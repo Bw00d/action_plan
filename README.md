@@ -109,8 +109,8 @@ from `ActionPlan` to your application name, in camel case.
     replace the following strings:
         - Replace `action_plan` by `your_app_name` 
         - Replace `action_plan` by `YOUR_APP_NAME`
-        - Replace `Project Name` by the project's name
-        - Replace `replace@me.com`  manually by the different e-mail addresses
+        - Replace `Action Plan` by the project's name
+        - Replace `bwoodreid@gmail.com`  manually by the different e-mail addresses
         that should send and receive e-mails in various parts of the 
         application.
 4. Run `bundle install` to install the gems listed in the `Gemfile` and their 

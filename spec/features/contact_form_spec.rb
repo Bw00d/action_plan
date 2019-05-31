@@ -12,7 +12,7 @@ describe 'Contact form via UI', type: :feature, js: true do
 
     # Open last sent e-mail and set current_email variable
     # Implemented by https://github.com/DockYard/capybara-email
-    open_email('replace@me.com')
+    open_email('bwoodreid@gmail.com')
     expect(current_email).to have_text "Name: #{valid_attributes[:name]}"
     expect(current_email).to have_text "Email: #{valid_attributes[:email]}"
     expect(current_email).to have_text "Message: #{valid_attributes[:message]}"

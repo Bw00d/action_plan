@@ -1,6 +1,6 @@
 # :nocov:
 class ApplicationMailer < ActionMailer::Base
-  default from: 'replace@me.com'
+  default from: 'bwoodreid@gmail.com'
   layout 'mailer'
 end
 # :nocov:

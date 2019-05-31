@@ -3,7 +3,7 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content_for?(:title) ? yield(:title) : "Project Name" %></title>
+  <title><%= content_for?(:title) ? yield(:title) : "Action Plan" %></title>
   <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Insert description" %>">
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -26,7 +26,7 @@ controller and action allows the implementation of page-specific CSS and JS %>
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-            <%= link_to image_tag('logo.png'), root_path, class: 'navbar-brand', alt: 'Project Name' %>
+            <%= link_to image_tag('logo.png'), root_path, class: 'navbar-brand', alt: 'Action Plan' %>
           </a>
         </div>
 
@@ -97,7 +97,7 @@ controller and action allows the implementation of page-specific CSS and JS %>
       <div class="row">
         <footer class="footer">
           <div class="container">
-            <p class="text-muted">&copy; Project Name</p>
+            <p class="text-muted">&copy; Action Plan</p>
           </div>
         </footer>
       </div>
