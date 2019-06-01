@@ -12,10 +12,6 @@ describe 'layout and UI elements', type: :feature, js: true do
       visit '/'
       expect(page).to have_selector 'body.guest-layout'
       within '.navbar-default' do
-        expect(page).to have_link(I18n.t('navigation.home'),
-                                  href: root_path)
-        expect(page).to have_link(I18n.t('navigation.contact'),
-                                  href: contact_path)
         expect(page).to have_link(I18n.t('navigation.sign-up'),
                                   href: new_user_registration_path)
         expect(page).to have_link(I18n.t('navigation.sign-in'),
@@ -29,10 +25,6 @@ describe 'layout and UI elements', type: :feature, js: true do
       login_as(ordinary_user)
       visit '/'
       expect(page).to have_selector('body.user-layout')
-      expect(page).to have_link(I18n.t('navigation.home'),
-                                href: root_path)
-      expect(page).to have_link(I18n.t('navigation.contact'),
-                                href: contact_path)
 
       expect(page).not_to have_link(I18n.t('navigation.users'),
                                     href: admin_users_path)
@@ -44,11 +36,6 @@ describe 'layout and UI elements', type: :feature, js: true do
       login_as(admin_user)
       visit '/'
       expect(page).to have_selector('body.admin-layout')
-
-      expect(page).to have_link(I18n.t('navigation.home'),
-                                href: root_path)
-      expect(page).to have_link(I18n.t('navigation.contact'),
-                                href: contact_path)
       expect(page).to have_link(I18n.t('navigation.users'),
                                 href: admin_users_path)
     end

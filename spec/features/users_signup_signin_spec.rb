@@ -70,7 +70,7 @@ describe 'User self-management via UI', type: :feature, js: true do
     login_as(user)
     visit '/'
     click_navbar_dropdown_item('Sign out')
-    expect(page).to have_current_path(new_user_session_path)
+    expect(page).to have_link('Sign in')
   end
 
   it 'allows the user to edit his profile' do

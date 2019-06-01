@@ -30,7 +30,7 @@ gem 'bootstrap-sass'
 # List of countries and their respective states and cities
 gem 'city-state'
 # Authentication
-gem 'devise'
+gem "devise", ">= 4.6.0"
 # Generate fake user names, e-mails, adresses, IPs, lorem text, etc. Include
 # in all environments as we might use it to seed the DB in test deploys.
 gem 'faker'
