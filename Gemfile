@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 
+
 gem "bootstrap-sass", ">= 3.4.1"
 # List of countries and their respective states and cities
 gem 'city-state'
