@@ -149,16 +149,16 @@ label, dt {
 }
 
 // Navbar
-$navbar-height:                    50px;
+$navbar-height:                    100px;
 $navbar-default-color:             white;
-$navbar-default-bg:                desaturate($brand-primary, 10%);
-$navbar-default-link-color:                white;
-$navbar-default-link-hover-color:          white;
-$navbar-default-link-hover-bg:             $brand-light;
-$navbar-default-link-active-color:         white;
-$navbar-default-link-active-bg:            $brand-light;
+$navbar-default-bg:                desaturate(white, 10%);
+$navbar-default-link-color:                #3D3D3D;
+$navbar-default-link-hover-color:          #3D3D3D;
+/*$navbar-default-link-hover-bg:             $brand-light;*/
+$navbar-default-link-active-color:         #3D3D3D;
+/*$navbar-default-link-active-bg:            $brand-light;*/
 $navbar-default-link-disabled-color:       $gray-lighter;
-$navbar-default-link-disabled-bg:          $brand-light;
+/*$navbar-default-link-disabled-bg:          $brand-light;*/
 
 // Navbar items font weight
 .nav > li > a {
@@ -172,7 +172,8 @@ body {
 
 // Centralize logo vertically in the navbar
 .navbar-brand {
-  padding-top: 10px !important;
+  padding-top: 40px !important;
+  font-size: 2em;
 }
 
 // Pagination
