@@ -149,7 +149,7 @@ label, dt {
 }
 
 // Navbar
-$navbar-height:                    100px;
+$navbar-height:                    60px;
 $navbar-default-color:             white;
 $navbar-default-bg:                desaturate(white, 10%);
 $navbar-default-link-color:                #3D3D3D;
@@ -172,7 +172,7 @@ body {
 
 // Centralize logo vertically in the navbar
 .navbar-brand {
-  padding-top: 40px !important;
+  padding-top: 20px !important;
   font-size: 2em;
 }
 
