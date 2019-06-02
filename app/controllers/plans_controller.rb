@@ -1,6 +1,9 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
 
+  include SkipAuthorization
+  skip_before_action :authenticate_user!
+
   # GET /plans
   # GET /plans.json
   def index
@@ -24,7 +27,7 @@ class PlansController < ApplicationController
   # POST /plans
   # POST /plans.json
   def create
-    @plan = Plan.new(plan_params)
+    @plan = Plan.create(plan_params.merge({user_id: current_user.id}))
 
     respond_to do |format|
       if @plan.save

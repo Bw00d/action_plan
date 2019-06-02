@@ -2,6 +2,7 @@ en:
   navigation:
     home: Home
     users: Users
+    plan: Plan
     contact: Contact
     sign-in: Sign in
     sign-up: Sign up
