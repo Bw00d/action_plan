@@ -19,7 +19,7 @@ module DeviseControllerSpecLogin
     # anywhere in the spec files.
     @current_user = FactoryGirl.create(user_factory_name)
     # Required if using the "confirmable" module
-    @current_user.confirm
+    # @current_user.confirm
     @request.env['devise.mapping'] = Devise.mappings[:user]
     sign_in @current_user
   end

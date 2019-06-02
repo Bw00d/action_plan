@@ -28,7 +28,7 @@ module DeviseRequestSpecLogin
     # anywhere in the spec files.
     @current_user = FactoryGirl.create(user_factory_name)
     # Required if using the "confirmable" module
-    @current_user.confirm
+    # @current_user.confirm
     login_as(@current_user, scope: warden_scope(@current_user))
   end
 

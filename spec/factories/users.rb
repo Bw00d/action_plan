@@ -18,7 +18,7 @@ FactoryGirl.define do
 
     after(:create) do |user|
       # Required when using Devise's confirmable module
-      user.confirm
+      # user.confirm
     end
   end
 end
