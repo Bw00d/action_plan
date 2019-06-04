@@ -11,7 +11,7 @@
   margin: 0 auto;
   margin-top: 50px;
   border-radius: 100px;
-  z-index: 3 !important;
+  z-index: 6 !important;
   position: relative;
 
 }
@@ -35,12 +35,17 @@
  /*stages */
 .stage {
   font-size: 1.2em;
+  color: #000;
+  font-weight: bold;
+  font-weight: 500;
+  line-height: 1.02em;
 }
 .tactics {
-  background-color: #FD8A8B;
+  /*background-color: #FD8A8B;*/
+  background-color: #E7EAED;
   float: left;
-  height: 110px;
-  width: 143px;
+  height: 170px;
+  width: 170px;
   border-right: 4px solid black;
   padding: 50px 10px 0 20px;
   border-top-left-radius: 100px;
@@ -49,108 +54,128 @@
   z-index: 1;
   border-left: 4px solid black;
   border-top: 4px solid black;
-}
-.tactics .text-box {
-  position: absolute;
-  width: 100px;
-}
-.tactics .arrow-up-border {
-  position: absolute;
-  margin-top: 66px;
+  border-bottom: 4px solid black;
+ .text-box {
+    position: absolute;
+    width: 100px;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+  .arrow-up-border {
+    position: absolute;
+    margin-top: 66px;
 
-}
-.tactics .arrow-up {
-  position: absolute;
-  margin-left: -49px;
-  margin-top: 4px;
+  }
+  .arrow-up {
+    position: absolute;
+    margin-left: -49px;
+    margin-top: 4px;
+  }
 }
 .prep-plan {
-  background-color: #99CCFD;
+  /*background-color: #99CCFD;*/
   float: left;
-  height: 110px;
-  max-width: 121px !important;
-  padding: 40px 10px 0 10px;
+  height: 175px;
+  max-width: 165px !important;
+  padding: 50px 10px 0 10px;
   text-align: center;
   border-right: 4px solid black;
+  .text-box {
+    margin-top: 10px;
+  }
+
 }
 .planning {
-  background-color: #FD8A8B;
+  /*background-color: #FD8A8B;*/
+  background-color: #E7EAED;
   float: left;
-  height: 120px;
-  width: 158px !important;
+  height: 170px;
+  width: 161px !important;
   padding: 40px 10px 0 10px;
   text-align: center;
   border-top-right-radius: 100px;
-}
-.planning .text-box {
-  position:absolute;
-  margin-top: -95px;
-  margin-left: 40px;
-  width: 100px;
+  border-bottom: 4px solid black;
+  .text-box {
+    position:absolute;
+    margin-top: -83px;
+    margin-left: 30px;
+    width: 100px;
+  }
 }
 .prep-tactics {
-  background-color: #99CCFD;
+  /*background-color: #99CCFD;*/
   float: left;
-  height: 48px;
-  width: 480px !important;
+  height: 70px;
+  width: 492px !important;
   padding: 40px 10px 0 10px;
-  border-top: 4px solid black;
+  /*border-top: 4px solid black;*/
+   .text-box {
+    text-align: center !important;
+    margin-top: -43px;
+    margin-left: 15px;
+    position: absolute;
+    width: 100px;
+    line-height: 1.05em;
+  }
+  .right-box {
+    text-align: center !important;
+    margin-top: -25px;
+    right: 18px;
+    position: absolute;
+    width: 100px;
+  }
 }
-.prep-tactics .text-box {
-  text-align: center !important;
-  margin-top: -41px;
-  margin-left: 15px;
-  position: absolute;
-  width: 100px;
-}
-.prep-tactics .right-box {
-  text-align: center !important;
-  margin-top: -15px;
-  right: 18px;
-  position: absolute;
-  width: 100px;
-}
+
 .c_g {
-  background-color: #FFFCA2;
+  /*background-color: #FFFCA2;*/
   float: left;
-  height: 88px;
-  width: 500px !important;
+  height: 90px;
+  width: 492px !important;
   border-bottom: 4px solid black;
   border-top: 4px solid black;
-}
-.c_g .text-box {
-  position: absolute;
-  width: 150px;
-  margin-left: 0;
-}
-.c_g .right-box {
-  text-align: center !important;
-  margin-top: 40px;
-  right: 18px;
-  position: absolute;
-  width: 100px;
+  .text-box {
+    position: absolute;
+    width: 150px;
+    margin-left: 0;
+    margin-top: 15px;
+  }
+  .right-box {
+    text-align: center !important;
+    margin-top: 40px;
+    right: 18px;
+    position: absolute;
+    width: 100px;
+    .text-box {
+      margin-left: -27px;
+      margin-top: 0px;
+      line-height: 1.05em;
+    }
+  }
 }
 .objectives {
-  background-color: #FD8A8B;
+  /*background-color: #FD8A8B;*/
+  background-color: #E7EAED;
   float: left;
-  height: 112px;
-  width: 155px !important;
+  height: 157px;
+  width: 166px !important;
   padding: 40px 10px 0 10px;
   border-bottom-left-radius: 100px;
   border-right: 4px solid black;
+  position: relative;
 }
 .execute {
-  background-color: #CCFDCD;
+  /*background-color: #CCFDCD;*/
+  background-color: #E7EAED;
   float: left;
-  height: 112px;
-  width: 301px !important;
+  height: 157px;
+  width: 326px !important;
   padding: 40px 10px 0 10px;
   border-bottom-right-radius: 100px;
-}
-.execute .text-box {
-  float: left;
-  width: 130px;
-  margin-right: 30px;
+  .text-box {
+    float: left;
+    width: 130px;
+    margin-right: 30px;
+  }
 }
 .ic-meet {
   background-color: #FECB9C;
@@ -187,19 +212,20 @@
   border-top: 4px solid black;
 }
 .new-ops {
-  background-color:#D9D9d9;
+  /*background-color:#D9D9d9;*/
+  background-color: white;
   float: left;
   width: 100px;
   border: 4px solid black;
 }
 
- arrows 
+ /*arrows */
 .arrow-up {
   width: 0;
   height: 0;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
-  border-bottom: 30px solid #9BCDFB;
+  border-bottom: 30px solid white;
   position: absolute;
 }
 .arrow-up-border {
@@ -211,11 +237,12 @@
 }
 .arrow-up-stem {
   width: 40px;
-  height: 14px;
+  height: 16px;
   position: absolute;
   margin-left: -23px;
   margin-top: 34px;
-  background-color: #9BCDFB;
+  background-color: white;
+  /*background-color: #9BCDFB;*/
   border-right: 4px solid black;
   border-left: 4px solid black;
 }
@@ -225,7 +252,8 @@
   height: 0;
   border-bottom: 50px solid transparent;
   border-top: 50px solid transparent;
-  border-left: 30px solid #9BCDFB;
+  /*border-left: 30px solid #9BCDFB;*/
+  border-left: 30px solid white;
   position: absolute;
   margin-left: -34px;
   margin-top: -50px;
@@ -245,7 +273,8 @@
   position: absolute;
   margin-left: -51px;
   margin-top: -25px;
-  background-color: #9BCDFB;
+  /*background-color: #9BCDFB;*/
+  background-color: white;
   border-top: 4px solid black;
   border-bottom: 4px solid black;
 }
@@ -255,7 +284,8 @@
   height: 0;
   border-right: 50px solid transparent;
   border-left: 50px solid transparent;
-  border-top: 30px solid #9BCDFB;
+  /*border-top: 30px solid #9BCDFB;*/
+  border-top: 30px solid white;
   position: absolute;
   margin-left: -50px;
   margin-top: -34px;
@@ -273,9 +303,10 @@
   width: 40px;
   height: 14px;
   position: absolute;
-  margin-left: -27px;
+  margin-left: -22px;
   margin-top: -48px;
-  background-color: #9BCDFB;
+  background-color: white;
+  /*background-color: #9BCDFB;*/
   border-right: 4px solid black;
   border-left: 4px solid black;
 }
