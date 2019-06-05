@@ -16,12 +16,9 @@
     <%= form.date_select :date, id: :plan_date %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id, id: :plan_user_id %>
-  </div>
+
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
