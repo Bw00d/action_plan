@@ -1,5 +1,25 @@
 <%= content_for :title, "The Plan" %>
 <!-- <p id="notice"><%= notice %></p> -->
 
-
-<%= link_to (fa_icon('plus-circle')), new_plan_path, class: "new-plan" %>
+<div class="row">
+  <%= link_to (fa_icon('plus-circle')), new_plan_path, class: "new-plan" %> 
+</div>
+<div class="row">
+  <ul class="date-row">
+    <li class="date-tab">
+      <div class="top"></div>
+      <div class="bottom">6/18</div>
+    </li >
+    <li class="date-tab">
+      <div class="top"></div>
+      <div class="bottom">6/17</div>
+    </li >
+    <li class="date-tab">
+      <div class="top"></div>
+      <div class="bottom">6/16</div>
+    </li >
+  </ul>
+  <div class="plan-row situation">SITUATION</div>
+  <div class="plan-row">OBJECTIVES</div>
+  <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
+</div>

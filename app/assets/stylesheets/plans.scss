@@ -1,7 +1,50 @@
 // Place all the styles related to the Plans controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.date-row {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.date-tab {
+  list-style: none;
+  margin-bottom: -9px;
+  margin-left: -10px;
+  display: inline-block;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  .top {   
+    width: 60px;
+    background-color: white;
+    border: 1px solid #777;
+    height: 30px;
+    border-radius: 30px;
+    display: inline-block;
+    border-bottom: none;
+    z-index: 1 !important;
+    position: relative;
+  }
+  .bottom {
+    width: 60px;
+    background-color: white;
+    border: 1px solid #777;
+    height: 20px;
+    position: absolute;
+    margin-top: -18px;
+    z-index: 2 !important;
+    border-bottom: 1px solid white;
+    border-top: none;
+    text-align: center;
+  }
+}
 .new-plan {
   font-size: 2.5em;
   color: #B4B4B4;
+}
+.plan-row {
+  border-bottom: 1px solid #777;
+  padding: 10px;
+}
+.situation {
+  border-top: 1px solid #777;
 }
