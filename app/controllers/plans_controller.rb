@@ -7,7 +7,8 @@ class PlansController < ApplicationController
   # GET /plans
   # GET /plans.json
   def index
-    @plans = Plan.all
+    @plan = Plan.new
+    @plans = Plan.all.order(date: :desc)
   end
 
   # GET /plans/1
@@ -31,8 +32,8 @@ class PlansController < ApplicationController
 
     respond_to do |format|
       if @plan.save
-        format.html { redirect_to @plan, notice: 'Plan was successfully created.' }
-        format.json { render :show, status: :created, location: @plan }
+        format.html { redirect_to plans_path }
+        format.json { render :index, status: :created, location: @plan }
       else
         format.html { render :new }
         format.json { render json: @plan.errors, status: :unprocessable_entity }

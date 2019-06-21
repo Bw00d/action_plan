@@ -112,7 +112,7 @@ RSpec.configure do |config|
   config.include MiscTestHelpers
 
   # ------------------- Begin Database Cleaner config --------------------
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
 
   config.before(:suite) do
     # Perform the initial DB cleaning by truncating all the tables

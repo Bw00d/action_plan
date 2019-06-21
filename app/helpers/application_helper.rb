@@ -46,4 +46,8 @@ module ApplicationHelper
 
     html.html_safe
   end
+
+  def current_plan
+    Plan.find_by(date: Date.today)
+  end
 end
