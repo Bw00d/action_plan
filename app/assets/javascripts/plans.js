@@ -26,7 +26,7 @@ $(document).on("turbolinks:load", function() {
       }
   });
 
-  $('.tabrow li').removeClass('selected');
-  $('.tabrow li:first').addClass('selected');
+  // $('.tabrow li').removeClass('selected');
+  // $('.tabrow li:first').addClass('selected');
   
 });

@@ -1,14 +1,41 @@
+<%= content_for :title, "The Plan" %>
+
 <p id="notice"><%= notice %></p>
+  
+<div class="row">
+  <ul class="tabrow">
+    <% unless current_plan  %>
+     <li>
+      <%= form_with(model: @new_plan, id: 'plan-form', local: true) do |form| %>
+        <%= form.hidden_field :date, value: Date.today %>
+      <%= link_to 'New', "", :onclick => "$('#plan-form').submit()" %>
+      <% end %>
+     </li>
+    <% end %>
+   <% @plans.each do |p|  %>
+   <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), plan_path(p) %></li>
+   <% end %>
+  
+</ul>
+  <div class="plan-row situation">SITUATION</div>
+  <div class="situation-content">
+    
+  </div>
+  <div class="plan-row ">OBJECTIVES</div>
+  <div class="objectives-list">
+    <ol>
+      <li>Make sure it all looks good before adding dynamic content.</li>
+      <li>The padding should be fixed, but there is not point doing it now.</li>
+      <li>Maybe the line height could be a little higher, but again, wait until later.</li>
+    </ol>
+  </div>
+  <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
+</div>
 
-<p>
-  <strong>Date:</strong>
-  <%= @plan.date %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @plan.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_plan_path(@plan) %> |
-<%= link_to 'Back', plans_path %>
+<script type="text/javascript">
+  $(document).on("turbolinks:load", function() {
+  id = "<%= @plan.id %>"
+  $('.tabrow li').removeClass('selected');
+  $('li#'+ id).addClass('selected');
+  });
+</script>

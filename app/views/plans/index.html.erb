@@ -1,19 +1,19 @@
 <%= content_for :title, "The Plan" %>
 
 <p id="notice"><%= notice %></p>
-<%= form_with(model: @plan, id: 'plan-form', local: true) do |form| %>
   
 <div class="row">
   <ul class="tabrow">
     <% unless current_plan  %>
-     <li class="selected">
+     <li>
+      <%= form_with(model: @plan, id: 'plan-form', local: true) do |form| %>
         <%= form.hidden_field :date, value: Date.today %>
         <%= link_to 'New', "", :onclick => "$('#plan-form').submit()" %>
       <% end %>
       </li>
     <% end %>
    <% @plans.each do |p|  %>
-   <li><%= p.date.strftime("%-m/%d") %></li>
+   <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), plan_path(p) %></li>
    <% end %>
   
 </ul>
@@ -31,3 +31,10 @@
   </div>
   <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
 </div>
+
+<script type="text/javascript">
+  $(document).on("turbolinks:load", function() {
+    $('.tabrow li').removeClass('selected');
+    $('.tabrow li:first').addClass('selected');
+  });
+</script>

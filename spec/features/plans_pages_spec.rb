@@ -15,6 +15,10 @@ describe 'Index page', type: :feature, js: true do
     expect(page).to have_link ('New')
   end
 
+  it 'should select the most recent tab or new tab' do
+    seed_plans
+  end
+
   it 'should create a new plan when "New" button is clicked' do
     click_link 'New'
     expect(page).to have_content (Date.today.strftime("%-m/%d"))

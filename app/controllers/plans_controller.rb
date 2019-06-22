@@ -14,6 +14,9 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
+    @new_plan = Plan.new
+    @plan = Plan.find(params[:id])
+    @plans = Plan.all.order(date: :desc)
   end
 
   # GET /plans/new
@@ -32,7 +35,7 @@ class PlansController < ApplicationController
 
     respond_to do |format|
       if @plan.save
-        format.html { redirect_to plans_path }
+        format.html { redirect_to @plan }
         format.json { render :index, status: :created, location: @plan }
       else
         format.html { render :new }
