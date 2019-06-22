@@ -25,8 +25,4 @@ $(document).on("turbolinks:load", function() {
         $(this).next('div').slideDown();
       }
   });
-
-  // $('.tabrow li').removeClass('selected');
-  // $('.tabrow li:first').addClass('selected');
-  
 });
