@@ -21,4 +21,5 @@
 //= require bootstrap-sprockets
 //= require select2
 //= require sweetalert2/dist/sweetalert2
+//= require best_in_place
 //= require_tree .

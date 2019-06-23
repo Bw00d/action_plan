@@ -51,6 +51,7 @@
 .plan-row {
   border-bottom: 1px solid #777;
   padding: 10px;
+  font-weight: 700;
 }
 .situation {
   /*border-top: 1px solid #777;*/
@@ -59,14 +60,41 @@
   border-bottom: 1px solid #777;
   padding: 10px 20px;
   display: none;
+  textarea {
+    width: 100%;
+  }
+  input {
+    border-radius: 5px;
+    margin-right: 10px;
+  }
 }
 .objectives-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
+  .new-objective {
+    background: #ECECEC;
+    border: 1px solid #AAA;
+    text-align: center;
+    font-size: 1.6em;
+    line-height:  .75em;
+    color: #AAA;
+    width:20px;
+    height:20px;
+    border-radius: 20px;
+    font-weight: 200;
+    a:hover {
+      text-decoration: none;
+    }
+  }
+}
+.new-objective:hover {
+  background-color: #1DA0E2;
 }
 .actions-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
 }
+
+

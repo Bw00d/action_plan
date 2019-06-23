@@ -19,15 +19,12 @@
 </ul>
   <div class="plan-row situation">SITUATION</div>
   <div class="situation-content">
-    
+    <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
   </div>
   <div class="plan-row ">OBJECTIVES</div>
   <div class="objectives-list">
-    <ol>
-      <li>Make sure it all looks good before adding dynamic content.</li>
-      <li>The padding should be fixed, but there is not point doing it now.</li>
-      <li>Maybe the line height could be a little higher, but again, wait until later.</li>
-    </ol>
+  <div class="new-objective"><%= link_to '+', 'javascript:;', class: "button-primary" %></div>
+    
   </div>
   <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
   <div class="actions-list">

@@ -50,7 +50,7 @@ class PlansController < ApplicationController
     respond_to do |format|
       if @plan.update(plan_params)
         format.html { redirect_to @plan, notice: 'Plan was successfully updated.' }
-        format.json { render :show, status: :ok, location: @plan }
+        format.json { respond_with_bip(@plan) }
       else
         format.html { render :edit }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
@@ -76,6 +76,6 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:date, :user_id)
+      params.require(:plan).permit(:date, :user_id, :situation)
     end
 end

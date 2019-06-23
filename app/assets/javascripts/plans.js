@@ -1,4 +1,7 @@
 $(document).on("turbolinks:load", function() {
+   /* Activating Best In Place */
+    jQuery(".best_in_place").best_in_place();
+
     $("#content").find("[id^='tab']").hide(); // Hide all content
     $("#tabs li:first").attr("id","current"); // Activate the first tab
     $("#content #tab1").fadeIn(); // Show first tab's content
