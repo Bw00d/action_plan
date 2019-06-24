@@ -22,10 +22,24 @@
     <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
   </div>
   <div class="plan-row ">OBJECTIVES</div>
-  <div class="objectives-list">
-  <div class="new-objective"><%= link_to '+', 'javascript:;', class: "button-primary" %></div>
+    <div class="objectives-list">
+      <ol>
+        <% @objectives.each do |o|  %>
+        <li><%= o.order %> <%= o.description %></li>
+        <% end %>
+      </ol>
+
+      <div id="objective-form" class="form-group">
+        <%= form_for @objective, local: true do |f| %>
+          <%= f.hidden_field :plan_id, value: @plan.id %>
+          <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
+          <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
+        <% end %>
+      </div>
+        <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
+      
+    </div>
     
-  </div>
   <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
   <div class="actions-list">
     <ul>

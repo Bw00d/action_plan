@@ -68,33 +68,34 @@
     margin-right: 10px;
   }
 }
+/* Objectives */
 .objectives-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
   .new-objective {
-    background: #ECECEC;
-    border: 1px solid #AAA;
-    text-align: center;
-    font-size: 1.6em;
-    line-height:  .75em;
-    color: #AAA;
-    width:20px;
-    height:20px;
-    border-radius: 20px;
-    font-weight: 200;
-    a:hover {
-      text-decoration: none;
-    }
+    color: #a19afc;
+    size: 1.2em;
+  }
+  ol {
+    padding-left: 20px;
   }
 }
-.new-objective:hover {
-  background-color: #1DA0E2;
+#objective-form {
+  display: none;
+  position: relative;
+  textarea {
+    width: 100%;
+  }
+  input {
+    width: 100px;
+  }
 }
 .actions-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
 }
+  
 
 

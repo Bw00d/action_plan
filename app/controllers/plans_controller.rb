@@ -17,6 +17,8 @@ class PlansController < ApplicationController
     @new_plan = Plan.new
     @plan = Plan.find(params[:id])
     @plans = Plan.all.order(date: :desc)
+    @objectives = @plan.objectives
+    @objective = Objective.new
   end
 
   # GET /plans/new

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :objectives, only: [:create, :update, :destroy]
   resources :plans
   root to: 'home#index'
 

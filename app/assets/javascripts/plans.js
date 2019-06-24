@@ -28,4 +28,9 @@ $(document).on("turbolinks:load", function() {
         $(this).next('div').slideDown();
       }
   });
+
+  $("#new-objective").click(function () {
+    $("#new-objective").hide();
+    $("#objective-form").show();
+  });
 });
