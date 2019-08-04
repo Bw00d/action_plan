@@ -1,0 +1,84 @@
+<%= content_for :title, "202" %>
+<div id="incident-objectives">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 form-row top-row">
+        <div class="col-xs-5">
+          <h4><strong>INCIDENT OBJECTIVES</strong></h4>
+        </div>
+        <div class="col-xs-3 bl small-box">
+          <span class="small">1. INCIDENT NAME<br>
+            MCG Fires 2019
+          </span>
+
+        </div>
+        <div class="col-xs-2 bl small-box">
+          <span class="small">2. DATE PREPARED<br>
+            7/21/19
+          </span>
+        </div>
+        <div class="col-xs-2 bl small-box">
+          <span class="small">3. TIME PREPARED<br>
+            22:00
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 form-row">
+        <span class="small">4. OPERATIONAL PERIOD</span><br>
+        0800-2200
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 form-row tall-rows">
+        <span class="small">5. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
+          <% @plan.objectives.each do |o| %>
+          <h4><%= o.order %> <%= o.description %></h4>
+          <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 form-row medium-rows">
+        <span class="small">6. WEATHER FORECAST FOR OPERATIONAL PERIOD</span><br>
+          
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 form-row short-rows">
+        <span class="small">7. GENERAL SAFETY MESSAGE</span><br>
+          
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 form-row">
+        <span class="small">8. ATTACHMENTS</span><br>
+          <ul class="small col-xs-3">
+            <li><%= check_box_tag("org list", "#") %>  ORGANIZATION LIST</li>
+            <li><%= check_box_tag("org list", "#") %>  ASSIGNMENT LIST</li>
+            <li><%= check_box_tag("org list", "#") %>  COMMUNICATION PLAN</li>
+          </ul>
+          <ul class="small col-xs-3">
+            <li><%= check_box_tag("org list", "#") %>  MEDICAL PLAN</li>
+            <li><%= check_box_tag("org list", "#") %>  INCIDENT MAP</li>
+            <li><%= check_box_tag("org list", "#") %>  TRAFFIC PLAN</li>
+          </ul>
+          <ul class="small col-xs-3">
+            <li><%= check_box_tag("org list", "#") %>  _______________</li>
+            <li><%= check_box_tag("org list", "#") %>  _______________</li>
+            <li><%= check_box_tag("org list", "#") %>  _______________</li>
+          </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 form-row">
+          <div class="col-xs-6">
+            <span class="small small-box">9. PREPARED BY</span><br>Bill Blake
+          </div>
+          <div class="col-xs-6 bl">
+            <span class="small small-box">10. APPROVED BY</span><br>John Thomas
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

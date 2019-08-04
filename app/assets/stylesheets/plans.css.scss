@@ -97,5 +97,65 @@
   display: none;
 }
   
+/* IAP */
+#cover {
+  padding-top: 75px;
+  padding-bottom: 100px;
+  text-align: center;
+  border: 2px solid black;
+  h1 {
+    font-weight: 700;
+    font-size: 3em;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 2em;
+  }
+  #picture {
+    margin-top: 10px;
+    width: 75%;
+    height: auto;
+  }
+  .cost-code {
+    margin-top: 30px;
+    h3 {
+    font-weight: 700;
+    }
+  }
+}
+.form-row {
+  position: relative;
+  border-bottom: 1px solid black;
+  min-height: 40px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+.top-row {
+  border-top: 1px solid black;
+}
+.small {
+  font-size: .70em;
+}
+.small-box {
+  padding-right: 0;
+  padding-left: 5px;
+}
+.bl {
+  border-left: 1px solid black;
+}
+#incident-objectives {
+  ul {
+    list-style: none;
+  }
+}
+.tall-rows {
+  min-height: 300px;
+}
+.medium-rows {
+  min-height: 200px;
+}
+.short-rows {
+  min-height: 100px;
+}
 
 
