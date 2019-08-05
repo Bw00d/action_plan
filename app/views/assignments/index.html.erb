@@ -2,11 +2,13 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-8 center-block">
-      <h1><strong>ICS 204s</strong></h1>
+      <h1 ><strong>ICS 204s</strong></h1>
         <%= link_to fa_icon("plus-circle"), new_plan_assignment_path(@plan, @assignment), class: "new-button" %>
-        <ul>
+        <ul class="assignments-lists">
           <% @assignments.each do |assignment| %>
-            <li><%= link_to assignment.designator, plan_assignment_path(@plan, assignment) %></li>
+          <%= link_to plan_assignment_path(@plan, assignment) do %>
+            <li><%= assignment.designator %>  –  Leader's Name  –  # of Personnel </li><br>
+            <% end %>
           <% end %>
         </ul>
       <br>

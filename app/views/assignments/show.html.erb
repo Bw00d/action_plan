@@ -17,7 +17,7 @@
 
         </div>
         <div class="col-xs-4 bl small-box padded-box">
-          <h5><%= @assignment.designator %></h5>
+          <h5><%= best_in_place @assignment, :designator, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %></h5>
         </div>
       </div>
     </div>
@@ -135,8 +135,9 @@
     <div class="row">
       <div class="col-xs-12 form-row header-row">
           COMMUNICATIONS SUMMARY
-          </div>
       </div>
     </div>
+    <%= render 'commo_plan' %>
+    
   </div>
 </div>

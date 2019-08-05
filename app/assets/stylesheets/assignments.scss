@@ -1,7 +1,25 @@
-// Place all the styles related to the assignments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$aqua: #07c5ff;
 
 .wide-textarea {
   width: 100%;
+}
+.commo-row {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  div {
+    min-height: 30px;
+  }
+}
+.assignments-lists {
+  list-style: none;
+  padding-left: 0;
+  li {
+    background-color: #E7EAED;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  a {
+    text-decoration: none;
+  }
 }
