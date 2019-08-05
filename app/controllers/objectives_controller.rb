@@ -32,6 +32,7 @@ class ObjectivesController < ApplicationController
     respond_to do |format|
       if @objective.save
         format.html { redirect_to plan_path(@plan.id) }
+        format.js { }
         format.json { render :show, status: :created, location: @objective }
       else
         format.html { render :new }

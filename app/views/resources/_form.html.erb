@@ -1,0 +1,57 @@
+<%= form_with(model: resource, local: true) do |form| %>
+  <% if resource.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
+
+      <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :resource_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :leader %>
+    <%= form.text_field :leader, id: :resource_leader %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number_personnel %>
+    <%= form.number_field :number_personnel, id: :resource_number_personnel %>
+  </div>
+
+  <div class="field">
+    <%= form.label :position %>
+    <%= form.text_field :position, id: :resource_position %>
+  </div>
+
+  <div class="field">
+    <%= form.label :agency %>
+    <%= form.text_field :agency, id: :resource_agency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :order_number %>
+    <%= form.text_field :order_number, id: :resource_order_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lwd %>
+    <%= form.date_select :lwd, id: :resource_lwd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :checkin_date %>
+    <%= form.date_select :checkin_date, id: :resource_checkin_date %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

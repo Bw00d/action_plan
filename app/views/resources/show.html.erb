@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @resource.name %>
+</p>
+
+<p>
+  <strong>Leader:</strong>
+  <%= @resource.leader %>
+</p>
+
+<p>
+  <strong>Number personnel:</strong>
+  <%= @resource.number_personnel %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @resource.position %>
+</p>
+
+<p>
+  <strong>Agency:</strong>
+  <%= @resource.agency %>
+</p>
+
+<p>
+  <strong>Order number:</strong>
+  <%= @resource.order_number %>
+</p>
+
+<p>
+  <strong>Lwd:</strong>
+  <%= @resource.lwd %>
+</p>
+
+<p>
+  <strong>Checkin date:</strong>
+  <%= @resource.checkin_date %>
+</p>
+
+<%= link_to 'Edit', edit_resource_path(@resource) %> |
+<%= link_to 'Back', resources_path %>

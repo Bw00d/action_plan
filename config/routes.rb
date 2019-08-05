@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :resources
   resources :assignments
   resources :objectives, only: [:create, :update, :destroy]
   resources :plans

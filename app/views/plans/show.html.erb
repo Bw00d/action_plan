@@ -23,14 +23,14 @@
   </div>
   <div class="plan-row ">OBJECTIVES</div>
     <div class="objectives-list">
-      <ol>
+      <ol id="objectives">
         <% @objectives.each do |o|  %>
         <li><%= o.order %> <%= o.description %></li>
         <% end %>
       </ol>
 
       <div id="objective-form" class="form-group">
-        <%= form_for @objective, local: true do |f| %>
+        <%= form_for @objective, remote: true do |f| %>
           <%= f.hidden_field :plan_id, value: @plan.id %>
           <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
           <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
