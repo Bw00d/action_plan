@@ -1,0 +1,35 @@
+<%= form_for [@plan, @assignment] do |form| %>
+  <% if assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+
+      <ul>
+      <% assignment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :designator %>
+    <%= form.text_field :designator, id: :assignment_designator, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :control_operations %>
+    <%= form.text_area :control_operations, id: :assignment_control_operations, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :special_instructions %>
+    <%= form.text_area :special_instructions, id: :assignment_special_instructions, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.hidden_field :plan_id, id: :assignment_plan_id, value: @plan.id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "ADD 204", class: "btn btn-success" %>
+  </div>
+<% end %>

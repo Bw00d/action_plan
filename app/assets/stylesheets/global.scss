@@ -29,6 +29,7 @@ $brand-lighter:         lighten(desaturate($brand-primary, 20%), 30%);
 // Shades of gray
 $gray-lighter:           lighten(#000, 93.5%);
 $gray-lightest:          lighten(#000, 98%);
+$aqua:                   #07c5ff;
 
 // Page headers (no variable available)
 .page-header {
@@ -274,6 +275,13 @@ dt, dd {
       border-bottom-right-radius: 6px;
     }
   }
+}
+.new-btn {
+  height: 40px;
+  width: 40px;
+  background-color: #F1F1F1;
+  border-radius: 40px;
+  font-size: 2.5em;
 }
 
 // Action glyphicons (show, edit, delete, etc)

@@ -1,5 +1,6 @@
 // We need some variables declared in global.scss (mostly colors)
 @import "global";
+$aqua: #07c5ff;
 
 // Padding
 .no-padding {
@@ -177,4 +178,34 @@
   background-color: #ABABAB !important;
   pointer-events: none !important;
   cursor: not-allowed !important;
+}
+
+.edit-button {
+  padding-left: 0px !important;
+  padding-top: 8px !important;
+  text-align: center;
+  font-size: 1.2em !important;
+  -moz-border-radius: 20px/20px !important;
+  -webkit-border-radius: 20px 20px !important;
+  border-radius: 20px/20px !important;
+  width: 35px;
+  height: 35px;
+  color: black;
+  background-color: $aqua;
+  a {
+    color: black;
+  }
+  :hover {
+  }
+}
+.edit-button:hover {
+    a {
+    color: lighten(adjust-hue(black, 10), 30%);
+
+    }
+}
+.cancel-button {
+  margin-left: 10px;
+  background-color: black;
+  color: white;
 }

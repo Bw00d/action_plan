@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8 center-block">
+      <h1><strong>ICS 204s</strong></h1>
+        <%= link_to fa_icon("plus-circle"), new_plan_assignment_path(@plan, @assignment), class: "new-button" %>
+        <ul>
+          <% @assignments.each do |assignment| %>
+            <li><%= link_to assignment.designator, plan_assignment_path(@plan, assignment) %></li>
+          <% end %>
+        </ul>
+      <br>
+
+    </div>
+  </div>
+</div>
