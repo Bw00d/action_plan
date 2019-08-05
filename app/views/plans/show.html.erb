@@ -49,7 +49,18 @@
       <li>some stuff</li>
     </ul>
   </div>
+
+<div class="plan-row">IAP</div>
+<div class="forms-list">
+    <ul>
+      <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
+      <li><%= link_to "202", "#{@plan.id}/202" %></li>
+      <li><%= link_to "203", "#" %></li>
+      <li><%= link_to "204", plan_assignments_path(@plan) %></li>
+    </ul>
+  </div>
 </div>
+
 
 <script type="text/javascript">
   $(document).on("turbolinks:load", function() {

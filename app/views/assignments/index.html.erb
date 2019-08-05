@@ -2,6 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-8 center-block">
+    <div><%= link_to "PLAN",  @plan, class: "btn btn-info tiny" %></div><br>
       <h1 ><strong>ICS 204s</strong></h1>
         <%= link_to fa_icon("plus-circle"), new_plan_assignment_path(@plan, @assignment), class: "new-button" %>
         <ul class="assignments-lists">

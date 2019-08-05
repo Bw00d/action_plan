@@ -4,6 +4,7 @@
     <div id="plan-title">
       <h1>Incident Action Plan</h1>
       <h2>MCG Fires 2019</h2>
+      <h2><%= @plan.date.strftime("%-m/%d/%-Y") %></h2>
     </div>
     <div class="md-12-col">
       <%= image_tag 'picture.jpg', id: "picture"  %>

@@ -60,6 +60,10 @@ class PlansController < ApplicationController
     end
   end
 
+  def cover
+    @plan = Plan.find(params[:id])
+  end
+
   # DELETE /plans/1
   # DELETE /plans/1.json
   def destroy
