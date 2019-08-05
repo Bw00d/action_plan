@@ -98,6 +98,11 @@ $aqua: #07c5ff;
   padding: 10px 0px;
   display: none;
 }
+.resources-list {
+  border-bottom: 1px solid #777;
+  padding: 10px 0px;
+  display: none;
+}
   
 /* IAP */
 #cover {
@@ -115,6 +120,7 @@ $aqua: #07c5ff;
   }
   #picture {
     margin-top: 10px;
+    margin-bottom: 20px;
     width: 75%;
     height: auto;
   }
