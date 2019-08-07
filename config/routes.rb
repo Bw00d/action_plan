@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :incidents
   resources :resources
   resources :assignments
   resources :objectives, only: [:create, :update, :destroy]
@@ -12,6 +13,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
+  end
+
+  resources :incidents do
+    resources :plans
   end
   resources :plans do
     resources :assignments

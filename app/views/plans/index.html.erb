@@ -3,17 +3,15 @@
 <p id="notice"><%= notice %></p>
   
 <div class="row">
+  <h1 class="text-center"><strong>Fire <%= @incident.number + " – " + @incident.name  %></strong></h1>
   <ul class="tabrow">
     <% unless current_plan  %>
      <li>
-      <%= form_with(model: @plan, id: 'plan-form', local: true) do |form| %>
-        <%= form.hidden_field :date, value: Date.today %>
-        <%= link_to 'New', "", :onclick => "$('#plan-form').submit()" %>
-      <% end %>
+        <%= link_to 'New', new_incident_plan_path(@incident) %>
       </li>
     <% end %>
    <% @plans.each do |p|  %>
-   <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), plan_path(p) %></li>
+   <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
    <% end %>
   
 </ul>

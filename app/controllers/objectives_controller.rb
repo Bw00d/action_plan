@@ -47,7 +47,7 @@ class ObjectivesController < ApplicationController
     respond_to do |format|
       if @objective.update(objective_params)
         format.html { redirect_to @objective, notice: 'Objective was successfully updated.' }
-        format.json { render :show, status: :ok, location: @objective }
+        format.json { respond_with_bip(@objective) }
       else
         format.html { render :edit }
         format.json { render json: @objective.errors, status: :unprocessable_entity }
@@ -75,4 +75,5 @@ class ObjectivesController < ApplicationController
     def objective_params
       params.require(:objective).permit(:plan_id, :description, :order)
     end
+
 end

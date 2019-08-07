@@ -8,13 +8,15 @@ class PlansController < ApplicationController
   # GET /plans.json
   def index
     @plan = Plan.new
-    @plans = Plan.all.order(date: :desc)
+    @incident = Incident.find(params[:incident_id])
+    @plans = Plan.where(incident_id: @incident.id).order(date: :desc)
   end
 
   # GET /plans/1
   # GET /plans/1.json
   def show
     @new_plan = Plan.new
+    @incident = Incident.find(params[:incident_id])
     @plan = Plan.find(params[:id])
     @plans = Plan.all.order(date: :desc)
     @objectives = @plan.objectives
@@ -23,6 +25,7 @@ class PlansController < ApplicationController
 
   # GET /plans/new
   def new
+    @incident = Incident.find(params[:incident_id])
     @plan = Plan.new
   end
 
@@ -33,11 +36,11 @@ class PlansController < ApplicationController
   # POST /plans
   # POST /plans.json
   def create
-    @plan = Plan.create(plan_params.merge({user_id: current_user.id}))
-
+    @plan = Plan.create(plan_params)
+    @incident = Incident.find(params[:incident_id])
     respond_to do |format|
       if @plan.save
-        format.html { redirect_to @plan }
+        format.html { redirect_to incident_plan_path(@incident, @plan) }
         format.json { render :index, status: :created, location: @plan }
       else
         format.html { render :new }
@@ -51,7 +54,7 @@ class PlansController < ApplicationController
   def update
     respond_to do |format|
       if @plan.update(plan_params)
-        format.html { redirect_to @plan, notice: 'Plan was successfully updated.' }
+        format.html { redirect_to @plan }
         format.json { respond_with_bip(@plan) }
       else
         format.html { render :edit }
@@ -86,6 +89,6 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:date, :user_id, :situation)
+      params.require(:plan).permit(:date, :user_id, :situation, :incident_id)
     end
 end

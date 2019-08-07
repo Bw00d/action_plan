@@ -1,4 +1,4 @@
-<%= form_with(model: plan, local: true) do |form| %>
+<%= form_for [@incident, @plan] do |f| %>
   <% if plan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(plan.errors.count, "error") %> prohibited this plan from being saved:</h2>
@@ -12,13 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date, id: :plan_date %>
+    <%= f.label :date %>
+    <%= f.date_select :date, id: :plan_date %>
+   <%= f.hidden_field :incident_id, value: @incident.id %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
   </div>
 
 
 
   <div class="actions">
-    <%= form.submit class: 'btn btn-primary' %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

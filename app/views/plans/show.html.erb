@@ -25,7 +25,7 @@
     <div class="objectives-list">
       <ol id="objectives">
         <% @objectives.each do |o|  %>
-        <li><%= o.order %> <%= o.description %></li>
+        <li><%= o.order %> <%= best_in_place o, :description, :ok_button => 'Save', :cancel_button => 'Cancel', delete_button:  'Delete' %></li>
         <% end %>
       </ol>
 

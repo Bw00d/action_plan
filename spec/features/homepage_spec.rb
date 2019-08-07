@@ -9,4 +9,10 @@ describe 'Contact form via UI', type: :feature, js: true do
     expect(page).to have_title ('Action Plan | Home')
   end
 
+  it 'should have the right links' do
+    visit '/'
+    expect(page).to have_link ('Plans')
+    expect(page).to have_link ('Incidents')
+  end
+
 end

@@ -3,6 +3,8 @@ class User < ApplicationRecord
   # Use slugs instead of DB IDs in URLs
   include FriendlyId
   friendly_id :full_name, use: :slugged
+  has_many :plans
+  has_many :incidents
 
   # Roles used by the authorization setup
   enum role: { user: 0, admin: 1 }
