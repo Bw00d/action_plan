@@ -63,10 +63,6 @@ class PlansController < ApplicationController
     end
   end
 
-  def cover
-    @plan = Plan.find(params[:id])
-  end
-
   # DELETE /plans/1
   # DELETE /plans/1.json
   def destroy
@@ -77,8 +73,14 @@ class PlansController < ApplicationController
     end
   end
 
+  def cover
+    @plan = Plan.find(params[:id])
+    @incident = Incident.find(@plan.incident_id)
+  end
+  
   def incident_objectives
     @plan = Plan.find(params[:id])
+     @incident = Incident.find(@plan.incident_id)
   end
 
   private
