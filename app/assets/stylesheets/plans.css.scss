@@ -98,10 +98,29 @@ $aqua: #07c5ff;
   padding: 10px 0px;
   display: none;
 }
+/* Resources*/
+
 .resources-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
+  .new-resource {
+    color: #a19afc;
+    size: 1.2em;
+  }
+  ul {
+    padding-left: 20px;
+  }
+}
+#resource-form {
+  display: none;
+  position: relative;
+  textarea {
+    width: 100%;
+  }
+  input {
+    width: 100%;
+  }
 }
   
 /* IAP */

@@ -1,5 +1,7 @@
 class ResourcesController < ApplicationController
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  include SkipAuthorization
+  skip_before_action :authenticate_user!
 
   # GET /resources
   # GET /resources.json
@@ -28,7 +30,8 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       if @resource.save
-        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
+        format.html { redirect_to incident_plan_path(@incident, @plan) }
+        format.js { }
         format.json { render :show, status: :created, location: @resource }
       else
         format.html { render :new }
@@ -69,6 +72,7 @@ class ResourcesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
-      params.require(:resource).permit(:name, :leader, :number_personnel, :position, :agency, :order_number, :lwd, :checkin_date)
+      params.require(:resource).permit(:name, :leader, :number_personnel, :position, :agency, 
+                                       :order_number, :lwd, :checkin_date, :incident_id)
     end
 end

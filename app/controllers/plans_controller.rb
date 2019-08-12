@@ -17,6 +17,8 @@ class PlansController < ApplicationController
   def show
     @new_plan = Plan.new
     @incident = Incident.find(params[:incident_id])
+    @resources = @incident.resources
+    @resource = Resource.new
     @plan = Plan.find(params[:id])
     @plans = Plan.all.order(date: :desc)
     @objectives = @plan.objectives

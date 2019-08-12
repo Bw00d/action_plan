@@ -51,14 +51,31 @@
   </div>
 
   <div class="plan-row">RESOURCES</div>
-  <div class="resources-list">
-    <ul>
-      <li>some stuff</li>
-      <li>some stuff</li>
-      <li>some stuff</li>
-      <li>some stuff</li>
-    </ul>
-  </div>
+    <div class="resources-list">
+      <ul id="resources">
+          <% @resources.each do |r|  %>
+          <li><%= best_in_place r, :order_number, :as => :input%>  <%= best_in_place r,  :name, :as => :input %>  <%= best_in_place r, 
+          :position, :as => :input %></li>
+          <% end %>
+        </ul>
+
+      <div id="resource-form" class="form-group">
+        <%= form_for @resource, remote: true do |f| %>
+          <%= f.hidden_field :incident_id, value: @incident.id %>
+          <%= f.text_field :name, placeholder: "Resource Name", class: 'form-control' %></br>
+          <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %></br>
+          <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %></br>
+          <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %></br>
+          <%= f.text_field :number_personnel, placeholder: "# Personnel", class: 'form-control' %></br>
+          <%= f.text_field :agency, placeholder: "Agency", class: 'form-control' %></br>
+          <%= f.date_select :checkin_date, placeholder: "Checkin Date", class: 'form-control' %></br></br>
+          <%= f.date_select :lwd, placeholder: "Last Work Day", class: 'form-control' %></br></br>
+          <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %>
+        <% end %>
+      </div>
+        <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-resource' %>
+    </div>
+
 
 <div class="plan-row">IAP</div>
 <div class="forms-list">

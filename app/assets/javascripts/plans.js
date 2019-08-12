@@ -29,8 +29,17 @@ $(document).on("turbolinks:load", function() {
       }
   });
 
+  // Incident Objectives
+
   $("#new-objective").click(function () {
     $("#new-objective").hide();
     $("#objective-form").show();
+  });
+
+  // Incident Resources
+
+  $("#new-resource").click(function () {
+    $("#new-resource").hide();
+    $("#resource-form").show();
   });
 });
