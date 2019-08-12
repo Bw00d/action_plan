@@ -1,5 +1,9 @@
 <%= content_for :title, "Cover" %>
 <div class="container">
+  <div class="col-md-8 center-block">
+    <div class="row">
+    <%= link_to 'Plan', incident_plan_path(@incident, @plan), class: 'btn btn-info tiny' %></div><br>
+    </div> 
   <div id="cover" class="col-md-8 center-block">
     <div id="plan-title">
       <h1>Incident Action Plan</h1>

@@ -1,18 +1,23 @@
 <p id="notice"><%= notice %></p>
 <div class="container">
-  <div class="row">
-    <div class="col-xs-8 center-block">
-    <div><%= link_to "PLAN",  @plan, class: "btn btn-info tiny" %></div><br>
-      <h1 ><strong>ICS 204s</strong></h1>
-        <%= link_to fa_icon("plus-circle"), new_plan_assignment_path(@plan, @assignment), class: "new-button" %>
-        <ul class="assignments-lists">
-          <% @assignments.each do |assignment| %>
+  <div class="col-xs-12 col-lg-8 center-block">
+    <div class="row">
+      <%= link_to 'Plan', incident_plan_path(@incident, @plan), class: 'btn btn-info tiny' %>
+    </div>
+
+
+    <div class="row">
+      <h1 class="header"><strong>Incident Assignments(204)</strong> <%= link_to fa_icon("plus-circle"), new_plan_assignment_path(@plan, @assignment) %></h1>
+    </div>
+    <div class="row"> 
+      <ul class="assignments-lists">
+        <% @assignments.each do |assignment| %>
           <%= link_to plan_assignment_path(@plan, assignment) do %>
             <li><%= assignment.designator %>  –  Leader's Name  –  # of Personnel </li><br>
-            <% end %>
           <% end %>
-        </ul>
-      <br>
+        <% end %>
+      </ul>
+    </div>
 
     </div>
   </div>

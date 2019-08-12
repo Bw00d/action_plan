@@ -1,21 +1,14 @@
-# Zen Rails Base Application
+# Status Summary
 
 ## Summary
-Base or "skeleton" application for Ruby on Rails 5.1 projects. Built to 
-minimize the time spent writing boilerplate code and performing repetitive 
-setup tasks. 
-
-It comes with a preselected set of tools which I believe to be the most
-efficient and widely used. If you are looking for greater flexibility, an
-application template which uses Rails's templating system such as [Rails
-Composer](http://www.railscomposer.com/) should be a better fit as it allows
-the user to choose which templating engine, test framework, JS framework and
-other tools to use.
-
-Although this project is opinionated regarding tool choices, community 
-feedback and contributions are always welcome and highly appreciated.
+An application for generating an Incident Action plan for a wildfire or other incident or planned
+event. This is a work in progress and will need plenty of testing in the wild before it can be
+shared with other users. It was built on the Zen-Rails-Base-Application template.
 
 ## Features
+User can create and incident and build a daily plan for the using standard ICS forms. The user can build a plan as a basic ICS-201, or the user can build an IAP using standard forms typically included in the IAP.
+
+## Zen Rails Features
 It consists of a Rails 5.1.3 app, including:
 - A selection of useful gems for development and debugging such as
 [rubocop](https://github.com/bbatsov/rubocop),
@@ -151,6 +144,13 @@ Checklist](https://github.com/brunofacca/zen-rails-security-checklist) before
 deploying the application to production.
 
 ## TODO
+- Fix checkboxes on 202 to us bip
+- Deploy to Heroku
+- Add upload for cover photo and maps to AWS
+- Add resources
+- Add current and planned actions
+- Add open task tracker or 24-48-72
+- Add ICS 203
 - Install and configure the [Secure Headers
 gem](https://github.com/twitter/secureheaders).
 - Set up CodeClimate with Rubocop, Reek, Brakeman, and ESLint engines.

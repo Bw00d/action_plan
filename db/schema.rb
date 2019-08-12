@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190806051029) do
+ActiveRecord::Schema.define(version: 20190812142209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,19 @@ ActiveRecord::Schema.define(version: 20190806051029) do
     t.datetime "updated_at", null: false
     t.text "situation"
     t.integer "incident_id"
+    t.text "weather"
+    t.text "general_safety"
+    t.string "prepared_by"
+    t.string "approved_by"
+    t.boolean "org_list"
+    t.boolean "assignment_list"
+    t.boolean "comm_plan"
+    t.boolean "med_plan"
+    t.boolean "incident_map"
+    t.boolean "travel_plan"
+    t.date "date_prepare"
+    t.string "time_prepared"
+    t.string "ops_period"
   end
 
   create_table "resources", force: :cascade do |t|

@@ -13,7 +13,7 @@
      </li>
     <% end %>
    <% @plans.each do |p|  %>
-   <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), plan_path(p) %></li>
+   <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
    <% end %>
   
 </ul>

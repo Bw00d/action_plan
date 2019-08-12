@@ -7,6 +7,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments.json
   def index
     @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
     @assignments = Assignment.all
   end
 
@@ -14,6 +15,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1.json
   def show
     @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
   end
 
   # GET /assignments/new
