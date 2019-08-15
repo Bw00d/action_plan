@@ -1,7 +1,4 @@
 <%# Menu items that that should appear in the navbar of all logged-in users,
 regardless of their roles %>
-<% if controller_name == 'incidents' %>
-  <li><%= link_to t('navigation.plan'), plans_path %></li>
-<% elsif  controller_name == 'home' %>
-  <li><%= link_to t('navigation.incidents'), incidents_path %></li>
-  <% end %>
+
+<li><%= link_to t('navigation.incidents'), incidents_path %></li>

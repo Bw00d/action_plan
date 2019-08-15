@@ -6,10 +6,7 @@
   <ul class="tabrow">
     <% unless current_plan  %>
      <li>
-      <%= form_with(model: @new_plan, id: 'plan-form', local: true) do |form| %>
-        <%= form.hidden_field :date, value: Date.today %>
-      <%= link_to 'New', "", :onclick => "$('#plan-form').submit()" %>
-      <% end %>
+      <%= link_to 'New', new_incident_plan_path(@incident) %>
      </li>
     <% end %>
    <% @plans.each do |p|  %>
@@ -25,7 +22,7 @@
     <div class="objectives-list">
       <ol id="objectives">
         <% @objectives.each do |o|  %>
-        <li><%= o.order %> <%= best_in_place o, :description, :ok_button => 'Save', :cancel_button => 'Cancel', delete_button:  'Delete' %></li>
+        <li><%= o.order %> <%= best_in_place o, :description, delete_button:  'Delete' %></li>
         <% end %>
       </ol>
 

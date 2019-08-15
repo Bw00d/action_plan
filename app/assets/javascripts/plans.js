@@ -29,6 +29,12 @@ $(document).on("turbolinks:load", function() {
       }
   });
 
+  // Incidents
+
+  $("#show-incident-form").click(function () {
+    $("#edit-incident-form").show();
+  });
+
   // Incident Objectives
 
   $("#new-objective").click(function () {

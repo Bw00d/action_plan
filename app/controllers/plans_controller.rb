@@ -1,5 +1,7 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
+ 
+    
 
   include SkipAuthorization
   skip_before_action :authenticate_user!
@@ -43,7 +45,7 @@ class PlansController < ApplicationController
     respond_to do |format|
       if @plan.save
         format.html { redirect_to incident_plan_path(@incident, @plan) }
-        format.json { render :index, status: :created, location: @plan }
+        format.json { redirect_to incident_plan_path(@incident, @plan) }
       else
         format.html { render :new }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
