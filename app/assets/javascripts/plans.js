@@ -49,3 +49,11 @@ $(document).on("turbolinks:load", function() {
     $("#resource-form").show();
   });
 });
+
+// $('.plan-row')
+//     .click(localStorage.getItem('bgColor'))
+//     .click(function() {
+//         $('body').css({'background-color': this.value});
+//         localStorage.setItem('bgColor', this.value);
+//     })
+//     .change();
