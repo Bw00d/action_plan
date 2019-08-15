@@ -48,6 +48,6 @@ module ApplicationHelper
   end
 
   def current_plan
-    Plan.find_by(date: Date.today)
+    @incident.plans.where(date: Date.today).first
   end
 end

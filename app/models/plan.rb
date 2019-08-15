@@ -3,7 +3,8 @@ class Plan < ApplicationRecord
   belongs_to :incident
   has_many :objectives, dependent: :destroy
   validates :user_id, presence: true
-  validates :date, presence: true, uniqueness: true
+  # validates :date, presence: true, uniqueness: true
+  validates_uniqueness_of :date, :scope => :incident_id
   after_create :duplicate_objectives
 
   def duplicate_objectives

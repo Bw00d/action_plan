@@ -9,17 +9,17 @@
   <div id="edit-incident-form" class="col-xs-5 center-block">
     <%= render 'incidents/form', incident: @incident %>
   </div>
+  <!-- plans tabs -->
   <ul class="tabrow">
     <% unless current_plan  %>
-     <li>
+      <li>
         <%= link_to 'New', new_incident_plan_path(@incident) %>
       </li>
     <% end %>
-   <% @plans.each do |p|  %>
-   <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
-   <% end %>
-  
-</ul>
+    <% @plans.each do |p|  %>
+      <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
+    <% end %>
+  </ul>
   <div class="plan-row situation">SITUATION</div>
   <div class="situation-content"> 
   </div>
