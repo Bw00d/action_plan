@@ -32,7 +32,7 @@ $(document).on("turbolinks:load", function() {
   // Incidents
 
   $("#show-incident-form").click(function () {
-    $("#edit-incident-form").show();
+    $("#edit-incident-form").toggle();
   });
 
   // Incident Objectives
