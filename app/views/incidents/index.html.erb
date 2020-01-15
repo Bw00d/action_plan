@@ -9,7 +9,7 @@
       <% end %>
         <% @incidents.each do |incident| %>
         <ul class="incidents-list">
-          <%= link_to incident_plans_path(incident) do  %>
+          <%= link_to incident_path(incident) do  %>
             <li>Fire <%= incident.number %> – <%= incident.name %></li>
           <% end %>
         </ul>

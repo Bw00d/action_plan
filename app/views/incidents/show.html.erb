@@ -4,6 +4,69 @@
 
       <h1 class="text-center"><strong>Fire <%= @incident.number %>  –  <%= @incident.name %></strong></h1>
 
+      <div class="col-lg-4 col-xs-4">Size: <%= best_in_place @incident, :size %> acres  </div>
+      <div class="col-lg-4 col-xs-4">Financial Code: <%= best_in_place @incident, :financial_code %> </div>
+      <div class="col-lg-4 col-xs-4">P Code:  <%= best_in_place @incident, :p_code %></div>
+      <div class="row">
+        <div class="incident-block">
+
+          <div class="plans">
+            <%= link_to "Plans", incident_plans_path(@incident), class: 'btn btn-info tiny' %>
+          </div>
+          <div id="resources">
+            <h4><strong>Resources</strong></h4>
+              
+              
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order #</th>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Leader</th>
+                <th scope="col"># personnel</th>
+                <th scope="col">Agency</th>
+                <th scope="col">LWD</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @resources.each do |r|  %>
+              <tr>
+                <th scope="row">1</th>
+                <td><%= best_in_place r, :order_number, :as => :input%></td>
+                <td><%= best_in_place r, :name, :as => :input %></td>
+                <td><%= best_in_place r, :position, :as => :input %></td>
+                <td><%= best_in_place r, :leader, :as => :input %></td>
+                <td><%= best_in_place r, :number_personnel, :as => :input %></td>
+                <td><%= best_in_place r, :agency, :as => :input %></td>
+                <td><%= best_in_place r, :lwd, :as => :input %></td>
+              </tr>
+              <% end %>
+  
+            </tbody>
+          </table>
+
+          <div id="resource-form" class="form-group">
+            <%= form_for @resource, remote: true do |f| %>
+              <%= f.hidden_field :incident_id, value: @incident.id %>
+              <%= f.text_field :name, placeholder: "Resource Name", class: 'form-control' %></br>
+              <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %></br>
+              <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %></br>
+              <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %></br>
+              <%= f.text_field :number_personnel, placeholder: "# Personnel", class: 'form-control' %></br>
+              <%= f.text_field :agency, placeholder: "Agency", class: 'form-control' %></br>
+              <%= f.date_select :checkin_date, placeholder: "Checkin Date", class: 'form-control' %></br></br>
+              <%= f.date_select :lwd, placeholder: "Last Work Day", class: 'form-control' %></br></br>
+              <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %>
+            <% end %>
+          </div>
+            <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-resource' %>
+        </div>
+      </div>
+
       <%= link_to 'Back', incidents_path %>
 
     </div>

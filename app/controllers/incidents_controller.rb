@@ -12,6 +12,8 @@ class IncidentsController < ApplicationController
   # GET /incidents/1
   # GET /incidents/1.json
   def show
+    @resources = @incident.resources
+    @resource = Resource.new
   end
 
   # GET /incidents/new
@@ -31,6 +33,7 @@ class IncidentsController < ApplicationController
     respond_to do |format|
       if @incident.save
         format.html { redirect_to incident_plans_path(@incident) }
+        format.js { }
         format.json { render incident_plans_path(@incident), status: :created, location: @incident }
       else
         format.html { render :new }
@@ -71,6 +74,6 @@ class IncidentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def incident_params
-      params.require(:incident).permit(:name, :number, :p_number, :user_id)
+      params.require(:incident).permit(:name, :number, :p_code, :user_id, :financial_code, :size)
     end
 end

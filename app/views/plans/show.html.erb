@@ -24,11 +24,11 @@
   </ul>
   <!-- end plans tabs -->
 
-  <div class="plan-row situation">SITUATION</div>
+  <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %></div>
   <div class="situation-content">
     <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
   </div>
-  <div class="plan-row ">OBJECTIVES</div>
+  <div id="objectives-list" class="plan-row "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
     <div class="objectives-list">
       <ol id="objectives">
         <% @objectives.each do |o|  %>
@@ -47,7 +47,7 @@
       
     </div>
     
-  <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
+  <div id="action-list" class="plan-row"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
   <div class="actions-list">
     <ul>
       <li>some stuff</li>
@@ -57,7 +57,7 @@
     </ul>
   </div>
 
-  <div class="plan-row">RESOURCES</div>
+  <div id="resource-list" class="plan-row"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
     <div class="resources-list">
       <ul id="resources">
           <% @resources.each do |r|  %>
@@ -84,7 +84,7 @@
     </div>
 
 
-<div class="plan-row">IAP</div>
+<div id="iap-row" class="plan-row"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
 <div class="forms-list">
     <ul>
       <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
@@ -98,8 +98,9 @@
 
 <script type="text/javascript">
   $(document).on("turbolinks:load", function() {
-  id = "<%= @plan.id %>"
-  $('.tabrow li').removeClass('selected');
-  $('li#'+ id).addClass('selected');
+    id = "<%= @plan.id %>"
+    $('.tabrow li').removeClass('selected');
+    $('li#'+ id).addClass('selected');
   });
+
 </script>

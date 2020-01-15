@@ -19,15 +19,36 @@ $(document).on("turbolinks:load", function() {
         }
     });
 
-  $(".plan-row").click(function () {
-     if($(this).hasClass('expanded')) {
-       $(this).next('div').slideUp();
-       $(this).removeClass('expanded');
-      } else {
-        $(this).addClass('expanded');
-        $(this).next('div').slideDown();
+
+  // local storage
+    $('.plan-row').click(function(){
+      var div = $(this).attr("id");
+      if ($(this).hasClass('expanded')) {
+        $(this).removeClass('expanded');
+        localStorage.setItem(div, "closed");
+        $(this).next('div').slideUp();
+      } 
+      else {
+      $(this).next('div').slideDown();
+      localStorage.setItem(div, "expanded");
+      $(this).addClass('expanded');
       }
-  });
+    });
+    if (localStorage.getItem("iap-row") == "expanded") {
+      $("#iap-row").next('div').slideDown();
+    }
+    if (localStorage.getItem("resource-list") == "expanded") {
+      $("#resource-list").next('div').slideDown();
+    }
+    if (localStorage.getItem("objectives-list") == "expanded") {
+      $("#objectives-list").next('div').slideDown();
+    }
+    if (localStorage.getItem("situation-content") == "expanded") {
+      $("#situation-content").next('div').slideDown();
+    }
+    if (localStorage.getItem("action-list") == "expanded") {
+      $("#action-list").next('div').slideDown();
+    }
 
   // Incidents
 
