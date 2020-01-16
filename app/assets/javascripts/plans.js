@@ -35,19 +35,24 @@ $(document).on("turbolinks:load", function() {
       }
     });
     if (localStorage.getItem("iap-row") == "expanded") {
-      $("#iap-row").next('div').slideDown();
+      $("#iap-row").next('div').show();
+      $("#iap-row").addClass('expanded');
     }
     if (localStorage.getItem("resource-list") == "expanded") {
-      $("#resource-list").next('div').slideDown();
+      $("#resource-list").next('div').show();
+      $("#resource-list").addClass('expanded');
     }
     if (localStorage.getItem("objectives-list") == "expanded") {
-      $("#objectives-list").next('div').slideDown();
+      $("#objectives-list").next('div').show();
+      $("#objectives-list").addClass('expanded');
     }
     if (localStorage.getItem("situation-content") == "expanded") {
-      $("#situation-content").next('div').slideDown();
+      $("#situation-content").next('div').show();
+      $("#situation-content").addClass('expanded');
     }
     if (localStorage.getItem("action-list") == "expanded") {
-      $("#action-list").next('div').slideDown();
+      $("#action-list").next('div').show();
+      $("#action-list").addClass('expanded');
     }
 
   // Incidents
