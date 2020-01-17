@@ -7,12 +7,12 @@
 
 
     <div class="row">
-      <h1 class="header"><strong>Incident Assignments(204)</strong> <%= link_to fa_icon("plus-circle"), new_plan_assignment_path(@plan, @assignment) %></h1>
+      <h1 class="header"><strong>Incident Assignments(204)</strong> <%= link_to fa_icon("plus-circle"), new_incident_plan_assignment_path(@incident, @plan, @assignment) %></h1>
     </div>
     <div class="row"> 
       <ul class="assignments-lists">
         <% @assignments.each do |assignment| %>
-          <%= link_to plan_assignment_path(@plan, assignment) do %>
+          <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
             <li><%= assignment.designator %>  –  Leader's Name  –  # of Personnel </li><br>
           <% end %>
         <% end %>

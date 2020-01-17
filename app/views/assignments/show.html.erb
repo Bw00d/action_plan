@@ -6,7 +6,7 @@
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
     <div class="row">
-      <div><%= link_to "ALL 204s",  plan_assignments_path(@plan), class: "btn btn-info tiny" %></div><br>
+      <div><%= link_to "ALL 204s",  incident_plan_assignments_path(@incident, @plan), class: "btn btn-info tiny" %></div><br>
       <div class=" center form-row top-row">
         <div class="col-xs-6">
           <h4><strong>DIVISION ASSIGNMENT LIST</strong></h4>
@@ -139,6 +139,8 @@
       </div>
     </div>
     <%= render 'commo_plan' %>
+  </br>
+    <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
     </div>
   </div>
 </div>

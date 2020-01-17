@@ -8,7 +8,7 @@ class AssignmentsController < ApplicationController
   def index
     @plan = Plan.find(params[:plan_id])
     @incident = Incident.find(@plan.incident_id)
-    @assignments = Assignment.all
+    @assignments = @plan.assignments
   end
 
   # GET /assignments/1
@@ -21,6 +21,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments/new
   def new
     @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
     @assignment = Assignment.new
   end
 
@@ -33,11 +34,12 @@ class AssignmentsController < ApplicationController
   # POST /assignments.json
   def create
     @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
     @assignment = Assignment.new(assignment_params)
 
     respond_to do |format|
       if @assignment.save
-        format.html { redirect_to plan_assignments_path(@plan, @assignment) }
+        format.html { redirect_to incident_plan_assignments_path(@incident, @plan) }
         format.json { render :show, status: :created, location: @assignment }
       else
         format.html { render :new }
@@ -64,9 +66,11 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1
   # DELETE /assignments/1.json
   def destroy
+    @plan = Plan.find(@assignment.plan_id)
+    @incident = Incident.find(@plan.incident_id)
     @assignment.destroy
     respond_to do |format|
-      format.html { redirect_to assignments_url, notice: 'Assignment was successfully destroyed.' }
+      format.html { redirect_to incident_plan_assignments_path(@incident, @plan) }
       format.json { head :no_content }
     end
   end

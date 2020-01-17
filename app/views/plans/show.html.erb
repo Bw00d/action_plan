@@ -90,7 +90,7 @@
       <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
       <li><%= link_to "202", "#{@plan.id}/202" %></li>
       <li><%= link_to "203", "#" %></li>
-      <li><%= link_to "204", plan_assignments_path(@plan) %></li>
+      <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
     </ul>
   </div>
 </div>

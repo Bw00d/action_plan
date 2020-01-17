@@ -16,11 +16,13 @@ Rails.application.routes.draw do
   end
 
   resources :incidents do
-    resources :plans
+    resources :plans do
+      resources :assignments
+    end
   end
-  resources :plans do
-    resources :assignments
-  end
+  # resources :plans do
+  #   resources :assignments
+  # end
 
   # form_for is easier to use with a resourceful route
   resources :contact_forms, only: [:create]
