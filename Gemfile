@@ -81,6 +81,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'spring-commands-rspec'
+  gem 'rb-readline'
   # code coverage analysis tool
   gem 'simplecov', require: false
 end
