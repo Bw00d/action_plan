@@ -46,8 +46,9 @@ $aqua:                   #07c5ff;
 // Body
 $body-bg:               white;
 body {
-  padding-right: 30px;
-  padding-left: 30px;
+  padding-right: 0;
+  padding-left: 0;
+  margin: 0;
 }
 
 // Alerts and form feedback states

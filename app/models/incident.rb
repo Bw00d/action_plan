@@ -5,4 +5,8 @@ class Incident < ApplicationRecord
   def display_incident_name
     "#{self.name}  –  #{self.incident_type} #{self.number}"
   end
+
+  def wildfire?
+    return true if self.incident_type == "Wildfire"
+  end
 end
