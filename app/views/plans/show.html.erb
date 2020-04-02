@@ -1,97 +1,99 @@
 <%= content_for :title, "The Plan" %>
+ <div class="col-lg-8 col-xs-12 center-block">
 
-<p id="notice"><%= notice %></p>
-  
-<div class="row">
-  <%= link_to @incident do %>
-    <h1 id="show-incident-form" class="text-center"><strong> Fire <%= @incident.number + " – " + @incident.name  %> </strong></h1>
-  <% end %>
-  <div id="edit-incident-form" class="col-xs-5 center-block">
-    <%= render 'incidents/form', incident: @incident %>
-  </div>
-
-  <!-- plans tabls -->
-  <ul class="tabrow">
-    <% unless current_plan  %>
-      <li>
-        <%= link_to 'New', new_incident_plan_path(@incident) %>
-      </li>
-    <% end %>
-    <% @incident.plans.each do |p|  %>
-      <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
-    <% end %>
-  
-  </ul>
-  <!-- end plans tabs -->
-
-  <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %></div>
-  <div class="situation-content">
-    <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
-  </div>
-  <div id="objectives-list" class="plan-row "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
-    <div class="objectives-list">
-      <ol id="objectives">
-        <% @objectives.each do |o|  %>
-        <li><%= o.order %> <%= best_in_place o, :description, delete_button:  'Delete' %></li>
-        <% end %>
-      </ol>
-
-      <div id="objective-form" class="form-group">
-        <%= form_for @objective, remote: true do |f| %>
-          <%= f.hidden_field :plan_id, value: @plan.id %>
-          <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
-          <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
-        <% end %>
-      </div>
-        <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
-      
-    </div>
+  <p id="notice"><%= notice %></p>
     
-  <div id="action-list" class="plan-row"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
-  <div class="actions-list">
-    <ul>
-      <li>some stuff</li>
-      <li>some stuff</li>
-      <li>some stuff</li>
-      <li>some stuff</li>
-    </ul>
-  </div>
-
-  <div id="resource-list" class="plan-row"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
-    <div class="resources-list">
-      <ul id="resources">
-          <% @resources.each do |r|  %>
-          <li><%= best_in_place r, :order_number, :as => :input%>  <%= best_in_place r,  :name, :as => :input %>  <%= best_in_place r, 
-          :position, :as => :input %></li>
-          <% end %>
-        </ul>
-
-      <div id="resource-form" class="form-group">
-        <%= form_for @resource, remote: true do |f| %>
-          <%= f.hidden_field :incident_id, value: @incident.id %>
-          <%= f.text_field :name, placeholder: "Resource Name", class: 'form-control' %></br>
-          <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %></br>
-          <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %></br>
-          <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %></br>
-          <%= f.text_field :number_personnel, placeholder: "# Personnel", class: 'form-control' %></br>
-          <%= f.text_field :agency, placeholder: "Agency", class: 'form-control' %></br>
-          <%= f.date_select :checkin_date, placeholder: "Checkin Date", class: 'form-control' %></br></br>
-          <%= f.date_select :lwd, placeholder: "Last Work Day", class: 'form-control' %></br></br>
-          <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %>
-        <% end %>
-      </div>
-        <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-resource' %>
+  <div class="row">
+    <%= link_to "javascript:;" do %>
+      <h1 id="show-incident-form" class="text-center"><strong><%= @incident.display_incident_name %> </strong></h1>
+    <% end %>
+    <div id="edit-incident-form" class="col-xs-5 center-block">
+      <%= render 'incidents/form', incident: @incident %>
     </div>
 
-
-<div id="iap-row" class="plan-row"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
-<div class="forms-list">
-    <ul>
-      <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
-      <li><%= link_to "202", "#{@plan.id}/202" %></li>
-      <li><%= link_to "203", "#" %></li>
-      <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+    <!-- plans tabls -->
+    <ul class="tabrow">
+      <% unless current_plan  %>
+        <li>
+          <%= link_to 'New', new_incident_plan_path(@incident) %>
+        </li>
+      <% end %>
+      <% @incident.plans.each do |p|  %>
+        <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
+      <% end %>
+    
     </ul>
+    <!-- end plans tabs -->
+
+    <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %></div>
+    <div class="situation-content">
+      <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
+    </div>
+    <div id="objectives-list" class="plan-row "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
+      <div class="objectives-list">
+        <ol id="objectives">
+          <% @objectives.each do |o|  %>
+          <li><%= o.order %> <%= best_in_place o, :description, delete_button:  'Delete' %></li>
+          <% end %>
+        </ol>
+
+        <div id="objective-form" class="form-group">
+          <%= form_for @objective, remote: true do |f| %>
+            <%= f.hidden_field :plan_id, value: @plan.id %>
+            <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
+            <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
+          <% end %>
+        </div>
+          <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
+        
+      </div>
+      
+    <div id="action-list" class="plan-row"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
+    <div class="actions-list">
+      <ul>
+        <li>some stuff</li>
+        <li>some stuff</li>
+        <li>some stuff</li>
+        <li>some stuff</li>
+      </ul>
+    </div>
+
+    <div id="resource-list" class="plan-row"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
+      <div class="resources-list">
+        <ul id="resources">
+            <% @resources.each do |r|  %>
+            <li><%= best_in_place r, :order_number, :as => :input%>  <%= best_in_place r,  :name, :as => :input %>  <%= best_in_place r, 
+            :position, :as => :input %></li>
+            <% end %>
+          </ul>
+
+        <div id="resource-form" class="form-group">
+          <%= form_for @resource, remote: true do |f| %>
+            <%= f.hidden_field :incident_id, value: @incident.id %>
+            <%= f.text_field :name, placeholder: "Resource Name", class: 'form-control' %></br>
+            <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %></br>
+            <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %></br>
+            <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %></br>
+            <%= f.text_field :number_personnel, placeholder: "# Personnel", class: 'form-control' %></br>
+            <%= f.text_field :agency, placeholder: "Agency", class: 'form-control' %></br>
+            <%= f.date_select :checkin_date, placeholder: "Checkin Date", class: 'form-control' %></br></br>
+            <%= f.date_select :lwd, placeholder: "Last Work Day", class: 'form-control' %></br></br>
+            <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %>
+          <% end %>
+        </div>
+          <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-resource' %>
+      </div>
+
+
+  <div id="iap-row" class="plan-row"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
+  <div class="forms-list">
+      <ul>
+        <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
+        <li><%= link_to "202", "#{@plan.id}/202" %></li>
+        <li><%= link_to "203", "#" %></li>
+        <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+      </ul>
+    </div>
   </div>
 </div>
 

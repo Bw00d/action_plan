@@ -28,6 +28,7 @@ ul.incidents-list {
   display: none;
 }
 
+
 /* incidents */
 h4.incident-feed {
     margin-top: -1px;
@@ -54,9 +55,11 @@ h4.incident-feed {
     padding: 10px 0;
   }
 }
-#incident-form {
-  input {
+  select {
+    width: 100%;
+    height: 35px;
   }
+#incident-form {
 }
 .pad-left-10 {
   margin-left: 10px;
