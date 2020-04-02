@@ -1,33 +1,34 @@
 <%= content_for :title, "The Plan" %>
-
-<p id="notice"><%= notice %></p>
-  
-<div class="row">
-  <%= link_to(@incident) do %>
-    <h1 id="show-incident-form" class="text-center"><strong> <%= @incident.display_incident_name  %> </strong></h1>
-  <% end %>
-  <div id="edit-incident-form" class="col-xs-5 center-block">
-    <%#= render 'incidents/form', incident: @incident %>
-  </div>
-  <!-- plans tabs -->
-  <ul class="tabrow">
-    <% unless current_plan  %>
-      <li>
-        <%= link_to 'New', new_incident_plan_path(@incident) %>
-      </li>
+ <div class="col-lg-8 col-xs-12 center-block">
+  <p id="notice"><%= notice %></p>
+    
+  <div class="row">
+    <%= link_to 'javascript:;' do %>
+      <h1 id="show-incident-form" class="text-center"><strong> <%= @incident.display_incident_name  %> </strong></h1>
     <% end %>
-    <% @plans.each do |p|  %>
-      <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
-    <% end %>
-  </ul>
-  <div class="plan-row situation">SITUATION</div>
-  <div class="situation-content"> 
+    <div id="edit-incident-form" class="col-xs-5 center-block">
+      <%= render 'incidents/form', incident: @incident %>
+    </div>
+    <!-- plans tabs -->
+    <ul class="tabrow">
+      <% unless current_plan  %>
+        <li>
+          <%= link_to 'New', new_incident_plan_path(@incident) %>
+        </li>
+      <% end %>
+      <% @plans.each do |p|  %>
+        <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
+      <% end %>
+    </ul>
+    <div class="plan-row situation">SITUATION</div>
+    <div class="situation-content"> 
+    </div>
+    <div class="plan-row ">OBJECTIVES</div>
+    <div class="objectives-list">
+    </div>
+    <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
+    <div class="plan-row">ICS FORMS</div>
   </div>
-  <div class="plan-row ">OBJECTIVES</div>
-  <div class="objectives-list">
-  </div>
-  <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
-  <div class="plan-row">ICS FORMS</div>
 </div>
 
 <script type="text/javascript">

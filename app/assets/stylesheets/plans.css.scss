@@ -1,5 +1,6 @@
 $aqua: #07c5ff;
 
+/* show */
 .date-row {
   margin-bottom: 2px;
   padding-bottom: 0;
@@ -55,6 +56,8 @@ $aqua: #07c5ff;
 }
 .situation {
   /*border-top: 1px solid #777;*/
+    border-left: 1px solid #777;
+  border-right: 1px solid #777;
 }
 .situation-content {
   border-bottom: 1px solid #777;
@@ -68,7 +71,14 @@ $aqua: #07c5ff;
     margin-right: 10px;
   }
 }
+span.plans-button {
+  margin-top: -7px;
+}
 /* Objectives */
+#objectives-list {
+  border-left: 1px solid #777;
+  border-right: 1px solid #777;
+}
 .objectives-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
@@ -96,18 +106,25 @@ $aqua: #07c5ff;
     width: 100%;
   }
 }
+#action-list {
+  border-left: 1px solid #777;
+  border-right: 1px solid #777;
+}
 .actions-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
 }
 .forms-list {
-  border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
 }
 /* Resources*/
 
+#resource-list {
+  border-left: 1px solid #777;
+  border-right: 1px solid #777;
+}
 .resources-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
@@ -132,6 +149,10 @@ $aqua: #07c5ff;
 }
   
 /* IAP */
+#iap-row {
+  border-left: 1px solid #777;
+  border-right: 1px solid #777;
+}
 #cover {
   padding-top: 75px;
   padding-bottom: 100px;
