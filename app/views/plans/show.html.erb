@@ -48,14 +48,22 @@
         
       </div>
       
-    <div id="action-list" class="plan-row"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
-    <div class="actions-list">
-      <ul>
-        <li>some stuff</li>
-        <li>some stuff</li>
-        <li>some stuff</li>
-        <li>some stuff</li>
+    <div id="activity-list" class="plan-row activity"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
+    <div class="activities-list">
+      <ul id="activities">
+        <% @plan.activities.each do |a|  %>
+          <li> <%= best_in_place a, :description, :as => :input %></li>
+        <% end %>
       </ul>
+
+        <div id="activity-form" class="form-group">
+          <%= form_for @activity, remote: true do |f| %>
+            <%= f.hidden_field :plan_id, value: @plan.id %>
+            <%= f.text_field :description, placeholder: "Add activity", class: 'form-control' %></br>
+            <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-activity-button" %>
+          <% end %>
+        </div>
+          <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-activity' %>
     </div>
 
     <div id="resource-list" class="plan-row"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>

@@ -25,6 +25,7 @@ class PlansController < ApplicationController
     @plans = Plan.all.order(date: :desc)
     @objectives = @plan.objectives
     @objective = Objective.new
+    @activity = Activity.new
   end
 
   # GET /plans/new

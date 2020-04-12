@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :activities
+  resources :actions
   resources :incidents
   resources :resources
   resources :assignments

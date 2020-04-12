@@ -50,9 +50,9 @@ $(document).on("turbolinks:load", function() {
       $("#situation-content").next('div').show();
       $("#situation-content").addClass('expanded');
     }
-    if (localStorage.getItem("action-list") == "expanded") {
-      $("#action-list").next('div').show();
-      $("#action-list").addClass('expanded');
+    if (localStorage.getItem("activity-list") == "expanded") {
+      $("#activity-list").next('div').show();
+      $("#activity-list").addClass('expanded');
     }
 
   // Incidents
@@ -66,6 +66,12 @@ $(document).on("turbolinks:load", function() {
   $("#new-objective").click(function () {
     $("#new-objective").hide();
     $("#objective-form").show();
+  });
+
+  // Incident Activites
+  $("#new-activity").click(function () {
+    $("#new-activity").hide();
+    $("#activity-form").show();
   });
 
   // Incident Resources

@@ -26965,9 +26965,9 @@ $(document).on("turbolinks:load", function() {
       $("#situation-content").next('div').show();
       $("#situation-content").addClass('expanded');
     }
-    if (localStorage.getItem("action-list") == "expanded") {
-      $("#action-list").next('div').show();
-      $("#action-list").addClass('expanded');
+    if (localStorage.getItem("activity-list") == "expanded") {
+      $("#activity-list").next('div').show();
+      $("#activity-list").addClass('expanded');
     }
 
   // Incidents

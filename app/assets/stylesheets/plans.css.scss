@@ -106,14 +106,27 @@ span.plans-button {
     width: 100%;
   }
 }
-#action-list {
+#activity-list {
   border-left: 1px solid #777;
   border-right: 1px solid #777;
 }
-.actions-list {
+.activities-list {
   border-bottom: 1px solid #777;
   padding: 10px 0px;
   display: none;
+  ul {
+    padding-left: 20px;
+  }
+}
+#activity-form {
+  display: none;
+  position: relative;
+  textarea {
+    width: 100%;
+  }
+  input {
+    width: 100%;
+  }
 }
 .forms-list {
   padding: 10px 0px;
@@ -122,6 +135,7 @@ span.plans-button {
 /* Resources*/
 
 #resource-list {
+  border-left: 1px solid #777;
   border-left: 1px solid #777;
   border-right: 1px solid #777;
 }
