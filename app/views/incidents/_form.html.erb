@@ -19,7 +19,15 @@
     <%= form.label :incident_type %></br>
 
     <%= form.select(:incident_type, 
-    raw('<option>Wildfire</option><option>Hazmat</option><option>Event</option>'), class: 'form-control')  %>
+    raw('<option>Wildfire</option>
+         <option>Hazmat</option>
+         <option>Flood</option>
+         <option>Spill</option>
+         <option>Slide</option>
+         <option>Shooting</option>
+         <option>Fire</option>
+         <option>Epidemic</option>
+         <option>Event</option>'), class: 'form-control')  %>
     </div>
 
   <div class="form-group">
