@@ -13,7 +13,8 @@
 
   <div class="form-group">
     <%= f.label :date %>
-    <%= f.date_select :date, id: :plan_date, class: 'form-control' %>
+    <%= f.text_field :date, id: :plan_date, :data => {:provide => "datepicker"}, 
+                      class: "form-control", placeholder: "DATE" %>
    <%= f.hidden_field :incident_id, value: @incident.id, class: 'form-control' %>
     <%= f.hidden_field :user_id, value: current_user.id, class: 'form-control' %>
   </div>
