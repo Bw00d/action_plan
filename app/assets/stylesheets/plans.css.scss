@@ -81,7 +81,7 @@ span.plans-button {
 }
 .objectives-list {
   border-bottom: 1px solid #777;
-  padding: 10px 0px;
+  padding: 10px 5px;
   display: none;
   .new-objective {
     color: #a19afc;
@@ -112,7 +112,7 @@ span.plans-button {
 }
 .activities-list {
   border-bottom: 1px solid #777;
-  padding: 10px 0px;
+  padding: 10px 5px;
   display: none;
   ul {
     padding-left: 20px;
@@ -129,8 +129,11 @@ span.plans-button {
   }
 }
 .forms-list {
-  padding: 10px 0px;
   display: none;
+  padding: 10px 5px;
+  ul {
+    padding-left: 20px;
+  }
 }
 /* Resources*/
 
@@ -141,7 +144,7 @@ span.plans-button {
 }
 .resources-list {
   border-bottom: 1px solid #777;
-  padding: 10px 0px;
+  padding: 10px 5px;
   display: none;
   .new-resource {
     color: #a19afc;
@@ -163,6 +166,7 @@ span.plans-button {
 }
   
 /* IAP */
+
 #iap-row {
   border-left: 1px solid #777;
   border-right: 1px solid #777;
