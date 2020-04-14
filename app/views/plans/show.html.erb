@@ -26,11 +26,11 @@
     <!-- end plans tabs -->
 
     <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %></div>
-    <div class="situation-content">
+    <div class="situation-content list-content">
       <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
     </div>
     <div id="objectives-list" class="plan-row "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
-      <div class="objectives-list">
+      <div class="objectives-list list-content">
         <ol id="objectives">
           <% @objectives.each do |o|  %>
           <li><%= o.order %> <%= best_in_place o, :description, delete_button:  'Delete' %></li>
@@ -49,8 +49,8 @@
       </div>
       
     <div id="activity-list" class="plan-row activity"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
-    <div class="activities-list">
-      <ul id="activities">
+    <div class="activities-list list-content">
+      <ul id="activities list-content">
         <% @plan.activities.each do |a|  %>
           <li> <%= best_in_place a, :description, :as => :input %></li>
         <% end %>
@@ -67,7 +67,7 @@
     </div>
 
     <div id="resource-list" class="plan-row"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
-      <div class="resources-list">
+      <div class="resources-list list-content">
         <ul id="resources">
             <% @resources.each do |r|  %>
             <li><%= best_in_place r, :order_number, :as => :input%>  <%= best_in_place r,  :name, :as => :input %>  <%= best_in_place r, 
@@ -96,7 +96,7 @@
 
 
   <div id="iap-row" class="plan-row"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
-  <div class="forms-list">
+  <div class="forms-list list-content">
       <ul>
         <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
         <li><%= link_to "202", "#{@plan.id}/202" %></li>

@@ -9,26 +9,47 @@
             <span class="float-right plans-button"><%= link_to "Plans", incident_plans_path(@incident), class: 'btn btn-primary' %></span>
             </h4>
         </div>
-          <div class="panel-body">
+        <div class="panel-body">
+          <div class="incident-content-block">
             <h4><strong>Incident Information</strong></h4>
-            <% if @incident.wildfire? %>
-              <div class="col-lg-12 col-xs-12">
-                <div class="col-lg-4 col-xs-4">Size: <%= best_in_place @incident, :size %> acres  </div>
-                <div class="col-lg-4 col-xs-4">% Contained: <%= @incident.percent_contained %></div>
-                <div class="col-lg-4 col-xs-4">Status: <%= @incident.status %></div>
-              </div>
-              <div class="col-lg-12 col-xs-12">
-                <div class="col-lg-4 col-xs-4">Location</div>
-                <div class="col-lg-4 col-xs-4"> </div>
-                <div class="col-lg-4 col-xs-4"></div>
-              </div>
-              <div class="col-lg-12 col-xs-12">
-                <div class="col-lg-4 col-xs-4">Financial Code: <%= best_in_place @incident, :financial_code %> </div>
-                <div class="col-lg-4 col-xs-4">P Code:  <%= best_in_place @incident, :p_code %></div>
-                <div class="col-lg-4 col-xs-4"></div>
-              </div>
-            <% end %>
-            <h4><strong>Incident Resources</strong></h4>
+              <!-- wildfire specific -->
+              <% if @incident.wildfire? %>
+                <div>
+                  
+                  <div class="col-lg-12 col-xs-12">
+                    <div class="col-lg-4 col-xs-4">Size: <%= best_in_place @incident, :size %> acres  </div>
+                    <div class="col-lg-4 col-xs-4">% Contained: <%= @incident.percent_contained %></div>
+                    <div class="col-lg-4 col-xs-4">Status: <%= @incident.status %></div>
+                  </div>
+                  <div class="col-lg-12 col-xs-12">
+                    <div class="col-lg-4 col-xs-4">Location</div>
+                    <div class="col-lg-4 col-xs-4"> </div>
+                    <div class="col-lg-4 col-xs-4"></div>
+                  </div>
+                  <div class="col-lg-12 col-xs-12">
+                    <div class="col-lg-4 col-xs-4">Financial Code: <%= best_in_place @incident, :financial_code %> </div>
+                    <div class="col-lg-4 col-xs-4">P Code:  <%= best_in_place @incident, :p_code %></div>
+                    <div class="col-lg-4 col-xs-4"></div>
+                  </div>
+                </div>
+              <% end %>
+              <!-- All Hazard -->
+              <% unless @incident.wildfire? %>
+                
+                <div class="col-lg-12 col-xs-12">
+                  <div class="col-lg-4 col-xs-4">Location</div>
+                  <div class="col-lg-4 col-xs-4"> </div>
+                  <div class="col-lg-4 col-xs-4"></div>
+                </div>
+                <div class="col-lg-12 col-xs-12">
+                  <div class="col-lg-4 col-xs-4">Financial Code: <%= best_in_place @incident, :financial_code %> </div>
+                  <div class="col-lg-4 col-xs-4">P Code:  <%= best_in_place @incident, :p_code %></div>
+                  <div class="col-lg-4 col-xs-4"></div>
+                </div>
+              <% end %>
+            </div>
+            <div class="incident-content-block">
+              <h4><strong>Incident Resources</strong></h4>
               <table class="table">
                 <thead>
                   <tr>
@@ -55,24 +76,23 @@
                     <td><%= best_in_place r, :lwd, :as => :input %></td>
                   </tr>
                   <% end %>
-
+  
                 </tbody>
               </table>
-
+  
               <div id="resource-form" class="form-group">
                 <%= render 'new_resource_form' %>
               </div>
               <div>
                   <%= link_to (fa_icon('user-plus')), "javascript:;", id: 'new-resource' %>
               </div>
-          </div> <!-- panel body -->
+            </div>
+        </div> <!-- panel body -->
       </div>   <!-- panel -->
 
       
 
-      <div class="col-lg-8 col-xs-12 center-block">
         <%= link_to 'Back', incidents_path %>
-      </div>
     </div> <!-- responsive wrapper -->
   </div>  <!-- row -->
 </div>   <!-- incident container -->
