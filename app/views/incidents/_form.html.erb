@@ -11,36 +11,46 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :incident_name, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= form.label :incident_type %></br>
-
-    <%= form.select(:incident_type, 
-    raw('<option>Wildfire</option>
-         <option>Hazmat</option>
-         <option>Flood</option>
-         <option>Spill</option>
-         <option>Slide</option>
-         <option>Shooting</option>
-         <option>Fire</option>
-         <option>Epidemic</option>
-         <option>Event</option>'), class: 'form-control')  %>
+<div class="container">
+ 
+  <div class="row">
+    <div class="col-med-6">
+      <%= form.label :name %>
+      <%= form.text_field :name, id: :incident_name, class: 'form-control' %>
     </div>
+    <div class="col-med-6">
+      <%= form.label :incident_type %></br>
 
-  <div class="form-group">
-    <%= form.label :number %>
-    <%= form.text_field :number, id: :incident_number, class: 'form-control' %>
+      <%= form.select(:incident_type, 
+      raw('<option>Wildfire</option>
+           <option>Hazmat</option>
+           <option>Flood</option>
+           <option>Spill</option>
+           <option>Slide</option>
+           <option>Shooting</option>
+           <option>Fire</option>
+           <option>Epidemic</option>
+           <option>Event</option>'), class: 'form-control')  %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-med-6">
+      <%= form.label :number %>
+      <%= form.text_field :number, id: :incident_number, class: 'form-control' %>
+    </div>
   </div>
 
-  <div class="form-group">
+  <div class="col-med-6">
     <%= form.label :p_code %>
     <%= form.text_field :p_code, id: :incident_p_code, class: 'form-control' %>
   </div>
   <%= form.hidden_field :user_id, value: current_user.id %>
-  <div class="actions">
-    <%= form.submit 'SUBMIT', class: 'btn btn-success tiny' %>
+  <div class="col-med-12">
+    <div class="actions">
+      <%= form.submit 'SUBMIT', class: 'btn btn-success tiny' %>
+    </div>
   </div>
+</div>
+
+
 <% end %>

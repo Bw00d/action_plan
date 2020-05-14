@@ -12,20 +12,24 @@
     </div>
 
     <!-- plans tabls -->
-    <ul class="tabrow">
-      <% unless current_plan  %>
-        <li>
-          <%= link_to 'New', new_incident_plan_path(@incident) %>
-        </li>
-      <% end %>
-      <% @incident.plans.each do |p|  %>
-        <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
-      <% end %>
-    
-    </ul>
+    <div class="plan-panel-head">
+      <ul class="tabrow">
+          <% unless current_plan  %>
+            <li>
+              <%= link_to 'New', new_incident_plan_path(@incident) %>
+            </li>
+          <% end %>
+          <% @incident.plans.each do |p|  %>
+            <li id=<%= p.id %>><%= link_to p.date.try(:strftime,"%-m/%d"), incident_plan_path(@incident, p) %></li>
+          <% end %>
+        
+        </ul>
+      </div>
+    <div class="masking-tape"></div>
+        
     <!-- end plans tabs -->
 
-    <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %></div>
+    <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %> </div>
     <div class="situation-content list-content">
       <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
     </div>
@@ -96,7 +100,7 @@
 
 
   <div id="iap-row" class="plan-row"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
-  <div class="forms-list list-content">
+  <div id="iap-content" class="forms-list list-content">
       <ul>
         <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
         <li><%= link_to "202", "#{@plan.id}/202" %></li>

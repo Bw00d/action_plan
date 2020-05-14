@@ -1,12 +1,12 @@
 <%= content_for :title, "The Plan" %>
- <div class="col-lg-8 col-xs-12 center-block">
+ <div class=" col-xs-12 center-block">
   <p id="notice"><%= notice %></p>
     
   <div class="row">
     <%= link_to 'javascript:;' do %>
       <h1 id="show-incident-form" class="text-center"><strong> <%= @incident.display_incident_name  %> </strong></h1>
     <% end %>
-    <div id="edit-incident-form" class="col-xs-5 center-block">
+    <div id="edit-incident-form" class=" center-block">
       <%= render 'incidents/form', incident: @incident %>
     </div>
     <!-- plans tabs -->
@@ -17,7 +17,7 @@
         </li>
       <% end %>
       <% @plans.each do |p|  %>
-        <li id=<%= p.id %>><%= link_to p.date.strftime("%-m/%d"), incident_plan_path(@incident, p) %></li>
+        <li id=<%= p.id %>><%= link_to p.date.try(:strftime, "%-m/%d"), incident_plan_path(@incident, p) %></li>
       <% end %>
     </ul>
     <div class="plan-row situation">SITUATION</div>

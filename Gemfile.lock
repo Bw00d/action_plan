@@ -40,6 +40,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
+    american_date (1.1.1)
     arel (8.0.0)
     ast (2.3.0)
     autoprefixer-rails (9.5.1.1)
@@ -342,6 +343,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  american_date
   awesome_print
   best_in_place (~> 3.0.1)
   better_errors

@@ -7,11 +7,14 @@
   padding: 0;
   line-height: 24px;
   position: relative;
+  a {
+    color: #3d3d3d;
+  }
 }
 .tabrow li {
   margin: 0 10px;
   padding: 0 10px;
-  border: 1px solid #AAA;
+  border: 1px solid #DDD;
   background: #ECECEC;
   display: inline-block;
   position: relative;
@@ -19,8 +22,11 @@
   /*background: linear-gradient(to bottom, #ECECEC 50%, #D1D1D1 100%);*/
   /*box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;*/
   text-shadow: 0 1px #FFF;
-  margin: 0 -5px;
-  padding: 0 20px;
+  margin: 0 -3px;
+  padding: 3px 20px;
+}
+.tabrow li:hover {
+    background-color: #ddd;
 }
 .tabrow li.selected {
   background: #FFF;
@@ -34,7 +40,7 @@
   width: 100%;
   bottom: 0;
   left: 0;
-  border-bottom: 1px solid #AAA;
+  border-bottom: 1px solid #DDD;
   z-index: 1;
 }
 .tabrow li:before,
@@ -52,29 +58,29 @@
 .tabrow li:after {
   position: absolute;
   bottom: -1px;
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
   content: " ";
 }
 .tabrow li:before {
-  left: -6px;
+  left: -10px;
 }
 .tabrow li:after {
-  right: -6px;
+  right: -10px;
 }
 .tabrow li:after, .tabrow li:before {
-  border: 1px solid #AAA;
+  border: 1px solid #DDD;
 }
 .tabrow li {
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
 }
 .tabrow li:before {
-  border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 11px !important;
   border-width: 0 1px 1px 0;
 }
 .tabrow li:after {
-  border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 11px !important;
   border-width: 0 0 1px 1px;
 }
 .tabrow li:before {

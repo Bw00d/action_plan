@@ -42,6 +42,12 @@ $aqua: #07c5ff;
 .sm-padding-left {
   padding-left: 10px !important;
 }
+.sm-padding-top {
+  padding-top: 10px !important;
+}
+.md-padding-left {
+  padding-left: 25px;
+}
 
 // Margin
 .no-margin {
@@ -215,3 +221,6 @@ $aqua: #07c5ff;
   postion: relative;
   overflow: hidden;
 }
+
+/* panels*/
+

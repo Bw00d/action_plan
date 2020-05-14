@@ -97,3 +97,30 @@ h4.incident-feed {
   position: relative;
   overflow: hidden;
 }
+#resource-form {
+  padding: 10px;
+  border-top: 1px solid $grayLighter;
+}
+#resource-panel {
+  /*padding-bottom: 20px;*/
+}
+.panel-foot {
+  margin-top: 10px;
+  background-color: #f5f5f5;
+  height:15px;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid #D7d7d7;
+}
+.incidents-panel {
+  h4 {
+    color: #3d3d3d;
+  }
+    a {
+    color: #3d3d3d;
+  }
+}
+
+.incident-index-content {
+  display: none;
+}

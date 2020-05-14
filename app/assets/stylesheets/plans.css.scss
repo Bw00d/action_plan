@@ -1,6 +1,36 @@
 $aqua: #07c5ff;
 
 /* show */
+.plan-panel-head {
+  background-color: #F5F5F5;
+  border: 1px solid #DDD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height:40px;
+  .tabrow {
+    text-align: left;
+    list-style: none;
+    margin: 0;
+    margin-top: 7px;
+    margin-left: 10px;
+    padding: 0;
+    line-height: 24px;
+    position: relative;
+  }
+}
+.masking-tape {
+  height: 5px;
+  width: 50px;
+  color: blue;
+  background-color: white;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  border-right: 1px solid #ddd; 
+  border-left: 1px solid #ddd;
+}
+
 .date-row {
   margin-bottom: 2px;
   padding-bottom: 0;
@@ -17,7 +47,7 @@ $aqua: #07c5ff;
   .top {   
     width: 60px;
     background-color: white;
-    border: 1px solid #777;
+    border: 1px solid #DDD;
     height: 30px;
     border-radius: 30px;
     display: inline-block;
@@ -26,10 +56,11 @@ $aqua: #07c5ff;
     position: relative;
 
   }
+
   .bottom {
     width: 60px;
     background-color: white;
-    border: 1px solid #777;
+    border: 1px solid #DDD;
     height: 20px;
     position: absolute;
     margin-top: -18px;
@@ -46,25 +77,29 @@ $aqua: #07c5ff;
   font-size: 2.5em;
   color: #B4B4B4;
 }
+.expanded { border-bottom: none !important; }
 .plan-row {
-  border-bottom: 1px solid #777;
+  z-index: 2;
+  overflow: hidden;
+  border-bottom: 1px solid #DDD;
   padding: 10px;
   font-weight: 700;
+  background-color: white;
   a {
     color: #3D3D3D !important;
   }
 }
 .list-content {
-  border-left: 1px solid #777;
-  border-right: 1px solid #777;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
 }
 .situation {
-  /*border-top: 1px solid #777;*/
-    border-left: 1px solid #777;
-  border-right: 1px solid #777;
+  /*border-top: 1px solid #DDD;*/
+    border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
 }
 .situation-content {
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid #DDD;
   padding: 10px 20px;
   display: none;
   textarea {
@@ -80,11 +115,11 @@ span.plans-button {
 }
 /* Objectives */
 #objectives-list {
-  border-left: 1px solid #777;
-  border-right: 1px solid #777;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
 }
 .objectives-list {
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid #DDD;
   padding: 10px 5px;
   display: none;
   .new-objective {
@@ -111,11 +146,11 @@ span.plans-button {
   }
 }
 #activity-list {
-  border-left: 1px solid #777;
-  border-right: 1px solid #777;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
 }
 .activities-list {
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid #DDD;
   padding: 10px 5px;
   display: none;
   ul {
@@ -139,15 +174,18 @@ span.plans-button {
     padding-left: 20px;
   }
 }
+#iap-content {
+  border-bottom: 1px solid #DDD !important;
+}
 /* Resources*/
 
 #resource-list {
-  border-left: 1px solid #777;
-  border-left: 1px solid #777;
-  border-right: 1px solid #777;
+  border-left: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
 }
 .resources-list {
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid #DDD;
   padding: 10px 5px;
   display: none;
   .new-resource {
@@ -172,8 +210,8 @@ span.plans-button {
 /* IAP */
 
 #iap-row {
-  border-left: 1px solid #777;
-  border-right: 1px solid #777;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
 }
 #cover {
   padding-top: 75px;

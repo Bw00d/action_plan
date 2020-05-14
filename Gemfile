@@ -62,6 +62,7 @@ gem 'exception_notification'
 gem 'best_in_place', '~> 3.0.1'
 gem 'feathericon-sass'
 gem 'bootstrap-datepicker-rails'
+gem 'american_date'
 
 group :test do
   gem 'database_cleaner'

@@ -1,0 +1,48 @@
+<div id="resource-panel" class="panel panel-default">
+<!-- Default panel contents -->
+  <div class="panel-heading"><strong>Resources</strong> <%= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
+  </div>
+  <% if !@incident.resources.empty? %>
+    <!-- Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Order #</th>
+          <th scope="col">Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Leader</th>
+          <th scope="col"># personnel</th>
+          <th scope="col">Agency</th>
+          <th scope="col">LWD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @resources.each do |r|  %>
+        <tr>
+          <th scope="row">1</th>
+          <td><%= best_in_place r, :order_number, :as => :input%></td>
+          <td><%= best_in_place r, :name, :as => :input %></td>
+          <td><%= best_in_place r, :position, :as => :input %></td>
+          <td><%= best_in_place r, :leader, :as => :input %></td>
+          <td><%= best_in_place r, :number_personnel, :as => :input %></td>
+          <td><%= best_in_place r, :agency, :as => :input %></td>
+          <td><%= best_in_place r, :lwd, :as => :input %></td>
+        </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+
+    <% else %>
+    <div class="sm-padding-top md-padding-left">
+      <h4>There are no resources assigned to this incident.</h4>
+    </div>
+  <% end %>
+
+  <div id="resource-form">
+    <h4><strong>New Resource</strong></h4>
+    <%= render 'new_resource_form' %>
+  </div>
+  <div class="panel-foot"></div>
+</div>
