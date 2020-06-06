@@ -41,7 +41,11 @@
     </div>
     <div class="row">
       <div class="col-xs-12 form-row medium-rows">
-        <span class="small">6. WEATHER FORECAST FOR OPERATIONAL PERIOD</span><br>
+        <% if @incident.wildfire? %>
+          <span class="small">6. WEATHER FORECAST FOR OPERATIONAL PERIOD</span><br>
+        <% else %>
+          <span class="small">6. GENERAL SITUATION AWARENESS</span><br>
+        <% end %>
            <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'weather-form'  %>
       </div>
     </div>

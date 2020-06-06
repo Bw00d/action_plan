@@ -68,42 +68,47 @@
         <%= form.text_field :ic, id: :incident_ic, class: 'form-control' %>
       </div>
 
-      <div class="form-group">
-        <%= form.label :size %>
-        <%= form.text_field :size, id: :incident_size, class: 'form-control' %>
-      </div>
+      <% if @incident.wildfire? %>
+        
 
-      <div class="form-group">
-        <%= form.label :status %>
-        <%= form.select(:status, raw('<option>Uncontained</option> 
-                                             <option>Contained</option> 
-                                             <option>Controlled</option>' ), class: 'form-control')  %>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :fuel_type %>
-        <%= form.text_field :fuel_type, id: :incident_fuel_type, class: 'form-control' %>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :start_date %>
-        <%= form.text_field :start_date, id: :incident_start_date, class: 'datepicker form-control' %>
-      </div>
+        <div class="form-group">
+          <%= form.label :size %>
+          <%= form.text_field :size, id: :incident_size, class: 'form-control' %>
+        </div>
 
-      <div class="form-group">
-        <%= form.label :containment_date %>
-        <%= form.text_field :containment_date, id: :incident_containment_date, class: 'datepicker form-control' %>
-      </div>
+        <div class="form-group">
+          <%= form.label :status %>
+          <%= form.select(:status, raw('<option>Uncontained</option> 
+                                               <option>Contained</option> 
+                                               <option>Controlled</option>' ), class: 'form-control')  %>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :fuel_type %>
+          <%= form.text_field :fuel_type, id: :incident_fuel_type, class: 'form-control' %>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :start_date %>
+          <%= form.text_field :start_date, id: :incident_start_date, class: 'datepicker form-control' %>
+        </div>
 
-      <div class="form-group">
-        <%= form.label :control_date %>
-        <%= form.text_field :control_date, id: :incident_control_date, class: 'datepicker form-control' %>
-      </div>
+        <div class="form-group">
+          <%= form.label :containment_date %>
+          <%= form.text_field :containment_date, id: :incident_containment_date, class: 'datepicker form-control' %>
+        </div>
 
-      <div class="form-group">
-        <%= form.label :percent_contained %>
-        <%= form.text_field :percent_contained, id: :incident_percent_contained, class: 'form-control' %>
-      </div>
+        <div class="form-group">
+          <%= form.label :control_date %>
+          <%= form.text_field :control_date, id: :incident_control_date, class: 'datepicker form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :percent_contained %>
+          <%= form.text_field :percent_contained, id: :incident_percent_contained, class: 'form-control' %>
+        </div>
+
+      <% end %>
 
       <div class="form-group">
         <%= form.label :number %>
