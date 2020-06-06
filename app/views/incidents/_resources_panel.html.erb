@@ -7,7 +7,6 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Order #</th>
           <th scope="col">Name</th>
           <th scope="col">Position</th>
@@ -20,7 +19,6 @@
       <tbody>
         <% @resources.each do |r|  %>
         <tr>
-          <th scope="row">1</th>
           <td><%= best_in_place r, :order_number, :as => :input%></td>
           <td><%= best_in_place r, :name, :as => :input %></td>
           <td><%= best_in_place r, :position, :as => :input %></td>
