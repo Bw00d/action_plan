@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200412031030) do
+ActiveRecord::Schema.define(version: 20200606200633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,13 @@ ActiveRecord::Schema.define(version: 20200412031030) do
     t.date "control_date"
     t.date "out_date"
     t.integer "percent_contained"
+    t.string "location"
+    t.string "ownership"
+    t.string "protection"
+    t.string "latitude"
+    t.string "longitude"
+    t.string "ic"
+    t.string "fire_behavior"
   end
 
   create_table "objectives", force: :cascade do |t|

@@ -5,39 +5,43 @@
         <!-- wildfire specific -->
         <% if @incident.wildfire? %>
           <div>
-            
-            <div class="col-lg-12 col-xs-12">
-              <div class="col-lg-4 col-xs-4">Size: <%= best_in_place @incident, :size %> acres  </div>
-              <div class="col-lg-4 col-xs-4">% Contained: <%= @incident.percent_contained %></div>
-              <div class="col-lg-4 col-xs-4">Status: <%= @incident.status %></div>
+            <div class="col-sm-12 col-xs-12">
+            <div class="col-sm-8 col-xs-8">Location: <%= best_in_place @incident, :location %></div>
+            <div class="col-sm-4 col-xs-4"> Coordinates: <%= best_in_place @incident, :latitude %> x <%= best_in_place @incident, :longitude %></div>
+          </div>
+            <div class="col-sm-12 col-xs-12">
+              <div class="col-sm-3 col-xs-12">Cause: <%= best_in_place @incident, :cause %></div>
+              <div class="col-sm-5 col-xs-12">Fuels: <%= best_in_place @incident, :fuel_type %></div>
+              <div class="col-sm-4 col-xs-12">Activity: <%= best_in_place @incident, :fire_behavior %></div>
             </div>
-            <div class="col-lg-12 col-xs-12">
-              <div class="col-lg-4 col-xs-4">Location</div>
-              <div class="col-lg-4 col-xs-4"> </div>
-              <div class="col-lg-4 col-xs-4"></div>
+            <div class="col-sm-12 col-xs-12">
+              <div class="col-sm-4 col-xs-12">Size: <%= best_in_place @incident, :size %> acres  </div>
+              <div class="col-sm-4 col-xs-12">% Contained: <%= best_in_place @incident, :percent_contained %></div>
+              <div class="col-sm-4 col-xs-12">Status: <%= best_in_place @incident, :status %></div>
             </div>
-            <div class="col-lg-12 col-xs-12">
-              <div class="col-lg-4 col-xs-4">Financial Code: <%= best_in_place @incident, :financial_code %> </div>
-              <div class="col-lg-4 col-xs-4">P Code:  <%= best_in_place @incident, :p_code %></div>
-              <div class="col-lg-4 col-xs-4"></div>
+            <div class="col-sm-12 col-xs-12">
+              <div class="col-sm-4 col-xs-12">IC: <%= best_in_place @incident, :ic %>   </div>
+              <div class="col-sm-4 col-xs-12">% Protection: <%= best_in_place @incident, :protection %></div>
+              <div class="col-sm-4 col-xs-12">Ownership: <%= best_in_place @incident, :ownership %></div>
+            </div>
+            <div class="col-sm-12 col-xs-12">
+              <div class="col-sm-4 col-xs-12">Financial Code: <%= best_in_place @incident, :financial_code %> </div>
+              <div class="col-sm-4 col-xs-12">P Code:  <%= best_in_place @incident, :p_code %></div>
+              <div class="col-sm-4 col-xs-12"></div>
             </div>
           </div>
         <% end %>
         <!-- All Hazard -->
         <% unless @incident.wildfire? %>
           
-          <div class="col-lg-12 col-xs-12">
-            <div class="col-lg-4 col-xs-4">Location</div>
-            <div class="col-lg-4 col-xs-4"> </div>
-            <div class="col-lg-4 col-xs-4"></div>
+          <div class="col-sm-12 col-xs-12">
+            <div class="col-sm-8 col-xs-8">Location: <%= best_in_place @incident, :location %></div>
+            <div class="col-sm-4 col-xs-4"> Coordinates: <%= best_in_place @incident, :latitude %> x <%= best_in_place @incident, :longitude %></div>
           </div>
-          <div class="col-lg-12 col-xs-12">
-            <div class="col-lg-4 col-xs-4">Financial Code: <%= best_in_place @incident, :financial_code %> </div>
-            <div class="col-lg-4 col-xs-4">P Code:  <%= best_in_place @incident, :p_code %></div>
-            <div class="col-lg-4 col-xs-4"></div>
-          </div>
+          
         <% end %>
       </div>
+      <%= link_to (fa_icon('edit')), edit_incident_path(@incident), class: "float-right", id: 'edit-incident' %>
       
   </div> <!-- panel body -->
 

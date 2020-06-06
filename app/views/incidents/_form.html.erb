@@ -11,46 +11,123 @@
     </div>
   <% end %>
 
-<div class="container">
- 
-  <div class="row">
-    <div class="col-med-6">
-      <%= form.label :name %>
-      <%= form.text_field :name, id: :incident_name, class: 'form-control' %>
-    </div>
-    <div class="col-med-6">
-      <%= form.label :incident_type %></br>
+      <div class="form-group">
+        <%= form.label :name %>
+        <%= form.text_field :name, id: :incident_name, class: 'form-control' %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :incident_type %>
 
-      <%= form.select(:incident_type, 
-      raw('<option>Wildfire</option>
-           <option>Hazmat</option>
-           <option>Flood</option>
-           <option>Spill</option>
-           <option>Slide</option>
-           <option>Shooting</option>
-           <option>Fire</option>
-           <option>Epidemic</option>
-           <option>Event</option>'), class: 'form-control')  %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-med-6">
-      <%= form.label :number %>
-      <%= form.text_field :number, id: :incident_number, class: 'form-control' %>
-    </div>
-  </div>
+        <%= form.select(:incident_type, 
+        raw('<option>Wildfire</option>
+             <option>Hazmat</option>
+             <option>Flood</option>
+             <option>Spill</option>
+             <option>Slide</option>
+             <option>Shooting</option>
+             <option>Fire</option>
+             <option>Epidemic</option>
+             <option>Event</option>'), class: 'form-control')  %>
+      </div>
 
-  <div class="col-med-6">
-    <%= form.label :p_code %>
-    <%= form.text_field :p_code, id: :incident_p_code, class: 'form-control' %>
-  </div>
-  <%= form.hidden_field :user_id, value: current_user.id %>
-  <div class="col-med-12">
-    <div class="actions">
-      <%= form.submit 'SUBMIT', class: 'btn btn-success tiny' %>
-    </div>
-  </div>
-</div>
+      <div class="form-group">
+        <%= form.label :complexity %>
+        <%= form.select(:complexity, raw('<option>Type 5</option> 
+                                             <option>Type 4</option> 
+                                             <option>Type 3</option>' ), class: 'form-control')  %>
+      </div>
+      <div class="form-group">
+        <%= form.label :location %>
+        <%= form.text_field :location, id: :incident_location, class: 'form-control' %>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 form-group">
+          <%= form.label :latitude %>
+          <%= form.text_field :latitude, id: :incident_latitude, class: 'form-control' %>
+        </div>
+        <div class="col-lg-4">
+          <%= form.label :longitude %>
+          <%= form.text_field :longitude, id: :incident_longitude, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :ownership %>
+        <%= form.text_field :ownership, id: :incident_ownership, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :protection %>
+        <%= form.text_field :protection, id: :incident_protection, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :ic %>
+        <%= form.text_field :ic, id: :incident_ic, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :size %>
+        <%= form.text_field :size, id: :incident_size, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :status %>
+        <%= form.select(:status, raw('<option>Uncontained</option> 
+                                             <option>Contained</option> 
+                                             <option>Controlled</option>' ), class: 'form-control')  %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :fuel_type %>
+        <%= form.text_field :fuel_type, id: :incident_fuel_type, class: 'form-control' %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :start_date %>
+        <%= form.text_field :start_date, id: :incident_start_date, class: 'datepicker form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :containment_date %>
+        <%= form.text_field :containment_date, id: :incident_containment_date, class: 'datepicker form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :control_date %>
+        <%= form.text_field :control_date, id: :incident_control_date, class: 'datepicker form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :percent_contained %>
+        <%= form.text_field :percent_contained, id: :incident_percent_contained, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :number %>
+        <%= form.text_field :number, id: :incident_number, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :p_code %>
+        <%= form.text_field :p_code, id: :incident_p_code, class: 'form-control' %>
+      </div>
+
+
+
+
+
+
+
+    <%= form.hidden_field :user_id, value: current_user.id %>
+
+      <div class="form-group">
+        <div class="actions">
+          <%= form.submit 'SUBMIT', class: 'btn btn-success tiny' %>
+        </div>
+      </div>
 
 
 <% end %>

@@ -1,5 +1,5 @@
 <%= content_for :title, "The Plan" %>
- <div class=" col-xs-12 center-block">
+ <div class="col-lg-8 col-xs-12 center-block">
   <p id="notice"><%= notice %></p>
     
   <div class="row">
@@ -9,25 +9,47 @@
     <div id="edit-incident-form" class=" center-block">
       <%= render 'incidents/form', incident: @incident %>
     </div>
-    <!-- plans tabs -->
-    <ul class="tabrow">
-      <% unless current_plan  %>
-        <li>
-          <%= link_to 'New', new_incident_plan_path(@incident) %>
-        </li>
-      <% end %>
-      <% @plans.each do |p|  %>
-        <li id=<%= p.id %>><%= link_to p.date.try(:strftime, "%-m/%d"), incident_plan_path(@incident, p) %></li>
-      <% end %>
-    </ul>
-    <div class="plan-row situation">SITUATION</div>
-    <div class="situation-content"> 
+    <!-- plans tabls -->
+    <div class="plan-panel-head">
+      <ul class="tabrow">
+          <% unless current_plan  %>
+            <li>
+              <%= link_to 'New', new_incident_plan_path(@incident) %>
+            </li>
+          <% end %>
+          <% @incident.plans.each do |p|  %>
+            <li id=<%= p.id %>><%= link_to p.date.try(:strftime,"%-m/%d"), incident_plan_path(@incident, p) %></li>
+          <% end %>
+        
+        </ul>
+      </div>
+    <div class="masking-tape"></div>
+        
+    <!-- end plans tabs -->
+
+    <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %> </div>
+    <div class="situation-content list-content">
+      
     </div>
-    <div class="plan-row ">OBJECTIVES</div>
-    <div class="objectives-list">
+    <div id="objectives-list" class="plan-row "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
+    <div class="objectives-list list-content"></div>
+      
+    <div id="activity-list" class="plan-row activity"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
+    <div class="activities-list list-content">
     </div>
-    <div class="plan-row">CURRENT AND PLANNED ACTIONS</div>
-    <div class="plan-row">ICS FORMS</div>
+
+    <div id="resource-list" class="plan-row"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
+      <div class="resources-list list-content">
+        
+
+        
+      </div>
+
+
+  <div id="iap-row" class="plan-row"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
+    <div id="iap-content" class="forms-list list-content">
+    
+    </div>
   </div>
 </div>
 
