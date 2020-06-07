@@ -2,23 +2,30 @@
 <div class="container">
   <div class="col-xs-12 col-lg-8 center-block">
     <div class="row">
-      <%= link_to 'Plan', incident_plan_path(@incident, @plan), class: 'btn btn-info tiny' %>
+      <div class="plan-panel-head">
+        <ul class="tabrow">
+          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+          <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
+          <li><%= link_to "202", "../#{@plan.id}/202" %></li>
+          <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+          <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+        </ul>
+        </div>
+      <div class="masking-tape"></div>
     </div>
-
 
     <div class="row">
-      <h1 class="header"><strong>Incident Assignments(204)</strong> <%= link_to fa_icon("plus-circle"), new_incident_plan_assignment_path(@incident, @plan, @assignment) %></h1>
-    </div>
-    <div class="row"> 
-      <ul class="assignments-lists">
-        <% @assignments.each do |assignment| %>
-          <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
-            <li><%= assignment.designator %>  –  Leader's Name  –  # of Personnel </li><br>
+      <div class="assignment-box">
+        <span class="float-left sm-padding-left"> <%= link_to "New", new_incident_plan_assignment_path(@incident, @plan, @assignment) %></span>
+        <h1 class="header"><strong>Incident Assignments(204)</strong></h1> 
+        <ul class="assignments-lists">
+          <% @assignments.each do |assignment| %>
+            <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
+            <li><%= assignment.designator %>  –  Leader's Name  –  # of Personnel </li>
           <% end %>
         <% end %>
-      </ul>
-    </div>
-
+        </ul>
+      </div>
     </div>
   </div>
 </div>

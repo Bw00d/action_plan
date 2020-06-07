@@ -16,6 +16,7 @@ class AssignmentsController < ApplicationController
   def show
     @plan = Plan.find(params[:plan_id])
     @incident = Incident.find(@plan.incident_id)
+    @assignments = @plan.assignments
   end
 
   # GET /assignments/new

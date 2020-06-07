@@ -13,17 +13,20 @@
         </div>
       <div class="masking-tape"></div>
     </div>
-  <div id="cover" class="col-md-8 center-block">
-    <div id="plan-title">
-      <h1>Incident Action Plan</h1>
-      <h2><%= @incident.name %></h2>
-      <h2><%= @plan.date.strftime("%-m/%d/%-Y") %></h2>
-    </div>
-    <div class="col-xs-12">
-      <%= image_tag 'picture.jpg', id: "picture"  %>
-    </div>
-    <div class="cost-code">
-      <h3><%= @incident.number %> – <%= @incident.p_code %></h3>
+    <div class="row">
+      <div id="cover">
+        <div id="plan-title">
+          <h1>Incident Action Plan</h1>
+          <h2><%= @incident.name %></h2>
+          <h2><%= @plan.date.strftime("%-m/%d/%-Y") %></h2>
+        </div>
+        <div class="col-xs-12">
+          <%= image_tag 'picture.jpg', id: "picture"  %>
+        </div>
+        <div class="cost-code">
+          <h3><%= @incident.number %> – <%= @incident.p_code %></h3>
+        </div>
+      </div>
     </div>
   </div>
 </div>

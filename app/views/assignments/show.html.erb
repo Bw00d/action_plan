@@ -6,7 +6,17 @@
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
     <div class="row">
-      <div><%= link_to "ALL 204s",  incident_plan_assignments_path(@incident, @plan), class: "btn btn-info tiny" %></div><br>
+        <div class="plan-panel-head">
+          <ul class="tabrow">
+            <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+            <% @assignments.each do |assignment| %>
+              <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
+              <li><%= assignment.designator %></li>
+            <% end %>
+          <% end %>
+          </ul>
+          </div>
+        <div class="masking-tape"></div>
       <div class=" center form-row top-row">
         <div class="col-xs-6">
           <h4><strong>DIVISION ASSIGNMENT LIST</strong></h4>

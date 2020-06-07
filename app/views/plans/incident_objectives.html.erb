@@ -1,102 +1,104 @@
 <%= content_for :title, "202" %>
 <div id="incident-objectives">
   <div class="container">
-    <div class="row">
-      <div class="plan-panel-head">
-        <ul class="tabrow">
-          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
-          <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
-          <li><%= link_to "202", "../#{@plan.id}/202" %></li>
-          <li><%= link_to "203", "../#{@plan.id}/203" %></li>
-          <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
-          </ul>
-        </div>
-      <div class="masking-tape"></div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 form-row top-row">
-        <div class="col-xs-5">
-          <h4><strong>INCIDENT OBJECTIVES</strong></h4>
-        </div>
-        <div class="col-xs-3 bl small-box">
-          <span class="small">1. INCIDENT NAME<br>
-            <%= @incident.name %>
-          </span>
+    <div class="col-xs-12 col-lg-8 center-block">
+      <div class="row">
+        <div class="plan-panel-head">
+          <ul class="tabrow">
+            <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+            <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
+            <li><%= link_to "202", "../#{@plan.id}/202" %></li>
+            <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+            </ul>
+          </div>
+        <div class="masking-tape"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 form-row top-row">
+          <div class="col-xs-5">
+            <h4><strong>INCIDENT OBJECTIVES</strong></h4>
+          </div>
+          <div class="col-xs-3 bl small-box">
+            <span class="small">1. INCIDENT NAME<br>
+              <%= @incident.name %>
+            </span>
 
-        </div>
-        <div class="col-xs-2 bl small-box">
-          <span class="small">2. DATE PREPARED<br>
-            7/21/19
-          </span>
-        </div>
-        <div class="col-xs-2 bl small-box">
-          <span class="small">3. TIME PREPARED<br>
-            <%= best_in_place @plan, :time_prepared, :as => :input, :place_holder => "Add Time Here", class: 'bip-input' %>
-          </span>
+          </div>
+          <div class="col-xs-2 bl small-box">
+            <span class="small">2. DATE PREPARED<br>
+              7/21/19
+            </span>
+          </div>
+          <div class="col-xs-2 bl small-box">
+            <span class="small">3. TIME PREPARED<br>
+              <%= best_in_place @plan, :time_prepared, :as => :input, :place_holder => "Add Time Here", class: 'bip-input' %>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 form-row">
-        <span class="small">4. OPERATIONAL PERIOD</span><br>
-        <%= best_in_place @plan, :ops_period, :as => :input, :place_holder => "Add Time Range Here", class: 'bip-input' %>
+      <div class="row">
+        <div class="col-xs-12 form-row">
+          <span class="small">4. OPERATIONAL PERIOD</span><br>
+          <%= best_in_place @plan, :ops_period, :as => :input, :place_holder => "Add Time Range Here", class: 'bip-input' %>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 form-row tall-rows">
-        <span class="small">5. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
-          <% @plan.objectives.each do |o| %>
-          <h4><%= o.order %> <%= o.description %></h4>
+      <div class="row">
+        <div class="col-xs-12 form-row tall-rows">
+          <span class="small">5. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
+            <% @plan.objectives.each do |o| %>
+            <h4><%= o.order %> <%= o.description %></h4>
+            <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 form-row medium-rows">
+          <% if @incident.wildfire? %>
+            <span class="small">6. WEATHER FORECAST FOR OPERATIONAL PERIOD</span><br>
+          <% else %>
+            <span class="small">6. GENERAL SITUATION AWARENESS</span><br>
           <% end %>
+             <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'weather-form'  %>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 form-row medium-rows">
-        <% if @incident.wildfire? %>
-          <span class="small">6. WEATHER FORECAST FOR OPERATIONAL PERIOD</span><br>
-        <% else %>
-          <span class="small">6. GENERAL SITUATION AWARENESS</span><br>
-        <% end %>
-           <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'weather-form'  %>
+      <div class="row">
+        <div class="col-xs-12 form-row short-rows">
+          <span class="small">7. GENERAL SAFETY MESSAGE</span><br>
+            <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'safety-form'  %>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 form-row short-rows">
-        <span class="small">7. GENERAL SAFETY MESSAGE</span><br>
-          <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'safety-form'  %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 form-row">
-        <span class="small">8. ATTACHMENTS</span><br>
-          <ul class="small col-xs-3">
-            <li><%= best_in_place @plan, :org_list, :as => :checkbox  %>  ORGANIZATION LIST</li>
+      <div class="row">
+        <div class="col-xs-12 form-row">
+          <span class="small">8. ATTACHMENTS</span><br>
+            <ul class="small col-xs-3">
+              <li><%= best_in_place @plan, :org_list, :as => :checkbox  %>  ORGANIZATION LIST</li>
 
-            <li><%= check_box_tag("org list", "#") %>  ASSIGNMENT LIST</li>
-            <li><%= check_box_tag("org list", "#") %>  COMMUNICATION PLAN</li>
-          </ul>
-          <ul class="small col-xs-3">
-            <li><%= check_box_tag("org list", "#") %>  MEDICAL PLAN</li>
-            <li><%= check_box_tag("org list", "#") %>  INCIDENT MAP</li>
-            <li><%= check_box_tag("org list", "#") %>  TRAFFIC PLAN</li>
-          </ul>
-          <ul class="small col-xs-3">
-            <li><%= check_box_tag("org list", "#") %>  _______________</li>
-            <li><%= check_box_tag("org list", "#") %>  _______________</li>
-            <li><%= check_box_tag("org list", "#") %>  _______________</li>
-          </ul>
+              <li><%= check_box_tag("org list", "#") %>  ASSIGNMENT LIST</li>
+              <li><%= check_box_tag("org list", "#") %>  COMMUNICATION PLAN</li>
+            </ul>
+            <ul class="small col-xs-3">
+              <li><%= check_box_tag("org list", "#") %>  MEDICAL PLAN</li>
+              <li><%= check_box_tag("org list", "#") %>  INCIDENT MAP</li>
+              <li><%= check_box_tag("org list", "#") %>  TRAFFIC PLAN</li>
+            </ul>
+            <ul class="small col-xs-3">
+              <li><%= check_box_tag("org list", "#") %>  _______________</li>
+              <li><%= check_box_tag("org list", "#") %>  _______________</li>
+              <li><%= check_box_tag("org list", "#") %>  _______________</li>
+            </ul>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 form-row">
-          <div class="col-xs-6">
-            <span class="small small-box">9. PREPARED BY</span><br>
-            <%= best_in_place @plan, :prepared_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %>
-          </div>
-          <div class="col-xs-6 bl">
-            <span class="small small-box">10. APPROVED BY</span><br>
-            <%= best_in_place @plan, :approved_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %>
-          </div>
+      <div class="row">
+        <div class="col-xs-12 form-row">
+            <div class="col-xs-6">
+              <span class="small small-box">9. PREPARED BY</span><br>
+              <%= best_in_place @plan, :prepared_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %>
+            </div>
+            <div class="col-xs-6 bl">
+              <span class="small small-box">10. APPROVED BY</span><br>
+              <%= best_in_place @plan, :approved_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %>
+            </div>
+        </div>
       </div>
     </div>
   </div>

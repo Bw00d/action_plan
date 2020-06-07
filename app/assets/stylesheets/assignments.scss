@@ -12,14 +12,26 @@ $aqua: #07c5ff;
   }
 }
 .assignments-lists {
+  margin-top: 0;
+  border-top:1px solid #DDD;
   list-style: none;
   padding-left: 0;
   li {
-    background-color: #E7EAED;
-    padding: 20px;
-    border-radius: 5px;
+    padding: 10px;
   }
   a {
     text-decoration: none;
+    :hover {
+      text-decoration: underline;
+    }
   }
+}
+.assignment-box {
+  .header {
+    margin-bottom: 15px;
+    padding-top: 5px;
+  }
+  border-right: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
 }
