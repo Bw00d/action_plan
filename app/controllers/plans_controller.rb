@@ -88,6 +88,11 @@ class PlansController < ApplicationController
      @incident = Incident.find(@plan.incident_id)
   end
 
+  def incident_organization
+    @plan = Plan.find(params[:id])
+     @incident = Incident.find(@plan.incident_id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan

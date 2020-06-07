@@ -307,3 +307,19 @@ h1.header {
   text-align: center;
   margin-bottom: 30px;
 }
+
+/* ICS 202 Incident Organization */
+
+.split-right {
+  position: relative;
+  border-bottom: 1px solid black;
+  min-height: 40px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+.split-left {
+  position: relative;
+  border-bottom: 1px solid black;
+  min-height: 40px;
+  border-left: 1px solid black;
+}

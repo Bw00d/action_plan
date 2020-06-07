@@ -1,0 +1,150 @@
+
+
+
+<%= content_for :title, "204" %>
+<div id="incident-objectives">
+  <div class="container">
+    <div class="col-xs-12 col-lg-8 center-block">
+    <div class="row">
+      <div class=" center form-row top-row">
+        <div class="col-xs-6">
+          <h4><strong>Organization Assignment List</strong></h4>
+        </div>
+        <div class="col-xs-6 bl small-box">
+          <span class="small">Date<br>  
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row">
+
+        <div class="col-xs-6 small-box">
+          <span class="small">INCIDENT NAME</span><br>
+            <%= @incident.name %>
+        </div>
+        <div class="col-xs-6 bl small-box">
+           <span class="small">OPERATIONAL PERIOD</span><br>
+           0800 - 2200
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="center">
+        <div class="col-xs-6 split-left header-row">
+          COMMAND AND GENERAL STAFF
+        </div>
+        <div class="col-xs-6 split-right header-row">
+          OPERATIONS  
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Overhead rows -->
+    <div class="row">
+      <div class=" center form-row">
+        <div class="col-xs-3  small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row">
+        <div class="col-xs-3  small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row">
+        <div class="col-xs-3  small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+        <div class="col-xs-3 bl small-box">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row header-row">
+        RESOURCES ASSIGNED
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row">
+        <div class="col-xs-4  small-box"><span class="small">RESOURCE DESIGNATOR</span> </div>
+        <div class="col-xs-5 bl small-box"><span class="small">LEADER</span> </div>
+        <div class="col-xs-1 bl small-box"><span class="small"># PERS.</span></div>
+        <div class="col-xs-1 bl small-box"><span class="small">LWD</span></div>
+        <div class="col-xs-1 bl small-box"><span class="small">LOCATION</span></div>
+          
+      </div>
+    </div>
+    <!-- REPLACE WITH RESOURCES LIST -->
+    <div class="row">
+      <div class=" center form-row">
+        <div class="col-xs-4  small-box"><span class="small"></span></div>
+        <div class="col-xs-5 bl small-box"><span class="small"></span> </div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row">
+        <div class="col-xs-4  small-box"><span class="small"></span></div>
+        <div class="col-xs-5 bl small-box"><span class="small"></span> </div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row">
+        <div class="col-xs-4  small-box"><span class="small"></span></div>
+        <div class="col-xs-5 bl small-box"><span class="small"></span> </div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
+      </div>
+    </div>
+    <!--  End -->
+    <div class="row">
+      <div class=" center form-row short-rows">
+        <span class="small">CONTROL OPERATIONS</span><br>
+          <%#= @assignment.control_operations %>
+          <%#= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row short-rows">
+        <span class="small">SPECIAL INSTRUCTIONS</span><br>
+          <%#= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" center form-row header-row">
+          COMMUNICATIONS SUMMARY
+      </div>
+    </div>
+    <%#= render 'commo_plan' %>
+  </br>
+    <%#= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+    </div>
+  </div>
+</div>
