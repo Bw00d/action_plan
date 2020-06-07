@@ -1,9 +1,18 @@
 <%= content_for :title, "Cover" %>
 <div class="container">
-  <div class="col-md-8 center-block">
+  <div class="col-xs-12 col-lg-8 center-block">
     <div class="row">
-    <%= link_to 'Plan', incident_plan_path(@incident, @plan), class: 'btn btn-info tiny' %></div><br>
-    </div> 
+      <div class="plan-panel-head">
+        <ul class="tabrow">
+          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+          <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
+          <li><%= link_to "202", "../#{@plan.id}/202" %></li>
+          <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+          <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+        </ul>
+        </div>
+      <div class="masking-tape"></div>
+    </div>
   <div id="cover" class="col-md-8 center-block">
     <div id="plan-title">
       <h1>Incident Action Plan</h1>

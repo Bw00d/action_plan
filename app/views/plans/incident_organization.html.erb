@@ -5,6 +5,21 @@
 <div id="incident-objectives">
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
+
+
+      <div class="row">
+        <div class="plan-panel-head">
+          <ul class="tabrow">
+            <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+            <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
+            <li><%= link_to "202", "../#{@plan.id}/202" %></li>
+            <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+          </ul>
+          </div>
+        <div class="masking-tape"></div>
+      </div>
+
     <div class="row">
       <div class=" center form-row top-row">
         <div class="col-xs-6">
