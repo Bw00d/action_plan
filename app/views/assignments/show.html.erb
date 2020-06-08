@@ -11,7 +11,7 @@
             <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
             <% @assignments.each do |assignment| %>
               <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
-              <li><%= assignment.designator %></li>
+              <li id=<%= assignment.id %>><%= assignment.designator %></li>
             <% end %>
           <% end %>
           </ul>
@@ -131,14 +131,14 @@
     </div>
     <!--  End -->
     <div class="row">
-      <div class=" center form-row short-rows">
+      <div class="center form-row short-rows xs-padding-left">
         <span class="small">CONTROL OPERATIONS</span><br>
           <%#= @assignment.control_operations %>
           <%= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %>
       </div>
     </div>
     <div class="row">
-      <div class=" center form-row short-rows">
+      <div class=" center form-row short-rows xs-padding-left">
         <span class="small">SPECIAL INSTRUCTIONS</span><br>
           <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
       </div>
@@ -154,3 +154,12 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).on("turbolinks:load", function() {
+    id = "<%= @assignment.id %>"
+    $('.tabrow li').removeClass('selected');
+    $('li#'+ id).addClass('selected');
+  });
+
+</script>
