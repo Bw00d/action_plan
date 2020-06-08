@@ -19,7 +19,7 @@
               <%= link_to 'New', new_incident_plan_path(@incident) %>
             </li>
           <% end %>
-          <% @incident.plans.each do |p|  %>
+          <% @incident.plans.order(date: :asc).each do |p|  %>
             <li id=<%= p.id %>><%= link_to p.date.try(:strftime,"%-m/%d"), incident_plan_path(@incident, p) %></li>
           <% end %>
         
