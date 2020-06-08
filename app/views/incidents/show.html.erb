@@ -6,7 +6,11 @@
       <div class="panel-heading">
         <h4>
           <strong><%= @incident.display_incident_name %></strong>
-          <span class="float-right plans-button"><%= link_to "Plans", incident_plans_path(@incident), class: 'btn btn-primary' %></span>
+          <% if @incident.plans.count > 0 %>
+            <span class="float-right plans-button"><%= link_to "Plans", incident_plan_path(@incident, @incident.plans.last), class: 'btn btn-primary' %></span>
+          <% else %>
+            <span class="float-right plans-button"><%= link_to "Plans", incident_plans_path(@incident), class: 'btn btn-primary' %></span>
+          <% end %>
           </h4>
       </div>
       <%= render 'information_panel' %>

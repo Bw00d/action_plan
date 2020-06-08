@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= content_for :title, "204s" %>
 <div class="container">
   <div class="col-xs-12 col-lg-8 center-block">
     <div class="row">
@@ -8,7 +8,7 @@
           <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
           <li><%= link_to "202", "../#{@plan.id}/202" %></li>
           <li><%= link_to "203", "../#{@plan.id}/203" %></li>
-          <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+          <li class="selected"><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
         </ul>
         </div>
       <div class="masking-tape"></div>

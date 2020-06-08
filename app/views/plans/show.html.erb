@@ -113,21 +113,21 @@
 
 
 <script type="text/javascript">
-  $(document).on("turbolinks:load", function() {
+  $(document).ready(function() {
     id = "<%= @plan.id %>"
     $('.tabrow li').removeClass('selected');
     $('li#'+ id).addClass('selected');
 
 
-    var input = document.getElementById('best_in_place_objective_104_description');
+    // var input = document.getElementById('best_in_place_objective_104_description');
 
-    input.onkeydown = function() {
-        var key = event.keyCode || event.charCode;
-        var content = this.text;
+    // input.onkeydown = function() {
+    //     var key = event.keyCode || event.charCode;
+    //     var content = this.text;
 
-        if( key == 8 || key == 46 )
-            alert(content);
-    };
+    //     if( key == 8 || key == 46 )
+    //         alert(content);
+    // };
   });
 
 </script>

@@ -156,7 +156,8 @@
 </div>
 
 <script type="text/javascript">
-  $(document).on("turbolinks:load", function() {
+  // $(document).on("turbolinks:load", function() {
+    $(document).ready(function() {
     id = "<%= @assignment.id %>"
     $('.tabrow li').removeClass('selected');
     $('li#'+ id).addClass('selected');
