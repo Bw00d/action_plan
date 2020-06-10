@@ -1,6 +1,6 @@
 
 <%= content_for :title, "203" %>
-<div id="incident-objectives">
+<div id="organization-assignments">
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
 
@@ -17,147 +17,218 @@
           </div>
         <div class="masking-tape"></div>
       </div>
-
-    <div class="row">
-      <div class=" center form-row top-row">
-        <div class="col-xs-6">
-          <h4><strong>Organization Assignment List</strong></h4>
-        </div>
-        <div class="col-xs-6 bl small-box">
-          <span class="small">Date<br>  
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row">
-
-        <div class="col-xs-6 small-box">
-          <span class="small">INCIDENT NAME</span><br>
-            <%= @incident.name %>
-        </div>
-        <div class="col-xs-6 bl small-box">
-           <span class="small">OPERATIONAL PERIOD</span><br>
-           0800 - 2200
-        </div>
-      </div>
-    </div>
+  
 
 
-    <div class="row">
-      <div class="center">
-        <div class="col-xs-6 split-left header-row">
-          COMMAND AND GENERAL STAFF
+      <div class="row">
+        <div class="left-column col-xs-6"> <!-- Left Column-->
+          <div class="row">
+            <div class="col-xs-12 content-box top-row">
+              <h4 ><strong>ORGANIZATION ASSIGNMENT LIST</strong></h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 content-box ">
+          <span class="small">INCIDENT NAME</span>
+            <span class="lg-padding-left"><%= @incident.name %></span>
         </div>
-        <div class="col-xs-6 split-right header-row">
-          OPERATIONS  
-        </div>
-      </div>
-    </div>
-    
+          </div>
+          <div class="row">
+            <div class="col-xs-12 content-box header-row"> COMMAND AND GENERAL STAFF </div>
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">IC/UCs</div>      
+            <div class="content-box col-xs-6"></div>      
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">Deputy</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">Safety Officer</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">Information Officer</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">Liason Officer</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-12 header-row">AGENCY REPRESENTATIVES</div>     <!-- Agency Reps-->        
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
 
-    <!-- Overhead rows -->
-    <div class="row">
-      <div class=" center form-row">
-        <div class="col-xs-3  small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row">
-        <div class="col-xs-3  small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row">
-        <div class="col-xs-3  small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-        <div class="col-xs-3 bl small-box">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row header-row">
-        RESOURCES ASSIGNED
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row">
-        <div class="col-xs-4  small-box"><span class="small">RESOURCE DESIGNATOR</span> </div>
-        <div class="col-xs-5 bl small-box"><span class="small">LEADER</span> </div>
-        <div class="col-xs-1 bl small-box"><span class="small"># PERS.</span></div>
-        <div class="col-xs-1 bl small-box"><span class="small">LWD</span></div>
-        <div class="col-xs-1 bl small-box"><span class="small">LOCATION</span></div>
-          
-      </div>
-    </div>
-    <!-- REPLACE WITH RESOURCES LIST -->
-    <div class="row">
-      <div class=" center form-row">
-        <div class="col-xs-4  small-box"><span class="small"></span></div>
-        <div class="col-xs-5 bl small-box"><span class="small"></span> </div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row">
-        <div class="col-xs-4  small-box"><span class="small"></span></div>
-        <div class="col-xs-5 bl small-box"><span class="small"></span> </div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row">
-        <div class="col-xs-4  small-box"><span class="small"></span></div>
-        <div class="col-xs-5 bl small-box"><span class="small"></span> </div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-        <div class="col-xs-1 bl small-box"><span class="small"></span></div>
-      </div>
-    </div>
-    <!--  End -->
-    <div class="row">
-      <div class=" center form-row short-rows">
-        <span class="small">CONTROL OPERATIONS</span><br>
-          <%#= @assignment.control_operations %>
-          <%#= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row short-rows">
-        <span class="small">SPECIAL INSTRUCTIONS</span><br>
-          <%#= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
-      </div>
-    </div>
-    <div class="row">
-      <div class=" center form-row header-row">
-          COMMUNICATIONS SUMMARY
-      </div>
-    </div>
-    <%#= render 'commo_plan' %>
-  </br>
-    <%#= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          <div class="row">
+            <div class="content-box col-xs-12 header-row">PLANNING SECTION</div>     <!-- Planning Section-->        
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">Chief</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">Deputy</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">SITL</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">RESL</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">DMOB</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6">DOCL</div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+
+          <div class="row">
+            <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>     <!-- Logistics Section-->        
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+
+          <div class="row">
+            <div class="content-box col-xs-12">Prepared by:</div>     <!-- Finance Section-->        
+          </div>
+
+        </div> <!-- END LEFT COLUMN-->    
+
+        <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
+          <div class="row">
+            <div class="col-xs-12 content-box top-row">
+              <span class="small">DATE </span>
+              <span class="lg-padding-left"><%= @plan.date.try(:strftime,"%-m/%d/%y") %></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 content-box">
+               <span class="small">OPERATIONAL PERIOD</span>
+               <span class="lg-padding-left">0800 - 2200</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 content-box header-row"> OPERATIONS </div>
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+
+          <div class="row">
+            <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>     <!-- Finance Section-->        
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+          <div class="row">
+            <div class="content-box col-xs-6"></div>      
+            <div class="content-box col-xs-6"></div>       
+          </div>
+
+          <div class="row">
+            <div class="content-box col-xs-12">Total # Personnel:</div>     <!-- Finance Section-->        
+          </div>
+        </div> <!-- END RIGHT COLUMN -->
+      </div> 
+
     </div>
   </div>
 </div>

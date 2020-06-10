@@ -242,7 +242,7 @@ span.plans-button {
 .form-row {
   position: relative;
   border-bottom: 1px solid black;
-  min-height: 40px;
+  min-height: 30px;
   border-left: 1px solid black;
   border-right: 1px solid black;
 }
@@ -255,7 +255,7 @@ span.plans-button {
 .small-box {
   padding-right: 0;
   padding-left: 5px;
-  min-height: 40px;
+  min-height: 30px;
 }
 .bl {
   border-left: 1px solid black;
@@ -320,6 +320,25 @@ h1.header {
 .split-left {
   position: relative;
   border-bottom: 1px solid black;
-  min-height: 40px;
+  min-height: 35px;
   border-left: 1px solid black;
+}
+
+.content-box {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  height: 30px;
+  margin: 0;
+  padding: 8px 5px;
+}
+.right-column {
+  border-right: 1px solid black;
+}
+#organization-assignments {
+  h4 {
+    padding-bottom: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
 }
