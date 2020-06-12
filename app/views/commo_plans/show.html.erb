@@ -59,7 +59,7 @@
             <th class="c3"><span class="">Remarks</span></th>
           </thead>
 
-          <% @commo_plan.commo_items.each do |i| %>
+          <% @commo_plan.commo_items.order(created_at: :asc).each do |i| %>
             <tr class="radio-channel">
                 <td class="c1"><span class=""><%= best_in_place i,  :zone, :as => :input %></span></td>
                 <td class="c1"><span class=""><%= best_in_place i,  :ch_num, :as => :input %></span></td>
