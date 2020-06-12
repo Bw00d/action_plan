@@ -1,0 +1,261 @@
+
+
+
+
+<%= content_for :title, "205" %>
+  <div class="container">
+    <div class="col-xs-12 col-lg-10 center-block">
+
+
+      <div class="row">
+        <div class="plan-panel-head">
+          <ul class="tabrow">
+            <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+            <li><%= link_to "Cover", "../../#{@plan.id}/cover" %></li>
+            <li><%= link_to "202", "../../#{@plan.id}/202" %></li>
+            <li><%= link_to "203", "../../#{@plan.id}/203" %></li>
+            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+            <li class="selected"><%= link_to "205", incident_plan_commo_plan_path(@incident, @plan, @plan.commo_plan) %></li>
+          </ul>
+          </div>
+        <div class="masking-tape"></div>
+      </div>
+  
+<div id="commo-plan">
+
+
+      <div class="row">
+        <div class="tall-row top-row"> <!-- Left Column-->
+          <h4 class="center"><strong>INCIDENT RADIO COMMUNICATIONS PLAN(ICS 205)</strong></h4>
+        </div>
+        <div class="tall-row">
+          <div class="col-xs-3 r-b">
+            <span class=""><strong>1. Incident Name</strong></span><br>
+            <span class="lg-padding-left"><%= @incident.name %></span>
+          </div>
+          <div class="col-xs-5 r-b"><span class=""><strong>2. Date/Time Prepared:</strong></span><br>
+            <span class="lg-padding-left"></span></div>
+          <div class="col-xs-4 "><span class=""><strong>3. Operational Period:</strong></span><br>
+            <%= best_in_place @commo_plan,  :ops_period, :as => :input, :place_holder => "(ENTER OPS PERIOD)", class: "sm-padding-left" %>
+          </div>
+        </div>
+        <div class="head-spacer">
+          
+        </div>
+
+        <div class="wrapper">
+          <div class="c1">
+
+            <div class="tbl-hd"><span class="">Zone</span></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c1">
+            <div class="tbl-hd"><span class="">Ch #</span></div>
+            <div class="content-box">1</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+
+          <div class="c3">
+            <div class="tbl-hd"><span class="">Channel Name</span></div>
+            <div class="content-box">TAC 1</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c3">
+            <div class="tbl-hd"><span class="">Function</span></div>
+            <div class="content-box">TAC 1</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c2">
+            <div class="tbl-hd"><span class="">RX Freq</span></div>
+            <div class="content-box">168.0000</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c2">
+            <div class="tbl-hd"><span class="">Tone</span></div>
+            <div class="content-box">127.3</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c2">
+            <div class="tbl-hd"><span class="">TX Freq</span></div>
+            <div class="content-box">168.0000</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c2">
+            <div class="tbl-hd"><span class="">Tone</span></div>
+            <div class="content-box">127.3</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c4">
+            <div class="tbl-hd"><span class="">Assignment</span></div>
+            <div class="content-box">DIV W</div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+          <div class="c3 r-b">
+            <div class="tbl-hd"><span class="">Remarks</span></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+            <div class="content-box"></div>
+          </div>
+        </div>      <!-- end wrapper -->
+      </div>
+      <div class="row">
+        <div class="form-row xs-padding-top">
+          <span class=" sm-padding-left"><strong>Prepared by:</strong></span>
+          <span class=" lg-padding-left">Name:</span> 
+          <%= best_in_place @commo_plan,  :prepared_by, :as => :input, :place_holder => "(ENTER NAME)", class: "sm-padding-left" %>
+          <span class=" huge-padding-left">Signature:</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-row">
+          <div class="col-xs-3 r-b xs-padding-top">
+            <span class=" sm-padding-left"><strong>ICS 205</strong></span>
+          </div>
+          <div class="col-xs-9 xs-padding-top">
+            <span class=" sm-padding-left"><strong>Date/Time:</strong></span>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>

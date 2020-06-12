@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200606200633) do
+ActiveRecord::Schema.define(version: 20200611011807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,33 @@ ActiveRecord::Schema.define(version: 20200606200633) do
     t.text "control_operations"
     t.text "special_instructions"
     t.integer "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "commo_items", force: :cascade do |t|
+    t.string "zone"
+    t.string "ch_num"
+    t.string "function"
+    t.string "channel_name"
+    t.string "assignment"
+    t.string "rx_freq"
+    t.string "rx_tone"
+    t.string "tx_freq"
+    t.string "tx_tone"
+    t.string "mode"
+    t.integer "commo_plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "commo_plans", force: :cascade do |t|
+    t.integer "plan_id"
+    t.string "date_prepared"
+    t.string "ops_period"
+    t.text "special_instructions"
+    t.string "prepared_by"
+    t.string "date_signed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,76 @@
+#commo-plan {
+  font-size: .70em;
+  .plan-panel-head {
+    font-size: 1em !important;
+  }
+  .top-row {
+    text-align: center;
+  }
+  .c1 {
+    width:5%;
+    
+    float: left;
+    display: inline-block;
+  }
+  .c2 {
+    width:8%;
+    
+    float: left;
+    display: inline-block;
+  }
+  .c3 {
+    width:15%;
+    
+    float: left;
+    display: inline-block;
+  }
+  .c4 {
+    width:13%;
+    
+    float: left;
+    display: inline-block;
+  }
+  h4 {
+    margin-top: 5px;
+  }
+}
+.r-b {
+  border-right: 1px solid black;
+  min-height: 30px;
+}
+.tall-row {
+  height: 30px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.tbl-hd {
+  padding: 0px;
+  text-align: center;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.head-spacer {
+  background-color: #f3f3f3;
+  min-height: 13px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.wrapper {                  /* this is to make sure border comes all the way to edge. */
+  margin-right: -1px;       /*  otherwise it is 1px shy */
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: pink;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: pink;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: pink;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: pink;
+}
+

@@ -1,0 +1,72 @@
+<%= form_with(model: commo_item, local: true) do |form| %>
+  <% if commo_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(commo_item.errors.count, "error") %> prohibited this commo_item from being saved:</h2>
+
+      <ul>
+      <% commo_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :zone %>
+    <%= form.text_field :zone, id: :commo_item_zone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ch_num %>
+    <%= form.text_field :ch_num, id: :commo_item_ch_num %>
+  </div>
+
+  <div class="field">
+    <%= form.label :function %>
+    <%= form.text_field :function, id: :commo_item_function %>
+  </div>
+
+  <div class="field">
+    <%= form.label :channel_name %>
+    <%= form.text_field :channel_name, id: :commo_item_channel_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assignment %>
+    <%= form.text_field :assignment, id: :commo_item_assignment %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rx_freq %>
+    <%= form.text_field :rx_freq, id: :commo_item_rx_freq %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rx_tone %>
+    <%= form.text_field :rx_tone, id: :commo_item_rx_tone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tx_freq %>
+    <%= form.text_field :tx_freq, id: :commo_item_tx_freq %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tx_tone %>
+    <%= form.text_field :tx_tone, id: :commo_item_tx_tone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mode %>
+    <%= form.text_field :mode, id: :commo_item_mode %>
+  </div>
+
+  <div class="field">
+    <%= form.label :commo_plan_id %>
+    <%= form.number_field :commo_plan_id, id: :commo_item_commo_plan_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

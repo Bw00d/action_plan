@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Zone:</strong>
+  <%= @commo_item.zone %>
+</p>
+
+<p>
+  <strong>Ch num:</strong>
+  <%= @commo_item.ch_num %>
+</p>
+
+<p>
+  <strong>Function:</strong>
+  <%= @commo_item.function %>
+</p>
+
+<p>
+  <strong>Channel name:</strong>
+  <%= @commo_item.channel_name %>
+</p>
+
+<p>
+  <strong>Assignment:</strong>
+  <%= @commo_item.assignment %>
+</p>
+
+<p>
+  <strong>Rx freq:</strong>
+  <%= @commo_item.rx_freq %>
+</p>
+
+<p>
+  <strong>Rx tone:</strong>
+  <%= @commo_item.rx_tone %>
+</p>
+
+<p>
+  <strong>Tx freq:</strong>
+  <%= @commo_item.tx_freq %>
+</p>
+
+<p>
+  <strong>Tx tone:</strong>
+  <%= @commo_item.tx_tone %>
+</p>
+
+<p>
+  <strong>Mode:</strong>
+  <%= @commo_item.mode %>
+</p>
+
+<p>
+  <strong>Commo plan:</strong>
+  <%= @commo_item.commo_plan_id %>
+</p>
+
+<%= link_to 'Edit', edit_commo_item_path(@commo_item) %> |
+<%= link_to 'Back', commo_items_path %>

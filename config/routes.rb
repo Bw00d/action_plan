@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :commo_items
+  resources :commo_plans
   resources :activities
   resources :actions
   resources :incidents
@@ -20,11 +22,10 @@ Rails.application.routes.draw do
   resources :incidents do
     resources :plans do
       resources :assignments
+      resources :commo_plans
     end
   end
-  # resources :plans do
-  #   resources :assignments
-  # end
+ 
 
   # form_for is easier to use with a resourceful route
   resources :contact_forms, only: [:create]
@@ -33,4 +34,5 @@ Rails.application.routes.draw do
   get 'incidents/:id/plans/:id/cover'      => 'plans#cover'
   get 'incidents/:id/plans/:id/202'        => 'plans#incident_objectives'
   get 'incidents/:id/plans/:id/203'        => 'plans#incident_organization'
+  # get 'incidents/:id/plans/:id/205'        => 'plans#commo_plan'
 end

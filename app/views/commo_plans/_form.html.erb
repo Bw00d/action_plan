@@ -1,0 +1,47 @@
+<%= form_with(model: commo_plan, local: true) do |form| %>
+  <% if commo_plan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(commo_plan.errors.count, "error") %> prohibited this commo_plan from being saved:</h2>
+
+      <ul>
+      <% commo_plan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :incident_id %>
+    <%= form.number_field :incident_id, id: :commo_plan_incident_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_prepared %>
+    <%= form.datetime_select :date_prepared, id: :commo_plan_date_prepared %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ops_period_start %>
+    <%= form.datetime_select :ops_period_start, id: :commo_plan_ops_period_start %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ops_period_end %>
+    <%= form.datetime_select :ops_period_end, id: :commo_plan_ops_period_end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :special_instructions %>
+    <%= form.text_area :special_instructions, id: :commo_plan_special_instructions %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prepared_by %>
+    <%= form.text_area :prepared_by, id: :commo_plan_prepared_by %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
