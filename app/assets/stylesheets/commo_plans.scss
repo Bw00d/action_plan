@@ -1,4 +1,21 @@
 #commo-plan {
+  table {
+    width: 100%;
+    thead {
+      height: 20px;
+      border: 1px solid black;
+    }
+    th {
+      text-align: center;
+      border-right: 1px solid black;
+    }
+    tr {
+      height: 30px;
+    }
+    td {
+      border-right: 1px solid black;
+    }
+  }
   font-size: .70em;
   .plan-panel-head {
     font-size: 1em !important;
@@ -8,31 +25,26 @@
   }
   .c1 {
     width:5%;
-    
-    float: left;
-    display: inline-block;
+
   }
   .c2 {
     width:8%;
-    
-    float: left;
-    display: inline-block;
+
   }
   .c3 {
     width:15%;
-    
-    float: left;
-    display: inline-block;
+
   }
   .c4 {
     width:13%;
-    
-    float: left;
-    display: inline-block;
+
   }
   h4 {
     margin-top: 5px;
   }
+}
+.special-instructions {
+  height: 75px;
 }
 .r-b {
   border-right: 1px solid black;
@@ -49,13 +61,14 @@
   text-align: center;
   border-left: 1px solid black;
   border-bottom: 1px solid black;
+  width: 100%;
+  overflow: hidden;
 }
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
   border-right: 1px solid black;
   border-left: 1px solid black;
-  border-bottom: 1px solid black;
 }
 .wrapper {                  /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;       /*  otherwise it is 1px shy */
@@ -72,5 +85,34 @@
 }
 :-moz-placeholder { /* Firefox 18- */
   color: pink;
+}
+
+.radio-channel {
+  min-height: 30px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  text-align: center;
+  :hover {
+    .new-channel {
+      display: block;
+    }
+  }
+  verticle-align: middle;
+  input {
+    width: 100%;
+  }
+}
+.new-channel {
+  postion: absolute;
+  background-color: yellow;
+  margin-left: -35px;
+  height: 30px;
+  width: 30px;
+}
+.special-instructions {
+  padding:10px;
+  textarea {
+    width: 100%;
+  }
 }
 

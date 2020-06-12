@@ -40,13 +40,15 @@ class CommoItemsController < ApplicationController
   # PATCH/PUT /commo_items/1
   # PATCH/PUT /commo_items/1.json
   def update
+    @commo_item = CommoItem.find params[:id]
+
     respond_to do |format|
-      if @commo_item.update(commo_item_params)
-        format.html { redirect_to @commo_item, notice: 'Commo item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @commo_item }
+      if @commo_item.update_attributes(commo_item_params)
+        format.html { redirect_back(fallback_location: root_path) }
+        format.json { respond_with_bip(@commo_item) }
       else
-        format.html { render :edit }
-        format.json { render json: @commo_item.errors, status: :unprocessable_entity }
+        format.html { render :action => "show" }
+        format.json { respond_with_bip(@commo_item) }
       end
     end
   end
