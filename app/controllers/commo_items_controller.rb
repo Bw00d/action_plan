@@ -1,5 +1,7 @@
 class CommoItemsController < ApplicationController
   before_action :set_commo_item, only: [:show, :edit, :update, :destroy]
+  include SkipAuthorization
+  skip_before_action :authenticate_user!
 
   # GET /commo_items
   # GET /commo_items.json
@@ -28,10 +30,10 @@ class CommoItemsController < ApplicationController
 
     respond_to do |format|
       if @commo_item.save
-        format.html { redirect_to @commo_item, notice: 'Commo item was successfully created.' }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { render :show, status: :created, location: @commo_item }
       else
-        format.html { render :new }
+        format.html { render :show }
         format.json { render json: @commo_item.errors, status: :unprocessable_entity }
       end
     end
