@@ -241,9 +241,8 @@ span.plans-button {
 }
 .form-row {
   position: relative;
-  border-bottom: 1px solid black;
-  min-height: 30px;
-  border-left: 1px solid black;
+  border-top: 1px solid black;
+  height: 30px;
   border-right: 1px solid black;
 }
 .top-row {
@@ -285,6 +284,7 @@ span.plans-button {
   text-align: center;
   background-color: #f3f3f3;
   padding-top: 10px;
+  border-left: 1px solid black;
 }
 #weather-form {
   textarea {
