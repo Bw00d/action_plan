@@ -112,27 +112,28 @@
           <% end %>
         </table>
       </div>
-    </div>
     
-    <!--  End -->
-      <div class="center r-b form-box short-rows xs-padding-left">
-        <span class="small">CONTROL OPERATIONS</span><br>
-          <%#= @assignment.control_operations %>
-          <%= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %>
+      <div class="row">
+        <div class="center r-b form-box short-rows xs-padding-left">
+          <span class="small">CONTROL OPERATIONS</span><br>
+            <%#= @assignment.control_operations %>
+            <%= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %>
+        </div>
+        <div class="bl center form-row short-rows xs-padding-left">
+          <span class="small">SPECIAL INSTRUCTIONS</span><br>
+            <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
+        </div>
+        <div class=" center form-row header-row">
+            COMMUNICATIONS SUMMARY
+        </div>
+        <%= render 'commo_plan' %>
+        </br>
+        <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
       </div>
-      <div class="bl center form-row short-rows xs-padding-left">
-        <span class="small">SPECIAL INSTRUCTIONS</span><br>
-          <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
-      </div>
-      <div class=" center form-row header-row">
-          COMMUNICATIONS SUMMARY
-      </div>
-    <%= render 'commo_plan' %>
-  </br>
-    <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
     </div>
   </div>
 </div>
+
 
 <script type="text/javascript">
   // $(document).on("turbolinks:load", function() {
