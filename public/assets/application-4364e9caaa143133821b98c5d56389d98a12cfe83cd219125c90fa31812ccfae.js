@@ -26208,6 +26208,9 @@ jQuery.fn.best_in_place = function () {
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
 (function() {
   (function() {
     (function() {
@@ -26820,6 +26823,19 @@ jQuery.fn.best_in_place = function () {
   App.cable = ActionCable.createConsumer();
 
 }).call(this);
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
+$(document).on("turbolinks:load", function() {
+
+  $('.blank-row').hover(function() {
+        $('.commo-item-form').first().show();
+      }, 
+      function () {
+        $('.commo-item-form').first().hide();
+      }
+    );
+});
 // Replace Rails's default confirm popup with our own version
 $.rails.allowAction = function (link) {
     "use strict";
@@ -26983,6 +26999,12 @@ $(document).on("turbolinks:load", function() {
     $("#objective-form").show();
   });
 
+  // Incident Activites
+  $("#new-activity").click(function () {
+    $("#new-activity").hide();
+    $("#activity-form").show();
+  });
+
   // Incident Resources
 
   $("#new-resource").click(function () {
@@ -26998,6 +27020,9 @@ $(document).on("turbolinks:load", function() {
 //         localStorage.setItem('bgColor', this.value);
 //     })
 //     .change();
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
