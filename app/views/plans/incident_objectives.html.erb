@@ -16,7 +16,7 @@
         <div class="masking-tape"></div>
       </div>
       <div class="row">
-        <div class="col-xs-12 form-row bl top-row">
+        <div class="col-xs-12 title-row bl top-row">
           <div class="col-xs-5">
             <h4><strong>INCIDENT OBJECTIVES</strong></h4>
           </div>
@@ -31,21 +31,22 @@
               7/21/19
             </span>
           </div>
-          <div class="col-xs-2 bl form-box">
+          <div class="col-xs-2 bl form-box no-padding-right">
             <span class="small">3. TIME PREPARED<br>
-              <%= best_in_place @plan, :time_prepared, :as => :input, :place_holder => "Add Time Here", class: 'bip-input' %>
+              <span class="neg-padding-top"><%= best_in_place @plan, :time_prepared, :as => :input, :place_holder => "Add Time Here", class: 'bip-input' %></span>
             </span>
           </div>
         </div>
       </div>
+
       <div class="row">
-        <div class="col-xs-12 form-row">
+        <div id="ops-period" class="col-xs-12 title-row">
           <span class="small">4. OPERATIONAL PERIOD</span><br>
           <%= best_in_place @plan, :ops_period, :as => :input, :place_holder => "Add Time Range Here", class: 'bip-input' %>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 form-row tall-rows">
+        <div id="control-objectives" class="col-xs-12">
           <span class="small">5. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
             <% @plan.objectives.each do |o| %>
             <h4><%= o.order %> <%= o.description %></h4>
@@ -53,7 +54,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 form-row medium-rows">
+        <div id="weather-forecast" class="col-xs-12 form-row">
           <% if @incident.wildfire? %>
             <span class="small">6. WEATHER FORECAST FOR OPERATIONAL PERIOD</span><br>
           <% else %>
@@ -63,13 +64,13 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 form-row short-rows">
+        <div id="safety-message" class="col-xs-12">
           <span class="small">7. GENERAL SAFETY MESSAGE</span><br>
             <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'safety-form'  %>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 form-row">
+        <div id="attachments" class="col-xs-12">
           <span class="small">8. ATTACHMENTS</span><br>
             <ul class="small col-xs-3">
               <li><%= best_in_place @plan, :org_list, :as => :checkbox  %>  ORGANIZATION LIST</li>
@@ -90,14 +91,14 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 form-row">
+        <div class="prepared-by-row col-xs-12">
             <div class="col-xs-6">
               <span class="small small-box">9. PREPARED BY</span><br>
-              <%= best_in_place @plan, :prepared_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %>
+              <span class="lg-padding-left"><%= best_in_place @plan, :prepared_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %></span>
             </div>
             <div class="col-xs-6 bl">
               <span class="small small-box">10. APPROVED BY</span><br>
-              <%= best_in_place @plan, :approved_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %>
+              <span class="lg-padding-left"><%= best_in_place @plan, :approved_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %></span>
             </div>
         </div>
       </div>

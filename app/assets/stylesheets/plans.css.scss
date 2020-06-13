@@ -113,7 +113,7 @@ $aqua: #07c5ff;
 span.plans-button {
   margin-top: -7px;
 }
-/* Objectives */
+/* Incident Objectives */
 #objectives-list {
   border-left: 1px solid #DDD;
   border-right: 1px solid #DDD;
@@ -176,6 +176,12 @@ span.plans-button {
 }
 #iap-content {
   border-bottom: 1px solid #DDD !important;
+}
+.title-row {
+  border-right: 1px solid black;
+  div {
+    height: 40px;
+  }
 }
 /* Resources*/
 
@@ -260,6 +266,38 @@ span.plans-button {
   border-left: 1px solid black;
 }
 #incident-objectives {
+  #ops-period {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+  }
+  #control-objectives {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    min-height: 300px;
+  }
+  #weather-forecast {
+    border-left: 1px solid black;
+    min-height: 200px;
+  }
+  #safety-message {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    min-height: 100px;
+  }
+  #attachments {
+    overflow: hidden;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+  }
+  .prepared-by-row {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+  }
   ul {
     list-style: none;
   }
