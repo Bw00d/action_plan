@@ -18,8 +18,8 @@
             </div>
           <div class="masking-tape"></div>
         <div class="form-row top-row">
-          <div class="col-xs-6 form-box">
-            <h4><strong>DIVISION ASSIGNMENT LIST</strong></h4>
+          <div class="col-xs-6 center-h-container form-box">
+            <h4 class="" ><strong>DIVISION ASSIGNMENT LIST</strong></h4>
           </div>
           <div class="col-xs-2 form-box">
             <span class="small"># PERSONNEL<br>
@@ -121,7 +121,7 @@
         </div>
         <div class="bl center form-row short-rows xs-padding-left">
           <span class="small">SPECIAL INSTRUCTIONS</span><br>
-            <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
+            <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "(ADD CONTENT OR LEAVE BLANK)",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
         </div>
         <div class=" center form-row header-row">
             COMMUNICATIONS SUMMARY
