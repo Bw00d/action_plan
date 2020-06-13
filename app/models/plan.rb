@@ -5,6 +5,7 @@ class Plan < ApplicationRecord
   has_many :objectives, dependent: :destroy
   has_many :activities, dependent: :destroy
   has_one :commo_plan
+  has_one :safety_message
   validates :user_id, presence: true
   # validates :date, presence: true, uniqueness: true
   validates_uniqueness_of :date, :scope => :incident_id

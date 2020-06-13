@@ -16,7 +16,6 @@ class CommoPlansController < ApplicationController
         format.html { render 'index' }
       end
     end
-
   end
 
   # GET /commo_plans/1

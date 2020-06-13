@@ -1,0 +1,37 @@
+<%= form_with(model: safety_message, local: true) do |form| %>
+  <% if safety_message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(safety_message.errors.count, "error") %> prohibited this safety_message from being saved:</h2>
+
+      <ul>
+      <% safety_message.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :hazards %>
+    <%= form.text_area :hazards, id: :safety_message_hazards %>
+  </div>
+
+  <div class="field">
+    <%= form.label :narrative %>
+    <%= form.text_area :narrative, id: :safety_message_narrative %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prodced_by %>
+    <%= form.text_field :prodced_by, id: :safety_message_prodced_by %>
+  </div>
+
+  <div class="field">
+    <%= form.label :plan_id %>
+    <%= form.number_field :plan_id, id: :safety_message_plan_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

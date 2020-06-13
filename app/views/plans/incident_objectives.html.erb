@@ -11,6 +11,7 @@
             <li><%= link_to "203", "../#{@plan.id}/203" %></li>
             <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
             <li><%= link_to "205", incident_plan_commo_plan_path(@incident, @plan, @plan.commo_plan) %></li>
+            <li><%= link_to "Safety Message", incident_plan_safety_message_path(@incident, @plan, @plan.safety_message) %></li>
             </ul>
           </div>
         <div class="masking-tape"></div>

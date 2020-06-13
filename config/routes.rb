@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :safety_messages
   resources :commo_items
   resources :commo_plans
   resources :activities
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
     resources :plans do
       resources :assignments
       resources :commo_plans
+      resources :safety_messages
     end
   end
  

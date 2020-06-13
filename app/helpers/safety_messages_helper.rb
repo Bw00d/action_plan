@@ -1,0 +1,2 @@
+module SafetyMessagesHelper
+end
