@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Freqs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Assignment</th>
+      <th>Commo item</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @freqs.each do |freq| %>
+      <tr>
+        <td><%= freq.assignment_id %></td>
+        <td><%= freq.commo_item_id %></td>
+        <td><%= link_to 'Show', freq %></td>
+        <td><%= link_to 'Edit', edit_freq_path(freq) %></td>
+        <td><%= link_to 'Destroy', freq, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Freq', new_freq_path %>

@@ -1,0 +1,27 @@
+<%= form_with(model: freq, local: true) do |form| %>
+  <% if freq.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(freq.errors.count, "error") %> prohibited this freq from being saved:</h2>
+
+      <ul>
+      <% freq.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :assignment_id %>
+    <%= form.number_field :assignment_id, id: :freq_assignment_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :commo_item_id %>
+    <%= form.number_field :commo_item_id, id: :freq_commo_item_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

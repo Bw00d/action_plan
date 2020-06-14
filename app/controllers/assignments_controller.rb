@@ -17,6 +17,7 @@ class AssignmentsController < ApplicationController
     @plan = Plan.find(params[:plan_id])
     @incident = Incident.find(@plan.incident_id)
     @assignments = @plan.assignments
+    @freq = Freq.new
   end
 
   # GET /assignments/new

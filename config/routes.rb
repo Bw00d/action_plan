@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :freqs
   resources :safety_messages
   resources :commo_items
   resources :commo_plans
