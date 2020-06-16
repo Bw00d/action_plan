@@ -136,4 +136,11 @@ input.new-commo-item {
 .bb {
   border-bottom: 1px solid black;
 }
-
+a.add-freqs {
+  float: left;
+  overflow: hidden;
+}
+.commo-items {
+  margin-right: 20px;
+  font-weight: 500;
+}

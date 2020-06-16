@@ -17,7 +17,7 @@ class AssignmentsController < ApplicationController
     @plan = Plan.find(params[:plan_id])
     @incident = Incident.find(@plan.incident_id)
     @assignments = @plan.assignments
-    @freq = Freq.new
+    # @freq = Freq.new
   end
 
   # GET /assignments/new
@@ -55,7 +55,7 @@ class AssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @assignment.update_attributes(assignment_params)
-        format.html { redirect_to :back }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { respond_with_bip(@assignment) }
       else
         format.html { render :action => "edit" }
@@ -85,6 +85,7 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:designator, :control_operations, :special_instructions, :plan_id)
+      params.require(:assignment).permit(:designator, :control_operations, :special_instructions,
+                                         :plan_id, commo_item_ids: [])
     end
 end

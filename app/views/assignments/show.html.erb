@@ -124,11 +124,11 @@
             <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "(ADD CONTENT OR LEAVE BLANK)",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
         </div>
         <div class=" center form-row header-row">
-            COMMUNICATIONS SUMMARY
+            COMMUNICATIONS SUMMARY <%= link_to '(Edit)', 'javascript:;', id: 'add-freqs', class: "" %>
         </div>
         <%= render 'commo_plan' %>
         </br>
-        <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "float-right btn btn-danger" %>
       </div>
     </div>
   </div>

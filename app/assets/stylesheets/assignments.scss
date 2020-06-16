@@ -86,13 +86,16 @@ a.new-freq-button {
   position: absolute;
   margin-left: -10px;
   margin-top: -12px;
+  display: none;
 }
 a.new-freq-button:hover {
     text-decoration: none;
     color: black;
 
   }
+
 #freq-form {
+  display: none;
   li {
     display: inline;
   }
