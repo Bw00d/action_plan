@@ -45,8 +45,6 @@
           </div>
         </div>
       </div>
-
-
     
 
       <!-- Overhead rows -->
@@ -86,12 +84,25 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div id="assign-resources-row" class="row">
         <div class=" center form-row header-row">
-          RESOURCES ASSIGNED
+          <span id="assign-resources-button" class="header-button">ADD</span>RESOURCES ASSIGNED
         </div>
       </div>
       <div class="row">
+        <div id="resource-assignments-form">
+          <%= form_for @assignment do |f| %>
+            <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-success tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-resource-assignments-form', class: 'btn btn-default tiny' %></div>
+          <ul>
+            <% @incident.resources.order(:position).each do |r| %>
+              <li class="commo-items"><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
+              
+                      <%= f.label :commo_item_ids, r.position %>  -  <%= f.label :commo_item_ids, r.name %></li>
+            <% end %>
+          </ul>
+           
+          <% end %>
+        </div>
         <table class="assigned-resources">
           <thead>
             <th class="p35">RESOURCE DESIGNATOR </th>
@@ -101,7 +112,16 @@
             <th class="p8">LOCATION</th>
           </thead>
 
-          <% 8.times do %>
+          <% @assignment.assigned_resources.each do |r| %>
+          <tr>
+              <td class="p35 sm-padding-left"><%= r.name %>  <%= r.position %></td>
+              <td class="p40 sm-padding-left"><%= r.leader %></td>
+              <td class="p8 centered"><%= r.number_personnel %></td>
+              <td class="p9 centered"><%= r.lwd.try(:strftime,"%-m/%d") %></td>
+              <td class="p8 centered"></td>
+            </tr>
+          <% end %>
+          <% (8 - @assignment.assigned_resources.count).times do %>
             <tr>
               <td class="p35"></td>
               <td class="p40"></td>
@@ -123,8 +143,8 @@
           <span class="small">SPECIAL INSTRUCTIONS</span><br>
             <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "(ADD CONTENT OR LEAVE BLANK)",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
         </div>
-        <div class=" center form-row header-row">
-            COMMUNICATIONS SUMMARY <%= link_to '(Edit)', 'javascript:;', id: 'add-freqs', class: "" %>
+        <div id="add-freqs-row" class=" center form-row header-row">
+            <span id="add-freqs" class="header-button">ADD</span>COMMUNICATIONS SUMMARY
         </div>
         <%= render 'commo_plan' %>
         </br>
@@ -136,11 +156,8 @@
 
 
 <script type="text/javascript">
-  // $(document).on("turbolinks:load", function() {
-    $(document).ready(function() {
-    id = "<%= @assignment.id %>"
-    $('.tabrow li').removeClass('selected');
-    $('li#'+ id).addClass('selected');
-  });
+  id = "<%= @assignment.id %>"
+  $('.tabrow li').removeClass('selected');
+  $('li#'+ id).addClass('selected');
 
 </script>

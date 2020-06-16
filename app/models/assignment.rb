@@ -10,4 +10,12 @@ class Assignment < ApplicationRecord
     end
     items
   end
+
+  def assigned_resources
+    items = []
+    if self.resource_ids
+      self.resource_ids.each { |i| items << Resource.find(i) }
+    end
+    items
+  end
 end
