@@ -26823,6 +26823,27 @@ jQuery.fn.best_in_place = function () {
   App.cable = ActionCable.createConsumer();
 
 }).call(this);
+$(document).on("turbolinks:load", function() {
+
+ 
+
+  $('#add-freqs').click(function() {
+    $('#freq-form').show();
+  });
+  $('#cancel-freq-form').click(function() {
+    $('#freq-form').hide();
+  });
+});
+$(document).on("turbolinks:load", function() {
+
+  $('.blank-row').hover(function() {
+        $('.commo-item-form').first().show();
+      }, 
+      function () {
+        $('.commo-item-form').first().hide();
+      }
+    );
+});
 // Replace Rails's default confirm popup with our own version
 $.rails.allowAction = function (link) {
     "use strict";
@@ -26858,6 +26879,9 @@ $.rails.showConfirmationDialog = function (link) {
         $.rails.confirmed(link);
     });
 };
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
 // This file contains JS code which is used across the entire Rails application.
 
 $(document).on("turbolinks:load", function() {
@@ -27007,6 +27031,9 @@ $(document).on("turbolinks:load", function() {
 //         localStorage.setItem('bgColor', this.value);
 //     })
 //     .change();
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
