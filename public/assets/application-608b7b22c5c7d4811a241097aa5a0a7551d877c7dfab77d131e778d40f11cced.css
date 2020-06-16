@@ -19345,6 +19345,129 @@ body.swal2-iosfix {
   margin-bottom: 15px;
   padding-top: 5px;
 }
+
+/* line 41, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+table.assigned-resources {
+  border-top: 1px solid black;
+  width: 100%;
+}
+/* line 44, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+table.assigned-resources thead {
+  border-right: 1px solid black;
+}
+/* line 47, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+table.assigned-resources tr {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+/* line 51, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+table.assigned-resources td {
+  height: 30px;
+  border-right: 1px solid black;
+  font-size: .9em;
+}
+/* line 56, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+table.assigned-resources td.centered {
+  text-align: center !important;
+  padding: 0 auto;
+}
+/* line 60, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+table.assigned-resources th {
+  font-weight: 400;
+  font-size: .70em;
+  height: 30px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  padding: 5px;
+}
+
+/* line 69, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+.form-box {
+  height: 30px;
+  border-left: 1px solid black;
+  padding: 0px 5px;
+}
+
+/* line 75, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#incident-assignments textarea {
+  width: 100%;
+}
+
+/* line 79, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+a.new-freq-button {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d2d2d2;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #242424;
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -12px;
+  display: none;
+}
+
+/* line 94, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+a.new-freq-button:hover {
+  text-decoration: none;
+  color: black;
+}
+
+/* line 100, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#freq-form {
+  display: none;
+  width: 100%;
+  background-color: white;
+  z-index: 3;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  padding: 15px 0;
+}
+/* line 110, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#freq-form li {
+  display: inline;
+}
+
+/* line 116, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+.header-button {
+  background-color: #3d3d3d;
+  color: white;
+  position: absolute;
+  left: 10px;
+  padding: 2px 10px;
+  margin-top: -3px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  z-index: 3px;
+  display: none;
+}
+
+/* line 130, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+.header-button:hover {
+  padding: 3px 11px;
+  margin-top: -3px;
+  cursor: pointer;
+}
+
+/* line 135, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#resource-assignments-form {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  margin-bottom: -5px;
+  display: none;
+}
+/* line 143, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#resource-assignments-form li {
+  list-style: none;
+}
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
 .btn-dark {
   background-color: black;
@@ -19522,6 +19645,28 @@ input.new-commo-item {
   line-height: 8px;
   padding-bottom: 3px;
   color: #242424;
+}
+
+/* line 133, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
+.br {
+  border-right: 1px solid black;
+}
+
+/* line 136, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
+.bb {
+  border-bottom: 1px solid black;
+}
+
+/* line 139, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
+a.add-freqs {
+  float: left;
+  overflow: hidden;
+}
+
+/* line 143, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
+.commo-items {
+  margin-right: 20px;
+  font-weight: 500;
 }
 /* line 35, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .page-header {
@@ -20373,7 +20518,7 @@ span.plans-button {
   margin-top: -7px;
 }
 
-/* Objectives */
+/* Incident Objectives */
 /* line 117, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #objectives-list {
   border-left: 1px solid #DDD;
@@ -20461,178 +20606,225 @@ span.plans-button {
   border-bottom: 1px solid #DDD !important;
 }
 
-/* Resources*/
+/* line 180, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+.title-row {
+  border-right: 1px solid black;
+}
 /* line 182, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+.title-row div {
+  height: 40px;
+}
+
+/* Resources*/
+/* line 188, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #resource-list {
   border-left: 1px solid #DDD;
   border-left: 1px solid #DDD;
   border-right: 1px solid #DDD;
 }
 
-/* line 187, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 193, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .resources-list {
   border-bottom: 1px solid #DDD;
   padding: 10px 5px;
   display: none;
 }
-/* line 191, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 197, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .resources-list .new-resource {
   color: #a19afc;
   size: 1.2em;
 }
-/* line 195, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 201, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .resources-list ul {
   padding-left: 20px;
 }
 
-/* line 199, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 205, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #resource-form {
   display: none;
   position: relative;
 }
-/* line 202, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 208, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #resource-form textarea {
   width: 100%;
 }
-/* line 205, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 211, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #resource-form input {
   width: 100%;
 }
 
 /* IAP */
-/* line 212, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 218, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #iap-row {
   border-left: 1px solid #DDD;
   border-right: 1px solid #DDD;
 }
 
-/* line 216, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 222, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #cover {
   padding-top: 75px;
   padding-bottom: 100px;
   text-align: center;
   border: 2px solid black;
 }
-/* line 221, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 227, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #cover h1 {
   font-weight: 700;
   font-size: 3em;
 }
-/* line 225, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 231, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #cover h2 {
   font-weight: 700;
   font-size: 2em;
 }
-/* line 229, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 235, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #cover #picture {
   margin-top: 10px;
   margin-bottom: 20px;
   width: 75%;
   height: auto;
 }
-/* line 235, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 241, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #cover .cost-code {
   margin-top: 30px;
 }
-/* line 237, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 243, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #cover .cost-code h3 {
   font-weight: 700;
 }
 
-/* line 242, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 248, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .form-row {
   position: relative;
-  border-bottom: 1px solid black;
-  min-height: 30px;
-  border-left: 1px solid black;
+  border-top: 1px solid black;
+  height: 30px;
   border-right: 1px solid black;
 }
 
-/* line 249, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 254, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .top-row {
   border-top: 1px solid black;
 }
 
-/* line 252, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 257, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .small {
   font-size: .70em;
 }
 
-/* line 255, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 260, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .small-box {
   padding-right: 0;
   padding-left: 5px;
   min-height: 30px;
 }
 
-/* line 260, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 265, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .bl {
   border-left: 1px solid black;
 }
 
-/* line 264, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 269, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives #ops-period {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+/* line 273, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  min-height: 300px;
+}
+/* line 279, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives #weather-forecast {
+  border-left: 1px solid black;
+  min-height: 200px;
+}
+/* line 283, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives #safety-message {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  min-height: 100px;
+}
+/* line 289, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments {
+  overflow: hidden;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+/* line 295, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives .prepared-by-row {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+/* line 301, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #incident-objectives ul {
   list-style: none;
 }
 
-/* line 268, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 305, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .tall-rows {
   min-height: 300px;
 }
 
-/* line 271, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 308, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .medium-rows {
   min-height: 200px;
 }
 
-/* line 274, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 311, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .short-rows {
   min-height: 100px;
 }
 
-/* line 277, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 314, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .padded-box {
   padding-left: 20px;
 }
 
-/* line 280, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 317, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .new-button {
   font-size: 2em;
   color: #333;
 }
 
-/* line 284, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 321, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .header-row {
   text-align: center;
   background-color: #f3f3f3;
-  padding-top: 10px;
+  padding-top: 5px;
+  border-left: 1px solid black;
 }
 
-/* line 290, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 328, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #weather-form textarea {
   width: 100%;
   height: 100%;
 }
 
-/* line 296, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 334, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #safety-form textarea {
   width: 100%;
   height: 100%;
 }
 
-/* line 302, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 340, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .bip-input input {
   margin-right: 5px;
 }
 
-/* line 306, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 344, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 h1.header {
   text-align: center;
   margin-bottom: 30px;
 }
 
 /* ICS 202 Incident Organization */
-/* line 313, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 351, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .split-right {
   position: relative;
   border-bottom: 1px solid black;
@@ -20641,7 +20833,7 @@ h1.header {
   border-left: 1px solid black;
 }
 
-/* line 320, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 358, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .split-left {
   position: relative;
   border-bottom: 1px solid black;
@@ -20649,7 +20841,7 @@ h1.header {
   border-left: 1px solid black;
 }
 
-/* line 327, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 365, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .content-box {
   border-bottom: 1px solid black;
   border-left: 1px solid black;
@@ -20658,17 +20850,46 @@ h1.header {
   padding: 8px 5px;
 }
 
-/* line 334, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 372, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .right-column {
   border-right: 1px solid black;
 }
 
-/* line 338, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 376, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #organization-assignments h4 {
   padding-bottom: 0;
   padding-top: 0;
   margin-bottom: 0;
   margin-top: 0;
+}
+/* line 2, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
+.hazards-form textarea {
+  width: 100%;
+  height: 150px;
+}
+
+/* line 7, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
+#major-hazards {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  min-height: 150px;
+}
+
+/* line 13, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
+#narrative {
+  min-height: 500px;
+}
+/* line 15, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
+#narrative textarea {
+  width: 100%;
+  min-height: 300px;
+  height: 400px;
+}
+
+/* line 21, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
+.safety-prep {
+  height: 35px;
 }
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/tabs.css.scss */
 .tabrow {
@@ -21245,4 +21466,23 @@ dt, dd {
   overflow: hidden;
 }
 
-/* panels*/
+/* percentages*/
+/* line 234, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+.p35 {
+  width: 35%;
+}
+
+/* line 237, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+.p10 {
+  width: 10%;
+}
+
+/* line 240, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+.p8 {
+  width: 8%;
+}
+
+/* line 243, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+.p9 {
+  width: 9%;
+}

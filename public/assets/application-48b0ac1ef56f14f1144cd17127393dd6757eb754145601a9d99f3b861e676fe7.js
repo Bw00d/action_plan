@@ -26208,9 +26208,31 @@ jQuery.fn.best_in_place = function () {
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
+$(document).on("turbolinks:load", function() {
+
+  $('#assign-resources-row').hover(function() {
+        $('#assign-resources-button').show();
+      }, 
+      function () {
+        $('#assign-resources-button').hide();
+      }
+    );
+
+  $('#add-freqs-row').hover(function() {
+        $('#add-freqs').show();
+      }, 
+      function () {
+        $('#add-freqs').hide();
+      }
+    );
+  $('#assign-resources-button').click(function() {
+    $('#resource-assignments-form').show();
+  });
+  $('#cancel-resource-assignments-form').click(function() {
+    $('#resource-assignments-form').hide();
+  });
+
+});
 (function() {
   (function() {
     (function() {
@@ -26823,9 +26845,20 @@ jQuery.fn.best_in_place = function () {
   App.cable = ActionCable.createConsumer();
 
 }).call(this);
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
+$(document).on("turbolinks:load", function() {
+
+ 
+
+  $('#add-freqs').click(function() {
+    $('#freq-form').show();
+  
+
+  });
+  $('#cancel-freq-form').click(function() {
+    $('#freq-form').hide();
+  });
+
+});
 $(document).on("turbolinks:load", function() {
 
   $('.blank-row').hover(function() {
@@ -27020,6 +27053,9 @@ $(document).on("turbolinks:load", function() {
 //         localStorage.setItem('bgColor', this.value);
 //     })
 //     .change();
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
