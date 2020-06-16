@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :freqs
   resources :safety_messages
   resources :commo_items
   resources :commo_plans
@@ -37,5 +36,4 @@ Rails.application.routes.draw do
   get 'incidents/:id/plans/:id/cover'      => 'plans#cover'
   get 'incidents/:id/plans/:id/202'        => 'plans#incident_objectives'
   get 'incidents/:id/plans/:id/203'        => 'plans#incident_organization'
-  # get 'incidents/:id/plans/:id/205'        => 'plans#commo_plan'
 end

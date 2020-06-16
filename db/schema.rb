@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200615145543) do
+ActiveRecord::Schema.define(version: 20200616141642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20200615145543) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "commo_item_ids", array: true
+    t.string "ops_period"
   end
 
   create_table "commo_items", force: :cascade do |t|
@@ -64,13 +65,6 @@ ActiveRecord::Schema.define(version: 20200615145543) do
     t.text "special_instructions"
     t.string "prepared_by"
     t.string "date_signed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "freqs", force: :cascade do |t|
-    t.integer "assignment_id"
-    t.integer "commo_item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -176,6 +170,8 @@ ActiveRecord::Schema.define(version: 20200615145543) do
     t.integer "plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "date_prepared"
+    t.string "time_prepared"
   end
 
   create_table "users", force: :cascade do |t|

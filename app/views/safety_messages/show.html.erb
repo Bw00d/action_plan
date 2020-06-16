@@ -29,12 +29,14 @@
           </div>
           <div class="col-xs-2 bl form-box">
             <span class="small">2. DATE PREPARED<br>
-              7/21/19
+              <%= best_in_place @safety_message, :date_prepared, :as => :input, :place_holder => "(ENTER DATE)", class: 'bip-input' %>
             </span>
           </div>
           <div class="col-xs-2 bl form-box no-padding-right">
             <span class="small">3. TIME PREPARED<br>
-              <span class="neg-padding-top"></span>
+              <span class="neg-padding-top">
+                <%= best_in_place @safety_message, :time_prepared, :as => :input, :place_holder => "(ENTER TIME)", class: 'bip-input' %>
+              </span>
             </span>
           </div>
         </div>
@@ -50,7 +52,10 @@
       <div class="row">
         <div id="major-hazards" class="col-xs-12">
           <span class="small">5. MAJOR HAZARDS AND RISKS</span>
-            <div class="sm-padding-left hazards-form"><%= simple_format (best_in_place @safety_message, :hazards, :as => :textarea, :place_holder => "(LIST HAZARDS HERE)", class: 'bip-input') %></div>
+            <div class="sm-padding-left hazards-form">
+              <%= best_in_place @safety_message, :hazards, :as => :textarea, :display_with => :simple_format,
+                                                 :place_holder => "(LIST HAZARDS HERE)", class: 'bip-input' %>
+            </div>
         </div>
       </div>
  
@@ -58,7 +63,8 @@
         <div id="safety-message" class="col-xs-12">
           <span class="small">6. NARRATIVE</span><br>
            <div id="narrative">
-             <%= simple_format (best_in_place @safety_message, :narrative, :as => :textarea, :place_holder => "(ADD SAFETY NARRATIVE)", class: 'bip-input') %>
+             <%= best_in_place @safety_message, :narrative, :as => :textarea, :display_with => :simple_format,
+                                                :place_holder => "(ADD SAFETY NARRATIVE)", class: 'bip-input' %>
            </div>
         </div>
       </div>

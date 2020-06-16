@@ -28,7 +28,7 @@
 
           </div>
           <div class="col-xs-4 form-box text-center">
-            <h5><%= best_in_place @assignment, :designator, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %></h5>
+            <h5><%= best_in_place @assignment, :designator, :as => :input, :place_holder => "(DESIGNATOR)" %></h5>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
           </div>
           <div class="col-xs-6 bl form-box">
              <span class="small">OPERATIONAL PERIOD</span>
-             <span class="lg-padding-left">0800 - 2200</span>
+             <span class="lg-padding-left"><%= best_in_place @assignment, :ops_period, :as => :input, :place_holder => "(ENTER OPS PERIOD)" %></span>
           </div>
         </div>
       </div>
