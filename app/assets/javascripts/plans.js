@@ -55,31 +55,7 @@ $(document).on("turbolinks:load", function() {
       $("#activity-list").addClass('expanded');
     }
 
-  // Incidents
-
-  $("#show-incident-form").click(function () {
-    $("#edit-incident-form").toggle();
-  });
-
-  // Incident Objectives
-
-  $("#new-objective").click(function () {
-    $("#new-objective").hide();
-    $("#objective-form").show();
-  });
-
-  // Incident Activites
-  $("#new-activity").click(function () {
-    $("#new-activity").hide();
-    $("#activity-form").show();
-  });
-
-  // Incident Resources
-
-  $("#new-resource").click(function () {
-    $("#new-resource").hide();
-    $("#resource-form").show();
-  });
+ 
 });
 
 // $('.plan-row')
