@@ -84,7 +84,7 @@
             <div id="resource-form" class="form-group">
               <%= form_for @resource, remote: true do |f| %>
                 <%= f.hidden_field :incident_id, value: @incident.id %>
-                <%= f.text_field :name, placeholder: "Resource Name", class: 'form-control' %></br>
+                <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control' %></br>
                 <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %></br>
                 <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %></br>
                 <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %></br>
@@ -94,7 +94,10 @@
                                   class: "form-control", placeholder: "CHECKIN DATE" %></br>
                 <%= f.text_field :lwd, id: :incident_lwd, :data => {:provide => "datepicker"},
                                   class: "form-control", placeholder: "LAST WORK DAY" %></br>
-                <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %>
+                <div class="row">
+                  <span class="col-xs-6"><%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %></span>
+                  <span class="col-xs-6"><%= link_to "Cancel", 'javascript:;', class: 'btn btn-tiny btn-default btn-wide', id: "cancel-resource-button" %></span>
+                </div>
               <% end %>
             </div>
             <%= link_to (fa_icon('user-plus')), "javascript:;", id: 'new-resource' %>

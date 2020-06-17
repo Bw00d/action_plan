@@ -29,12 +29,12 @@
           </div>
           <div class="col-xs-2 bl form-box">
             <span class="small">2. DATE PREPARED<br>
-              7/21/19
+              <%= best_in_place @plan, :date_prepare, :as => :input, :place_holder => "(Add date)", class: 'bip-input' %>
             </span>
           </div>
           <div class="col-xs-2 bl form-box no-padding-right">
             <span class="small">3. TIME PREPARED<br>
-              <span class="neg-padding-top"><%= best_in_place @plan, :time_prepared, :as => :input, :place_holder => "Add Time Here", class: 'bip-input' %></span>
+              <span class="neg-padding-top"><%= best_in_place @plan, :time_prepared, :as => :input, :place_holder => "(Add Time Here)", class: 'bip-input' %></span>
             </span>
           </div>
         </div>
@@ -43,7 +43,7 @@
       <div class="row">
         <div id="ops-period" class="col-xs-12 title-row">
           <span class="small">4. OPERATIONAL PERIOD</span><br>
-          <%= best_in_place @plan, :ops_period, :as => :input, :place_holder => "Add Time Range Here", class: 'bip-input' %>
+          <%= best_in_place @plan, :ops_period, :as => :input, :place_holder => "(Add Time Range Here)", class: 'bip-input' %>
         </div>
       </div>
       <div class="row">
