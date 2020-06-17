@@ -1,29 +1,29 @@
 <%= form_for @resource, remote: true do |f| %>
   <%= f.hidden_field :incident_id, value: @incident.id %>
-  <div class="field"><%= f.label :name %>
+  <div class="form-group"><%= f.label :name %>
     <%= f.text_field :name, placeholder: "Resource Name", class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :position %>
     <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %>
     
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label "Order #" %>
     <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %>
     
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :leader %>
     <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %>
     
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label "# personnel" %>
     <%= f.text_field :number_personnel, placeholder: "# Personnel", class: 'form-control' %>
     
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :agency %>
     <%= f.text_field :agency, placeholder: "Agency", class: 'form-control' %>
   </div>
@@ -34,14 +34,18 @@
       <%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
                              class: "form-control", placeholder: "CHECKIN DATE" %>
     </div>  
-    <div class="col-md-6">
+    <div class="col-md-6 form-group">
       <%= f.label "Last work day" %>
       <%= f.text_field :lwd, id: :incident_checkin_date, :data => {:provide => "datepicker"},
                              class: "form-control", placeholder: "LAST WORK DAY" %>
     </div>
   </div>
-</br>
-  <div>
-    <%= f.submit "Submit", class: 'btn btn-primary', id: "submit-resource-button" %>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <%= f.submit "Submit", class: 'btn btn-primary', id: "submit-resource-button" %>
+    </div>
+    <div class="col-md-6">
+      <%= link_to "Cancel", 'javascript:;', class: 'btn btn-default btn-wide', id: "cancel-resource-button" %>
+    </div>
   </div>
 <% end %>

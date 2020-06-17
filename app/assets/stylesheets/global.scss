@@ -94,7 +94,7 @@ h1, .h1 {
 // Buttons
 $btn-primary-color:              #fff;
 $btn-primary-bg:                 $brand-primary;
-$btn-primary-border:             $gray-lighter;
+/*$btn-primary-border:             $gray-lighter;*/
 // There is no variable for the button bg color on hover, active and focus
 .btn-primary {
   &:hover, &:focus, &:active, &:active:hover, &:active:focus {
@@ -277,6 +277,7 @@ dt, dd {
     }
   }
 }
+/* Buttons*/
 .new-btn {
   height: 40px;
   width: 40px;
@@ -284,7 +285,13 @@ dt, dd {
   border-radius: 40px;
   font-size: 2.5em;
 }
-
+.btn-wide {
+  width: 100%;
+}
+.btn-default {
+  background-color: #e6e6e6;
+  border: 1px solid #e6e6e6;
+}
 // Action glyphicons (show, edit, delete, etc)
 .action-icon {
   font-size: 1.2em; // Glyphicon size
