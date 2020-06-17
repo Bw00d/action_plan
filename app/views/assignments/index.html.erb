@@ -22,7 +22,7 @@
         <ul class="assignments-lists">
           <% @assignments.each do |assignment| %>
             <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
-            <li><%= assignment.designator %>  –  Leader's Name  –  # of Personnel </li>
+            <li><%= assignment.designator %>   </li>
           <% end %>
         <% end %>
         </ul>
