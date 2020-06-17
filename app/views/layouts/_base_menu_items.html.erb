@@ -1,4 +1,11 @@
 <%# Menu items that that should appear in the navbar of all logged-in users,
 regardless of their roles %>
 
+<% if @incident %>
+  <% if @incident.plans.count > 0 %>
+    <li><%= link_to "Plans", incident_plan_path(@incident, @incident.plans.last) %></li>
+  <% else %>
+    <li><%= link_to "Plans", incident_plans_path(@incident) %></li>
+  <% end %>
+<% end %>
 <li><%= link_to t('navigation.incidents'), incidents_path %></li>
