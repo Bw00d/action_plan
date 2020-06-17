@@ -96,10 +96,15 @@ h4.incident-feed {
   margin-bottom: 10px;
   position: relative;
   overflow: hidden;
+  h4 {
+    margin-left: 30px;
+  }
 }
 #resource-form {
   padding: 10px;
   border-top: 1px solid $grayLighter;
+  border-bottom: 1px solid $grayLighter;
+  padding-bottom: 50px;
 }
 #resource-panel {
   /*padding-bottom: 20px;*/

@@ -2,6 +2,10 @@
 <!-- Default panel contents -->
   <div class="panel-heading"><strong>Resources</strong> <%= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
   </div>
+  <div id="resource-form">
+    <h4><strong>New Resource</strong></h4>
+    <%= render 'new_resource_form' %>
+  </div>
   <% if !@incident.resources.empty? %>
     <!-- Table -->
     <table class="table">
@@ -38,9 +42,6 @@
     </div>
   <% end %>
 
-  <div id="resource-form">
-    <h4><strong>New Resource</strong></h4>
-    <%= render 'new_resource_form' %>
-  </div>
+  
   <div class="panel-foot"></div>
 </div>
