@@ -275,6 +275,9 @@ span.plans-button {
     border-left: 1px solid black;
     border-top: 1px solid black;
     min-height: 300px;
+    ul {
+      line-height: 2em;
+    }
   }
   #weather-forecast {
     border-left: 1px solid black;
@@ -292,6 +295,10 @@ span.plans-button {
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
+    ul {
+      list-style: none;
+      /*line-height: 2em;*/
+    }
   }
   .prepared-by-row {
     border-top: 1px solid black;
@@ -299,10 +306,7 @@ span.plans-button {
     border-left: 1px solid black;
     border-bottom: 1px solid black;
   }
-  ul {
-    /*list-style: none;*/
-    line-height: 2em;
-  }
+ 
 }
 .tall-rows {
   min-height: 300px;

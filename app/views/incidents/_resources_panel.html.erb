@@ -23,13 +23,13 @@
       <tbody>
         <% @resources.each do |r|  %>
         <tr>
-          <td><%= r.cat %><%= best_in_place r, :order_number, :as => :input%></td>
-          <td><%= best_in_place r, :name, :as => :input %></td>
-          <td><%= best_in_place r, :position, :as => :input %></td>
-          <td><%= best_in_place r, :leader, :as => :input %></td>
-          <td><%= best_in_place r, :number_personnel, :as => :input %></td>
-          <td><%= best_in_place r, :agency, :as => :input %></td>
-          <td><%= best_in_place r, :lwd, :as => :input %></td>
+          <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
+          <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
+          <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
+          <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
+          <td class="sm-bip-input"><%= best_in_place r, :number_personnel, :as => :input %></td>
+          <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
+          <td class="lg-bip-input"><%= best_in_place r, :lwd, :as => :input %></td>
         </tr>
         <% end %>
 

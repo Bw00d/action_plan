@@ -129,3 +129,21 @@ h4.incident-feed {
 .incident-index-content {
   display: none;
 }
+
+.sm-bip-input {
+  input {
+    width: 30px ;
+  }
+}
+
+.md-bip-input {
+  input {
+    width: 60px ;
+  }
+}
+
+.lg-bip-input {
+  input {
+    width: 120px ;
+  }
+}
