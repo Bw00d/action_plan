@@ -23,7 +23,7 @@
       <tbody>
         <% @resources.each do |r|  %>
         <tr>
-          <td><%= best_in_place r, :order_number, :as => :input%></td>
+          <td><%= r.cat %><%= best_in_place r, :order_number, :as => :input%></td>
           <td><%= best_in_place r, :name, :as => :input %></td>
           <td><%= best_in_place r, :position, :as => :input %></td>
           <td><%= best_in_place r, :leader, :as => :input %></td>
