@@ -33,6 +33,7 @@ h1, .h1 {
   margin-top: 0 !important;
 }
 
+/*$btn-primary-border:             $gray-lighter;*/
 /* line 100, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
   background: #115599 !important;
@@ -166,7 +167,8 @@ dt, dd {
   border-bottom-right-radius: 6px;
 }
 
-/* line 280, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* Buttons*/
+/* line 281, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .new-btn {
   height: 40px;
   width: 40px;
@@ -175,13 +177,24 @@ dt, dd {
   font-size: 2.5em;
 }
 
-/* line 289, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* line 288, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+.btn-wide {
+  width: 100%;
+}
+
+/* line 291, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+.btn-default {
+  background-color: #e6e6e6;
+  border: 1px solid #e6e6e6;
+}
+
+/* line 296, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .action-icon {
   font-size: 1.2em;
   margin: 2px;
   color: #002f5e !important;
 }
-/* line 293, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* line 300, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .action-icon:hover, .action-icon:focus {
   color: #115599 !important;
 }
@@ -4689,37 +4702,37 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-primary {
   color: #fff;
   background-color: #002f5e;
-  border-color: #eeeeee;
+  border-color: #002245;
 }
 /* line 11, /Users/bwood/.rvm/gems/ruby-2.4.2/gems/bootstrap-sass-3.4.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:focus, .btn-primary.focus {
   color: #fff;
   background-color: #00162b;
-  border-color: #afafaf;
+  border-color: black;
 }
 /* line 17, /Users/bwood/.rvm/gems/ruby-2.4.2/gems/bootstrap-sass-3.4.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:hover {
   color: #fff;
   background-color: #00162b;
-  border-color: #d0d0d0;
+  border-color: #000407;
 }
 /* line 22, /Users/bwood/.rvm/gems/ruby-2.4.2/gems/bootstrap-sass-3.4.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #00162b;
   background-image: none;
-  border-color: #d0d0d0;
+  border-color: #000407;
 }
 /* line 30, /Users/bwood/.rvm/gems/ruby-2.4.2/gems/bootstrap-sass-3.4.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus, .open > .btn-primary.dropdown-toggle:hover, .open > .btn-primary.dropdown-toggle:focus, .open > .btn-primary.dropdown-toggle.focus {
   color: #fff;
   background-color: #000407;
-  border-color: #afafaf;
+  border-color: black;
 }
 /* line 41, /Users/bwood/.rvm/gems/ruby-2.4.2/gems/bootstrap-sass-3.4.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus {
   background-color: #002f5e;
-  border-color: #eeeeee;
+  border-color: #002245;
 }
 /* line 49, /Users/bwood/.rvm/gems/ruby-2.4.2/gems/bootstrap-sass-3.4.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary .badge {
@@ -19468,6 +19481,13 @@ a.new-freq-button:hover {
 #resource-assignments-form li {
   list-style: none;
 }
+
+/* line 147, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+.personnel_num {
+  padding-left: 15px;
+  padding-top: 5px;
+  position: absolute;
+}
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
 .btn-dark {
   background-color: black;
@@ -19693,6 +19713,7 @@ h1, .h1 {
   margin-top: 0 !important;
 }
 
+/*$btn-primary-border:             $gray-lighter;*/
 /* line 100, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
   background: #115599 !important;
@@ -19826,7 +19847,8 @@ dt, dd {
   border-bottom-right-radius: 6px;
 }
 
-/* line 280, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* Buttons*/
+/* line 281, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .new-btn {
   height: 40px;
   width: 40px;
@@ -19835,13 +19857,24 @@ dt, dd {
   font-size: 2.5em;
 }
 
-/* line 289, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* line 288, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+.btn-wide {
+  width: 100%;
+}
+
+/* line 291, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+.btn-default {
+  background-color: #e6e6e6;
+  border: 1px solid #e6e6e6;
+}
+
+/* line 296, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .action-icon {
   font-size: 1.2em;
   margin: 2px;
   color: #002f5e !important;
 }
-/* line 293, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* line 300, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .action-icon:hover, .action-icon:focus {
   color: #115599 !important;
 }
@@ -19991,6 +20024,21 @@ select {
 /* line 129, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/incidents.scss */
 .incident-index-content {
   display: none;
+}
+
+/* line 134, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/incidents.scss */
+.sm-bip-input input {
+  width: 30px;
+}
+
+/* line 140, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/incidents.scss */
+.md-bip-input input {
+  width: 60px;
+}
+
+/* line 146, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/incidents.scss */
+.lg-bip-input input {
+  width: 120px;
 }
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/planning-p.css.scss */
 .p-container {
@@ -20741,64 +20789,69 @@ span.plans-button {
   border-top: 1px solid black;
   min-height: 300px;
 }
-/* line 279, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 278, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives ul {
+  line-height: 2em;
+}
+/* line 282, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #incident-objectives #weather-forecast {
   border-left: 1px solid black;
   min-height: 200px;
 }
-/* line 283, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 286, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #incident-objectives #safety-message {
   border-left: 1px solid black;
   border-right: 1px solid black;
   border-top: 1px solid black;
   min-height: 100px;
 }
-/* line 289, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 293, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #incident-objectives #attachments {
   overflow: hidden;
   border-top: 1px solid black;
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
-/* line 295, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 298, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments ul {
+  list-style: none;
+  /*line-height: 2em;*/
+}
+/* line 303, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #incident-objectives .prepared-by-row {
   border-top: 1px solid black;
   border-right: 1px solid black;
   border-left: 1px solid black;
   border-bottom: 1px solid black;
 }
-/* line 301, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
-#incident-objectives ul {
-  list-style: none;
-}
 
-/* line 305, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 311, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .tall-rows {
   min-height: 300px;
 }
 
-/* line 308, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 314, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .medium-rows {
   min-height: 200px;
 }
 
-/* line 311, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 317, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .short-rows {
   min-height: 100px;
 }
 
-/* line 314, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 320, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .padded-box {
   padding-left: 20px;
 }
 
-/* line 317, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 323, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .new-button {
   font-size: 2em;
   color: #333;
 }
 
-/* line 321, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 327, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .header-row {
   text-align: center;
   background-color: #f3f3f3;
@@ -20806,31 +20859,31 @@ span.plans-button {
   border-left: 1px solid black;
 }
 
-/* line 328, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 334, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #weather-form textarea {
   width: 100%;
-  height: 100%;
+  height: 80%;
 }
 
-/* line 334, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 340, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #safety-form textarea {
   width: 100%;
   height: 100%;
 }
 
-/* line 340, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 346, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .bip-input input {
   margin-right: 5px;
 }
 
-/* line 344, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 350, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 h1.header {
   text-align: center;
   margin-bottom: 30px;
 }
 
 /* ICS 202 Incident Organization */
-/* line 351, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 357, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .split-right {
   position: relative;
   border-bottom: 1px solid black;
@@ -20839,7 +20892,7 @@ h1.header {
   border-left: 1px solid black;
 }
 
-/* line 358, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 364, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .split-left {
   position: relative;
   border-bottom: 1px solid black;
@@ -20847,7 +20900,7 @@ h1.header {
   border-left: 1px solid black;
 }
 
-/* line 365, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 371, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .content-box {
   border-bottom: 1px solid black;
   border-left: 1px solid black;
@@ -20856,17 +20909,42 @@ h1.header {
   padding: 8px 5px;
 }
 
-/* line 372, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 378, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .right-column {
   border-right: 1px solid black;
 }
 
-/* line 376, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
+/* line 382, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 #organization-assignments h4 {
   padding-bottom: 0;
   padding-top: 0;
   margin-bottom: 0;
   margin-top: 0;
+}
+/* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+#resource_order_number {
+  padding-left: 30px;
+}
+
+/* line 4, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+#order-number-input {
+  display: none;
+  /*overflow: hidden;*/
+}
+
+/* line 8, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+.order-number-prefix {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 8px;
+  color: #999;
+}
+
+/* line 15, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+#resource-form select {
+  border: 1px solid #CCC;
+  color: #999;
+  padding-left: 10px;
 }
 /* line 2, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
 .hazards-form textarea {
@@ -21055,6 +21133,7 @@ h1, .h1 {
   margin-top: 0 !important;
 }
 
+/*$btn-primary-border:             $gray-lighter;*/
 /* line 100, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
   background: #115599 !important;
@@ -21188,7 +21267,8 @@ dt, dd {
   border-bottom-right-radius: 6px;
 }
 
-/* line 280, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* Buttons*/
+/* line 281, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .new-btn {
   height: 40px;
   width: 40px;
@@ -21197,13 +21277,24 @@ dt, dd {
   font-size: 2.5em;
 }
 
-/* line 289, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* line 288, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+.btn-wide {
+  width: 100%;
+}
+
+/* line 291, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+.btn-default {
+  background-color: #e6e6e6;
+  border: 1px solid #e6e6e6;
+}
+
+/* line 296, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .action-icon {
   font-size: 1.2em;
   margin: 2px;
   color: #002f5e !important;
 }
-/* line 293, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
+/* line 300, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .action-icon:hover, .action-icon:focus {
   color: #115599 !important;
 }
