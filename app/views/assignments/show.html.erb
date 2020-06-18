@@ -115,7 +115,7 @@
 
           <% @assignment.assigned_resources.each do |r| %>
           <tr>
-              <td class="p35 sm-padding-left"><%= r.name %>  <%= r.position %></td>
+              <td class="p35 sm-padding-left"><%= r.cat %><%= r.order_number %>  <%= r.position %>  <%= r.name %></td>
               <td class="p40 sm-padding-left"><%= r.leader %></td>
               <td class="p8 centered"><%= r.number_personnel %></td>
               <td class="p9 centered"><%= r.lwd.try(:strftime,"%-m/%d") %></td>
