@@ -85,11 +85,11 @@
               <%= form_for @resource, remote: true do |f| %>
                 <%= f.hidden_field :incident_id, value: @incident.id %>
                 <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control' %></br>
-                <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %></br>
-                <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %></br>
-                <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %></br>
-                <%= f.text_field :number_personnel, placeholder: "# Personnel", class: 'form-control' %></br>
-                <%= f.text_field :agency, placeholder: "Agency", class: 'form-control' %></br>
+                <%= f.text_field :position, placeholder: "RESOURCE TYPE", class: 'form-control' %></br>
+                <%= f.text_field :order_number, placeholder: "ORDER NUMBER", class: 'form-control' %></br>
+                <%= f.text_field :leader, placeholder: "LEADER'S NAME", class: 'form-control' %></br>
+                <%= f.text_field :number_personnel, placeholder: "# PERSONNEL", class: 'form-control' %></br>
+                <%= f.text_field :agency, placeholder: "AGENCY", class: 'form-control' %></br>
                 <%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
                                   class: "form-control", placeholder: "CHECKIN DATE" %></br>
                 <%= f.text_field :lwd, id: :incident_lwd, :data => {:provide => "datepicker"},
