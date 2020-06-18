@@ -94,8 +94,10 @@
           <%= form_for @assignment do |f| %>
             <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-success tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-resource-assignments-form', class: 'btn btn-default tiny' %></div>
           <ul>
+            <%= javascript_tag "var resourceIds = #{@assignment.resource_ids.to_json}" %>
+
             <% @incident.resources.order(:position).each do |r| %>
-              <li class="commo-items"><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
+              <li class=""><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
               
                       <%= f.label :commo_item_ids, r.position %>  -  <%= f.label :commo_item_ids, r.name %></li>
             <% end %>

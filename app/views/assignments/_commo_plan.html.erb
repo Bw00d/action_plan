@@ -1,4 +1,5 @@
 <div id="freq-form">
+  <%= javascript_tag "var freqIds = #{@assignment.commo_item_ids.to_json}" %>
   <%= form_for @assignment do |f| %>
   <ul>
     <% @plan.commo_plan.commo_items.each do |item| %>
