@@ -156,13 +156,13 @@ ActiveRecord::Schema.define(version: 20200618143646) do
     t.integer "number_personnel"
     t.string "position"
     t.string "agency"
-    t.integer "order_number"
     t.date "lwd"
     t.date "checkin_date"
     t.integer "incident_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
+    t.integer "order_number"
   end
 
   create_table "safety_messages", force: :cascade do |t|
