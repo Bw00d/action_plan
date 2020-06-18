@@ -12,7 +12,7 @@ class IncidentsController < ApplicationController
   # GET /incidents/1
   # GET /incidents/1.json
   def show
-    @resources = @incident.resources.order(:order_number)
+    @resources = @incident.resources.order(:category, :order_number)
     @resource = Resource.new
   end
 
