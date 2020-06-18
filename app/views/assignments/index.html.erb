@@ -18,7 +18,8 @@
 
     <div class="row">
       <div class="assignment-box">
-        <span class="float-left sm-padding-left"> <%= link_to "New", new_incident_plan_assignment_path(@incident, @plan, @assignment) %></span>
+        <span class="float-left sm-padding-left"> 
+          <%= link_to "New", new_incident_plan_assignment_path(@incident, @plan, @assignment), class: 'btn btn-primary' %></span>
         <h1 class="header"><strong>Incident Assignments(204)</strong></h1> 
         <ul class="assignments-lists">
           <% @assignments.each do |assignment| %>

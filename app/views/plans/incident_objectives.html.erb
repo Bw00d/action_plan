@@ -49,9 +49,11 @@
       <div class="row">
         <div id="control-objectives" class="col-xs-12">
           <span class="small">5. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
+          <ul>
             <% @plan.objectives.each do |o| %>
-            <h4><%= o.order %> <%= o.description %></h4>
+            <li><%= o.order %> <%= o.description %></li>
             <% end %>
+          </ul>
         </div>
       </div>
       <div class="row">
@@ -61,13 +63,13 @@
           <% else %>
             <span class="small">6. GENERAL SITUATION AWARENESS</span><br>
           <% end %>
-             <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'weather-form'  %>
+             <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "(ADD CONTENT)",:display_with => :simple_format, id: 'weather-form'  %>
         </div>
       </div>
       <div class="row">
         <div id="safety-message" class="col-xs-12">
           <span class="small">7. GENERAL SAFETY MESSAGE</span><br>
-            <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel', id: 'safety-form'  %>
+            <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "(ADD CONTENT)",:display_with => :simple_format, id: 'safety-form'  %>
         </div>
       </div>
       <div class="row">

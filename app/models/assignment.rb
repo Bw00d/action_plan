@@ -18,4 +18,10 @@ class Assignment < ApplicationRecord
     end
     items
   end
+
+  def personnel
+    num_personnel = 0
+    self.resource_ids.each { |r| num_personnel += Resource.find(r).number_personnel } if self.resource_ids
+    num_personnel
+  end
 end
