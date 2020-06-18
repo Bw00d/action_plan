@@ -26210,6 +26210,7 @@ jQuery.fn.best_in_place = function () {
 ;
 $(document).on("turbolinks:load", function() {
 
+
   $('#assign-resources-row').hover(function() {
         $('#assign-resources-button').show();
       }, 
@@ -26227,6 +26228,11 @@ $(document).on("turbolinks:load", function() {
     );
   $('#assign-resources-button').click(function() {
     $('#resource-assignments-form').show();
+  
+    var i;
+     for (i = 0; i < resourceIds.length; i++) {
+      $("#assignment_resource_ids_" + resourceIds[i] ).prop("checked","true");
+    }
   });
   $('#cancel-resource-assignments-form').click(function() {
     $('#resource-assignments-form').hide();
@@ -26846,11 +26852,19 @@ $(document).on("turbolinks:load", function() {
 
 }).call(this);
 $(document).on("turbolinks:load", function() {
+   
+});
+$(document).on("turbolinks:load", function() {
 
  
 
   $('#add-freqs').click(function() {
     $('#freq-form').show();
+
+    var i;
+     for (i = 0; i < freqIds.length; i++) {
+      $("#assignment_commo_item_ids_" + freqIds[i] ).prop("checked","true");
+    }
   
 
   });
@@ -26958,6 +26972,38 @@ $(document).on("turbolinks:load", function() {
 
   $('.datepicker').datepicker();
 
+   // Incidents
+
+  $("#show-incident-form").click(function () {
+    $("#edit-incident-form").toggle();
+  });
+
+  // Incident Objectives
+
+  $("#new-objective").click(function () {
+    $("#new-objective").hide();
+    $("#objective-form").show();
+  });
+
+  // Incident Activites
+  $("#new-activity").click(function () {
+    $("#new-activity").hide();
+    $("#activity-form").show();
+  });
+
+  // Incident Resources
+
+  $("#new-resource").click(function () {
+    $("#new-resource").hide();
+    $("#resource-form").show();
+  });
+
+  $('#cancel-resource-button').click(function() {
+    $('#resource-form').hide();
+    $("#new-resource").show();
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    return false;
+  });
 });
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
@@ -27019,31 +27065,7 @@ $(document).on("turbolinks:load", function() {
       $("#activity-list").addClass('expanded');
     }
 
-  // Incidents
-
-  $("#show-incident-form").click(function () {
-    $("#edit-incident-form").toggle();
-  });
-
-  // Incident Objectives
-
-  $("#new-objective").click(function () {
-    $("#new-objective").hide();
-    $("#objective-form").show();
-  });
-
-  // Incident Activites
-  $("#new-activity").click(function () {
-    $("#new-activity").hide();
-    $("#activity-form").show();
-  });
-
-  // Incident Resources
-
-  $("#new-resource").click(function () {
-    $("#new-resource").hide();
-    $("#resource-form").show();
-  });
+ 
 });
 
 // $('.plan-row')
@@ -27053,9 +27075,27 @@ $(document).on("turbolinks:load", function() {
 //         localStorage.setItem('bgColor', this.value);
 //     })
 //     .change();
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
+$(document).on("turbolinks:load", function() {
+  $('select#resource_category').change(function() {
+    var text = $(this).val();
+    $('#order-number-input').show();
+    switch(text) {
+    case 'EQUIPMENT':  
+      var prefix = 'E-'
+     break;
+
+    case 'CREW':  
+      var prefix = 'C-'
+      break;
+
+    case 'OVERHEAD':
+      var prefix = 'O-'
+      break;
+    }
+      $('.order-number-prefix').html( prefix )
+
+  });
+});
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
