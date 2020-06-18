@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :category %>
+    <%= form.select :category, options_for_select([["CREW", "CREW"], ["EQUIPMENT", "EQUIPMENT"], ["OVERHEAD", "OVERHEAD"]]), :prompt => "SELECT CATEGORY", id: :resource_category %>
+  </div>
+
+  <div class="field">
     <%= form.label :position %>
     <%= form.text_field :position, id: :resource_position %>
   </div>
@@ -37,6 +42,7 @@
   </div>
 
   <div class="field">
+    <span class="order-number-prefix"></span>
     <%= form.label :order_number %>
     <%= form.text_field :order_number, id: :resource_order_number %>
   </div>

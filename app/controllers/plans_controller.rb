@@ -19,7 +19,7 @@ class PlansController < ApplicationController
   def show
     @new_plan = Plan.new
     @incident = Incident.find(params[:incident_id])
-    @resources = @incident.resources
+    @resources = @incident.resources.order(:category, :order_number)
     @resource = Resource.new
     @plan = Plan.find(params[:id])
     @plans = Plan.all.order(date: :desc)

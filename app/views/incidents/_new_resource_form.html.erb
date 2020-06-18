@@ -1,41 +1,39 @@
 <%= form_for @resource, remote: true do |f| %>
   <%= f.hidden_field :incident_id, value: @incident.id %>
-  <div class="form-group"><%= f.label :name %>
-    <%= f.text_field :name, placeholder: "Resource Name", class: 'form-control' %>
+  <div class="form-group">
+    <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :position %>
-    <%= f.text_field :position, placeholder: "Resource Type", class: 'form-control' %>
+    <%= f.text_field :position, placeholder: "RESOURCE TYPE", class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.select :category, options_for_select([["CREW", "CREW"], ["EQUIPMENT", "EQUIPMENT"],["OVERHEAD", "OVERHEAD"]]), :prompt => "SELECT CATEGORY", id: :resource_category, class: 'form-control' %>
+  </div>
+
+  <div id="order-number-input" class="form-group">
+    <span class="order-number-prefix"></span>
+    <%= f.text_field :order_number, placeholder: "ORDER NUMBER", class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :leader, placeholder: "LEADER NAME", class: 'form-control' %>
     
   </div>
   <div class="form-group">
-    <%= f.label "Order #" %>
-    <%= f.text_field :order_number, placeholder: "Order Number", class: 'form-control' %>
+    <%= f.text_field :number_personnel, placeholder: "# PERSONNEL", class: 'form-control' %>
     
   </div>
   <div class="form-group">
-    <%= f.label :leader %>
-    <%= f.text_field :leader, placeholder: "Leader Name", class: 'form-control' %>
-    
-  </div>
-  <div class="form-group">
-    <%= f.label "# personnel" %>
-    <%= f.text_field :number_personnel, placeholder: "# Personnel", class: 'form-control' %>
-    
-  </div>
-  <div class="form-group">
-    <%= f.label :agency %>
-    <%= f.text_field :agency, placeholder: "Agency", class: 'form-control' %>
+    <%= f.text_field :agency, placeholder: "AGENCY", class: 'form-control' %>
   </div>
   
   <div class="row">
     <div class="col-md-6">
-      <%= f.label :checkin_date %>
       <%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
                              class: "form-control", placeholder: "CHECKIN DATE" %>
     </div>  
     <div class="col-md-6 form-group">
-      <%= f.label "Last work day" %>
       <%= f.text_field :lwd, id: :incident_checkin_date, :data => {:provide => "datepicker"},
                              class: "form-control", placeholder: "LAST WORK DAY" %>
     </div>

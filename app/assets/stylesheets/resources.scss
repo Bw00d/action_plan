@@ -1,3 +1,20 @@
-// Place all the styles related to the resources controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#resource_order_number {
+  padding-left: 30px;
+}
+#order-number-input {
+  display: none;
+  /*overflow: hidden;*/
+}
+.order-number-prefix {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 8px;
+  color: #999;
+}
+#resource-form {
+  select {
+    border: 1px solid #CCC;
+    color: #999;
+    padding-left: 10px;
+  }
+}
