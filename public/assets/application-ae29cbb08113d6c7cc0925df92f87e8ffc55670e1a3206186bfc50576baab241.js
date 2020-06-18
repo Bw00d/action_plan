@@ -26208,9 +26208,37 @@ jQuery.fn.best_in_place = function () {
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
+$(document).on("turbolinks:load", function() {
+
+
+  $('#assign-resources-row').hover(function() {
+        $('#assign-resources-button').show();
+      }, 
+      function () {
+        $('#assign-resources-button').hide();
+      }
+    );
+
+  $('#add-freqs-row').hover(function() {
+        $('#add-freqs').show();
+      }, 
+      function () {
+        $('#add-freqs').hide();
+      }
+    );
+  $('#assign-resources-button').click(function() {
+    $('#resource-assignments-form').show();
+  
+    var i;
+     for (i = 0; i < resourceIds.length; i++) {
+      $("#assignment_resource_ids_" + resourceIds[i] ).prop("checked","true");
+    }
+  });
+  $('#cancel-resource-assignments-form').click(function() {
+    $('#resource-assignments-form').hide();
+  });
+
+});
 (function() {
   (function() {
     (function() {
@@ -26824,15 +26852,26 @@ jQuery.fn.best_in_place = function () {
 
 }).call(this);
 $(document).on("turbolinks:load", function() {
+   
+});
+$(document).on("turbolinks:load", function() {
 
  
 
   $('#add-freqs').click(function() {
     $('#freq-form').show();
+
+    var i;
+     for (i = 0; i < freqIds.length; i++) {
+      $("#assignment_commo_item_ids_" + freqIds[i] ).prop("checked","true");
+    }
+  
+
   });
   $('#cancel-freq-form').click(function() {
     $('#freq-form').hide();
   });
+
 });
 $(document).on("turbolinks:load", function() {
 
@@ -26879,9 +26918,6 @@ $.rails.showConfirmationDialog = function (link) {
         $.rails.confirmed(link);
     });
 };
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
 // This file contains JS code which is used across the entire Rails application.
 
 $(document).on("turbolinks:load", function() {
@@ -26936,6 +26972,38 @@ $(document).on("turbolinks:load", function() {
 
   $('.datepicker').datepicker();
 
+   // Incidents
+
+  $("#show-incident-form").click(function () {
+    $("#edit-incident-form").toggle();
+  });
+
+  // Incident Objectives
+
+  $("#new-objective").click(function () {
+    $("#new-objective").hide();
+    $("#objective-form").show();
+  });
+
+  // Incident Activites
+  $("#new-activity").click(function () {
+    $("#new-activity").hide();
+    $("#activity-form").show();
+  });
+
+  // Incident Resources
+
+  $("#new-resource").click(function () {
+    $("#new-resource").hide();
+    $("#resource-form").show();
+  });
+
+  $('#cancel-resource-button').click(function() {
+    $('#resource-form').hide();
+    $("#new-resource").show();
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    return false;
+  });
 });
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
@@ -26997,31 +27065,7 @@ $(document).on("turbolinks:load", function() {
       $("#activity-list").addClass('expanded');
     }
 
-  // Incidents
-
-  $("#show-incident-form").click(function () {
-    $("#edit-incident-form").toggle();
-  });
-
-  // Incident Objectives
-
-  $("#new-objective").click(function () {
-    $("#new-objective").hide();
-    $("#objective-form").show();
-  });
-
-  // Incident Activites
-  $("#new-activity").click(function () {
-    $("#new-activity").hide();
-    $("#activity-form").show();
-  });
-
-  // Incident Resources
-
-  $("#new-resource").click(function () {
-    $("#new-resource").hide();
-    $("#resource-form").show();
-  });
+ 
 });
 
 // $('.plan-row')
