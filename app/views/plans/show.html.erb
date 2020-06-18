@@ -31,12 +31,12 @@
             
         <!-- end plans tabs -->
 
-        <div id="situation-content" class="plan-row situation"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %> </div>
-        <div class="situation-content list-content">
+        <div id="situation-content" class="plan-row situation md-padding-left"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %> </div>
+        <div class="situation-content list-content md-padding-left">
           <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
         </div>
-        <div id="objectives-list" class="plan-row "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
-          <div class="objectives-list list-content">
+        <div id="objectives-list" class="plan-row md-padding-left "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
+          <div class="objectives-list list-content md-padding-left">
             <ol id="objectives">
               <% @objectives.each do |o|  %>
               <li><%= o.order %> <%= best_in_place o, :description, delete_button:  'Delete' %></li>
@@ -54,8 +54,8 @@
             
           </div>
           
-        <div id="activity-list" class="plan-row activity"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
-        <div class="activities-list list-content">
+        <div id="activity-list" class="plan-row activity md-padding-left"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
+        <div class="activities-list list-content md-padding-left">
           <ul id="activities list-content">
             <% @plan.activities.each do |a|  %>
               <li> <%= best_in_place a, :description, :as => :input %></li>
@@ -72,8 +72,8 @@
               <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-activity' %>
         </div>
 
-        <div id="resource-list" class="plan-row"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
-          <div class="resources-list list-content">
+        <div id="resource-list" class="plan-row md-padding-left"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
+          <div class="resources-list list-content md-padding-left">
             <ul id="resources">
                 <% @resources.each do |r|  %>
                 <li><%= r.cat %><%= best_in_place r, :order_number, :as => :input%>  <%= best_in_place r,  :name, :as => :input %>  <%= best_in_place r, 
@@ -109,14 +109,16 @@
           </div>
 
 
-      <div id="iap-row" class="plan-row"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
-      <div id="iap-content" class="forms-list list-content">
+      <div id="iap-row" class="plan-row md-padding-left"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
+      <div id="iap-content" class="forms-list list-content md-padding-left">
           <ul>
             <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
             <li><%= link_to "ICS 202 Incident Objectives", "#{@plan.id}/202" %></li>
             <li><%= link_to "ICS 203 Incident Organization", "#{@plan.id}/203" %></li>
             <li><%= link_to "ICS 204 Incident Assignments", incident_plan_assignments_path(@incident, @plan) %></li>
             <li><%= link_to "ICS 205 Communications Plan", incident_plan_commo_plans_path(@incident, @plan) %></li>
+            <li><%= link_to "ICS 206 Medical Plan", '#' %></li>
+            <li><%= link_to "ICS 220 Air Operations Summary", '#' %></li>
             <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
           </ul>
         </div>
