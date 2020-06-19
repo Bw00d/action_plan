@@ -21,7 +21,10 @@ class Assignment < ApplicationRecord
 
   def personnel
     num_personnel = 0
-    self.resource_ids.each { |r| num_personnel += Resource.find(r).number_personnel } if self.resource_ids
+
+    if !self.resource_ids == nil
+      self.resource_ids.each { |r| num_personnel += Resource.find(r).number_personnel } 
+    end
     num_personnel
   end
 end
