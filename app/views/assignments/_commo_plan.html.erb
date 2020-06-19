@@ -2,10 +2,12 @@
   <%= javascript_tag "var freqIds = #{@assignment.commo_item_ids.to_json}" %>
   <%= form_for @assignment do |f| %>
   <ul>
-    <% @plan.commo_plan.commo_items.each do |item| %>
-      <li class="commo-items"><%= f.check_box :commo_item_ids, {multiple: true}, item.id, nil %>
-      
-            <%= f.label :commo_item_ids, item.function %></li>
+    <% if !@plan.commo_plan.nil? %>
+      <% @plan.commo_plan.commo_items.each do |item| %>
+        <li class="commo-items"><%= f.check_box :commo_item_ids, {multiple: true}, item.id, nil %>
+        
+              <%= f.label :commo_item_ids, item.function %></li>
+      <% end %>
     <% end %>
   </ul>
     <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-success tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-freq-form', class: 'btn btn-default tiny' %></div>
