@@ -1,0 +1,19 @@
+.team-form {
+  margin-top: -5px;
+  padding-top: 0;
+  position: absolute;
+  display: none;
+}
+.staff-row {
+  select {
+    margin-top: -7px;
+    max-height: 27px;
+    width: 173px;
+    position: absolute;
+  }
+  input {
+    margin-top: -7px;
+    position: absolute;
+    width: 173px;
+  }
+}

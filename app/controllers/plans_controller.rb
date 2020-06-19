@@ -85,12 +85,13 @@ class PlansController < ApplicationController
   
   def incident_objectives
     @plan = Plan.find(params[:id])
-     @incident = Incident.find(@plan.incident_id)
+    @incident = Incident.find(@plan.incident_id)
   end
 
   def incident_organization
     @plan = Plan.find(params[:id])
-     @incident = Incident.find(@plan.incident_id)
+    @incident = Incident.find(@plan.incident_id)
+    @team = Team.new
   end
 
   private

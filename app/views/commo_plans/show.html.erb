@@ -80,10 +80,12 @@
               <tr class="radio-channel blank-row">
 
                 <td class="c1"><span class=""></span>
-                  <span class="commo-item-form"><%= form_for @commo_item do |f| %>
-                                      <%= f.hidden_field :commo_plan_id, value: @commo_plan.id %>
-                                      <%= f.submit '+', class: "new-commo-item" %>
-                                    <% end %></span>
+                  <span class="commo-item-form">
+                    <%= form_for @commo_item do |f| %>
+                      <%= f.hidden_field :commo_plan_id, value: @commo_plan.id %>
+                      <%= f.submit '+', class: "new-commo-item" %>
+                    <% end %>
+                  </span>
 
                 </td>
                 <td class="c1"><span class=""></span></td>

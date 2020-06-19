@@ -265,6 +265,10 @@ span.plans-button {
 .bl {
   border-left: 1px solid black;
 }
+.bt {
+  border-top: 1px solid black;
+  margin-top: -1px;
+}
 #incident-objectives {
   #ops-period {
     border-top: 1px solid black;

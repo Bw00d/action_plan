@@ -18,3 +18,17 @@
     padding-left: 10px;
   }
 }
+a.delete-resource {
+  color: white;
+  font-weight: 900;
+  font-size: 1.3em;
+  position: absolute;
+  width:15px;
+  right: 5px;
+  top: 5px;
+
+}
+a.delete-resource:hover {
+  text-decoration: none;
+  color: red;
+}
