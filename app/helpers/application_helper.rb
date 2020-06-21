@@ -50,4 +50,12 @@ module ApplicationHelper
   def current_plan
     @incident.plans.where(date: Date.today).first
   end
+
+  module ActionView  
+    class Base  
+      def format_date(rec)  
+          rec.strftime('%m/%d/%Y')  
+      end  
+    end  
+  end
 end
