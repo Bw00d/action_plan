@@ -26211,31 +26211,78 @@ jQuery.fn.best_in_place = function () {
 $(document).on("turbolinks:load", function() {
 
 
-  $('#assign-resources-row').hover(function() {
+  $('table#assigned-resources').hover(function() {
         $('#assign-resources-button').show();
       }, 
       function () {
         $('#assign-resources-button').hide();
       }
     );
+  $('#assign-resources-button').hover(function() {
+      $(this).show();
+    }, 
+    function () {
+      $(this).hide();
+    }
+  );
 
-  $('#add-freqs-row').hover(function() {
-        $('#add-freqs').show();
-      }, 
-      function () {
-        $('#add-freqs').hide();
-      }
-    );
-  $('#assign-resources-button').click(function() {
+  $('#commo-table').hover(function() {
+      $('#add-freqs-button').show();
+    }, 
+    function () {
+      $('#add-freqs-button').hide();
+    }
+  );
+  $('#add-freqs-button').hover(function() {
+      $(this).show();
+    }, 
+    function () {
+      $(this).hide();
+    }
+  );
+
+  $('#ops-resources').click(function() {    // adding operations
+    $('#ops-resource-form').show();
+  
+    var i;
+     for (i = 0; i < opsIds.length; i++) {
+      $("#assignment_ops_personnel_ids_" + opsIds[i] ).prop("checked","true");
+    }
+  }); 
+  $('#cancel-ops-form').click(function() {
+    $('#ops-resource-form').hide();
+  });
+
+
+  $('#assign-resources-button').click(function() {    // adding resources
     $('#resource-assignments-form').show();
   
     var i;
      for (i = 0; i < resourceIds.length; i++) {
       $("#assignment_resource_ids_" + resourceIds[i] ).prop("checked","true");
     }
-  });
+  }); 
   $('#cancel-resource-assignments-form').click(function() {
     $('#resource-assignments-form').hide();
+  });
+
+
+  $('#ops-box-container').hover(function() {
+        $('#ops-resources').show();
+      }, 
+      function () {
+        $('#ops-resources').hide();
+      }
+    );
+  $('#ops-resources').hover(function() {
+      $(this).show();
+    }, 
+    function () {
+      $(this).hide();
+    }
+  );
+  $('#ops-resources').click(function() {
+    $('#ops-resource-form').show();
   });
 
 });
@@ -26858,7 +26905,7 @@ $(document).on("turbolinks:load", function() {
 
  
 
-  $('#add-freqs').click(function() {
+  $('#add-freqs-button').click(function() {
     $('#freq-form').show();
 
     var i;
@@ -27075,12 +27122,41 @@ $(document).on("turbolinks:load", function() {
 //         localStorage.setItem('bgColor', this.value);
 //     })
 //     .change();
+$(document).on("turbolinks:load", function() {
+  $('select#resource_category').change(function() {
+    var text = $(this).val();
+    $('#order-number-input').show();
+    switch(text) {
+    case 'EQUIPMENT':  
+      var prefix = 'E-'
+     break;
+
+    case 'CREW':  
+      var prefix = 'C-'
+      break;
+
+    case 'OVERHEAD':
+      var prefix = 'O-'
+      break;
+    }
+      $('.order-number-prefix').html( prefix )
+
+  });
+});
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 ;
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
+$(document).on("turbolinks:load", function() {
+
+
+  $('.blank-row').hover(function() {
+        $(this).find('.team-form').show();
+      }, 
+      function () {
+        $(this).find('.team-form').hide();
+      }
+    );
+});
 /*
  Zen Utils is a small library consisting of utility functions (reusable code)
  written by Bruno Facca.
