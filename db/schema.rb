@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200619033525) do
+ActiveRecord::Schema.define(version: 20200620235944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20200619033525) do
     t.string "commo_item_ids", array: true
     t.string "ops_period"
     t.string "resource_ids", array: true
+    t.string "ops_personnel_ids", array: true
   end
 
   create_table "commo_items", force: :cascade do |t|

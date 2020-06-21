@@ -16,7 +16,8 @@
    
   <% end %>
 </div>
-<table class="assigned-resources">
+<table id="commo-table", class="assigned-resources">
+  <%= link_to (fa_icon('user-plus')), "javascript:;",class: 'resources-button', id: 'add-freqs-button' %>
   <thead class="">
     <th class="c1"><span class="">Zone</span></th>
     <th class="c1"><span class="">Ch #</span></th>

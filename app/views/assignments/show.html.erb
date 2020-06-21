@@ -44,48 +44,48 @@
           </div>
         </div>
       </div>
-    
+      <div class="row">
+        <div id="ops-resource-form">   <!-- operations leadership form -->
+          <%= form_for @assignment do |f| %>
+            <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-success tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-ops-form', class: 'btn btn-default tiny' %></div>
+          <ul>
+            <%= javascript_tag "var opsIds = #{@assignment.ops_personnel_ids.to_json}" %>
 
+            <% @plan.operations.order(:position).each do |r| %>
+              <li class=""><%= f.check_box :ops_personnel_ids, {multiple: true}, r.id, nil %>
+              
+                      <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.resource_name %></li>
+            <% end %>
+          </ul>
+           
+          <% end %>
+        </div>
+      </div>
+        <%= link_to (fa_icon('user-plus')), "javascript:;",class: 'resources-button', id: 'ops-resources' %>   <!-- Ops personnel button -->
       <!-- Overhead rows -->
       <div class="row">
-        <div class=" center form-row">
-          <div class="col-xs-3  form-box">
+        <div id="ops-box-container">
+        <% @assignment.operations_resources.each do |o| %>
+          <div class="col-xs-3 ops-box"><%= o.position %>
           </div>
-          <div class="col-xs-3 bl form-box">
+          <div class="col-xs-3 ops-box"><%= o.resource_name %>
           </div>
-          <div class="col-xs-3 bl form-box">
+        <% end %>
+        <% (6 - @assignment.operations_resources.count).times do %>
+
+          <div class="col-xs-3 ops-box">
           </div>
-          <div class="col-xs-3 bl form-box">
+          <div class="col-xs-3 ops-box">
           </div>
+
+        <% end %>
         </div>
       </div>
-      <div class="row">
-        <div class=" center form-row">
-          <div class="col-xs-3  form-box">
-          </div>
-          <div class="col-xs-3 bl form-box">
-          </div>
-          <div class="col-xs-3 bl form-box">
-          </div>
-          <div class="col-xs-3 bl form-box">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class=" center form-row">
-          <div class="col-xs-3  form-box">
-          </div>
-          <div class="col-xs-3 bl form-box">
-          </div>
-          <div class="col-xs-3 bl form-box">
-          </div>
-          <div class="col-xs-3 bl form-box">
-          </div>
-        </div>
-      </div>
+      
       <div id="assign-resources-row" class="row">
+          <%= link_to (fa_icon('user-plus')), "javascript:;",id: "assign-resources-button", class: "resources-button" %>   
         <div class=" center form-row header-row">
-          <span id="assign-resources-button" class="header-button">ADD</span>RESOURCES ASSIGNED
+          RESOURCES ASSIGNED
         </div>
       </div>
       <div class="row">
@@ -98,13 +98,13 @@
             <% @incident.resources.order(:position).each do |r| %>
               <li class=""><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
               
-                      <%= f.label :commo_item_ids, r.position %>  -  <%= f.label :commo_item_ids, r.name %></li>
+                      <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.name %></li>
             <% end %>
           </ul>
            
           <% end %>
         </div>
-        <table class="assigned-resources">
+        <table id="assigned-resources", class="assigned-resources">
           <thead>
             <th class="p35">RESOURCE DESIGNATOR </th>
             <th class="p40">LEADER</th>
@@ -145,7 +145,7 @@
             <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "(ADD CONTENT OR LEAVE BLANK)",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
         </div>
         <div id="add-freqs-row" class=" center form-row header-row">
-            <span id="add-freqs" class="header-button">ADD</span>COMMUNICATIONS SUMMARY
+            COMMUNICATIONS SUMMARY
         </div>
         <%= render 'commo_plan' %>
         </br>

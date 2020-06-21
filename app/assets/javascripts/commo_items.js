@@ -2,7 +2,7 @@ $(document).on("turbolinks:load", function() {
 
  
 
-  $('#add-freqs').click(function() {
+  $('#add-freqs-button').click(function() {
     $('#freq-form').show();
 
     var i;

@@ -19,12 +19,20 @@ class Assignment < ApplicationRecord
     items
   end
 
-  def personnel
+  def personnel  # this counts assignment personnel
     num_personnel = 0
 
-    if !self.resource_ids == nil
+    if self.resource_ids
       self.resource_ids.each { |r| num_personnel += Resource.find(r).number_personnel } 
     end
     num_personnel
+  end
+
+  def operations_resources
+    items = []
+    if self.ops_personnel_ids
+      self.ops_personnel_ids.each { |i| items << Team.find(i) }
+    end
+    items
   end
 end

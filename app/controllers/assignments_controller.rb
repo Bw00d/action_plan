@@ -86,6 +86,7 @@ class AssignmentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
       params.require(:assignment).permit(:designator, :control_operations, :special_instructions,
-                                         :plan_id, :ops_period, commo_item_ids: [], resource_ids: [])
+                                         :plan_id, :ops_period, commo_item_ids: [], resource_ids: [],
+                                         ops_personnel_ids: [])
     end
 end
