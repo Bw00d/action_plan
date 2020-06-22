@@ -18257,15 +18257,17 @@ a.new-freq-button:hover {
   overflow: hidden;
   height: 30px;
   float: left;
+  padding-top: 6px;
+  padding-left: 10px;
 }
 
-/* line 159, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 161, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #ops-box-container {
   border-left: 1px solid black;
   overflow: hidden;
 }
 
-/* line 163, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 165, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 .resources-button {
   overflow: hidden;
   position: absolute;
@@ -18284,26 +18286,31 @@ a.new-freq-button:hover {
   display: flex;
   padding-left: 4px;
   display: none;
+  color: #3d3d3d;
 }
-/* line 181, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 184, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 .resources-button i {
   margin-top: 10px;
   margin-left: 6px;
 }
+/* line 188, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+.resources-button a {
+  color: #3d3d3d !important;
+}
 
-/* line 186, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 192, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #ops-resources {
   left: -16px;
   margin-top: 13px;
 }
 
-/* line 191, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 197, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #assign-resources-button {
   left: -15px;
   margin-top: 133px;
 }
 
-/* line 195, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 202, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #ops-resource-form {
   border-right: 1px solid black;
   border-left: 1px solid black;
@@ -18312,15 +18319,67 @@ a.new-freq-button:hover {
   padding-top: 20px;
   display: none;
 }
+/* line 209, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#ops-resource-form li {
+  list-style: none;
+}
 
-/* line 203, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 213, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #add-freqs-button {
   left: -15px;
   margin-top: 75px;
 }
+
+/* line 217, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#new-204-button {
+  margin-left: 20px;
+  overflow: hidden;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  -moz-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(191, 163, 163, 0.75);
+  background-color: #f5f5f5;
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding-left: 0;
+  font-size: 1.3em;
+  color: #3d3d3d;
+  padding-top: 0;
+}
+/* line 238, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#new-204-button i {
+  margin-top: 0px;
+  margin-left: 2px;
+}
+/* line 242, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#new-204-button a {
+  color: #3d3d3d !important;
+}
+
+/* line 246, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+a#new-204-button:hover {
+  text-decoration: none;
+}
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
 .btn-dark {
   background-color: black;
+  color: white;
+}
+
+/* line 5, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
+.btn-aqua {
+  background-color: #60C1DD;
+  color: white;
+}
+/* line 8, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
+.btn-aqua :hover {
   color: white;
 }
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
