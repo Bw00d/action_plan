@@ -47,7 +47,7 @@
       <div class="row">
         <div id="ops-resource-form">   <!-- operations leadership form -->
           <%= form_for @assignment do |f| %>
-            <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-success tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-ops-form', class: 'btn btn-default tiny' %></div>
+            <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-aqua tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-ops-form', class: 'btn btn-default tiny' %></div>
           <ul>
             <%= javascript_tag "var opsIds = #{@assignment.ops_personnel_ids.to_json}" %>
 
@@ -91,7 +91,7 @@
       <div class="row">
         <div id="resource-assignments-form">
           <%= form_for @assignment do |f| %>
-            <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-success tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-resource-assignments-form', class: 'btn btn-default tiny' %></div>
+            <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-aqua tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-resource-assignments-form', class: 'btn btn-default tiny' %></div>
           <ul>
             <%= javascript_tag "var resourceIds = #{@assignment.resource_ids.to_json}" %>
 

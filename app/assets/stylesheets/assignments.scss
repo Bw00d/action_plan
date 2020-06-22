@@ -206,6 +206,9 @@ a.new-freq-button:hover {
   padding-bottom: 25px;
   padding-top: 20px;
   display: none;
+  li {
+    list-style: none;
+  }
 }
 #add-freqs-button {
   left: -15px;

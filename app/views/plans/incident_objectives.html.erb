@@ -75,7 +75,7 @@
         <div id="attachments" class="col-xs-12">
           <span class="small">7. ATTACHMENTS</span><br>
             <ul class="small col-xs-3">
-              <li><%= best_in_place @plan, :org_list, :as => :checkbox  %>  ORGANIZATION LIST</li>
+              <li><%= check_box_tag("org list", "#") %>  ORGANIZATION LIST</li>
 
               <li><%= check_box_tag("org list", "#") %>  ASSIGNMENT LIST</li>
               <li><%= check_box_tag("org list", "#") %>  COMMUNICATION PLAN</li>
