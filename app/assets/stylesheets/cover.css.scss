@@ -1,0 +1,41 @@
+#cover {
+  padding-top: 50px;
+  min-height: 936px;
+  text-align: center;
+  border: 2px solid #DDD;
+  h1 {
+    font-weight: 700;
+    font-size: 3em;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 2em;
+  }
+  #picture {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 75%;
+    height: auto;
+  }
+  .cost-code {
+    margin-top: 30px;
+    h3 {
+    font-weight: 700;
+    }
+  }
+}
+.cover-block {
+  border: 1px dashed orange;
+}
+.sm-spacer {
+  height: 25px;
+  overflow: hidden;
+}
+.md-spacer {
+  height: 50px;
+  overflow: hidden;
+}
+.lg-spacer {
+  height: 75px;
+  overflow: hidden;
+}

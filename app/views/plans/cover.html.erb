@@ -1,8 +1,9 @@
 <%= content_for :title, "Cover" %>
 <div class="container">
   <div class="col-xs-12 col-lg-8 center-block">
-    <div class="row">
-      <div class="plan-panel-head">
+
+    <div class="row">                    <!-- Begin the tabrows -->
+      <div class="plan-panel-head"> 
         <ul class="tabrow">
           <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
           <li id="selected" class="selected"><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
@@ -14,9 +15,10 @@
           <li><%= link_to "220", '#' %></li>
           <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
         </ul>
-        </div>
+      </div>    
       <div class="masking-tape"></div>
-    </div>
+    </div>   
+                               <!-- End the tabrows -->
     <div class="row">
       <div id="cover">
         <div id="plan-title">
@@ -30,6 +32,14 @@
         <div class="cost-code">
           <h3><%= @incident.number %> – <%= @incident.p_code %></h3>
         </div>
+
+      <!--   <div class="cover-block">
+          <h1>This is a cover block</h1>
+        </div>
+        <div class="cover-block sm-spacer">sm-spacer</div>
+        <div class="cover-block md-spacer">md-spacer</div>
+        <div class="cover-block lg-spacer">lg-spacer</div>
+        <div class="cover-block"></div> -->
       </div>
     </div>
   </div>
