@@ -26,6 +26,7 @@
 }
 .cover-block {
   border: 1px dashed orange;
+  overflow: hidden;
 }
 .sm-spacer {
   height: 25px;
@@ -38,4 +39,38 @@
 .lg-spacer {
   height: 75px;
   overflow: hidden;
+}
+
+.add-block-button {
+  overflow: hidden;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%; 
+  -moz-border-radius: 50%; 
+  border-radius: 50%; 
+  -webkit-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  -moz-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(191, 163, 163, 0.75);
+  background-color: #f5f5f5;
+  z-index: 3;
+  justify-content: center; 
+  align-items: center;
+  display: flex;
+  padding-left: 0px;
+  padding-bottom: 7px;
+  display: none;
+  margin-top: 5px;
+  color :#3d3d3d;
+  left: -16px;
+  i {
+    margin-top: 10px;
+    margin-left: 6px;
+  }
+  font-size: 2em;
+  font-weight: 300;
+
+  a {
+    color: #3d3d3d !important;
+  }
 }

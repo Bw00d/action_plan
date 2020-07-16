@@ -18319,14 +18319,20 @@ a.new-freq-button:hover {
   padding-top: 20px;
   display: none;
 }
+/* line 209, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+#ops-resource-form li {
+  list-style: none;
+}
 
-/* line 210, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 213, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #add-freqs-button {
   left: -15px;
   margin-top: 75px;
+  padding-left: 8px;
+  padding-top: 2px;
 }
 
-/* line 214, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 219, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #new-204-button {
   margin-left: 20px;
   overflow: hidden;
@@ -18349,23 +18355,33 @@ a.new-freq-button:hover {
   color: #3d3d3d;
   padding-top: 0;
 }
-/* line 235, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 240, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #new-204-button i {
   margin-top: 0px;
   margin-left: 2px;
 }
-/* line 239, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 244, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 #new-204-button a {
   color: #3d3d3d !important;
 }
 
-/* line 243, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
+/* line 248, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.scss */
 a#new-204-button:hover {
   text-decoration: none;
 }
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
 .btn-dark {
   background-color: black;
+  color: white;
+}
+
+/* line 5, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
+.btn-aqua {
+  background-color: #60C1DD;
+  color: white;
+}
+/* line 8, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
+.btn-aqua :hover {
   color: white;
 }
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
@@ -18537,25 +18553,81 @@ input.new-commo-item {
   border: none;
   font-size: 20px;
   font-weight: 400;
-  line-height: 8px;
-  padding-bottom: 3px;
+  line-height: 7px;
+  padding-bottom: 6px;
+  padding-left: 6px;
   color: #242424;
 }
 
-/* line 133, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
+/* line 134, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 136, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
+/* line 137, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 139, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
+/* line 140, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
+}
+/* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+#cover {
+  padding-top: 50px;
+  min-height: 936px;
+  text-align: center;
+  border: 2px solid #DDD;
+}
+/* line 6, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+#cover h1 {
+  font-weight: 700;
+  font-size: 3em;
+}
+/* line 10, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+#cover h2 {
+  font-weight: 700;
+  font-size: 2em;
+}
+/* line 14, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+#cover #picture {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 75%;
+  height: auto;
+}
+/* line 20, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+#cover .cost-code {
+  margin-top: 30px;
+}
+/* line 22, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+#cover .cost-code h3 {
+  font-weight: 700;
+}
+
+/* line 27, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+.cover-block {
+  border: 1px dashed orange;
+}
+
+/* line 30, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+.sm-spacer {
+  height: 25px;
+  overflow: hidden;
+}
+
+/* line 34, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+.md-spacer {
+  height: 50px;
+  overflow: hidden;
+}
+
+/* line 38, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/cover.css.scss */
+.lg-spacer {
+  height: 75px;
+  overflow: hidden;
 }
 /* line 35, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .page-header {
@@ -19583,39 +19655,32 @@ span.plans-button {
   border-right: 1px solid #DDD;
 }
 
-/* line 222, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
-#cover {
+/*#cover {
   padding-top: 75px;
   padding-bottom: 100px;
   text-align: center;
   border: 2px solid black;
-}
-/* line 227, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
-#cover h1 {
-  font-weight: 700;
-  font-size: 3em;
-}
-/* line 231, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
-#cover h2 {
-  font-weight: 700;
-  font-size: 2em;
-}
-/* line 235, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
-#cover #picture {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 75%;
-  height: auto;
-}
-/* line 241, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
-#cover .cost-code {
-  margin-top: 30px;
-}
-/* line 243, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
-#cover .cost-code h3 {
-  font-weight: 700;
-}
-
+  h1 {
+    font-weight: 700;
+    font-size: 3em;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 2em;
+  }
+  #picture {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 75%;
+    height: auto;
+  }
+  .cost-code {
+    margin-top: 30px;
+    h3 {
+    font-weight: 700;
+    }
+  }
+}*/
 /* line 248, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/plans.css.scss */
 .form-row {
   position: relative;
