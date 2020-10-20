@@ -28,7 +28,7 @@
           <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
           <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
           <td class="sm-bip-input">
-            <% if r.number_personnel %> 
+            <% if r.number_personnel != nil  %> 
               <%= best_in_place r, :number_personnel, :as => :input %>
             <% end %>
               </td>
