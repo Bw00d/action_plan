@@ -27,7 +27,11 @@
           <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
           <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
           <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
-          <td class="sm-bip-input"><%= best_in_place r, :number_personnel, :as => :input %></td>
+          <td class="sm-bip-input">
+            <% if r.number_personnel %> 
+              <%= best_in_place r, :number_personnel, :as => :input %>
+            <% end %>
+              </td>
           <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
           <td class="lg-bip-input"><%= best_in_place r, :lwd, :as => :input %></td>
         </tr>
