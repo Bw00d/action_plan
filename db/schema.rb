@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200620235944) do
+ActiveRecord::Schema.define(version: 2020_10_23_210947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 20200620235944) do
     t.string "ops_personnel_ids", array: true
   end
 
+  create_table "blocks", force: :cascade do |t|
+    t.string "font_size"
+    t.string "font_family"
+    t.string "content"
+    t.string "number"
+    t.integer "cover_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "commo_items", force: :cascade do |t|
     t.string "zone"
     t.string "ch_num"
@@ -67,6 +77,12 @@ ActiveRecord::Schema.define(version: 20200620235944) do
     t.text "special_instructions"
     t.string "prepared_by"
     t.string "date_signed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "covers", force: :cascade do |t|
+    t.integer "plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

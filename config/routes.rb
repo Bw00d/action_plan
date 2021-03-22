@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :blocks
+  resources :covers
   resources :teams
   resources :safety_messages
   resources :commo_items
