@@ -4,7 +4,7 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-ruby '2.4.4'
+ruby '2.5.9'
 
 # Choose between PostgreSQL and MySQL (comment out one of the following gems)
 gem 'pg', '~> 0.21.0'
