@@ -1,5 +1,7 @@
 class BlocksController < ApplicationController
   before_action :set_block, only: [:show, :edit, :update, :destroy]
+  include SkipAuthorization
+  skip_before_action :authenticate_user!
 
   # GET /blocks
   # GET /blocks.json
@@ -28,10 +30,10 @@ class BlocksController < ApplicationController
 
     respond_to do |format|
       if @block.save
-        format.html { redirect_to @block, notice: 'Block was successfully created.' }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { render :show, status: :created, location: @block }
       else
-        format.html { render :new }
+        format.html { render :show }
         format.json { render json: @block.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +71,9 @@ class BlocksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def block_params
-      params.fetch(:block, {})
+      params.require(:block).permit(:cover_id, :font_size ,:font_family ,:content, :number)
     end
 end
+
+
+

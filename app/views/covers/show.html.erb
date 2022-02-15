@@ -1,4 +1,42 @@
-<p id="notice"><%= notice %></p>
+<%= content_for :title, "Cover" %>
+<div class="container">
+  <div class="col-xs-12 col-lg-8 center-block">
 
-<%= link_to 'Edit', edit_cover_path(@cover) %> |
-<%= link_to 'Back', covers_path %>
+    <div class="row">                    <!-- Begin the tabrows -->
+      <div class="plan-panel-head"> 
+        <ul class="tabrow">
+          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+          <li id="selected" class="selected"><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
+          <li><%= link_to "202", "../../#{@plan.id}/202" %></li>
+            <li><%= link_to "203", "../../#{@plan.id}/203" %></li>
+            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+            <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
+            <li><%= link_to "206", '#' %></li>
+            <li><%= link_to "220", '#' %></li>
+          <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
+        </ul>
+      </div>    
+      <div class="masking-tape"></div>
+    </div>   
+                               <!-- End the tabrows -->
+    <div class="row">
+      <div id="cover">
+        <%= form_for @block do |f| %>
+          <%= f.hidden_field :cover_id, value: @cover.id %>
+          <%= f.submit '+', class: "new-commo-item" %>
+        <% end %>
+
+
+       
+        <!-- <div class="cover-block">
+          <span class="add-block-button"> + </span>
+          <h1>This is a cover block</h1>
+        </div>
+        <div class="cover-block sm-spacer"><span class="add-block-button"> + </span>sm-spacer</div>
+        <div class="cover-block md-spacer"><span class="add-block-button"> + </span>md-spacer</div>
+        <div class="cover-block lg-spacer"><span class="add-block-button"> + </span>lg-spacer</div>
+        <div class="cover-block"><span class="add-block-button"> + </span></div> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,30 @@
 class CoversController < ApplicationController
   before_action :set_cover, only: [:show, :edit, :update, :destroy]
+  include SkipAuthorization
+  skip_before_action :authenticate_user!
 
   # GET /covers
   # GET /covers.json
   def index
-    @covers = Cover.all
+    @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
+    @cover = Cover.new
+    respond_to do |format|
+      if @plan.cover
+        format.html { redirect_to incident_plan_cover_path(@incident, @plan, @plan.cover)}
+      else
+        format.html { render 'index' }
+      end
+    end
   end
 
   # GET /covers/1
   # GET /covers/1.json
   def show
+    @cover = Cover.find(params[:id])
+    @plan = Plan.find(@cover.plan_id)
+    @incident = Incident.find(@plan.incident_id)
+    @block = Block.new
   end
 
   # GET /covers/new
@@ -24,11 +39,13 @@ class CoversController < ApplicationController
   # POST /covers
   # POST /covers.json
   def create
+    @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
     @cover = Cover.new(cover_params)
 
     respond_to do |format|
       if @cover.save
-        format.html { redirect_to @cover, notice: 'Cover was successfully created.' }
+        format.html { redirect_to incident_plan_cover_path(@incident, @plan, @cover) }
         format.json { render :show, status: :created, location: @cover }
       else
         format.html { render :new }
@@ -69,6 +86,6 @@ class CoversController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cover_params
-      params.fetch(:cover, {})
+      params.require(:cover).permit(:plan_id)
     end
 end
