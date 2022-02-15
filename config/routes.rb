@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  resources :blocks
+  resources :covers
   resources :teams
   resources :safety_messages
   resources :commo_items
   resources :commo_plans
+  resources :covers
   resources :activities
   resources :actions
   resources :incidents
@@ -26,6 +29,7 @@ Rails.application.routes.draw do
       resources :assignments
       resources :commo_plans
       resources :safety_messages
+      resources :covers
     end
   end
  

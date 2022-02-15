@@ -8,6 +8,7 @@ class Plan < ApplicationRecord
   has_one :safety_message
   validates :user_id, presence: true
   has_many :teams
+  has_one :cover
   validates_uniqueness_of :date, :scope => :incident_id
   after_create :duplicate_objectives
 
