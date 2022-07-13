@@ -27,15 +27,41 @@
         <% end %>
 
 
-       
+       <% @blocks.each do |b| %>
+       <div>
+         
+         <div class="style-controls">
+           <div><h1>H1</h1></div>
+           <div><h2>H2</h2></div>
+           <div><h3>H3</h3></div>
+           <div><h4>H4</h4></div>
+           <div><strong>Bold</strong></div>
+           <div><em>Italic</em></div>
+           <div><%= fa_icon('image') %></div>
+           <div><%= fa_icon('delete') %></div>
+         </div>
+         <div class="block gray-border" style="font-size:<%= b.font_size %>; font-family:<%= b.font_family %>;" >
+          <%= b.content %>
+          </div> 
+       </div>
+       <% end %>
+        
+       <% javascript_tag do %>
+          var blocks = <%= @blocks.to_json %>;
+          for (let i = 0; i < blocks.length; i++) {
+
+        }
+      <% end %>
+
         <!-- <div class="cover-block">
           <span class="add-block-button"> + </span>
-          <h1>This is a cover block</h1>
+         <h1>This is a cover block</h1>
         </div>
         <div class="cover-block sm-spacer"><span class="add-block-button"> + </span>sm-spacer</div>
         <div class="cover-block md-spacer"><span class="add-block-button"> + </span>md-spacer</div>
         <div class="cover-block lg-spacer"><span class="add-block-button"> + </span>lg-spacer</div>
         <div class="cover-block"><span class="add-block-button"> + </span></div> -->
+
       </div>
     </div>
   </div>
