@@ -70,4 +70,6 @@ Rails.application.configure do
   # detailed exceptions provided by the better-errors gem
   BetterErrors::Middleware.allow_ip! '10.0.2.2'
   config.web_console.whiny_requests = false
+
+  config.active_storage.service = :amazon
 end

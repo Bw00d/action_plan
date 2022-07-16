@@ -64,6 +64,7 @@ gem 'best_in_place', '~> 3.0.1'
 gem 'font_awesome5_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'american_date'
+gem 'aws-sdk-s3'
 
 group :test do
   gem 'database_cleaner'

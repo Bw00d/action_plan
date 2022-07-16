@@ -50,6 +50,22 @@ GEM
     autoprefixer-rails (10.4.2.0)
       execjs (~> 2)
     awesome_print (1.9.2)
+    aws-eventstream (1.1.0)
+    aws-partitions (1.342.0)
+    aws-sdk-core (3.104.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.36.0)
+      aws-sdk-core (~> 3, >= 3.99.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.74.0)
+      aws-sdk-core (~> 3, >= 3.102.1)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.2.1)
+      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.16)
     best_in_place (3.0.3)
       actionpack (>= 3.2)
@@ -135,6 +151,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jmespath (1.4.0)
     jquery-rails (4.4.0)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -352,6 +369,7 @@ DEPENDENCIES
   actionview (>= 5.2.4.3)
   american_date
   awesome_print
+  aws-sdk-s3
   best_in_place (~> 3.0.1)
   better_errors
   binding_of_caller
