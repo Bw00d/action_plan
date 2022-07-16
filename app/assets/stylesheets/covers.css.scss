@@ -160,7 +160,8 @@ style-controls {
 /*content styles*/
 
 .h1 {
-  font-size: 40px;
+  /*font-size: 40px;*/
+  font-size: 5vh;
 }
 .h2 { 
   font-size: 30px;
@@ -182,6 +183,10 @@ style-controls {
 }
 .italic {
   font-style: italic;
+}
+.image-block {
+  padding: 0 50px;
+
 }
 
 
