@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   end
 
   resources :incidents do
+    resources :posts
+    resources :resources
     resources :plans do
       resources :assignments
       resources :commo_plans

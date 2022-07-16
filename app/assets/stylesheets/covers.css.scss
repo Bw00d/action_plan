@@ -188,6 +188,21 @@ style-controls {
   padding: 0 50px;
 
 }
+.cover-image {
+  width: 65%;
+  height: auto;
+}
+.image-form {
+  font-size: 1em;
+  overflow: hidden;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  display: none;
+  input {
+    font-size: 20px;
+  }
+}
 
 
 
