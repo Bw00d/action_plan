@@ -65,6 +65,8 @@ gem 'font_awesome5_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'american_date'
 gem 'aws-sdk-s3'
+# for active storage
+gem "image_processing", ">= 1.2"
 
 group :test do
   gem 'database_cleaner'
