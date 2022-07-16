@@ -71,5 +71,5 @@ Rails.application.configure do
   BetterErrors::Middleware.allow_ip! '10.0.2.2'
   config.web_console.whiny_requests = false
 
-  config.active_storage.service = :amazon
+  config.active_storage.service = :local
 end

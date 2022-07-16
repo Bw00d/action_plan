@@ -21,14 +21,23 @@
     <%= form.text_area :body %>
   </div>
 
-  <div class="field">
-    <%= form.label :posted_at %>
-    <%= form.datetime_select :posted_at %>
-  </div>
+<!--   <div class="field">
+    <%##= form.datetime_select :posted_at %>
+  </div> -->
 
   <div class="field">
     <%= form.label :user_id %>
-    <%= form.number_field :user_id %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :main_image %>
+    <%= form.file_field :main_image %>
+  </div>
+
+  <div class="field">
+    <%= form.label :other_images %>
+    <%= form.file_field :other_images, multiple: true %>
   </div>
 
   <div class="actions">
