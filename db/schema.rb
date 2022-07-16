@@ -45,11 +45,15 @@ ActiveRecord::Schema.define(version: 2020_10_23_210947) do
   end
 
   create_table "blocks", force: :cascade do |t|
-    t.string "font_size"
+    t.string "font_size", default: "h2"
     t.string "font_family"
+    t.string "Arial"
     t.string "content"
     t.string "number"
     t.integer "cover_id"
+    t.string "font_weight", default: "semi-bold"
+    t.string "text_align", default: "center"
+    t.string "text_style", default: "normal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
