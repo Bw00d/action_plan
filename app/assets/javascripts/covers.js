@@ -81,5 +81,9 @@ $(document).on("turbolinks:load", function() {
     target = $(this).parent().siblings('.block')
     target.toggleClass('italic');
   });
+  $('.add-image-block').click(function() {
+    target = $(this).parent().siblings('.block');
+    target.children('.image-form').toggle();
+  });
 
 });

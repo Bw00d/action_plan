@@ -28,6 +28,9 @@
 .tabrow li:hover {
     background-color: #ddd;
 }
+.tabrow a:hover {
+  background-color: transparent;
+}
 .tabrow li.selected {
   background: #FFF;
   color: #000;
