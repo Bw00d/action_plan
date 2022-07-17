@@ -51,20 +51,21 @@
          </div>
 
          <div id="<%= b.id %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %>" >
-            
-            <div class="image-field">
-            
-            <% if b.main_image.attached? %>
-             <%= image_tag b.main_image, class: "cover-image" %>
-            <% end %>
-          </div>
-            <div class="image-form">
-              <%= form_for b do |f| %>
-                <%= f.file_field :main_image, class: 'small-button' %>
-                <%= f.submit "Upload" %>
-              <% end %>
-            </div>
-          <% unless b.main_image.attached?  %>
+           <% if b.image_block? %> 
+              <div class="image-field">
+                <% if b.main_image.attached? %>
+                 <%= image_tag b.main_image, class: "cover-image" %>
+                <% end %>
+              </div>
+              <div class="image-form">
+                <%= form_for b do |f| %>
+                  <%= f.file_field :main_image, class: 'small-button' %>
+                  <%= f.submit "Upload" %>
+                <% end %>
+              </div>
+          <% end %>
+
+          <% unless b.image_block?  %>
             <%= best_in_place b, :content, :as => :input, class: 'bock-content' %>
           <% end %>
         </div> 

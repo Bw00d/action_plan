@@ -190,8 +190,18 @@ style-controls {
 
 }
 .cover-image {
+  width: 100%;
+  height: auto;
+}
+.image-field {
+  margin: 0 auto;
+  text-align: center;
+  min-width: 65%;
+  min-height: 250px;
   width: 65%;
   height: auto;
+  background-color: #e1e1e1;
+  overflow: hidden;
 }
 .image-form {
   font-size: 1em;

@@ -2,6 +2,7 @@ class CoversController < ApplicationController
   before_action :set_cover, only: [:show, :edit, :update, :destroy]
   include SkipAuthorization
   skip_before_action :authenticate_user!
+  
 
   # GET /covers
   # GET /covers.json
@@ -85,6 +86,7 @@ class CoversController < ApplicationController
       @cover = Cover.find(params[:id])
     end
 
+  
     # Only allow a list of trusted parameters through.
     def cover_params
       params.require(:cover).permit(:plan_id)
