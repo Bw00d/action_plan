@@ -51,11 +51,21 @@
          </div>
 
          <div id="<%= b.id %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %>" >
+
+            
            <% if b.image_block? %> 
-              <div class="image-field">
-                <% if b.main_image.attached? %>
-                 <%= image_tag b.main_image, class: "cover-image" %>
-                <% end %>
+                <div class="resizable">
+                  <div class=" resizers">
+                    <div class='resizer top-left'></div>
+                    <div class='resizer top-right'></div>
+                    <div class='resizer bottom-left'></div>
+                    <div class='resizer bottom-right'></div>
+
+                  <% if b.main_image.attached? %>
+                   <%= image_tag b.main_image, class: "cover-image" %>
+                  <% end %>
+
+                </div>
               </div>
               <div class="image-form">
                 <%= form_for b do |f| %>
@@ -68,6 +78,7 @@
           <% unless b.image_block?  %>
             <%= best_in_place b, :content, :as => :input, class: 'bock-content' %>
           <% end %>
+          <!-- <div class="top-padding"><div class="resize-padding"></div></div> -->
         </div> 
        </div>
        <% end %>
