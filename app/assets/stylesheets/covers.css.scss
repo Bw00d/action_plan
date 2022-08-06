@@ -1,6 +1,6 @@
 .block {
   min-height: 30px;
-  padding: 15px 0 0 0;
+  padding: 0;
   margin-top: 0;
   margin-bottom: 0;
   &:hover {
@@ -138,6 +138,10 @@
   width: 100%;
   margin-top: -11px; 
   display: none;
+  height: 0 !important;
+}
+#new_block {
+  height: 0;
 }
 .new-block-button {
   width: 26px;
@@ -153,10 +157,11 @@
   padding-top: 1px;
   color: #242424;
   /*display: none;*/
+  margin-bottom: 5px;
 }
 
 style-controls {
-    
+    z-index: 3;
 }
 /*content styles*/
 
@@ -192,6 +197,7 @@ style-controls {
 .cover-image {
   width: 100%;
   height: auto;
+  z-index: 1;
 }
 .image-field {
   margin: 0 auto;
@@ -201,6 +207,7 @@ style-controls {
   width: 65%;
   height: auto;
   background-color: #e1e1e1;
+  z-index: 1;
 }
 .image-form {
   font-size: 1em;
@@ -223,6 +230,9 @@ style-controls {
 
 
 /* resizable image */
+.resizable {
+  margin-top: 15px;
+}
 
 .resizable .resizers{
   width: 65%;
@@ -271,19 +281,19 @@ style-controls {
 
 /* resize block */
 .resize-padding {
-  background-color: orange;
-  height: 5px;
+  /*background-color: orange;*/
+  height: 8px;
   width: 100%;
   cursor: ns-resize;
   position: absolute;
   bottom: 0;
 }
-.top-padding {
-  background-color: yellow;
+.bottom-padding {
+  /*background-color: yellow;*/
   height: 25px;
   width: 100%;
   position: relative
 }
 .selected-resizer {
-  background-color: blue !important;
-}
+    /*background-color: blue !important;*/
+  }
