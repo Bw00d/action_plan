@@ -13,8 +13,12 @@ class Cover < ApplicationRecord
                     text_align: 'center', cover_id: self.id)
       Block.create!(number: 2, content: self.plan.date.strftime('%B %d, %Y'), font_size: 'h2', font_weight: 'bold', 
                     text_align: 'center', cover_id: self.id)
-      Block.create(number: 3, content: 'ADD AN IMAGE', font_size: 'h2', font_weight: 'bold', 
+      Block.create!(number: 3, content: '0700 - 2200 ', font_size: 'h2', font_weight: 'bold', 
+                    text_align: 'center', cover_id: self.id)
+      Block.create(number: 4, content: 'ADD AN IMAGE', font_size: 'h2', font_weight: 'bold', 
                    text_align: 'center', cover_id: self.id, image_block: true )
+      Block.create!(number: 4, content: 'charge code', font_size: 'h3', font_weight: 'bold', 
+                    text_align: 'center', cover_id: self.id)
       
     end
 end

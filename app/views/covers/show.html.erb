@@ -21,12 +21,7 @@
                                <!-- End the tabrows -->
     <div class="row">
       <div id="cover">
-        <%#= form_for @block do |f| %>
-          <%#= f.hidden_field :cover_id, value: @cover.id %>
-          <%#= f.submit '+', class: "new-commo-item" %>
-        <%# end %> 
-
-    <!-- <ul id="block-list" data-update-url="<%#= sort_cover_blocks_url %>"> -->
+           
        <% @blocks.each do |b| %>
        <%#= content_tag_for :li, b do %>
        <div>

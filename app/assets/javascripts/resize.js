@@ -33,13 +33,10 @@ $(document).on("turbolinks:load", function() {
       function resize_image(e) {
         if (currentResizer.classList.contains('bottom-right')) {
           const width = original_width + (e.pageX - original_mouse_x);
-          // const height = original_height + (e.pageY - original_mouse_y)
           if (width > minimum_size) {
             element.style.width = width + 'px'
           }
-          // if (height > minimum_size) {
-          //   element.style.height = height + 'px'
-          // }
+          
         }
         else if (currentResizer.classList.contains('bottom-left')) {
           // const height = original_height + (e.pageY - original_mouse_y)
@@ -49,7 +46,7 @@ $(document).on("turbolinks:load", function() {
           // }
           if (width > minimum_size) {
             element.style.width = width + 'px'
-            element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+            // element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
           }
         }
         else if (currentResizer.classList.contains('top-right')) {
@@ -68,7 +65,7 @@ $(document).on("turbolinks:load", function() {
           // const height = original_height - (e.pageY - original_mouse_y)
           if (width > minimum_size) {
             element.style.width = width + 'px'
-            element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+            // element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
           }
           // if (height > minimum_size) {
           //   element.style.height = height + 'px'
