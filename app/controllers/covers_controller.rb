@@ -26,7 +26,7 @@ class CoversController < ApplicationController
     @plan = Plan.find(@cover.plan_id)
     @incident = Incident.find(@plan.incident_id)
     @block = Block.new
-    @blocks = @cover.blocks
+    @blocks = @cover.blocks.order(number: :asc)
   end
 
   # GET /covers/new

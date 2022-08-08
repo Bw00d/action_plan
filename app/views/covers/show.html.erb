@@ -45,7 +45,7 @@
            <div class="delete-block"><%= fa_icon('trash') %></div>
          </div>
 
-         <div id="<%= b.id %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %>" >
+         <div  id="<%= b.id %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %>" >
 
             
            <% if b.image_block? %> 
@@ -70,10 +70,10 @@
               </div>
           <% end %>
 
-          <% unless b.image_block?  %>
+          <% unless b.image_block? || b.blank? %>
             <%= best_in_place b, :content, :as => :input, class: 'bock-content' %>
           <% end %>
-          <div class="bottom-padding"><div class="resize-padding"></div></div>
+          <div style="height: <%= b.bottom_padding %>" class="bottom-padding"><div class="resize-padding"></div></div>
         </div> 
        </div>
        <% end %>

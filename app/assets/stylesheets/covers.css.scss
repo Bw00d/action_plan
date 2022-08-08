@@ -161,10 +161,11 @@
   margin-bottom: 5px;
 }
 
+/*content styles*/
+
 .style-controls {
   z-index: 3
 }
-/*content styles*/
 
 .h1 {
   /*font-size: 40px;*/
@@ -245,7 +246,7 @@
   position: relative;
   background-color: #f0f0f0;
   min-width: 300px;
-  min-height: 200px;
+  min-height: 300px;
 }
 .resizable .bordered{
   border: 3px solid #4286f4;
