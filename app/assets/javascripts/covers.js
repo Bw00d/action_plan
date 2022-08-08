@@ -1,11 +1,21 @@
 $(document).on("turbolinks:load", function() {
-
+  $(document).click(function() {
+    var container = $('.block');
+    if (!container.is(event.target) && !container.has(event.target).length) {
+      $('.style-controls').hide();
+      $('.new-block-form').hide();
+    }
+  });
 
   $('.block').click(function() {
     $('.block').removeClass('block-selected');
     if (!($('.block')).hasClass('block-selected')) {
       $('.style-controls').hide();
       $('.new-block-form').hide();
+    }
+    let container = $(".block");
+    if (!container.is(event.target) && !container.has(event.target).length) {
+        
     }
 
     $(this).addClass('block-selected');
