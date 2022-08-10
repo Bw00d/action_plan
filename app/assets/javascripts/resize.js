@@ -95,15 +95,18 @@ $(document).on("turbolinks:load", function() {
 
           if (height > minimum_size) {
             parent.style.height = height + 'px'
+            // parent.previousElementSibling('#block_bottom_padding').val(height + 'px');
           }
       }
-      
+
       function stopResize() {
         window.removeEventListener('mousemove', resize_block)
+        
       }
     }
   }
 
   makeResizableBlock('.bottom-padding')
+
 
 });

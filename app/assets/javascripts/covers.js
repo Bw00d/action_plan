@@ -1,5 +1,7 @@
 $(document).on("turbolinks:load", function() {
 
+// Setting padding can be found in resize.js
+
 // Select blocks
   $('.block').click(function() {
     $('.block').removeClass('block-selected');
@@ -44,6 +46,7 @@ $(document).on("turbolinks:load", function() {
     );
 
   // style-controls
+
   $('.h1-text').click(function() {
     target = $(this).parent().siblings('.block')
     target.addClass('h1');
@@ -106,9 +109,16 @@ $(document).on("turbolinks:load", function() {
   });
   $('.italic-text').click(function() {
     target = $(this).parent().siblings('.block')
-    target.toggleClass('italic');
     target.children('.edit_block').show();
-    $('input#block_text_style').val('italic');
+    
+    if (target[0].classList.contains('italic')){
+       $('input#block_text_style').val(' ');
+      
+    } else {
+      $('input#block_text_style').val('italic');
+    }
+    target.toggleClass('italic');
+
   });
   $('.add-image-block').click(function() {
     target = $(this).parent().siblings('.block');
@@ -116,3 +126,4 @@ $(document).on("turbolinks:load", function() {
   });
 
 });
+

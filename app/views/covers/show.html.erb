@@ -63,20 +63,22 @@
                 </div>
               </div>
               <div class="image-form">
-                <%= form_for b do |f| %>
+                <%= form_for b, html: {class: "edit-image-block"}  do |f| %>
                   <%= f.file_field :main_image, class: 'small-button' %>
                   <%= f.submit "Upload" %>
                 <% end %>
               </div>
           <% end %>
 
-          <% unless b.image_block? || b.blank? %>
+          
+          <% unless b.image_block? || b.blank? %>           
 <!-- Block form -->
           
+
             <%= form_for b, class: "block-form", remote: true do |f| %>
 
               <%= f.hidden_field :id %>
-              <%= f.hidden_field :bottom_padding %>
+              <%= f.hidden_field :bottom_padding, name: 'bottom_padding' %>
               <%= f.hidden_field :font_size %>
               <%= f.hidden_field :font_family %>
               <%= f.hidden_field :number %>
@@ -86,8 +88,7 @@
               <%= f.hidden_field :image_block %>
               <%= f.hidden_field :blank %>
               <%= f.submit "Save", class: "save-block-button" %>
-
-            <% end %>            
+            <% end %> 
             <%= best_in_place b, :content, :as => :input, class: 'bock-content' %>
         
 
