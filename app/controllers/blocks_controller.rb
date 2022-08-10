@@ -72,7 +72,8 @@ class BlocksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def block_params
       params.require(:block).permit(:cover_id, :font_size ,:font_family ,:content, :number, :remove_main_image, 
-                                    :main_image, :bottom_padding, other_images: [])
+                                    :main_image, :bottom_padding, :id, :font_weight, :text_align, 
+                                    :text_style, :image_block, :blank, other_images: [])
     end
 end
 

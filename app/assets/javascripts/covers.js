@@ -1,30 +1,33 @@
 $(document).on("turbolinks:load", function() {
-  $(document).click(function() {
-    var container = $('.block');
-    if (!container.is(event.target) && !container.has(event.target).length) {
-      $('.style-controls').hide();
-      $('.new-block-form').hide();
-    }
-  });
 
+// Select blocks
   $('.block').click(function() {
     $('.block').removeClass('block-selected');
     if (!($('.block')).hasClass('block-selected')) {
       $('.style-controls').hide();
       $('.new-block-form').hide();
-    }
-    let container = $(".block");
-    if (!container.is(event.target) && !container.has(event.target).length) {
-        
+      $('.new-block-form').hide();
+      $('.edit_block').hide();
     }
 
     $(this).addClass('block-selected');
     if ($(this).hasClass('block-selected')) {
-      // $(this).prev('.style-controls').toggle();
-      // $(this).closest('.new-block-form').toggle();
       $(this).siblings().toggle();
       }
   });
+// End
+
+// Deselect blocks
+  $(document).click(function() {
+    var container = $('.block');
+    if (!container.is(event.target) && !container.has(event.target).length) {
+      $('.style-controls').hide();
+      $('.new-block-form').hide();
+      $('.block').removeClass('block-selected');
+    }
+  });
+// End 
+
   $('.cover-block').hover(function() {
         $(this).find('.add-block-button').show();
       }, 
@@ -47,6 +50,8 @@ $(document).on("turbolinks:load", function() {
     target.removeClass('h2');
     target.removeClass('h3');
     target.removeClass('h4');
+    target.children('.edit_block').show();
+    $('input#block_font_size').val('h1');
   });
   $('.h2-text').click(function() {
     target = $(this).parent().siblings('.block')
@@ -54,6 +59,8 @@ $(document).on("turbolinks:load", function() {
     target.removeClass('h1');
     target.removeClass('h3');
     target.removeClass('h4');
+    target.children('.edit_block').show();
+    $('input#block_font_size').val('h2');
   });
   $('.h3-text').click(function() {
     target = $(this).parent().siblings('.block')
@@ -61,6 +68,8 @@ $(document).on("turbolinks:load", function() {
     target.removeClass('h1');
     target.removeClass('h2');
     target.removeClass('h4');
+    target.children('.edit_block').show();
+    $('input#block_font_size').val('h3');
   });
   $('.h4-text').click(function() {
     target = $(this).parent().siblings('.block')
@@ -68,28 +77,38 @@ $(document).on("turbolinks:load", function() {
     target.removeClass('h1');
     target.removeClass('h2');
     target.removeClass('h3');
+    target.children('.edit_block').show();
+    $('input#block_font_size').val('h4');
   });
   $('.normal-text').click(function() {
     target = $(this).parent().siblings('.block')
     target.addClass('normal');
     target.removeClass('bold');
     target.removeClass('semi-bold');
+    target.children('.edit_block').show();
+    $('input#block_font_weight').val('normal');
   });
   $('.semi-text').click(function() {
     target = $(this).parent().siblings('.block')
     target.addClass('semi-bold');
     target.removeClass('normal');
     target.removeClass('bold');
+    target.children('.edit_block').show();
+    $('input#block_font_weight').val('semi-bold');
   });
   $('.bold-text').click(function() {
     target = $(this).parent().siblings('.block')
     target.addClass('bold');
     target.removeClass('normal');
     target.removeClass('semi-bold');
+    target.children('.edit_block').show();
+    $('input#block_font_weight').val('bold');
   });
   $('.italic-text').click(function() {
     target = $(this).parent().siblings('.block')
     target.toggleClass('italic');
+    target.children('.edit_block').show();
+    $('input#block_text_style').val('italic');
   });
   $('.add-image-block').click(function() {
     target = $(this).parent().siblings('.block');

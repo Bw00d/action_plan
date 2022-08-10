@@ -161,6 +161,18 @@
   margin-bottom: 5px;
 }
 
+.block-form {
+  display: none;
+}
+.edit_block {
+  display: none;
+}
+.save-block-button {
+  font-size: 10px;
+  position: absolute;
+  right: 10px;
+}
+
 /*content styles*/
 
 .style-controls {
