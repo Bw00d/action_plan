@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @resources.each do |r|  %>
+        <% @resources.assigned.each do |r|  %>
         <tr>
           <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
           <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
