@@ -1,0 +1,2 @@
+- Add ajax to resource forms
+- Update block when padding is changed

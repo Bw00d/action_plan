@@ -1,3 +1,21 @@
+.resources-panel-head {
+  background-color: #F5F5F5;
+  border: 1px solid #DDD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height:40px;
+  padding-right: 10px;
+  .tabrow {
+    text-align: left;
+    list-style: none;
+    margin: 0;
+    margin-top: 7px;
+    margin-left: 10px;
+    padding: 0;
+    line-height: 24px;
+    position: relative;
+  }
+}
 #resource_order_number {
   padding-left: 30px;
 }
@@ -31,4 +49,45 @@ a.delete-resource {
 a.delete-resource:hover {
   text-decoration: none;
   color: red;
+}
+.panel-head {
+  li {
+    display: inline-block;
+    list-style: underline;
+  }
+  a#new-resource {
+    clear: both;
+    margin-right: 10px !important;
+  }
+}
+.glide-header {
+  color: #424242 !important;
+}
+.glide-calendar {
+  border: 1px solid #e6e6e6;
+  text-align: center;
+  color: white;
+}
+.glide-row {
+ 
+}
+.yellow {
+  background-color: yellow !important;
+}
+.orange {
+  background-color: orange;
+}
+.red {
+  background-color: red;
+}
+.black {
+  background-color: black;
+}
+#glide-info {
+  display: none;
+}
+.table-col {
+    min-width: 25px !important;
+  }
+#ics-211-info {
 }

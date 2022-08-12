@@ -1,0 +1,53 @@
+<div id="glide-info" class="panel panel-default">
+<!-- Default panel contents -->
+  <% if !@incident.resources.empty? %>
+    <!-- Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col table-col">Order#</th>
+          <th scope="col table-col">Position</th>
+          <th scope="col table-col">Name</th>
+          <th scope="col table-col">LWD</th>
+
+      
+          <% count = 0 %>
+          <% 16.times do |t| %>
+           <th class="glide-header glide-calendar" scope="col"><%= (Date.today + count.days).strftime('%m/%d') %></th>
+           <% count += 1 %>
+          <% end %>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @resources.each do |r|  %>
+        <tr>
+          <td class=" table-col"><%= r.full_order_number  %></td>
+          <td class=" table-col"><%=  r.position%></td>
+          <td class=" table-col"><%=  r.name %></td>
+          <% if !r.last_work_day.blank? %>
+            <td class=" table-col"><%=  r.last_work_day.strftime("%m/%d") %></td>
+          <% else %>
+          <td class=" table-col"></td>
+          <% end %>
+
+          <% glide_count = 0 %>
+          <% 16.times do |d| %>
+            <td class="glide-calendar glide-row" data-day="<%= Date.today + glide_count.days %>", data-lwd="<%= r.last_work_day%>"></td>
+            <% glide_count += 1 %>
+          <% end %>
+        </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+
+    <% else %>
+    <div class="sm-padding-top md-padding-left">
+      <h4>There are no resources assigned to this incident.</h4>
+    </div>
+  <% end %>
+
+  
+  <div class="panel-foot"></div>
+</div>

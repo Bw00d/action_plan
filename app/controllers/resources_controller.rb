@@ -6,7 +6,9 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.json
   def index
-    @resources = Resource.all
+    @incident = Incident.find(params[:incident_id])
+    @resource = Resource.new
+    @resources = @incident.resources.order(order_number: :asc)
   end
 
   # GET /resources/1
@@ -46,10 +48,10 @@ class ResourcesController < ApplicationController
     respond_to do |format|
       if @resource.update(resource_params)
         format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
-        format.json { render :show, status: :ok, location: @resource }
+        format.json { respond_with_bip(@resource) }
       else
         format.html { render :edit }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
+        format.json { respond_with_bip(@resource) }
       end
     end
   end
@@ -73,6 +75,7 @@ class ResourcesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
       params.require(:resource).permit(:name, :leader, :number_personnel, :position, :agency, 
-                                       :order_number, :lwd, :checkin_date, :incident_id, :category)
+                                       :order_number, :lwd, :checkin_date, :incident_id, :category,
+                                       :phone, :email, :comment, :fwd, :assignment_length)
     end
 end

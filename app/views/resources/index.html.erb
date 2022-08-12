@@ -1,41 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Resources</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Leader</th>
-      <th>Number personnel</th>
-      <th>Position</th>
-      <th>Agency</th>
-      <th>Order number</th>
-      <th>Lwd</th>
-      <th>Checkin date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @resources.each do |resource| %>
-      <tr>
-        <td><%= resource.name %></td>
-        <td><%= resource.leader %></td>
-        <td><%= resource.number_personnel %></td>
-        <td><%= resource.position %></td>
-        <td><%= resource.agency %></td>
-        <td><%= resource.order_number %></td>
-        <td><%= resource.lwd %></td>
-        <td><%= resource.checkin_date %></td>
-        <td><%= link_to 'Show', resource %></td>
-        <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
-        <td><%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+<!-- plans tabs -->
+    <div class="resources-panel-head">
+      <ul class="tabrow ">
+          <li>
+              <%= link_to 'ICS-211', "javascript:;", id: "ics-211-tab"%>
+          </li>
+          <li>
+              <%= link_to 'Glide Path', "javascript:;", id: "glide-tab" %>
+          </li>
+          <li>
+              <%= link_to 'Demob List', "javascript:;", id: "demob-tab" %>
+          </li>
+          
+        <%= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
+        </ul>
+      </div>
+    <div class="masking-tape"></div>
+        
+    <!-- end plans tabs -->
+    <%= render 'ics_211' %>
+    <%= render 'glide' %>
+    <%#= render 'demob', id: 'demob-info' %>
 
 <%= link_to 'New Resource', new_resource_path %>
