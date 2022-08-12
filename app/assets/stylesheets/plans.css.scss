@@ -176,6 +176,12 @@ span.plans-button {
 }
 #iap-content {
   border-bottom: 1px solid #DDD !important;
+  a:hover {
+    color: #3d3d3d;
+  }
+  a:visited {
+    color: #3d3d3d;
+  }
 }
 .title-row {
   border-right: 1px solid black;

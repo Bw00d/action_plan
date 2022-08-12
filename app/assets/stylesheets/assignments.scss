@@ -188,6 +188,9 @@ a.new-freq-button:hover {
   a {
     color: #3d3d3d !important;
   }
+  a:hover {
+    color: #3d3d3d !important;
+  }
 }
 #ops-resources {
   left: -16px;
@@ -248,3 +251,12 @@ a.new-freq-button:hover {
 a#new-204-button:hover { 
   text-decoration: none;
  }
+
+li.assigned-204-resources {
+  input {
+    display: inline; 
+  }
+  label {
+    display: inline; 
+  }
+}

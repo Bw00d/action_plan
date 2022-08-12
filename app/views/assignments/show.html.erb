@@ -96,7 +96,7 @@
             <%= javascript_tag "var resourceIds = #{@assignment.resource_ids.to_json}" %>
 
             <% @incident.resources.order(:position).each do |r| %>
-              <li class=""><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
+              <li class="assigned-204-resources"><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
               
                       <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.name %></li>
             <% end %>
@@ -118,7 +118,7 @@
               <td class="p35 sm-padding-left"><%= r.cat %><%= r.order_number %>  <%= r.position %>  <%= r.name %></td>
               <td class="p40 sm-padding-left"><%= r.leader %></td>
               <td class="p8 centered"><%= r.number_personnel %></td>
-              <td class="p9 centered"><%= r.lwd.try(:strftime,"%-m/%d") %></td>
+              <td class="p9 centered"><%= r.last_work_day.try(:strftime,"%-m/%d") %></td>
               <td class="p8 centered"></td>
             </tr>
           <% end %>

@@ -75,7 +75,7 @@
         <div id="resource-list" class="plan-row md-padding-left"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
           <div class="resources-list list-content md-padding-left">
             <ul id="resources">
-                <% @resources.each do |r|  %>
+                <% @resources.assigned.each do |r|  %>
                 <li><%= r.cat %><%= best_in_place r, :order_number, :as => :input%>  <%= best_in_place r,  :name, :as => :input %>  <%= best_in_place r, 
                 :position, :as => :input %></li>
                 <% end %>
