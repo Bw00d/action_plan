@@ -91,3 +91,17 @@ a.delete-resource:hover {
   }
 #ics-211-info {
 }
+
+/* Demob Info */
+#demob-info {
+  display: none;
+  #demob-dates {
+    text-align: center;
+  }
+}
+#demob-dates {
+  margin: 5% 0;
+  h1, h2, h3, h4 {
+    font-weight: 666;
+  }
+}

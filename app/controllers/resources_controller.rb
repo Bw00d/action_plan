@@ -8,7 +8,7 @@ class ResourcesController < ApplicationController
   def index
     @incident = Incident.find(params[:incident_id])
     @resource = Resource.new
-    @resources = @incident.resources.order(order_number: :asc)
+    @resources = @incident.resources.order(fwd: :asc)
   end
 
   # GET /resources/1

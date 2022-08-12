@@ -1,0 +1,28 @@
+<div id="demob-info" class="panel panel-default">
+<!-- Default panel contents -->
+  <% if !@resources.empty? %>
+    <!-- Table -->
+    <div id="demob-dates">
+      <h1>DEMOB LIST</h1>
+
+      <% count = 0 %>
+      <% 6.times do %>
+        <h3><%= Date.today + count.days %></h3>
+        <% @resources.each do |r| %>
+          <% if r.last_work_day == Date.yesterday + count.days %>
+            <div><%= r.full_order_number  %> <%= r.position %> <%= r.name %></div>
+          <% end %>
+        <% end %>
+        <% count += 1 %>
+      <% end %>
+    </div>
+
+    <% else %>
+    <div class="sm-padding-top md-padding-left">
+      <h4>There are no resources assigned to this incident.</h4>
+    </div>
+  <% end %>
+
+  
+  <div class="panel-foot"></div>
+</div>
