@@ -12,6 +12,7 @@ class ResourcesController < ApplicationController
     @overhead = @resources.overhead
     @equipment = @resources.equipment
     @crews = @resources.crew
+    @aircraft = @resources.aircraft
   end
 
   # GET /resources/1

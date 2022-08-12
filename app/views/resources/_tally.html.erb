@@ -7,20 +7,45 @@
       
       <div class="col-10">
           
-          <h1>RESOURCE TALLY</h1>
-        <div class="col-sm-4 dashed">
+        <h1>RESOURCE TALLY</h1>
+
+        <div class="col-sm-3">
+          <h4>Crews</h4>
+          <ul>
+            
+            <% get_resources(@crews).each do |r| %>
+            <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="col-sm-3">
+          <h4>Equipment</h4>
+          <ul>
+            
+            <% get_resources(@equipment).each do |r| %>
+            <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="col-sm-3">
+          <h4>Aircraft</h4>
+          <ul>
+            
+            <% get_resources(@aircraft).each do |r| %>
+            <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="col-sm-3">
           <h4>Overhead</h4>
           <ul>
             <% tally_resources(@overhead).each do |a, c| %>
               <li><%= a %> - <%= c %></li>
             <% end %>
           </ul>
-        </div>
-        <div class="col-sm-4 dashed">
-          <h4>Equipment</h4>
-        </div>
-        <div class="col-sm-4 dashed">
-          <h4>Aircraft</h4>
         </div>
 
       </div>

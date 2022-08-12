@@ -108,13 +108,20 @@ a.delete-resource:hover {
 
 /* Resource Tally Info*/
 #tally-info {
+  display: none;
   padding-top: 5%;
   h1, h2 {
     text-align: center;
     font-weight: 666;
     margin-bottom: 20px;
   }
-  display: none;
+  h3, h4 {
+    font-weight: 666;
+  }
+  ul {
+    padding-left: 5px;
+    list-style: none;
+  }
 }
 .dashed {
   border: 1px dashed orange;

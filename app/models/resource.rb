@@ -3,6 +3,7 @@ class Resource < ApplicationRecord
   scope :overhead, -> { where(category: 'OVERHEAD') }
   scope :equipment, -> { where(category: 'EQUIPMENT') }
   scope :crew, -> { where(category: 'CREW') }
+  scope :aircraft, -> { where(category: 'AIRCRAFT') }
 
   def cat
     case self.category
@@ -12,6 +13,8 @@ class Resource < ApplicationRecord
       'C-'
     when 'EQUIPMENT'
       'E-'
+    when 'AIRCRAFT'
+      'A-'
     end
   end
 
