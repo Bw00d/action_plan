@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @resources.each do |r|  %>
+        <% @resources.assigned.each do |r|  %>
         <tr>
           <td class=" table-col"><%= r.full_order_number  %></td>
           <td class=" table-col"><%=  r.position%></td>

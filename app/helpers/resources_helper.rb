@@ -12,7 +12,7 @@ module ResourcesHelper
   end
 
   def get_resources(resources)
-    resources.pluck(:agency, :position, :number_personnel)
+    resources
   end
 
 end

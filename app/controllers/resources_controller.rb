@@ -9,7 +9,7 @@ class ResourcesController < ApplicationController
     @incident = Incident.find(params[:incident_id])
     @resource = Resource.new
     @resources = @incident.resources.order(fwd: :asc)
-    @overhead = @resources.overhead
+    @overhead = @resources.assigned
     @equipment = @resources.equipment
     @crews = @resources.crew
     @aircraft = @resources.aircraft
@@ -80,6 +80,6 @@ class ResourcesController < ApplicationController
     def resource_params
       params.require(:resource).permit(:name, :leader, :number_personnel, :position, :agency, 
                                        :order_number, :lwd, :checkin_date, :incident_id, :category,
-                                       :phone, :email, :comment, :fwd, :assignment_length)
+                                       :phone, :email, :comment, :fwd, :assignment_length, :release_date)
     end
 end

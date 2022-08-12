@@ -8,7 +8,7 @@
       <% count = 0 %>
       <% 6.times do %>
         <h3><%= Date.today + count.days %></h3>
-        <% @resources.each do |r| %>
+        <% @resources.assigned.each do |r| %>
           <% if r.last_work_day == Date.yesterday + count.days %>
             <div><%= r.full_order_number  %> <%= r.position %> <%= r.name %></div>
           <% end %>

@@ -13,8 +13,10 @@
           <h4>Crews</h4>
           <ul>
             
-            <% get_resources(@crews).each do |r| %>
-            <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %></li>
+            <% @resources.crew.each do |r| %>
+              <% unless r.released? %>
+              <li><%= r.agency %> - <%= r.position %> - <%= r.number_personnel %></li>
+              <% end %>
             <% end %>
           </ul>
         </div>
@@ -23,8 +25,10 @@
           <h4>Equipment</h4>
           <ul>
             
-            <% get_resources(@equipment).each do |r| %>
-            <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %></li>
+            <% @resources.equipment.each do |r| %>
+              <% unless r.released? %>
+                <li><%= r.agency %> - <%= r.position %> - <%= r.number_personnel %></li>
+              <% end %>
             <% end %>
           </ul>
         </div>
@@ -33,8 +37,10 @@
           <h4>Aircraft</h4>
           <ul>
             
-            <% get_resources(@aircraft).each do |r| %>
-            <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %></li>
+            <% @resources.aircraft.each do |r| %>
+              <% unless r.released? %>
+                <li><%= r.agency %> - <%= r.position %> - <%= r.number_personnel %></li>
+              <% end %>
             <% end %>
           </ul>
         </div>
@@ -77,10 +83,10 @@
           </div>
         <% end %>
         </div>
+  <div class="panel-foot"></div>
       </div>
   </div>
+</div>
 
   
-  <div class="panel-foot"></div>
-</div>
   

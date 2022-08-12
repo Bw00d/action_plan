@@ -13,34 +13,38 @@
           <th scope="col">Position</th>
           <th scope="col">Name</th>
           <th scope="col">Leader</th>
-          <th scope="col"># personnel</th>
+          <th scope="col"># Pers</th>
           <th scope="col">Agency</th>
           <th scope="col">FWD</th>
           <th scope="col">Length</th>
           <th scope="col">LWD</th>
+          <th scope="col">Released</th>
         </tr>
       </thead>
       <tbody>
         <% @resources.each do |r|  %>
+          <% unless r.released? %>
         <tr>
-          <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
-          <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
-          <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
-          <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
-          <td class="sm-bip-input">
-            <% if r.number_personnel != nil  %> 
-              <%= best_in_place r, :number_personnel, :as => :input %>
+            <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
+            <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
+            <td class="sm-bip-input">
+              <% if r.number_personnel != nil  %> 
+                <%= best_in_place r, :number_personnel, :as => :input %>
+              <% end %>
+                </td>
+            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
+            <% if !r.last_work_day.blank? %>
+              <td><%=  r.last_work_day.strftime("%m/%d") %></td>
+            <% else %>
+            <td></td>
             <% end %>
-              </td>
-          <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
-          <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_date %></td>
-          <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
-          <% if !r.last_work_day.blank? %>
-            <td><%=  r.last_work_day.strftime("%m/%d") %></td>
-          <% else %>
-          <td></td>
+            <td class="lg-bip-input"><%= best_in_place r, :release_date, display_as: :formatted_release_date %></td>
+          </tr>
           <% end %>
-        </tr>
         <% end %>
 
       </tbody>
@@ -52,6 +56,37 @@
     </div>
   <% end %>
 
-  
   <div class="panel-foot"></div>
+
+    <table class="table">
+      <thead>
+        <th>Released</th>
+      </thead>
+      <tbody>
+        <% @resources.each do |r|  %>
+          <% if r.released? %>
+        <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
+            <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
+            <td class="sm-bip-input">
+              <% if r.number_personnel != nil  %> 
+                <%= best_in_place r, :number_personnel, :as => :input %>
+              <% end %>
+                </td>
+            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
+            <% if !r.last_work_day.blank? %>
+              <td><%=  r.last_work_day.strftime("%m/%d") %></td>
+            <% else %>
+            <td></td>
+            <% end %>
+            <td class="lg-bip-input"><%= best_in_place r, :release_date, display_as: :formatted_release_date %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="panel-foot"></div>
 </div>

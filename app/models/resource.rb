@@ -4,6 +4,7 @@ class Resource < ApplicationRecord
   scope :equipment, -> { where(category: 'EQUIPMENT') }
   scope :crew, -> { where(category: 'CREW') }
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
+  scope :assigned, -> { where(release_date: nil)}
 
   def cat
     case self.category
@@ -26,14 +27,23 @@ class Resource < ApplicationRecord
     end
   end
 
-  def formatted_date
+  def formatted_fwd
     if self.fwd
-     return self.fwd.strftime("%m/%d/%Y")
+     return self.fwd.strftime("%m/%d")
+   end
+  end
+  def formatted_release_date
+    if self.release_date
+     return self.release_date.strftime("%m/%d")
    end
   end
 
   def full_order_number
    return "#{self.cat}#{self.order_number}"
+  end
+
+  def released?
+    return true if self.release_date
   end
 
 end
