@@ -1,0 +1,61 @@
+
+<div id="tally-info" class="panel panel-default">
+  <% if !@resources.empty? %>
+  <div class="container">
+    
+    <div class="row">
+      
+      <div class="col-10">
+          
+          <h1>RESOURCE TALLY</h1>
+        <div class="col-sm-4 dashed">
+          <h4>Overhead</h4>
+          <ul>
+            <% tally_resources(@overhead).each do |a, c| %>
+              <li><%= a %> - <%= c %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="col-sm-4 dashed">
+          <h4>Equipment</h4>
+        </div>
+        <div class="col-sm-4 dashed">
+          <h4>Aircraft</h4>
+        </div>
+
+      </div>
+  </div>
+
+        <!-- <table class="table">
+          <thead>
+            <tr>
+            <%# get_resources(ordered_resources(@resources)).uniq.each do |r| %>
+              <th><%#= r %></th>
+            <%# end %>
+            </tr>
+          </thead>
+          <tbody>
+            <%# get_agencies(@resources).uniq.each do |a| %>
+              <tr>
+                <td><%#= a %></td> 
+                </tr>
+            <%# end %>
+          </tbody>
+        </table> -->
+
+
+
+
+        <% else %>
+          <div class="sm-padding-top md-padding-left">
+            <h4>There are no resources assigned to this incident.</h4>
+          </div>
+        <% end %>
+        </div>
+      </div>
+  </div>
+
+  
+  <div class="panel-foot"></div>
+</div>
+  

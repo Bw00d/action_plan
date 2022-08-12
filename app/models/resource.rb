@@ -1,5 +1,9 @@
 class Resource < ApplicationRecord
 
+  scope :overhead, -> { where(category: 'OVERHEAD') }
+  scope :equipment, -> { where(category: 'EQUIPMENT') }
+  scope :crew, -> { where(category: 'CREW') }
+
   def cat
     case self.category
     when 'OVERHEAD'

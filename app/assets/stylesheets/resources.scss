@@ -105,3 +105,17 @@ a.delete-resource:hover {
     font-weight: 666;
   }
 }
+
+/* Resource Tally Info*/
+#tally-info {
+  padding-top: 5%;
+  h1, h2 {
+    text-align: center;
+    font-weight: 666;
+    margin-bottom: 20px;
+  }
+  display: none;
+}
+.dashed {
+  border: 1px dashed orange;
+}

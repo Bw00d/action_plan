@@ -2,15 +2,18 @@
 
 <!-- plans tabs -->
     <div class="resources-panel-head">
-      <ul class="tabrow ">
-          <li>
-              <%= link_to 'ICS-211', "javascript:;", id: "ics-211-tab"%>
+      <ul class="tabrow resource-tabs">
+          <li  class="resource-tab selected">
+              <%= link_to 'ICS-211', "javascript:;", class: "resource-tab-link", id: "ics-211-tab"%>
           </li>
-          <li>
-              <%= link_to 'Glide Path', "javascript:;", id: "glide-tab" %>
+          <li class="resource-tab">
+              <%= link_to 'Glide Path', "javascript:;", class: "resource-tab-link", id: "glide-tab" %>
           </li>
-          <li>
-              <%= link_to 'Demob List', "javascript:;", id: "demob-tab" %>
+          <li class="resource-tab">
+              <%= link_to 'Demob List', "javascript:;", class: "resource-tab-link", id: "demob-tab" %>
+          </li>
+          <li class="resource-tab">
+              <%= link_to 'Resource Tally', "javascript:;", class: "resource-tab-link", id: "tally-tab" %>
           </li>
           
         <%= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
@@ -22,3 +25,4 @@
     <%= render 'ics_211' %>
     <%= render 'glide' %>
     <%= render 'demob' %>
+    <%= render 'tally' %>

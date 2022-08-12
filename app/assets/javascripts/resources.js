@@ -40,24 +40,41 @@ $(document).on("turbolinks:load", function() {
 
 
 // tabrows
+
+  $('a.resource-tab-link').click(function() {
+    $('.resource-tab').removeClass('selected');
+    $(this).parent().addClass('selected');
+  })
   $('a#ics-211-tab').click(function (){
     $('#ics-211-info').show();
     $('#demob-info').hide();
     $('#glide-info').hide();
+    $('#tally-info').hide();
   })
   $('a#glide-tab').click(function (){
     $('#ics-211-info').hide();
     $('#demob-info').hide();
     $('#glide-info').show();
+    $('#tally-info').hide();
   })
   $('a#demob-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').show();
+    $('#tally-info').hide();
+  })
+  $('a#tally-tab').click(function (){
+    $('#ics-211-info').hide();
+    $('#glide-info').hide();
+    $('#demob-info').hide();
+    $('#tally-info').show();
   })
 
+// Reload page after creating resource
   $('#submit-resource-button').click(function() {
     window.location.reload();
   })
+
+
   
 });

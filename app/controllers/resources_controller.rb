@@ -9,6 +9,9 @@ class ResourcesController < ApplicationController
     @incident = Incident.find(params[:incident_id])
     @resource = Resource.new
     @resources = @incident.resources.order(fwd: :asc)
+    @overhead = @resources.overhead
+    @equipment = @resources.equipment
+    @crews = @resources.crew
   end
 
   # GET /resources/1
