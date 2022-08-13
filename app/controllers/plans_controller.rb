@@ -23,7 +23,7 @@ class PlansController < ApplicationController
     @resource = Resource.new
     @plan = Plan.find(params[:id])
     @plans = Plan.all.order(date: :desc)
-    @objectives = @plan.objectives
+    @objectives = @plan.objectives.order(order: :asc)
     @objective = Objective.new
     @activity = Activity.new
   end

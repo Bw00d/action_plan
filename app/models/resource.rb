@@ -1,5 +1,5 @@
 class Resource < ApplicationRecord
-
+  belongs_to :incident, dependent: :destroy
   scope :overhead, -> { where(category: 'OVERHEAD') }
   scope :equipment, -> { where(category: 'EQUIPMENT') }
   scope :crew, -> { where(category: 'CREW') }

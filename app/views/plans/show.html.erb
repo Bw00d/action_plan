@@ -39,7 +39,7 @@
           <div class="objectives-list list-content md-padding-left">
             <ol id="objectives">
               <% @objectives.each do |o|  %>
-              <li><%= o.order %> <%= best_in_place o, :description, delete_button:  'Delete' %></li>
+              <li> <%= best_in_place o, :description, as: :input %></li>
               <% end %>
             </ol>
 

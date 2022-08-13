@@ -71,6 +71,7 @@ class ObjectivesController < ApplicationController
       @objective = Objective.find(params[:id])
     end
 
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def objective_params
       params.require(:objective).permit(:plan_id, :description, :order)
