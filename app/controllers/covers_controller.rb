@@ -59,9 +59,11 @@ class CoversController < ApplicationController
   # PATCH/PUT /covers/1
   # PATCH/PUT /covers/1.json
   def update
+    @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
     respond_to do |format|
       if @cover.update(cover_params)
-        format.html { redirect_to @cover, notice: 'Cover was successfully updated.' }
+        format.html { redirect_to incident_plan_cover_path(@incident, @plan, @cover) }
         format.json { render :show, status: :ok, location: @cover }
       else
         format.html { render :edit }

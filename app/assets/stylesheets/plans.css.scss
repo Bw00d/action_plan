@@ -176,6 +176,9 @@ span.plans-button {
 }
 #iap-content {
   border-bottom: 1px solid #DDD !important;
+  a {
+    color: #3d3d3d;
+  }
   a:hover {
     color: #3d3d3d;
   }
@@ -225,32 +228,7 @@ span.plans-button {
   border-left: 1px solid #DDD;
   border-right: 1px solid #DDD;
 }
-/*#cover {
-  padding-top: 75px;
-  padding-bottom: 100px;
-  text-align: center;
-  border: 2px solid black;
-  h1 {
-    font-weight: 700;
-    font-size: 3em;
-  }
-  h2 {
-    font-weight: 700;
-    font-size: 2em;
-  }
-  #picture {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    width: 75%;
-    height: auto;
-  }
-  .cost-code {
-    margin-top: 30px;
-    h3 {
-    font-weight: 700;
-    }
-  }
-}*/
+
 .form-row {
   position: relative;
   border-top: 1px solid black;

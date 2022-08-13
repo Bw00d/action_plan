@@ -44,7 +44,7 @@ class BlocksController < ApplicationController
   def update
     respond_to do |format|
       if @block.update(block_params)
-        format.html { redirect_to @block.cover }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { render :show, status: :ok, location: @block }
       else
         format.html { render :edit }

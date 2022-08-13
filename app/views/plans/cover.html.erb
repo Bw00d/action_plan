@@ -6,7 +6,7 @@
       <div class="plan-panel-head"> 
         <ul class="tabrow">
           <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
-          <li id="selected" class="selected"><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
+          <li id="selected" class="selected"><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
           <li><%= link_to "202", "../#{@plan.id}/202" %></li>
           <li><%= link_to "203", "../#{@plan.id}/203" %></li>
           <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
@@ -21,16 +21,6 @@
                                <!-- End the tabrows -->
     <div class="row">
       <div id="cover">
-
-       
-       <!--  <div class="cover-block">
-          <span class="add-block-button"> + </span>
-          <h1>This is a cover block</h1>
-        </div>
-        <div class="cover-block sm-spacer"><span class="add-block-button"> + </span>sm-spacer</div>
-        <div class="cover-block md-spacer"><span class="add-block-button"> + </span>md-spacer</div>
-        <div class="cover-block lg-spacer"><span class="add-block-button"> + </span>lg-spacer</div>
-        <div class="cover-block"><span class="add-block-button"> + </span></div> -->
       </div>
     </div>
   </div>
