@@ -145,6 +145,24 @@ span.plans-button {
     width: 100%;
   }
 }
+.delete-objective {
+  width:15px;
+  height: 15px;
+  font-size: 10px;
+  text-align: center;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  font-weight: 666;
+  position: absolute;
+  left: 10px;
+}
+a.delete-objective:hover {
+  color: white;
+}
+
+/* Activities */
 #activity-list {
   border-left: 1px solid #DDD;
   border-right: 1px solid #DDD;
