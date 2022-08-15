@@ -280,14 +280,14 @@ a.delete-objective:hover {
     border-right: 1px solid black;
     border-left: 1px solid black;
     border-top: 1px solid black;
-    min-height: 300px;
+    min-height: 500px;
     ul {
       line-height: 2em;
     }
   }
   #weather-forecast {
     border-left: 1px solid black;
-    min-height: 200px;
+    min-height: 230px;
   }
   #safety-message {
     border-left: 1px solid black;
@@ -356,6 +356,10 @@ a.delete-objective:hover {
 h1.header {
   text-align: center;
   margin-bottom: 30px;
+}
+
+.print-button {
+  margin-top: 25px;
 }
 
 /* ICS 202 Incident Organization */

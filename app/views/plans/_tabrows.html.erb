@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="plan-panel-head">
+    <ul class="tabrow">
+      <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+      <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
+      <li class="selected"><%= link_to "202", "#{@plan.id}/202" %></li>
+      <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+      <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+      <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
+      <li><%= link_to "206", '#' %></li>
+      <li><%= link_to "220", '#' %></li>
+      <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
+      </ul>
+    </div>
+  <div class="masking-tape"></div>
+</div>

@@ -1,24 +1,6 @@
-<%= content_for :title, "202" %>
+
 <div id="incident-objectives">
   <div class="container">
-    <div class="col-xs-12 col-lg-8 center-block">
-      <div class="row">
-        <div class="plan-panel-head">
-          <ul class="tabrow">
-            <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
-            <li><%= link_to "Cover", "../#{@plan.id}/cover" %></li>
-            <li class="selected"><%= link_to "202", "#{@plan.id}/202" %></li>
-            <li><%= link_to "203", "../#{@plan.id}/203" %></li>
-            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
-            <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
-            <li><%= link_to "206", '#' %></li>
-            <li><%= link_to "220", '#' %></li>
-            <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
-            </ul>
-          </div>
-        <div class="masking-tape"></div>
-      </div>
-
       <div class="row">
         <div class="col-xs-12 title-row bl top-row">
           <div class="col-xs-4">
@@ -37,7 +19,7 @@
           </div>
           <div class="col-xs-3 bl form-box">
             <span class="small">3. OPERATIONAL PERIOD<br>
-          <%= best_in_place @plan, :ops_period, :as => :input, :place_holder => "(Add Time Range Here)", class: 'bip-input' %>
+          <%= best_in_place @plan, :ops_period, :as => :input, class: 'bip-input' %>
           </span>
         </div>
           </div>
@@ -61,13 +43,13 @@
           <% else %>
             <span class="small">5. GENERAL SITUATION AWARENESS</span><br>
           <% end %>
-             <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "(ADD CONTENT)",:display_with => :simple_format, id: 'weather-form'  %>
+             <%= best_in_place @plan, :weather, :as => :textarea, :display_with => :simple_format, id: 'weather-form'  %>
         </div>
       </div>
       <div class="row">
         <div id="safety-message" class="col-xs-12">
           <span class="small">6. GENERAL SAFETY MESSAGE</span><br>
-            <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "(ADD CONTENT)",:display_with => :simple_format, id: 'safety-form'  %>
+            <%= best_in_place @plan, :general_safety, :as => :textarea, :display_with => :simple_format, id: 'safety-form'  %>
         </div>
       </div>
       <div class="row">
@@ -104,6 +86,12 @@
         </div>
       </div>
     </div>
-    <div class="print-button"><%= link_to "PRINT", "../#{@plan.id}/objectives_to_pdf.pdf", class: "btn btn-success tiny" %></div>
   </div>
-</div>
+  <script type="text/javascript">
+    $(document).on("turbolinks:load", function() {
+      $('#header').hide();
+      $('body').css("padding-top", 0);
+      $('body').css("padding-right", 10);
+      $('body').css("padding-left", 10);
+    });
+  </script>

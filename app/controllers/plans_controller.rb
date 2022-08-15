@@ -81,14 +81,38 @@ class PlansController < ApplicationController
   def cover
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
+    @cover = @plan.cover
+    @blocks = @cover.blocks.order(number: :asc)
+    @block = Block.new
   end
+
+  def cover_to_pdf
+    @plan = Plan.find(params[:id])
+    @incident = Incident.find(@plan.incident_id)
+    @cover = @plan.cover
+    @blocks = @cover.blocks.order(number: :asc)
+    @block = Block.new
+  end
+
   
   def incident_objectives
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
   end
 
+  def objectives_to_pdf
+    @plan = Plan.find(params[:id])
+    @incident = Incident.find(@plan.incident_id)
+  end
+
+
   def incident_organization
+    @plan = Plan.find(params[:id])
+    @incident = Incident.find(@plan.incident_id)
+    @team = Team.new
+  end
+
+  def organization_to_pdf
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
     @team = Team.new

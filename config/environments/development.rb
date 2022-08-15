@@ -72,4 +72,5 @@ Rails.application.configure do
   config.web_console.whiny_requests = false
 
   config.active_storage.service = :local
+  # config.asset_host = 'localhost:3000'
 end

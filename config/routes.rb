@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   # A non-resourceful route was used to place the contact form at /contact
   get 'contact' => 'contact_forms#new', as: 'contact'
   get 'incidents/:id/plans/:id/cover'      => 'plans#cover'
+  get 'incidents/:id/plans/:id/cover-pdf'      => 'plans#cover_to_pdf'
   get 'incidents/:id/plans/:id/202'        => 'plans#incident_objectives'
+  get 'incidents/:id/plans/:id/202-pdf'        => 'plans#objectives_to_pdf'
   get 'incidents/:id/plans/:id/203'        => 'plans#incident_organization'
+  get 'incidents/:id/plans/:id/203-pdf'        => 'plans#organization_to_pdf'
 end

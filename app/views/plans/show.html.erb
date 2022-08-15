@@ -112,7 +112,7 @@
       <div id="iap-row" class="plan-row md-padding-left"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
       <div id="iap-content" class="forms-list list-content md-padding-left">
           <ul>
-            <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
+            <li><%= link_to "Cover", "#{@plan.id}/cover" %></li>
             <li><%= link_to "ICS 202 Incident Objectives", "#{@plan.id}/202" %></li>
             <li><%= link_to "ICS 203 Incident Organization", "#{@plan.id}/203" %></li>
             <li><%= link_to "ICS 204 Incident Assignments", incident_plan_assignments_path(@incident, @plan) %></li>

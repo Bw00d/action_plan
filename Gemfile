@@ -68,6 +68,8 @@ gem 'aws-sdk-s3'
 # for active storage
 gem "image_processing", ">= 1.2"
 gem 'datejs-rails'
+# for generating pdfs
+gem 'grover'
 
 group :test do
   gem 'database_cleaner'

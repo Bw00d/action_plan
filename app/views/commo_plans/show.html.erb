@@ -11,7 +11,7 @@
         <div class="plan-panel-head">
           <ul class="tabrow">
             <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
-            <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
+            <li><%= link_to "Cover", "../#{@plan.id}/cover"  %></li>
             <li><%= link_to "202", "../../#{@plan.id}/202" %></li>
             <li><%= link_to "203", "../../#{@plan.id}/203" %></li>
             <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
