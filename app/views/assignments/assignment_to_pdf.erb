@@ -1,33 +1,19 @@
 
-
-
-<%= content_for :title, "204" %>
 <div id="incident-assignments">
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
       <div class="row">
-          <div class="plan-panel-head">
-            <ul class="tabrow">
-              <li><%= link_to 'Index', incident_plan_assignments_path(@incident, @plan) %></li>
-              <% @assignments.each do |assignment| %>
-                <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
-                <li id=<%= assignment.id %>><%= assignment.designator %></li>
-              <% end %>
-            <% end %>
-            </ul>
-            </div>
-          <div class="masking-tape"></div>
         <div class="form-row top-row">
           <div class="col-xs-6 center-h-container form-box">
             <h4 class="" ><strong>DIVISION ASSIGNMENT LIST</strong></h4>
           </div>
           <div class="col-xs-2 form-box">
             <span class="small"># PERSONNEL  
-            </span>  <span class="personnel_num"><%= @assignment.personnel %></span>
+            </span>  <span class="personnel_num"><%#= @assignment.personnel %></span>
 
           </div>
           <div class="col-xs-4 form-box text-center">
-            <h5><%= best_in_place @assignment, :designator, :as => :input, :place_holder => "(DESIGNATOR)" %></h5>
+            <h5><%= @assignment.designator %></h5>
           </div>
         </div>
       </div>
@@ -40,12 +26,12 @@
           </div>
           <div class="col-xs-6 bl form-box">
              <span class="small">OPERATIONAL PERIOD</span>
-             <span class="lg-padding-left"><%= best_in_place @assignment, :ops_period, :as => :input, :place_holder => "(ENTER OPS PERIOD)" %></span>
+             <span class="lg-padding-left"><%= @assignment.ops_period %></span>
           </div>
         </div>
       </div>
       <div class="row">
-        <div id="ops-resource-form">   <!-- operations leadership form -->
+        <div id="ops-resource-form"> 
           <%= form_for @assignment do |f| %>
             <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-aqua tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-ops-form', class: 'btn btn-default tiny' %></div>
           <ul>
@@ -137,30 +123,28 @@
       <div class="row">
         <div class="center r-b form-box short-rows xs-padding-left">
           <span class="small">CONTROL OPERATIONS</span><br>
-            <%#= @assignment.control_operations %>
-            <%= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %>
+            <%=  @assignment.control_operations  %>
         </div>
         <div class="bl center form-row short-rows xs-padding-left">
           <span class="small">SPECIAL INSTRUCTIONS</span><br>
-            <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "(ADD CONTENT OR LEAVE BLANK)",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
+            <%=  @assignment.special_instructions %>
         </div>
         <div id="add-freqs-row" class=" center form-row header-row">
             COMMUNICATIONS SUMMARY
         </div>
         <%= render 'commo_plan' %>
         </br>
-        <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "float-right btn btn-danger" %>
-   <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/assignments/#{@assignment.id}/assignment_to_pdf.pdf", class: "btn btn-success float-left tiny", target: :_blank %></div>
-    <!-- <div class="print-button"><%#= link_to "PRINT", incident_plan_assignment_path(@incident, @plan, @assignment) + "-pdf.pdf", class: "btn btn-success float-left tiny", target: :_blank %></div> -->
       </div>
     </div>
   </div>
 </div>
-
-
 <script type="text/javascript">
-  id = "<%= @assignment.id %>"
-  $('.tabrow li').removeClass('selected');
-  $('li#'+ id).addClass('selected');
-
+  $(document).on("turbolinks:load", function() {
+    $('nav#header').hide();
+    $('#assignment-header').hide();
+    $('ul.tabrow').hide();
+    $('body').css("padding-top", 25);
+    $('body').css("padding-right", 10);
+    $('body').css("padding-left", 10);
+  });
 </script>

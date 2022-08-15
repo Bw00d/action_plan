@@ -19,7 +19,7 @@
           </div>
           <div class="col-xs-3 bl form-box">
             <span class="small">3. OPERATIONAL PERIOD<br>
-          <%= best_in_place @plan, :ops_period, :as => :input, class: 'bip-input' %>
+          <%=  @plan.ops_period %>
           </span>
         </div>
           </div>
@@ -43,13 +43,13 @@
           <% else %>
             <span class="small">5. GENERAL SITUATION AWARENESS</span><br>
           <% end %>
-             <%= best_in_place @plan, :weather, :as => :textarea, :display_with => :simple_format, id: 'weather-form'  %>
+             <%=  simple_format(@plan.weather)  %>
         </div>
       </div>
       <div class="row">
         <div id="safety-message" class="col-xs-12">
           <span class="small">6. GENERAL SAFETY MESSAGE</span><br>
-            <%= best_in_place @plan, :general_safety, :as => :textarea, :display_with => :simple_format, id: 'safety-form'  %>
+            <%=  simple_format(@plan.general_safety)  %>
         </div>
       </div>
       <div class="row">
@@ -77,11 +77,11 @@
         <div class="prepared-by-row col-xs-12">
             <div class="col-xs-6">
               <span class="small small-box">8. PREPARED BY</span><br>
-              <span class="lg-padding-left"><%= best_in_place @plan, :prepared_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %></span>
+              <span class="lg-padding-left"><%=  @plan.prepared_by %></span>
             </div>
             <div class="col-xs-6 bl">
               <span class="small small-box">9. APPROVED BY</span><br>
-              <span class="lg-padding-left"><%= best_in_place @plan, :approved_by, :as => :input, :place_holder => "Add name here", class: 'bip-input' %></span>
+              <span class="lg-padding-left"><%=  @plan.approved_by %></span>
             </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
   <script type="text/javascript">
     $(document).on("turbolinks:load", function() {
       $('#header').hide();
-      $('body').css("padding-top", 0);
+      $('body').css("padding-top", 25);
       $('body').css("padding-right", 10);
       $('body').css("padding-left", 10);
     });

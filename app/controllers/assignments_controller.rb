@@ -20,6 +20,14 @@ class AssignmentsController < ApplicationController
     # @freq = Freq.new
   end
 
+  def assignment_to_pdf
+    @assignment = Assignment.find(params[:id])
+    @plan = Plan.find(@assignment.plan_id)
+    @incident = Incident.find(@plan.incident_id)
+    @assignments = @plan.assignments
+    # @freq = Freq.new
+  end
+
   # GET /assignments/new
   def new
     @plan = Plan.find(params[:plan_id])
