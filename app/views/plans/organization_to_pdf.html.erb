@@ -1,6 +1,7 @@
 
 <div id="organization-assignments">
   <div class="container">
+      
     <div class="col-xs-12 col-lg-8 center-block">
 
       <div class="row">
@@ -28,28 +29,19 @@
                         { "1" => "(CHOOSE POSITION)", "2" =>'IC', "3" =>'Deputy IC', "4" =>'SOFR', "5" =>'LOFR', "6" => "PIO" } %>
               </div>     
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
               </div>    
             </div>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
-                <span class="team-form">
-                  <%= form_for @team do |f| %>
-                    <%= f.hidden_field :staff, value: "Command" %>
-                    <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "1" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
-                <% end %>
-              </span>
+                
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-          <% (4 - @plan.command_staff.count).times do %>
+          <% (6 - @plan.command_staff.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>             
             </div>
           <% end %>
           <!-- END Command Staff -->
@@ -63,29 +55,20 @@
                 <%= best_in_place s, :position, :as => :input %>
               </div>     
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
                   
                 </div>    
             </div>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
-                <span class="team-form">
-                  <%= form_for @team do |f| %>
-                    <%= f.hidden_field :staff, value: "Agency" %>
-                    <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "(POSITION)" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
-                <% end %>
-              </span>
+                
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-          <% (2 - @plan.agency_reps.count).times do %>
+          <% (6 - @plan.agency_reps.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>              
             </div>
           <% end %>
           <!-- END Agency Admins -->
@@ -102,28 +85,19 @@
                           "14" => "FEMO", "15" => "TNSP", "16" => "HRSP", "17" => "IRIN" } %>
               </div>     
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
               </div>    
             </div>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
-                <span class="team-form">
-                  <%= form_for @team do |f| %>
-                    <%= f.hidden_field :staff, value: "Plans" %>
-                    <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "1" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
-                <% end %>
-              </span>
+                
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (5 - @plan.plans.count).times do %>
+            <% (6 - @plan.plans.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>             
             </div>
           <% end %>
           <!-- END Plans -->
@@ -139,28 +113,20 @@
                         "7" => "EQTR", "8" => "COMP", "9" => "INBA", "10" => "PROC" } %>
                 </div>     
                 <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                  <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
+
                 </div>    
               </div>
             <% end %>
               <div class="row blank-row">
                 <div class="content-box col-xs-6">
-                  <span class="team-form">
-                    <%= form_for @team do |f| %>
-                      <%= f.hidden_field :staff, value: "Finance" %>
-                      <%= f.hidden_field :plan_id, value: @plan.id %>
-                      <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                      <%= f.hidden_field :position, value: "1" %>
-                    <%= f.submit '+', class: "new-commo-item" %>
-                  <% end %>
-                </span>
+                  
               </div>      
                 <div class="content-box col-xs-6"></div>      
               </div>
-              <% (2 - @plan.finance.count).times do %>
+              <% (6 - @plan.finance.count).times do %>
               <div class="row">
                 <div class="content-box col-xs-6"></div>      
-                <div class="content-box col-xs-6"></div>       
+                <div class="content-box col-xs-6"></div>             
               </div>
             <% end %>
           <!-- END Finance -->
@@ -191,25 +157,16 @@
                 <%= best_in_place s, :position, :as => :input %>
               </div>     
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
               </div>    
             </div>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
-                <span class="team-form">
-                  <%= form_for @team do |f| %>
-                    <%= f.hidden_field :staff, value: "Operations" %>
-                    <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "(POSITION)" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
-                <% end %>
-              </span>
+                
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (9 - @plan.operations.count).times do %>
+            <% (14 - @plan.operations.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>       
@@ -230,7 +187,6 @@
                           "21" => "EDSD" } %>
               </div>     
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
               </div>    
             </div>
           <% end %>
@@ -248,7 +204,7 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (9 - @plan.logistics.count).times do %>
+            <% (14 - @plan.logistics.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>       
@@ -260,8 +216,7 @@
         </div> <!-- END RIGHT COLUMN -->
       </div> 
         <div class="row bottom-row">
-          <div class="content-box col-xs-6">Prepared by:</div> 
-          <div class="content-box col-xs-6 br">Total # Personnel:</div>         
+          <div class="content-box col-xs-12">Prepared by:</div> 
         </div>
 
     </div>
@@ -270,6 +225,7 @@
 <script type="text/javascript">
     $(document).on("turbolinks:load", function() {
       $('#header').hide();
+      $('.footer').hide();
       $('body').css("padding-top", 25);
       $('body').css("padding-right", 10);
       $('body').css("padding-left", 10);

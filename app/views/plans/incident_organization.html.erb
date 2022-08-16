@@ -67,10 +67,10 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-          <% (4 - @plan.command_staff.count).times do %>
+          <% (6 - @plan.command_staff.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>              
             </div>
           <% end %>
           <!-- END Command Staff -->
@@ -103,10 +103,10 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-          <% (2 - @plan.agency_reps.count).times do %>
+          <% (6 - @plan.agency_reps.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>             
             </div>
           <% end %>
           <!-- END Agency Admins -->
@@ -141,10 +141,10 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (5 - @plan.plans.count).times do %>
+            <% (6 - @plan.plans.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>              
             </div>
           <% end %>
           <!-- END Plans -->
@@ -178,10 +178,10 @@
               </div>      
                 <div class="content-box col-xs-6"></div>      
               </div>
-              <% (2 - @plan.finance.count).times do %>
+              <% (6 - @plan.finance.count).times do %>
               <div class="row">
                 <div class="content-box col-xs-6"></div>      
-                <div class="content-box col-xs-6"></div>       
+                <div class="content-box col-xs-6"></div>              
               </div>
             <% end %>
           <!-- END Finance -->
@@ -230,7 +230,7 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (9 - @plan.operations.count).times do %>
+            <% (14 - @plan.operations.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>       
@@ -269,7 +269,7 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (9 - @plan.logistics.count).times do %>
+            <% (14 - @plan.logistics.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>       
@@ -281,8 +281,8 @@
         </div> <!-- END RIGHT COLUMN -->
       </div> 
         <div class="row bottom-row">
-          <div class="content-box col-xs-6">Prepared by:</div> 
-          <div class="content-box col-xs-6 br">Total # Personnel:</div>         
+          <div class="content-box col-xs-12">Prepared by:</div> 
+                 
         </div>
 
     <div class="print-button"><%= link_to "PRINT", "../#{@plan.id}/203-pdf.pdf", class: "btn btn-success tiny", target: :_blank %></div>

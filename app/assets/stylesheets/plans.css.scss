@@ -254,7 +254,10 @@ a.delete-objective:hover {
   border-right: 1px solid black;
 }
 .top-row {
-  /*border-top: 1px solid black;*/
+  border-top: 1px solid black;
+}
+.bottom-row {
+  border-right: 1px solid black;
 }
 .small {
   font-size: .70em;
@@ -408,4 +411,7 @@ h1.header {
     margin-bottom: 0;
     margin-top: 0;
   }
+}
+.team-form {
+  overflow: hidden;
 }
