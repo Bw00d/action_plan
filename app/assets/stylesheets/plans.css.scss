@@ -254,7 +254,7 @@ a.delete-objective:hover {
   border-right: 1px solid black;
 }
 .top-row {
-  border-top: 1px solid black;
+  /*border-top: 1px solid black;*/
 }
 .small {
   font-size: .70em;
@@ -271,7 +271,20 @@ a.delete-objective:hover {
   border-top: 1px solid black;
   margin-top: -1px;
 }
+
+/* ICS 202 Incident Objectives*/
+#print-container {
+  margin: 0px;
+  padding: 0 10px;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden;
+  height: 1070px !important;
+  width: 740px
+
+}
 #incident-objectives {
+  overflow: hidden;
   #ops-period {
     border-top: 1px solid black;
     border-left: 1px solid black;
@@ -280,14 +293,21 @@ a.delete-objective:hover {
     border-right: 1px solid black;
     border-left: 1px solid black;
     border-top: 1px solid black;
-    min-height: 500px;
+    min-height: 449px;
+    overflow: hidden;
     ul {
       line-height: 2em;
     }
   }
   #weather-forecast {
     border-left: 1px solid black;
-    min-height: 230px;
+    min-height: 300px;
+    overflow: hidden;
+  }
+  #general-safety-message {
+    border-top: 1px solid black;
+    height: 143px;
+    overflow: hidden;
   }
   #attachments {
     overflow: hidden;
@@ -303,7 +323,7 @@ a.delete-objective:hover {
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid black;*/
   }
  
 }
