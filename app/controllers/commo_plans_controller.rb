@@ -27,6 +27,13 @@ class CommoPlansController < ApplicationController
     @commo_item = CommoItem.new
   end
 
+  def commo_plan_to_pdf
+    @commo_plan = CommoPlan.find(params[:id])
+    @plan = Plan.find(@commo_plan.plan_id)
+    @incident = Incident.find(@plan.incident_id)
+    @commo_item = CommoItem.new
+  end
+
   # GET /commo_plans/new
   def new
     @plan = Plan.find(params[:plan_id])

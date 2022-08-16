@@ -5,6 +5,7 @@ Grover.configure do |config|
       top: '0',
       bottom: '0'
     },
+    display_url: "http://localhost:3000",
     display_header_footer: false,
     prefer_css_page_size: true,
     cache: false,

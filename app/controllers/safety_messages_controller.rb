@@ -26,6 +26,13 @@ class SafetyMessagesController < ApplicationController
     @incident = Incident.find(@plan.incident_id)
   end
 
+  def safety_message_to_pdf
+    @safety_message = SafetyMessage.find(params[:id])
+    @plan = Plan.find(@safety_message.plan_id)
+    @incident = Incident.find(@plan.incident_id)
+  end
+
+
   # GET /safety_messages/new
   def new
     @safety_message = SafetyMessage.new
@@ -76,6 +83,16 @@ class SafetyMessagesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to safety_messages_url, notice: 'Safety message was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+    def download_safety_message
+    @safety_message = SafetyMessage.find(params[:id])
+    safety_message = render_to_string "safety_message_to_pdf.html.erb", layout: "pdf"
+
+    respond_to do |format|
+      format.html { render html: safety_message }
+      format.pdf { render_pdf safety_message, filename: t(".filename", id: @safety_message.id) }
     end
   end
 

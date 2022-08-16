@@ -1,0 +1,77 @@
+<%= content_for :title, "Safety Message" %>
+<div id="incident-objectives">
+  <div class="container">
+    <div class="col-xs-12 col-lg-8 center-block">
+      <div class="row">
+        <div class="col-xs-12 title-row bl top-row">
+          <div class="col-xs-5">
+            <h4><strong>SAFETY MESSAGE</strong></h4>
+          </div>
+          <div class="col-xs-3 bl form-box">
+            <span class="small">1. INCIDENT NAME<br>
+              <span class="sm-padding-left"><%= @incident.name %></span>
+            </span>
+
+          </div>
+          <div class="col-xs-2 bl form-box">
+            <span class="small">2. DATE PREPARED<br>
+              <%= @safety_message.date_prepared %>
+            </span>
+          </div>
+          <div class="col-xs-2 bl form-box no-padding-right">
+            <span class="small">3. TIME PREPARED<br>
+              <span class="neg-padding-top">
+                <%= @safety_message.time_prepared %>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="ops-period" class="col-xs-12 title-row">
+          <span class="small">4. OPERATIONAL PERIOD</span><br>
+          <span class="huge-padding-left"><%= @plan.ops_period %></span>
+          
+        </div>
+      </div>
+      <div class="row">
+        <div id="major-hazards" class="col-xs-12">
+          <span class="small">5. MAJOR HAZARDS AND RISKS</span>
+            <div class="sm-padding-left hazards-form">
+              <%=  simple_format(@safety_message.hazards) %>
+            </div>
+        </div>
+      </div>
+ 
+      <div class="row">
+        <div id="safety-message" class="col-xs-12">
+          <span class="small">6. NARRATIVE</span><br>
+           <div id="narrative">
+             <%= simple_format(@safety_message.narrative) %>
+           </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="prepared-by-row safety-prep col-xs-12">
+            <div class="col-xs-12">
+              <span class="small small-box">9. PREPARED BY</span>
+              <span class="lg-padding-left"><%= @safety_message.prepared_by %></span>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).on("turbolinks:load", function() {
+    $('nav#header').hide();
+    $('.footer').hide();
+    $('ul.tabrow').hide();
+    $('body').css("padding-top", 25);
+    $('body').css("padding-right", 10);
+    $('body').css("padding-left", 10);
+  });
+</script>

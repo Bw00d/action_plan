@@ -151,7 +151,6 @@
         </br>
         <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "float-right btn btn-danger" %>
    <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/assignments/#{@assignment.id}/assignment_to_pdf.pdf", class: "btn btn-success float-left tiny", target: :_blank %></div>
-    <!-- <div class="print-button"><%#= link_to "PRINT", incident_plan_assignment_path(@incident, @plan, @assignment) + "-pdf.pdf", class: "btn btn-success float-left tiny", target: :_blank %></div> -->
       </div>
     </div>
   </div>

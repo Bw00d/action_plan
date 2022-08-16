@@ -58,6 +58,7 @@
               <%= best_in_place @safety_message, :hazards, :as => :textarea, :display_with => :simple_format,
                                                  :place_holder => "(LIST HAZARDS HERE)", class: 'bip-input' %>
             </div>
+            <div class="bottom-padding"><div class="resize-padding"></div></div>
         </div>
       </div>
  
@@ -69,6 +70,7 @@
                                                 :place_holder => "(ADD SAFETY NARRATIVE)", class: 'bip-input' %>
            </div>
         </div>
+        <div class="bottom-padding"><div class="resize-padding"></div></div>
       </div>
       
       <div class="row">
@@ -80,6 +82,7 @@
             
         </div>
       </div>
+      <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/safety_messages/#{@safety_message.id}/safety_message_to_pdf.pdf", class: "btn btn-success float-left tiny", target: :_blank %></div>
     </div>
   </div>
 </div>

@@ -1,26 +1,7 @@
-<%= content_for :title, "205" %>
-  <div class="container">
-    <div class="col-xs-12 col-lg-10 center-block">
+<div class="container">
+  <div class="col-xs-12 col-lg-10 center-block">
 
-
-      <div class="row">
-        <div class="plan-panel-head">
-          <ul class="tabrow">
-            <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
-            <li><%= link_to "Cover", "../#{@plan.id}/cover"  %></li>
-            <li><%= link_to "202", "../../#{@plan.id}/202" %></li>
-            <li><%= link_to "203", "../../#{@plan.id}/203" %></li>
-            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
-            <li class="selected"><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
-            <li><%= link_to "206", '#' %></li>
-            <li><%= link_to "220", '#' %></li>
-            <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
-          </ul>
-          </div>
-        <div class="masking-tape"></div>
-      </div>
-  
-<div id="commo-plan">
+  <div id="commo-plan">
 
 
       <div class="row">
@@ -127,6 +108,13 @@
         </div>
       </div> 
     </div>
-     <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/commo_plans/#{@commo_plan.id}/commo_plan_to_pdf.pdf", class: "btn btn-success float-left tiny", target: :_blank %></div>
   </div>
 </div>
+<script type="text/javascript">
+  $(document).on("turbolinks:load", function() {
+    $('#header').hide();
+    $('body').css("padding-top", 25);
+    $('body').css("padding-right", 10);
+    $('body').css("padding-left", 10);
+  });
+</script>
