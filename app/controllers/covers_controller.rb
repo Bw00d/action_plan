@@ -29,6 +29,14 @@ class CoversController < ApplicationController
     @blocks = @cover.blocks.order(number: :asc)
   end
 
+  def cover_to_pdf
+    @cover = Cover.find(params[:id])
+    @plan = @cover.plan
+    @incident = @plan.incident    
+    @block = Block.new
+    @blocks = @cover.blocks.order(number: :asc)
+  end
+
   # GET /covers/new
   def new
     @cover = Cover.new
