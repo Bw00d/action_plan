@@ -59,8 +59,7 @@ class Plan < ApplicationRecord
 
   def duplicate_safety_message
     if self.incident.plans.last(2).first.safety_message
-      safety_message = self.incident.plans.last(2).first.safety_message.dup
-      safety_message.update_attributes(plan_id: self.id)
+       SafetyMessage.create( plan_id: self.id, hazards: self.incident.plans.last(2).first.safety_message.hazards)
     end
   end
 

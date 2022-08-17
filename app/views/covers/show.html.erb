@@ -45,7 +45,7 @@
            <div class="delete-block"><%= fa_icon('trash') %></div>
          </div>
   <!-- End style control panel -->
-         <div  id="<%= b.id %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %> <%= b.text_style %>" >
+         <div  id="plan" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %> <%= b.text_style %>" >
 
             
            <% if b.image_block? %> 
@@ -100,6 +100,6 @@
 <!-- End blocks display -->   
       </div>
     </div>
-    <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/covers/#{@cover.id}/cover_to_pdf" + ".pdf", class: "btn btn-success tiny" %></div>
+    <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/covers/#{@cover.id}/cover_to_pdf" + ".pdf", target: :_blank, class: "btn btn-success tiny" %></div>
   </div>
 </div>
