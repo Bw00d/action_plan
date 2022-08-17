@@ -8,8 +8,8 @@
             <h4 class="" ><strong>DIVISION ASSIGNMENT LIST</strong></h4>
           </div>
           <div class="col-xs-2 form-box">
-            <span class="small"># PERSONNEL  
-            </span>  <span class="personnel_num"><%#= @assignment.personnel %></span>
+            <span class="small">  
+            </span>  <span class="personnel_num"></span>
 
           </div>
           <div class="col-xs-4 form-box text-center">
@@ -108,7 +108,7 @@
               <td class="p8 centered"></td>
             </tr>
           <% end %>
-          <% (8 - @assignment.assigned_resources.count).times do %>
+          <% (12 - @assignment.assigned_resources.count).times do %>
             <tr>
               <td class="p35"></td>
               <td class="p40"></td>
@@ -121,7 +121,7 @@
       </div>
     
       <div class="row">
-        <div class="center r-b form-box short-rows xs-padding-left">
+        <div id="control-operations" class="center r-b form-box short-rows xs-padding-left">
           <span class="small">CONTROL OPERATIONS</span><br>
             <%=  @assignment.control_operations  %>
         </div>
@@ -142,6 +142,7 @@
   $(document).on("turbolinks:load", function() {
     $('nav#header').hide();
     $('#assignment-header').hide();
+    $('.footer').hide();
     $('ul.tabrow').hide();
     $('body').css("padding-top", 25);
     $('body').css("padding-right", 10);

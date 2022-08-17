@@ -142,10 +142,12 @@ $aqua: #07c5ff;
 // Positioning
 .float-left {
   float: left;
+  clear: both;
 }
 
 .float-right {
   float: right;
+  clear: both;
 }
 
 

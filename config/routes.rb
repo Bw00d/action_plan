@@ -49,5 +49,5 @@ Rails.application.routes.draw do
   get 'incidents/:id/plans/:id/203-pdf'        => 'plans#organization_to_pdf'
   get 'incidents/:id/plans/:id/assignments/:id/assignment_to_pdf'        => 'assignments#assignment_to_pdf'
   get 'incidents/:id/plans/:id/commo_plans/:id/commo_plan_to_pdf'        => 'commo_plans#commo_plan_to_pdf'
-  get 'incidents/:id/plans/:id/safety_messages/:id/safety_message_to_pdf'        => 'safety_messages#safety_message_to_pdf'
+  get 'incidents/:id/plans/:id/safety_messages/:id/safety_message_to_pdf'  => 'safety_messages#safety_message_to_pdf'
 end

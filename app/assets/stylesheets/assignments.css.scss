@@ -202,6 +202,9 @@ a.new-freq-button:hover {
   margin-top: 133px;
  
 }
+#control-operations {
+  min-height: 160px;
+}
 #ops-resource-form {
   border-right: 1px solid black;
   border-left: 1px solid black;
@@ -259,4 +262,20 @@ li.assigned-204-resources {
   label {
     display: inline; 
   }
+}
+.float-button {
+  clear: both;
+}
+ul#action-buttons {
+  list-style-type: none !important;
+  padding: 0 !important;
+  clear: both;
+  li {
+    display: inline !important;
+  }
+}
+.action-buttons {
+  display: inline;
+  clear: both;
+  margin-left: 0;
 }
