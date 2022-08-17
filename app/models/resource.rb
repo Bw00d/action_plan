@@ -5,6 +5,14 @@ class Resource < ApplicationRecord
   scope :crew, -> { where(category: 'CREW') }
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
   scope :assigned, -> { where(release_date: nil)}
+  before_save :format_release_date
+
+  def format_release_date
+    if self.release_date?
+      date = Date.strptime(str, '%m/%d/%Y')
+      return date.strftime('%Y-%m-%d')
+    end
+  end
 
   def cat
     case self.category

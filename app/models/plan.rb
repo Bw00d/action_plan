@@ -11,14 +11,7 @@ class Plan < ApplicationRecord
   has_one :cover
   validates_uniqueness_of :date, :scope => :incident_id
   after_create :duplicate_plan
-  before_save :format_release_date
-
-def format_release_date
-  if self.release_date?
-    date = Date.strptime(str, '%m/%d/%Y')
-    return date.strftime('%Y-%m-%d')
-  end
-end
+  
 
   def duplicate_plan
     if self.incident.plans.count >= 2

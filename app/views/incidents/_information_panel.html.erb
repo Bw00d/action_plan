@@ -8,27 +8,30 @@
         <!-- wildfire specific -->
         <% if @incident.wildfire? %>
           <div>
-            <div class="col-sm-12 col-xs-12">
-            <div><strong>Location:</strong> <%= best_in_place @incident, :location %></div>
-            <div><strong>Coordinates:</strong> <%= best_in_place @incident, 
+            <div class="col-lg-12 col-xs-12">
+            <div class="col-md-6 col-sm-12"><strong>Location:</strong> <%= best_in_place @incident, :location %></div>
+            <div class="col-md-6 col-sm-12"><strong>Coordinates:</strong> <%= best_in_place @incident, 
             :latitude %> x <%= best_in_place @incident, :longitude %></div>
          
-              <div><strong>Cause:</strong> <%= best_in_place @incident, :cause %></div>
-              <div><strong>Fuels:</strong> <%= best_in_place @incident, :fuel_type %></div>
-              <div><strong>Activity:</strong> <%= best_in_place @incident, :fire_behavior %></div>
+              <div class="col-md-6 col-sm-12"><strong>Size:</strong> <%= best_in_place @incident, :size %> acres  </div>
+              <div class="col-md-6 col-sm-12"><strong>Cause:</strong> <%= best_in_place @incident, :cause %></div>
+              <div class="col-md-6 col-sm-12"><strong>Fuels:</strong> <%= best_in_place @incident, :fuel_type %></div>
+              <div class="col-md-6 col-sm-12"><strong>Activity:</strong> <%= best_in_place @incident, :fire_behavior %></div>
           
-              <div><strong>Size:</strong> <%= best_in_place @incident, :size %> acres  </div>
-              <div><strong>Complexity:</strong> <%= best_in_place @incident, :complexity %>  </div>
-              <div><strong>Start Date:</strong> <%= best_in_place @incident, :start_date %>  </div>
-              <div><strong>% Contained:</strong> <%= best_in_place @incident, :percent_contained %></div>
-              <div><strong>Status:</strong> <%= best_in_place @incident, :status %></div>
+              <div class="col-md-6 col-sm-12"><strong>Complexity:</strong> <%= best_in_place @incident, :complexity %>  </div>
+              <div class="col-md-6 col-sm-12"><strong>IC:</strong> <%= best_in_place @incident, :ic %>   </div>
+              <div class="col-md-6 col-sm-12"><strong>Status:</strong> <%= best_in_place @incident, :status %></div>
+              <div class="col-md-6 col-sm-12"><strong>% Contained:</strong> <%= best_in_place @incident, :percent_contained %></div>
+              <div class="col-md-6 col-sm-12"><strong>Start Date:</strong> <%= best_in_place @incident, :start_date %>  </div>
+              <div class="col-md-6 col-sm-12"><strong>Contained Date:</strong> <%= best_in_place @incident, :containment_date %></div>
+              <div class="col-md-6 col-sm-12"><strong>Controlled Date:</strong> <%= best_in_place @incident, :control_date %></div>
+              <div class="col-md-6 col-sm-12"><strong>Out Date:</strong> <%= best_in_place @incident, :out_date %></div>
        
-              <div><strong>IC:</strong> <%= best_in_place @incident, :ic %>   </div>
-              <div><strong>Protection Level Level:</strong> <%= best_in_place @incident, :protection %></div>
-              <div><strong>Ownership:</strong> <%= best_in_place @incident, :ownership %></div>
+              <div class="col-md-6 col-sm-12"><strong>Protection Level Level:</strong> <%= best_in_place @incident, :protection %></div>
+              <div class="col-md-6 col-sm-12"><strong>Ownership:</strong> <%= best_in_place @incident, :ownership %></div>
         
-              <div><strong>Financial Code:</strong> <%= best_in_place @incident, :financial_code %> </div>
-              <div><strong>P Code:</strong>  <%= best_in_place @incident, :p_code %></div>
+              <div class="col-md-6 col-sm-12"><strong>Financial Code:</strong> <%= best_in_place @incident, :financial_code %> </div>
+              <div class="col-md-6 col-sm-12"><strong>P Code:</strong>  <%= best_in_place @incident, :p_code %></div>
               <div></div>
             </div>
           </div>
