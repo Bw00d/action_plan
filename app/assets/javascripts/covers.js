@@ -125,5 +125,25 @@ $(document).on("turbolinks:load", function() {
     target.children('.image-form').toggle();
   });
 
+  //  temporary avatar
+    function readURL(input) {
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('.cover-image').hide();
+          $('#temp-image').show();
+          $('#temp-image').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#block_main_image").change(function(){
+      readURL(this);
+    });
+
 });
 
