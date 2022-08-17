@@ -22,6 +22,7 @@
     <div class="row">
       <div id="cover">
 <!-- Display blocks -->
+     <% if @blocks %>
        <% @blocks.each do |b| %>
        <div>
          <div class="new-block-form">
@@ -29,6 +30,7 @@
             <%= f.hidden_field :cover_id, value: @cover.id %>
             <%= f.submit '+', class: "new-block-button" %>
           <% end %>
+        <% end %>
         </div>
 
   <!-- Style control panel -->

@@ -1,4 +1,4 @@
 class CommoPlan < ApplicationRecord
-  belongs_to :plan, dependent: :destroy
-  has_many :commo_items
+  belongs_to :plan
+  has_many :commo_items, dependent: :destroy
 end

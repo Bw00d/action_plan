@@ -1,6 +1,6 @@
 class Cover < ApplicationRecord
-  has_many :blocks
-  belongs_to :plan, dependent: :destroy
+  has_many :blocks, dependent: :destroy
+  belongs_to :plan
   after_create :set_blocks
 
   def plan

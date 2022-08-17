@@ -1,5 +1,5 @@
 class Block < ApplicationRecord
-  belongs_to :cover, dependent: :destroy
+  belongs_to :cover
   attr_accessor :remove_main_image
 
   has_one_attached :main_image

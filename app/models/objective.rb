@@ -1,5 +1,5 @@
 class Objective < ApplicationRecord
-  belongs_to :plan, dependent: :destroy
+  belongs_to :plan
 
   before_create :set_order
 

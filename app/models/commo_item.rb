@@ -1,3 +1,3 @@
 class CommoItem < ApplicationRecord
-  belongs_to :commo_plan, dependent: :destroy
+  belongs_to :commo_plan
 end

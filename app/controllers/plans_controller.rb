@@ -82,8 +82,10 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
     @cover = @plan.cover
-    @blocks = @cover.blocks.order(number: :asc)
     @block = Block.new
+    if @cover
+      @blocks = @cover.blocks.order(number: :asc)
+    end
   end
 
   def cover_to_pdf
