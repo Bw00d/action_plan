@@ -56,7 +56,7 @@
           
         <div id="activity-list" class="plan-row activity md-padding-left"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
         <div class="activities-list list-content md-padding-left">
-          <ul id="activities list-content">
+          <ul id="activities">
             <% @plan.activities.each do |a|  %>
               <li> <%= best_in_place a, :description, :as => :input %></li>
             <% end %>
