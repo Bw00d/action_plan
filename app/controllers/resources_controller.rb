@@ -37,7 +37,7 @@ class ResourcesController < ApplicationController
     respond_to do |format|
       if @resource.save
         format.html { redirect_to incident_plan_path(@incident, @plan) }
-        format.js
+        format.js { }
         format.json { render :show, status: :created, location: @resource }
       else
         format.html { render :new }

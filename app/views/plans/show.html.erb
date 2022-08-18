@@ -98,7 +98,7 @@
                 <div class="form-group"><%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
                                   class: "form-control", placeholder: "CHECKIN DATE" %></div>
                 <div class="form-group"><%= f.text_field :fwd, id: :incident_fwd, :data => {:provide => "datepicker"},
-                                  class: "form-control", placeholder: "LAST WORK DAY" %></div>
+                                  class: "form-control", placeholder: "FIRST DAY WORKED" %></div>
                 <div class="row">
                   <span class="col-xs-6"><%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %></span>
                   <span class="col-xs-6"><%= link_to "Cancel", 'javascript:;', class: 'btn btn-tiny btn-default btn-wide', id: "cancel-resource-button" %></span>
