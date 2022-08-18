@@ -14,6 +14,10 @@ $(document).on("turbolinks:load", function() {
     case 'OVERHEAD':
       var prefix = 'O-'
       break;
+
+    case 'AIRCRAFT':
+      var prefix = 'A-'
+      break;
     }
       $('.order-number-prefix').html( prefix )
 
