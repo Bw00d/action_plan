@@ -1,0 +1,21 @@
+
+$("tbody#incident-resources").append( <tr>
+            <td class="sm-padding-left "><%= r.cat %><%= r.order_number %></td>
+            <td ><%=  r.position %></td>
+            <td><%=  r.name %></td>
+            <td><%=  r.leader %></td>
+            <td >
+              <% if r.number_personnel != nil  %> 
+                <%= r.number_personnel %>
+              <% end %>
+                </td>
+            <td><%= r.agency %></td>
+            <td><%= r.fwd %></td>
+            <td><%= r.assignment_length %></td>
+            <% if !r.last_work_day.blank? %>
+              <td><%=  r.last_work_day.strftime("%m/%d") %></td>
+            <% else %>
+            <td></td>
+            <% end %>
+            <td><%= r.release_date %></td>
+          </tr>)

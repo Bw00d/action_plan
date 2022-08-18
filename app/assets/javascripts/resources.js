@@ -71,9 +71,9 @@ $(document).on("turbolinks:load", function() {
   })
 
 // Reload page after creating resource
-  $('#submit-resource-button').click(function() {
-    window.location.reload();
-  })
+  // $('#submit-resource-button').click(function() {
+  //   window.location.reload();
+  // })
 
 
   

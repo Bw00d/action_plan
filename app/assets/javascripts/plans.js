@@ -19,6 +19,11 @@ $(document).on("turbolinks:load", function() {
         }
     });
 
+    $(".tabrow li").click(function(){
+      $(".tabrow li").removeClass('selected');
+      $(this).addClass('selected');
+    })
+
 
   // local storage
     $('.plan-row').click(function(){
@@ -55,13 +60,13 @@ $(document).on("turbolinks:load", function() {
       $("#activity-list").addClass('expanded');
     }
 
+// $('.plan-row')
+//   .click(localStorage.getItem('bgColor'))
+//   .click(function() {
+//       $('body').css({'background-color': this.value});
+//       localStorage.setItem('bgColor', this.value);
+//   })
+//   .change();
  
 });
 
-// $('.plan-row')
-//     .click(localStorage.getItem('bgColor'))
-//     .click(function() {
-//         $('body').css({'background-color': this.value});
-//         localStorage.setItem('bgColor', this.value);
-//     })
-//     .change();

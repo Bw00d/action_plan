@@ -21,7 +21,7 @@
           <th scope="col">Released</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="incident-resources">
         <% @resources.each do |r|  %>
           <% unless r.released? %>
         <tr>
