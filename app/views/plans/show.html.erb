@@ -81,31 +81,7 @@
                 <% end %>
               </ul>
 
-            <div id="resource-form" class="form-group">
-              <%= form_for @resource, remote: true do |f| %>
-                <%= f.hidden_field :incident_id, value: @incident.id %>
-                <div class="form-group"><%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control' %></div>
-                <div class="form-group"><%= f.text_field :position, placeholder: "RESOURCE TYPE", class: 'form-control' %></div>
-                <div class="form-group"><%= f.select :category, options_for_select([ ["CREW", "CREW"], ["EQUIPMENT", "EQUIPMENT"], ["OVERHEAD", "OVERHEAD"]]), :prompt => "SELECT CATEGORY", class: 'form-control', id: :resource_category %></div>
-
-                <div id="order-number-input" class="form-group">
-                  <span class="order-number-prefix"></span>
-                     <%= f.text_field :order_number, placeholder: "NUMBER", id: :resource_order_number, class: 'form-control' %>
-                  </div>
-                <div class="form-group"><%= f.text_field :leader, placeholder: "LEADER'S NAME", class: 'form-control' %></div>
-                <div class="form-group"><%= f.text_field :number_personnel, placeholder: "# PERSONNEL", class: 'form-control' %></div>
-                <div class="form-group"><%= f.text_field :agency, placeholder: "AGENCY", class: 'form-control' %></div>
-                <div class="form-group"><%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
-                                  class: "form-control", placeholder: "CHECKIN DATE" %></div>
-                <div class="form-group"><%= f.text_field :fwd, id: :incident_fwd, :data => {:provide => "datepicker"},
-                                  class: "form-control", placeholder: "FIRST DAY WORKED" %></div>
-                <div class="row">
-                  <span class="col-xs-6"><%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-resource-button" %></span>
-                  <span class="col-xs-6"><%= link_to "Cancel", 'javascript:;', class: 'btn btn-tiny btn-default btn-wide', id: "cancel-resource-button" %></span>
-                </div>
-              <% end %>
-            </div>
-            <%= link_to (fa_icon('user-plus')), "javascript:;", id: 'new-resource' %>
+            <%= render 'new_resource_form'  %>
           </div>
 
 

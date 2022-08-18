@@ -48,14 +48,20 @@
   </div>
 
   <div class="field">
-    <%= form.label :lwd %>
-    <%= form.date_select :lwd, id: :resource_lwd %>
-  </div>
-
-  <div class="field">
     <%= form.label :checkin_date %>
     <%= form.date_select :checkin_date, id: :resource_checkin_date %>
   </div>
+
+  <div class="field">
+    <%= form.label :fwd %>
+    <%= form.date_select :fwd, id: :resource_fwd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assignment_length %>
+    <%= form.text_field :assignment_length, id: :incident_assignment_length %>
+  </div>
+
 
   <div class="actions">
     <%= form.submit %>
