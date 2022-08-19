@@ -14,3 +14,7 @@ def seed_plans
   plan2 = Plan.create(user_id: user.id, date: "Sat, 19 Jun 2019 02:18:11 UTC +00:00")
   plan3 = Plan.create(user_id: user.id, date: "Sat, 18 Jun 2019 02:18:11 UTC +00:00")
 end
+
+def update_incident_user_id(incident, user)
+  incident.update_attributes(user_id: user.id)
+end

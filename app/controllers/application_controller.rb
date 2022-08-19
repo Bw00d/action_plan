@@ -1,7 +1,7 @@
 # :nodoc:
 class ApplicationController < ActionController::Base
   # Authorization gem
-  include Pundit
+  include Pundit::Authorization
 
   protect_from_forgery with: :exception
 

@@ -23,11 +23,24 @@ describe 'Home Page', type: :feature, js: true do
     end
   end
 
-  describe 'before after signing in', type: :feature, js: true do
+  describe 'Signing as ordinary user', type: :feature, js: true do
+    before { login_as(ordinary_user) }
+    it 'should have the right links' do
+      visit '/'
+      expect(page).to have_link ('Incidents')
+      expect(page).not_to have_link ('Users')
+      expect(page).to have_link (ordinary_user.first_name + " " + ordinary_user.last_name)
+      expect(page).not_to have_link ('Sign in')
+      expect(page).not_to have_link ('Sign up')
+    end
+  end
+
+  describe 'Signing as admin', type: :feature, js: true do
     before { login_as(admin_user) }
     it 'should have the right links' do
       visit '/'
       expect(page).to have_link ('Incidents')
+      expect(page).to have_link ('Users')
       expect(page).to have_link (admin_user.first_name + " " + admin_user.last_name)
       expect(page).not_to have_link ('Sign in')
       expect(page).not_to have_link ('Sign up')

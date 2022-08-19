@@ -1,11 +1,12 @@
+<%= content_for :title, "Incidents" %>
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-xs-12 center-block">
       
-      <h1>Incidents</h1>
+      <h1><strong>Incidents</strong></h1>
 
       <% if @incidents.empty?  %>
-      <h3>Begin by adding an incident</h3>
+      <h3>Begin by adding an incident.</h3>
       <% end %>
         <% @incidents.each do |incident| %>
           <%= link_to incident_path(incident) do  %>
@@ -62,7 +63,7 @@
           <% end %> 
       <br>
 
-      <%= link_to 'New Incident', new_incident_path %>
+      <%= link_to 'New Incident', new_incident_path, class: 'btn btn-success tiny' %>
     </div>
   </div>
 </div>
