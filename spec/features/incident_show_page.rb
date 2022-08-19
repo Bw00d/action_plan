@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Home Page', type: :feature, js: true do
+describe 'Incident Show', type: :feature, js: true do
   let(:admin_user) { FactoryGirl.create(:admin_user) }
   let(:ordinary_user) { FactoryGirl.create(:user) }
 

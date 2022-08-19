@@ -41,7 +41,7 @@ Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   # The window size is important for screenshots
   options.add_argument '--window-size=1366,768'
-  Selenium::WebDriver::Chrome.driver_path = '/usr/local/bin/chromedriver'
+  Selenium::WebDriver::Chrome::Service.driver_path = '/usr/local/bin/chromedriver'
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
