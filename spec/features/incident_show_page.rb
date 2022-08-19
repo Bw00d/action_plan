@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Incident Show', type: :feature, js: true do
-  let(:admin_user) { FactoryGirl.create(:admin_user) }
-  let(:ordinary_user) { FactoryGirl.create(:user) }
+  let(:admin_user) { FactoryBot.create(:admin_user) }
+  let(:ordinary_user) { FactoryBot.create(:user) }
 
   it 'should have the right title' do
     visit '/'

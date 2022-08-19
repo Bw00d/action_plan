@@ -29,7 +29,7 @@ module ActionPlan
     config.generators do |g|
       # Disable CoffeeScript
       g.javascript_engine :js
-      # Configure RSpec and FactoryGirl
+      # Configure RSpec and FactoryBot
       g.test_framework :rspec,
                        view_specs: false,
                        helper_specs: false,

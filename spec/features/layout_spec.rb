@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'layout and UI elements', type: :feature, js: true do
-  let(:admin_user) { FactoryGirl.create(:admin_user) }
-  let(:ordinary_user) { FactoryGirl.create(:user) }
+  let(:admin_user) { FactoryBot.create(:admin_user) }
+  let(:ordinary_user) { FactoryBot.create(:user) }
 
   # The layout selection expectations are an alternative to the deprecated
   # render_layout matcher. They require the <BODY> element to have a

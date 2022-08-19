@@ -30,7 +30,7 @@ module MiscTestHelpers
 
   # This helper allows custom matchers and shared examples to guess factory
   # names based on model names. For this to work, factories must be named
-  # accordingly to the naming convention suggested by the FactoryGirl docs.
+  # accordingly to the naming convention suggested by the FactoryBot docs.
   def factory_name(model)
     model.name.underscore.to_sym
   end

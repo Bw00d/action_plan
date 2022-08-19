@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :action do
-    description "MyString"
-    completed false
+    description {"MyString"}
+    completed {false}
   end
 end
