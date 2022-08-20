@@ -7,7 +7,8 @@
       <div class="panel-heading">
         <h4>
           <strong><%= @incident.display_incident_name %></strong>
-          </h4>
+        </h4>
+        <%= link_to "Invite", '#', id: "share-incident-button", class: "btn btn-success tiny float-right"  %>
       </div>
       <%= render 'information_panel' %>
     </div>

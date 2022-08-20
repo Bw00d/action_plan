@@ -27,7 +27,7 @@
               <div class="col-md-6 col-sm-12"><strong>Controlled Date:</strong> <%= best_in_place @incident, :control_date %></div>
               <div class="col-md-6 col-sm-12"><strong>Out Date:</strong> <%= best_in_place @incident, :out_date %></div>
        
-              <div class="col-md-6 col-sm-12"><strong>Protection Level Level:</strong> <%= best_in_place @incident, :protection %></div>
+              <div class="col-md-6 col-sm-12"><strong>Protection Level:</strong> <%= best_in_place @incident, :protection %></div>
               <div class="col-md-6 col-sm-12"><strong>Ownership:</strong> <%= best_in_place @incident, :ownership %></div>
         
               <div class="col-md-6 col-sm-12"><strong>Financial Code:</strong> <%= best_in_place @incident, :financial_code %> </div>
@@ -40,8 +40,14 @@
         <% unless @incident.wildfire? %>
           
           <div class="col-sm-12 col-xs-12">
-            <div>Location: <%= best_in_place @incident, :location %></div>
-            <div> Coordinates: <%= best_in_place @incident, :latitude %> x <%= best_in_place @incident, :longitude %></div>
+            <div class="col-md-6 col-sm-12"><strong>Location:</strong> <%= best_in_place @incident, :location %></div>
+            <div class="col-md-6 col-sm-12"><strong>Coordinates:</strong> <%= best_in_place @incident, 
+            :latitude %> x <%= best_in_place @incident, :longitude %></div>
+            <div class="col-md-6 col-sm-12"><strong>Complexity:</strong> <%= best_in_place @incident, :complexity %>  </div>
+              <div class="col-md-6 col-sm-12"><strong>IC:</strong> <%= best_in_place @incident, :ic %>   </div>
+              <div class="col-md-6 col-sm-12"><strong>Status:</strong> <%= best_in_place @incident, :status %></div>
+              <div class="col-md-6 col-sm-12"><strong>Protection Level:</strong> <%= best_in_place @incident, :protection %></div>
+              <div class="col-md-6 col-sm-12"><strong>Ownership:</strong> <%= best_in_place @incident, :ownership %></div>
           </div>
           
         <% end %>
