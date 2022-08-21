@@ -2,7 +2,7 @@
 regardless of their roles %>
 
 <% if @incident %>
-  <% if @incident.plans.count > 0 %>
+  <% unless request.path == 'plans/new' %>
     <li><%= link_to "Plans", incident_plans_path(@incident) %></li>
     <li><%= link_to "Resources", incident_resources_path(@incident) %></li>
   <% end %>
