@@ -64,7 +64,7 @@ gem 'best_in_place', '~> 3.0.1'
 gem 'font_awesome5_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'american_date'
-gem 'aws-sdk-s3'
+gem 'aws-sdk-s3', require: false
 # for active storage
 gem "image_processing", ">= 1.2"
 gem 'datejs-rails'
