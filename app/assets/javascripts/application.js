@@ -23,6 +23,5 @@
 //= require select2
 //= require sweetalert2/dist/sweetalert2
 //= require best_in_place
-//= require best_in_place.jquery-ui
 //= require date/extras
 //= require_tree .
