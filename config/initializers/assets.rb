@@ -13,6 +13,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 Rails.application.config.assets.precompile += %w( admin.js admin.css  best_in_place.jquery-ui.js )
 
-# %w(eot svg ttf woff woff2).each do |ext|
-#   Rails.application.config.assets.precompile << "fontawesome-webfont.#{ext}"
-# end
+%w(eot svg ttf woff woff2).each do |ext|
+  Rails.application.config.assets.precompile << "fontawesome-webfont.#{ext}"
+end
