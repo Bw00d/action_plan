@@ -1,4 +1,8 @@
 Rails.application.configure do
+
+  # Store files on Amazon S3.
+  config.active_storage.service = :amazon
+
   # Settings specified here will take precedence over those in
   # config/application.rb.
   config.middleware.use ExceptionNotification::Rack,
@@ -102,6 +106,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  config.active_storage.service = :amazon
 end
