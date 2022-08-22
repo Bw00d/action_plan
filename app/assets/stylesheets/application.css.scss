@@ -17,8 +17,7 @@
 // "bootstrap/variables
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import 'font_awesome5_webfont';
-$fa-font-path: '@fontawesome/fontawesome-free/webfonts';
+@import "font-awesome";
  
 
 // Put "global" SCSS code in global.scss, not here.
