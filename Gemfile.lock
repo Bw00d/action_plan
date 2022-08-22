@@ -145,8 +145,8 @@ GEM
       i18n (>= 1.6, < 2)
     ffi (1.15.5)
     flamegraph (0.9.5)
-    font-awesome-sass (6.1.2)
-      sassc (~> 2.0)
+    font-awesome-rails (4.7.0.8)
+      railties (>= 3.2, < 8.0)
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
     globalid (1.0.0)
@@ -406,7 +406,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   flamegraph
-  font-awesome-sass (~> 6.1.2)
+  font-awesome-rails
   friendly_id
   grover
   image_processing (>= 1.2)
