@@ -58,7 +58,11 @@
           <% end %>
         </div>
       </div>
-        <%= link_to (fa_icon('user-plus')), "javascript:;",class: 'resources-button', id: 'ops-resources' %>   <!-- Ops personnel button -->
+        <%#= link_to (fa_icon('user-plus')), "javascript:;",class: 'resources-button', id: 'ops-resources' %>   <!-- Ops personnel button -->
+
+        <%= link_to "javascript:;" do %>
+          <%= image_tag 'user-plus.svg', class: "resources-button medium-icon", id: 'ops-resources' %>
+        <% end %>
       <!-- Overhead rows -->
       <div class="row">
         <div id="ops-box-container">
@@ -80,7 +84,10 @@
       </div>
       
       <div id="assign-resources-row" class="row">
-          <%= link_to (fa_icon('user-plus')), "javascript:;",id: "assign-resources-button", class: "resources-button" %>   
+          <%#= link_to (fa_icon('user-plus')), "javascript:;",id: "assign-resources-button", class: "resources-button" %> 
+          <%= link_to "javascript:;" do %>
+            <%= image_tag 'user-plus.svg', class: "resources-button medium-icon ", id: 'assign-resources-button' %>
+          <% end %>  
         <div class=" center form-row header-row">
           RESOURCES ASSIGNED
         </div>

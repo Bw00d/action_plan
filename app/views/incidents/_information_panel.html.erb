@@ -52,7 +52,8 @@
           
         <% end %>
       </div>
-      <%= link_to (fa_icon('edit')), edit_incident_path(@incident), class: "float-right", id: 'edit-incident' %>
+      <%#= link_to (fa_icon('edit')), edit_incident_path(@incident), class: "float-right", id: 'edit-incident' %>
+      <%= link_to 'Edit', edit_incident_path(@incident), class: "float-right", id: 'edit-incident' %>
       
   </div> <!-- panel body -->
 

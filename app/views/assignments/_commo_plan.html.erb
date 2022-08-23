@@ -17,7 +17,10 @@
   <% end %>
 </div>
 <table id="commo-table", class="assigned-resources">
-  <%= link_to (fa_icon('bolt')), "javascript:;",class: 'resources-button', id: 'add-freqs-button' %>
+  <%#= link_to (fa_icon('bolt')), "javascript:;",class: 'resources-button', id: 'add-freqs-button' %>
+  <%= link_to "javascript:;" do %>
+    <%= image_tag 'bolt.png', class: "resources-button medium-icon", id: 'add-freqs-button' %>
+  <% end %>
   <thead class="">
     <th class="c1"><span class="">Zone</span></th>
     <th class="c1"><span class="">Ch #</span></th>

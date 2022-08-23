@@ -1,6 +1,9 @@
 <div id="resource-panel" class="panel panel-default">
 <!-- Default panel contents -->
-  <div class="panel-heading"><strong>Resources</strong> <%= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
+  <div class="panel-heading"><strong>Resources</strong> <%#= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
+    <%= link_to "javascript:;" do %>
+      <%= image_tag 'user-plus.svg', class: "float-right", id: 'new-resource' %>
+    <% end %>
   </div>
   <div id="resource-form">
     <h4><strong>New Resource</strong></h4>

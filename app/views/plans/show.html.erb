@@ -50,7 +50,10 @@
                 <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
               <% end %>
             </div>
-              <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
+              <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
+              <%= link_to "javascript:;" do %>
+                <%= image_tag 'plus.png', class: "small-icon", id: 'new-objective' %>
+              <% end %>
             
           </div>
           
@@ -69,7 +72,10 @@
                 <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-activity-button" %>
               <% end %>
             </div>
-              <%= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-activity' %>
+              <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-activity' %>
+              <%= link_to "javascript:;" do %>
+                <%= image_tag 'plus.png', class: "small-icon", id: 'new-activity' %>
+              <% end %>
         </div>
 
         <div id="resource-list" class="plan-row md-padding-left"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>

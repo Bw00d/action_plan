@@ -24,4 +24,7 @@
     </div>
   <% end %>
 </div>
-<%= link_to (fa_icon('user-plus')), "javascript:;", id: 'new-resource' %>
+<%#= link_to (fa_icon('user-plus')), "javascript:;", id: 'new-resource' %>
+<%= link_to "javascript:;" do %>
+  <%= image_tag 'user-plus.svg', class: "", id: 'new-resource' %>
+<% end %>
