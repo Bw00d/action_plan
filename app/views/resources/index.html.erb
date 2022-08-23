@@ -17,7 +17,9 @@
           </li>
           
         <%#= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
-        <%= link_to image_tag('user-plus'), "javascript:;", class: "float-right", id: 'new-resource' %>
+        <%= link_to "javascript:;" do %>
+          <%= image_tag 'user-plus.svg', class: "float-right", id: 'new-resource' %>
+        <% end %>
         </ul>
       </div>
     <div class="masking-tape"></div>
