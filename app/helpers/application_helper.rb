@@ -48,7 +48,9 @@ module ApplicationHelper
   end
 
   def current_plan
-    @incident.plans.where(date: Date.today).first
+    if @incident.plans
+      @incident.plans.last
+    end
   end
 
   module ActionView  

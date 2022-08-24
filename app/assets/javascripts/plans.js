@@ -19,6 +19,8 @@ $(document).on("turbolinks:load", function() {
         }
     });
 
+    $('#plans-index').last('li').addClass("selected");
+
     $(".tabrow li").click(function(){
       $(".tabrow li").removeClass('selected');
       $(this).addClass('selected');

@@ -11,12 +11,12 @@
     </div>
     <!-- plans tabs -->
     <div class="plan-panel-head">
-      <ul class="tabrow">
-          <% unless current_plan  %>
+      <ul id="plans-index" class="tabrow">
+          <%# unless current_plan  %>
             <li>
               <%= link_to 'New', new_incident_plan_path(@incident) %>
             </li>
-          <% end %>
+          <%# end %>
           <% if @incident.plans %>
             <% @incident.plans.each do |p|  %>
               <li id=<%= p.id %>><%= link_to p.date.try(:strftime,"%-m/%d"), incident_plan_path(@incident, p) %></li>

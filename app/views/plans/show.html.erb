@@ -16,11 +16,11 @@
         <!-- plans tabls -->
         <div class="plan-panel-head">
           <ul class="tabrow">
-              <% unless current_plan  %>
+              <%# unless current_plan  %>
                 <li>
                   <%= link_to 'New', new_incident_plan_path(@incident) %>
                 </li>
-              <% end %>
+              <%# end %>
               <% @incident.plans.order(date: :asc).each do |p|  %>
                 <li id=<%= p.id %>><%= link_to p.date.try(:strftime,"%-m/%d"), incident_plan_path(@incident, p) %></li>
               <% end %>
