@@ -32,9 +32,9 @@ class IncidentsController < ApplicationController
 
     respond_to do |format|
       if @incident.save
-        format.html { redirect_to incident_plans_path(@incident) }
+        format.html { redirect_to incident_path(@incident) }
         format.js { }
-        format.json { render incident_plans_path(@incident), status: :created, location: @incident }
+        format.json { render incident_path(@incident), status: :created, location: @incident }
       else
         format.html { render :new }
         format.json { render json: @incident.errors, status: :unprocessable_entity }
