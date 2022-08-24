@@ -13,7 +13,7 @@
           <%= render 'incidents/form', incident: @incident %>
         </div>
 
-        <!-- plans tabls -->
+<!-- plans tabls -->
         <div class="plan-panel-head">
           <ul class="tabrow">
               <%# unless current_plan  %>
@@ -29,12 +29,17 @@
           </div>
         <div class="masking-tape"></div>
             
-        <!-- end plans tabs -->
+<!-- end plans tabs -->
+
+<!-- SITUATIONS -->
 
         <div id="situation-content" class="plan-row situation md-padding-left"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %> </div>
         <div class="situation-content list-content md-padding-left">
           <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
         </div>
+
+<!-- OBJECTIVES -->
+
         <div id="objectives-list" class="plan-row md-padding-left "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
           <div class="objectives-list list-content md-padding-left">
             <ol id="objectives">
@@ -57,7 +62,9 @@
               <% end %>
             
           </div>
-          
+
+<!-- ACTIVITIES -->
+
         <div id="activity-list" class="plan-row activity md-padding-left"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
         <div class="activities-list list-content md-padding-left">
           <ul id="activities">
@@ -79,7 +86,7 @@
                 <%= image_tag 'plus.png', class: "small-icon", id: 'new-activity' %>
               <% end %>
         </div>
-
+<!-- RESOURCES -->
         <div id="resource-list" class="plan-row md-padding-left"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
           <div class="resources-list list-content md-padding-left">
             <ul id="resources">
@@ -115,17 +122,6 @@
     id = "<%= @plan.id %>"
     $('.tabrow li').removeClass('selected');
     $('li#'+ id).addClass('selected');
-
-
-    // var input = document.getElementById('best_in_place_objective_104_description');
-
-    // input.onkeydown = function() {
-    //     var key = event.keyCode || event.charCode;
-    //     var content = this.text;
-
-    //     if( key == 8 || key == 46 )
-    //         alert(content);
-    // };
   });
 
 </script>

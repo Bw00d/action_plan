@@ -49,11 +49,23 @@
       <div class="row">
         <div id="control-objectives" class="col-xs-12">
           <span class="small">4. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
-          <ul>
-            <% @plan.objectives.each do |o| %>
-            <li><%= o.description %></li>
-            <% end %>
-          </ul>
+            <ul id="objectives">
+              <% @plan.objectives.each do |o| %>
+              <li><%= o.description %></li>
+              <% end %>
+            </ul>
+            <div id="objective-form" class="form-group">
+              <%= form_for @objective, remote: true do |f| %>
+                <%= f.hidden_field :plan_id, value: @plan.id %>
+                <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
+                <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
+                <%= link_to "CANCEL", 'javascript:;', id: 'cancel-objective-form', class: 'btn btn-default tiny' %>
+              <% end %>
+            </div>
+              <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
+              <%= link_to "javascript:;" do %>
+                <%= image_tag 'plus.png', class: "small-icon", id: 'new-objective' %>
+              <% end %>
         </div>
       </div>
       <div class="row">

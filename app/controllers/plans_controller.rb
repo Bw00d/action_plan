@@ -100,6 +100,7 @@ class PlansController < ApplicationController
   def incident_objectives
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
+    @objective = Objective.new
   end
 
   def objectives_to_pdf
