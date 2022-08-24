@@ -48,6 +48,7 @@
                 <%= f.hidden_field :plan_id, value: @plan.id %>
                 <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
                 <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
+                <%= link_to "CANCEL", 'javascript:;', id: 'cancel-objective-form', class: 'btn btn-default tiny' %>
               <% end %>
             </div>
               <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
@@ -70,6 +71,7 @@
                 <%= f.hidden_field :plan_id, value: @plan.id %>
                 <%= f.text_field :description, placeholder: "Add activity", class: 'form-control' %></br>
                 <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-activity-button" %>
+                <%= link_to "CANCEL", 'javascript:;', id: 'cancel-activity-form', class: 'btn btn-default tiny' %>
               <% end %>
             </div>
               <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-activity' %>

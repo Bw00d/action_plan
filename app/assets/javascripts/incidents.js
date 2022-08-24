@@ -15,10 +15,22 @@ $(document).on("turbolinks:load", function() {
     $("#objective-form").show();
   });
 
+  $("#cancel-objective-form").click(function () {
+    $("#new-objective").show();
+    $("#objective-form").hide();
+  });
+
+
+
   // Incident Activites
   $("#new-activity").click(function () {
     $("#new-activity").hide();
     $("#activity-form").show();
+  });
+
+  $("#cancel-activity-form").click(function () {
+    $("#new-activity").show();
+    $("#activity-form").hide();
   });
 
   // Incident Resources
