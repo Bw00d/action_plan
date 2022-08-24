@@ -6,7 +6,8 @@ class Team < ApplicationRecord
   def update_204
     id = self.id.to_s
     self.plan.assignments.each do |a|
-      if a.ops_personnel_ids.include?(id)
+
+      if !a.ops_personnel_ids.nil? && a.ops_personnel_ids.include?(id)
         a.update_resources(id)
       end
     end

@@ -46,12 +46,16 @@
           <%= form_for @assignment do |f| %>
             <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-aqua tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-ops-form', class: 'btn btn-default tiny' %></div>
           <ul>
-            <%= javascript_tag "var opsIds = #{@assignment.ops_personnel_ids.to_json}" %>
+            <% unless @assignment.plan.operations.empty? %>
+              <%= javascript_tag "var opsIds = #{@assignment.ops_personnel_ids.to_json}" %>
 
-            <% @plan.operations.order(:position).each do |r| %>
-              <li class=""><%= f.check_box :ops_personnel_ids, {multiple: true}, r.id, nil %>
-              
-                      <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.resource_name %></li>
+              <% @plan.operations.order(:position).each do |r| %>
+                <li class=""><%= f.check_box :ops_personnel_ids, {multiple: true}, r.id, nil %>
+                
+                        <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.resource_name %></li>
+              <% end %>
+            <% else %>
+              Start by adding Operations Overhead to the <%= link_to "ICS 203", "../../#{@plan.id}/203" %>. 
             <% end %>
           </ul>
            
@@ -98,14 +102,14 @@
             <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-aqua tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-resource-assignments-form', class: 'btn btn-default tiny' %></div>
           <ul>
             <%= javascript_tag "var resourceIds = #{@assignment.resource_ids.to_json}" %>
-            <% unless  @incident.resources.empty? %>
+            <% if  !@incident.resources.empty? %>
               <% @incident.resources.order(:position).each do |r| %>
                 <li class="assigned-204-resources"><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
                 
                         <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.name %></li>
               <% end %>
               <% else %>
-              <li>There are no resources assigned to this incident</li>
+              <li>There are no resources assigned to this incident. Add resources to the <%= link_to "ICS 211", incident_resources_path(@incident) %>.</li>
               <% end %>
           </ul>
            
