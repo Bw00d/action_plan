@@ -311,6 +311,8 @@ a.delete-objective:hover {
     border-top: 1px solid black;
     height: 143px;
     overflow: hidden;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
   }
   #attachments {
     overflow: hidden;
@@ -326,7 +328,7 @@ a.delete-objective:hover {
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
-    /*border-bottom: 1px solid black;*/
+    border-bottom: 1px solid black;
   }
  
 }

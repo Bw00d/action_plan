@@ -27896,10 +27896,22 @@ $(document).on("turbolinks:load", function() {
     $("#objective-form").show();
   });
 
+  $("#cancel-objective-form").click(function () {
+    $("#new-objective").show();
+    $("#objective-form").hide();
+  });
+
+
+
   // Incident Activites
   $("#new-activity").click(function () {
     $("#new-activity").hide();
     $("#activity-form").show();
+  });
+
+  $("#cancel-activity-form").click(function () {
+    $("#new-activity").show();
+    $("#activity-form").hide();
   });
 
   // Incident Resources
@@ -27936,6 +27948,8 @@ $(document).on("turbolinks:load", function() {
           $('#' + $(this).attr('name')).fadeIn(); // Show content for the current tab
         }
     });
+
+    $('#plans-index').last('li').addClass("selected");
 
     $(".tabrow li").click(function(){
       $(".tabrow li").removeClass('selected');
@@ -28379,6 +28393,4 @@ $(document).on("turbolinks:load", function() {
 
 
 
-
-import "@fortawesome/fontawesome-free/js/all";
-import "@fortawesome/fontawesome-free/css/all";
+;

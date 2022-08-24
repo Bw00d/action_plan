@@ -2,6 +2,7 @@
 <div id="incident-objectives">
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
+
       <div class="row">
         <div class="plan-panel-head">
           <ul class="tabrow">
@@ -18,8 +19,7 @@
           </div>
         <div class="masking-tape"></div>
       </div>
-<div class="row">
-      <div id="print-container">
+
 
       <div class="row">
         <div class="col-xs-12 title-row bl top-row">
@@ -51,9 +51,14 @@
           <span class="small">4. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
             <ul id="objectives">
               <% @plan.objectives.each do |o| %>
-              <li><%= o.description %></li>
+                <li><%= o.description %></li>
               <% end %>
             </ul>
+              <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
+
+              <%= link_to "javascript:;" do %>
+                <%= image_tag 'plus.png', class: "small-icon", id: 'new-objective' %>
+              <% end %>
             <div id="objective-form" class="form-group">
               <%= form_for @objective, remote: true do |f| %>
                 <%= f.hidden_field :plan_id, value: @plan.id %>
@@ -62,10 +67,6 @@
                 <%= link_to "CANCEL", 'javascript:;', id: 'cancel-objective-form', class: 'btn btn-default tiny' %>
               <% end %>
             </div>
-              <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
-              <%= link_to "javascript:;" do %>
-                <%= image_tag 'plus.png', class: "small-icon", id: 'new-objective' %>
-              <% end %>
         </div>
       </div>
       <div class="row">
@@ -117,9 +118,7 @@
             </div>
         </div>
       </div>
-</div>
-    </div>
-    <div class="print-button"><%= link_to "PRINT", "../#{@plan.id}/202-pdf.pdf", class: "btn btn-success tiny", target: :_blank %></div>
-    </div>
+      <div class="print-button"><%= link_to "PRINT", "../#{@plan.id}/202-pdf.pdf", class: "btn btn-success tiny", target: :_blank %></div>
+      </div>
   </div>
 </div>
