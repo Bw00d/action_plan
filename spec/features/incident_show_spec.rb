@@ -10,18 +10,18 @@ describe 'Incident Show', type: :feature, js: true do
     click_link incident.name
      }
 
-  # it 'should have the right title' do
-  #   expect(page).to have_title ("Action Plan | #{incident.name}")
-  # end
+  it 'should have the right title' do
+    expect(page).to have_title ("Action Plan | #{incident.name}")
+  end
 
-  # it 'should have the right links' do
-  #   expect(page).to have_link ('Action Plan')
-  #   expect(page).to have_link ('Back')
-  # end
+  it 'should have the right links' do
+    expect(page).to have_link ('Action Plan')
+    expect(page).to have_link ('Back')
+  end
 
-  # it 'should display the incident name and type' do
-  #   expect(page).to have_text ("#{incident.name} – #{incident.incident_type}")
-  # end
+  it 'should display the incident name and type' do
+    expect(page).to have_text ("#{incident.name} – #{incident.incident_type}")
+  end
 
   it 'should display a share link' do
     expect(page).to have_link 'Invite'
