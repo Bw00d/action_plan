@@ -77,7 +77,10 @@ $aqua: #07c5ff;
   font-size: 2.5em;
   color: #B4B4B4;
 }
-.expanded { border-bottom: none !important; }
+.expanded { 
+  border-bottom: none !important; 
+}
+
 .plan-row {
   z-index: 2;
   overflow: hidden;
@@ -283,7 +286,7 @@ a.delete-objective:hover {
   position: relative;
   overflow: hidden;
   height: 1070px !important;
-  width: 740px
+  width: 740px;
 
 }
 #incident-objectives {

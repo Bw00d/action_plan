@@ -5,11 +5,13 @@ class Resource < ApplicationRecord
   scope :crew, -> { where(category: 'CREW') }
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
   scope :assigned, -> { where(release_date: nil)}
-  before_save :format_release_date
+  # before_save :format_release_date
+  has_one :demob
+  after_create :create_demob
 
   def format_release_date
     if self.release_date?
-      date = Date.strptime(str, '%m/%d/%Y')
+      date = Date.strptime(self.release_date, '%m/%d/%Y')
       return date.strftime('%Y-%m-%d')
     end
   end
@@ -52,6 +54,14 @@ class Resource < ApplicationRecord
 
   def released?
     return true if self.release_date
+  end
+
+  def create_demob
+    Demob.create!(resource_id: self.id)
+  end
+
+  def demob
+    Demob.where(resource_id: self.id).first
   end
 
 end

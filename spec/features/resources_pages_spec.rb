@@ -35,18 +35,15 @@ describe 'Resources Page', type: :feature  do
       it { should have_text 'New Resource'}
     end
 
-    describe 'When filing in form it should create a new resource' do
-      before do 
+    describe 'When filing in form it should create a new resource' do 
         find("#new-resource").click 
-        fill_in 'RESOURCE NAME', with: 'Jim Dandy'
+        fill_in '#resource_name', with: 'Jim Dandy'
         select 'OVERHEAD', from: '#resource_category'
         fill_in "RESOURCE KIND/TYPE", with: 'SITL'
         fill_in "CHECKIN DATE", with: Date.today
         fill_in "FIRST WORK DAY", with: Date.today
         fill_in "ASSIGNMENT LENGTH", with: 14
-        click_button "Submit"
-      end
-      expect(incident.resources.count).to equal 1
+      it { should have_text "Jim Dandy" }
     end
   end
 

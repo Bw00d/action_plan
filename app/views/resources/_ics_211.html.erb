@@ -18,7 +18,7 @@
           <th scope="col">FWD</th>
           <th scope="col">Length</th>
           <th scope="col">LWD</th>
-          <th scope="col">Released</th>
+          <th scope="col">Release</th>
         </tr>
       </thead>
       <tbody id="incident-resources">
@@ -42,7 +42,9 @@
             <% else %>
             <td></td>
             <% end %>
-            <td class="lg-bip-input"><%= best_in_place r, :release_date, display_as: :formatted_release_date %></td>
+            <!-- <td class="lg-bip-input"><%#= best_in_place r, :release_date, display_as: :formatted_release_date %></td> -->
+            <td><%#= link_to "DMB", "../resources/#{r.id}/demobs/#{r.demob.id}", class: "demob-button btn tiny btn-dark"  %></td>
+            <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark"  %></td>
           </tr>
           <% end %>
         <% end %>

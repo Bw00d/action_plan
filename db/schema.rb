@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_12_154959) do
+ActiveRecord::Schema.define(version: 2022_08_26_171531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,34 @@ ActiveRecord::Schema.define(version: 2022_08_12_154959) do
     t.integer "plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "demobs", force: :cascade do |t|
+    t.integer "resource_id"
+    t.text "remarks"
+    t.date "edd"
+    t.string "edt"
+    t.string "destination"
+    t.string "travel_method"
+    t.boolean "manifest"
+    t.boolean "manifest_number"
+    t.boolean "ron"
+    t.date "actual_release_date"
+    t.string "actual_release_time"
+    t.string "eta"
+    t.string "contact_enroute"
+    t.boolean "agency_notified"
+    t.boolean "reassigned"
+    t.string "new_incident"
+    t.string "new_incident_number"
+    t.string "new_order_number"
+    t.string "prepared_by"
+    t.string "pb_position"
+    t.date "date"
+    t.string "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "new_location"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -241,6 +269,17 @@ ActiveRecord::Schema.define(version: 2022_08_12_154959) do
     t.string "position"
     t.string "staff"
     t.integer "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "units", force: :cascade do |t|
+    t.boolean "selected"
+    t.string "manager"
+    t.string "remarks"
+    t.string "name"
+    t.integer "demob_id"
+    t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

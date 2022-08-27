@@ -15,4 +15,8 @@ module ResourcesHelper
     resources
   end
 
+  def release_resource(resource)
+    resource.update_attribute(release_date: resource.demob.actual_release_date)
+  end
+
 end

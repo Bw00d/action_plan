@@ -5,4 +5,4 @@ $('#resource-form').hide();
 $("#new-resource").show();
 
 
-$("#incident-resources").append('<tr><td><%= @resource.cat %><%= @resource.order_number %></td><td><%= @resource.position %></td><td><%=  @resource.name %></td><td><%=  @resource.leader %></td><td></td><td><%= @resource.agency %></td><td><%= @resource.fwd.strftime("%m/%d") %></td><td><%= @resource.assignment_length %></td><td><%=  @resource.last_work_day.strftime("%m/%d") %></td><td></td></tr>')
+$("#incident-resources").append('<tr><td><%= @resource.cat %><%= @resource.order_number %></td><td><%= @resource.position %></td><td><%=  @resource.name %></td><td><%=  @resource.leader %></td><td></td><td><%= @resource.agency %></td><td><%= @resource.fwd.strftime("%m/%d") %></td><td><%= @resource.assignment_length %></td><td><%=  @resource.last_work_day.strftime("%m/%d") %></td><td><%= link_to "DMB", incident_resource_demobs_path(@resource) %></td></tr>')

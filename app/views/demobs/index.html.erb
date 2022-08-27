@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Demobs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Remarks</th>
+      <th>Edd</th>
+      <th>Edt</th>
+      <th>Destination</th>
+      <th>Travel method</th>
+      <th>Manifest</th>
+      <th>Manifest number</th>
+      <th>Ron</th>
+      <th>Actual release date</th>
+      <th>Actual release time</th>
+      <th>Eta</th>
+      <th>Contact enroute</th>
+      <th>Agency notified</th>
+      <th>Reassigned</th>
+      <th>New incident</th>
+      <th>New incident number</th>
+      <th>New order number</th>
+      <th>Prepared by</th>
+      <th>Pb position</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @demobs.each do |demob| %>
+      <tr>
+        <td><%= demob.resource_id %></td>
+        <td><%= demob.remarks %></td>
+        <td><%= demob.edd %></td>
+        <td><%= demob.edt %></td>
+        <td><%= demob.destination %></td>
+        <td><%= demob.travel_method %></td>
+        <td><%= demob.manifest %></td>
+        <td><%= demob.manifest_number %></td>
+        <td><%= demob.ron %></td>
+        <td><%= demob.actual_release_date %></td>
+        <td><%= demob.actual_release_time %></td>
+        <td><%= demob.eta %></td>
+        <td><%= demob.contact_enroute %></td>
+        <td><%= demob.agency_notified %></td>
+        <td><%= demob.reassigned %></td>
+        <td><%= demob.new_incident %></td>
+        <td><%= demob.new_incident_number %></td>
+        <td><%= demob.new_order_number %></td>
+        <td><%= demob.prepared_by %></td>
+        <td><%= demob.pb_position %></td>
+        <td><%= demob.date %></td>
+        <td><%= demob.time %></td>
+        <td><%= link_to 'Show', demob %></td>
+        <td><%= link_to 'Edit', edit_demob_path(demob) %></td>
+        <td><%= link_to 'Destroy', demob, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Demob', new_demob_path %>

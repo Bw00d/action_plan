@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :units
+  resources :demobs
   resources :posts
   resources :blocks
   resources :covers
@@ -27,7 +29,9 @@ Rails.application.routes.draw do
 
   resources :incidents do
     resources :posts
-    resources :resources
+    resources :resources do
+      resources :demobs
+    end
     resources :plans do
       resources :assignments
       resources :commo_plans

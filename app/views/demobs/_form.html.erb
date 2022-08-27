@@ -1,0 +1,127 @@
+<%= form_with(model: demob, local: true) do |form| %>
+  <% if demob.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(demob.errors.count, "error") %> prohibited this demob from being saved:</h2>
+
+      <ul>
+      <% demob.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :resource_id %>
+    <%= form.number_field :resource_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :remarks %>
+    <%= form.text_area :remarks %>
+  </div>
+
+  <div class="field">
+    <%= form.label :edd %>
+    <%= form.date_select :edd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :edt %>
+    <%= form.text_field :edt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :destination %>
+    <%= form.text_field :destination %>
+  </div>
+
+  <div class="field">
+    <%= form.label :travel_method %>
+    <%= form.text_field :travel_method %>
+  </div>
+
+  <div class="field">
+    <%= form.label :manifest %>
+    <%= form.check_box :manifest %>
+  </div>
+
+  <div class="field">
+    <%= form.label :manifest_number %>
+    <%= form.check_box :manifest_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ron %>
+    <%= form.check_box :ron %>
+  </div>
+
+  <div class="field">
+    <%= form.label :actual_release_date %>
+    <%= form.date_select :actual_release_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :actual_release_time %>
+    <%= form.text_field :actual_release_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :eta %>
+    <%= form.text_field :eta %>
+  </div>
+
+  <div class="field">
+    <%= form.label :contact_enroute %>
+    <%= form.text_field :contact_enroute %>
+  </div>
+
+  <div class="field">
+    <%= form.label :agency_notified %>
+    <%= form.check_box :agency_notified %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reassigned %>
+    <%= form.check_box :reassigned %>
+  </div>
+
+  <div class="field">
+    <%= form.label :new_incident %>
+    <%= form.text_field :new_incident %>
+  </div>
+
+  <div class="field">
+    <%= form.label :new_incident_number %>
+    <%= form.text_field :new_incident_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :new_order_number %>
+    <%= form.text_field :new_order_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prepared_by %>
+    <%= form.text_field :prepared_by %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pb_position %>
+    <%= form.text_field :pb_position %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time %>
+    <%= form.text_field :time %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

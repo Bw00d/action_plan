@@ -1,0 +1,223 @@
+<%= content_for :title, "Demob"  %>
+
+<div id="demob-sheet">
+  <div class="container center-vh-containe">
+    <div class="col-xs-12 col-lg-8 center-block ">
+
+     <div class="row center-vh-container">
+       <h4>DEMOBILIZATION CHECK-OUT (ICS 221)</h4>
+     </div>
+
+      
+      
+      <div id="form-container" class="row">
+        <div class="row">
+          <div class="col-xs-12 bb">
+            <div class="col-xs-3 "><span class="small">1. INCIDENT NAME  </span></div>
+            <div class="col-xs-3"><%= @incident.name %></div>
+            <div class="col-xs-3 bl"><span class="small">2. INCIDENT NUMBER  </span></div>
+            <div class="col-xs-3"> <%= @incident.number %></div>
+          </div>  
+        </div>
+
+        <div class="row bb">
+          <div class="col-xs-4 br"><span class="small">3. PLANNED RELEASE DATE/TIME</span></div>
+          <div class="col-xs-4 br"><span class="small">4. RESOURCE RELEASED</span></div>
+          <div class="col-xs-4"><span class="small">5. ORDER REQUEST NUMBER</span> </div>
+       
+          <div class="col-xs-4 br"><span class="small sm-margin-right">DATE</span><%= best_in_place @demob, :actual_release_date, :as => :input  %> <span class="small sm-margin-left sm-margin-right"> TIME</span> <%= best_in_place @demob, :actual_release_time, :as => :input  %></div>
+          <div class="col-xs-4 br"><span class="small"></span><%= @resource.name  %></div>
+          <div class="col-xs-4"><span class="small"></span><%= @resource.cat  %><%= @resource.order_number  %></div>
+        </div>
+         
+        <div class="row">
+          <div class="col-xs-12 bb"><span class="small">7. RESOURCE OR PERSONNEL</span> 
+
+            <P>You and your resources are in the process of being released. Resources are not released until the checked boxes
+                below have been signed off by the appropriate overhead and the Demobilization Unit Leader (or Planning Section
+                representative).
+            </P>
+            <H6>LOGISTICS SECTION</H6>
+
+            <div>
+              <table id="logs-table" class="table custom-table">
+                <thead>
+                  <tr >
+                    <th class="head-row" width="4%" scope="col"></th>
+                    <th class="head-row bl" width="20%" scope="col">Unit Manager</th>
+                    <th class="head-row bl" width="20%" scope="col">Remarks</th>
+                    <th class="head-row bl" width="20%" scope="col">Name</th>
+                    <th class="head-row bl" width="20%" scope="col">Signature</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @logistics_units.each do |u| %>
+                    <tr>
+                      <td><span class="sm-padding-left"><%= check_box_tag 'selected' %></span></td>
+                      <td class="bl"><strong><%= best_in_place u, :manager, :as => :input  %></strong></td>
+                      <td class="bl"><%= best_in_place u, :remarks, :as => :input %></td>
+                      <td class="bl"><%= best_in_place u, :name, :as => :input %></td>
+                      <td class="bl"></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+
+            <H6>FINANCE SECTION</H6>
+
+            <div>
+              <table id="finance-table" class="table custom-table">
+                <thead>
+                  <tr >
+                    <th class="head-row" width="4%" scope="col"></th>
+                    <th class="head-row bl" width="20%" scope="col">Unit Manager</th>
+                    <th class="head-row bl" width="20%" scope="col">Remarks</th>
+                    <th class="head-row bl" width="20%" scope="col">Name</th>
+                    <th class="head-row bl" width="20%" scope="col">Signature</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @finance_units.each do |u| %>
+                    <tr>
+                      <td><span class="sm-padding-left"><%= check_box_tag 'selected' %></span></td>
+                      <td class="bl"><strong><%= best_in_place u, :manager, :as => :input  %></strong></td>
+                      <td class="bl"><%= best_in_place u, :remarks, :as => :input %></td>
+                      <td class="bl"><%= best_in_place u, :name, :as => :input %></td>
+                      <td class="bl"></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+
+            <H6>OTHER SECTIONS/STAFF</H6>
+
+            <div>
+              <table id="other-table" class="table custom-table">
+                <thead>
+                  <tr >
+                    <th class="head-row" width="4%" scope="col"></th>
+                    <th class="head-row bl" width="20%" scope="col">Unit Manager</th>
+                    <th class="head-row bl" width="20%" scope="col">Remarks</th>
+                    <th class="head-row bl" width="20%" scope="col">Name</th>
+                    <th class="head-row bl" width="20%" scope="col">Signature</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @other_units.each do |u| %>
+                    <tr>
+                      <td><span class="sm-padding-left"><%= check_box_tag 'selected' %></span></td>
+                      <td class="bl"><strong><%= best_in_place u, :manager, :as => :input  %></strong></td>
+                      <td class="bl"><%= best_in_place u, :remarks, :as => :input %></td>
+                      <td class="bl"><%= best_in_place u, :name, :as => :input %></td>
+                      <td class="bl"></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+
+            <H6>PLANS SECTION</H6>
+
+            <div>
+              <table id="plans-table" class="table custom-table">
+                <thead>
+                  <tr >
+                    <th class="head-row" width="4%" scope="col"></th>
+                    <th class="head-row bl" width="20%" scope="col">Unit Manager</th>
+                    <th class="head-row bl" width="20%" scope="col">Remarks</th>
+                    <th class="head-row bl" width="20%" scope="col">Name</th>
+                    <th class="head-row bl" width="20%" scope="col">Signature</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @plans_units.each do |u| %>
+                    <tr>
+                      <td><span class="sm-padding-left"><%= check_box_tag 'selected' %></span></td>
+                      <td class="bl"><strong><%= best_in_place u, :manager, :as => :input  %></strong></td>
+                      <td class="bl"><%= best_in_place u, :remarks, :as => :input %></td>
+                      <td class="bl"><%= best_in_place u, :name, :as => :input %></td>
+                      <td class="bl"></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+           
+        <div class="row bb">
+         <div id="demob-remarks" class="col-xs-12"><span class="small">8. REMARKS</span>
+          <div id="remarks-content">
+            <%= best_in_place @demob, :remarks, :as => :textarea, :display_with => :simple_format, 
+                                      :html_attrs => { :style => 'width:100%; height:50px;' },
+                                      :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', 
+                                      :cancel_button_class => "btn btn-default sm-margin-left tiny" %>
+          </div>
+         </div>
+        </div>
+         
+        <div id="demob-transportation" class="row bb sm-padding-bottom">
+          <div class="col-xs-12">
+            <div class="col-xs-7"> <span id="transportation-header">9. TRANSPORTATION INFORMATION</span>
+            </div>
+            <div class="col-xs-5"> <span class="md-margin-right">Room Overnight </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
+            </div>
+
+            <div class="col-xs-7"> Estimated Time of Departure <%= best_in_place @demob, :edt, as: :input %>
+            </div>
+            <div class="col-xs-5"> <span class="md-margin-right">Actual Release Date: <%= best_in_place @demob, :actual_release_date, :as => :input %></span>  Time <%= best_in_place @demob, :actual_release_time, :as => :input %>
+            </div>
+
+            <div class="col-xs-7"> Estimated Time of Departure <%= best_in_place @demob, :destination, as: :input  %>
+            </div>
+            <div class="col-xs-5"> Estimated Time of Arrival <%= best_in_place @demob, :eta, :as => :input %>
+            </div>
+
+            <div class="col-xs-7"> Travel Method <%= best_in_place @demob, :travel_method, as: :input  %>
+            </div>
+            <div class="col-xs-5"> Contact While Travelling <%= best_in_place @demob, :contact_enroute, :as => :input %>
+            </div>
+
+            <div class="col-xs-7"> <span class="md-margin-right">Manifest </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <span class="md-margin-right"><%= check_box_tag " Yes"  %> Yes</span> Number <%= best_in_place @demob, :manifest_number, as: :input %>
+            </div>
+            <div class="col-xs-5"> Area/Agency/Region Notified <%= best_in_place @demob, :agency_notified, :as => :input %>
+            </div>
+          </div>
+        </div> 
+
+        <div class="row bb sm-padding-bottom">
+          <div id="reassignment-info" class="col-xs-12">
+            <div><span id="reassignment-header" class="sm-margin-right">10. REASSIGNMENT INFORMATION</span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
+            </div>
+            <div class="col-xs-6"><span class="md-margin-right">Incident Name</span><%= best_in_place @demob, :new_incident, as: :input %>
+            </div>
+            <div class="col-xs-6"><span class="md-margin-right">Incident Number</span><%= best_in_place @demob, :new_incident_number, as: :input %>
+            </div>
+
+            <div class="col-xs-6"><span class="md-margin-right">Location</span><%= best_in_place @demob, :new_location, as: :input %>
+            </div>
+            <div class="col-xs-6"><span class="md-margin-right">Order Request Number</span><%= best_in_place @demob, :new_order_number, as: :input %>
+            </div>
+          </div>
+        </div> 
+
+
+        <div class="row">
+          <div id="prepared-by-row" class="col-xs-12">
+            <div class="col-xs-5"><span id="prepared-by-header">11. PREPARED BY</span> Name <%= best_in_place @demob, :prepared_by, as: :input %></div>
+            <div class="col-xs-4">Position/Title <%= best_in_place @demob, :pb_position, as: :input %></div>
+            <div class="col-xs-3">Signature</div>
+
+            <div class="col-xs-4">ICS-221</div>
+            <div class="col-xs-4">Date <%= best_in_place @demob, :date, as: :input %></div>
+            <div class="col-xs-4">TIME <%= best_in_place @demob, :time, as: :input %></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="print-button"><%= link_to "PRINT", '#', class: "btn btn-success float-left tiny", target: :_blank %></div>
+    </div>
+  </div>
+</div>

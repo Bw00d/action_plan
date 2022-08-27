@@ -1,0 +1,99 @@
+#demob-sheet {
+  #form-container {
+    margin: 0px;
+    padding: 0 10px;
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
+    height: 1070px !important;
+    width: 740px;
+    div {
+      line-height: 1.7em;
+    }
+  }
+  .small {
+    font-weight: 777;
+  }
+  p {
+    font-size: .80em;
+    padding: 0 10px;
+    line-height: 1.7em;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: 777;
+    color: #444;
+  }
+  .units-container{
+    /*border-bottom: 1px solid black;*/
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+}
+.custom-table {
+  margin-bottom: 0;
+  th {
+    font-size: 0.9em;
+    font-weight: 777;
+    padding-top: 0;
+  }
+  thead {
+    border-bottom: 1px solid black;
+  }
+  td {
+    padding: 4px 0 0 3px !important;
+    font-size: 0.7em;
+    border-top: 1px solid black !important;
+  }
+  .head-row {
+    padding-top: 0 !important;
+    border-bottom: 1px solid black !important;
+  }
+}
+#finance-table {
+  tbody tr:last-child {
+      border-bottom: 1px solid black !important;
+    }
+}
+#logs-table {
+  tbody tr:last-child {
+      border-bottom: 1px solid black !important;
+    }
+}
+#other-table {
+  tbody tr:last-child {
+      border-bottom: 1px solid black !important;
+    }
+}
+#demob-remarks {
+  height: 120px;
+  overflow: hidden;
+}
+#demob-transportation {
+  font-size: 0.7em;
+}
+#transportation-header {
+  font-weight: 777;
+  margin-left: -15px;
+}
+#reassignment-header {
+  font-weight: 777;
+}
+#reassignment-info {
+  font-size: 0.7em;
+  overflow: hidden;
+}
+#prepared-by-row {
+  font-size: 0.7em;
+  overflow: hidden;
+}
+#prepared-by-header {
+  font-weight: 777;
+  margin-left: -15px;
+  margin-right: 10px;
+}
+#remarks-content {
+  font-size: 0.9em;
+  overflow: hidden;
+}
