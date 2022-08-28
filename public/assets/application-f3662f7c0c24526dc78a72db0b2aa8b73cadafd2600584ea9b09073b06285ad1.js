@@ -27829,6 +27829,14 @@ $.rails.showConfirmationDialog = function (link) {
         $.rails.confirmed(link);
     });
 };
+$(document).on("turbolinks:load", function() {
+  $("#demob-form :input").change(function() {
+    $('#print-demob-button').hide();
+    $('#demob-form-button').show();
+  });
+});// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
 // This file contains JS code which is used across the entire Rails application.
 
 $(document).on("turbolinks:load", function() {
@@ -27948,6 +27956,8 @@ $(document).on("turbolinks:load", function() {
           $('#' + $(this).attr('name')).fadeIn(); // Show content for the current tab
         }
     });
+
+    $('#plans-index').last('li').addClass("selected");
 
     $(".tabrow li").click(function(){
       $(".tabrow li").removeClass('selected');
@@ -28207,6 +28217,9 @@ $(document).on("turbolinks:load", function() {
       }
     );
 });
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
 /*
  Zen Utils is a small library consisting of utility functions (reusable code)
  written by Bruno Facca.
