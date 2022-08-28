@@ -48,10 +48,10 @@ class DemobsController < ApplicationController
   def update
     respond_to do |format|
       if @demob.update(demob_params)
-        format.html { redirect_to demob_url(@demob), notice: "Demob was successfully updated." }
+        format.html { redirect_to incident_resources_path(@demob.resource.incident) }
         format.json { render :show, status: :ok, location: @demob }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :show, status: :unprocessable_entity }
         format.json { render json: @demob.errors, status: :unprocessable_entity }
       end
     end

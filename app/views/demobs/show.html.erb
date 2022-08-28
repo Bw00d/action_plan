@@ -10,7 +10,7 @@
      <div class="row center-vh-container">
        <h4>DEMOBILIZATION CHECK-OUT (ICS 221)</h4>
      </div>
-      
+      <%= form_for @demob, :html => {id: "demob-form"} do |f| %>
       <div id="form-container" class="row">
         <div class="row">
           <div class="col-xs-12 bb">
@@ -26,7 +26,7 @@
           <div class="col-xs-4 br"><span class="small">4. RESOURCE RELEASED</span></div>
           <div class="col-xs-4"><span class="small">5. ORDER REQUEST NUMBER</span> </div>
        
-          <div class="col-xs-4 br"><span class="small sm-margin-right">DATE</span><%= best_in_place @demob, :edd, :as => :input, display_as: :formatted_release_date  %> <span class="small sm-margin-left sm-margin-right"> TIME</span><%= best_in_place @demob, :edt, :as => :input  %></div>
+          <div class="col-xs-4 br"><span class="small sm-margin-right">DATE</span><%= f.text_field :edd, size: "7"  %> <span class="small sm-margin-left sm-margin-right"> TIME</span><%= f.text_field :edt, size: "6"  %></div>
           <div class="col-xs-4 center-text br"><span class="small"></span><%= @resource.name  %></div>
           <div class="col-xs-4 center-text"><span class="small"></span><%= @resource.cat  %><%= @resource.order_number  %></div>
         </div>
@@ -151,39 +151,37 @@
         <div class="row bb">
          <div id="demob-remarks" class="col-xs-12"><span class="small">8. REMARKS</span>
           <div id="remarks-content">
-            <%= best_in_place @demob, :remarks, :as => :textarea, :display_with => :simple_format, :place_holder => "(ADD CONTENT)", 
-                                      :html_attrs => { :style => 'width:100%; height:50px;' },
-                                      :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', 
-                                      :cancel_button_class => "btn btn-default sm-margin-left tiny" %>
+            <%= f.text_area :remarks, :display_with => :simple_format, :place_holder => "(ADD CONTENT)", cols: '105', rows: '3'
+                                       %>
           </div>
          </div>
         </div>
          
         <div id="demob-transportation" class="row bb sm-padding-bottom">
           <div class="col-xs-12">
-            <div class="col-xs-7"> <span id="transportation-header">9. TRANSPORTATION INFORMATION</span>
+            <div class="col-xs-6"> <span id="transportation-header">9. TRANSPORTATION INFORMATION</span>
             </div>
-            <div class="col-xs-5"> <span class="md-margin-right">Room Overnight </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
-            </div>
-
-            <div class="col-xs-7"> Estimated Time of Departure <%= best_in_place @demob, :edt, as: :input, :place_holder => "(ESTIMATED DEPARTURE TIME)"  %>
-            </div>
-            <div class="col-xs-5"> <span class="md-margin-right">Actual Release Date: <%= best_in_place @demob, :actual_release_date, :place_holder => "(DATE)", :as => :input %></span>  Time <%= best_in_place @demob, :actual_release_time, :place_holder => "(TIME)", :as => :input %>
+            <div class="col-xs-6"> <span class="md-margin-right">Room Overnight </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
             </div>
 
-            <div class="col-xs-7"> Destination <%= best_in_place @demob, :destination, as: :input, :place_holder => "(DESTINATION)"  %>
+            <div class="col-xs-6"> Estimated Time of Departure <%= f.text_field :edt, :place_holder => "(ESTIMATED DEPARTURE TIME)"  %>
             </div>
-            <div class="col-xs-5"> Estimated Time of Arrival <%= best_in_place @demob, :eta, :place_holder => "(ETA)", :as => :input %>
-            </div>
-
-            <div class="col-xs-7"> Travel Method <%= best_in_place @demob, :travel_method, as: :input, :place_holder => "(TRAVEL METHOD)"  %>
-            </div>
-            <div class="col-xs-5"> Contact While Travelling <%= best_in_place @demob, :contact_enroute, :place_holder => "(CONTACT PHONE)", :as => :input %>
+            <div class="col-xs-6"> <span class="md-margin-right">Actual Release Date: <%= f.text_field :actual_release_date, :place_holder => "(DATE)", size: '13' %></span>  Time <%= f.text_field :actual_release_time, :place_holder => "(TIME)", size: '13' %>
             </div>
 
-            <div class="col-xs-7"> <span class="md-margin-right">Manifest </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <span class="md-margin-right"><%= check_box_tag " Yes"  %> Yes</span> Number <%= best_in_place @demob, :manifest_number, as: :input, :place_holder => "(MANIFEST NUMBER)"  %>
+            <div class="col-xs-6"> Destination <%= f.text_field :destination, size: '13'  %>
             </div>
-            <div class="col-xs-5"> Area/Agency/Region Notified <%= best_in_place @demob, :agency_notified, :place_holder => "(UNIT NOTIFIED)", :as => :input %>
+            <div class="col-xs-6"> Estimated Time of Arrival <%= f.text_field :eta %>
+            </div>
+
+            <div class="col-xs-6"> Travel Method <%= f.text_field :travel_method  %>
+            </div>
+            <div class="col-xs-6"> Contact While Travelling <%= f.text_field :contact_enroute %>
+            </div>
+
+            <div class="col-xs-6"> <span class="md-margin-right">Manifest </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <span class="md-margin-right"><%= check_box_tag " Yes"  %> Yes</span> Number <%= f.text_field :manifest_number, size: '15'  %>
+            </div>
+            <div class="col-xs-6"> Area/Agency/Region Notified <%= f.text_field :agency_notified %>
             </div>
           </div>
         </div> 
@@ -192,14 +190,14 @@
           <div id="reassignment-info" class="col-xs-12">
             <div><span id="reassignment-header" class="sm-margin-right">10. REASSIGNMENT INFORMATION</span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
             </div>
-            <div class="col-xs-6"><span class="md-margin-right">Incident Name</span><%= best_in_place @demob, :new_incident, as: :input, :place_holder => "(NEW INCIDENT NAME)" %>
+            <div class="col-xs-6"><span class="md-margin-right">Incident Name</span><%= f.text_field :new_incident %>
             </div>
-            <div class="col-xs-6"><span class="md-margin-right">Incident Number</span><%= best_in_place @demob, :new_incident_number, as: :input, :place_holder => "(NEW INCIDENT NUMBER)" %>
+            <div class="col-xs-6"><span class="md-margin-right">Incident Number</span><%= f.text_field :new_incident_number %>
             </div>
 
-            <div class="col-xs-6"><span class="md-margin-right">Location</span><%= best_in_place @demob, :new_location, as: :input, :place_holder => "(NEW INCIDENT LOCATION)" %>
+            <div class="col-xs-6"><span class="md-margin-right">Location</span><%= f.text_field :new_location %>
             </div>
-            <div class="col-xs-6"><span class="md-margin-right">Order Request Number</span><%= best_in_place @demob, :new_order_number, as: :input, :place_holder => "(NEW ORDER NUMBER)" %>
+            <div class="col-xs-6"><span class="md-margin-right">Order Request Number</span><%= f.text_field :new_order_number %>
             </div>
           </div>
         </div> 
@@ -207,18 +205,19 @@
 
         <div class="row">
           <div id="prepared-by-row" class="col-xs-12">
-            <div class="col-xs-5"><span id="prepared-by-header">11. PREPARED BY</span> Name <%= best_in_place @demob, :prepared_by, as: :input, :place_holder => "(ENTER NAME)" %></div>
-            <div class="col-xs-4">Position/Title <%= best_in_place @demob, :pb_position, as: :input, :place_holder => "(ENTER POSITION)" %></div>
+            <div class="col-xs-5"><span id="prepared-by-header">11. PREPARED BY</span> Name <%= f.text_field :prepared_by %></div>
+            <div class="col-xs-4">Position/Title <%= f.text_field:pb_position %></div>
             <div class="col-xs-3">Signature</div>
 
             <div class="col-xs-4">ICS-221</div>
-            <div class="col-xs-4">Date <%= best_in_place @demob, :date, as: :input, :place_holder => "(ENTER DATE)" %></div>
-            <div class="col-xs-4">TIME <%= best_in_place @demob, :time, as: :input, :place_holder => "(ENTER TIME)" %></div>
+            <div class="col-xs-4">Date <%= f.text_field :date %></div>
+            <div class="col-xs-4">TIME <%= f.text_field :time %></div>
           </div>
         </div>
-
       </div>
-      <div class="print-button"><%= link_to "PRINT", '#', class: "btn btn-success float-left tiny", target: :_blank %></div>
+      <div class="print-button"><%= link_to "PRINT", '#', class: "btn btn-success float-left tiny", target: :_blank, id: "print-demob-button" %></div>
+      <div class=""><%= f.submit "Submit", class: "btn btn-success float-left tiny", id: "demob-form-button" %></div>
+        <% end %>
     </div>
   </div>
 </div>

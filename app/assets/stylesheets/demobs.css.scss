@@ -10,6 +10,9 @@
     div {
       line-height: 1.7em;
     }
+    input, textarea {
+      border: none;
+    }
   }
   .small {
     font-weight: 777;
@@ -67,7 +70,7 @@
     }
 }
 #demob-remarks {
-  height: 120px;
+  height: 100px;
   overflow: hidden;
 }
 #demob-transportation {
@@ -96,4 +99,7 @@
 #remarks-content {
   font-size: 0.9em;
   overflow: hidden;
+}
+#demob-form-button {
+  display: none;
 }
