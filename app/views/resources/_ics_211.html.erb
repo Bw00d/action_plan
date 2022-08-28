@@ -42,32 +42,25 @@
             <% else %>
             <td></td>
             <% end %>
-            <!-- <td class="lg-bip-input"><%#= best_in_place r, :release_date, display_as: :formatted_release_date %></td> -->
-            <td><%#= link_to "DMB", "../resources/#{r.id}/demobs/#{r.demob.id}", class: "demob-button btn tiny btn-dark"  %></td>
             <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark"  %></td>
           </tr>
           <% end %>
         <% end %>
-
-      </tbody>
-    </table>
-
-    <% else %>
-    <div class="sm-padding-top md-padding-left">
-      <h4>There are no resources assigned to this incident.</h4>
-    </div>
-  <% end %>
-
-  <div class="panel-foot"></div>
-
-    <table class="table">
-      <thead>
-        <th>Released</th>
-      </thead>
-      <tbody>
+        <tr>
+          <td class="grayed"><strong>RELEASED</strong></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+        </tr>
         <% @resources.each do |r|  %>
           <% if r.released? %>
-        <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
+            <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
             <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
             <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
@@ -84,11 +77,19 @@
             <% else %>
             <td></td>
             <% end %>
-            <td class="lg-bip-input"><%= best_in_place r, :release_date, display_as: :formatted_release_date %></td>
+            <td class="lg-bip-input"><%= link_to r.release_date.strftime('%m/%d'), incident_resource_demob_path(@incident, r, r.demob), 
+                                      class: 'btn tiny btn-info' %></td>
           </tr>
           <% end %>
         <% end %>
       </tbody>
     </table>
+
+    <% else %>
+    <div class="sm-padding-top md-padding-left">
+      <h4>There are no resources assigned to this incident.</h4>
+    </div>
+  <% end %>
+
     <div class="panel-foot"></div>
 </div>
