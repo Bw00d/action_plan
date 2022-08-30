@@ -2,7 +2,7 @@
   "name": "action_plan",
   "private": true,
   "dependencies": {
-    "puppeteer": "^16.1.0",
+    "puppeteer": "^16.2.0",
     "sweetalert2": "^6.6.9"
   },
   "version": "1.0.0",
