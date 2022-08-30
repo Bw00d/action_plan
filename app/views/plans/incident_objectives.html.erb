@@ -8,7 +8,7 @@
           <ul class="tabrow">
             <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
             <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
-            <li class="selected"><%= link_to "202", "#{@plan.id}/202" %></li>
+            <li class="selected"><%= link_to "202", "../#{@plan.id}/202" %></li>
             <li><%= link_to "203", "../#{@plan.id}/203" %></li>
             <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
             <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
@@ -89,20 +89,37 @@
         <div id="attachments" class="col-xs-12">
           <span class="small">7. ATTACHMENTS</span><br>
             <ul class="small col-xs-3">
-              <li><%= check_box_tag("org list", "#") %>  ORGANIZATION LIST</li>
 
-              <li><%= check_box_tag("org list", "#") %>  ASSIGNMENT LIST</li>
-              <li><%= check_box_tag("org list", "#") %>  COMMUNICATION PLAN</li>
+              <% @first_attachments.each do |a| %>
+                <li> 
+                  <%= best_in_place a, :attached, as: :checkbox, collection: {false: raw("&#x2610;"), true: raw("&#x2611;")}, class: "bip-checkbox" %>
+                  <%= best_in_place a, :description, as: :input  %>
+                </li>
+              <% end %>
             </ul>
             <ul class="small col-xs-3">
-              <li><%= check_box_tag("org list", "#") %>  MEDICAL PLAN</li>
-              <li><%= check_box_tag("org list", "#") %>  INCIDENT MAP</li>
-              <li><%= check_box_tag("org list", "#") %>  TRAFFIC PLAN</li>
+              <% @second_attachments.each do |a| %>
+                  <li>
+                    <%= best_in_place a, :attached, as: :checkbox, collection: {false: raw("&#x2610;"), true: raw("&#x2611;")}, class: "bip-checkbox" %>
+                    <%= best_in_place a, :description, as: :input  %>
+                  </li>
+                <% end %>
             </ul>
             <ul class="small col-xs-3">
-              <li><%= check_box_tag("org list", "#") %>  _______________</li>
-              <li><%= check_box_tag("org list", "#") %>  _______________</li>
-              <li><%= check_box_tag("org list", "#") %>  _______________</li>
+              <% @third_attachments.each do |a| %>
+                  <li>
+                    <%= best_in_place a, :attached, as: :checkbox, collection: {false: raw("&#x2610;"), true: raw("&#x2611;")}, class: "bip-checkbox" %>
+                    <%= best_in_place a, :description, as: :input  %>
+                  </li>
+              <% end %>
+            </ul>
+            <ul class="small col-xs-3">
+              <% @fourth_attachments.each do |a| %>
+                  <li>
+                    <%= best_in_place a, :attached, as: :checkbox, collection: {false: raw("&#x2610;"), true: raw("&#x2611;")}, class: "bip-checkbox" %>
+                    <%= best_in_place a, :description, as: :input  %>
+                  </li>
+              <% end %>
             </ul>
         </div>
       </div>

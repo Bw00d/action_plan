@@ -13,10 +13,6 @@
 .style-controls {
   position: absolute;
   left:-25px;
-  /*height: 310px;*/
-
-  /*box-shadow: 0px 1px 1px 1px #cecece;
-  box-sizing: border-box;*/
   display: none;
   padding: 10px;
   color: white;
@@ -53,6 +49,10 @@
   }
   i {
     font-size: 2em;
+  }
+  img {
+    width: 25px;
+    height: 25px;
   }
 }
 #cover {

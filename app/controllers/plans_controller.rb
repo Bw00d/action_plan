@@ -84,7 +84,7 @@ class PlansController < ApplicationController
     @cover = @plan.cover
     @block = Block.new
     if @cover
-      @blocks = @cover.blocks.order(number: :asc)
+      @blocks = @cover.blocks.order(id: :asc)
     end
   end
 
@@ -92,7 +92,7 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
     @cover = @plan.cover
-    @blocks = @cover.blocks.order(number: :asc)
+    @blocks = @cover.blocks.order(id: :asc)
     @block = Block.new
   end
 
@@ -101,11 +101,21 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
     @objective = Objective.new
+    @attachments = @plan.attachments.order(id: :asc)
+    @first_attachments = @attachments[0..2]
+    @second_attachments = @attachments[3..5]
+    @third_attachments = @attachments[6..8]
+    @fourth_attachments = @attachments[9..11]
   end
 
   def objectives_to_pdf
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
+    @attachments = @plan.attachments.order(:id)
+    @first_attachments = @attachments[0..2]
+    @second_attachments = @attachments[3..5]
+    @third_attachments = @attachments[6..8]
+    @fourth_attachments = @attachments[9..11]
   end
 
 

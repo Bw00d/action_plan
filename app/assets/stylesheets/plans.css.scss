@@ -317,16 +317,7 @@ a.delete-objective:hover {
     border-right: 1px solid black;
     border-left: 1px solid black;
   }
-  #attachments {
-    overflow: hidden;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    ul {
-      list-style: none;
-      /*line-height: 2em;*/
-    }
-  }
+  
   .prepared-by-row {
     border-top: 1px solid black;
     border-right: 1px solid black;
@@ -436,4 +427,33 @@ img.medium-icon {
 img#add-freqs-button {
   height: 30px;
   width: 30px;
+}
+
+/* Attachments */
+
+#attachments {
+    overflow: hidden;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    height: 95px;
+    overflow: hidden;
+    ul {
+      list-style: none;
+    }
+    li.attachment {
+      list-style: none;
+      float: left;
+      width: 200px;
+   }
+  }
+
+.checkboxes img {
+  height: 17px !important;
+  width: 17px !important;
+}
+.bip-checkbox {
+  cursor: pointer;
+  font-size: 17px;
+  margin-right: 5px;
 }

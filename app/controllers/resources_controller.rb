@@ -65,7 +65,7 @@ class ResourcesController < ApplicationController
   def destroy
     @resource.destroy
     respond_to do |format|
-      format.html { redirect_to resources_url, notice: 'Resource was successfully destroyed.' }
+      format.html { redirect_to incident_resources_path(@resource.incident) }
       format.json { head :no_content }
     end
   end

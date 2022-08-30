@@ -24,7 +24,12 @@ $(document).on("turbolinks:load", function() {
     $(".tabrow li").click(function(){
       $(".tabrow li").removeClass('selected');
       $(this).addClass('selected');
-    })
+    });
+
+    // Submitting checkboxes
+    $('.objective-checkbox').change(function() {
+        $(this).parents('form:first').submit();
+    });
 
 
   // local storage

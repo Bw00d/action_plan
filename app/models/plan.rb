@@ -9,8 +9,10 @@ class Plan < ApplicationRecord
   validates :user_id, presence: true
   has_many :teams, dependent: :destroy
   has_one :cover
+  has_many :attachments, dependent: :destroy
   validates_uniqueness_of :date, :scope => :incident_id
   after_create :duplicate_plan
+  after_create :add_attachments
   
 
   def duplicate_plan
@@ -61,6 +63,14 @@ class Plan < ApplicationRecord
   def duplicate_safety_message
     if self.incident.plans.last(2).first.safety_message
        SafetyMessage.create( plan_id: self.id, hazards: self.incident.plans.last(2).first.safety_message.hazards)
+    end
+  end
+
+  def add_attachments
+    attachments = ["ORGANIZATION LIST", "ASSIGNMENT LIST", "COMMUNITCATIONS PLAN", "MEDICAL PLAN", "FINANCE MESSAGE","INCIDENT MAP",
+                    "TRAFFIC PLAN", "_______________", "_______________", "_______________", "_______________", "_______________"]
+    attachments.each do |a|
+      Attachment.create!(description: a, plan_id: self.id)
     end
   end
 

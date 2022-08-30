@@ -19,6 +19,7 @@
           <th scope="col">Length</th>
           <th scope="col">LWD</th>
           <th scope="col">Release</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody id="incident-resources">
@@ -43,11 +44,17 @@
             <td></td>
             <% end %>
             <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark"  %></td>
+            <td>
+              <%= link_to r, method: :delete, data: {confirm: 'Are you sure?'} do %>
+                <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
+              <% end %>
+            </td>
           </tr>
           <% end %>
         <% end %>
         <tr>
           <td class="grayed"><strong>RELEASED</strong></td>
+          <td class="grayed"></td>
           <td class="grayed"></td>
           <td class="grayed"></td>
           <td class="grayed"></td>
@@ -79,6 +86,11 @@
             <% end %>
             <td class="lg-bip-input"><%= link_to r.release_date.strftime('%m/%d'), incident_resource_demob_path(@incident, r, r.demob), 
                                       class: 'btn tiny btn-info' %></td>
+            <td>
+              <%= link_to r, method: :delete, data: {confirm: 'Are you sure?'} do %>
+                <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
+              <% end %>
+            </td>
           </tr>
           <% end %>
         <% end %>
