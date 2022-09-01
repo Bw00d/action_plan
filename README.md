@@ -24,10 +24,7 @@ User can create and incident and build a daily plan for the using standard ICS f
 ## TODO
 - Fix checkboxes on 202 to us bip
 - Add upload for cover photo and maps to AWS
-- Add resources
-- Add current and planned actions
 - Add open task tracker or 24-48-72
-- Add ICS 203
 - Install and configure the [Secure Headers
 gem](https://github.com/twitter/secureheaders).
 - Set up CodeClimate with Rubocop, Reek, Brakeman, and ESLint engines.

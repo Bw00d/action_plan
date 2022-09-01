@@ -78,6 +78,7 @@ class DemobsController < ApplicationController
       params.require(:demob).permit(:resource_id, :remarks, :edd, :edt, :destination, :travel_method, 
                                     :manifest, :manifest_number, :ron, :actual_release_date, :actual_release_time, 
                                     :eta, :contact_enroute, :agency_notified, :reassigned, :new_incident, 
-                                    :new_incident_number, :new_order_number, :prepared_by, :pb_position, :date, :time)
+                                    :new_incident_number, :new_order_number, :prepared_by, :pb_position, :date,
+                                    :new_location, :time)
     end
 end

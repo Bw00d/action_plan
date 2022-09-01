@@ -190,14 +190,14 @@
           <div id="reassignment-info" class="col-xs-12">
             <div><span id="reassignment-header" class="sm-margin-right">10. REASSIGNMENT INFORMATION</span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
             </div>
-            <div class="col-xs-6"><span class="md-margin-right">Incident Name</span><%= f.text_field :new_incident %>
+            <div class="col-xs-6"><span class="md-margin-right">Incident Name</span><%= f.text_field :new_incident, class: "strong" %>
             </div>
-            <div class="col-xs-6"><span class="md-margin-right">Incident Number</span><%= f.text_field :new_incident_number %>
+            <div class="col-xs-6"><span class="md-margin-right">Incident Number</span><%= f.text_field :new_incident_number, class: "strong" %>
             </div>
 
-            <div class="col-xs-6"><span class="md-margin-right">Location</span><%= f.text_field :new_location %>
+            <div class="col-xs-6"><span class="md-margin-right">Location</span><%= f.text_field :new_location, class: "strong" %>
             </div>
-            <div class="col-xs-6"><span class="md-margin-right">Order Request Number</span><%= f.text_field :new_order_number %>
+            <div class="col-xs-6"><span class="md-margin-right">Order Request Number</span><%= f.text_field :new_order_number, class: "strong" %>
             </div>
           </div>
         </div> 
