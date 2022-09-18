@@ -3,7 +3,7 @@
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
       <div class="row">
-          <div class="plan-panel-head">
+          <div id="assignment-tabs" class="plan-panel-head">
             <ul class="tabrow">
               <li><%= link_to 'Index', incident_plan_assignments_path(@incident, @plan) %></li>
               <% @assignments.each do |assignment| %>
