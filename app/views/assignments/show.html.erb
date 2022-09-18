@@ -106,7 +106,8 @@
               <% @incident.resources.order(:position).each do |r| %>
                 <li class="assigned-204-resources"><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
                 
-                        <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.name %></li>
+                        <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.name %> <%= f.label :ops_personnel_ids, r.cat %>
+                        <%= f.label :ops_personnel_ids, r.order_number %></li>
               <% end %>
               <% else %>
               <li>There are no resources assigned to this incident. Add resources to the <%= link_to "ICS 211", incident_resources_path(@incident) %>.</li>
