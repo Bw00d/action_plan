@@ -9,7 +9,7 @@ class ResourcesController < ApplicationController
     @incident = Incident.find(params[:incident_id])
     @resource = Resource.new
     @resources = @incident.resources.order(:category, :order_number)
-    @overhead = @resources.assigned
+    @overhead = @resources.overhead
     @equipment = @resources.equipment
     @crews = @resources.crew
     @aircraft = @resources.aircraft

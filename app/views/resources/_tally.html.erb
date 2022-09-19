@@ -48,7 +48,8 @@
         <div class="col-sm-3">
           <h4>Overhead</h4>
           <ul>
-            <% tally_resources(@overhead).each do |a, c| %>
+            <% tally_resources(@overhead.assigned).each do |a, c| %>
+
               <li><%= a %> - <%= c %></li>
             <% end %>
           </ul>
