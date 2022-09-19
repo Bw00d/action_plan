@@ -17890,6 +17890,12 @@ ul#action-buttons li {
   clear: both;
   margin-left: 0;
 }
+
+/* line 283, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.css.scss */
+.tabrow {
+  overflow: auto;
+  white-space: nowrap;
+}
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
 .btn-dark {
   background-color: black;
@@ -18595,46 +18601,60 @@ input.new-commo-item {
 #demob-transportation {
   font-size: 0.7em;
 }
+/* line 78, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+#demob-transportation input {
+  font-weight: 777;
+}
 
-/* line 79, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+/* line 82, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
 #transportation-header {
   font-weight: 777;
   margin-left: -15px;
 }
 
-/* line 83, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+/* line 86, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
 #reassignment-header {
   font-weight: 777;
 }
 
-/* line 86, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+/* line 90, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
 #reassignment-info {
   font-size: 0.7em;
   overflow: hidden;
 }
 
-/* line 90, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+/* line 94, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
 #prepared-by-row {
   font-size: 0.7em;
   overflow: hidden;
 }
 
-/* line 94, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+/* line 98, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
 #prepared-by-header {
   font-weight: 777;
   margin-left: -15px;
   margin-right: 10px;
 }
 
-/* line 99, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+/* line 103, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
 #remarks-content {
   font-size: 0.9em;
   overflow: hidden;
 }
+/* line 106, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+#remarks-content input {
+  width: 100%;
+  min-height: 60px;
+}
 
-/* line 103, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+/* line 111, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
 #demob-form-button {
   display: none;
+}
+
+/* line 114, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/demobs.css.scss */
+.strong {
+  font-weight: 777;
 }
 /* line 35, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/global.scss */
 .page-header {
