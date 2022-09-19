@@ -103,6 +103,10 @@
 #remarks-content {
   font-size: 0.9em;
   overflow: hidden;
+  input {
+    width: 100%;
+    min-height: 60px;
+  }
 }
 #demob-form-button {
   display: none;

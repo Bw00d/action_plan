@@ -151,8 +151,8 @@
         <div class="row bb">
          <div id="demob-remarks" class="col-xs-12"><span class="small">8. REMARKS</span>
           <div id="remarks-content">
-            <%= f.text_area :remarks, :display_with => :simple_format, :place_holder => "(ADD CONTENT)", cols: '105', rows: '3'
-                                       %>
+            <%#= @demob.remarks %>
+            <%= f.text_area :remarks, :display_with => :simple_format, :place_holder => "(ADD CONTENT)", cols: '105', rows: '3' %>
           </div>
          </div>
         </div>
@@ -166,7 +166,7 @@
 
             <div class="col-xs-6"> Estimated Time of Departure <%= f.text_field :edt, :place_holder => "(ESTIMATED DEPARTURE TIME)"  %>
             </div>
-            <div class="col-xs-6"> <span class="md-margin-right">Actual Release Date: <%= f.text_field :actual_release_date, :place_holder => "(DATE)", size: '13' %></span>  Time <%= f.text_field :actual_release_time, :place_holder => "(TIME)", size: '13' %>
+            <div class="col-xs-6"> <span class="md-margin-right yellow">Actual Release Date: <%= f.text_field :actual_release_date, class: 'datepicker', display_as: :formatted_date, :place_holder => "(DATE)", size: '13' %></span>  Time <%= f.text_field :actual_release_time, :place_holder => "(TIME)", size: '13' %>
             </div>
 
             <div class="col-xs-6"> Destination <%= f.text_field :destination, size: '13'  %>
@@ -221,3 +221,7 @@
     </div>
   </div>
 </div>
+
+<%#= best_in_place @demob, :remarks, as: :input, :display_with => :simple_format, :place_holder => "(ADD CONTENT)" %>
+
+
