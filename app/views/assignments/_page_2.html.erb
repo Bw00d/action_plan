@@ -1,0 +1,111 @@
+<p class="new-page"></p>
+<div id="incident-assignments">
+  <div class="container">
+    <div class="col-xs-12 col-lg-8 center-block">
+      <div class="row">
+        <div class="form-row top-row">
+          <div class="col-xs-6 center-h-container form-box">
+            <h4 class="" ><strong>DIVISION ASSIGNMENT LIST</strong></h4>
+          </div>
+          <div class="col-xs-2 form-box">
+            <span class="small">Branch</span>
+
+          </div>
+          <div class="col-xs-4 form-box text-center">
+            <span class="small float-left"> Div/Grp</span>
+            <h5><%= @assignment.designator %></h5>
+            <span class="page-number">page 2 of <%= (@assignment.assigned_resources.count.to_f / 13).ceil  %></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class=" center form-row">
+
+          <div class="col-xs-6 form-box">
+            <span class="small">INCIDENT NAME</span>
+              <span class="lg-padding-left"><%= @incident.name %></span>
+          </div>
+          <div class="col-xs-6 bl form-box">
+             <span class="small">OPERATIONAL PERIOD</span>
+             <span class="lg-padding-left"><%= @assignment.ops_period %></span>
+          </div>
+        </div>
+      </div>
+      
+        
+      <!-- Overhead rows -->
+      <div class="row">
+        <div id="ops-box-container">
+        <% @assignment.operations_resources.each do |o| %>
+          <div class="col-xs-3 ops-box"><%= o.position %>
+          </div>
+          <div class="col-xs-3 ops-box"><%= o.resource_name %>
+          </div>
+        <% end %>
+        <% (6 - @assignment.operations_resources.count).times do %>
+
+          <div class="col-xs-3 ops-box">
+          </div>
+          <div class="col-xs-3 ops-box">
+          </div>
+
+        <% end %>
+        </div>
+      </div>
+      
+      <div id="assign-resources-row" class="row">
+          <%= link_to (fa_icon('user-plus')), "javascript:;",id: "assign-resources-button", class: "resources-button" %>   
+        <div class=" center form-row header-row">
+          RESOURCES ASSIGNED
+        </div>
+      </div>
+      <div class="row">
+        
+        <table id="assigned-resources", class="assigned-resources">
+          <thead>
+            <th class="p35">RESOURCE DESIGNATOR </th>
+            <th class="p40">LEADER</th>
+            <th class="p8"># PERS.</th>
+            <th class="p9">LWD</th>
+            <th class="p8">LOCATION</th>
+          </thead>
+
+          <% @assignment.assigned_resources[13..24].each do |r| %>
+          <tr>
+              <td class="p35 sm-padding-left"><%= r.cat %><%= r.order_number %>  <%= r.position %>  <%= r.name %></td>
+              <td class="p40 sm-padding-left"><%= r.leader %></td>
+              <td class="p8 centered"><%= r.number_personnel %></td>
+              <td class="p9 centered"><%= r.last_work_day.try(:strftime,"%-m/%d") %></td>
+              <td class="p8 centered"></td>
+            </tr>
+          <% end %>
+          <% (13 - @assignment.assigned_resources[13..25].count).times do %>
+            <tr>
+              <td class="p35"></td>
+              <td class="p40"></td>
+              <td class="p8"></td>
+              <td class="p9"></td>
+              <td class="p8"></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    
+      <div class="row">
+        <div id="control-operations" class="center r-b form-box short-rows xs-padding-left">
+          <span class="small">CONTROL OPERATIONS</span><br>
+            <%=  @assignment.control_operations  %>
+        </div>
+        <div class="bl center form-row short-rows xs-padding-left">
+          <span class="small">SPECIAL INSTRUCTIONS</span><br>
+            <%=  @assignment.special_instructions %>
+        </div>
+        <div id="add-freqs-row" class=" center form-row header-row">
+            COMMUNICATIONS SUMMARY
+        </div>
+        <%= render 'commo_plan' %>
+        </br>
+      </div>
+    </div>
+  </div>
+</div>
