@@ -2,11 +2,15 @@
 #cover
 - Update block when padding is changed
 
-#204s
--Set up to handle multiple pages
+
 
 #collaboration
 -Set up associations so multiple users can share incident
 
 #deleting incident
 -Make it more difficult to delete incident 
+
+Completed
+
+#204s
+-Set up to handle multiple pages
