@@ -12,7 +12,12 @@
 #deleting incident
 -Make it more difficult to delete incident 
 
-Completed
 
 #204s
--Set up to handle multiple pages
+-refactor multiple pages
+-gray out resources already assigned to other 204s
+
+#Demob
+-Set up a checkin form that is open to non-users
+-Set up a remote demob form
+-Set up flight request form
