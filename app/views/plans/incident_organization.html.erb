@@ -45,7 +45,7 @@
             <div class="staff-row row">
               <div class="content-box col-xs-6">  
                 <%= best_in_place s, :position, :as => :select, :collection => 
-                        { "1" => "(CHOOSE POSITION)", "2" =>'IC', "3" =>'Deputy IC', "4" =>'SOFR', "5" =>'LOFR', "6" => "PIO" } %>
+                        { "1" => "(CHOOSE POSITION)", "2" =>'IC', "3" =>'Deputy IC', "4" =>'IC Trainee', "5" =>'SOFR', "6" =>'LOFR', "7" => "PIO" } %>
               </div>     
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
                 <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>

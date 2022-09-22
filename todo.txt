@@ -1,3 +1,5 @@
+-Set up email functions
+
 - Add ajax to resource forms
 #cover
 - Update block when padding is changed
