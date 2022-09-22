@@ -33,4 +33,14 @@ class Incident < ApplicationRecord
   def wildfire?
     return true if self.incident_type == "Wildfire"
   end
+
+  def total_resources
+    total = 0
+    self.resources.assigned.each do |r|
+      unless r.number_personnel.nil?
+        total += r.number_personnel
+      end
+    end
+    total
+  end
 end
