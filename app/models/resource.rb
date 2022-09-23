@@ -25,7 +25,7 @@ class Resource < ApplicationRecord
 
   def last_work_day
     if self.fwd && self.assignment_length
-      return self.fwd + self.assignment_length.days
+      return self.fwd + self.assignment_length-1.days 
     else
       return " "
     end

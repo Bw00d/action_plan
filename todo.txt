@@ -4,7 +4,8 @@
 #cover
 - Update block when padding is changed
 
-
+#211
+-Set resource on R&R
 
 #collaboration
 -Set up associations so multiple users can share incident
@@ -21,3 +22,4 @@
 -Set up a checkin form that is open to non-users
 -Set up a remote demob form
 -Set up flight request form
+
