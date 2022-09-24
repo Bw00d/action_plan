@@ -1,22 +1,33 @@
 <%= form_for @resource, remote: true do |f| %>
+<% if @resource.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
+
+      <ul>
+      <% @resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <%= f.hidden_field :incident_id, value: @incident.id %>
   <div class="form-group">
-    <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control' %>
+    <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control', required: true %>
   </div>
 
   <div class="form-group">
     <%= f.select :category, options_for_select([["CREW", "CREW"], ["EQUIPMENT", "EQUIPMENT"],["OVERHEAD", "OVERHEAD"], 
-    ["AIRCRAFT", "AIRCRAFT"]]), :prompt => "SELECT CATEGORY", id: :resource_category, class: 'form-control' %>
+    ["AIRCRAFT", "AIRCRAFT"]]), :prompt => "SELECT CATEGORY", id: :resource_category, class: 'form-control', required: true %>
   </div>
 
   <div class="form-group">
-    <%= f.text_field :position, placeholder: "RESOURCE KIND/TYPE", class: 'form-control' %>
+    <%= f.text_field :position, placeholder: "RESOURCE KIND/TYPE", class: 'form-control', required: true %>
   </div>
 
 
   <div id="order-number-input" class="form-group">
     <span class="order-number-prefix"></span>
-    <%= f.text_field :order_number, placeholder: "ORDER NUMBER", class: 'form-control' %>
+    <%= f.text_field :order_number, placeholder: "ORDER NUMBER", class: 'form-control', required: true %>
   </div>
 
   <div class="form-group">
@@ -24,25 +35,25 @@
     
   </div>
   <div class="form-group">
-    <%= f.text_field :number_personnel, placeholder: "# PERSONNEL", class: 'form-control' %>
+    <%= f.text_field :number_personnel, placeholder: "# PERSONNEL", class: 'form-control', required: true %>
     
   </div>
   <div class="form-group">
-    <%= f.text_field :agency, placeholder: "AGENCY", class: 'form-control' %>
+    <%= f.text_field :agency, placeholder: "AGENCY", class: 'form-control', required: true %>
   </div>
   
   <div class="row">
     <div class="col-md-5">
       <%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
-                             class: "form-control", placeholder: "CHECKIN DATE" %>
+                             class: "form-control", placeholder: "CHECKIN DATE", required: true %>
     </div>  
     <div class="col-md-5 form-group">
       <%= f.text_field :fwd, id: :incident_fwd, :data => {:provide => "datepicker"},
-                             class: "form-control", placeholder: "FIRST WORK DAY" %>
+                             class: "form-control", placeholder: "FIRST WORK DAY", required: true %>
     </div>
     <div class="col-md-2 form-group">
       <%= f.text_field :assignment_length, id: :incident_fwd, 
-                             class: "form-control", placeholder: "ASSIGNMENT LENGTH" %>
+                             class: "form-control", placeholder: "ASSIGNMENT LENGTH", required: true %>
     </div>
   </div>
   <div class="row">

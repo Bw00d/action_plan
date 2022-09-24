@@ -70,6 +70,7 @@ gem "image_processing", ">= 1.2"
 gem 'datejs-rails'
 # for generating pdfs
 gem 'grover'
+gem 'jquery-validation-rails'
 
 group :test do
   gem 'database_cleaner'

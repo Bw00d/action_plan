@@ -24,4 +24,5 @@
 //= require sweetalert2/dist/sweetalert2
 //= require best_in_place
 //= require date/extras
+//= require jquery.validate
 //= require_tree .

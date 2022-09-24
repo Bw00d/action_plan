@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name, id: :resource_name %>
+    <%= form.text_field :name, id: :resource_name, required: true %>
   </div>
 
   <div class="field">
@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :number_personnel %>
-    <%= form.number_field :number_personnel, id: :resource_number_personnel %>
+    <%= form.number_field :number_personnel, id: :resource_number_personnel, required: true %>
   </div>
 
   <div class="field">
@@ -33,28 +33,28 @@
 
   <div class="field">
     <%= form.label :position %>
-    <%= form.text_field :position, id: :resource_position %>
+    <%= form.text_field :position, id: :resource_position, required: true %>
   </div>
 
   <div class="field">
     <%= form.label :agency %>
-    <%= form.text_field :agency, id: :resource_agency %>
+    <%= form.text_field :agency, id: :resource_agency, required: true %>
   </div>
 
   <div class="field">
     <span class="order-number-prefix"></span>
     <%= form.label :order_number %>
-    <%= form.text_field :order_number, id: :resource_order_number %>
+    <%= form.text_field :order_number, id: :resource_order_number, required: true %>
   </div>
 
   <div class="field">
     <%= form.label :checkin_date %>
-    <%= form.date_select :checkin_date, id: :resource_checkin_date %>
+    <%= form.date_select :checkin_date, id: :resource_checkin_date, required: true %>
   </div>
 
   <div class="field">
     <%= form.label :fwd %>
-    <%= form.date_select :fwd, id: :resource_fwd %>
+    <%= form.date_select :fwd, id: :resource_fwd, required: true %>
   </div>
 
   <div class="field">

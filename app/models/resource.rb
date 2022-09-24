@@ -5,6 +5,16 @@ class Resource < ApplicationRecord
   scope :crew, -> { where(category: 'CREW') }
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
   scope :assigned, -> { where(release_date: nil)}
+   validates :name, presence: true
+   validates :position, presence: true
+   validates :agency, presence: true
+   validates :order_number, presence: true
+   validates :number_personnel, presence: true
+   validates :number_personnel, presence: true
+   validates :assignment_length, presence: true
+   validates :category, presence: true
+
+
  
   has_one :demob
   after_create :create_demob
