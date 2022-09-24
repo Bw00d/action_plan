@@ -13,10 +13,9 @@
           <h4>Crews</h4>
           <ul>
             
-            <% @resources.crew.each do |r| %>
-              <% unless r.released? %>
-              <li><%= r.agency %> - <%= r.position %> - <%= r.number_personnel %></li>
-              <% end %>
+            <% tally_assigned_resources(@incident.resources.crew.assigned).each do |r| %>
+                <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %>- <%= r[3] %></li>
+             
             <% end %>
           </ul>
         </div>
@@ -25,7 +24,7 @@
           <h4>Equipment</h4>
           <ul>
             
-            <% tally_equipment(@incident).each do |r| %>
+            <% tally_assigned_resources(@incident.resources.equipment.assigned).each do |r| %>
                 <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %>- <%= r[3] %></li>
              
             <% end %>

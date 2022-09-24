@@ -37,4 +37,21 @@ module ResourcesHelper
     return final
   end
 
+  def tally_assigned_resources(resources)
+    types = resources.pluck(:agency, :position).uniq
+    final = []
+    types.each do |t|
+      count = 0
+      tally = 0
+      resources.pluck(:agency, :position, :number_personnel).each do |r|
+        if t == [r[0], r[1]]
+          count += 1
+          tally += r[2]
+        end
+      end
+        final << [count, t[0], t[1], tally]
+    end
+    return final
+  end
+
 end
