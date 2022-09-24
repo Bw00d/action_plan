@@ -301,3 +301,8 @@ ul#action-buttons {
   left: 3px;
   top: 2px;
 }
+td.no-padding {
+  padding-right: none !important;
+  padding-left: 15px !important;
+  padding-top: 10px !important;
+}

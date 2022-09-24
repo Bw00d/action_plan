@@ -79,6 +79,12 @@ $(document).on("turbolinks:load", function() {
   //   window.location.reload();
   // })
 
+  // submitting the RnR form
+
+  $(".rnr-form-button").on("click", function (){
+    $(this).parents('form:first').submit();
+  });
+
 
   
 });

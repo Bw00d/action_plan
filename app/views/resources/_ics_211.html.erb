@@ -20,11 +20,11 @@
           <th scope="col">LWD</th>
           <th scope="col">Release</th>
           <th scope="col">Delete</th>
+          <th scope="col">R&R</th>
         </tr>
       </thead>
       <tbody id="incident-resources">
-        <% @resources.each do |r|  %>
-          <% unless r.released? %>
+        <% @resources.assigned.each do |r|  %>
         <tr>
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
@@ -44,20 +44,26 @@
             <td></td>
             <% end %>
             <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark"  %></td>
+           
+
             <td>
               <%= link_to r, method: :delete, data: {confirm: 'Are you sure?'} do %>
                 <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
               <% end %>
             </td>
+            <td class="no-padding">
+              <%= form_for r do |f| %>
+                <%= f.check_box :r_and_r, class: 'rnr-form-button', data: { confirm: 'Are you sure?' }  %>
+              <% end %>
+            </td>
           </tr>
-          <!-- <div class="resource-information col-xs-6">
-            <h4><%#= r.position  %>  <%#= r.name  %>  <%#= r.last_work_day.try(:strftime,"%-m/%d") %></h4>
-            <p><%#=  best_in_place r, :comment, :as => :textarea %></p>
-          </div> -->
-          <% end %>
         <% end %>
+
+
+        <!-- Released Resoruces -->
         <tr>
           <td class="grayed"><strong>RELEASED</strong></td>
+          <td class="grayed"></td>
           <td class="grayed"></td>
           <td class="grayed"></td>
           <td class="grayed"></td>
@@ -90,14 +96,68 @@
             <% end %>
             <td class="lg-bip-input"><%= link_to r.release_date.strftime('%m/%d'), incident_resource_demob_path(@incident, r, r.demob), 
                                       class: 'btn tiny btn-info' %></td>
+            
             <td>
               <%= link_to r, method: :delete, data: {confirm: 'Are you sure?'} do %>
                 <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
               <% end %>
             </td>
+            <td >
+            </td></tr>
+          <% end %>
+        <% end %>
+
+
+
+        <!-- R&R Resoruces -->
+        <tr>
+          <td class="grayed"><strong>On R&R</strong></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+          <td class="grayed"></td>
+        </tr>
+        <% @resources.each do |r|  %>
+          <% if r.rnr? %>
+            <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
+            <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
+            <td class="sm-bip-input">
+              <% if r.number_personnel != nil  %> 
+                <%= best_in_place r, :number_personnel, :as => :input %>
+              <% end %>
+                </td>
+            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
+            <% if !r.last_work_day.blank? %>
+              <td><%=  r.last_work_day.strftime("%m/%d") %></td>
+            <% else %>
+            <% end %>
+            <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark"  %></td>
+            <td>
+              <%= link_to r, method: :delete, data: {confirm: 'Are you sure?'} do %>
+                <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
+              <% end %>
+            </td>
+            <td class="no-padding">
+              <%= form_for r do |f| %>
+                <%= f.check_box :r_and_r, class: 'rnr-form-button', data: { confirm: 'Are you sure?' }  %>
+              <% end %>
+            </td>
           </tr>
           <% end %>
         <% end %>
+
+
       </tbody>
     </table>
 

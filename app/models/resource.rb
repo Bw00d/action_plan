@@ -4,7 +4,7 @@ class Resource < ApplicationRecord
   scope :equipment, -> { where(category: 'EQUIPMENT') }
   scope :crew, -> { where(category: 'CREW') }
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
-  scope :assigned, -> { where(release_date: nil)}
+  scope :assigned, -> { where(release_date: nil, r_and_r: false)}
    validates :name, presence: true
    validates :position, presence: true
    validates :agency, presence: true
@@ -58,6 +58,10 @@ class Resource < ApplicationRecord
 
   def released?
     return true if self.release_date
+  end
+
+  def rnr?
+    return true if self.r_and_r
   end
 
   def create_demob

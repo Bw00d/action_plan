@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_28_053112) do
+ActiveRecord::Schema.define(version: 2022_09_24_212948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,6 +259,7 @@ ActiveRecord::Schema.define(version: 2022_08_28_053112) do
     t.text "comment"
     t.date "fwd"
     t.date "release_date"
+    t.boolean "r_and_r", default: false
   end
 
   create_table "safety_messages", force: :cascade do |t|

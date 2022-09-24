@@ -51,7 +51,7 @@ class ResourcesController < ApplicationController
   def update
     respond_to do |format|
       if @resource.update(resource_params)
-        format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { respond_with_bip(@resource) }
       else
         format.html { render :edit }
@@ -80,6 +80,7 @@ class ResourcesController < ApplicationController
     def resource_params
       params.require(:resource).permit(:name, :leader, :number_personnel, :position, :agency, 
                                        :order_number, :lwd, :checkin_date, :incident_id, :category,
-                                       :phone, :email, :comment, :fwd, :assignment_length, :release_date)
+                                       :phone, :email, :comment, :fwd, :assignment_length, :release_date,
+                                       :r_and_r)
     end
 end
