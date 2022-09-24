@@ -25,10 +25,9 @@
           <h4>Equipment</h4>
           <ul>
             
-            <% @resources.equipment.each do |r| %>
-              <% unless r.released? %>
-                <li><%= r.agency %> - <%= r.position %> - <%= r.number_personnel %></li>
-              <% end %>
+            <% tally_equipment(@incident).each do |r| %>
+                <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %>- <%= r[3] %></li>
+             
             <% end %>
           </ul>
         </div>
