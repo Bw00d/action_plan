@@ -10,22 +10,6 @@ class Incident < ApplicationRecord
     format_out_date
   end
 
-  def format_start_date
-    
-  end
-
-  def format_containment_date
-    
-  end
-
-  def format_control_date
-    
-  end
-
-  def format_out_date
-    
-  end
-
   def display_incident_name
     "#{self.name}  –  #{self.incident_type} #{self.number}"
   end
