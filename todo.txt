@@ -5,7 +5,7 @@
 - Update block when padding is changed
 
 #211
--Set resource on R&R
+
 
 #collaboration
 -Set up associations so multiple users can share incident
