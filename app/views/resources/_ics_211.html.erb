@@ -124,8 +124,7 @@
           <td class="grayed"></td>
           <td class="grayed"></td>
         </tr>
-        <% @resources.each do |r|  %>
-          <% if r.rnr? %>
+        <% @resources.on_rnr.each do |r|  %>
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
             <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
@@ -150,11 +149,10 @@
             </td>
             <td class="no-padding">
               <%= form_for r do |f| %>
-                <%= f.check_box :r_and_r, class: 'rnr-form-button', data: { confirm: 'Are you sure?' }  %>
+                <%= f.check_box :r_and_r, class: 'rnr-form-button' %>
               <% end %>
             </td>
           </tr>
-          <% end %>
         <% end %>
 
 

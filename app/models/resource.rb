@@ -5,6 +5,7 @@ class Resource < ApplicationRecord
   scope :crew, -> { where(category: 'CREW') }
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
   scope :assigned, -> { where(release_date: nil, r_and_r: false)}
+  scope :on_rnr, -> { where(r_and_r: true)}
    validates :name, presence: true
    validates :position, presence: true
    validates :agency, presence: true
