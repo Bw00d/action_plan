@@ -17896,6 +17896,38 @@ ul#action-buttons li {
   overflow: auto;
   white-space: nowrap;
 }
+
+/* line 287, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.css.scss */
+.new-page {
+  height: 20px;
+}
+
+/* line 290, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.css.scss */
+.page-number {
+  font-size: 0.70em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/* line 296, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.css.scss */
+.clear {
+  clear: all;
+}
+
+/* line 299, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.css.scss */
+.div-grp-branch {
+  position: absolute;
+  left: 3px;
+  top: 2px;
+}
+
+/* line 304, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.css.scss */
+td.no-padding {
+  padding-right: none !important;
+  padding-left: 15px !important;
+  padding-top: 10px !important;
+}
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
 .btn-dark {
   background-color: black;
@@ -20168,6 +20200,11 @@ img#new-resource {
 .grayed {
   background-color: #f5f5f5;
 }
+
+/* line 136, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+.resource-information {
+  background-color: yellow;
+}
 /* line 2, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
 .hazards-form textarea {
   width: 100%;
@@ -20795,11 +20832,16 @@ div.alert {
 }
 
 /* line 194, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+.hide-overflow {
+  overflow: hidden;
+}
+
+/* line 197, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .hidden {
   display: none;
 }
 
-/* line 198, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 201, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .disabled-button,
 .disabled-button:active,
 .disabled-button:focus,
@@ -20810,7 +20852,7 @@ div.alert {
   cursor: not-allowed !important;
 }
 
-/* line 208, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 211, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .edit-button {
   padding-left: 0px !important;
   padding-top: 8px !important;
@@ -20824,24 +20866,24 @@ div.alert {
   color: black;
   background-color: #07c5ff;
 }
-/* line 220, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 223, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .edit-button a {
   color: black;
 }
 
-/* line 227, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 230, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .edit-button:hover a {
   color: #4d4d4d;
 }
 
-/* line 232, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 235, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .cancel-button {
   margin-left: 10px;
   background-color: black;
   color: white;
 }
 
-/* line 237, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 240, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .content-container {
   margin-bottom: 25px;
   margin-top: 30px;
@@ -20850,22 +20892,22 @@ div.alert {
 }
 
 /* percentages*/
-/* line 245, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 248, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .p35 {
   width: 35%;
 }
 
-/* line 248, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 251, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .p10 {
   width: 10%;
 }
 
-/* line 251, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 254, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .p8 {
   width: 8%;
 }
 
-/* line 254, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+/* line 257, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .p9 {
   width: 9%;
 }
