@@ -103,7 +103,7 @@
           <ul>
             <%= javascript_tag "var resourceIds = #{@assignment.resource_ids.to_json}" %>
             <% if  !@incident.resources.empty? %>
-              <% @incident.resources.order(:position).each do |r| %>
+              <% @incident.resources.assigned.order(:position).each do |r| %>
                 <li class="assigned-204-resources"><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
                 
                         <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.name %> <%= f.label :ops_personnel_ids, r.cat %>

@@ -6,6 +6,9 @@
 <% if @assignment.assigned_resources.count > 25 %>
   <%= render 'page_3'  %>
 <% end %>
+<% if @assignment.assigned_resources.count > 36 %>
+  <%= render 'page_4'  %>
+<% end %>
 
 
 <script type="text/javascript">
