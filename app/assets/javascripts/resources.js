@@ -85,6 +85,16 @@ $(document).on("turbolinks:load", function() {
     $(this).parents('form:first').submit();
   });
 
+  $("tr.incident-resource").dblclick(function (){
+    var id = $(this).attr('id').replace('resource-','');;
+    $(".resource-comment").hide();
+    $(`#comment-${id}`).show();
+  });
+
+  $("a.hide-comment").click(function (){
+    $(".resource-comment").hide();
+  });
+
 
   
 });
