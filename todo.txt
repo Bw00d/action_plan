@@ -4,7 +4,12 @@
 #cover
 - Update block when padding is changed
 
+#Style
+-get grover to access stylesheets
+-get font-awesome icons working in production
+
 #211
+!-Calendars for bip dates
 
 
 #collaboration
