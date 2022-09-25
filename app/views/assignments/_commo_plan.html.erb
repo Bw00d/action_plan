@@ -6,7 +6,7 @@
       <% @plan.commo_plan.commo_items.each do |item| %>
         <li class="commo-items"><%= f.check_box :commo_item_ids, {multiple: true}, item.id, nil %>
         
-              <%= f.label :commo_item_ids, item.function %></li>
+              <%= f.label :commo_item_ids, item.channel_name %></li>
       <% end %>
     <% end %>
   </ul>
