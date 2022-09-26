@@ -89,6 +89,8 @@ $(document).on("turbolinks:load", function() {
     var id = $(this).attr('id').replace('resource-','');;
     $(".resource-comment").hide();
     $(`#comment-${id}`).show();
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    return false;
   });
 
   $("a.hide-comment").click(function (){

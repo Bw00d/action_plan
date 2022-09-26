@@ -25,7 +25,10 @@
       </thead>
       <tbody id="incident-resources">
         <% @resources.assigned.each do |r|  %>
-        <div id="comment-<%= r.id %>" class="resource-comment col-xs-10 col-md-6 center-block">
+
+
+
+        <div id="comment-<%= r.id %>" class="resource-comment col-xs-10 col-md-6 center-block panel panel-default resources-panel-head">
           <%= link_to image_tag('close.png'), "javascript:;", class: "hide-comment xs-padding-top float-right sm-icon" %>
           <h2 ><%= r.full_order_number %> <%= r.position %> <%= r.name %> </h2>
           <h5 ><%= r.agency %></h5>
