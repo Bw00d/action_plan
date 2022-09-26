@@ -87,10 +87,10 @@ $(document).on("turbolinks:load", function() {
 
   $("tr.incident-resource").dblclick(function (){
     var id = $(this).attr('id').replace('resource-','');;
+    var coord = ($(this).offset().top);
     $(".resource-comment").hide();
-    $(`#comment-${id}`).show();
-    $("html, body").animate({ scrollTop: 0 }, "slow");
-    return false;
+    $(`#comment-${id}`).css({ top: coord -100 }).show();
+
   });
 
   $("a.hide-comment").click(function (){
