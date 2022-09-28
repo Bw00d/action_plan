@@ -29862,16 +29862,24 @@ $(document).on("turbolinks:load", function() {
   //   window.location.reload();
   // })
 
-  // submitting the RnR form
+  // submitting forms
 
   $(".rnr-form-button").on("click", function (){
     $(this).parents('form:first').submit();
   });
 
+    $(".fwd-datepicker").on("change", function (){
+    $(this).parents('form:first').submit();
+  });
+
+
+
   $("tr.incident-resource").dblclick(function (){
     var id = $(this).attr('id').replace('resource-','');;
+    var coord = ($(this).offset().top);
     $(".resource-comment").hide();
-    $(`#comment-${id}`).show();
+    $(`#comment-${id}`).css({ top: coord -100 }).show();
+
   });
 
   $("a.hide-comment").click(function (){

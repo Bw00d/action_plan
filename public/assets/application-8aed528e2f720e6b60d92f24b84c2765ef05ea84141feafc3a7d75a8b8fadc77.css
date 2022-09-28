@@ -17921,6 +17921,13 @@ ul#action-buttons li {
   left: 3px;
   top: 2px;
 }
+
+/* line 304, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/assignments.css.scss */
+td.no-padding {
+  padding-right: none !important;
+  padding-left: 15px !important;
+  padding-top: 10px !important;
+}
 /* line 1, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/colors.css.scss */
 .btn-dark {
   background-color: black;
@@ -20198,6 +20205,51 @@ img#new-resource {
 .resource-information {
   background-color: yellow;
 }
+
+/* line 140, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+.view-resource img {
+  width: 20px;
+  height: auto;
+}
+
+/* line 145, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+.resource-comment {
+  display: none;
+  z-index: 4;
+  box-shadow: 9px 11px 8px -8px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 9px 11px 8px -8px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 9px 11px 8px -8px rgba(0, 0, 0, 0.2);
+  height: 300px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  background-color: white;
+  top: 75px;
+  border: 1px solid #d8d8d8;
+}
+/* line 160, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+.resource-comment h2 {
+  font-weight: 555;
+}
+/* line 163, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+.resource-comment textarea {
+  /*width:100%;*/
+  /*height: 150px;*/
+}
+
+/* line 168, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/resources.scss */
+input.fwd-datepicker {
+  border: none !important;
+  width: 36px;
+  height: 20px;
+  margin: 0 !important;
+  /*padding: none !important;*/
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
 /* line 2, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/safety_messages.scss */
 .hazards-form textarea {
   width: 100%;
@@ -20903,4 +20955,11 @@ div.alert {
 /* line 257, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
 .p9 {
   width: 9%;
+}
+
+/* Icons */
+/* line 264, /Users/bwood/code/rails/5.1/actionplan/app/assets/stylesheets/utility-classes.scss */
+.sm-icon img {
+  width: 25px;
+  height: auto;
 }
