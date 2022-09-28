@@ -86,7 +86,7 @@ $(document).on("turbolinks:load", function() {
   });
 
     $(".fwd-datepicker").on("change", function (){
-    $(this).parents('form:first').submit();
+    $(this).parents('form:first').trigger('submit.rails');
   });
 
 
