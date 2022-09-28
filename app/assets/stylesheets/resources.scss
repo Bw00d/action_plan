@@ -165,3 +165,13 @@ img#new-resource {
     /*height: 150px;*/
   }
 }
+input.fwd-datepicker {
+  border: none !important;
+  width: 36px;
+  height: 20px;
+  margin: 0 !important;
+  /*padding: none !important;*/
+  -webkit-box-sizing: content-box; 
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}

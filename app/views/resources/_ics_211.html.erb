@@ -52,7 +52,13 @@
               <%# end %>
                 </td>
             <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd %></td>
+            <td class="datepicker-td">
+              <%= form_for r do |f| %>
+                <%= f.text_field :fwd, class: 'datepicker fwd-datepicker'  %>
+              <% end %>
+            </td>
+
+           <!--  <td class="lg-bip-input"><%#= best_in_place r, :fwd, display_as: :formatted_fwd %></td> -->
             <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
             <% if !r.last_work_day.blank? %>
               <td><%=  r.last_work_day.strftime("%m/%d") %></td>

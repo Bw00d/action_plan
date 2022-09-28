@@ -79,11 +79,17 @@ $(document).on("turbolinks:load", function() {
   //   window.location.reload();
   // })
 
-  // submitting the RnR form
+  // submitting forms
 
   $(".rnr-form-button").on("click", function (){
     $(this).parents('form:first').submit();
   });
+
+    $(".fwd-datepicker").on("change", function (){
+    $(this).parents('form:first').submit();
+  });
+
+
 
   $("tr.incident-resource").dblclick(function (){
     var id = $(this).attr('id').replace('resource-','');;
