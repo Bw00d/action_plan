@@ -53,9 +53,12 @@ class ResourcesController < ApplicationController
       if @resource.update(resource_params)
         format.html { redirect_back(fallback_location: root_path) }
         format.json { respond_with_bip(@resource) }
+        format.js {}
       else
         format.html { render :edit }
         format.json { respond_with_bip(@resource) }
+        format.js {}
+
       end
     end
   end
