@@ -54,7 +54,7 @@
             <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
             <td class="datepicker-td">
               <%= form_for r do |f| %>
-                <%= f.text_field :fwd, class: 'datepicker fwd-datepicker'  %>
+                <%= f.text_field :fwd, class: 'datepicker fwd-datepicker', remote: true  %>
               <% end %>
             </td>
 
