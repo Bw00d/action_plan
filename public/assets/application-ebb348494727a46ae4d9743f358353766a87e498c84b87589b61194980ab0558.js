@@ -29543,7 +29543,9 @@ function hasScrolled() {
 });
 $(document).on("turbolinks:load", function() {
 
-  $('.datepicker').datepicker();
+  $('.datepicker').datepicker({
+    assumeNearbyYear: true
+  });
 
    // Incidents
 
@@ -29862,18 +29864,24 @@ $(document).on("turbolinks:load", function() {
   //   window.location.reload();
   // })
 
-  // submitting the RnR form
+  // submitting forms
 
   $(".rnr-form-button").on("click", function (){
     $(this).parents('form:first').submit();
   });
 
+    $(".fwd-datepicker").on("change", function (){
+    $(this).parents('form:first').trigger('submit.rails');
+  });
+
+
+
   $("tr.incident-resource").dblclick(function (){
     var id = $(this).attr('id').replace('resource-','');;
+    var coord = ($(this).offset().top);
     $(".resource-comment").hide();
-    $(`#comment-${id}`).show();
-    $("html, body").animate({ scrollTop: 0 }, "slow");
-    return false;
+    $(`#comment-${id}`).css({ top: coord -100 }).show();
+
   });
 
   $("a.hide-comment").click(function (){
