@@ -29543,7 +29543,9 @@ function hasScrolled() {
 });
 $(document).on("turbolinks:load", function() {
 
-  $('.datepicker').datepicker();
+  $('.datepicker').datepicker({
+    assumeNearbyYear: true
+  });
 
    // Incidents
 
@@ -29869,7 +29871,8 @@ $(document).on("turbolinks:load", function() {
   });
 
     $(".fwd-datepicker").on("change", function (){
-    $(this).parents('form:first').submit();
+    $(this).parents('form:first').trigger('submit.rails');
+    $('.datepicker-dropdown').hide();
   });
 
 
@@ -29885,7 +29888,6 @@ $(document).on("turbolinks:load", function() {
   $("a.hide-comment").click(function (){
     $(".resource-comment").hide();
   });
-
 
   
 });
