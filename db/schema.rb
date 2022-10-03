@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_24_212948) do
+ActiveRecord::Schema.define(version: 2022_09_28_215506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,27 @@ ActiveRecord::Schema.define(version: 2022_09_24_212948) do
     t.boolean "image_block", default: false
     t.string "bottom_padding", default: "0"
     t.boolean "blank", default: false
+  end
+
+  create_table "checkins", force: :cascade do |t|
+    t.integer "incident_id"
+    t.string "agency"
+    t.string "category"
+    t.string "position"
+    t.float "order_number"
+    t.date "checkin_date"
+    t.string "leader"
+    t.string "contact_info"
+    t.string "home_unit"
+    t.string "other_quals"
+    t.boolean "other_incident"
+    t.string "other_incident_name"
+    t.date "first_day_worked"
+    t.string "name"
+    t.integer "number_personnel"
+    t.integer "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "commo_items", force: :cascade do |t|

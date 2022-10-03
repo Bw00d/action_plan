@@ -91,7 +91,6 @@ $(document).on("turbolinks:load", function() {
   });
 
 
-
   $("tr.incident-resource").dblclick(function (){
     var id = $(this).attr('id').replace('resource-','');;
     var coord = ($(this).offset().top);

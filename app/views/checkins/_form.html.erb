@@ -1,0 +1,75 @@
+<%= form_for [@incident, @checkin] do |f| %>
+<% if @checkin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@checkin.errors.count, "error") %> prohibited this checkin from being saved:</h2>
+
+      <ul>
+      <% @checkin.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :incident_id, value: @incident.id %>
+  <%= f.hidden_field :checkin_date, id: :incident_checkin_date, value: Date.today %>
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control', required: true %>
+  </div>
+
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.select :category, options_for_select([["CREW", "CREW"], ["EQUIPMENT", "EQUIPMENT"],["OVERHEAD", "OVERHEAD"], 
+    ["AIRCRAFT", "AIRCRAFT"]]), :prompt => "SELECT CATEGORY", id: :checkin_category %>
+  </div>
+
+  <div id="checkin-order-number-input" class="col-sm-12 col-md-8 form-group center-block">
+    <span class="order-number-prefix"></span>
+    <%= f.text_field :order_number, placeholder: "ORDER NUMBER", class: 'form-control', id: :checkin_order_number, required: true %>
+  </div>
+
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.text_field :position, placeholder: "RESOURCE KIND/TYPE", class: 'form-control', required: true %>
+  </div>
+
+
+
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.text_field :agency, placeholder: "AGENCY", class: 'form-control', required: true %>
+  </div>
+
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.text_field :leader, placeholder: "LEADER NAME", class: 'form-control' %>
+  </div>
+
+  <div class="col-sm-12 col-md-8 form-group center-block ">
+    <%= f.text_field :contact_info, placeholder: "CONTACT PHONE #", class: 'form-control' %>
+  </div>
+
+  <div class="col-sm-12 col-md-8 form-group center-block ">
+    <%= f.text_field :number_personnel, placeholder: "# PERSONNEL", class: 'form-control', required: true %>
+  </div>
+  
+
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.text_field :other_incident, placeholder: "DID YOU COME FROM ANOTHER INCIDENT?", class: 'form-control' %>
+  </div>
+
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.text_field :other_incident_name, placeholder: "OTHER INCIDENT NAME", class: 'form-control' %>
+  </div>
+
+
+  <div class="col-sm-12 col-md-8 form-group center-block ">
+    <%= f.text_field :first_day_worked, id: :incident_fwd, :data => {:provide => "datepicker"},
+                           class: "form-control", placeholder: "FIRST WORK DAY", required: true %>
+  </div>
+
+  <div class="col-sm-12 col-md-8 form-group center-block">
+    <%= f.text_field :other_quals, placeholder: "OTHER QUALS", class: 'form-control' %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 form-group center-block">
+      <%= f.submit "Submit", class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

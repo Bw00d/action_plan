@@ -1,5 +1,6 @@
 class Resource < ApplicationRecord
   belongs_to :incident
+  has_one :demob
   scope :overhead, -> { where(category: 'OVERHEAD') }
   scope :equipment, -> { where(category: 'EQUIPMENT') }
   scope :crew, -> { where(category: 'CREW') }
@@ -14,10 +15,7 @@ class Resource < ApplicationRecord
    validates :number_personnel, presence: true
    validates :assignment_length, presence: true
    validates :category, presence: true
-
-
  
-  has_one :demob
   after_create :create_demob
 
 
@@ -72,5 +70,6 @@ class Resource < ApplicationRecord
   def demob
     Demob.where(resource_id: self.id).first
   end
+
 
 end

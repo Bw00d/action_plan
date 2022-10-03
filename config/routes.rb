@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :checkins
   resources :attachments
   resources :units
   resources :demobs
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :incidents do
+    resources :checkins
     resources :posts
     resources :resources do
       resources :demobs
@@ -55,4 +57,5 @@ Rails.application.routes.draw do
   get 'incidents/:id/plans/:id/commo_plans/:id/commo_plan_to_pdf'        => 'commo_plans#commo_plan_to_pdf'
   get 'incidents/:id/plans/:id/covers/:id/cover_to_pdf'      => 'covers#cover_to_pdf'
   get 'incidents/:id/plans/:id/safety_messages/:id/safety_message_to_pdf'  => 'safety_messages#safety_message_to_pdf'
+  get 'confimation'   => 'checkins/confirmations'
 end

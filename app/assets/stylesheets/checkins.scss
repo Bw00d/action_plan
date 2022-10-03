@@ -1,0 +1,25 @@
+#checkin-order-number-input {
+  display: none;
+}
+input#checkin_order_number {
+  padding-left: 30px;
+}
+
+.checkin-panel {
+  thead {
+    background-color: #F5F5F5;
+    border: 1px solid #DDD;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px;
+    height:40px;
+    padding-right: 10px;
+  }
+  tbody {
+    border-right: 1px solid #EEE;
+    border-left: 1px solid #EEE;
+    border-bottom: 1px solid #EEE;
+  }
+  .panel-body {
+    margin-top: 10px;
+  }
+}
