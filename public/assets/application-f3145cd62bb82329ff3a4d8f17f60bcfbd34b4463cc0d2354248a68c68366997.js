@@ -29271,6 +29271,31 @@ $(document).on("turbolinks:load", function() {
    
 });
 $(document).on("turbolinks:load", function() {
+  $('select#checkin_category').change(function() {
+    var text = $(this).val();
+    $('#checkin-order-number-input').show();
+    switch(text) {
+    case 'EQUIPMENT':  
+      var prefix = 'E-'
+     break;
+
+    case 'CREW':  
+      var prefix = 'C-'
+      break;
+
+    case 'OVERHEAD':
+      var prefix = 'O-'
+      break;
+
+    case 'AIRCRAFT':
+      var prefix = 'A-'
+      break;
+    }
+      $('.order-number-prefix').html( prefix )
+
+  });
+});
+$(document).on("turbolinks:load", function() {
 
  
 
@@ -29543,7 +29568,9 @@ function hasScrolled() {
 });
 $(document).on("turbolinks:load", function() {
 
-  $('.datepicker').datepicker();
+  $('.datepicker').datepicker({
+    assumeNearbyYear: true
+  });
 
    // Incidents
 
@@ -29870,8 +29897,8 @@ $(document).on("turbolinks:load", function() {
 
     $(".fwd-datepicker").on("change", function (){
     $(this).parents('form:first').trigger('submit.rails');
+    $('.datepicker-dropdown').hide();
   });
-
 
 
   $("tr.incident-resource").dblclick(function (){
@@ -29885,7 +29912,6 @@ $(document).on("turbolinks:load", function() {
   $("a.hide-comment").click(function (){
     $(".resource-comment").hide();
   });
-
 
   
 });
