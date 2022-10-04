@@ -250,6 +250,11 @@ $aqua: #07c5ff;
 }
 .p10 {
   width: 10%;
+  display: inline-block;
+}
+.p20 {
+  width: 20%;
+  display: inline-block;
 }
 .p8 {
   width: 8%;
@@ -265,4 +270,7 @@ $aqua: #07c5ff;
   width: 25px;
   height: auto;
   }
+}
+.inline-block {
+  display: inline-block;
 }

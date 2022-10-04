@@ -6,7 +6,13 @@ input#checkin_order_number {
 }
 
 .checkin-panel {
-  thead {
+  min-width: 890px;
+  h1 {
+    font-weight: 777;
+  }
+  .panel-head {
+    font-weight: 777;
+    padding: 10px;
     background-color: #F5F5F5;
     border: 1px solid #DDD;
     border-top-left-radius: 5px !important;
@@ -14,12 +20,25 @@ input#checkin_order_number {
     height:40px;
     padding-right: 10px;
   }
-  tbody {
+
+  .panel-body {
+    padding: 0;
     border-right: 1px solid #EEE;
     border-left: 1px solid #EEE;
     border-bottom: 1px solid #EEE;
+    .info-row {
+    padding: 10px 15px;
+    border-bottom: 1px solid #EEE;
+    }
+    .hidden-row {
+      display: none;
+      overflow: hidden;
+      background-color: white;
+      margin-top: -1px;
+      padding: 10px 15px;
+      border-bottom: 1px solid #EEE;
+    }
   }
-  .panel-body {
-    margin-top: 10px;
-  }
+
+
 }

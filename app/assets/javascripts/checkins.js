@@ -22,4 +22,13 @@ $(document).on("turbolinks:load", function() {
       $('.order-number-prefix').html( prefix )
 
   });
+
+  // animate the 211
+
+  $( ".info-row" ).dblclick(function() {
+      $(this).next(".hidden-row" ).slideToggle(200);
+  });
+  $( ".hidden-row" ).dblclick(function() {
+    $(this).slideToggle(200);
+  })
 });

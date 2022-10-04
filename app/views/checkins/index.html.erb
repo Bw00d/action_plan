@@ -1,73 +1,40 @@
 <p id="notice"><%= notice %></p>
 
-<div class="col-sm-12 panel-head checkin-panel">
-<h1><%= @incident.name %> ICS 211(Checkin List)</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Order #</th>
-        <th scope="col">Position</th>
-        <th scope="col">Name</th>
-        <th scope="col">Agency</th>
-        <th scope="col">Home Unit</th>
-        <th scope="col">Leader</th>
-        <th scope="col">Contact #</th>
-        <th scope="col"># Pers</th>
-        <th scope="col">Other Incident</th>
-        <th scope="col">Incident Name</th>
-        <th scope="col">FWD</th>
-        <th scope="col">Other Quals</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-      
-    <tbody id="incident-resources">
-      <% @checkins.each do |c| %>
-      <tr>
-        <td><%= c.full_order_number %></td>
-        <td><%= c.position %></td>
-        <td><%= c.name %></td>
-        <td><%= c.agency %></td>
-        <td><%= c.home_unit %></td>
-        <td><%= c.leader %></td>
-        <td><%= c.contact_info %></td>
-        <td><%= c.number_personnel %></td>
-        <td><%= c.other_incident %></td>
-        <td><%= c.other_incident_name %></td>
-        <td><%= c.first_day_worked.try(:strftime,"%-m/%d") %></td>
-        <td><%= c.other_quals %></td>
-        <td>delete</td>
 
-      </tr>
-      <% end %>
-    </tbody>
-    </div>
-  </table>
-</div>
-
-<div class="checkin-panel">
-  <div class="panel-head"></div>
+<div class="col-md-12 checkin-panel">
+  <h1><%= @incident.name %> Checkin List(ICS 211)</h1>
+  <div class="panel-head">
+    <div class="p8 inline-block ">Order #</div>
+    <div class="p10 inline-block ">Position</div>
+    <div class="p20 inline-block ">Name</div>
+    <div class="p10 inline-block ">Agency</div>
+    <div class="p20 inline-block ">Leader</div>
+    <div class="p9 inline-block "># Pers</div>
+    <div class="p10 inline-block ">FWD</div>
+    <div class="p8 inline-block ">Delete</div>
+  </div>
   <div class="panel-body">
     <% @checkins.each do |c| %>
-      
-        <div class="col-1"><%= c.full_order_number %></div>
-        <div class="col-1"><%= c.position %></div>
-        <div class="col-1"><%= c.name %></div>
-        <div class="col-1"><%= c.agency %></div>
-        <div class="col-1"><%= c.home_unit %></div>
-        <div class="col-1"><%= c.leader %></div>
-        <div class="col-1"><%= c.contact_info %></div>
-        <div class="col-1"><%= c.number_personnel %></div>
-        <div class="col-1"><%= c.other_incident %></div>
-        <div class="col-1"><%= c.other_incident_name %></div>
-        <div class="col-1"><%= c.first_day_worked.try(:strftime,"%-m/%d") %></div>
-        <div class="col-1"><%= c.other_quals %></div>
-        <div class="col-1">delete</div>
-
-      </tr>
+      <div class="info-row">
+        <div class="p8 inline-block "><%= c.full_order_number %></div>
+        <div class="p10 inline-block "><%= c.position %></div>
+        <div class="p20 inline-block"><%= c.name %></div>
+        <div class="p10 inline-block "><%= c.agency %></div>
+        <div class="p20 inline-block"><%= c.leader %></div>
+        <div class="p10 inline-block "><%= c.number_personnel %></div>
+        <div class="p10 inline-block "><%= c.first_day_worked.try(:strftime,"%-m/%d") %></div>
+        <div class="p8 inline-block "><%= link_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+      </div>
+      <div class="hidden-row">
+        <div class="p20 inline-block ">Contact Info: <%= c.contact_info %></div>
+        <div class="p10 inline-block ">Home Unit: <%= c.home_unit %></div>
+        <% if c.other_incident == 'Yes'%>
+          <div class="p20 inline-block ">Other Incident: <%= c.other_incident_name %></div>
+        <% else %>
+          <div class="p20 inline-block ">Other Incident:  No</div>
+        <% end %>
+          <div class="p20 inline-block ">Other Quals: <%= c.other_quals %></div>
+      </div>
       <% end %>
   </div>
 </div>
-
-
-        <%#= link_to 'Destroy', checkin, method: :delete, data: { confirm: 'Are you sure?' } %>
