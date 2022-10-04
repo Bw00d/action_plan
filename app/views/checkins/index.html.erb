@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class="col-md-12 checkin-panel">
+  <h1><%= @incident.name %> Checkin List(ICS 211)</h1>
+  <div class="panel-head">
+    <div class="p8 inline-block ">Order #</div>
+    <div class="p10 inline-block ">Position</div>
+    <div class="p20 inline-block ">Name</div>
+    <div class="p10 inline-block ">Agency</div>
+    <div class="p20 inline-block ">Leader</div>
+    <div class="p9 inline-block "># Pers</div>
+    <div class="p10 inline-block ">FWD</div>
+    <div class="p8 inline-block ">Delete</div>
+  </div>
+  <div class="panel-body">
+    <% @checkins.each do |c| %>
+      <div class="info-row">
+        <div class="p8 inline-block "><%= c.full_order_number %></div>
+        <div class="p10 inline-block "><%= c.position %></div>
+        <div class="p20 inline-block"><%= c.name %></div>
+        <div class="p10 inline-block "><%= c.agency %></div>
+        <div class="p20 inline-block"><%= c.leader %></div>
+        <div class="p10 inline-block "><%= c.number_personnel %></div>
+        <div class="p10 inline-block "><%= c.first_day_worked.try(:strftime,"%-m/%d") %></div>
+        <div class="p8 inline-block "><%= link_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+      </div>
+      <div class="hidden-row">
+        <div class="p20 inline-block ">Contact Info: <%= c.contact_info %></div>
+        <div class="p10 inline-block ">Home Unit: <%= c.home_unit %></div>
+        <% if c.other_incident == 'Yes'%>
+          <div class="p20 inline-block ">Other Incident: <%= c.other_incident_name %></div>
+        <% else %>
+          <div class="p20 inline-block ">Other Incident:  No</div>
+        <% end %>
+          <div class="p20 inline-block ">Other Quals: <%= c.other_quals %></div>
+      </div>
+      <% end %>
+  </div>
+</div>

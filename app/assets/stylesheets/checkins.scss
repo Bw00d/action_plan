@@ -1,0 +1,44 @@
+#checkin-order-number-input {
+  display: none;
+}
+input#checkin_order_number {
+  padding-left: 30px;
+}
+
+.checkin-panel {
+  min-width: 890px;
+  h1 {
+    font-weight: 777;
+  }
+  .panel-head {
+    font-weight: 777;
+    padding: 10px;
+    background-color: #F5F5F5;
+    border: 1px solid #DDD;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px;
+    height:40px;
+    padding-right: 10px;
+  }
+
+  .panel-body {
+    padding: 0;
+    border-right: 1px solid #EEE;
+    border-left: 1px solid #EEE;
+    border-bottom: 1px solid #EEE;
+    .info-row {
+    padding: 10px 15px;
+    border-bottom: 1px solid #EEE;
+    }
+    .hidden-row {
+      display: none;
+      overflow: hidden;
+      background-color: white;
+      margin-top: -1px;
+      padding: 10px 15px;
+      border-bottom: 1px solid #EEE;
+    }
+  }
+
+
+}
