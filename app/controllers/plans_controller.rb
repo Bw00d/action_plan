@@ -71,9 +71,10 @@ class PlansController < ApplicationController
   # DELETE /plans/1
   # DELETE /plans/1.json
   def destroy
+    @incident = Incident.find(@plan.incident_id)
     @plan.destroy
     respond_to do |format|
-      format.html { redirect_to plans_url, notice: 'Plan was successfully destroyed.' }
+      format.html { redirect_to incident_plans_path(@incident) }
       format.json { head :no_content }
     end
   end

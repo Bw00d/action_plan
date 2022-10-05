@@ -1,7 +1,7 @@
 <%= content_for :title, "The Plan" %>
 <div class="container">
   <div class="row">
-     <div class="col-lg-8 col-xs-12 center-block">
+     <div class="col-lg-10 col-xs-12 center-block">
 
       <p id="notice"><%= notice %></p>
         
@@ -113,9 +113,9 @@
               <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
             </ul>
           </div>
-          <div class="small-margin-top"> <%= form_for @plan do |f| %>
-              <% f.submit "DELETE", method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-small float-right ' %>
-            <% end %>
+          <div class="small-margin-top"> 
+            <%= link_to 'DELETE', @plan, method: :delete, data: { confirm: 'Are you sure?' }, class: "float-right" %>
+           
           </div>
       </div>
     </div>
