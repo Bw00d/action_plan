@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2022_09_28_215506) do
     t.string "contact_info"
     t.string "home_unit"
     t.string "other_quals"
-    t.boolean "other_incident"
+    t.boolean "other_incident", default: false
     t.string "other_incident_name"
     t.date "first_day_worked"
     t.string "name"

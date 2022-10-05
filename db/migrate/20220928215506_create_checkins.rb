@@ -11,7 +11,7 @@ class CreateCheckins < ActiveRecord::Migration[5.2]
       t.string :contact_info
       t.string :home_unit
       t.string :other_quals
-      t.boolean :other_incident
+      t.boolean :other_incident, default: false
       t.string :other_incident_name
       t.date :first_day_worked
       t.string :name
