@@ -17,6 +17,7 @@
 // rails-ujs, mainly because it makes it easier to override $.rails.allowAction
 // to replace JavaScript confirmation dialogs with application-specific modals.
 //= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker

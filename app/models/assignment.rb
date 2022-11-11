@@ -8,13 +8,17 @@ class Assignment < ApplicationRecord
     if self.commo_item_ids
       self.commo_item_ids.each { |i| items << CommoItem.find(i) }
     end
-    items
+    items.sort
   end
 
   def assigned_resources
     items = []
     if self.resource_ids
-      self.resource_ids.each { |i| items << Resource.find(i) }
+      self.resource_ids.each do  |i|
+        if Resource.find_by_id(i)
+          items << Resource.find_by_id(i) 
+        end
+      end
     end
     items
   end

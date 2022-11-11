@@ -30,7 +30,11 @@ Rails.application.routes.draw do
   end
 
   resources :incidents do
-    resources :checkins
+    resources :checkins do
+      collection do
+        patch :sort
+      end
+    end
     resources :posts
     resources :resources do
       resources :demobs

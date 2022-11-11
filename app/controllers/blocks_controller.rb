@@ -46,9 +46,11 @@ class BlocksController < ApplicationController
       if @block.update(block_params)
         format.html { redirect_back(fallback_location: root_path) }
         format.json { render :show, status: :ok, location: @block }
+        format.js { head :no_content}
       else
         format.html { render :edit }
         format.json { render json: @block.errors, status: :unprocessable_entity }
+        format.js { }
       end
     end
   end
@@ -58,7 +60,7 @@ class BlocksController < ApplicationController
   def destroy
     @block.destroy
     respond_to do |format|
-      format.html { redirect_to blocks_url, notice: 'Block was successfully destroyed.' }
+      format.html { redirect_back(fallback_location: root_path) }
       format.json { head :no_content }
     end
   end

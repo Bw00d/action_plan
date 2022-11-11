@@ -20,7 +20,7 @@
     </div>   
 <!-- End the tabrows -->
     <div class="row">
-      <div id="cover">
+      <div id="cover" data-url="<%= 'sort_checkins_path' %>">
 <!-- Display blocks -->
        <% @blocks.each do |b| %>
        <div>
@@ -45,10 +45,10 @@
            <div class="add-image-block"><%= image_tag('white-image.png') %></div>
 
            <!-- <div class="delete-block"><%#= fa_icon('trash') %></div> --> 
-           <div class="delete-block"><%= image_tag('white-trash.png') %></div>
+           <div class="delete-block"><%= link_to image_tag('white-trash.png'), b,  method: :delete, data: { confirm: 'Are you sure?' } %></div>
          </div>
   <!-- End style control panel -->
-         <div  id="plan" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %> <%= b.text_style %>" >
+         <div  id="<%= dom_id(b) %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %> <%= b.text_style %>" >
 
             
            <% if b.image_block? %> 
@@ -81,7 +81,7 @@
             <%= form_for b, class: "block-form", remote: true do |f| %>
 
               <%= f.hidden_field :id %>
-              <%= f.hidden_field :bottom_padding, name: 'bottom_padding' %>
+              <%= f.hidden_field :bottom_padding %>
               <%= f.hidden_field :font_size %>
               <%= f.hidden_field :font_family %>
               <%= f.hidden_field :number %>

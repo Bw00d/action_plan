@@ -1,5 +1,5 @@
 class Cover < ApplicationRecord
-  has_many :blocks, dependent: :destroy
+  has_many :blocks, -> { order(position: :asc) }, dependent: :destroy
   belongs_to :plan
   after_create :set_blocks
 

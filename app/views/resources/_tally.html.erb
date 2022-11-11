@@ -36,7 +36,7 @@
               <h4>Aircraft</h4>
               <ul>
                 
-                <% @resources.aircraft.each do |r| %>
+                <% @resources.aircraft.assigned.each do |r| %>
                   <% unless r.released? %>
                     <li><%= r.agency %> - <%= r.position %> - <%= r.number_personnel %></li>
                   <% end %>

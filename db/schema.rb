@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_28_215506) do
+ActiveRecord::Schema.define(version: 2022_10_06_003459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2022_09_28_215506) do
     t.boolean "image_block", default: false
     t.string "bottom_padding", default: "0"
     t.boolean "blank", default: false
+    t.integer "position"
   end
 
   create_table "checkins", force: :cascade do |t|

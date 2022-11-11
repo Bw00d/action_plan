@@ -41,6 +41,9 @@ gem 'faker'
 gem 'friendly_id'
 # jQuery is no longer installed by default on Rails 5.1
 gem 'jquery-rails'
+# These will allow us to sort objects
+gem 'jquery-ui-rails'
+gem 'acts_as_list'
 # Pagination
 gem 'kaminari'
 # Authorization

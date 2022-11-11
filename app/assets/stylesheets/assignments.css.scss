@@ -306,3 +306,8 @@ td.no-padding {
   padding-left: 15px !important;
   padding-top: 10px !important;
 }
+@media print {
+    div.header-row {
+        background-color: #f3f3f3 !important;
+    }
+}
