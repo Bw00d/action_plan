@@ -26,7 +26,7 @@ class CoversController < ApplicationController
     @plan = Plan.find(@cover.plan_id)
     @incident = Incident.find(@plan.incident_id)
     @block = Block.new
-    @blocks = @cover.blocks.order(id: :asc)
+    @blocks = @cover.blocks.order(position: :asc)
   end
 
   def cover_to_pdf
@@ -34,7 +34,7 @@ class CoversController < ApplicationController
     @plan = @cover.plan
     @incident = @plan.incident    
     @block = Block.new
-    @blocks = @cover.blocks.order(id: :asc)
+    @blocks = @cover.blocks.order(position: :asc)
   end
 
   # GET /covers/new

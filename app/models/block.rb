@@ -6,4 +6,10 @@ class Block < ApplicationRecord
   has_one_attached :main_image
   has_many_attached :other_images
 
+  # after_save :set_position
+
+  def set_position
+    
+  end
+
 end

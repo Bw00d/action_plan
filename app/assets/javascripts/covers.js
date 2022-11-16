@@ -8,13 +8,13 @@ $(document).on("turbolinks:load", function() {
     if (!($('.block')).hasClass('block-selected')) {
       $('.style-controls').hide();
       $('.new-block-form').hide();
-      $('.new-block-form').hide();
       $('.edit_block').hide();
     }
 
     $(this).addClass('block-selected');
     if ($(this).hasClass('block-selected')) {
       $(this).siblings().toggle();
+      var position = $(this).val('#new-block-position')
       }
   });
 // End

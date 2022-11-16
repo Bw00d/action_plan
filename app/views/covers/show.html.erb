@@ -27,6 +27,7 @@
          <div class="new-block-form">
           <%= form_for @block do |f| %>
             <%= f.hidden_field :cover_id, value: @cover.id %>
+            <%= f.hidden_field :position, id: 'new-block-position' %>
             <%= f.submit '+', class: "new-block-button" %>
           <% end %>
         </div>
@@ -68,6 +69,7 @@
               <div class="image-form">
                 <%= form_for b, html: {class: "edit-image-block"}  do |f| %>
                   <%= f.file_field :main_image, class: 'small-button' %>
+                  <%= f.hidden_field :bottom_padding %>
                   <%= f.submit "Upload" %>
                 <% end %>
               </div>
