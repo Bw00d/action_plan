@@ -1,18 +1,18 @@
 databases:
-  - name: mysite
-    databaseName: mysite
-    user: mysite
+  - name: actionplan
+    databaseName: actionplan
+    user: bwood
 
 services:
   - type: web
-    name: mysite
+    name: actionplan
     env: ruby
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: mysite
+          name: actionplan
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
