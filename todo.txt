@@ -34,3 +34,10 @@
 
 
 
+1-13-23
+
+#collaboration
+-Set up associations so multiple users can share incident
+
+1. Add functionality to incident model to all multiple users
+2. Add an invite model to invite new users by email

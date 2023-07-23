@@ -1,7 +1,9 @@
 $(document).on("turbolinks:load", function() {
 
   $('.datepicker').datepicker({
-    assumeNearbyYear: true
+    assumeNearbyYear: true,
+    autoclose: true,
+    todayHighlight: true
   });
 
    // Incidents

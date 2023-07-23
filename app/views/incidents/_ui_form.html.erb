@@ -1,0 +1,89 @@
+<%= form_with(model: incident, local: true) do |form| %>
+<%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="form-group lg-padding-top ui-group">
+
+    <!-- Incident Name -->
+    <div class="form-incident-name form-attributes">
+      <p class="convo" >
+        Let's create a new Incident.
+      </p>
+      <%= form.label :name, "What is the name of the incident?" %>
+      <%= form.text_field :name, id: :incident_name, class: 'attribute form-control', placeholder: 'Start typing here...' %>
+      <div class="next-btn-container hideable">
+         <div class="next-btn btn btn-dark tiny"> NEXT</div>
+      </div>
+    </div>
+
+    <!-- Incident Type -->
+    <div class="form-incident-type form-attributes">
+      <p class="convo" >
+        What type of incident is this?
+      </p>
+      <%= form.label :incident_type, "Incident Type" %>
+
+        <%= form.select(:incident_type, 
+        raw('<option>Wildfire</option>
+             <option>Hazmat</option>
+             <option>Flood</option>
+             <option>Spill</option>
+             <option>Slide</option>
+             <option>Shooting</option>
+             <option>Fire</option>
+             <option>Epidemic</option>
+             <option>Event</option>'), class: 'form-control attribute')  %>
+      <div class="next-btn-container ">
+         <div class="next-btn btn btn-dark tiny"> NEXT</div>
+      </div>
+    </div>
+
+    <!-- Complexity -->
+    <div class="form-incident-complexity form-attributes">
+      <p class="convo" >
+        What is the complexity of this incident?
+      </p>
+      <%= form.label :complexity %>
+        <%= form.select(:complexity, raw('<option>Type 5</option> 
+                                         <option>Type 4</option> 
+                                         <option>Type 3</option>' ), class: 'form-control attribute ')  %>
+      <div class="next-btn-container ">
+         <div class="next-btn btn btn-dark tiny"> NEXT</div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="form-incident-loction form-attributes">
+      <p class="convo" >
+        Where is this incident located?
+      </p>
+      <%= form.label :location, "Incident Location" %>
+        <%= form.text_field :location, id: :incident_location, class: 'form-control attribute ', placeholder: 'Start typing here...' %>
+      <div class="next-btn-container hideable ">
+         <div class="next-btn btn btn-dark tiny"> NEXT</div>
+      </div>
+    </div>
+
+    <!-- Start Date -->
+    <div class="form-incident-loction form-attributes">
+      <p class="convo" >
+        What was the start date?
+      </p>
+      <%= form.label :location, "Start Date" %>
+      <%= form.text_field :start_date, id: :incident_start_date, class: 'datepicker form-control start-date-picker' %>
+      <div class="next-btn-container hideable ">
+         <%= form.submit 'CREATE INCIDENT', class: 'btn btn-success tiny' %>
+      </div>
+    </div>
+
+  </div>
+
+<% end %>
+
+
+<script type="text/javascript">
+  $('form').on('keypress', e => {
+    if (e.keyCode == 13) {
+        return false;
+    }
+});
+</script>

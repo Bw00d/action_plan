@@ -457,3 +457,41 @@ img#add-freqs-button {
   font-size: 17px;
   margin-right: 5px;
 }
+
+/* New Incident conversation UI form*/
+
+.ui-group {
+  /*.form-incident-type {
+    display: none;
+  }
+  .form-incident-complexity {
+    display: none;
+  }*/
+  .form-attributes {
+    display: none;
+  }
+
+  
+  p {
+    color: #979797;
+    font-size: 1.1em;
+  }
+  label {
+    font-size: 1.6em;
+    font-weight: 999;
+    margin-bottom: 20px;
+  }
+  div.next-btn-container {
+    margin-top: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  div.hideable {
+    visibility: hidden;
+  }
+  .next-btn {
+    max-width: 60px;
+  }
+
+}
+
