@@ -1,5 +1,8 @@
 <%= content_for :title, "Resources"  %>
 <p id="notice"><%= notice %></p>
+<div class="incident-name">
+  <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+</div>
 
 <!-- plans tabs -->
     <div class="resources-panel-head">
