@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_14_062156) do
+ActiveRecord::Schema.define(version: 2023_08_02_160752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,13 @@ ActiveRecord::Schema.define(version: 2023_01_14_062156) do
     t.string "longitude"
     t.string "ic"
     t.string "fire_behavior"
+  end
+
+  create_table "incidents_users", id: false, force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["incident_id", "user_id"], name: "index_incidents_users_on_incident_id_and_user_id"
+    t.index ["user_id", "incident_id"], name: "index_incidents_users_on_user_id_and_incident_id"
   end
 
   create_table "objectives", force: :cascade do |t|

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   friendly_id :full_name, use: :slugged
   has_many :plans, dependent: :destroy
   has_many :incidents, dependent: :destroy
+  has_and_belongs_to_many :incidents
 
   # Roles used by the authorization setup
   enum role: { user: 0, admin: 1 }
