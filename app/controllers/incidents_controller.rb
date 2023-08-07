@@ -3,6 +3,11 @@ class IncidentsController < ApplicationController
   include SkipAuthorization
   skip_before_action :authenticate_user!
 
+  
+  def users
+    @incident = Incident.find(params[:id])
+    @users = @incident.users
+  end
   # GET /incidents
   # GET /incidents.json
   def index
@@ -32,6 +37,7 @@ class IncidentsController < ApplicationController
 
     respond_to do |format|
       if @incident.save
+        @incident.users << current_user
         format.html { redirect_to incident_path(@incident) }
         format.js { }
         format.json { render incident_path(@incident), status: :created, location: @incident }
@@ -63,6 +69,21 @@ class IncidentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to incidents_url, notice: 'Incident was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def invite
+    @incident = Incident.find(params[:incident_id])
+    @invite = params[:invite]
+    # @invitee = User.where('email LIKE ?', "%#{@invite}%")
+    @invitee = User.find_by(email: params[:invite])
+    if @invitee
+      @incident.users << @invitee
+    end
+    respond_to do |format|
+        format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
+    else
+      format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
     end
   end
 

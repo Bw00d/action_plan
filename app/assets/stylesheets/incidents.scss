@@ -163,3 +163,16 @@ h4.incident-feed {
     margin-bottom: 20px;
   }
 }
+#invite-user-panel {
+  display: none;
+}
+#invite-container {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+#invite-button {
+  position: absolute;
+  right: 15px;
+  margin-top: -35px;
+}

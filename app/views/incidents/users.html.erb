@@ -1,0 +1,45 @@
+<%= content_for :title, @incident.name %>
+<div id="incident-container" class="container">
+  <div class="row">
+    <div class="col-lg-10 col-xs-12 center-block">
+
+     <div class="panel panel-default devise-bs center-block">
+      <div class="panel-heading">
+        <h4>
+          <strong><%= @incident.display_incident_name %></strong>
+        </h4>
+      </div>
+     
+        <div class="incident-content-block">
+          <div class="row">
+            <div id="invite-container" class="col-lg-10 center-block">
+                
+              <%= form_tag invite_incidents_path, method: :post do %>
+              <div class=" col-xs-12">
+                <%= text_field_tag :invite, params[:invite], placeholder: "Enter an email...", class: "form-control" %>
+                <%= hidden_field_tag :incident_id, @incident.id %>
+                <%= submit_tag "Invite", id: "invite-button", class: "btn btn-tiny btn-success float-right" %>
+              </div>
+              <div class=" col-xs-1">
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <h4><strong>Collaborators</strong></h4>
+            <ul>
+              <% @users.all.each do |u| %>
+                <li><%= u.full_name %>  <%= link_to (fa_icon('times-circle')), "javascript:;" %></li>
+              <% end %>
+            </ul>
+            </div>
+          </div>
+      </div>
+ 
+      
+
+        <%= link_to 'Back', incidents_path %>
+    </div> <!-- responsive wrapper -->
+  </div>  <!-- row -->
+</div>   <!-- incident container -->
+

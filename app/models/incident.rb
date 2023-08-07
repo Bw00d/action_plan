@@ -4,6 +4,7 @@ class Incident < ApplicationRecord
   has_many :checkins
   has_and_belongs_to_many :users
 
+
   def display_incident_name
     "#{self.name}  –  #{self.incident_type} #{self.number}"
   end

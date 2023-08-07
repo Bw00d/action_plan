@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :incidents do
+    get 'invite', on: :collection
     resources :checkins do
       collection do
         patch :sort
@@ -52,7 +53,7 @@ Rails.application.routes.draw do
   resources :contact_forms, only: [:create]
   # A non-resourceful route was used to place the contact form at /contact
   get 'contact' => 'contact_forms#new', as: 'contact'
-  # get 'incidents/:id/plans/:id/cover'      => 'plans#cover'
+  get 'incidents/:id/users'   => 'incidents#users'
   get 'incidents/:id/plans/:id/202'        => 'plans#incident_objectives'
   get 'incidents/:id/plans/:id/202-pdf'        => 'plans#objectives_to_pdf'
   get 'incidents/:id/plans/:id/203'        => 'plans#incident_organization'
@@ -62,4 +63,6 @@ Rails.application.routes.draw do
   get 'incidents/:id/plans/:id/covers/:id/cover_to_pdf'      => 'covers#cover_to_pdf'
   get 'incidents/:id/plans/:id/safety_messages/:id/safety_message_to_pdf'  => 'safety_messages#safety_message_to_pdf'
   get 'confimation'   => 'checkins/confirmations'
+  # get 'incidents/:id/invite', to: 'incidents#invite'
+  post '/incidents/invite', to: 'incidents#invite'
 end
