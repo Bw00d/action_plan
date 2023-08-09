@@ -79,6 +79,10 @@ class IncidentsController < ApplicationController
     @invitee = User.find_by(email: params[:invite])
     if @invitee
       @incident.users << @invitee
+    else
+      @invited = User.create!(email: params[:invite], password: "Changm3!", password_confirmation: "Changm3!", 
+                              first_name: "Firstname", last_name: "Lastname")
+      @incident.users << @invited
     end
     respond_to do |format|
         format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
