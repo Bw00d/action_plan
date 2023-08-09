@@ -85,8 +85,6 @@ class IncidentsController < ApplicationController
       @incident.users << @invited
     end
     respond_to do |format|
-        format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
-    else
       format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
     end
   end
@@ -96,8 +94,6 @@ class IncidentsController < ApplicationController
     @user = User.find(params[:user]) 
     @incident.users.delete(@user)
     respond_to do |format|
-        format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
-    else
       format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
     end
   end
@@ -117,10 +113,3 @@ class IncidentsController < ApplicationController
                                        :latitude, :longitude, :ic, :fire_behavior )
     end
 end
-
-
-
-
-
-  
-
