@@ -6,7 +6,7 @@
      <div class="panel panel-default devise-bs center-block">
       <div class="panel-heading">
         <h4>
-          <strong><%= @incident.display_incident_name %></strong>
+          <strong><%= link_to @incident.display_incident_name, @incident %></strong>
         </h4>
       </div>
      
@@ -30,7 +30,7 @@
             <ul>
               <% @users.all.each do |u| %>
                   <%= form_tag incidents_remove_user_path, method: :post do %>
-                <li><%= u.full_name %>  <%= link_to (fa_icon('times-circle')), "#", onclick: "$(this).closest('form').submit()" %>
+                <li><%= u.full_name %>  <%= link_to (fa_icon('times-circle')), "#", onclick: "$(this).closest('form').submit()", data: { confirm: 'Are you sure?' } %>
                     <%= hidden_field_tag :incident_id, @incident.id %>
                     <%= hidden_field_tag :user, u.id %>
                     
