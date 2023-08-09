@@ -65,4 +65,6 @@ Rails.application.routes.draw do
   get 'confimation'   => 'checkins/confirmations'
   # get 'incidents/:id/invite', to: 'incidents#invite'
   post '/incidents/invite', to: 'incidents#invite'
+  post '/incidents/remove-user', to: 'incidents#remove_user'
+
 end

@@ -29,7 +29,12 @@
             <h4><strong>Collaborators</strong></h4>
             <ul>
               <% @users.all.each do |u| %>
-                <li><%= u.full_name %>  <%= link_to (fa_icon('times-circle')), "javascript:;" %></li>
+                  <%= form_tag incidents_remove_user_path, method: :post do %>
+                <li><%= u.full_name %>  <%= link_to (fa_icon('times-circle')), "#", onclick: "$(this).closest('form').submit()" %>
+                    <%= hidden_field_tag :incident_id, @incident.id %>
+                    <%= hidden_field_tag :user, u.id %>
+                    
+                <% end %></li>
               <% end %>
             </ul>
             </div>
