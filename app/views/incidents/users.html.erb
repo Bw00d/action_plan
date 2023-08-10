@@ -30,7 +30,11 @@
             <ul>
               <% @users.all.each do |u| %>
                   <%= form_tag incidents_remove_user_path, method: :post do %>
-                <li><%= u.full_name %>  <%= link_to (fa_icon('times-circle')), "#", onclick: "$(this).closest('form').submit()", data: { confirm: 'Are you sure?' } %>
+                <li><%= u.full_name %> 
+                <% unless u == @incident.owner %> 
+                  <%= link_to (fa_icon('times-circle')), "#", onclick: "$(this).closest('form').submit()", data: { confirm: 'Are you sure?' } %>
+
+                <% end %> 
                     <%= hidden_field_tag :incident_id, @incident.id %>
                     <%= hidden_field_tag :user, u.id %>
                     
@@ -47,4 +51,5 @@
     </div> <!-- responsive wrapper -->
   </div>  <!-- row -->
 </div>   <!-- incident container -->
+
 
