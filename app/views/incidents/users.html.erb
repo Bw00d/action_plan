@@ -31,7 +31,7 @@
               <% @users.all.each do |u| %>
                   <%= form_tag incidents_remove_user_path, method: :post do %>
                 <li><%= u.full_name %> 
-                <% unless u == @incident.owner %> 
+                <% unless u.id == @incident.user_id %> 
                   <%= link_to (fa_icon('times-circle')), "#", onclick: "$(this).closest('form').submit()", data: { confirm: 'Are you sure?' } %>
 
                 <% end %> 

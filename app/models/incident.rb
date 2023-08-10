@@ -24,6 +24,6 @@ class Incident < ApplicationRecord
   end
 
   def owner
-    User.find(self.user_id)
+      User.find(self.user_id) 
   end
 end

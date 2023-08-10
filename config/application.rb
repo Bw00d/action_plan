@@ -18,6 +18,11 @@ module ActionPlan
     # here. Application configuration should go into files in
     # config/initializers -- all .rb files in that directory are automatically
     # loaded.
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    config.assets.paths << "#{Rails.root}/app/assets/fonts" 
+    
     config.middleware.use Grover::Middleware
 
     # Locale config
