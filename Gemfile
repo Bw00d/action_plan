@@ -65,6 +65,7 @@ gem 'select2-rails'
 gem 'exception_notification'
 gem 'best_in_place', '~> 3.0.1'
 gem "font-awesome-rails"
+gem 'font_awesome5_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'american_date'
 gem 'aws-sdk-s3', require: false
