@@ -32,7 +32,7 @@
                   <%= form_tag incidents_remove_user_path, method: :post do %>
                 <li><%= u.full_name %> 
                 <% unless u.id == @incident.user_id %> 
-                  <%= link_to (fa_icon('circle-xmark.svg')), "#", onclick: "$(this).closest('form').submit()", data: { confirm: 'Are you sure?' } %>
+                  <%= link_to (fa_icon('user-plus')), "#", onclick: "$(this).closest('form').submit()" %>
 
                 <% end %> 
                     <%= hidden_field_tag :incident_id, @incident.id %>
