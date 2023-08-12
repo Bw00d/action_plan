@@ -8,7 +8,7 @@
         <h4>
           <strong><%= @incident.display_incident_name %></strong>
         </h4>
-        <%= link_to "Users", "#{@incident.id}/users", id: "share-incident-button", class: "btn btn-success tiny float-right"  %>
+        <%= link_to "Collaborators", "#{@incident.id}/users", id: "share-incident-button", class: "btn btn-success tiny float-right"  %>
       </div>
       <%= render 'information_panel' %>
     </div>
