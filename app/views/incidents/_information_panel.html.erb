@@ -9,6 +9,7 @@
         <% if @incident.wildfire? %>
           <div>
             <div class="col-md-6 col-sm-12"><strong>Location:</strong> <%= best_in_place @incident, :location %></div>
+            <div class="col-md-6 col-sm-12"><strong>Number:</strong> <%= best_in_place @incident, :number %></div>
             <div class="col-md-6 col-sm-12"><strong>Coordinates:</strong> <%= best_in_place @incident, 
             :latitude %> x <%= best_in_place @incident, :longitude %></div>
          
