@@ -4,9 +4,9 @@ regardless of their roles %>
 <% if @incident %>
   <% unless request.path == 'plans/new' || request.path == '/incidents/new' %>
   <% unless @incident.plans.empty? %>
-    <li><%= link_to "Plans", incident_plan_path(@incident, @incident.plans.last) %></li>
+    <li><%= link_to "IAP", incident_plan_path(@incident, @incident.plans.last) %></li>
   <% else %>
-  <li><%= link_to "Plans", new_incident_plan_path(@incident) %></li>
+  <li><%= link_to "IAP", new_incident_plan_path(@incident) %></li>
   <% end %>
     <li><%= link_to "Resources", incident_resources_path(@incident) %></li>
   <% end %>
