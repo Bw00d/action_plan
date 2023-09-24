@@ -35,8 +35,8 @@
                   <%#= link_to (image_tag'times-circle-solid'), "#", onclick: "$(this).closest('form').submit()", class: 'remove-user' %>
 
                 <% end %> 
-                    <%#= hidden_field_tag :incident_id, @incident.id %>
-                    <%#= hidden_field_tag :user, u.id %>
+                    <%= hidden_field_tag :incident_id, @incident.id %>
+                    <%= hidden_field_tag :user, u.id %>
                     
                 <% end %></li>
               <% end %>
