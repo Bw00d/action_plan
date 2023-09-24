@@ -31,10 +31,10 @@
               <% @users.all.each do |u| %>
                   <%= form_tag incidents_remove_user_path, method: :post do %>
                 <li><%= u.full_name %> 
-                <%# unless u.id == @incident.user_id %> 
-                  <%#= link_to (image_tag'times-circle-solid'), "#", onclick: "$(this).closest('form').submit()", class: 'remove-user' %>
+                <% unless u.id == @incident.user_id %> 
+                  <%= link_to (image_tag'times-circle-solid'), "#", onclick: "$(this).closest('form').submit()", class: 'remove-user' %>
 
-                <%# end %> 
+                <% end %> 
                     <%#= hidden_field_tag :incident_id, @incident.id %>
                     <%#= hidden_field_tag :user, u.id %>
                     
