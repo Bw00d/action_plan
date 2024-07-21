@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /resources
   # GET /resources.json

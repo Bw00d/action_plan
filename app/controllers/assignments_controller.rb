@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /assignments
   # GET /assignments.json

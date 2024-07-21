@@ -1,7 +1,7 @@
 class CommoItemsController < ApplicationController
   before_action :set_commo_item, only: [:show, :edit, :update, :destroy]
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /commo_items
   # GET /commo_items.json

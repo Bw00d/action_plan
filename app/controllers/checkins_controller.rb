@@ -2,7 +2,7 @@ class CheckinsController < ApplicationController
   before_action :set_checkin, only: %i[ show edit update destroy ]
 
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /checkins or /checkins.json
   def index

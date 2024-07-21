@@ -1,7 +1,7 @@
 class SafetyMessagesController < ApplicationController
   before_action :set_safety_message, only: [:show, :edit, :update, :destroy]
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /safety_messages
   # GET /safety_messages.json

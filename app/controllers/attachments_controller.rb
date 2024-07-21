@@ -2,7 +2,7 @@ class AttachmentsController < ApplicationController
   before_action :set_attachment, only: %i[ update destroy ]
 
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /attachments or /attachments.json
   def index

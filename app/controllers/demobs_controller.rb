@@ -2,7 +2,7 @@ class DemobsController < ApplicationController
   before_action :set_demob, only: %i[ show edit update destroy ]
   
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /demobs or /demobs.json
   def index

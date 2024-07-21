@@ -1,7 +1,7 @@
 class CommoPlansController < ApplicationController
   before_action :set_commo_plan, only: [:show, :edit, :update, :destroy]
   include SkipAuthorization
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
   # GET /commo_plans
   # GET /commo_plans.json
