@@ -1,27 +1,36 @@
 -Set up email functions
 
 - Add ajax to resource forms
+
 #cover
 - Update block when padding is changed
+- Fix grover so image prints
+- allow for placing multiple images
 
 #Style
 -get grover to access stylesheets
 -get font-awesome icons working in production
 
 #211
-!-Calendars for bip dates
 
+- Fix calendar so today's date is highlighted
 
 #collaboration
--Set up associations so multiple users can share incident
+- Improve the collaboration experience to allow for searching of signed up resources
+- Send email when envited to an incident
+
 
 #deleting incident
--Make it more difficult to delete incident 
+- Change it so only incident owner can delete incident
 
 
 #204s
 -refactor multiple pages
 -gray out resources already assigned to other 204s
+- Add 
+
+#203
+- Fix so that spaces self adjust when many resources are added to a function
 
 #Demob
 -Set up a checkin form that is open to non-users
@@ -32,7 +41,8 @@
 -Update Ruby
 -Update stack
 
-
+#Printing
+- Fix functionality for printing ICS 221
 
 1-13-23
 

@@ -149,9 +149,9 @@
       <div class="row">
         <div id="control-operations" class="center r-b form-box short-rows xs-padding-left">
           <span class="small">CONTROL OPERATIONS</span><br>
-            <%= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea'  %>
+            <%= best_in_place @assignment, :control_operations, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: 'wide-textarea solid'  %>
         </div>
-        <div class="bl center form-row short-rows xs-padding-left">
+        <div class="bl center form-row short-rows xs-padding-left solid">
           <span class="small">SPECIAL INSTRUCTIONS</span><br>
             <%= best_in_place @assignment, :special_instructions, :as => :textarea, :place_holder => "(ADD CONTENT OR LEAVE BLANK)",:display_with => :simple_format, :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', :cancel_button_class => "btn btn-default sm-margin-left tiny", class: "wide-textarea"  %>
         </div>

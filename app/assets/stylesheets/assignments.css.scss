@@ -309,5 +309,9 @@ td.no-padding {
 @media print {
     div.header-row {
         background-color: #f3f3f3 !important;
+      }
     }
+div.solid {
+  z-index: 7 !important;
+  position: relative;
 }
