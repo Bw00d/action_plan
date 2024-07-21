@@ -45,21 +45,21 @@
             </td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
             <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input, place_holder: "---------" %></td>
             <td class="sm-bip-input">
               <%# if r.number_personnel != nil  %> 
                 <%= best_in_place r, :number_personnel, :as => :input %>
               <%# end %>
                 </td>
-            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
+            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input, place_holder: "------" %></td>
             <td class="datepicker-td">
               <%= form_for r, remote: true do |f| %>
-                <%= f.text_field :fwd, class: 'datepicker fwd-datepicker', remote: true  %>
+                <%= f.text_field :fwd, class: 'datepicker fwd-datepicker', remote: true %>
               <% end %>
             </td>
 
            <!--  <td class="lg-bip-input"><%#= best_in_place r, :fwd, display_as: :formatted_fwd %></td> -->
-            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input, place_holder: "----" %></td>
             <% if !r.last_work_day.blank? %>
               <td><%=  r.last_work_day.strftime("%m/%d") %></td>
             <% else %>
@@ -102,7 +102,7 @@
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
             <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input, place_holder: "---------" %></td>
             <td class="sm-bip-input">
               <% if r.number_personnel != nil  %> 
                 <%= best_in_place r, :number_personnel, :as => :input %>
@@ -110,7 +110,7 @@
                 </td>
             <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
             <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input, place_holder: "----" %></td>
             <% if !r.last_work_day.blank? %>
               <td><%=  r.last_work_day.strftime("%m/%d") %></td>
             <% else %>
@@ -148,17 +148,17 @@
         </tr>
         <% @resources.on_rnr.each do |r|  %>
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
-            <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
+            <td class="md-bip-input"><%= best_in_place r, :position, :as => :input, place_holder: "------" %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input, place_holder: "------" %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input, place_holder: "------"%></td>
             <td class="sm-bip-input">
               <% if r.number_personnel != nil  %> 
                 <%= best_in_place r, :number_personnel, :as => :input %>
               <% end %>
                 </td>
-            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd %></td>
-            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input %></td>
+            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input, place_holder: "------" %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd, place_holder: "------" %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input, place_holder: "----" %></td>
             <% if !r.last_work_day.blank? %>
               <td><%=  r.last_work_day.strftime("%m/%d") %></td>
             <% else %>
