@@ -7,7 +7,7 @@ class Objective < ApplicationRecord
       
       objectives = self.plan.objectives
       if !objectives.empty?
-        self.order = objectives.last.order + 1
+         self.order = objectives.maximum(:order) + 1
       else
         self.order = 1
       end

@@ -14,10 +14,3 @@ FactoryBot.define do
     r_and_r { false }
   end
 end
-
-# spec/factories/demobs.rb (if you don't have this already)
-FactoryBot.define do
-  factory :demob do
-    association :resource
-  end
-end
