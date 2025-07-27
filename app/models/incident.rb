@@ -2,7 +2,9 @@ class Incident < ApplicationRecord
   has_many :plans, dependent: :destroy
   has_many :resources, dependent: :destroy
   has_many :checkins
-  has_and_belongs_to_many :users
+  
+  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+  has_and_belongs_to_many :users  # shared users who can edit
 
 
   def display_incident_name
@@ -23,7 +25,7 @@ class Incident < ApplicationRecord
     total
   end
 
-  def owner
-      User.find(self.user_id) 
-  end
+  # def owner
+  #     User.find(self.user_id) 
+  # end
 end

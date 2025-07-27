@@ -13,7 +13,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
 require 'selenium/webdriver'
-require 'capybara-screenshot/rspec'
+# require 'capybara-screenshot/rspec'
 require 'capybara/email/rspec'
 require 'devise'
 
@@ -39,8 +39,14 @@ ActiveRecord::Migration.maintain_test_schema!
 # ---------------------- Begin Capybara configurations ----------------------
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-  # The window size is important for screenshots
   options.add_argument '--window-size=1366,768'
+  
+  # Only run headless unless SHOW_BROWSER is set
+  unless ENV['SHOW_BROWSER']
+    options.add_argument '--headless'
+    options.add_argument '--disable-gpu'
+  end
+  
   Selenium::WebDriver::Chrome::Service.driver_path = '/usr/local/bin/chromedriver'
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
@@ -57,7 +63,7 @@ Capybara.always_include_port = true
 Capybara.default_max_wait_time = 5
 
 # capybara-screenshot gem screebshot save path
-Capybara.save_path = "#{::Rails.root}/tmp/capybara_screenshots"
+# Capybara.save_path = "#{::Rails.root}/tmp/capybara_screenshots"
 
 # Allows finding and interacting with hidden elements. Useful when working
 # with default browser elements that are hidden by Bootstrap (e.g., file
@@ -68,7 +74,7 @@ Capybara.ignore_hidden_elements = false
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
+  config.include FactoryBot::Syntax::Methods
   # Display all JavaScript errors (from the headless browser console) when
   # running JS-enabled feature specs with Selenium and Chrome. Should also
   # work with Firefox.

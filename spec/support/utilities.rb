@@ -18,3 +18,20 @@ end
 def update_incident_user_id(incident, user)
   incident.update_attributes(user_id: user.id)
 end
+
+def create_incident
+  click_link "New Incident"
+  fill_in '#incident-name', with: "Swamp Goat"
+  click_link 'NEXT'
+  select "Wildfire", from: "incident_incident_type"
+  click_link 'NEXT'
+  select "Type 3", from: "incident_complexity"
+  click_link 'NEXT'
+  fill_in "#incident_location", with: "Boise, ID"
+  click_link 'NEXT'
+  fill_in "#incident_start_date", with: Date.today
+  click_link 'CREATE INCIDENT'
+end 
+def create_new_incident(user) Incident.create!(name: "Swamp Goat", incident_type: "Wildfire", 
+    complexity: "Type 3", location: "Fairbanks, AK", user_id: user.id, start_date: Date.today) 
+end

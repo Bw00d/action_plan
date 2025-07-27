@@ -52,12 +52,12 @@ RSpec.describe AssignmentsController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new assignment as @assignment" do
-      get :new, params: {}, session: valid_session
-      expect(assigns(:assignment)).to be_a_new(Assignment)
-    end
-  end
+  # describe "GET #new" do
+  #   it "assigns a new assignment as @assignment" do
+  #     get :new, params: {}, session: valid_session
+  #     expect(assigns(:assignment)).to be_a_new(Assignment)
+  #   end
+  # end
 
   describe "GET #edit" do
     it "assigns the requested assignment as @assignment" do

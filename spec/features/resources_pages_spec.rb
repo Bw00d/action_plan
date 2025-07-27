@@ -7,21 +7,21 @@ describe 'Resources Page', type: :feature  do
   before do 
     update_incident_user_id(incident, admin_user)
     visit "/incidents/#{incident.id}/resources"
-     end
+  end
 
  subject { page }
 
   describe 'The visiting the resources page with no assigned resources' do 
-      context 'It should have the right title' do
+    context 'It should have the right title' do
       it { should have_title ('Action Plan | Resources') }
     end
 
-      context 'The page should have the right tab links' do
-        it { should have_link("ICS-211")}
-        it { should have_link("Glide Path")}
-        it { should have_link("Demob List")}
-        it { should have_link("Resource Tally")}
-      end
+    context 'The page should have the right tab links' do
+      it { should have_link("ICS-211")}
+      it { should have_link("Glide Path")}
+      it { should have_link("Demob List")}
+      it { should have_link("Resource Tally")}
+    end
 
     context 'It should have a notice that no resources are assigned' do
       it { should have_text ('There are no resources assigned to this incident.')}
@@ -30,12 +30,15 @@ describe 'Resources Page', type: :feature  do
 
   describe 'Describe adding resources to the page', type: :feature, js: true do
     
-    scenario 'When clicking new resource link it should show the resource form' do
-      before { find("#new-resource").click }
+    describe 'When clicking new resource link it should show the resource form' do
+      before do
+        find("#new-resource").click 
+      end
       it { should have_text 'New Resource'}
     end
 
-    describe 'When filing in form it should create a new resource' do 
+    describe 'When filling in form it should create a new resource' do 
+      before do
         find("#new-resource").click 
         fill_in '#resource_name', with: 'Jim Dandy'
         select 'OVERHEAD', from: '#resource_category'
@@ -43,6 +46,7 @@ describe 'Resources Page', type: :feature  do
         fill_in "CHECKIN DATE", with: Date.today
         fill_in "FIRST WORK DAY", with: Date.today
         fill_in "ASSIGNMENT LENGTH", with: 14
+      end
       it { should have_text "Jim Dandy" }
     end
   end

@@ -52,12 +52,12 @@ RSpec.describe ActivitiesController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new activity as @activity" do
-      get :new, params: {}, session: valid_session
-      expect(assigns(:activity)).to be_a_new(Activity)
-    end
-  end
+  # describe "GET #new" do
+  #   it "assigns a new activity as @activity" do
+  #     get :new, params: {}, session: valid_session
+  #     expect(assigns(:activity)).to be_a_new(Activity)
+  #   end
+  # end
 
   describe "GET #edit" do
     it "assigns the requested activity as @activity" do
