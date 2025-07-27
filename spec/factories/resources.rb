@@ -1,23 +1,23 @@
+# spec/factories/resources.rb
 FactoryBot.define do
   factory :resource do
-    name {"MyString"}
-    leader {"MyString"}
-    number_personnel { 1 }
-    position {"MyString"}
-    agency {"MyString"}
-    order_number {"MyString"}
-    fwd {"2019-08-04"}
-    checkin_date {"2019-08-04"}
-    assignment_length { 14 }
     association :incident
-    category {"Overhead"}
-    
-    # trait :assigned do
-    #   status { 'assigned' }
-    # end
-    
-    # trait :available do
-    #   status { 'available' }
-    # end
+    name { "Test Resource" }
+    position { "Squad Boss" }
+    agency { "USFS" }
+    order_number { "12345" }
+    number_personnel { 5 }
+    assignment_length { 14 }
+    category { "OVERHEAD" }
+    fwd { Date.today }
+    release_date { nil }
+    r_and_r { false }
+  end
+end
+
+# spec/factories/demobs.rb (if you don't have this already)
+FactoryBot.define do
+  factory :demob do
+    association :resource
   end
 end

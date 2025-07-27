@@ -12,7 +12,6 @@ class Resource < ApplicationRecord
    validates :agency, presence: true
    validates :order_number, presence: true
    validates :number_personnel, presence: true
-   validates :number_personnel, presence: true
    validates :assignment_length, presence: true
    validates :category, presence: true
  
