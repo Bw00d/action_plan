@@ -1,10 +1,9 @@
+# spec/factories/commo_plans.rb
 FactoryBot.define do
   factory :commo_plan do
-    incident_id {1}
-    date_prepared {"2020-06-10 18:14:46}"}
-    ops_period_start {"2020-06-10 18:14:46}"}
-    ops_period_end {"2020-06-10 18:14:46}"}
-    special_instructions {"MyText"}
-    prepared_by {"MyText"}
+    association :plan
+    ops_period { "0600-1800" }
+    date_prepared { Date.today.to_s }
+    prepared_by { "Test Preparer" }
   end
 end

@@ -1,6 +1,8 @@
+
 FactoryBot.define do
   factory :plan do
-    date {"2019-05-31"}
-    user_id {1}
+    association :user
+    association :incident
+    date { Date.today }
   end
 end

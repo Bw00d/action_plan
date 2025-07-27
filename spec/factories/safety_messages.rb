@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :safety_message do
     hazards {"MyText"}
     narrative {"MyText"}
-    prodced_by {"MyString"}
-    plan_id {1}
+    prepared_by {"MyString"}
+    association :plan
   end
 end
