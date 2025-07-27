@@ -41,10 +41,9 @@ class Assignment < ApplicationRecord
   end
 
   def update_resources(id)
-    if self.ops_personnel_ids.include?(id)
+    if self.ops_personnel_ids && self.ops_personnel_ids.include?(id)
       arr = self.ops_personnel_ids.reject{|e| e == id}
       self.update_attributes(ops_personnel_ids: arr)
     end
-    
   end
 end

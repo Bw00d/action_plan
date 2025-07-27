@@ -18,9 +18,7 @@ class Plan < ApplicationRecord
   
 
   def duplicate_plan
-    puts "DEBUG: duplicate_plan called, incident.plans.count = #{self.incident.plans.count}"
     if self.incident.plans.count >= 2
-      puts "DEBUG: Duplicating from previous plan"
       self.duplicate_objectives
       self.duplicate_teams
       self.duplicate_assignments
@@ -71,7 +69,6 @@ class Plan < ApplicationRecord
   end
 
   def add_attachments
-    puts "DEBUG: add_attachments called"
     attachments = ["ORGANIZATION LIST", "ASSIGNMENT LIST", "COMMUNITCATIONS PLAN", "MEDICAL PLAN", "FINANCE MESSAGE","INCIDENT MAP",
                     "TRAFFIC PLAN", "_______________", "_______________", "_______________", "_______________", "_______________"]
     attachments.each do |a|
