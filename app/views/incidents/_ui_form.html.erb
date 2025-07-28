@@ -53,7 +53,7 @@
     </div>
 
     <!-- Location -->
-    <div class="form-incident-loction form-attributes">
+    <div class="form-incident-location form-attributes">
       <p class="convo" >
         Where is this incident located?
       </p>
@@ -65,11 +65,11 @@
     </div>
 
     <!-- Start Date -->
-    <div class="form-incident-loction form-attributes">
+    <div class="form-start-date form-attributes">
       <p class="convo" >
         What was the start date?
       </p>
-      <%= form.label :location, "Start Date" %>
+      <%= form.label :start_date, "Start Date" %>
       <%= form.text_field :start_date, id: :incident_start_date, class: 'datepicker form-control start-date-picker' %>
       <div class="next-btn-container hideable ">
          <%= form.submit 'CREATE INCIDENT', class: 'btn btn-success tiny' %>
@@ -86,5 +86,5 @@
     if (e.keyCode == 13) {
         return false;
     }
-});
+  });
 </script>

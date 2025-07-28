@@ -1,54 +1,74 @@
 require 'rails_helper'
-include Warden::Test::Helpers
-Warden.test_mode!
 
-feature 'Incident pages', :devise do
+RSpec.describe 'Incident Show Page', type: :feature, js: true do
+  let(:user) { create(:user) }
 
-  after(:each) do
-    Warden.test_reset!
+  before do
+    login_as(user, scope: :user)
+    create(:incident, name: 'Boundary', user_id: user.id)
+    create(:incident, name: 'Swamp Goat', user_id: user.id)
   end
 
-  before(:each) do 
-    @admin_user =  FactoryBot.create(:admin_user)
-    login_as(@admin_user, scope: :user) 
-
-  end 
-
-
-  describe 'creating and incident', js: true do 
-    before do
-      create_new_incident(@admin_user)
-      visit '/incidents'
-    end
-    
   subject { page }
-
-    it 'creates the incident' do
-      expect(Incident.count).to  eq(1)
-    end
-  end
 
   describe 'visiting the incident page' do 
     before do
       visit '/incidents'
-      click_link "Swamp Goat"
+      click_link "Boundary"
     end
-    it { should have_title ("Action Plan | #{@incident.name}") }
+    it { should have_title ("Action Plan | Boundary") }
+
+    context 'it should have the right links' do
+     it { should have_link 'IAP'}
+     it { should have_link 'Resources'}
+     it { should have_link 'Back'}
+    end
+
+    context 'it should display the incident name and type' do
+      it { should have_text ("Boundary – Wildfire") }
+    end
+
+    context 'should display a share link' do
+      it { should have_link 'Collaborators'}
+    end
+
+    context 'there should have a resource panel' do
+      it { should have_content 'There are no resources assigned to this incident.'}
+      it { should have_link('') { have_css('#new-resource') } } 
+      it { should_not have_css('#resource-form') }
+      
+    end
+
+    describe 'clicking the new resource link' do
+      before do
+        find('#new-resource').click
+      end
+
+      context 'it should display the new resource form' do
+        it { should have_css('#resource-form') }
+        it { should have_link('') { have_css('#new-resource') } } 
+      end
+    end
   end
 
+  # describe 'adding a resource with the resource form' do
+  #   before do
+  #     visit '/incidents'
+  #     click_link "Boundary"
+  #     find('#new-resource').click
+  #     within('.resource-form')  # Adjust selector as needed
+  #       add_resource(
+  #         name: "Big State Wildfire",
+  #         position: "ENG6",
+  #         category: "EQUIPMENT"
+  #       )
+  #   end
 
-
-  # it 'should have the right links' do
-  #   expect(page).to have_link ('Action Plan')
-  #   expect(page).to have_link ('Back')
+  #   context 'it should display the new resource and hide the form' do
+  #     it { have_content("Big State Wildfire") }
+  #     it { should have_css('#resource-form') }
+  #   end
   # end
 
-  # it 'should display the incident name and type' do
-  #   expect(page).to have_text ("#{incident.name} – #{incident.incident_type}")
-  # end
-
-  # it 'should display a share link' do
-  #   expect(page).to have_link 'Invite'
-  # end
-
+  
 end

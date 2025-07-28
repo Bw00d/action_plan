@@ -1,7 +1,9 @@
 <div id="resource-panel" class="panel panel-default">
 <!-- Default panel contents -->
   <div class="panel-heading"><strong>Resources</strong> <%#= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
-    <%= link_to "javascript:;" do %>
+
+    <!-- <%#= link_to "javascript:;" do %>  this removes functionality of resoruce form on this page-->
+    <%= link_to incident_resources_path(@incident) do %>
       <%= image_tag 'user-plus.svg', class: "float-right", id: 'new-resource' %>
     <% end %>
   </div>

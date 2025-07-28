@@ -1,0 +1,13 @@
+<tr id="resource_<%= resource.id %>">
+  <td class="sm-padding-left sm-bip-input"><%= resource.cat %><%= best_in_place resource, :order_number, :as => :input %></td>
+  <td class="lg-bip-input"><%= best_in_place resource, :name, :as => :input %></td>
+  <td class="md-bip-input"><%= best_in_place resource, :position, :as => :input %></td>
+  <td class="lg-bip-input"><%= best_in_place resource, :leader, :as => :input %></td>
+  <td class="sm-bip-input">
+    <% if resource.number_personnel != nil  %> 
+      <%= best_in_place resource, :number_personnel, :as => :input %>
+    <% end %>
+  </td>
+  <td class="md-bip-input"><%= best_in_place resource, :agency, :as => :input %></td>
+  <td class="lg-bip-input"><%= resource.last_work_day %></td>
+</tr>

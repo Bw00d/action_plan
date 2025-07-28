@@ -11,7 +11,7 @@ class IncidentsController < ApplicationController
   # GET /incidents
   # GET /incidents.json
   def index
-    @incidents = current_user.incidents
+    @incidents = Incident.where(user_id: current_user.id)
   end
 
   # GET /incidents/1

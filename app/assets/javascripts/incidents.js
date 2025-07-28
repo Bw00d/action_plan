@@ -39,10 +39,10 @@ $(document).on("turbolinks:load", function() {
 
   // Incident Resources
 
-  $("#new-resource").click(function () {
-    $("#new-resource").hide();
-    $("#resource-form").show();
-  });
+  // $("#new-resource").click(function () {
+  //   $("#new-resource").hide();
+  //   $("#resource-form").show();
+  // });
 
   $('#cancel-resource-button').click(function() {
     $('#resource-form').hide();
@@ -50,4 +50,23 @@ $(document).on("turbolinks:load", function() {
     $("html, body").animate({ scrollTop: 0 }, "slow");
     return false;
   });
+
+  // new incident ui
+
+  $('.form-incident-name').show();
+  $('.attribute').on('keyup', function() {
+    if ($(this).val() !== '') {
+      // $('div.next-btn-container').css('visibility', 'visible');
+      $(this).next('div.next-btn-container').css('visibility', 'visible');
+    }
+  });
+  $('.start-date-picker').on('click', function() {
+    $(this).next('div.next-btn-container').css('visibility', 'visible');
+  });
+  $('.next-btn').click(function(){
+    $(this).closest('.form-attributes').next(':hidden:first').fadeIn(1000).show();
+    $(this).closest('.form-attributes').hide();
+  })
+
+ 
 });

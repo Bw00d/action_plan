@@ -3,6 +3,8 @@ require 'rails_helper'
 describe 'Index page', type: :feature, js: true do
     before do 
       create_and_signin_user
+      create_new_incident(User.last)
+      click_link 'Swamp Goat'
       click_link 'Plan' 
     end
     

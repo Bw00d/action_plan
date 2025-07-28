@@ -75,23 +75,6 @@ $(document).on("turbolinks:load", function() {
 //   })
 //   .change();
 
-// new incident ui
-
-  $('.form-incident-name').show();
-  $('.attribute').on('keyup', function() {
-    if ($(this).val() !== '') {
-      // $('div.next-btn-container').css('visibility', 'visible');
-      $(this).next('div.next-btn-container').css('visibility', 'visible');
-    }
-  });
-  $('.start-date-picker').on('click', function() {
-    $(this).next('div.next-btn-container').css('visibility', 'visible');
-  });
-  $('.next-btn').click(function(){
-    $(this).closest('.form-attributes').next(':hidden:first').fadeIn(1000).show();
-    $(this).closest('.form-attributes').hide();
-  })
-
  
 });
 

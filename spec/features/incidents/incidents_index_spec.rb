@@ -1,47 +1,35 @@
 require 'rails_helper'
 
-describe 'Incident Index Page', type: :feature, js: true do
-  let(:admin_user) { FactoryBot.create(:admin_user) }
-  let(:ordinary_user) { FactoryBot.create(:user) }
+RSpec.describe 'Incidents', type: :feature, js: true do
+  let(:user) { create(:user) }
 
-  # describe 'Before incidents are created', type: :feature, js: true do
-  #   before { login_as(admin_user) }
-    
-  #   it 'Home page should have the link to incidents' do
-  #     visit '/'
-  #     expect(page).to have_link ('Incidents')
-  #     click_link 'Incidents'
-  #     expect(page).to have_title 'Action Plan | Incidents'
-  #   end
-
-  #   it 'Should prompt to add an incident' do
-      
-  #     visit '/incidents'
-  #     expect(page).to have_text 'Begin by adding an incident.'
-  #     expect(page).to have_link 'New Incident'
-  #   end
-  # end
-
-  describe 'After incidents are created', type: :feature, js: true do
-    before { login_as(admin_user) }
-    let(:incident) { FactoryBot.create(:incident)}
-    let(:another_incident) { FactoryBot.create(:incident)}
-    before {
-      update_incident_user_id(incident, admin_user)
-      update_incident_user_id(another_incident, admin_user)
-    }
-
-    it 'should have a link to the incidents' do
-      visit '/incidents'
-      expect(page).to have_link (incident.name)
-      expect(page).to have_link (another_incident.name)
-    end
-
-    it 'should link to the incident' do
-      visit '/incidents'
-      click_link (incident.name)
-      expect(page).to have_title ("Action Plan | #{incident.name}")
-    end
+  before do
+    login_as(user, scope: :user)
   end
 
+  describe 'incidents index page' do
+    context 'when no incidents exist' do
+      it 'shows empty state message and new incident button' do
+        visit incidents_path
+        
+        expect(page).to have_content('Begin by adding an incident.')
+        expect(page).to have_link('New Incident')
+      end
+    end
+
+    context 'when incidents already exist' do
+      before do
+        create(:incident, name: 'Forest Fire', user_id: user.id)
+        create(:incident, name: 'Grass Fire', user_id: user.id)
+      end
+
+      it 'displays all incidents' do
+        visit incidents_path
+        
+        expect(page).not_to have_content('Begin by adding an incident.')
+        expect(page).to have_link('Forest Fire')
+        expect(page).to have_link('Grass Fire')
+      end
+    end
+  end
 end

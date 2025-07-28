@@ -12,11 +12,11 @@ FactoryBot.define do
   #   protection {"Critical"}
   #   ic {Faker::Name.name}
   # end
-factory :incident do
-  name { "Test Incident" }
-  incident_type { "Wildfire" }
-  complexity {"Type 3"}
-  number { "001" }
-  association :owner, factory: :user  # This creates the owner relationship
-end
+  factory :incident do
+    name { "Test Incident" }
+    incident_type { "Wildfire" }
+    complexity {"Type 3"}
+    number { "001" }
+    association :owner, factory: :user  # This creates the owner relationship
+  end
 end
