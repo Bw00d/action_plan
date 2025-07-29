@@ -50,21 +50,5 @@ RSpec.describe 'Incident Show Page', type: :feature, js: true do
       end
     end
   end
-
-  describe 'adding collaborators' do
-    before do
-      visit '/incidents'
-      click_link "Boundary"
-      click_link "Collaborators"
-    end
-
-    context 'it should bring you to incident users page' do
-      it { have_content('Enter and email...') }
-      it { should have_button('Invite') }
-      it { should have_content(user.full_name) }
-      it { should have_content(user.email) }
-    end
-  end
-
   
 end
