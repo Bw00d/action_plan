@@ -39,10 +39,10 @@ $(document).on("turbolinks:load", function() {
 
   // Incident Resources
 
-  // $("#new-resource").click(function () {
-  //   $("#new-resource").hide();
-  //   $("#resource-form").show();
-  // });
+  $("#new-resource").click(function () {
+    $("#new-resource").hide();
+    $("#resource-form").show();
+  });
 
   $('#cancel-resource-button').click(function() {
     $('#resource-form').hide();

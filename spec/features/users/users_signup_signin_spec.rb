@@ -7,7 +7,7 @@ def login_via_form(email, password)
   click_button 'Sign in'
 end
 
-def click_navbar_dropdown_item(link_text)
+def click_navbar_dropdown_item(link_text, user)
   # Open Bootstrap dropdown at navbar
   find('li.dropdown', text: user.full_name).click
   click_on link_text
@@ -69,7 +69,7 @@ describe 'User self-management via UI', type: :feature, js: true do
   it 'signs out' do
     login_as(user)
     visit '/'
-    click_navbar_dropdown_item('Sign out')
+    click_navbar_dropdown_item('Sign out', user)
     expect(page).to have_link('Sign in')
   end
 
@@ -77,11 +77,13 @@ describe 'User self-management via UI', type: :feature, js: true do
     login_as(user)
     visit '/'
 
-    click_navbar_dropdown_item('Edit profile')
+    click_navbar_dropdown_item('Edit profile', user)
     expect(page).to have_current_path(edit_user_registration_path)
 
     # Do not change email or else Devise will require reconfirmation
-    fill_user_fields(valid_attributes.except(:email))
+    # Only fill in first and last name, not password fields
+    fill_in 'First name', with: valid_attributes[:first_name]
+    fill_in 'Last name', with: valid_attributes[:last_name]
     fill_in 'Current password', with: user.password
     click_button 'Update'
 
@@ -91,8 +93,9 @@ describe 'User self-management via UI', type: :feature, js: true do
   it 'performs password recovery (creates a new password)' do
     visit new_user_session_path
     click_link 'Forgot your password?'
+    expect(page).to have_current_path(new_user_password_path)
     fill_in 'E-mail', with: user.email
-    click_button 'Send me reset password instructions'
+    click_button class: 'btn-primary'
 
     expect(page).to have_text I18n.t('devise.passwords.send_instructions')
 
@@ -123,9 +126,10 @@ describe 'User self-management via UI', type: :feature, js: true do
         # Our factory creates users with confirmed e-mails
         visit new_user_session_path
         click_link "Didn't receive confirmation instructions?"
+        expect(page).to have_current_path(new_user_confirmation_path)
         fill_in 'E-mail', with: user.email
         expect do
-          click_button 'Resend confirmation instructions'
+          click_button class: 'btn-primary'
           # Expectation must be inside expect block to force Capybara to wait
           expect(page).to have_text I18n.t(
             'errors.messages.already_confirmed'
@@ -141,8 +145,10 @@ describe 'User self-management via UI', type: :feature, js: true do
 
         visit new_user_session_path
         click_link "Didn't receive confirmation instructions?"
+        expect(page).to have_current_path(new_user_confirmation_path)
         fill_in 'E-mail', with: user.email
-        click_button 'Resend confirmation instructions'
+        save_and_open_page if ENV['DEBUG']
+        click_button class: 'btn-primary'
 
         expect(page).to have_text I18n.t(
           'devise.confirmations.send_instructions'
@@ -194,8 +200,9 @@ describe 'User self-management via UI', type: :feature, js: true do
 
       visit new_user_session_path
       click_link "Didn't receive unlock instructions?"
+      expect(page).to have_current_path(new_user_unlock_path)
       fill_in 'E-mail', with: user.email
-      click_button 'Resend unlock instructions'
+      click_button class: 'btn-primary'
 
       expect(page).to have_text I18n.t('devise.unlocks.send_instructions')
 
@@ -216,9 +223,10 @@ describe 'User self-management via UI', type: :feature, js: true do
       # Our factory creates users with confirmed e-mails
       visit new_user_session_path
       click_link "Didn't receive unlock instructions?"
+      expect(page).to have_current_path(new_user_unlock_path)
       fill_in 'E-mail', with: user.email
       expect do
-        click_button 'Resend unlock instructions'
+        click_button class: 'btn-primary'
         # Expectation must be inside expect block to force Capybara to wait
         expect(page).to have_text I18n.t('errors.messages.not_locked')
       end.not_to change(ActionMailer::Base.deliveries, :count)

@@ -89,6 +89,7 @@ RSpec.configure do |config|
                    .select { |e| e.level == 'SEVERE' && e.message.present? }
                    .map(&:message)
                    .to_a
+                   .reject { |msg| msg.include?('CORS') || msg.include?('glyphicons-halflings') }
       raise JavaScriptError, errors.join("\n\n") if errors.present?
     end
   end

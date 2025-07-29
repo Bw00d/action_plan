@@ -51,24 +51,20 @@ RSpec.describe 'Incident Show Page', type: :feature, js: true do
     end
   end
 
-  # describe 'adding a resource with the resource form' do
-  #   before do
-  #     visit '/incidents'
-  #     click_link "Boundary"
-  #     find('#new-resource').click
-  #     within('.resource-form')  # Adjust selector as needed
-  #       add_resource(
-  #         name: "Big State Wildfire",
-  #         position: "ENG6",
-  #         category: "EQUIPMENT"
-  #       )
-  #   end
+  describe 'adding collaborators' do
+    before do
+      visit '/incidents'
+      click_link "Boundary"
+      click_link "Collaborators"
+    end
 
-  #   context 'it should display the new resource and hide the form' do
-  #     it { have_content("Big State Wildfire") }
-  #     it { should have_css('#resource-form') }
-  #   end
-  # end
+    context 'it should bring you to incident users page' do
+      it { have_content('Enter and email...') }
+      it { should have_button('Invite') }
+      it { should have_content(user.full_name) }
+      it { should have_content(user.email) }
+    end
+  end
 
   
 end
