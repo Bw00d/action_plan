@@ -7,10 +7,10 @@ class Plan < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :objectives, dependent: :destroy
   has_many :activities, dependent: :destroy
-  has_one :commo_plan
-  has_one :safety_message
+  has_one :commo_plan, dependent: :destroy
+  has_one :safety_message, dependent: :destroy
   has_many :teams, dependent: :destroy
-  has_one :cover
+  has_one :cover, dependent: :destroy
   has_many :attachments, dependent: :destroy
   validates_uniqueness_of :date, :scope => :incident_id
   after_create :duplicate_plan

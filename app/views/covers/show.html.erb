@@ -2,35 +2,14 @@
 <div class="container">
   <div class="col-xs-12 col-lg-8 center-block">
 <!-- Begin the tabrows -->
-    <div class="row">     
-      <div class="plan-panel-head"> 
-        <ul class="tabrow">
-          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
-          <li id="selected" class="selected"><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
-          <li><%= link_to "202", "../../#{@plan.id}/202" %></li>
-            <li><%= link_to "203", "../../#{@plan.id}/203" %></li>
-            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
-            <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
-            <li><%= link_to "206", '#' %></li>
-            <li><%= link_to "220", '#' %></li>
-          <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
-        </ul>
-      </div>    
-      <div class="masking-tape"></div>
-    </div>   
+    <%= render 'tabrows' %>
 <!-- End the tabrows -->
     <div class="row">
       <div id="cover" data-url="<%= 'sort_checkins_path' %>">
 <!-- Display blocks -->
        <% @blocks.each do |b| %>
-       <div>
-         <div class="new-block-form">
-          <%= form_for @block do |f| %>
-            <%= f.hidden_field :cover_id, value: @cover.id %>
-            <%= f.hidden_field :position, id: 'new-block-position' %>
-            <%= f.submit '+', class: "new-block-button" %>
-          <% end %>
-        </div>
+         <div>
+               <%#= render 'new_block_form' %>
 
   <!-- Style control panel -->
          <div class="style-controls">
@@ -100,6 +79,7 @@
           <% end %>
           <div style="height: <%= b.bottom_padding %>" class="bottom-padding"><div class="resize-padding"></div></div>
         </div> 
+            <%= render 'new_block_form' %>
        </div>
        <% end %>
 <!-- End blocks display -->   
