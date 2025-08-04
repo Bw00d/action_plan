@@ -23,9 +23,9 @@ RSpec.describe 'Incident users page', type: :feature, js: true do
       # it 'has only one user before adding collaborations' do
       #   # expect(@first_incident.users.count).to eq(1)
       # end
-        # it { should have_content(user.full_name) }
+        it { should have_content(user.full_name) }
         it { have_content('(Owner)') }
-        it { should have_content(user.email) }
+        # it { should have_content(user.email) }
 
         # it { have_content('Enter and email...') }
         # it { should have_button('Invite') }

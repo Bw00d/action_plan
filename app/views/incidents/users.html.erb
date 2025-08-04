@@ -28,17 +28,18 @@
         <div class="row">
             <h4><strong>Collaborators</strong></h4>
             <ul>
-              <% @users.all.each do |u| %>
-                  <%= form_tag incidents_remove_user_path, method: :post do %>
-                <li><%= u.full_name %> 
-                <% if u.id == @incident.user_id %>  (Owner)  – <%= u.email %>
-                <% else %>
-                    – <%= u.email %>  <%= link_to (image_tag'times-circle-solid'), "#", onclick: "$(this).closest('form').submit()", class: 'remove-user' %>
-                <% end %> 
-                    <%= hidden_field_tag :incident_id, @incident.id %>
-                    <%= hidden_field_tag :user, u.id %>
-                    
-                <% end %></li>
+              <li><%= @incident.owner.full_name  %> (Owner)</li>
+              <% @users.each do |u| %>
+
+                <% unless u == @incident.owner %>
+                    <%= form_tag incidents_remove_user_path, method: :post do %> 
+                <li><%= u.full_name %> – <%= u.email %> 
+                        <%= link_to (image_tag'times-circle-solid'), "#", onclick: "$(this).closest('form').submit()", class: 'remove-user' %>
+                        <%= hidden_field_tag :incident_id, @incident.id %>
+                        <%= hidden_field_tag :user, u.id %>
+                </li> 
+                    <% end %>
+                <% end %>
               <% end %>
             </ul>
             </div>
