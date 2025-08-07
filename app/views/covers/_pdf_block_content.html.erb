@@ -1,0 +1,22 @@
+<div>
+  <div id="<%= dom_id(block) %>" class="block <%= block.font_size %> <%= block.font_family %> <%= block.font_weight %> <%= block.text_style %> <%= block.bottom_padding %>" >
+    
+    <!-- Image block (including split blocks) -->
+    <% if block.image_block? %> 
+      <div class="resizable">
+        <div class="resizers <%= 'no-image' unless block.main_image.attached? %>" style="width: <%= block.image_width.presence || (block.split_block? ? '45%' : '65%') %>;">
+          <% if block.main_image.attached? %>
+            <%= image_tag block.main_image, class: "cover-image" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    
+    <!-- Text blocks -->
+    <% unless block.image_block? || block.blank? %>           
+      <%= block.content %>
+    <% end %>
+    
+    <div style="height: <%= block.bottom_padding %>" class="bottom-padding"></div>
+  </div> 
+</div>

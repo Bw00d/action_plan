@@ -8,82 +8,33 @@
       <div id="cover" data-url="<%= 'sort_checkins_path' %>">
 <!-- Display blocks -->
       <%= render 'new_block_type' %>
+       <% processed_blocks = [] %>
        <% @blocks.each do |b| %>
-         <div>
-               <%= render 'new_block_form', block: b, insertion_type: 'above' %>
-
-  <!-- Style control panel -->
-         <div class="style-controls">
-           <div class="h1-text"><h1>H1</h1></div>
-           <div class="h2-text"><h2>H2</h2></div>
-           <div class="h3-text"><h3>H3</h3></div>
-           <div class="h4-text"><h4>H4</h4></div>
-           <div class="normal-text">Norm</div>
-           <div class="semi-text semi-bold">Semi</div>
-           <div class="bold-text bold">Bold</div>
-           <div class="italic-text"><em>Italic</em></div>
-           <!-- <div class="add-image-block"><%#= fa_icon('image') %></div> -->
-           <div class="add-image-block"><%= image_tag('white-image.png') %></div>
-
-           <!-- <div class="delete-block"><%#= fa_icon('trash') %></div> --> 
-           <div class="delete-block"><%= link_to image_tag('white-trash.png'), b,  method: :delete, data: { confirm: 'Are you sure?' } %></div>
-         </div>
-  <!-- End style control panel -->
-          
-  <!-- Now block type panel -->
-         <div  id="<%= dom_id(b) %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %> <%= b.text_style %>" >
-
-            
-           <% if b.image_block? %> 
-                <div class="resizable">
-                  <div class=" resizers">
-                    <div class='resizer top-left'></div>
-                    <div class='resizer top-right'></div>
-                    <div class='resizer bottom-left'></div>
-                    <div class='resizer bottom-right'></div>
-
-                  <% if b.main_image.attached? %>
-                   <%= image_tag b.main_image, class: "cover-image" %>
-                  <% end %>
-                     <img id="temp-image"></img>
-                </div>
-              </div>
-              <div class="image-form">
-                <%= form_for b, html: {class: "edit-image-block"}  do |f| %>
-                  <%= f.file_field :main_image, class: 'small-button' %>
-                  <%= f.hidden_field :bottom_padding %>
-                  <%= f.submit "Upload" %>
-                <% end %>
-              </div>
-          <% end %>
-
-          
-          <% unless b.image_block? || b.blank? %>           
-<!-- Block form -->
-          
-
-            <%= form_for b, class: "block-form", remote: true do |f| %>
-
-              <%= f.hidden_field :id %>
-              <%= f.hidden_field :bottom_padding %>
-              <%= f.hidden_field :font_size %>
-              <%= f.hidden_field :font_family %>
-              <%= f.hidden_field :number %>
-              <%= f.hidden_field :font_weight %>
-              <%= f.hidden_field :text_align %>
-              <%= f.hidden_field :text_style %>
-              <%= f.hidden_field :image_block %>
-              <%= f.hidden_field :blank %>
-              <%= f.submit "Save", class: "save-block-button" %>
-            <% end %> 
-            <%= best_in_place b, :content, :as => :input, class: 'bock-content' %>
-        
-
-          <% end %>
-          <div style="height: <%= b.bottom_padding %>" class="bottom-padding"><div class="resize-padding"></div></div>
-        </div> 
-            <%= render 'new_block_form', block: b, insertion_type: 'below' %>
-       </div>
+         <% next if processed_blocks.include?(b.id) %>
+         
+         <% if b.split_block? && b.pair_id.present? %>
+           <% # Find the paired block %>
+           <% paired_block = @blocks.find { |pb| pb.pair_id == b.pair_id && pb.id != b.id } %>
+           <% if paired_block %>
+             <% processed_blocks << b.id << paired_block.id %>
+             <div class="split-block-container">
+               <div class="split-block-wrapper">
+                 <%= render 'block_content', block: b %>
+               </div>
+               <div class="split-block-wrapper">
+                 <%= render 'block_content', block: paired_block %>
+               </div>
+             </div>
+           <% else %>
+             <div>
+               <%= render 'block_content', block: b %>
+             </div>
+           <% end %>
+         <% else %>
+           <div>
+             <%= render 'block_content', block: b %>
+           </div>
+         <% end %>
        <% end %>
 <!-- End blocks display -->   
       </div>

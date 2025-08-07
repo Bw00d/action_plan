@@ -26,30 +26,11 @@ class BlocksController < ApplicationController
   # POST /blocks
   # POST /blocks.json
   def create
-    @block = Block.new(block_params.except(:insertion_type))
-    
-    if @block.save
-      # Handle position insertion based on insertion_type
-      if params[:block][:position].present? && params[:block][:insertion_type].present?
-        reference_position = params[:block][:position].to_i
-        insertion_type = params[:block][:insertion_type]
-        
-        # Calculate new position based on insertion type
-        new_position = insertion_type == 'above' ? reference_position : reference_position + 1
-        
-        # Insert at the calculated position (acts_as_list will handle reordering)
-        @block.insert_at(new_position)
-      end
-      
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path) }
-        format.json { render :show, status: :created, location: @block }
-      end
+    # Check if this is a split block request
+    if params[:block][:split_block] == 'true'
+      create_split_blocks
     else
-      respond_to do |format|
-        format.html { render :show }
-        format.json { render json: @block.errors, status: :unprocessable_entity }
-      end
+      create_single_block
     end
   end
 
@@ -72,7 +53,13 @@ class BlocksController < ApplicationController
   # DELETE /blocks/1
   # DELETE /blocks/1.json
   def destroy
-    @block.destroy
+    # If this block has a pair, destroy both
+    if @block.pair_id.present?
+      Block.where(pair_id: @block.pair_id).destroy_all
+    else
+      @block.destroy
+    end
+    
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
       format.json { head :no_content }
@@ -89,9 +76,75 @@ class BlocksController < ApplicationController
     def block_params
       params.require(:block).permit(:cover_id, :font_size ,:font_family ,:content, :number, :remove_main_image, 
                                     :main_image, :bottom_padding, :id, :font_weight, :text_align, 
-                                    :text_style, :image_block, :blank, :position, :insertion_type, other_images: [])
+                                    :text_style, :image_block, :blank, :position, :insertion_type, :split_block, 
+                                    :pair_id, :image_width, :image_height, other_images: [])
+    end
+    
+    def create_single_block
+      @block = Block.new(block_params.except(:insertion_type))
+      
+      if @block.save
+        # Handle position insertion based on insertion_type
+        if params[:block][:position].present? && params[:block][:insertion_type].present?
+          reference_position = params[:block][:position].to_i
+          insertion_type = params[:block][:insertion_type]
+          
+          # Calculate new position based on insertion type
+          new_position = insertion_type == 'above' ? reference_position : reference_position + 1
+          
+          # Insert at the calculated position (acts_as_list will handle reordering)
+          @block.insert_at(new_position)
+        end
+        
+        respond_to do |format|
+          format.html { redirect_back(fallback_location: root_path) }
+          format.json { render :show, status: :created, location: @block }
+        end
+      else
+        respond_to do |format|
+          format.html { render :show }
+          format.json { render json: @block.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+    
+    def create_split_blocks
+      block_attributes = block_params.except(:insertion_type)
+      
+      # Generate a unique pair_id
+      pair_id = SecureRandom.uuid
+      
+      # Create first block
+      @block1 = Block.new(block_attributes.merge(pair_id: pair_id))
+      @block2 = Block.new(block_attributes.merge(pair_id: pair_id))
+      
+      if @block1.save && @block2.save
+        # Handle position insertion
+        if params[:block][:position].present? && params[:block][:insertion_type].present?
+          reference_position = params[:block][:position].to_i
+          insertion_type = params[:block][:insertion_type]
+          
+          # Calculate new position based on insertion type
+          new_position = insertion_type == 'above' ? reference_position : reference_position + 1
+          
+          # Insert both blocks at consecutive positions
+          @block1.insert_at(new_position)
+          @block2.insert_at(new_position + 1)
+        end
+        
+        respond_to do |format|
+          format.html { redirect_back(fallback_location: root_path) }
+          format.json { render :show, status: :created, location: @block1 }
+        end
+      else
+        # Clean up if one failed
+        @block1.destroy if @block1.persisted?
+        @block2.destroy if @block2.persisted?
+        
+        respond_to do |format|
+          format.html { render :show }
+          format.json { render json: (@block1.errors.merge(@block2.errors)), status: :unprocessable_entity }
+        end
+      end
     end
 end
-
-
-

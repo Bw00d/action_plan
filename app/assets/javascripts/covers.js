@@ -178,10 +178,20 @@ $(document).on("turbolinks:load", function() {
     form.find('#block_text_align').val('left');
     form.find('#block_bottom_padding').val('25px');
     form.find('#block_image_block').val('false');
+    form.find('#block_split_block').val('false');
     form.find('#block_content').val('Enter text here');
     
-    // Handle image block selection
-    if ($this.data('image-block')) {
+    // Handle split block selection
+    if ($this.data('split-block')) {
+      form.find('#block_split_block').val('true');
+      form.find('#block_content').val('ADD AN IMAGE');
+      form.find('#block_font_size').val('h2');
+      form.find('#block_font_weight').val('bold');
+      form.find('#block_text_align').val('center');
+      form.find('#block_bottom_padding').val('50px');
+      form.find('#block_image_block').val('true');
+    } else if ($this.data('image-block')) {
+      // Handle regular image block selection
       form.find('#block_content').val('ADD AN IMAGE');
       form.find('#block_font_size').val('h2');
       form.find('#block_font_weight').val('bold');

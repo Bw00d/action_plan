@@ -322,15 +322,20 @@
 }
 
 .resizable .resizers{
-  width: 65%;
+  /* width: 65%; - removed to allow inline styles to take precedence */
   height: auto;
+  display: inline-block;
   /*border: 3px solid #4286f4;*/
   text-align: center;
   margin: 0 auto;
   position: relative;
+  min-width: 50px;
+}
+
+/* Show gray background only when no image is uploaded */
+.resizable .resizers.no-image {
   background-color: #f0f0f0;
-  min-width: 300px;
-  min-height: 300px;
+  min-height: 200px;
 }
 .resizable .bordered{
   border: 3px solid #4286f4;
@@ -391,6 +396,39 @@
   width: 490px;
   height: auto;
   display: none;
+}  
+
+#small-temp-image {
+  width: 50px;
+  height: auto;
+  display: none;
 }
+
+/* Split block styles */
+.split-block-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.split-block-wrapper {
+  flex: 1;
+  width: 50%;
+}
+
+.split-block-wrapper .block {
+  width: 100%;
+}
+
+.split-block-wrapper .resizers {
+  /*width: 90% !important;*/
+  /*min-width: 50px;*/
+}
+
+.split-block-wrapper .cover-image {
+  /*max-width: 100%;*/
+  /*height: auto;*/
+}
+
 
 

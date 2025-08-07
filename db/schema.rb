@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_05_205747) do
+ActiveRecord::Schema.define(version: 2025_08_07_223853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,9 @@ ActiveRecord::Schema.define(version: 2025_08_05_205747) do
     t.boolean "blank", default: false
     t.integer "position"
     t.boolean "split_block", default: false
+    t.string "pair_id"
+    t.string "image_width"
+    t.string "image_height"
   end
 
   create_table "checkins", force: :cascade do |t|
