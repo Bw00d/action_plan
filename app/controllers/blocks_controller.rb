@@ -26,13 +26,27 @@ class BlocksController < ApplicationController
   # POST /blocks
   # POST /blocks.json
   def create
-    @block = Block.new(block_params)
-
-    respond_to do |format|
-      if @block.save
+    @block = Block.new(block_params.except(:insertion_type))
+    
+    if @block.save
+      # Handle position insertion based on insertion_type
+      if params[:block][:position].present? && params[:block][:insertion_type].present?
+        reference_position = params[:block][:position].to_i
+        insertion_type = params[:block][:insertion_type]
+        
+        # Calculate new position based on insertion type
+        new_position = insertion_type == 'above' ? reference_position : reference_position + 1
+        
+        # Insert at the calculated position (acts_as_list will handle reordering)
+        @block.insert_at(new_position)
+      end
+      
+      respond_to do |format|
         format.html { redirect_back(fallback_location: root_path) }
         format.json { render :show, status: :created, location: @block }
-      else
+      end
+    else
+      respond_to do |format|
         format.html { render :show }
         format.json { render json: @block.errors, status: :unprocessable_entity }
       end
@@ -75,7 +89,7 @@ class BlocksController < ApplicationController
     def block_params
       params.require(:block).permit(:cover_id, :font_size ,:font_family ,:content, :number, :remove_main_image, 
                                     :main_image, :bottom_padding, :id, :font_weight, :text_align, 
-                                    :text_style, :image_block, :blank, other_images: [])
+                                    :text_style, :image_block, :blank, :position, :insertion_type, other_images: [])
     end
 end
 

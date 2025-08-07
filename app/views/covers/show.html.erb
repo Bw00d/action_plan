@@ -7,9 +7,10 @@
     <div class="row">
       <div id="cover" data-url="<%= 'sort_checkins_path' %>">
 <!-- Display blocks -->
+      <%= render 'new_block_type' %>
        <% @blocks.each do |b| %>
          <div>
-               <%#= render 'new_block_form' %>
+               <%= render 'new_block_form', block: b, insertion_type: 'above' %>
 
   <!-- Style control panel -->
          <div class="style-controls">
@@ -28,6 +29,8 @@
            <div class="delete-block"><%= link_to image_tag('white-trash.png'), b,  method: :delete, data: { confirm: 'Are you sure?' } %></div>
          </div>
   <!-- End style control panel -->
+          
+  <!-- Now block type panel -->
          <div  id="<%= dom_id(b) %>" class="block gray-border <%= b.font_size %> <%= b.font_family %> <%= b.font_weight %> <%= b.text_style %>" >
 
             
@@ -79,7 +82,7 @@
           <% end %>
           <div style="height: <%= b.bottom_padding %>" class="bottom-padding"><div class="resize-padding"></div></div>
         </div> 
-            <%= render 'new_block_form' %>
+            <%= render 'new_block_form', block: b, insertion_type: 'below' %>
        </div>
        <% end %>
 <!-- End blocks display -->   

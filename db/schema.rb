@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_02_160752) do
+ActiveRecord::Schema.define(version: 2025_08_05_205747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,22 @@ ActiveRecord::Schema.define(version: 2023_08_02_160752) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "assignees", force: :cascade do |t|
+    t.date "lwd"
+    t.string "identifier"
+    t.string "position"
+    t.string "leader"
+    t.integer "personnel"
+    t.string "request_number"
+    t.string "reporting_location"
+    t.string "time"
+    t.bigint "assignment_id"
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_assignees_on_assignment_id"
+  end
+
   create_table "assignments", force: :cascade do |t|
     t.string "designator"
     t.text "control_operations"
@@ -89,6 +105,7 @@ ActiveRecord::Schema.define(version: 2023_08_02_160752) do
     t.string "bottom_padding", default: "0"
     t.boolean "blank", default: false
     t.integer "position"
+    t.boolean "split_block", default: false
   end
 
   create_table "checkins", force: :cascade do |t|
@@ -355,4 +372,5 @@ ActiveRecord::Schema.define(version: 2023_08_02_160752) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assignees", "assignments"
 end

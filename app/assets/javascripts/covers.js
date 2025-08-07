@@ -7,6 +7,7 @@ $(document).on("turbolinks:load", function() {
     $('.block').removeClass('block-selected');
     if (!($('.block')).hasClass('block-selected')) {
       $('.style-controls').hide();
+      $('.new-block-type').hide();
       $('.new-block-form').hide();
       $('.edit_block').hide();
     }
@@ -14,6 +15,7 @@ $(document).on("turbolinks:load", function() {
     $(this).addClass('block-selected');
     if ($(this).hasClass('block-selected')) {
       $(this).siblings().toggle();
+      $('.new-block-type').hide();
       var position = $(this).val('#new-block-position')
       }
   });
@@ -29,6 +31,7 @@ $(document).on("turbolinks:load", function() {
     }
   });
 // End 
+
 
   $('.cover-block').hover(function() {
         $(this).find('.add-block-button').show();
@@ -144,6 +147,65 @@ $(document).on("turbolinks:load", function() {
     $("#block_main_image").change(function(){
       readURL(this);
     });
+
+  // New block type selection functionality
+  var currentForm = null;
+  
+  // Show new block type selector when clicking the + button
+  $(document).on('click', '.new-block-button', function(e) {
+    e.preventDefault();
+    currentForm = $(this).closest('form');
+    $('.new-block-type').show();
+  });
+  
+  // Cancel block type selection
+  $('.cancel-block').click(function() {
+    $('.new-block-type').hide();
+    currentForm = null;
+  });
+  
+  // Handle block type selection
+  $('.block-type-option').click(function() {
+    if (!currentForm) return;
+    
+    var $this = $(this);
+    var form = currentForm;
+    
+    // Set default values
+    form.find('#block_font_size').val('');
+    form.find('#block_font_weight').val('normal');
+    form.find('#block_text_style').val('');
+    form.find('#block_text_align').val('left');
+    form.find('#block_bottom_padding').val('25px');
+    form.find('#block_image_block').val('false');
+    form.find('#block_content').val('Enter text here');
+    
+    // Handle image block selection
+    if ($this.data('image-block')) {
+      form.find('#block_content').val('ADD AN IMAGE');
+      form.find('#block_font_size').val('h2');
+      form.find('#block_font_weight').val('bold');
+      form.find('#block_text_align').val('center');
+      form.find('#block_bottom_padding').val('50px');
+      form.find('#block_image_block').val('true');
+    } else {
+      // Handle text block selections
+      if ($this.data('font-size')) {
+        form.find('#block_font_size').val($this.data('font-size'));
+      }
+      if ($this.data('font-weight')) {
+        form.find('#block_font_weight').val($this.data('font-weight'));
+      }
+      if ($this.data('text-style')) {
+        form.find('#block_text_style').val($this.data('text-style'));
+      }
+    }
+    
+    // Hide the selector and submit the form
+    $('.new-block-type').hide();
+    form.submit();
+    currentForm = null;
+  });
 
 });
 

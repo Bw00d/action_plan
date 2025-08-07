@@ -1,7 +1,15 @@
 <div class="new-block-form">
-  <%= form_for @block do |f| %>
+  <%= form_for @block, html: { class: "insert-block-form", data: { block_position: local_assigns[:block]&.position || 0, insertion_type: local_assigns[:insertion_type] || 'below' } } do |f| %>
     <%= f.hidden_field :cover_id, value: @cover.id %>
-    <%= f.hidden_field :position, id: 'new-block-position' %>
-    <%= f.submit '+', class: "new-block-button" %>
+    <%= f.hidden_field :position, value: local_assigns[:block]&.position || 0 %>
+    <%= f.hidden_field :insertion_type, value: local_assigns[:insertion_type] || 'below' %>
+    <%= f.hidden_field :font_size %>
+    <%= f.hidden_field :font_weight %>
+    <%= f.hidden_field :text_style %>
+    <%= f.hidden_field :text_align %>
+    <%= f.hidden_field :bottom_padding %>
+    <%= f.hidden_field :image_block %>
+    <%= f.hidden_field :content %>
+    <%= f.button '+', type: 'button', class: "new-block-button" %>
   <% end %>
 </div>
