@@ -127,6 +127,18 @@ $(document).on("turbolinks:load", function() {
     target = $(this).parent().siblings('.block');
     target.children('.image-form').toggle();
   });
+  
+  // Cancel image upload
+  $(document).on('click', '.cancel-image-upload', function() {
+    var form = $(this).closest('form');
+    var imageForm = $(this).closest('.image-form');
+    
+    // Clear the file input
+    form.find('input[type="file"]').val('');
+    
+    // Hide the image form
+    imageForm.hide();
+  });
 
   //  temporary avatar
     function readURL(input) {

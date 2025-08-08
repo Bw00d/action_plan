@@ -155,5 +155,89 @@ $(document).on("turbolinks:load", function() {
 
   makeResizableBlock('.bottom-padding')
 
+  // Make split block images draggable horizontally
+  function makeDraggableImages() {
+    const splitBlocks = document.querySelectorAll('.split-block-wrapper .resizers');
+    
+    splitBlocks.forEach(function(resizer) {
+      const blockDiv = resizer.closest('.block');
+      const blockId = blockDiv ? blockDiv.id : null;
+      let isDragging = false;
+      let startX = 0;
+      let startLeft = 0;
+      
+      // Add drag handle
+      const dragHandle = document.createElement('div');
+      dragHandle.className = 'drag-handle';
+      dragHandle.innerHTML = '⋮⋮';
+      dragHandle.title = 'Drag to reposition horizontally';
+      resizer.appendChild(dragHandle);
+      
+      dragHandle.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        isDragging = true;
+        startX = e.clientX;
+        
+        // Get current position
+        const currentTransform = resizer.style.transform;
+        const match = currentTransform.match(/translateX\(([-\d.]+)px\)/);
+        startLeft = match ? parseFloat(match[1]) : 0;
+        
+        resizer.classList.add('dragging');
+        
+        window.addEventListener('mousemove', drag);
+        window.addEventListener('mouseup', stopDrag);
+      });
+      
+      function drag(e) {
+        if (!isDragging) return;
+        
+        const deltaX = e.clientX - startX;
+        const newLeft = startLeft + deltaX;
+        
+        // Limit movement to reasonable bounds
+        const maxMove = 100; // pixels
+        const limitedLeft = Math.max(-maxMove, Math.min(maxMove, newLeft));
+        
+        resizer.style.transform = `translateX(${limitedLeft}px)`;
+      }
+      
+      function stopDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        resizer.classList.remove('dragging');
+        window.removeEventListener('mousemove', drag);
+        window.removeEventListener('mouseup', stopDrag);
+        
+        // Save the new position
+        if (blockId) {
+          const finalTransform = resizer.style.transform;
+          const match = finalTransform.match(/translateX\(([-\d.]+)px\)/);
+          const positionX = match ? match[1] + 'px' : '0px';
+          
+          console.log('Saving position:', positionX, 'for block:', blockId);
+          
+          // Find the form and save position
+          const form = $('#' + blockId + ' form[class*="edit_block"]');
+          if (form.length > 0) {
+            let positionField = form.find('input[name="block[image_position_x]"]');
+            if (positionField.length === 0) {
+              form.append('<input type="hidden" name="block[image_position_x]" />');
+              positionField = form.find('input[name="block[image_position_x]"]');
+            }
+            positionField.val(positionX);
+            
+            // Submit the form
+            form.trigger('submit.rails');
+            console.log('Position saved');
+          }
+        }
+      }
+    });
+  }
+  
+  // Initialize draggable images
+  makeDraggableImages();
 
 });

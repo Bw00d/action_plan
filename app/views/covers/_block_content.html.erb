@@ -26,7 +26,7 @@
     <% if block.image_block? %> 
       <!-- Debug: image_width = <%= block.image_width.inspect %> -->
       <div class="resizable">
-        <div class="resizers <%= 'no-image' unless block.main_image.attached? %>" style="width: <%= block.image_width.presence || (block.split_block? ? '45%' : '65%') %>;">
+        <div class="resizers <%= 'no-image' unless block.main_image.attached? %>" style="width: <%= block.image_width.presence || (block.split_block? ? '45%' : '65%') %>;<%= " transform: translateX(#{block.image_position_x});" if block.split_block? && block.image_position_x.present? %>">
           <div class='resizer top-left'></div>
           <div class='resizer top-right'></div>
           <div class='resizer bottom-left'></div>
@@ -47,11 +47,13 @@
           <%= f.file_field :main_image, class: 'small-button' %>
           <%= f.hidden_field :bottom_padding %>
           <%= f.submit "Upload" %>
+          <%= button_tag "Cancel", type: "button", class: "cancel-image-upload" %>
         <% end %>
       </div>
       <!-- Hidden form for saving dimensions -->
       <%= form_for block, html: {class: "edit_block", style: "display: none;"}, remote: true do |f| %>
         <%= f.hidden_field :image_width %>
+        <%= f.hidden_field :image_position_x %>
       <% end %>
     <% end %>
     <!-- End style a split block -->

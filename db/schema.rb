@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_07_223853) do
+ActiveRecord::Schema.define(version: 2025_08_08_001055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2025_08_07_223853) do
     t.string "pair_id"
     t.string "image_width"
     t.string "image_height"
+    t.string "image_position_x"
   end
 
   create_table "checkins", force: :cascade do |t|

@@ -4,7 +4,7 @@
     <!-- Image block (including split blocks) -->
     <% if block.image_block? %> 
       <div class="resizable">
-        <div class="resizers <%= 'no-image' unless block.main_image.attached? %>" style="width: <%= block.image_width.presence || (block.split_block? ? '45%' : '65%') %>;">
+        <div class="resizers <%= 'no-image' unless block.main_image.attached? %>" style="width: <%= block.image_width.presence || (block.split_block? ? '45%' : '65%') %>;<%= " transform: translateX(#{block.image_position_x});" if block.split_block? && block.image_position_x.present? %>">
           <% if block.main_image.attached? %>
             <%= image_tag block.main_image, class: "cover-image" %>
           <% end %>

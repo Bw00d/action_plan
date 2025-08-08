@@ -55,6 +55,13 @@
     height: 25px;
     margin-bottom: 15px;
   }
+  div {
+    cursor: pointer;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
 .new-block-type {
   display: none;
@@ -73,6 +80,21 @@
   span {
   display: inline-block;
   padding: 10px;
+  }
+  span {
+    cursor: pointer;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  
+  .cancel-block {
+    cursor: pointer;
+    
+    &:hover {
+      opacity: 0.8;
+    }
   }
   h1 {
     font-size: 2em !important;
@@ -311,6 +333,21 @@
     font-size: 15px;
     font-weight: 500;
   }
+  
+  .cancel-image-upload {
+    margin-left: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 15px;
+    
+    &:hover {
+      background-color: #c82333;
+    }
+  }
 }
 
 
@@ -409,6 +446,7 @@
   display: flex;
   gap: 10px;
   width: 100%;
+  overflow: hidden; /* Prevent horizontal scroll from dragged images */
 }
 
 .split-block-wrapper {
@@ -428,6 +466,40 @@
 .split-block-wrapper .cover-image {
   /*max-width: 100%;*/
   /*height: auto;*/
+}
+
+/* Drag handle for split blocks */
+.drag-handle {
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 40px;
+  background-color: #666;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ew-resize;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 12px;
+  border-radius: 3px 0 0 3px;
+  user-select: none;
+}
+
+.split-block-wrapper .resizers:hover .drag-handle {
+  opacity: 0.7;
+}
+
+.split-block-wrapper .resizers.dragging {
+  cursor: ew-resize;
+  opacity: 0.8;
+}
+
+.split-block-wrapper .resizers {
+  transition: transform 0.3s ease;
 }
 
 
