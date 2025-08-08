@@ -19,6 +19,9 @@
 /node_modules
 /yarn-error.log
 
+/storage/*
+!/storage/.keep
+
 .byebug_history
 
 .elasticbeanstalk/*
