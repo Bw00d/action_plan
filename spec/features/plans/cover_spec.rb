@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Index page', type: :feature, js: true do
+describe 'IAP Cover', type: :feature, js: true do
   before do 
     user = create_and_signin_user
     incident = create_new_incident(user)
@@ -44,5 +44,6 @@ describe 'Index page', type: :feature, js: true do
   it 'should have a link to create another plan' do
     expect(page).to have_link ('New')
   end
+
 
 end

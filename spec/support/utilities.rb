@@ -2,10 +2,16 @@ include ApplicationHelper
 
 def create_and_signin_user
   user = FactoryBot.create(:user)
+  user.confirm # Confirm the user for Devise confirmable
   visit new_user_session_path
   fill_in "user_email",    with: user.email
   fill_in "user_password", with: user.password
   click_button "Sign in"
+  
+  # Wait for redirect after sign in
+  expect(page).to have_current_path(root_path)
+  
+  user
 end
 
 def seed_plans
