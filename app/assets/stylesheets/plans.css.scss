@@ -279,13 +279,17 @@ a.delete-objective:hover {
 }
 
 /* ICS 202 Incident Objectives*/
+
+#title-box {
+  text-align: center;
+}
 #print-container {
   margin: 0px;
   padding: 0 10px;
   border: 1px solid black;
   position: relative;
   overflow: hidden;
-  height: 1070px !important;
+  height: 100%;
   width: 740px;
 
 }

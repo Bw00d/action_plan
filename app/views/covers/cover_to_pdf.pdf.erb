@@ -1,0 +1,34 @@
+<div class="container">
+  <div id="cover">
+<!-- Display blocks -->
+       <% processed_blocks = [] %>
+       <% @blocks.each do |b| %>
+         <% next if processed_blocks.include?(b.id) %>
+         
+         <% if b.split_block? && b.pair_id.present? %>
+           <% # Find the paired block %>
+           <% paired_block = @blocks.find { |pb| pb.pair_id == b.pair_id && pb.id != b.id } %>
+           <% if paired_block %>
+             <% processed_blocks << b.id << paired_block.id %>
+             <div class="split-block-container">
+               <div class="split-block-wrapper">
+                 <%= render 'pdf_block_content', block: b %>
+               </div>
+               <div class="split-block-wrapper">
+                 <%= render 'pdf_block_content', block: paired_block %>
+               </div>
+             </div>
+           <% else %>
+             <div>
+               <%= render 'pdf_block_content', block: b %>
+             </div>
+           <% end %>
+         <% else %>
+           <div>
+             <%= render 'pdf_block_content', block: b %>
+           </div>
+         <% end %>
+       <% end %>
+<!-- End blocks display -->   
+  </div>
+</div>

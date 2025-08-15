@@ -4,10 +4,10 @@ module ApplicationHelper
   # in our feature specs as an alternative to the deprecated #render_template
   # matcher.
   def layout_name
-    # _layout is a private method, this may break at any time. It requires an
-    # array containing a stringas an argument but the string value does not
-    # affect the output.
-    controller.send :_layout, ['some_string_here']
+    # In Rails 6, _layout returns the layout name directly as a string
+    layout = controller.send(:_layout, self, [])
+    # If it's already a string, just return it
+    layout.is_a?(String) ? layout : layout.virtual_path.split('/').last
   end
 
   # Select the appropriate Boostrap class for Rails's flash messages
@@ -58,6 +58,12 @@ module ApplicationHelper
     image_tag image_path, image_tag_options
   end
 end
+
+  def pdf_image_url(image)
+    if image.attached?
+      rails_blob_url(image, host: Rails.application.routes.default_url_options[:host])
+    end
+  end
 
   module ActionView  
     class Base  

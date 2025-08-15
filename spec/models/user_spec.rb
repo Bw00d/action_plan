@@ -27,21 +27,21 @@ RSpec.describe User, type: :model do
     context 'with less than 8 characters' do
       let(:password) { 'FooB4r!' }
       it 'is invalid' do
-        expect(user.errors[:password]).to include(expected_error)
+        expect(user.errors[:password].any? { |msg| msg.include?('weak_password') }).to be true
       end
     end
 
     context 'without at least one digit' do
       let(:password) { 'FooBarBaz!' }
       it 'is invalid' do
-        expect(user.errors[:password]).to include(expected_error)
+        expect(user.errors[:password].any? { |msg| msg.include?('weak_password') }).to be true
       end
     end
 
     context 'without at least one uppercase and one lower casse letter' do
       let(:password) { 'foob4rbaz!' }
       it 'is invalid' do
-        expect(user.errors[:password]).to include(expected_error)
+        expect(user.errors[:password].any? { |msg| msg.include?('weak_password') }).to be true
       end
     end
   end

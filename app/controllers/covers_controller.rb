@@ -35,6 +35,24 @@ class CoversController < ApplicationController
     @incident = @plan.incident    
     @block = Block.new
     @blocks = @cover.blocks.includes(:main_image_attachment).order(position: :asc)
+    
+    respond_to do |format|
+      format.pdf do
+        # Set up for absolute URLs in PDF
+        Rails.application.routes.default_url_options[:host] = request.host_with_port
+        Rails.application.routes.default_url_options[:protocol] = request.protocol
+        
+        html = render_to_string(
+          template: 'covers/cover_to_pdf.pdf.erb', 
+          layout: 'layouts/pdf.html.erb',
+          locals: { cover: @cover, blocks: @blocks }
+        )
+        
+        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+        
+        send_data pdf, filename: "cover_#{@cover.id}.pdf", type: 'application/pdf', disposition: 'inline'
+      end
+    end
   end
 
   # GET /covers/new

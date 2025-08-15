@@ -25,7 +25,29 @@ class AssignmentsController < ApplicationController
     @plan = Plan.find(@assignment.plan_id)
     @incident = Incident.find(@plan.incident_id)
     @assignments = @plan.assignments
-    # @freq = Freq.new
+    
+    respond_to do |format|
+      format.pdf do
+        # Set up for absolute URLs in PDF
+        Rails.application.routes.default_url_options[:host] = request.host_with_port
+        Rails.application.routes.default_url_options[:protocol] = request.protocol
+        
+        html = render_to_string(
+          template: 'assignments/assignment_to_pdf.pdf.erb',
+          layout: 'layouts/pdf.html.erb',
+          locals: { 
+            assignment: @assignment, 
+            plan: @plan, 
+            incident: @incident,
+            assignments: @assignments 
+          }
+        )
+        
+        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+        
+        send_data pdf, filename: "assignment_#{@assignment.id}.pdf", type: 'application/pdf', disposition: 'inline'
+      end
+    end
   end
 
   # GET /assignments/new

@@ -30,6 +30,24 @@ class SafetyMessagesController < ApplicationController
     @safety_message = SafetyMessage.find(params[:id])
     @plan = Plan.find(@safety_message.plan_id)
     @incident = Incident.find(@plan.incident_id)
+    
+    respond_to do |format|
+      format.pdf do
+        # Set up for absolute URLs in PDF
+        Rails.application.routes.default_url_options[:host] = request.host_with_port
+        Rails.application.routes.default_url_options[:protocol] = request.protocol
+        
+        html = render_to_string(
+          template: 'safety_messages/safety_message_to_pdf.pdf.erb',
+          layout: 'layouts/pdf.html.erb',
+          locals: { safety_message: @safety_message, plan: @plan, incident: @incident }
+        )
+        
+        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+        
+        send_data pdf, filename: "safety_message_#{@safety_message.id}.pdf", type: 'application/pdf', disposition: 'inline'
+      end
+    end
   end
 
 
@@ -86,15 +104,6 @@ class SafetyMessagesController < ApplicationController
     end
   end
 
-    def download_safety_message
-    @safety_message = SafetyMessage.find(params[:id])
-    safety_message = render_to_string "safety_message_to_pdf.html.erb", layout: "pdf"
-
-    respond_to do |format|
-      format.html { render html: safety_message }
-      format.pdf { render_pdf safety_message, filename: t(".filename", id: @safety_message.id) }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

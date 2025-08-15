@@ -89,13 +89,6 @@ class PlansController < ApplicationController
     end
   end
 
-  def cover_to_pdf
-    @plan = Plan.find(params[:id])
-    @incident = Incident.find(@plan.incident_id)
-    @cover = @plan.cover
-    @blocks = @cover.blocks.order(id: :asc)
-    @block = Block.new
-  end
 
   
   def incident_objectives
@@ -117,6 +110,32 @@ class PlansController < ApplicationController
     @second_attachments = @attachments[3..5]
     @third_attachments = @attachments[6..8]
     @fourth_attachments = @attachments[9..11]
+    
+    respond_to do |format|
+      format.pdf do
+        # Set up for absolute URLs in PDF
+        Rails.application.routes.default_url_options[:host] = request.host_with_port
+        Rails.application.routes.default_url_options[:protocol] = request.protocol
+        
+        html = render_to_string(
+          template: 'plans/objectives_to_pdf.pdf.erb',
+          layout: 'layouts/pdf.html.erb',
+          locals: { 
+            plan: @plan, 
+            incident: @incident,
+            attachments: @attachments,
+            first_attachments: @first_attachments,
+            second_attachments: @second_attachments,
+            third_attachments: @third_attachments,
+            fourth_attachments: @fourth_attachments
+          }
+        )
+        
+        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+        
+        send_data pdf, filename: "objectives_plan_#{@plan.id}.pdf", type: 'application/pdf', disposition: 'inline'
+      end
+    end
   end
 
 
@@ -130,6 +149,24 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
     @team = Team.new
+    
+    respond_to do |format|
+      format.pdf do
+        # Set up for absolute URLs in PDF
+        Rails.application.routes.default_url_options[:host] = request.host_with_port
+        Rails.application.routes.default_url_options[:protocol] = request.protocol
+        
+        html = render_to_string(
+          template: 'plans/organization_to_pdf.pdf.erb',
+          layout: 'layouts/pdf.html.erb',
+          locals: { plan: @plan, incident: @incident, team: @team }
+        )
+        
+        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+        
+        send_data pdf, filename: "organization_plan_#{@plan.id}.pdf", type: 'application/pdf', disposition: 'inline'
+      end
+    end
   end
 
 

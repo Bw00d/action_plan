@@ -76,7 +76,7 @@ class BlocksController < ApplicationController
     def block_params
       params.require(:block).permit(:cover_id, :font_size ,:font_family ,:content, :number, :remove_main_image, 
                                     :main_image, :bottom_padding, :id, :font_weight, :text_align, 
-                                    :text_style, :image_block, :blank, :position, :insertion_type, :split_block, 
+                                    :text_style, :image_block, :is_blank, :position, :insertion_type, :split_block, 
                                     :pair_id, :image_width, :image_height, :image_position_x, other_images: [])
     end
     

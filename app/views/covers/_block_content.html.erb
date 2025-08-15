@@ -58,7 +58,7 @@
     <% end %>
     <!-- End style a split block -->
     
-    <% unless block.image_block? || block.blank? %>           
+    <% unless block.image_block? || block.is_blank? %>           
       <!-- Block form -->
       <%= form_for block, class: "block-form", remote: true do |f| %>
         <%= f.hidden_field :id %>
@@ -70,7 +70,7 @@
         <%= f.hidden_field :text_align %>
         <%= f.hidden_field :text_style %>
         <%= f.hidden_field :image_block %>
-        <%= f.hidden_field :blank %>
+        <%= f.hidden_field :is_blank %>
         <%= f.hidden_field :image_width %>
         <%= f.submit "Save", class: "save-block-button" %>
       <% end %> 

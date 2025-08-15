@@ -1,17 +1,24 @@
 Grover.configure do |config|
   config.options = {
-    format: 'A4',
+    format: 'Letter',
     margin: {
       top: '0',
-      bottom: '0'
+      bottom: '0',
+      left: '0',
+      right: '0'
     },
-    display_url: "http://localhost:3000",
     display_header_footer: false,
     prefer_css_page_size: true,
     cache: false,
-    timeout: 0, # Timeout in ms. A value of `0` means 'no timeout'
-    launch_args: ['--font-render-hinting=medium'],
-    wait_until: 'domcontentloaded',
-    print_background: true
+    timeout: 30000, # Timeout in ms
+    launch_args: ['--no-sandbox', '--disable-setuid-sandbox', '--font-render-hinting=medium'],
+    wait_until: 'networkidle0',
+    print_background: true,
+    emulate_media: 'print',
+    viewport: {
+      width: 816,  # 8.5" at 96dpi
+      height: 1056 # 11" at 96dpi
+    },
+    scale: 1.0
   }
 end

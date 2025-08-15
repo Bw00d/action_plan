@@ -1,0 +1,39 @@
+// PDF-specific styles
+// Import only the styles needed for PDFs
+
+// Import specific component styles
+@import "plans";
+@import "assignments";
+@import "covers";
+@import "safety_messages";
+@import "commo_plans";
+
+// PDF-specific overrides
+@media all {
+  // Ensure print styles are always applied for PDFs
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  
+  // Hide interactive elements
+  /*.btn, button, .form-control, input[type="text"], textarea {
+    border: 1px solid #000 !important;
+    background: white !important;
+  }*/
+  
+  // Page setup
+  @page {
+    size: letter;
+    margin: 0;
+  }
+  
+  .page-wrapper {
+    padding: 0.5in;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  #print-container {
+  }
+}

@@ -1,0 +1,13 @@
+
+<%= render 'page_1'  %>
+<% if @assignment.assigned_resources.count > 13 %>
+  <%= render 'page_2'  %>
+<% end %>
+<% if @assignment.assigned_resources.count > 25 %>
+  <%= render 'page_3'  %>
+<% end %>
+<% if @assignment.assigned_resources.count > 36 %>
+  <%= render 'page_4'  %>
+<% end %>
+
+

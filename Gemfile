@@ -4,17 +4,19 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-ruby '2.5.9'
+ruby '3.1.4'
 
 # Choose between PostgreSQL and MySQL (comment out one of the following gems)
-gem 'pg', '~> 0.21.0'
+gem 'pg', '~> 1.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.4.3'
+gem 'rails', '~> 6.0.0'
+gem 'nokogiri', '~> 1.13'
+gem 'psych', '< 4'
 # Use Puma as the app server
-gem 'puma', '~> 3.10'
+gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0', '>= 5.0.6'
+gem 'sass-rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 3.2'
 # Turbolinks makes navigating your web application faster. Read more:
@@ -73,7 +75,7 @@ gem 'aws-sdk-s3', require: false
 gem "image_processing", ">= 1.2"
 gem 'datejs-rails'
 # for generating pdfs
-gem 'grover'
+gem 'grover', '~> 1.1.2'
 gem 'jquery-validation-rails'
 
 group :test do

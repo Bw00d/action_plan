@@ -1,22 +1,22 @@
 <div>
-  <div id="<%= dom_id(block) %>" class="block <%= block.font_size %> <%= block.font_family %> <%= block.font_weight %> <%= block.text_style %> <%= block.bottom_padding %>" >
+  <div id="<%= dom_id(block) %>" class="block <%= block.font_size %> <%= block.font_family || 'arial' %> <%= block.font_weight %> <%= block.text_style %> <%= block.text_align %>" style="margin-bottom: <%= block.bottom_padding %>">
     
     <!-- Image block (including split blocks) -->
     <% if block.image_block? %> 
       <div class="resizable">
         <div class="resizers <%= 'no-image' unless block.main_image.attached? %>" style="width: <%= block.image_width.presence || (block.split_block? ? '45%' : '65%') %>;<%= " transform: translateX(#{block.image_position_x});" if block.split_block? && block.image_position_x.present? %>">
           <% if block.main_image.attached? %>
-            <%= image_tag block.main_image, class: "cover-image" %>
+            <%= image_tag pdf_image_url(block.main_image), class: "cover-image", style: "max-width: 100%; height: auto;" %>
+          <% else %>
+            <div style="padding: 40px; color: #999;">ADD AN IMAGE</div>
           <% end %>
         </div>
       </div>
     <% end %>
     
     <!-- Text blocks -->
-    <% unless block.image_block? || block.blank? %>           
+    <% unless block.image_block? || block.is_blank? %>           
       <%= block.content %>
     <% end %>
-    
-    <div style="height: <%= block.bottom_padding %>" class="bottom-padding"></div>
   </div> 
 </div>

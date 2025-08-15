@@ -1,0 +1,69 @@
+<div id="freq-form">
+  <%= javascript_tag "var freqIds = #{@assignment.commo_item_ids.to_json}" %>
+  <%= form_for @assignment do |f| %>
+  <ul>
+    <% if !@plan.commo_plan.nil? %>
+      <% @plan.commo_plan.commo_items.each do |item| %>
+        <li class="commo-items"><%= f.check_box :commo_item_ids, {multiple: true}, item.id, nil %>
+        
+              <%= f.label :commo_item_ids, item.channel_name %></li>
+      <% end %>
+    <% end %>
+  </ul>
+    <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-success tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-freq-form', class: 'btn btn-default tiny' %></div>
+    <br>
+    <br>
+   
+  <% end %>
+</div>
+<table id="commo-table", class="assigned-resources">
+  <%#= link_to (fa_icon('bolt')), "javascript:;",class: 'resources-button', id: 'add-freqs-button' %>
+  <%= link_to "javascript:;" do %>
+    <%= image_tag 'bolt.png', class: "resources-button medium-icon", id: 'add-freqs-button' %>
+  <% end %>
+  <thead class="">
+    <th class="c1"><span class="">Zone</span></th>
+    <th class="c1"><span class="">Ch #</span></th>
+    <th class="c3"><span class="">Channel Name</span></th>
+    <th class="c3"><span class="">Function</span></th>
+    <th class="c2"><span class="">RX Freq</span></th>
+    <th class="c2"><span class="">Tone</span></th>
+    <th class="c2"><span class="">TX Freq</span></th>
+    <th class="c2"><span class="">Tone</span></th>
+    <th class="c4"><span class="">Assignment</span></th>
+    <th class="c3"><span class="">Remarks</span></th>
+  </thead>
+
+  <% @assignment.freqs.each do |f| %>
+  <tr  class="radio-channel">
+      <td class="c1"><span class=""><%= f.zone %></span></td>
+      <td class="c1"><span class=""><%= f.ch_num %></span></td>
+      <td class="c3"><span class=""><%= f.channel_name %></span></td>
+      <td class="c4"><span class=""><%= f.function %></span></td>
+      <td class="c3"><span class=""><%= f.rx_freq %></span></td>
+      <td class="c2"><span class=""><%= f.rx_tone %></span></td>
+      <td class="c2"><span class=""><%= f.tx_freq %></span></td>
+      <td class="c2"><span class=""><%= f.tx_tone %></span></td>
+      <td class="c2"><span class=""><%= f.assignment %></span></td>
+      <td class="c3"><span class=""></span></td>
+    </tr>
+    <% end %>
+  <% (5 - @assignment.freqs.count).times do %>
+    <tr class="radio-channel blank-row">
+       <td class="c1"><span class=""></span>
+          
+
+      </td>
+      <td class="c1"><span class=""></span></td>
+      <td class="c3"><span class=""></span></td>
+      <td class="c3"><span class=""></span></td>
+      <td class="c2"><span class=""></span></td>
+      <td class="c2"><span class=""></span></td>
+      <td class="c2"><span class=""></span></td>
+      <td class="c2"><span class=""></span></td>
+      <td class="c4"><span class=""></span></td>
+      <td class="c3"><span class=""></span></td>
+    </tr>
+  <% end %>
+</table>
+  

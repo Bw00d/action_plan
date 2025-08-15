@@ -9,7 +9,7 @@ class Cover < ApplicationRecord
 
   private
   def set_blocks
-      Block.create!(position: 1, blank: true, bottom_padding: '100px', cover_id: self.id)
+      Block.create!(position: 1, is_blank: true, bottom_padding: '100px', cover_id: self.id)
       Block.create!(position: 2, content: 'Incident Action Plan', font_size: 'h1', font_weight: 'bold', 
                     text_align: 'center', bottom_padding: '25px', cover_id: self.id)
       Block.create!(position: 3, content: 'Incident Name', font_size: 'h1', font_weight: 'bold', 

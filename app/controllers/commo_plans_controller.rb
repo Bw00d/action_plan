@@ -32,6 +32,29 @@ class CommoPlansController < ApplicationController
     @plan = Plan.find(@commo_plan.plan_id)
     @incident = Incident.find(@plan.incident_id)
     @commo_item = CommoItem.new
+    
+    respond_to do |format|
+      format.pdf do
+        # Set up for absolute URLs in PDF
+        Rails.application.routes.default_url_options[:host] = request.host_with_port
+        Rails.application.routes.default_url_options[:protocol] = request.protocol
+        
+        html = render_to_string(
+          template: 'commo_plans/commo_plan_to_pdf.pdf.erb',
+          layout: 'layouts/pdf.html.erb',
+          locals: { 
+            commo_plan: @commo_plan, 
+            plan: @plan, 
+            incident: @incident,
+            commo_item: @commo_item
+          }
+        )
+        
+        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+        
+        send_data pdf, filename: "commo_plan_#{@commo_plan.id}.pdf", type: 'application/pdf', disposition: 'inline'
+      end
+    end
   end
 
   # GET /commo_plans/new
