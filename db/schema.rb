@@ -15,14 +15,6 @@ ActiveRecord::Schema.define(version: 2025_08_09_010417) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "actions", force: :cascade do |t|
-    t.string "time"
-    t.string "note"
-    t.integer "plan_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,22 +42,6 @@ ActiveRecord::Schema.define(version: 2025_08_09_010417) do
     t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "assignees", force: :cascade do |t|
-    t.date "lwd"
-    t.string "identifier"
-    t.string "position"
-    t.string "leader"
-    t.integer "personnel"
-    t.string "request_number"
-    t.string "reporting_location"
-    t.string "time"
-    t.bigint "assignment_id"
-    t.integer "order"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assignment_id"], name: "index_assignees_on_assignment_id"
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -321,6 +297,7 @@ ActiveRecord::Schema.define(version: 2025_08_09_010417) do
     t.datetime "updated_at", null: false
     t.string "date_prepared"
     t.string "time_prepared"
+    t.string "ops_period"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -376,5 +353,4 @@ ActiveRecord::Schema.define(version: 2025_08_09_010417) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "assignees", "assignments"
 end

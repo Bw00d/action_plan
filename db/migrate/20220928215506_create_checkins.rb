@@ -16,7 +16,6 @@ class CreateCheckins < ActiveRecord::Migration[5.2]
       t.date :first_day_worked
       t.string :name
       t.integer :number_personnel
-      t.string :name
       t.integer :resource_id
 
       t.timestamps
