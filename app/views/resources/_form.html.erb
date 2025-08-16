@@ -49,12 +49,14 @@
 
   <div class="field">
     <%= form.label :checkin_date %>
-    <%= form.date_select :checkin_date, id: :resource_checkin_date, required: true %>
+    <%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
+                      class: "datepicker form-control", placeholder: "CHECKIN DATE", required: true %>
   </div>
 
   <div class="field">
     <%= form.label :fwd %>
-    <%= form.date_select :fwd, id: :resource_fwd, required: true %>
+    <%= f.text_field :fwd, id: :incident_fwd, :data => {:provide => "datepicker"},
+                    class: " datepicker form-control", placeholder: "FIRST WORK DAY", required: true %>
   </div>
 
   <div class="field">

@@ -1,4 +1,11 @@
 $(document).on("turbolinks:load", function() {
+
+  $('.datepicker').datepicker({
+    assumeNearbyYear: true,
+    autoclose: true,
+    todayHighlight: true
+  });
+  
   $('select#resource_category').change(function() {
     var text = $(this).val();
     $('#order-number-input').show();
