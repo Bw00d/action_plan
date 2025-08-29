@@ -8,18 +8,16 @@
       /* PDF-specific overrides and essential styles */
       @page {
         size: letter;
-        margin: 0;
+        margin: -50px 10px 10px 10px !important;
       }
       
-      body {
+     <%#  body {
         font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
         font-size: 14px;
         color: #444;
-        margin: 50px;
-      }
+      } %>
       
       .page-wrapper {
-        padding: 0.5in;
         width: 100%;
         box-sizing: border-box;
       }
@@ -46,7 +44,6 @@
       /* Fix for print container width */
       #print-container {
         width: 95%;
-        margin: 0;
       }
       
       /* Critical form layout styles from plans.scss */
