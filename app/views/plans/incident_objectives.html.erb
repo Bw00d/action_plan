@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="row">
-        <div id="weather-forecast" class="col-xs-12 form-row">
+        <div id="operational-emphasis" class="col-xs-12 form-row">
           <% if @incident.wildfire? %>
             <span class="small">5. OPERATIONAL PERIOD EMPHASIS</span><br>
           <% else %>
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="row">
-        <div id="general-safety-message" class="col-xs-12">
+        <div id="general-safety-message" class="col-xs-12 form-row">
           <span class="small">6. GENERAL SAFETY MESSAGE</span><br>
             <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "(ADD CONTENT)",:display_with => :simple_format, id: 'safety-form'  %>
         </div>
