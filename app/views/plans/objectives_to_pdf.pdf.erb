@@ -3,7 +3,7 @@
 
     <div id="print-container">
       <%# Top row %>
-      <div class="col-xs-12 title-row bl top-row">
+      <div class="col-xs-12 title-row bl top-row fixed-height-row">
         <div class="col-xs-4">
           <h5><strong>INCIDENT OBJECTIVES</strong></h5>
         </div>
@@ -23,17 +23,22 @@
           </span>
         </div>
       </div>
+
       <%# Control Objectives row %>
-      <div id="control-objectives" class="col-xs-12">
-        <span class="small">4. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
-        <ul>
-          <% @plan.objectives.each do |o| %>
-          <li><%= o.description %></li>
-          <% end %>
-        </ul>
-      </div>
+      <div class="flex-row">
+        <div id="control-objectives-pdf" class="col-xs-12 flex-content">
+              <span class="small">4. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
+              <ul>
+                <% @plan.objectives.each do |o| %>
+                <li><%= o.description %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+
       <%# Operations emphasis row %>
-      <div id="operational-emphasis" class="col-xs-12 form-row">
+      <div class="flex-row">
+      <div id="operational-emphasis-pdf" class="col-xs-12 form-row flex-content">
         <% if @incident.wildfire? %>
           <span class="small">5. OPERATIONAL PERIOD EMPHASIS</span><br>
         <% else %>
@@ -41,13 +46,19 @@
         <% end %>
            <%=  simple_format(@plan.weather)  %>
       </div>
+      </div>
+
       <%#  General Safety row %>
-      <div id="general-safety-message" class="col-xs-12">
+      <div class="flex-row">
+      <div id="general-safety-message-pdf" class="col-xs-12 flex-content">
         <span class="small">6. GENERAL SAFETY MESSAGE</span><br>
           <%=  simple_format(@plan.general_safety)  %>
       </div>
+      </div>
+
+
       <%# Attachments row %>
-      <div id="attachments" class="col-xs-12">
+      <div id="attachments" class="col-xs-12 fixed-height-row">
         <span class="small">7. ATTACHMENTS</span><br>
           <ul class="small col-xs-3">
 
@@ -84,7 +95,7 @@
           </ul>
       </div>
       <%# Prepared by row %>
-      <div class="prepared-by-row col-xs-12">
+      <div class="prepared-by-row col-xs-12 fixed-height-row">
         <div class="col-xs-6">
           <span class="small small-box">8. PREPARED BY</span><br>
           <span class="lg-padding-left"><%=  @plan.prepared_by %></span>

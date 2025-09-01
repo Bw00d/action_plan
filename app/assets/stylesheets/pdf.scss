@@ -15,6 +15,32 @@
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
+
+    @media print, (min-width: 0) {
+    #print-container {
+      height: calc(100vh - 30px); /* Account for 15px top/bottom margins */
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .fixed-height-row {
+      flex-shrink: 0;
+    }
+
+    .flex-row {
+      padding-top: 5px;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flex-content {
+      flex: 1;
+      overflow: hidden;
+    }
+  }
   
   // Hide interactive elements
   .btn, button, .form-control, input[type="text"], textarea {

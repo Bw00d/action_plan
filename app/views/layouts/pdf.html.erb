@@ -11,16 +11,6 @@
         margin: -50px 10px 10px 10px !important;
       }
       
-     <%#  body {
-        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-        font-size: 14px;
-        color: #444;
-      } %>
-      
-      .page-wrapper {
-        width: 100%;
-        box-sizing: border-box;
-      }
       
       /* Hide elements that shouldn't appear in PDFs */
       .no-print, 
@@ -35,66 +25,12 @@
       
       /* Ensure print background colors */
       @media print {
-        body {
+        <%# body {
           print-color-adjust: exact;
           -webkit-print-color-adjust: exact;
-        }
+        } %>
       }
-      
-      /* Fix for print container width */
-      #print-container {
-        <%# width: 95%; %>
-      }
-      
-      /* Critical form layout styles from plans.scss */
-      .form-row {
-        min-height: 30px;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .top-row {
-        border-top: 1px solid black;
-      }
-      .short-rows {
-        min-height: 60px;
-      }
-      .header-row {
-        font-weight: 700;
-        text-align: center;
-        padding: 5px 0;
-        border-left: 1px solid black;
-        background-color: #f3f3f3;
-      }
-      .bl {
-        border-left: 1px solid black;
-      }
-      .r-b {
-        border-right: 1px solid black;
-        border-bottom: 1px solid black;
-      }
-      .form-box {
-        height: 30px;
-        border-left: 1px solid black;
-        padding: 0px 5px;
-      }
-      
-      /* Critical utility classes */
-      .small {
-        font-size: 0.70em;
-      }
-      .center {
-        text-align: center;
-      }
-      .centered {
-        text-align: center !important;
-      }
-      
-      /* Percentage width classes */
-      .p35 { width: 35%; }
-      .p40 { width: 40%; }
-      .p8 { width: 8%; }
-      .p9 { width: 9%; }
+
     </style>
   </head>
   <body>

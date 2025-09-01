@@ -306,14 +306,34 @@ a.delete-objective:hover {
       line-height: 2em;
     }
   }
+  #control-objectives-pdf {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    overflow: hidden;
+    ul {
+      line-height: 2em;
+    }
+  }
   #operational-emphasis {
     border-left: 1px solid black;
     min-height: 300px;
     overflow: hidden;
   }
+  #operational-emphasis-pdf {
+    border-left: 1px solid black;
+    overflow: hidden;
+  }
   #general-safety-message {
     border-top: 1px solid black;
     height: 143px;
+    overflow: hidden;
+    padding-bottom: 10px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+  }
+  #general-safety-message-pdf {
+    border-top: 1px solid black;
     overflow: hidden;
     padding-bottom: 10px;
     border-right: 1px solid black;
@@ -325,6 +345,7 @@ a.delete-objective:hover {
     border-right: 1px solid black;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
+    hieght: 60px;
   }
  
 }
