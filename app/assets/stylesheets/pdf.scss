@@ -16,30 +16,57 @@
     -webkit-print-color-adjust: exact;
   }
 
-    @media print, (min-width: 0) {
-    #print-container {
-      height: calc(100vh - 30px); /* Account for 15px top/bottom margins */
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-    }
+  #print-container {
+    height: calc(100vh - 30px);
+    box-sizing: border-box;
+    position: relative;
+  }
 
-    .fixed-height-row {
-      flex-shrink: 0;
-    }
+  .fixed-height-row {
+    position: relative;
+  }
 
-    .flex-row {
-      padding-top: 5px;
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-    }
+  .title-row { 
+    // height: 50px; 
+  }
+  
+  #attachments { 
+    height: 95px; 
+  }
+  
+  .prepared-by-row { 
+    height: 60px; 
+  }
 
-    .flex-content {
-      flex: 1;
-      overflow: hidden;
-    }
+  .resizable-row {
+    position: relative;
+    min-height: 50px;
+    max-height: 200px;
+    overflow: hidden;
+  }
+
+  .row-content {
+    height: 100%;
+    overflow: hidden;
+    padding: 5px;
+  }
+
+  .resize-handle {
+    // height: 8px;
+    // background: #ddd;
+    border-top: 1px solid #FFF;
+    border-bottom: 1px solid #FFF;
+    cursor: ns-resize;
+    position: relative;
+    z-index: 10;
+  }
+
+  .resize-handle:hover {
+    // background: #bbb;
+  }
+
+  .resize-handle:active {
+    // background: #999;
   }
   
   // Hide interactive elements

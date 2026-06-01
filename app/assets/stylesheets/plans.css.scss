@@ -258,6 +258,7 @@ a.delete-objective:hover {
 }
 .top-row {
   border-top: 1px solid black;
+  // height:40px;
 }
 .bottom-row {
   border-right: 1px solid black;
@@ -300,7 +301,6 @@ a.delete-objective:hover {
     border-right: 1px solid black;
     border-left: 1px solid black;
     border-top: 1px solid black;
-    min-height: 449px;
     overflow: hidden;
     ul {
       line-height: 2em;
@@ -326,7 +326,7 @@ a.delete-objective:hover {
   }
   #general-safety-message {
     border-top: 1px solid black;
-    height: 143px;
+    height: 100%;
     overflow: hidden;
     padding-bottom: 10px;
     border-right: 1px solid black;
@@ -395,6 +395,31 @@ h1.header {
 
 .print-button {
   margin-top: 25px;
+}
+
+.resize-handle {
+  height: 8px;
+  background: #ddd;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  cursor: ns-resize;
+  position: relative;
+  z-index: 10;
+}
+
+.resize-handle:hover {
+  background: #bbb;
+}
+
+.resize-handle:active {
+  background: #999;
+}
+
+.resizable-row {
+  position: relative;
+  min-height: 100px;
+  overflow: hidden;
+  max-height: 400px;
 }
 
 /* ICS 202 Incident Organization */

@@ -25,8 +25,8 @@
       </div>
 
       <%# Control Objectives row %>
-      <div class="flex-row">
-        <div id="control-objectives-pdf" class="col-xs-12 flex-content">
+      <div class="resizable-row" id="objectives-row">
+        <div id="control-objectives-pdf" class="col-xs-12 row-content">
               <span class="small">4. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
               <ul>
                 <% @plan.objectives.each do |o| %>
@@ -35,10 +35,11 @@
               </ul>
             </div>
           </div>
+          <div class="resize-handle" data-target="objectives-row"></div>
 
       <%# Operations emphasis row %>
-      <div class="flex-row">
-      <div id="operational-emphasis-pdf" class="col-xs-12 form-row flex-content">
+      <div class="resizable-row" id="emphasis-row">
+      <div id="operational-emphasis-pdf" class="col-xs-12 row-content">
         <% if @incident.wildfire? %>
           <span class="small">5. OPERATIONAL PERIOD EMPHASIS</span><br>
         <% else %>
@@ -47,10 +48,11 @@
            <%=  simple_format(@plan.weather)  %>
       </div>
       </div>
+      <div class="resize-handle" data-target="emphasis-row"></div>
 
       <%#  General Safety row %>
-      <div class="flex-row">
-      <div id="general-safety-message-pdf" class="col-xs-12 flex-content">
+      <div class="resizable-row" id="safety-row">
+      <div id="general-safety-message-pdf" class="col-xs-12 row-content">
         <span class="small">6. GENERAL SAFETY MESSAGE</span><br>
           <%=  simple_format(@plan.general_safety)  %>
       </div>
@@ -107,3 +109,23 @@
       </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Apply heights from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  ['objectives-row', 'emphasis-row', 'safety-row'].forEach(rowId => {
+    const height = urlParams.get(rowId);
+    if (height) {
+      const row = document.getElementById(rowId);
+      if (row) {
+        // Constrain height for PDF to fit on single page
+        const constrainedHeight = Math.min(Math.max(50, parseInt(height)), 200);
+        row.style.height = constrainedHeight + 'px';
+      }
+    }
+  });
+});
+</script>
+
