@@ -3,9 +3,55 @@
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
     <span class="board-card-agency"><%= resource.agency %></span>
   </div>
+
   <div class="board-card-body">
     <div class="board-card-order"><%= resource.full_order_number %></div>
     <div class="board-card-name"><%= resource.name %></div>
     <div class="board-card-position"><%= resource.position %></div>
+  </div>
+
+  <div class="board-card-details" style="display:none;">
+    <div class="board-card-details-header">
+      <span class="board-card-details-title">Edit resource</span>
+      <button type="button" class="board-card-details-close" aria-label="Close">&times;</button>
+    </div>
+
+    <dl class="board-card-fields">
+      <dt>Order #</dt>
+      <dd><%= best_in_place resource, :order_number, as: :input %></dd>
+
+      <dt>Name</dt>
+      <dd><%= best_in_place resource, :name, as: :input %></dd>
+
+      <dt>Position</dt>
+      <dd><%= best_in_place resource, :position, as: :input %></dd>
+
+      <dt>Leader</dt>
+      <dd><%= best_in_place resource, :leader, as: :input %></dd>
+
+      <dt>Agency</dt>
+      <dd><%= best_in_place resource, :agency, as: :input %></dd>
+
+      <dt>Personnel</dt>
+      <dd><%= best_in_place resource, :number_personnel, as: :input %></dd>
+
+      <dt>Assignment days</dt>
+      <dd><%= best_in_place resource, :assignment_length, as: :input %></dd>
+
+      <dt>FWD</dt>
+      <dd><%= best_in_place resource, :fwd, as: :input %></dd>
+
+      <dt>Release</dt>
+      <dd><%= best_in_place resource, :release_date, as: :input %></dd>
+
+      <dt>Phone</dt>
+      <dd><%= best_in_place resource, :phone, as: :input %></dd>
+
+      <dt>Email</dt>
+      <dd><%= best_in_place resource, :email, as: :input %></dd>
+
+      <dt>Comment</dt>
+      <dd class="full-width"><%= best_in_place resource, :comment, as: :textarea %></dd>
+    </dl>
   </div>
 </li>

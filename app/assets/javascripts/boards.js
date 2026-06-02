@@ -13,6 +13,8 @@
       forcePlaceholderSize: true,
       tolerance: 'pointer',
       cursor: 'grabbing',
+      distance: 6,
+      cancel: '.board-card-details, .best_in_place, input, textarea, select, button, a',
       update: function (event, ui) {
         // Only fire on the receiving list to avoid two calls per drop
         if (this !== ui.item.parent()[0]) return;
@@ -51,6 +53,16 @@
 
     $(page).on('click', '.board-add-child-cancel', function () {
       $(this).closest('.board-add-child-form').hide();
+    });
+
+    $(page).on('dblclick', '.board-card', function (e) {
+      if ($(e.target).closest('.board-card-details').length > 0) return;
+      $(this).find('.board-card-details').toggle();
+    });
+
+    $(page).on('click', '.board-card-details-close', function (e) {
+      e.stopPropagation();
+      $(this).closest('.board-card-details').hide();
     });
   }
 
