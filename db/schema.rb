@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_09_010417) do
+ActiveRecord::Schema.define(version: 2026_06_02_182140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,46 @@ ActiveRecord::Schema.define(version: 2025_08_09_010417) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "org_unit_assignments", force: :cascade do |t|
+    t.bigint "org_unit_id", null: false
+    t.bigint "resource_id", null: false
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["org_unit_id", "position"], name: "index_org_unit_assignments_on_org_unit_id_and_position"
+    t.index ["org_unit_id"], name: "index_org_unit_assignments_on_org_unit_id"
+    t.index ["resource_id"], name: "index_org_unit_assignments_on_resource_id", unique: true
+  end
+
+  create_table "org_units", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "parent_id"
+    t.integer "kind", null: false
+    t.string "name", null: false
+    t.string "designator"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id", "kind"], name: "index_org_units_on_incident_id_and_kind"
+    t.index ["incident_id"], name: "index_org_units_on_incident_id"
+    t.index ["parent_id", "position"], name: "index_org_units_on_parent_id_and_position"
+    t.index ["parent_id"], name: "index_org_units_on_parent_id"
+  end
+
+  create_table "plan_assignment_snapshots", force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.bigint "org_unit_id", null: false
+    t.bigint "resource_id", null: false
+    t.integer "position"
+    t.string "designator_at_publish"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["org_unit_id"], name: "index_plan_assignment_snapshots_on_org_unit_id"
+    t.index ["plan_id", "org_unit_id", "position"], name: "index_pa_snapshots_on_plan_unit_position"
+    t.index ["plan_id"], name: "index_plan_assignment_snapshots_on_plan_id"
+    t.index ["resource_id"], name: "index_plan_assignment_snapshots_on_resource_id"
+  end
+
   create_table "plan_objectives", force: :cascade do |t|
     t.integer "plan_id"
     t.integer "objective_id"
@@ -255,6 +295,8 @@ ActiveRecord::Schema.define(version: 2025_08_09_010417) do
     t.date "date_prepare"
     t.string "time_prepared"
     t.string "ops_period"
+    t.datetime "published_at"
+    t.index ["published_at"], name: "index_plans_on_published_at"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -353,4 +395,11 @@ ActiveRecord::Schema.define(version: 2025_08_09_010417) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "org_unit_assignments", "org_units"
+  add_foreign_key "org_unit_assignments", "resources"
+  add_foreign_key "org_units", "incidents"
+  add_foreign_key "org_units", "org_units", column: "parent_id"
+  add_foreign_key "plan_assignment_snapshots", "org_units"
+  add_foreign_key "plan_assignment_snapshots", "plans"
+  add_foreign_key "plan_assignment_snapshots", "resources"
 end

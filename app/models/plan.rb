@@ -12,7 +12,16 @@ class Plan < ApplicationRecord
   has_many :teams, dependent: :destroy
   has_one :cover, dependent: :destroy
   has_many :attachments, dependent: :destroy
+  has_many :assignment_snapshots, class_name: 'PlanAssignmentSnapshot', dependent: :destroy
   validates_uniqueness_of :date, :scope => :incident_id
+
+  def published?
+    published_at.present?
+  end
+
+  def draft?
+    !published?
+  end
   after_create :duplicate_plan
   after_create :add_attachments
   

@@ -1,6 +1,13 @@
 class Resource < ApplicationRecord
   belongs_to :incident
   has_one :demob
+  has_one :org_unit_assignment, dependent: :destroy
+  has_one :org_unit, through: :org_unit_assignment
+
+  scope :unassigned, lambda {
+    left_outer_joins(:org_unit_assignment)
+      .where(org_unit_assignments: { id: nil })
+  }
   scope :overhead, -> { where(category: 'OVERHEAD') }
   scope :equipment, -> { where(category: 'EQUIPMENT') }
   scope :crew, -> { where(category: 'CREW') }

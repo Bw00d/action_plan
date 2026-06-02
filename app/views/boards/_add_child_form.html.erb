@@ -1,0 +1,30 @@
+<div class="board-add-child">
+  <button type="button" class="board-add-child-toggle">+ Add child</button>
+
+  <%= form_with url: incident_org_units_path(incident),
+                method: :post,
+                local: true,
+                html: { class: 'board-add-child-form', style: 'display:none;' } do |f| %>
+    <%= hidden_field_tag 'org_unit[parent_id]', unit.id %>
+    <div class="form-group">
+      <%= select_tag 'org_unit[kind]',
+                     options_for_select(OrgUnit.allowed_child_kinds_for(unit.kind).map { |k| [k.capitalize, k] }),
+                     class: 'form-control input-sm' %>
+    </div>
+    <div class="form-group">
+      <%= text_field_tag 'org_unit[name]', nil,
+                         placeholder: 'Name (e.g. Div A)',
+                         class: 'form-control input-sm',
+                         required: true %>
+    </div>
+    <div class="form-group">
+      <%= text_field_tag 'org_unit[designator]', nil,
+                         placeholder: 'Designator (optional)',
+                         class: 'form-control input-sm' %>
+    </div>
+    <div class="board-add-child-actions">
+      <%= submit_tag 'Add', class: 'btn btn-primary btn-xs' %>
+      <button type="button" class="btn btn-default btn-xs board-add-child-cancel">Cancel</button>
+    </div>
+  <% end %>
+</div>

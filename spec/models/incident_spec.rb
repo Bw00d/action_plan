@@ -6,7 +6,23 @@ RSpec.describe Incident, type: :model do
     it { should have_many(:plans).dependent(:destroy) }
     it { should have_many(:resources).dependent(:destroy) }
     it { should have_many(:checkins) }
+    it { should have_many(:org_units).dependent(:destroy) }
     it { should have_and_belong_to_many(:users) }
+  end
+
+  describe '#section' do
+    let(:incident) { create(:incident) }
+
+    before { Incidents::SeedOrgChart.call(incident) }
+
+    it 'finds a seeded section by name' do
+      expect(incident.section(:operations).kind).to eq('section')
+      expect(incident.section(:operations).name).to eq('Operations')
+    end
+
+    it 'returns nil for an unseeded section' do
+      expect(incident.section(:nonexistent)).to be_nil
+    end
   end
 
   describe '#owner' do

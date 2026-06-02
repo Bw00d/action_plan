@@ -1,0 +1,11 @@
+<li class="board-card" data-resource-id="<%= resource.id %>">
+  <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
+    <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
+    <span class="board-card-agency"><%= resource.agency %></span>
+  </div>
+  <div class="board-card-body">
+    <div class="board-card-order"><%= resource.full_order_number %></div>
+    <div class="board-card-name"><%= resource.name %></div>
+    <div class="board-card-position"><%= resource.position %></div>
+  </div>
+</li>

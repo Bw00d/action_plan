@@ -2,9 +2,19 @@ class Incident < ApplicationRecord
   has_many :plans, dependent: :destroy
   has_many :resources, dependent: :destroy
   has_many :checkins
-  
+  has_many :org_units, dependent: :destroy
+  has_many :org_unit_assignments, through: :org_units
+
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_and_belongs_to_many :users  # shared users who can edit
+
+  def section(name)
+    org_units.kind_section.find_by(name: name.to_s.titleize)
+  end
+
+  def command_unit
+    org_units.kind_command.first
+  end
 
 
   def display_incident_name

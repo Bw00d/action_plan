@@ -1,0 +1,18 @@
+<div class="board-column" id="<%= column_id %>" data-org-unit-id="<%= org_unit_id %>">
+  <div class="board-column-header">
+    <% if subtitle %>
+      <div class="board-column-subtitle"><%= subtitle %></div>
+    <% end %>
+    <div class="board-column-title"><%= title %></div>
+  </div>
+
+  <ul class="board-cards">
+    <% resources.each do |resource| %>
+      <%= render 'card', resource: resource %>
+    <% end %>
+  </ul>
+
+  <% if local_assigns[:unit] && unit.can_have_children? %>
+    <%= render 'add_child_form', incident: @incident, unit: unit %>
+  <% end %>
+</div>

@@ -1,0 +1,29 @@
+<% content_for :title, "Board — #{@incident.display_incident_name}" %>
+
+<div class="board-page" data-incident-id="<%= @incident.id %>">
+  <header class="board-header">
+    <h2><%= @incident.display_incident_name %></h2>
+    <p class="text-muted">Drag resources between sections to assign them.</p>
+    <% if flash[:notice] %><div class="alert alert-success"><%= flash[:notice] %></div><% end %>
+    <% if flash[:error] %><div class="alert alert-danger"><%= flash[:error] %></div><% end %>
+  </header>
+
+  <div class="board-columns">
+    <%= render 'column',
+               column_id: 'unassigned',
+               org_unit_id: '',
+               title: 'Unassigned',
+               subtitle: nil,
+               resources: @unassigned_resources %>
+
+    <% @columns.each do |unit| %>
+      <%= render 'column',
+                 column_id: "org-unit-#{unit.id}",
+                 org_unit_id: unit.id,
+                 title: unit.name,
+                 subtitle: column_subtitle(unit),
+                 resources: unit.resources.order(:position),
+                 unit: unit %>
+    <% end %>
+  </div>
+</div>

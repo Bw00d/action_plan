@@ -9,6 +9,7 @@ regardless of their roles %>
   <li><%= link_to "IAP", new_incident_plan_path(@incident) %></li>
   <% end %>
     <li><%= link_to "Resources", incident_resources_path(@incident) %></li>
+    <li><%= link_to "Board", incident_board_path(@incident) %></li>
   <% end %>
 <% end %>
 <li><%= link_to t('navigation.incidents'), incidents_path %></li>

@@ -38,6 +38,7 @@ class IncidentsController < ApplicationController
     respond_to do |format|
       if @incident.save
         @incident.users << current_user
+        Incidents::SeedOrgChart.call(@incident)
         format.html { redirect_to incident_path(@incident) }
         format.js { }
         format.json { render incident_path(@incident), status: :created, location: @incident }

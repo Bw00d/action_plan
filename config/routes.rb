@@ -46,6 +46,12 @@ Rails.application.routes.draw do
       resources :safety_messages
       resources :covers
     end
+
+    resource :board, only: [:show] do
+      patch :move
+    end
+
+    resources :org_units, only: [:create]
   end
  
 
