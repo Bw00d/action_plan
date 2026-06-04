@@ -3,7 +3,18 @@
     <% if subtitle %>
       <div class="board-column-subtitle"><%= subtitle %></div>
     <% end %>
-    <div class="board-column-title"><%= title %></div>
+    <div class="board-column-title-row">
+      <div class="board-column-title"><%= title %></div>
+      <% if local_assigns[:unit] && OrgUnitsController::DELETABLE_KINDS.include?(unit.kind) %>
+        <%= button_to '×',
+                      incident_org_unit_path(@incident, unit),
+                      method: :delete,
+                      class: 'board-column-delete',
+                      form: { class: 'board-column-delete-form' },
+                      data: { confirm: "Delete \"#{unit.name}\"? Any child branches/divisions/groups are deleted too. Resources on these units move to Unassigned." },
+                      title: 'Delete this unit' %>
+      <% end %>
+    </div>
   </div>
 
   <ul class="board-cards">

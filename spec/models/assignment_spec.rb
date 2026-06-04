@@ -107,6 +107,57 @@ RSpec.describe Assignment, type: :model do
     end
   end
 
+  describe '#assigned_resources with org_unit (board-sourced)' do
+    let(:incident) { create(:incident) }
+    let(:plan) { create(:plan, incident: incident) }
+    let(:operations) { create(:org_unit, :section, incident: incident, name: 'Operations') }
+    let(:division) { create(:org_unit, :division, incident: incident, parent: operations, name: 'Div A', designator: 'A') }
+    let!(:resource1) { create(:resource, incident: incident, number_personnel: 5) }
+    let!(:resource2) { create(:resource, incident: incident, number_personnel: 10) }
+
+    before do
+      create(:org_unit_assignment, org_unit: division, resource: resource1)
+      create(:org_unit_assignment, org_unit: division, resource: resource2)
+    end
+
+    context 'with a draft plan' do
+      let(:assignment) { create(:assignment, plan: plan, org_unit: division) }
+
+      it 'reads live OrgUnitAssignments for the org_unit' do
+        expect(assignment.assigned_resources).to contain_exactly(resource1, resource2)
+      end
+
+      it 'sums personnel from the board' do
+        expect(assignment.personnel).to eq(15)
+      end
+
+      it 'ignores the legacy resource_ids array' do
+        assignment.update!(resource_ids: ['99999'])
+        expect(assignment.assigned_resources).to contain_exactly(resource1, resource2)
+      end
+    end
+
+    context 'with a published plan' do
+      let(:assignment) { create(:assignment, plan: plan, org_unit: division) }
+
+      before do
+        assignment # ensure it exists pre-publish so snapshot has something to lock
+        Plans::Publish.call(plan)
+      end
+
+      it 'reads the frozen snapshot, not the live board' do
+        # Mutate the live board after publish
+        resource1.org_unit_assignment.destroy
+        expect(assignment.assigned_resources.map(&:id)).to contain_exactly(resource1.id, resource2.id)
+      end
+
+      it 'still sums personnel from the snapshot' do
+        resource1.org_unit_assignment.destroy
+        expect(assignment.personnel).to eq(15)
+      end
+    end
+  end
+
   describe '#operations_resources' do
     let(:plan) { create(:plan) }
     let!(:team1) { create(:team, plan: plan, staff: 'Operations') }

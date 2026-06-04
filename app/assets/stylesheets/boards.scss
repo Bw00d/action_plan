@@ -40,10 +40,43 @@
   letter-spacing: 0.4px;
 }
 
+.board-column-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
 .board-column-title {
   font-size: 14px;
   font-weight: 600;
   color: #172b4d;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.board-column-delete-form {
+  display: inline-block;
+  margin: 0;
+}
+
+.board-column-delete {
+  background: none;
+  border: none;
+  color: #97a0af;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 6px;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover {
+    background: #ebecf0;
+    color: #c62828;
+  }
 }
 
 .board-cards {

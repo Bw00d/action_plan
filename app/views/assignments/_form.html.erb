@@ -12,8 +12,19 @@
   <% end %>
 
   <div class="form-group">
+    <%= form.label :org_unit_id, 'Division / Group' %>
+    <% selectable_units = @incident.org_units.where(kind: [OrgUnit.kinds[:division], OrgUnit.kinds[:group]]).order(:name) %>
+    <%= form.select :org_unit_id,
+                    selectable_units.map { |u| ["#{u.name} (#{u.kind.capitalize})", u.id] },
+                    { include_blank: '— pick one —' },
+                    class: 'form-control' %>
+    <small class="text-muted">Resources for this 204 come from whatever's on the board for the selected unit.</small>
+  </div>
+
+  <div class="form-group">
     <%= form.label :designator %>
     <%= form.text_field :designator, id: :assignment_designator, class: "form-control" %>
+    <small class="text-muted">Optional override. Defaults to the org unit's designator if left blank.</small>
   </div>
   <div class="form-group">
     <%= form.label :control_operations %>

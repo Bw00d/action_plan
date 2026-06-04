@@ -5,6 +5,8 @@ class OrgUnit < ApplicationRecord
            class_name: 'OrgUnit', foreign_key: :parent_id, dependent: :destroy
   has_many :org_unit_assignments, -> { order(:position) }, dependent: :destroy
   has_many :resources, through: :org_unit_assignments
+  has_many :assignments, dependent: :nullify
+  has_many :plan_assignment_snapshots, dependent: :nullify
 
   enum kind: {
     command: 0,

@@ -2,7 +2,9 @@ class Incident < ApplicationRecord
   has_many :plans, dependent: :destroy
   has_many :resources, dependent: :destroy
   has_many :checkins
-  has_many :org_units, dependent: :destroy
+  has_many :org_units
+  has_many :root_org_units, -> { where(parent_id: nil) },
+           class_name: 'OrgUnit', dependent: :destroy
   has_many :org_unit_assignments, through: :org_units
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'

@@ -41,6 +41,10 @@ Rails.application.routes.draw do
       resources :demobs
     end
     resources :plans do
+      member do
+        post :publish
+        delete :unpublish
+      end
       resources :assignments
       resources :commo_plans
       resources :safety_messages
@@ -51,7 +55,7 @@ Rails.application.routes.draw do
       patch :move
     end
 
-    resources :org_units, only: [:create]
+    resources :org_units, only: [:create, :destroy]
   end
  
 

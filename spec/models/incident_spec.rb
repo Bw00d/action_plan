@@ -6,8 +6,28 @@ RSpec.describe Incident, type: :model do
     it { should have_many(:plans).dependent(:destroy) }
     it { should have_many(:resources).dependent(:destroy) }
     it { should have_many(:checkins) }
-    it { should have_many(:org_units).dependent(:destroy) }
+    it { should have_many(:org_units) }
+    it { should have_many(:root_org_units).dependent(:destroy) }
     it { should have_and_belong_to_many(:users) }
+  end
+
+  describe 'destroy with a full org chart' do
+    let(:incident) { create(:incident) }
+
+    before do
+      Incidents::SeedOrgChart.call(incident)
+      ops = incident.section(:operations)
+      branch = create(:org_unit, :branch, incident: incident, parent: ops, name: 'Branch I')
+      division = create(:org_unit, :division, incident: incident, parent: branch, name: 'Div A')
+      resource = create(:resource, incident: incident)
+      create(:org_unit_assignment, org_unit: division, resource: resource)
+    end
+
+    it 'tears down the tree and assignments without errors' do
+      expect { incident.destroy }.not_to raise_error
+      expect(OrgUnit.where(incident_id: incident.id)).to be_empty
+      expect(OrgUnitAssignment.joins(:org_unit).where(org_units: { incident_id: incident.id })).to be_empty
+    end
   end
 
   describe '#section' do

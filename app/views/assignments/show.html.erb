@@ -88,15 +88,24 @@
       </div>
       
       <div id="assign-resources-row" class="row">
-          <%#= link_to (fa_icon('user-plus')), "javascript:;",id: "assign-resources-button", class: "resources-button" %> 
+        <% if @assignment.org_unit_id.blank? %>
+          <%#= link_to (fa_icon('user-plus')), "javascript:;",id: "assign-resources-button", class: "resources-button" %>
           <%= link_to "javascript:;" do %>
             <%= image_tag 'user-plus.svg', class: "resources-button medium-icon ", id: 'assign-resources-button' %>
-          <% end %>  
+          <% end %>
+        <% end %>
         <div class=" center form-row header-row">
           RESOURCES ASSIGNED
+          <% if @assignment.org_unit_id.present? %>
+            <small class="text-muted">
+              from the board —
+              <%= link_to 'edit on board', incident_board_path(@incident) %>
+            </small>
+          <% end %>
         </div>
       </div>
       <div class="row">
+        <% if @assignment.org_unit_id.blank? %>
         <div id="resource-assignments-form">
           <%= form_for @assignment do |f| %>
             <div class="float-right lg-margin-right"><%= f.submit "SAVE", class: "btn btn-aqua tiny" %> <%= link_to "CANCEL", 'javascript:;', id: 'cancel-resource-assignments-form', class: 'btn btn-default tiny' %></div>
@@ -105,7 +114,7 @@
             <% if  !@incident.resources.empty? %>
               <% @incident.resources.assigned.order(:position).each do |r| %>
                 <li class="assigned-204-resources"><%= f.check_box :resource_ids, {multiple: true}, r.id, nil %>
-                
+
                         <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.name %> <%= f.label :ops_personnel_ids, r.cat %>
                         <%= f.label :ops_personnel_ids, r.order_number %></li>
               <% end %>
@@ -113,9 +122,10 @@
               <li>There are no resources assigned to this incident. Add resources to the <%= link_to "ICS 211", incident_resources_path(@incident) %>.</li>
               <% end %>
           </ul>
-           
+
           <% end %>
         </div>
+        <% end %>
         <table id="assigned-resources", class="assigned-resources">
           <thead>
             <th class="p35">RESOURCE DESIGNATOR </th>

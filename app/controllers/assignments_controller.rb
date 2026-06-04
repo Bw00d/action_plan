@@ -60,6 +60,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1/edit
   def edit
     @plan = Plan.find(params[:plan_id])
+    @incident = Incident.find(@plan.incident_id)
   end
 
   # POST /assignments
@@ -115,7 +116,7 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:designator, :control_operations, :special_instructions,
+      params.require(:assignment).permit(:designator, :org_unit_id, :control_operations, :special_instructions,
                                          :plan_id, :ops_period, commo_item_ids: [], resource_ids: [],
                                          ops_personnel_ids: [])
     end

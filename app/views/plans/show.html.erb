@@ -4,7 +4,23 @@
      <div class="col-lg-10 col-xs-12 center-block">
 
       <p id="notice"><%= notice %></p>
-        
+
+      <div class="iap-status-bar text-center" style="margin-bottom: 12px;">
+        <% if @plan.published? %>
+          <span class="label label-success">Published <%= @plan.published_at.strftime('%b %-d, %Y %-I:%M %p') %></span>
+          <%= button_to 'Unpublish', unpublish_incident_plan_path(@incident, @plan),
+                        method: :delete,
+                        class: 'btn btn-default btn-xs',
+                        data: { confirm: 'Returning to draft will discard the published snapshot. Continue?' } %>
+        <% else %>
+          <span class="label label-default">Draft</span>
+          <%= button_to 'Publish IAP', publish_incident_plan_path(@incident, @plan),
+                        method: :post,
+                        class: 'btn btn-success btn-xs',
+                        data: { confirm: "Publishing freezes every 204's resource list as it is right now. Continue?" } %>
+        <% end %>
+      </div>
+
       <div class="row">
         <%= link_to "javascript:;" do %>
           <h1 id="show-incident-form" class="text-center"><strong><%= @incident.display_incident_name %> </strong></h1>

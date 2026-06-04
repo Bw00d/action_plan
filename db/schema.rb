@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_06_02_182140) do
+ActiveRecord::Schema.define(version: 2026_06_03_183712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(version: 2026_06_02_182140) do
     t.string "ops_period"
     t.string "resource_ids", array: true
     t.string "ops_personnel_ids", array: true
+    t.bigint "org_unit_id"
+    t.index ["org_unit_id"], name: "index_assignments_on_org_unit_id"
   end
 
   create_table "attachments", force: :cascade do |t|
@@ -253,7 +255,7 @@ ActiveRecord::Schema.define(version: 2026_06_02_182140) do
 
   create_table "plan_assignment_snapshots", force: :cascade do |t|
     t.bigint "plan_id", null: false
-    t.bigint "org_unit_id", null: false
+    t.bigint "org_unit_id"
     t.bigint "resource_id", null: false
     t.integer "position"
     t.string "designator_at_publish"
@@ -395,6 +397,7 @@ ActiveRecord::Schema.define(version: 2026_06_02_182140) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assignments", "org_units"
   add_foreign_key "org_unit_assignments", "org_units"
   add_foreign_key "org_unit_assignments", "resources"
   add_foreign_key "org_units", "incidents"

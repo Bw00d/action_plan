@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
  
     
 
@@ -77,6 +77,18 @@ class PlansController < ApplicationController
       format.html { redirect_to incident_plans_path(@incident) }
       format.json { head :no_content }
     end
+  end
+
+  def publish
+    Plans::Publish.call(@plan)
+    redirect_back fallback_location: incident_plan_path(@plan.incident_id, @plan),
+                  notice: 'IAP published. The 204s are now locked to this ops period.'
+  end
+
+  def unpublish
+    Plans::Unpublish.call(@plan)
+    redirect_back fallback_location: incident_plan_path(@plan.incident_id, @plan),
+                  notice: 'IAP returned to draft. 204s now reflect the live board again.'
   end
 
   def cover
