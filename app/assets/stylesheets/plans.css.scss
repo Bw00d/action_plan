@@ -398,10 +398,11 @@ h1.header {
 }
 
 .resize-handle {
-  height: 8px;
-  background: #ddd;
-  border-top: 1px solid #999;
-  border-bottom: 1px solid #999;
+  height: 1px;
+  background: #999;
+  // background: #ddd;
+  // border-top: 1px solid #999;
+  // border-bottom: 1px solid #999;
   cursor: ns-resize;
   position: relative;
   z-index: 10;
