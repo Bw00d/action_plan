@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_06_03_183712) do
+ActiveRecord::Schema.define(version: 2026_06_25_154754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,15 @@ ActiveRecord::Schema.define(version: 2026_06_03_183712) do
     t.string "longitude"
     t.string "ic"
     t.string "fire_behavior"
+    t.string "iroc_inc_id"
+    t.string "state"
+    t.datetime "initial_date"
+    t.string "agency_abbrev"
+    t.string "disp_org_unit_code"
+    t.boolean "merged_inc_flag"
+    t.string "previous_inc_number"
+    t.string "time_zone"
+    t.index ["iroc_inc_id"], name: "index_incidents_on_iroc_inc_id", unique: true
   end
 
   create_table "incidents_users", id: false, force: :cascade do |t|
@@ -311,6 +320,38 @@ ActiveRecord::Schema.define(version: 2026_06_03_183712) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "requests", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.string "iroc_req_id", null: false
+    t.string "iroc_res_id"
+    t.boolean "root_req_flag"
+    t.string "req_number_prefix"
+    t.string "req_number"
+    t.string "req_catalog_name"
+    t.string "req_category_name"
+    t.string "res_name"
+    t.string "assignment_name"
+    t.string "res_prov_agency_abbrev"
+    t.string "res_prov_unit_code"
+    t.string "filled_catalog_item_code"
+    t.string "filled_catalog_item_name"
+    t.string "employment_class"
+    t.string "jet_port"
+    t.datetime "mob_etd"
+    t.boolean "vendor_owned_flag"
+    t.string "vendor_name"
+    t.string "contract_type"
+    t.string "contract_number"
+    t.string "last_name"
+    t.string "first_name"
+    t.string "middle_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id"], name: "index_requests_on_incident_id"
+    t.index ["iroc_req_id"], name: "index_requests_on_iroc_req_id", unique: true
+    t.index ["iroc_res_id"], name: "index_requests_on_iroc_res_id"
+  end
+
   create_table "resources", force: :cascade do |t|
     t.string "name"
     t.string "leader"
@@ -405,4 +446,5 @@ ActiveRecord::Schema.define(version: 2026_06_03_183712) do
   add_foreign_key "plan_assignment_snapshots", "org_units"
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
+  add_foreign_key "requests", "incidents"
 end

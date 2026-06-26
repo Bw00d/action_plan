@@ -1,0 +1,414 @@
+/* line 3, app/assets/stylesheets/assignments.css.scss */
+.wide-textarea {
+  width: 100%;
+}
+
+/* line 6, app/assets/stylesheets/assignments.css.scss */
+.commo-row {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 10, app/assets/stylesheets/assignments.css.scss */
+.commo-row div {
+  min-height: 30px;
+}
+
+/* line 14, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists {
+  margin-top: 0;
+  border-top: 1px solid #DDD;
+  list-style: none;
+  padding-left: 0;
+}
+
+/* line 19, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists li {
+  padding: 10px;
+}
+
+/* line 22, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists a {
+  text-decoration: none;
+}
+
+/* line 24, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists a :hover {
+  text-decoration: underline;
+}
+
+/* line 28, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists p {
+  padding-left: 10px;
+}
+
+/* line 32, app/assets/stylesheets/assignments.css.scss */
+.assignment-box {
+  border-right: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+}
+
+/* line 33, app/assets/stylesheets/assignments.css.scss */
+.assignment-box .header {
+  margin-bottom: 15px;
+  padding-top: 5px;
+}
+
+/* line 41, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources {
+  border-top: 1px solid black;
+  width: 100%;
+}
+
+/* line 44, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources thead {
+  border-right: 1px solid black;
+}
+
+/* line 47, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources tr {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 51, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources td {
+  height: 30px;
+  border-right: 1px solid black;
+  font-size: .9em;
+}
+
+/* line 56, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources td.centered {
+  text-align: center !important;
+  padding: 0 auto;
+}
+
+/* line 60, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources th {
+  font-weight: 400;
+  font-size: .70em;
+  height: 30px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  padding: 5px;
+}
+
+/* line 69, app/assets/stylesheets/assignments.css.scss */
+.form-box {
+  height: 30px;
+  border-left: 1px solid black;
+  padding: 0px 5px;
+}
+
+/* line 75, app/assets/stylesheets/assignments.css.scss */
+#incident-assignments textarea {
+  width: 100%;
+}
+
+/* line 79, app/assets/stylesheets/assignments.css.scss */
+a.new-freq-button {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d2d2d2;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #242424;
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -12px;
+  display: none;
+}
+
+/* line 94, app/assets/stylesheets/assignments.css.scss */
+a.new-freq-button:hover {
+  text-decoration: none;
+  color: black;
+}
+
+/* line 100, app/assets/stylesheets/assignments.css.scss */
+#freq-form {
+  display: none;
+  width: 100%;
+  background-color: white;
+  z-index: 3;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  padding: 15px 0;
+}
+
+/* line 110, app/assets/stylesheets/assignments.css.scss */
+#freq-form li {
+  display: inline;
+}
+
+/* line 116, app/assets/stylesheets/assignments.css.scss */
+.header-button {
+  background-color: #3d3d3d;
+  color: white;
+  position: absolute;
+  left: 10px;
+  padding: 2px 10px;
+  margin-top: -3px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  z-index: 3px;
+  display: none;
+}
+
+/* line 130, app/assets/stylesheets/assignments.css.scss */
+.header-button:hover {
+  padding: 3px 11px;
+  margin-top: -3px;
+  cursor: pointer;
+}
+
+/* line 135, app/assets/stylesheets/assignments.css.scss */
+#resource-assignments-form {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  margin-bottom: -5px;
+  display: none;
+}
+
+/* line 143, app/assets/stylesheets/assignments.css.scss */
+#resource-assignments-form li {
+  list-style: none;
+}
+
+/* line 147, app/assets/stylesheets/assignments.css.scss */
+.personnel_num {
+  padding-left: 15px;
+  padding-top: 5px;
+  position: absolute;
+}
+
+/* line 152, app/assets/stylesheets/assignments.css.scss */
+.ops-box {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  overflow: hidden;
+  height: 30px;
+  float: left;
+  padding-top: 6px;
+  padding-left: 10px;
+}
+
+/* line 161, app/assets/stylesheets/assignments.css.scss */
+#ops-box-container {
+  border-left: 1px solid black;
+  overflow: hidden;
+}
+
+/* line 165, app/assets/stylesheets/assignments.css.scss */
+.resources-button {
+  overflow: hidden;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  -moz-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(191, 163, 163, 0.75);
+  background-color: #f5f5f5;
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding-left: 4px;
+  display: none;
+  color: #3d3d3d;
+}
+
+/* line 184, app/assets/stylesheets/assignments.css.scss */
+.resources-button i {
+  margin-top: 10px;
+  margin-left: 6px;
+}
+
+/* line 188, app/assets/stylesheets/assignments.css.scss */
+.resources-button a {
+  color: #3d3d3d !important;
+}
+
+/* line 191, app/assets/stylesheets/assignments.css.scss */
+.resources-button a:hover {
+  color: #3d3d3d !important;
+}
+
+/* line 195, app/assets/stylesheets/assignments.css.scss */
+#ops-resources {
+  left: -16px;
+  margin-top: 13px;
+}
+
+/* line 200, app/assets/stylesheets/assignments.css.scss */
+#assign-resources-button {
+  left: -15px;
+  margin-top: 133px;
+}
+
+/* line 205, app/assets/stylesheets/assignments.css.scss */
+#control-operations {
+  min-height: 160px;
+}
+
+/* line 208, app/assets/stylesheets/assignments.css.scss */
+#ops-resource-form {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  padding-bottom: 25px;
+  padding-top: 20px;
+  display: none;
+}
+
+/* line 215, app/assets/stylesheets/assignments.css.scss */
+#ops-resource-form li {
+  list-style: none;
+}
+
+/* line 219, app/assets/stylesheets/assignments.css.scss */
+#add-freqs-button {
+  left: -15px;
+  margin-top: 75px;
+  padding-left: 8px;
+  padding-top: 2px;
+}
+
+/* line 225, app/assets/stylesheets/assignments.css.scss */
+#new-204-button {
+  margin-left: 20px;
+  overflow: hidden;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  -moz-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(191, 163, 163, 0.75);
+  background-color: #f5f5f5;
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding-left: 0;
+  font-size: 1.3em;
+  color: #3d3d3d;
+  padding-top: 0;
+}
+
+/* line 246, app/assets/stylesheets/assignments.css.scss */
+#new-204-button i {
+  margin-top: 0px;
+  margin-left: 2px;
+}
+
+/* line 250, app/assets/stylesheets/assignments.css.scss */
+#new-204-button a {
+  color: #3d3d3d !important;
+}
+
+/* line 254, app/assets/stylesheets/assignments.css.scss */
+a#new-204-button:hover {
+  text-decoration: none;
+}
+
+/* line 259, app/assets/stylesheets/assignments.css.scss */
+li.assigned-204-resources input {
+  display: inline;
+}
+
+/* line 262, app/assets/stylesheets/assignments.css.scss */
+li.assigned-204-resources label {
+  display: inline;
+}
+
+/* line 266, app/assets/stylesheets/assignments.css.scss */
+.float-button {
+  clear: both;
+}
+
+/* line 269, app/assets/stylesheets/assignments.css.scss */
+ul#action-buttons {
+  list-style-type: none !important;
+  padding: 0 !important;
+  clear: both;
+}
+
+/* line 273, app/assets/stylesheets/assignments.css.scss */
+ul#action-buttons li {
+  display: inline !important;
+}
+
+/* line 277, app/assets/stylesheets/assignments.css.scss */
+.action-buttons {
+  display: inline;
+  clear: both;
+  margin-left: 0;
+}
+
+/* line 283, app/assets/stylesheets/assignments.css.scss */
+.tabrow {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+/* line 287, app/assets/stylesheets/assignments.css.scss */
+.new-page {
+  height: 20px;
+}
+
+/* line 290, app/assets/stylesheets/assignments.css.scss */
+.page-number {
+  font-size: 0.70em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/* line 296, app/assets/stylesheets/assignments.css.scss */
+.clear {
+  clear: all;
+}
+
+/* line 299, app/assets/stylesheets/assignments.css.scss */
+.div-grp-branch {
+  position: absolute;
+  left: 3px;
+  top: 2px;
+}
+
+/* line 304, app/assets/stylesheets/assignments.css.scss */
+td.no-padding {
+  padding-right: none !important;
+  padding-left: 15px !important;
+  padding-top: 10px !important;
+}
+
+@media print {
+  /* line 310, app/assets/stylesheets/assignments.css.scss */
+  div.header-row {
+    background-color: #f3f3f3 !important;
+  }
+}
+
+/* line 314, app/assets/stylesheets/assignments.css.scss */
+div.solid {
+  z-index: 7 !important;
+  position: relative;
+}

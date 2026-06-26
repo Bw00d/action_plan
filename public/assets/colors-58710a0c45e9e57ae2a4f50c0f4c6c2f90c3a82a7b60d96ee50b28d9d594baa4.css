@@ -1,0 +1,16 @@
+/* line 1, app/assets/stylesheets/colors.css.scss */
+.btn-dark {
+  background-color: black;
+  color: white;
+}
+
+/* line 5, app/assets/stylesheets/colors.css.scss */
+.btn-aqua {
+  background-color: #60C1DD;
+  color: white;
+}
+
+/* line 8, app/assets/stylesheets/colors.css.scss */
+.btn-aqua :hover {
+  color: white;
+}

@@ -1,0 +1,40 @@
+/* line 2, app/assets/stylesheets/safety_messages.scss */
+.hazards-form textarea {
+  width: 100%;
+  height: 150px;
+}
+
+/* line 7, app/assets/stylesheets/safety_messages.scss */
+#major-hazards {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  min-height: 300px;
+}
+
+/* line 13, app/assets/stylesheets/safety_messages.scss */
+#narrative {
+  min-height: 500px;
+}
+
+/* line 15, app/assets/stylesheets/safety_messages.scss */
+#narrative textarea {
+  width: 100%;
+  min-height: 300px;
+  height: 400px;
+}
+
+/* line 21, app/assets/stylesheets/safety_messages.scss */
+.safety-prep {
+  height: 35px;
+  border-bottom: 1px solid black;
+}
+
+/* line 25, app/assets/stylesheets/safety_messages.scss */
+#safety-message {
+  min-height: 650px;
+  overflow: hidden;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+}

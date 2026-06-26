@@ -6,9 +6,13 @@ class Incident < ApplicationRecord
   has_many :root_org_units, -> { where(parent_id: nil) },
            class_name: 'OrgUnit', dependent: :destroy
   has_many :org_unit_assignments, through: :org_units
+  has_many :requests, dependent: :destroy
+  has_many :personnel_requests, -> { personnel }, class_name: 'Request'
 
-  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :owner, class_name: 'User', foreign_key: 'user_id', optional: true
   has_and_belongs_to_many :users  # shared users who can edit
+
+  validates :iroc_inc_id, uniqueness: true, allow_nil: true
 
   def section(name)
     org_units.kind_section.find_by(name: name.to_s.titleize)
