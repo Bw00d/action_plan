@@ -8,22 +8,26 @@
     <% if flash[:error] %><div class="alert alert-danger"><%= flash[:error] %></div><% end %>
   </header>
 
-  <div class="board-columns">
-    <%= render 'column',
-               column_id: 'unassigned',
-               org_unit_id: '',
-               title: 'Unassigned',
-               subtitle: nil,
-               resources: @unassigned_resources %>
-
-    <% @columns.each do |unit| %>
+  <div class="board-layout">
+    <div class="board-fixed">
       <%= render 'column',
-                 column_id: "org-unit-#{unit.id}",
-                 org_unit_id: unit.id,
-                 title: unit.name,
-                 subtitle: column_subtitle(unit),
-                 resources: unit.resources.assigned.order(:position),
-                 unit: unit %>
-    <% end %>
+                 column_id: 'unassigned',
+                 org_unit_id: '',
+                 title: 'Unassigned',
+                 subtitle: nil,
+                 resources: @unassigned_resources %>
+    </div>
+
+    <div class="board-columns">
+      <% @columns.each do |unit| %>
+        <%= render 'column',
+                   column_id: "org-unit-#{unit.id}",
+                   org_unit_id: unit.id,
+                   title: unit.name,
+                   subtitle: column_subtitle(unit),
+                   resources: unit.resources.assigned.order(:position),
+                   unit: unit %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -10,12 +10,24 @@
   }
 }
 
+.board-layout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.board-fixed {
+  flex: 0 0 260px;
+}
+
 .board-columns {
   display: flex;
   gap: 12px;
   overflow-x: auto;
   padding-bottom: 12px;
   align-items: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .board-column {
