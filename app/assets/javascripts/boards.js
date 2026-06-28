@@ -7,6 +7,19 @@
     var moveUrl = '/incidents/' + incidentId + '/board/move';
     var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
+    function recomputePersonnel() {
+      $('.board-column', page).each(function () {
+        var $col = $(this);
+        var total = 0;
+        $col.find('.board-card').each(function () {
+          total += parseInt($(this).data('personnel'), 10) || 0;
+        });
+        var $badge = $col.find('.board-column-personnel');
+        $badge.find('.board-column-personnel-count').text(total);
+        $badge.toggleClass('is-empty', total === 0);
+      });
+    }
+
     $('.board-cards').sortable({
       connectWith: '.board-cards',
       placeholder: 'board-card-placeholder',
@@ -25,6 +38,7 @@
         var position = column.find('.board-card').index(ui.item) + 1;
 
         var $sortable = $('.board-cards').sortable('disable');
+        recomputePersonnel();
 
         $.ajax({
           url: moveUrl,
@@ -38,6 +52,7 @@
         })
           .fail(function () {
             $(event.target).sortable('cancel');
+            recomputePersonnel();
             alert('Move failed. Refresh the page.');
           })
           .always(function () {

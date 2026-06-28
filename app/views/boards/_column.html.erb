@@ -5,6 +5,10 @@
     <% end %>
     <div class="board-column-title-row">
       <div class="board-column-title"><%= title %></div>
+      <% personnel_count = resources.sum { |r| r.number_personnel.to_i } %>
+      <span class="board-column-personnel <%= 'is-empty' if personnel_count.zero? %>" title="Personnel assigned">
+        <i class="fa fa-users" aria-hidden="true"></i> <span class="board-column-personnel-count"><%= personnel_count %></span>
+      </span>
       <% if local_assigns[:unit] && OrgUnitsController::DELETABLE_KINDS.include?(unit.kind) %>
         <%= button_to '×',
                       incident_org_unit_path(@incident, unit),

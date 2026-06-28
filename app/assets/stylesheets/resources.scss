@@ -83,12 +83,95 @@ a.delete-resource:hover {
 .black {
   background-color: black;
 }
+.glide-row.red,
+.glide-row.black {
+  color: white !important;
+}
 #glide-info {
   display: none;
+}
+
+.glide-print-actions {
+  margin: 16px 0;
+  text-align: right;
+}
+
+.print-only {
+  display: none;
+}
+
+.glide-print-header {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media print {
+  body.printing-glide {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+
+    header,
+    footer,
+    .incident-name,
+    .resources-panel-head,
+    .masking-tape,
+    #notice,
+    #ics-211-info,
+    #demob-info,
+    #tally-info,
+    #resource-form,
+    .no-print {
+      display: none !important;
+    }
+
+    #glide-info {
+      display: block !important;
+    }
+
+    .print-only {
+      display: block !important;
+    }
+
+    .glide-calendar,
+    .glide-row,
+    .yellow,
+    .orange,
+    .red,
+    .black {
+      -webkit-print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    // Inset box-shadow renders as a foreground decoration and prints
+    // even when the browser's "Background graphics" option is off.
+    .glide-row.yellow {
+      box-shadow: inset 0 0 0 999px yellow !important;
+    }
+    .glide-row.orange {
+      box-shadow: inset 0 0 0 999px orange !important;
+    }
+    .glide-row.red {
+      box-shadow: inset 0 0 0 999px red !important;
+    }
+    .glide-row.black {
+      box-shadow: inset 0 0 0 999px black !important;
+    }
+  }
+
+  @page {
+    size: landscape;
+    margin: 0.4in;
+  }
 }
 .table-col {
     min-width: 25px !important;
   }
+.name-col {
+  white-space: nowrap;
+}
 #ics-211-info {
 }
 

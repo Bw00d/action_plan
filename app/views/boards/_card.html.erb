@@ -1,4 +1,4 @@
-<li class="board-card" data-resource-id="<%= resource.id %>">
+<li class="board-card" data-resource-id="<%= resource.id %>" data-personnel="<%= resource.number_personnel.to_i %>">
   <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
     <span class="board-card-agency"><%= resource.agency %></span>
@@ -8,6 +8,14 @@
     <div class="board-card-order"><%= resource.full_order_number %></div>
     <div class="board-card-name"><%= resource.name %></div>
     <div class="board-card-position"><%= resource.position %></div>
+
+    <% lwd_class = lwd_status_class(resource) %>
+    <% if lwd_class %>
+      <span class="board-card-lwd <%= lwd_class %>">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        LWD <%= resource.last_work_day.strftime("%b %-d") %>
+      </span>
+    <% end %>
   </div>
 
   <div class="board-card-details" style="display:none;">

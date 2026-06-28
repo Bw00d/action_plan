@@ -1,3 +1,6 @@
+    <h1 class="glide-print-header print-only" class="left">
+      <%= @incident.name %> <%= @incident.incident_type %> Glide Path
+    </h1>
 <div id="glide-info" class="panel panel-default">
   <div id="resource-form">
     <h4><strong>New Resource</strong></h4>
@@ -11,7 +14,7 @@
         <tr>
           <th scope="col table-col">Order#</th>
           <th scope="col table-col">Position</th>
-          <th scope="col table-col">Name</th>
+          <th scope="col" class="table-col name-col">Name</th>
           <th scope="col table-col">LWD</th>
 
       
@@ -28,7 +31,7 @@
         <tr>
           <td class=" table-col"><%= r.full_order_number  %></td>
           <td class=" table-col"><%=  r.position%></td>
-          <td class=" table-col"><%=  r.name %></td>
+          <td class="table-col name-col"><%=  r.name %></td>
           <% if !r.last_work_day.blank? %>
             <td class=" table-col"><%=  r.last_work_day.strftime("%m/%d") %></td>
           <% else %>
@@ -52,6 +55,25 @@
     </div>
   <% end %>
 
-  
+
+  <% if !@incident.resources.empty? %>
+    <div class="glide-print-actions no-print">
+      <button type="button" id="print-glide" class="btn btn-primary" onclick="printGlide()">
+        <%= fa_icon 'print' %> Print Glide Path
+      </button>
+    </div>
+  <% end %>
   <div class="panel-foot"></div>
 </div>
+
+<script>
+  function printGlide() {
+    document.body.classList.add('printing-glide');
+    var cleanup = function () {
+      document.body.classList.remove('printing-glide');
+      window.removeEventListener('afterprint', cleanup);
+    };
+    window.addEventListener('afterprint', cleanup);
+    window.print();
+  }
+</script>

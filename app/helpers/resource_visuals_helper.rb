@@ -52,6 +52,22 @@ module ResourceVisualsHelper
     AGENCY_COLORS[key] || fallback_color(key)
   end
 
+  # Returns a CSS class describing how close `today` is to the resource's
+  # last work day: yellow when comfortably ahead, orange within 4 days, red on
+  # the day itself, black once past. Returns nil when there's no LWD to show.
+  def lwd_status_class(resource)
+    lwd = resource.last_work_day
+    return nil if lwd.blank? || !lwd.respond_to?(:to_date)
+
+    days_until = (lwd.to_date - Date.current).to_i
+    case
+    when days_until <  0 then 'lwd-past'
+    when days_until == 0 then 'lwd-today'
+    when days_until <= 4 then 'lwd-soon'
+    else 'lwd-future'
+    end
+  end
+
   private
 
   def equipment_icon(position)
