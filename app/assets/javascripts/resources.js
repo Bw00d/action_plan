@@ -5,6 +5,22 @@ $(document).on("turbolinks:load", function() {
     autoclose: true,
     todayHighlight: true
   });
+
+  // Auto-size best_in_place inputs to fit their content. Modern browsers
+  // handle this via CSS `field-sizing: content`; this is the fallback that
+  // sets the `size` attribute for browsers that don't yet support it.
+  var supportsFieldSizing = window.CSS && CSS.supports && CSS.supports('field-sizing', 'content');
+  if (!supportsFieldSizing) {
+    $(document).on('focus', '.sm-bip-input input, .md-bip-input input, .lg-bip-input input', function () {
+      var $input = $(this);
+      function resize() {
+        $input.attr('size', Math.max(($input.val() || '').length + 2, 4));
+      }
+      resize();
+      $input.on('input.bipResize', resize);
+      $input.one('blur.bipResize', function () { $input.off('.bipResize'); });
+    });
+  }
   
   $('select#resource_category').change(function() {
     var text = $(this).val();

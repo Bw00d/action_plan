@@ -22,6 +22,25 @@
     </div>
   <% end %>
 
-  
+
+  <% if !@resources.empty? %>
+    <div class="demob-print-actions no-print">
+      <button type="button" id="print-demob" class="btn btn-primary" onclick="printDemob()">
+        <%= fa_icon 'print' %> Print Demob List
+      </button>
+    </div>
+  <% end %>
   <div class="panel-foot"></div>
 </div>
+
+<script>
+  function printDemob() {
+    document.body.classList.add('printing-demob');
+    var cleanup = function () {
+      document.body.classList.remove('printing-demob');
+      window.removeEventListener('afterprint', cleanup);
+    };
+    window.addEventListener('afterprint', cleanup);
+    window.print();
+  }
+</script>

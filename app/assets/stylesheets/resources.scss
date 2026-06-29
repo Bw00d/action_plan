@@ -91,7 +91,8 @@ a.delete-resource:hover {
   display: none;
 }
 
-.glide-print-actions {
+.glide-print-actions,
+.demob-print-actions {
   margin: 16px 0;
   text-align: right;
 }
@@ -108,6 +109,26 @@ a.delete-resource:hover {
 }
 
 @media print {
+  body.printing-demob {
+    header,
+    footer,
+    .incident-name,
+    .resources-panel-head,
+    .masking-tape,
+    #notice,
+    #ics-211-info,
+    #glide-info,
+    #tally-info,
+    #resource-form,
+    .no-print {
+      display: none !important;
+    }
+
+    #demob-info {
+      display: block !important;
+    }
+  }
+
   body.printing-glide {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
