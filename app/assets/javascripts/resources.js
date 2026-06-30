@@ -47,21 +47,29 @@ $(document).on("turbolinks:load", function() {
   });
 
  // Style glide rows
+ //   demob day (LWD + 1) → black
+ //   LWD                 → red
+ //   LWD - 1, LWD - 2    → orange   (2 days before)
+ //   LWD - 3..LWD - 5    → yellow   (3 days before that)
+ //   anything earlier    → green
    $( ".glide-row" ).each( function( index, element ) {
       const day = Date.parse($(this).attr('data-day'))
       const lwd = Date.parse($(this).attr('data-lwd'))
-      const d_day =  Date.parse($(this).attr('data-lwd')) + 86400000
-      const warning_day = Date.parse($(this).attr('data-lwd')) - 259200000
-      if ($(this).attr('data-day') == $(this).attr('data-lwd')) {
-          $(this).addClass('red');  
-          $(this).text("LWD");  
-      } else if ( day == d_day ) {
+      if (isNaN(lwd)) return;
+      const ONE_DAY = 86400000;
+      const demob_day = lwd + ONE_DAY;
+      if (day === lwd) {
+        $(this).addClass('red');
+        $(this).text('LWD');
+      } else if (day === demob_day) {
         $(this).addClass('black');
         $(this).text('DMB');
-      } else if (day < lwd && day >= warning_day) {
+      } else if (day < lwd && day >= lwd - 2 * ONE_DAY) {
         $(this).addClass('orange');
-      } else if (day <  warning_day) {
+      } else if (day < lwd - 2 * ONE_DAY && day >= lwd - 5 * ONE_DAY) {
         $(this).addClass('yellow');
+      } else if (day < lwd - 5 * ONE_DAY) {
+        $(this).addClass('green');
       }
   });
 

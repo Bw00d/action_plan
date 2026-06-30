@@ -83,6 +83,9 @@ a.delete-resource:hover {
 .black {
   background-color: black;
 }
+.green {
+  background-color: #4caf50;
+}
 .glide-row.red,
 .glide-row.black {
   color: white !important;
@@ -106,6 +109,14 @@ a.delete-resource:hover {
   margin: 0 0 12px;
   font-size: 18px;
   font-weight: 600;
+}
+
+.glide-title-cell {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c2c2c;
 }
 
 @media print {
@@ -160,7 +171,8 @@ a.delete-resource:hover {
     .yellow,
     .orange,
     .red,
-    .black {
+    .black,
+    .green {
       -webkit-print-color-adjust: exact !important;
       color-adjust: exact !important;
       print-color-adjust: exact !important;
@@ -179,6 +191,19 @@ a.delete-resource:hover {
     }
     .glide-row.black {
       box-shadow: inset 0 0 0 999px black !important;
+    }
+    .glide-row.green {
+      box-shadow: inset 0 0 0 999px #4caf50 !important;
+    }
+
+    // Darker grid lines for print legibility.
+    table.table,
+    table.table th,
+    table.table td {
+      border-color: #555 !important;
+    }
+    .glide-calendar {
+      border-color: #555 !important;
     }
   }
 
