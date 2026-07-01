@@ -62,11 +62,11 @@ class Request < ApplicationRecord
   end
 
   # Pre-fill for Resource#name on the check-in form.
-  #   Person → "Last, First"
+  #   Person → "LAST, FIRST" (upcased to match the app's resource naming style)
   #   Otherwise → res_name (already carries crew/equipment display name)
   def suggested_resource_name
     if person?
-      [last_name, first_name].reject(&:blank?).join(', ')
+      [last_name, first_name].reject(&:blank?).map(&:upcase).join(', ')
     else
       res_name
     end

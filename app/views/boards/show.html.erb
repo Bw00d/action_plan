@@ -2,7 +2,9 @@
 
 <div class="board-page" data-incident-id="<%= @incident.id %>">
   <header class="board-header">
-    <h2><%= @incident.display_incident_name %></h2>
+    <div class="incident-name">
+  <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+</div>
     <p class="text-muted">Drag resources between sections to assign them.</p>
     <% if flash[:notice] %><div class="alert alert-success"><%= flash[:notice] %></div><% end %>
     <% if flash[:error] %><div class="alert alert-danger"><%= flash[:error] %></div><% end %>
@@ -31,3 +33,4 @@
     </div>
   </div>
 </div>
+
