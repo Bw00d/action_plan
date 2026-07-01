@@ -30,30 +30,20 @@
         <thead>
           <tr>
             <th>Req #</th>
-            <th>Category</th>
             <th>Resource Name</th>
-            <th>Person</th>
-            <th>Employment</th>
             <th>Filled Item</th>
-            <th>Assignment</th>
             <th>Provider</th>
             <th>Mob ETD</th>
-            <th>Vendor</th>
           </tr>
         </thead>
         <tbody>
           <% rows.each do |r| %>
             <tr>
               <td><%= [r.req_number_prefix, r.req_number].compact.join("-") %></td>
-              <td><%= r.req_category_name %></td>
               <td><%= r.res_name %></td>
-              <td><%= r.person? ? r.full_name : "—" %></td>
-              <td><%= r.employment_class %></td>
               <td><%= [r.filled_catalog_item_code, r.filled_catalog_item_name].compact.join(" — ") %></td>
-              <td><%= r.assignment_name %></td>
               <td><%= [r.res_prov_agency_abbrev, r.res_prov_unit_code].compact.join(" / ") %></td>
               <td><%= r.mob_etd&.strftime("%Y-%m-%d %H:%M") %></td>
-              <td><%= r.vendor_owned_flag ? r.vendor_name : "—" %></td>
             </tr>
           <% end %>
         </tbody>
