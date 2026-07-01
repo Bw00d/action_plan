@@ -21,6 +21,15 @@ class Resource < ApplicationRecord
    validates :number_personnel, presence: true
    validates :assignment_length, presence: true
    validates :category, presence: true
+   # Prevents manual creation of a Resource whose full_order_number would
+   # collide with one already on the incident — otherwise we couldn't rely on
+   # the Req# ↔ full_order_number tie to compute check-in status.
+   validates :order_number,
+             uniqueness: {
+               scope:   [:incident_id, :category],
+               message: "is already used for a resource of this category on this incident"
+             },
+             if: -> { incident_id.present? && category.present? && order_number.present? }
  
   after_create :create_demob
 

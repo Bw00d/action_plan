@@ -1,0 +1,12 @@
+// Render validation errors above the inline new-resource form so the
+// remote: true submit doesn't silently swallow them.
+(function () {
+  var messages = <%= raw @resource.errors.full_messages.to_json %>;
+  var html = '<div id="new-resource-errors" class="alert alert-danger" role="alert">' +
+             '<strong>Could not create resource:</strong><ul>' +
+             messages.map(function (m) { return '<li>' + m + '</li>'; }).join('') +
+             '</ul></div>';
+  $('#new-resource-errors').remove();
+  $('#resource-form').prepend(html);
+  $('html, body').animate({ scrollTop: $('#new-resource-errors').offset().top - 80 }, 200);
+})();

@@ -41,6 +41,7 @@ class ResourcesController < ApplicationController
         format.json { render :show, status: :created, location: @resource }
       else
         format.html { render :new }
+        format.js   { render :create_error, status: :unprocessable_entity }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end

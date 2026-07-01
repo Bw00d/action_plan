@@ -1,8 +1,5 @@
 <%= content_for :title, "Imported Requests" %>
 
-<% if notice.present? %><p id="notice"><%= notice %></p><% end %>
-
-
 <div class="requests-index">
   <div class="incident-name">
     <h1><%= link_to @incident.display_incident_name, @incident %></h1>
