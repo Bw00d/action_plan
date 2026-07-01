@@ -38,6 +38,13 @@ class RequestsController < ApplicationController
     # beneath them here regardless of the children's catalog.
     @parents_by_catalog   = all_parents.group_by(&:req_catalog_name)
     @counts_by_catalog    = @requests.group_by(&:req_catalog_name).transform_values(&:size)
+
+    # Preload the incident's resources keyed by full_order_number so the view
+    # can compute F/C/D status per Request without N+1 queries.
+    @resources_by_order = @incident.resources.each_with_object({}) do |r, h|
+      key = r.full_order_number
+      h[key] = r if key.present?
+    end
   end
 
   private

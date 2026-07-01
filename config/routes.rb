@@ -40,7 +40,9 @@ Rails.application.routes.draw do
     resources :resources do
       resources :demobs
     end
-    resources :requests, only: [:index]
+    resources :requests, only: [:index] do
+      resource :checkin, only: [:new, :create], controller: 'request_checkins'
+    end
     resources :dump_imports, only: [:new, :create]
     resources :plans do
       member do

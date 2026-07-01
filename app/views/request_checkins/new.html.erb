@@ -1,0 +1,97 @@
+<%= content_for :title, "Check In Resource" %>
+
+<div class="checkin-page">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <div class="checkin-header">
+    <h2>Check In: <%= @request.req_number %></h2>
+    <p class="muted">
+      <%= @request.req_catalog_name %>
+      <% if @request.filled_catalog_item_name.present? %>
+        &nbsp;·&nbsp; <%= @request.filled_catalog_item_name %>
+      <% end %>
+    </p>
+  </div>
+
+  <div id="glide-info" class="panel panel-default">
+    <div id="resource-form">
+      <h4><strong>New Resource</strong></h4>
+
+      <%= form_for @resource,
+                   url: incident_request_checkin_path(@incident, @request),
+                   local: true do |f| %>
+        <% if @resource.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
+            <ul>
+              <% @resource.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= f.hidden_field :incident_id, value: @incident.id %>
+
+        <div class="form-group">
+          <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control', required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.select :category,
+                       options_for_select([["CREW", "CREW"], ["EQUIPMENT", "EQUIPMENT"], ["OVERHEAD", "OVERHEAD"], ["AIRCRAFT", "AIRCRAFT"]], @resource.category),
+                       { prompt: "SELECT CATEGORY" },
+                       id: :resource_category, class: 'form-control', required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.text_field :position, placeholder: "RESOURCE KIND/TYPE", class: 'form-control', required: true %>
+        </div>
+
+        <div id="order-number-input" class="form-group">
+          <span class="order-number-prefix"></span>
+          <%= f.text_field :order_number, placeholder: "ORDER NUMBER", class: 'form-control', required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.text_field :leader, placeholder: "LEADER NAME", class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.text_field :number_personnel, placeholder: "# PERSONNEL", class: 'form-control', required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.text_field :agency, placeholder: "AGENCY", class: 'form-control', required: true %>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
+                                             class: "datepicker form-control", placeholder: "CHECKIN DATE", required: true %>
+          </div>
+          <div class="col-md-5 form-group">
+            <%= f.text_field :fwd, id: :incident_fwd, :data => {:provide => "datepicker"},
+                                   class: "datepicker form-control", placeholder: "FIRST WORK DAY", required: true %>
+          </div>
+          <div class="col-md-2 form-group">
+            <%= f.text_field :assignment_length,
+                                   class: "form-control", placeholder: "ASSIGNMENT LENGTH", required: true %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <%= f.submit "Check In", class: 'btn btn-primary', id: "submit-resource-button" %>
+          </div>
+          <div class="col-md-6">
+            <%= link_to "Cancel", incident_requests_path(@incident),
+                                  class: 'btn btn-default btn-wide' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

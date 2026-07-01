@@ -34,4 +34,27 @@ module RequestsHelper
   def parent_req_number(req_number)
     req_number.to_s.sub(/\.[^.]+\z/, '')
   end
+
+  # Determines a Request's status from the matched Resource (if any).
+  # Returns :filled (no resource), :checked_in (resource, no release_date),
+  # :released (resource with a release_date), or nil for un-checkinable rows
+  # (Supply) and subordinates (whose orders can't cleanly tie to a Resource
+  # given integer order_numbers).
+  def request_status(request, resources_by_order)
+    return nil unless request.checkinable?
+    return nil if request.subordinate?
+
+    resource = resources_by_order[request.req_number]
+    return :filled unless resource
+    return :released if resource.release_date.present?
+    :checked_in
+  end
+
+  def request_status_label(status)
+    { filled: 'F', checked_in: 'C', released: 'D' }[status]
+  end
+
+  def request_status_title(status)
+    { filled: 'Filled', checked_in: 'Checked In', released: 'Demobed' }[status]
+  end
 end

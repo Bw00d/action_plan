@@ -20,4 +20,21 @@ $(document).on('turbolinks:load', function () {
       toggleRequest($(this));
     }
   });
+
+  // Click on Req # text expands the detail row (check-in area).
+  function toggleDetail($el) {
+    var key = $el.data('detail-target');
+    $el.closest('table').find('tr.request-detail[data-detail-of="' + key + '"]').toggleClass('is-hidden');
+  }
+
+  $index.on('click', '.req-number-text[data-detail-target]', function () {
+    toggleDetail($(this));
+  });
+
+  $index.on('keydown', '.req-number-text[data-detail-target]', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleDetail($(this));
+    }
+  });
 });
