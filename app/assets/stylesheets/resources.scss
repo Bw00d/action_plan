@@ -168,6 +168,13 @@ a.delete-resource:hover {
 
     #demob-info {
       display: block !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    #demob-info .panel-foot {
+      display: none !important;
     }
   }
 
@@ -237,11 +244,8 @@ a.delete-resource:hover {
       border-color: #555 !important;
     }
   }
-
-  @page {
-    size: landscape;
-    margin: 0.4in;
-  }
+  // Orientation (@page) is injected per print action via JS so the demob
+  // list can print portrait while the glide path prints landscape.
 }
 .table-col {
     min-width: 25px !important;

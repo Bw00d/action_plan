@@ -72,8 +72,15 @@
 <script>
   function printGlide() {
     document.body.classList.add('printing-glide');
+    var style = document.createElement('style');
+    style.id = 'print-orientation';
+    style.textContent = '@page { size: landscape; margin: 0.4in; }';
+    document.head.appendChild(style);
+
     var cleanup = function () {
       document.body.classList.remove('printing-glide');
+      var s = document.getElementById('print-orientation');
+      if (s) s.remove();
       window.removeEventListener('afterprint', cleanup);
     };
     window.addEventListener('afterprint', cleanup);
