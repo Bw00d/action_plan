@@ -4,7 +4,15 @@ class RequestsController < ApplicationController
   before_action :set_incident
 
   def index
-    @requests = @incident.requests.order(:req_catalog_name, :req_number_prefix, :req_number)
+    # Natural-numeric sort so E-2 comes before E-10, and E-24.1..3 sort in
+    # the correct numeric order after E-24.
+    @requests = @incident.requests.to_a.sort_by do |r|
+      [
+        r.req_catalog_name.to_s,
+        r.req_number_prefix.to_s,
+        *r.req_number.to_s.scan(/\d+/).map(&:to_i)
+      ]
+    end
 
     # Split parents vs children globally (children can be a different catalog
     # than their parent — e.g. a Crew parent with Overhead crew members).

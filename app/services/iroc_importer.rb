@@ -26,9 +26,9 @@ class IrocImporter
   class DumpMismatch < StandardError; end
   class MissingHeader < StandardError; end
 
-  Result = Struct.new(:incident, :requests_created, :requests_updated, keyword_init: true) do
+  Result = Struct.new(:incident, :requests_created, :requests_skipped, keyword_init: true) do
     def requests_total
-      requests_created + requests_updated
+      requests_created + requests_skipped
     end
   end
 
@@ -41,8 +41,8 @@ class IrocImporter
   def create_incident!
     ActiveRecord::Base.transaction do
       incident = upsert_incident!
-      created, updated = import_requests!(incident)
-      Result.new(incident: incident, requests_created: created, requests_updated: updated)
+      created, skipped = import_requests!(incident)
+      Result.new(incident: incident, requests_created: created, requests_skipped: skipped)
     end
   end
 
@@ -69,8 +69,8 @@ class IrocImporter
     end
 
     ActiveRecord::Base.transaction do
-      created, updated = import_requests!(incident)
-      Result.new(incident: incident, requests_created: created, requests_updated: updated)
+      created, skipped = import_requests!(incident)
+      Result.new(incident: incident, requests_created: created, requests_skipped: skipped)
     end
   end
 
@@ -107,29 +107,24 @@ class IrocImporter
 
   # ── Requests ────────────────────────────────────────────────────────────
 
+  # Insert-only: brand-new ReqIDs are added; anything already present is
+  # left untouched. `skipped` counts how many rows we ignored because their
+  # ReqID already exists on this incident.
   def import_requests!(incident)
     created = 0
-    updated = 0
+    skipped = 0
 
     request_rows.each do |row|
       attrs = request_attributes(row)
-      request = incident.requests.find_or_initialize_by(iroc_req_id: attrs[:iroc_req_id])
-      new_record = request.new_record?
-
-      # For strictly insert-only behavior, replace the block below with:
-      #   next unless new_record
-      #   request.assign_attributes(attrs); request.save!; created += 1
-      request.assign_attributes(attrs)
-      if new_record
-        request.save!
-        created += 1
-      elsif request.changed?
-        request.save!
-        updated += 1
+      if incident.requests.exists?(iroc_req_id: attrs[:iroc_req_id])
+        skipped += 1
+        next
       end
+      incident.requests.create!(attrs)
+      created += 1
     end
 
-    [created, updated]
+    [created, skipped]
   end
 
   def request_attributes(row)

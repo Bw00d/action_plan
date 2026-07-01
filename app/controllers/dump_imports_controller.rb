@@ -18,8 +18,8 @@ class DumpImportsController < ApplicationController
                          .import_into(@incident)
 
     redirect_to incident_requests_path(@incident),
-                notice: "Imported #{result.requests_created} new requests, " \
-                        "#{result.requests_updated} updated."
+                notice: "Added #{result.requests_created} new request#{'s' if result.requests_created != 1}. " \
+                        "Skipped #{result.requests_skipped} already present."
   rescue IrocImporter::DumpMismatch => e
     redirect_to new_incident_dump_import_path(@incident), alert: e.message
   rescue IrocImporter::MissingHeader => e

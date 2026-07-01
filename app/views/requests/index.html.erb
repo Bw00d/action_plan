@@ -2,11 +2,11 @@
 
 <% if notice.present? %><p id="notice"><%= notice %></p><% end %>
 
-<div class="incident-name">
-  <h1><%= link_to @incident.display_incident_name, @incident %></h1>
-</div>
 
 <div class="requests-index">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
   <div class="requests-header">
     <h2>Imported Requests <span class="muted">(<%= @requests.size %> total)</span></h2>
     <div class="requests-actions">

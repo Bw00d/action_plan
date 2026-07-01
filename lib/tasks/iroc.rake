@@ -6,7 +6,7 @@ namespace :iroc do
     result = IrocImporter.new(args[:path], time_zone: args[:time_zone]).create_incident!
     puts "Incident #{result.incident.number} — #{result.incident.name} (id #{result.incident.id})"
     puts "  time zone: #{result.incident.time_zone || '(none)'}"
-    puts "  #{result.requests_created} requests created, #{result.requests_updated} updated"
+    puts "  #{result.requests_created} requests created, #{result.requests_skipped} already present"
   end
 
   desc "Import an IROC dump into an existing incident. Usage: rake 'iroc:import[42,path/to/dump.xml,Alaska]'"
@@ -16,6 +16,6 @@ namespace :iroc do
     incident = Incident.find(args[:incident_id])
     result = IrocImporter.new(args[:path], time_zone: args[:time_zone]).import_into(incident)
     puts "Incident #{result.incident.number} — #{result.incident.name}"
-    puts "  #{result.requests_created} requests created, #{result.requests_updated} updated"
+    puts "  #{result.requests_created} requests created, #{result.requests_skipped} already present"
   end
 end
