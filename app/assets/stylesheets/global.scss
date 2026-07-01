@@ -96,6 +96,9 @@ $btn-primary-color:              #fff;
 $btn-primary-bg:                 $brand-primary;
 /*$btn-primary-border:             $gray-lighter;*/
 // There is no variable for the button bg color on hover, active and focus
+.btn {
+  border: none !important;
+}
 .btn-primary {
   &:hover, &:focus, &:active, &:active:hover, &:active:focus {
     background: $brand-light !important;
