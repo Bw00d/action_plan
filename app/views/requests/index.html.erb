@@ -39,7 +39,7 @@
         <tbody>
           <% rows.each do |r| %>
             <tr>
-              <td><%= [r.req_number_prefix, r.req_number].compact.join("-") %></td>
+              <td><%= r.req_number %></td>
               <td><%= r.res_name %></td>
               <td><%= [r.filled_catalog_item_code, r.filled_catalog_item_name].compact.join(" — ") %></td>
               <td><%= [r.res_prov_agency_abbrev, r.res_prov_unit_code].compact.join(" / ") %></td>
