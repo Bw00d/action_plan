@@ -19,14 +19,17 @@
     <p>No requests have been imported for this incident yet.</p>
   <% else %>
     <div class="requests-summary">
-      <% @grouped.each do |catalog, rows| %>
-        <span class="catalog-pill"><strong><%= catalog %>:</strong> <%= rows.size %></span>
+      <% @counts_by_catalog.each do |catalog, total| %>
+        <span class="catalog-pill"><strong><%= catalog %>:</strong> <%= total %></span>
       <% end %>
     </div>
 
-    <% @grouped.each do |catalog, rows| %>
-      <h3 class="catalog-heading"><%= catalog %> (<%= rows.size %>)</h3>
-      <table class="requests-table">
+    <% @parents_by_catalog.each do |catalog, parents| %>
+      <% catalog_key = catalog.to_s.parameterize %>
+
+      <h3 class="catalog-heading"><%= catalog %> <span class="muted">(<%= parents.size %>)</span></h3>
+
+      <table class="requests-table" data-catalog="<%= catalog_key %>">
         <thead>
           <tr>
             <th>Req #</th>
@@ -37,14 +40,44 @@
           </tr>
         </thead>
         <tbody>
-          <% rows.each do |r| %>
-            <tr>
-              <td><%= r.req_number %></td>
+          <% parents.each do |r| %>
+            <% kids = @children_by_parent[r.req_number] || [] %>
+            <% row_id = "req-#{r.id}" %>
+            <tr class="request-parent <%= 'has-children' if kids.any? %>" data-parent-key="<%= row_id %>">
+              <td class="req-number-cell">
+                <% if kids.any? %>
+                  <span class="request-toggle"
+                        role="button"
+                        tabindex="0"
+                        aria-expanded="false"
+                        aria-controls="<%= row_id %>-children"
+                        data-target="<%= row_id %>"
+                        title="Show <%= kids.size %> subordinate<%= 's' if kids.size != 1 %>">
+                    <span class="toggle-caret" aria-hidden="true">&gt;</span>
+                  </span>
+                <% end %>
+                <span class="req-number-text"><%= r.req_number %></span>
+                <% if kids.any? %>
+                  <span class="child-count">(<%= kids.size %>)</span>
+                <% end %>
+              </td>
               <td><%= r.res_name %></td>
               <td><%= [r.filled_catalog_item_code, r.filled_catalog_item_name].compact.join(" — ") %></td>
               <td><%= [r.res_prov_agency_abbrev, r.res_prov_unit_code].compact.join(" / ") %></td>
               <td><%= r.mob_etd&.strftime("%Y-%m-%d %H:%M") %></td>
             </tr>
+            <% kids.each do |c| %>
+              <tr class="request-child is-hidden" data-child-of="<%= row_id %>">
+                <td class="req-number-cell">
+                  <span class="child-indent" aria-hidden="true">└</span>
+                  <span class="req-number-text"><%= c.req_number %></span>
+                </td>
+                <td><%= c.res_name %></td>
+                <td><%= [c.filled_catalog_item_code, c.filled_catalog_item_name].compact.join(" — ") %></td>
+                <td><%= [c.res_prov_agency_abbrev, c.res_prov_unit_code].compact.join(" / ") %></td>
+                <td><%= c.mob_etd&.strftime("%Y-%m-%d %H:%M") %></td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

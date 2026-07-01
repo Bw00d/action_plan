@@ -115,9 +115,67 @@
 
   // Sensible column widths for the 5 chosen columns:
   //   Req # | Resource Name | Filled Item | Provider | Mob ETD
-  th:nth-child(1), td:nth-child(1) { width: 10%; white-space: nowrap; font-weight: 600; }
+  th:nth-child(1), td:nth-child(1) { width: 12%; white-space: nowrap; font-weight: 600; }
   th:nth-child(2), td:nth-child(2) { width: 30%; }
-  th:nth-child(3), td:nth-child(3) { width: 30%; color: #42526e; }
+  th:nth-child(3), td:nth-child(3) { width: 28%; color: #42526e; }
   th:nth-child(4), td:nth-child(4) { width: 15%; color: #5e6c84; white-space: nowrap; }
   th:nth-child(5), td:nth-child(5) { width: 15%; color: #5e6c84; white-space: nowrap; }
+
+  // Parent/child nesting — caret sits in a fixed gutter on the left so
+  // Req # values align regardless of whether a row has children.
+  .req-number-cell {
+    position: relative;
+    padding-left: 28px;  // gutter for caret + a little margin
+  }
+
+  .request-toggle {
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #a1a8b4;     // same muted tone as the child-count label
+    font-size: 17px;    // slightly larger than the 14px body text
+    font-weight: 600;
+    line-height: 1;
+    user-select: none;
+
+    &:hover { color: #172b4d; }
+    &:focus { outline: none; }
+    &[aria-expanded="true"] .toggle-caret { transform: rotate(90deg); }
+  }
+
+  .toggle-caret {
+    display: inline-block;
+    transition: transform 0.12s ease;
+    transform-origin: center;
+    // Neutralize any inherited Bootstrap .caret triangle styling.
+    width: auto;
+    height: auto;
+    border: 0;
+    vertical-align: baseline;
+  }
+
+  .child-count {
+    margin-left: 6px;
+    color: #6b778c;
+    font-weight: 400;
+    font-size: 11px;
+  }
+
+  .child-indent {
+    display: none;
+  }
+
+  .request-child {
+    background: #fafbfc;
+
+    td { color: #5e6c84; }
+    td:first-child { font-weight: 400; }
+  }
+
+  .is-hidden {
+    display: none;
+  }
 }
+
