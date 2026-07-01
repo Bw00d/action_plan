@@ -55,6 +55,34 @@
   margin: 8px 0 16px;
 }
 
+.requests-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 16px;
+
+  input[type="search"] {
+    flex: 1 1 auto;
+    max-width: 420px;
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  .btn-link {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .muted {
+    color: #6b778c;
+    font-size: 12px;
+  }
+}
+
+.catalog-section.is-empty {
+  display: none;
+}
+
 .catalog-pill {
   display: inline-block;
   padding: 4px 10px;

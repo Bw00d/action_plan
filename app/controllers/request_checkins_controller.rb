@@ -19,6 +19,7 @@ class RequestCheckinsController < ApplicationController
       position:          @request.filled_catalog_item_code,
       agency:            @request.res_prov_agency_abbrev,
       order_number:      @request.suggested_order_number,
+      jetport:           @request.jet_port,
       assignment_length: 14
     )
   end
@@ -44,7 +45,8 @@ class RequestCheckinsController < ApplicationController
     params.require(:resource).permit(
       :name, :leader, :number_personnel, :position, :agency,
       :order_number, :category, :phone, :email, :comment,
-      :fwd, :checkin_date, :assignment_length
+      :fwd, :checkin_date, :assignment_length,
+      :jetport, :return_city, :return_state
     )
   end
 end

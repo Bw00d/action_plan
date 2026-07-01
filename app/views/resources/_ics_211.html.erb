@@ -5,6 +5,15 @@
     <%= render 'new_resource_form' %>
   </div>
   <% if !@incident.resources.empty? %>
+    <div class="ics-211-search">
+      <input type="search"
+             class="ics-211-search-input form-control"
+             placeholder="Search order#, position, name, agency…"
+             autocomplete="off">
+      <button type="button" class="ics-211-search-clear btn btn-link" style="display:none">Clear</button>
+      <span class="ics-211-search-summary muted"></span>
+    </div>
+
     <!-- Table -->
     <table class="table">
       <thead>
@@ -28,17 +37,6 @@
 
 
 
-        <div id="comment-<%= r.id %>" class="resource-comment col-xs-10 col-md-6 center-block panel panel-default resources-panel-head">
-          <%= link_to image_tag('close.png'), "javascript:;", class: "hide-comment xs-padding-top float-right sm-icon" %>
-          <h2 ><%= r.full_order_number %> <%= r.position %> <%= r.name %> </h2>
-          <h5 ><%= r.agency %></h5>
-          <h5>First Shift: <%= r.fwd.try(:strftime, "%m/%d") %>   Last Work Day: <%= r.last_work_day.try(:strftime,"%-m/%d") %></h5>
-          <label>Comments</label>
-          <%=  best_in_place r, :comment, :display_with => :simple_format, :as => :textarea,
-                                          :html_attrs => { :style => 'width:100%; height:125px;' },
-                                          :ok_button => 'Save', :ok_button_class => "btn btn-info tiny", :cancel_button => 'Cancel', 
-                                          :cancel_button_class => "btn btn-default sm-margin-left tiny"  %>
-        </div>
         <tr id="resource-<%= r.id %>" class="incident-resource">
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %> 
 
@@ -180,6 +178,83 @@
 
       </tbody>
     </table>
+
+    <% @resources.assigned.each do |r| %>
+      <div id="resource-panel-<%= r.id %>" class="resource-panel is-hidden" data-resource-panel="<%= r.id %>">
+        <div class="resource-panel-inner">
+          <button type="button" class="resource-panel-close" aria-label="Close">&times;</button>
+          <h3 class="resource-panel-title">
+            <%= r.full_order_number %> &middot; <%= r.name %>
+          </h3>
+
+          <div class="resource-panel-fields">
+            <div class="resource-panel-field">
+              <label>Order #</label>
+              <span><%= r.cat %><%= best_in_place r, :order_number, as: :input %></span>
+            </div>
+            <div class="resource-panel-field">
+              <label>Kind / Type</label>
+              <%= best_in_place r, :position, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Name</label>
+              <%= best_in_place r, :name, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Leader</label>
+              <%= best_in_place r, :leader, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label># Personnel</label>
+              <%= best_in_place r, :number_personnel, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Agency</label>
+              <%= best_in_place r, :agency, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>First Work Day</label>
+              <%= best_in_place r, :fwd, display_as: :formatted_fwd, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Assignment Length</label>
+              <%= best_in_place r, :assignment_length, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Last Work Day</label>
+              <span class="static-field"><%= r.last_work_day.try(:strftime, "%m/%d") || "—" %></span>
+            </div>
+            <div class="resource-panel-field">
+              <label>Phone</label>
+              <%= best_in_place r, :phone, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Email</label>
+              <%= best_in_place r, :email, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Jetport</label>
+              <%= best_in_place r, :jetport, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Return City</label>
+              <%= best_in_place r, :return_city, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field">
+              <label>Return State</label>
+              <%= best_in_place r, :return_state, as: :input, place_holder: "---" %>
+            </div>
+            <div class="resource-panel-field resource-panel-field-wide">
+              <label>Comment</label>
+              <%= best_in_place r, :comment, as: :textarea, place_holder: "Click to add comment…",
+                                             html_attrs: { style: 'width:100%; min-height:80px;' },
+                                             ok_button: 'Save',   ok_button_class: 'btn btn-info tiny',
+                                             cancel_button: 'Cancel', cancel_button_class: 'btn btn-default sm-margin-left tiny' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
     <% else %>
     <div class="sm-padding-top md-padding-left">

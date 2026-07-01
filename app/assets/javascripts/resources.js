@@ -6,6 +6,61 @@ $(document).on("turbolinks:load", function() {
     todayHighlight: true
   });
 
+  // ICS-211 client-side search
+  (function () {
+    var $panel = $('#ics-211-info');
+    if (!$panel.length) return;
+    var $search  = $panel.find('.ics-211-search-input');
+    var $clear   = $panel.find('.ics-211-search-clear');
+    var $summary = $panel.find('.ics-211-search-summary');
+    var $tbody   = $panel.find('#incident-resources');
+    if (!$search.length || !$tbody.length) return;
+
+    function normalize(s) { return (s || '').toString().toLowerCase(); }
+    function isHeaderRow($tr) { return $tr.find('td.grayed strong').length > 0; }
+
+    function applySearch() {
+      var q = normalize($search.val()).trim();
+      var hasQuery = q.length > 0;
+      $clear.toggle(hasQuery);
+
+      if (!hasQuery) {
+        $tbody.find('tr').show();
+        $summary.text('');
+        return;
+      }
+
+      var matches = 0;
+      var $currentHeader = null;
+      var currentHeaderHasMatch = false;
+
+      $tbody.find('tr').each(function () {
+        var $tr = $(this);
+        if (isHeaderRow($tr)) {
+          if ($currentHeader) $currentHeader.toggle(currentHeaderHasMatch);
+          $currentHeader = $tr;
+          currentHeaderHasMatch = false;
+          return;
+        }
+        var match = normalize($tr.text()).indexOf(q) !== -1;
+        $tr.toggle(match);
+        if (match) {
+          matches += 1;
+          currentHeaderHasMatch = true;
+        }
+      });
+      if ($currentHeader) $currentHeader.toggle(currentHeaderHasMatch);
+
+      $summary.text(matches + ' match' + (matches === 1 ? '' : 'es'));
+    }
+
+    $search.on('input', applySearch);
+    $clear.on('click', function () {
+      $search.val('').focus();
+      applySearch();
+    });
+  })();
+
   // Auto-size best_in_place inputs to fit their content. Modern browsers
   // handle this via CSS `field-sizing: content`; this is the fallback that
   // sets the `size` attribute for browsers that don't yet support it.
@@ -122,16 +177,26 @@ $(document).on("turbolinks:load", function() {
   });
 
 
-  $("tr.incident-resource").dblclick(function (){
-    var id = $(this).attr('id').replace('resource-','');;
-    var coord = ($(this).offset().top);
-    $(".resource-comment").hide();
-    $(`#comment-${id}`).css({ top: coord -100 }).show();
-
+  // Double-click a resource row → open its floating detail panel with all
+  // editable attributes. Close with the X, backdrop click, or Escape.
+  $(document).on('dblclick', 'tr.incident-resource', function (e) {
+    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button').length) return;
+    var id = $(this).attr('id').replace('resource-', '');
+    $('.resource-panel').addClass('is-hidden');
+    $('#resource-panel-' + id).removeClass('is-hidden');
   });
 
-  $("a.hide-comment").click(function (){
-    $(".resource-comment").hide();
+  $(document).on('click', '.resource-panel-close', function () {
+    $(this).closest('.resource-panel').addClass('is-hidden');
+  });
+
+  // Backdrop click closes; clicks inside .resource-panel-inner don't bubble to hide.
+  $(document).on('click', '.resource-panel', function (e) {
+    if (e.target === this) $(this).addClass('is-hidden');
+  });
+
+  $(document).on('keydown', function (e) {
+    if (e.key === 'Escape') $('.resource-panel').addClass('is-hidden');
   });
 
   

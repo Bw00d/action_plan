@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_06_25_154754) do
+ActiveRecord::Schema.define(version: 2026_07_01_150625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -371,6 +371,9 @@ ActiveRecord::Schema.define(version: 2026_06_25_154754) do
     t.date "fwd"
     t.date "release_date"
     t.boolean "r_and_r", default: false
+    t.string "jetport"
+    t.string "return_city"
+    t.string "return_state"
   end
 
   create_table "safety_messages", force: :cascade do |t|

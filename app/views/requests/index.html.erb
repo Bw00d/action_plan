@@ -21,9 +21,20 @@
       <% end %>
     </div>
 
+    <div class="requests-search">
+      <input type="search"
+             id="requests-search-input"
+             class="form-control"
+             placeholder="Search Req#, name, filled item, provider…"
+             autocomplete="off">
+      <button type="button" id="requests-search-clear" class="btn btn-link" style="display:none">Clear</button>
+      <span id="requests-search-summary" class="muted"></span>
+    </div>
+
     <% @parents_by_catalog.each do |catalog, parents| %>
       <% catalog_key = catalog.to_s.parameterize %>
 
+      <div class="catalog-section" data-catalog="<%= catalog_key %>">
       <h3 class="catalog-heading"><%= catalog %> <span class="muted">(<%= parents.size %>)</span></h3>
 
       <table class="requests-table" data-catalog="<%= catalog_key %>">
@@ -104,6 +115,7 @@
           <% end %>
         </tbody>
       </table>
+      </div>
     <% end %>
   <% end %>
 </div>
