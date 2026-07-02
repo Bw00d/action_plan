@@ -6,7 +6,7 @@
       <h1>DEMOB LIST</h1>
       <% count = 0 %>
       <% 6.times do %>
-        <h3><%= Date.today + count.days %></h3>
+        <h3><%= Date.today + 1.day + count.days %></h3>
         <% @resources.assigned.each do |r| %>
           <% if r.last_work_day == Date.yesterday + count.days %>
             <div><%= r.full_order_number  %> <%= r.position %> <%= r.name %></div>
