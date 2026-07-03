@@ -62,6 +62,11 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Host used by mailers to generate absolute URLs (Devise confirmation,
+  # password reset, etc.). Set APP_HOST per Heroku app so prod and staging
+  # link back to themselves.
+  config.action_mailer.default_url_options = { host: ENV.fetch('APP_HOST', 'incident-action-plan.herokuapp.com'), protocol: 'https' }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
