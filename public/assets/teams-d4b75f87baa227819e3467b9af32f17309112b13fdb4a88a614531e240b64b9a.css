@@ -1,0 +1,22 @@
+/* line 1, app/assets/stylesheets/teams.scss */
+.team-form {
+  margin-top: -5px;
+  padding-top: 0;
+  position: absolute;
+  display: none;
+}
+
+/* line 8, app/assets/stylesheets/teams.scss */
+.staff-row select {
+  margin-top: -7px;
+  max-height: 27px;
+  width: 173px;
+  position: absolute;
+}
+
+/* line 14, app/assets/stylesheets/teams.scss */
+.staff-row input {
+  margin-top: -7px;
+  position: absolute;
+  width: 173px;
+}

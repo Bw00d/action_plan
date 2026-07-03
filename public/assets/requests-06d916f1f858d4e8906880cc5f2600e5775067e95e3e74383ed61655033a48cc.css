@@ -1,0 +1,391 @@
+/* line 3, app/assets/stylesheets/requests.scss */
+.requests-index {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 20px;
+  color: #2c2c2c;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* line 11, app/assets/stylesheets/requests.scss */
+.requests-index h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+/* line 18, app/assets/stylesheets/requests.scss */
+.requests-index h3 {
+  margin: 24px 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #e6e8ec;
+}
+
+/* line 29, app/assets/stylesheets/requests.scss */
+.requests-index .muted {
+  color: #6b778c;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+/* line 37, app/assets/stylesheets/requests.scss */
+.requests-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+/* line 46, app/assets/stylesheets/requests.scss */
+.requests-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* line 51, app/assets/stylesheets/requests.scss */
+.requests-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+
+/* line 58, app/assets/stylesheets/requests.scss */
+.requests-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 16px;
+}
+
+/* line 64, app/assets/stylesheets/requests.scss */
+.requests-search input[type="search"] {
+  flex: 1 1 auto;
+  max-width: 420px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+/* line 71, app/assets/stylesheets/requests.scss */
+.requests-search .btn-link {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* line 76, app/assets/stylesheets/requests.scss */
+.requests-search .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 82, app/assets/stylesheets/requests.scss */
+.catalog-section.is-empty {
+  display: none;
+}
+
+/* line 86, app/assets/stylesheets/requests.scss */
+.catalog-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #f4f5f7;
+  border: 1px solid #e6e8ec;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #172b4d;
+}
+
+/* line 95, app/assets/stylesheets/requests.scss */
+.catalog-pill strong {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* line 101, app/assets/stylesheets/requests.scss */
+.requests-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 24px;
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.04);
+}
+
+/* line 112, app/assets/stylesheets/requests.scss */
+.requests-table thead th {
+  background: #f7f8fa;
+  color: #5e6c84;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e6e8ec;
+  white-space: nowrap;
+}
+
+/* line 125, app/assets/stylesheets/requests.scss */
+.requests-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef0f3;
+  vertical-align: top;
+  color: #172b4d;
+}
+
+/* line 132, app/assets/stylesheets/requests.scss */
+.requests-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* line 136, app/assets/stylesheets/requests.scss */
+.requests-table tbody tr:nth-child(even) td {
+  background: #fafbfc;
+}
+
+/* line 140, app/assets/stylesheets/requests.scss */
+.requests-table tbody tr:hover td {
+  background: #eef4ff;
+}
+
+/* line 146, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(1), .requests-table td:nth-child(1) {
+  width: 10%;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* line 147, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(2), .requests-table td:nth-child(2) {
+  width: 6%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* line 148, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(3), .requests-table td:nth-child(3) {
+  width: 28%;
+}
+
+/* line 149, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(4), .requests-table td:nth-child(4) {
+  width: 26%;
+  color: #42526e;
+}
+
+/* line 150, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(5), .requests-table td:nth-child(5) {
+  width: 15%;
+  color: #5e6c84;
+  white-space: nowrap;
+}
+
+/* line 151, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(6), .requests-table td:nth-child(6) {
+  width: 15%;
+  color: #5e6c84;
+  white-space: nowrap;
+}
+
+/* line 155, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-cell {
+  position: relative;
+  padding-left: 28px;
+}
+
+/* line 160, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #a1a8b4;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+}
+
+/* line 172, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle:hover {
+  color: #172b4d;
+}
+
+/* line 173, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle:focus {
+  outline: none;
+}
+
+/* line 174, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle[aria-expanded="true"] .toggle-caret {
+  transform: rotate(90deg);
+}
+
+/* line 177, app/assets/stylesheets/requests.scss */
+.requests-table .toggle-caret {
+  display: inline-block;
+  transition: transform 0.12s ease;
+  transform-origin: center;
+  width: auto;
+  height: auto;
+  border: 0;
+  vertical-align: baseline;
+}
+
+/* line 188, app/assets/stylesheets/requests.scss */
+.requests-table .child-count {
+  margin-left: 6px;
+  color: #6b778c;
+  font-weight: 400;
+  font-size: 11px;
+}
+
+/* line 195, app/assets/stylesheets/requests.scss */
+.requests-table .child-indent {
+  display: none;
+}
+
+/* line 199, app/assets/stylesheets/requests.scss */
+.requests-table .request-child {
+  background: #fafbfc;
+}
+
+/* line 202, app/assets/stylesheets/requests.scss */
+.requests-table .request-child td {
+  color: #5e6c84;
+}
+
+/* line 203, app/assets/stylesheets/requests.scss */
+.requests-table .request-child td:first-child {
+  font-weight: 400;
+}
+
+/* line 206, app/assets/stylesheets/requests.scss */
+.requests-table .is-hidden {
+  display: none;
+}
+
+/* line 211, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-text {
+  cursor: pointer;
+}
+
+/* line 213, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-text:hover {
+  text-decoration: underline;
+}
+
+/* line 214, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-text:focus {
+  outline: none;
+}
+
+/* line 218, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill {
+  display: inline-block;
+  min-width: 22px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+  color: #fff;
+}
+
+/* line 229, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill.status-filled {
+  background: #6b778c;
+}
+
+/* line 230, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill.status-checked_in {
+  background: #2e7d32;
+}
+
+/* line 231, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill.status-released {
+  background: #212121;
+}
+
+/* line 235, app/assets/stylesheets/requests.scss */
+.requests-table .request-detail {
+  background: #f7f8fa;
+}
+
+/* line 238, app/assets/stylesheets/requests.scss */
+.requests-table .request-detail td {
+  padding: 10px 12px 12px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+/* line 243, app/assets/stylesheets/requests.scss */
+.requests-table .request-detail-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 28px;
+}
+
+/* line 250, app/assets/stylesheets/requests.scss */
+.requests-table .check-in-btn {
+  font-size: 12px;
+  padding: 6px 14px;
+}
+
+/* line 254, app/assets/stylesheets/requests.scss */
+.requests-table .check-in-btn.is-disabled {
+  background: #dfe1e6;
+  border-color: #dfe1e6;
+  color: #42526e;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* line 268, app/assets/stylesheets/requests.scss */
+.checkin-page {
+  max-width: 720px;
+  margin: 24px auto;
+  padding: 0 20px;
+  color: #172b4d;
+}
+
+/* line 274, app/assets/stylesheets/requests.scss */
+.checkin-page #glide-info {
+  display: block;
+}
+
+/* line 275, app/assets/stylesheets/requests.scss */
+.checkin-page #resource-form {
+  display: block;
+}
+
+/* line 277, app/assets/stylesheets/requests.scss */
+.checkin-page .checkin-header {
+  margin: 8px 0 16px;
+}
+
+/* line 280, app/assets/stylesheets/requests.scss */
+.checkin-page .checkin-header h2 {
+  margin: 0 0 4px;
+}
+
+/* line 281, app/assets/stylesheets/requests.scss */
+.checkin-page .checkin-header p {
+  margin: 0;
+  color: #5e6c84;
+  font-size: 13px;
+}
