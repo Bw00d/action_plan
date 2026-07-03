@@ -12,6 +12,22 @@
 # with Incident.find_by(iroc_inc_id: '…').destroy if you want to re-run.
 
 namespace :data do
+  # This app's config/initializers/time_formats.rb overrides Date#to_s and
+  # Time#to_s to "%m/%d/%y" (two-digit year), which JSON serialization
+  # inherits. If we let that through, "2026-07-01" becomes "07/01/26" in the
+  # dump and parses back as year 26. Normalize with explicit strftime so the
+  # export is round-trip safe regardless of app-level date format overrides.
+  def iso_attrs(record)
+    record.attributes.transform_values do |v|
+      case v
+      when Date     then v.strftime('%Y-%m-%d')
+      when Time     then v.utc.iso8601
+      when DateTime then v.to_time.utc.iso8601
+      else v
+      end
+    end
+  end
+
   desc "Dump one incident + its requests/resources/demobs/schedules/org_units to JSON. Usage: data:export_incident[INCIDENT_ID,OUT_PATH]"
   task :export_incident, [:id, :out] => :environment do |_t, args|
     abort "Usage: data:export_incident[INCIDENT_ID,OUT_PATH]" if args[:id].blank? || args[:out].blank?
@@ -22,13 +38,13 @@ namespace :data do
 
     payload = {
       "meta"      => { "exported_at" => Time.zone.now.iso8601, "source_incident_id" => incident.id },
-      "incident"  => incident.attributes,
-      "requests"  => incident.requests.map(&:attributes),
-      "resources" => incident.resources.map(&:attributes),
-      "demobs"    => Demob.where(resource_id: resource_ids).map(&:attributes),
-      "schedules" => incident.schedules.map(&:attributes),
-      "org_units" => incident.org_units.map(&:attributes),
-      "org_unit_assignments" => OrgUnitAssignment.where(org_unit_id: org_unit_ids).map(&:attributes)
+      "incident"  => iso_attrs(incident),
+      "requests"  => incident.requests.map { |r| iso_attrs(r) },
+      "resources" => incident.resources.map { |r| iso_attrs(r) },
+      "demobs"    => Demob.where(resource_id: resource_ids).map { |r| iso_attrs(r) },
+      "schedules" => incident.schedules.map { |r| iso_attrs(r) },
+      "org_units" => incident.org_units.map { |r| iso_attrs(r) },
+      "org_unit_assignments" => OrgUnitAssignment.where(org_unit_id: org_unit_ids).map { |r| iso_attrs(r) }
     }
 
     File.write(args[:out], JSON.pretty_generate(payload))
