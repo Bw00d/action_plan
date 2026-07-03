@@ -11,7 +11,11 @@ class IncidentsController < ApplicationController
   # GET /incidents
   # GET /incidents.json
   def index
-    @incidents = Incident.where(user_id: current_user.id)
+    # Owner (user_id) + shared collaborators (incidents_users join table),
+    # deduped so an owner who is also in the join table isn't listed twice.
+    owned  = Incident.where(user_id: current_user.id)
+    shared = Incident.joins(:users).where(users: { id: current_user.id })
+    @incidents = Incident.where(id: (owned.pluck(:id) + shared.pluck(:id)).uniq)
   end
 
   # GET /incidents/1
