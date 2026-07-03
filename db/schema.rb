@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_01_150625) do
+ActiveRecord::Schema.define(version: 2026_07_02_093501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -388,6 +388,18 @@ ActiveRecord::Schema.define(version: 2026_07_01_150625) do
     t.string "ops_period"
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.string "meeting_name", null: false
+    t.string "time"
+    t.string "location"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id", "position"], name: "index_schedules_on_incident_id_and_position"
+    t.index ["incident_id"], name: "index_schedules_on_incident_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "resource_name"
     t.string "position"
@@ -450,4 +462,5 @@ ActiveRecord::Schema.define(version: 2026_07_01_150625) do
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
   add_foreign_key "requests", "incidents"
+  add_foreign_key "schedules", "incidents"
 end

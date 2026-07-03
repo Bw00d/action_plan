@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       resource :checkin, only: [:new, :create], controller: 'request_checkins'
     end
     resources :dump_imports, only: [:new, :create]
+    resources :schedules, only: [:index, :create, :update, :destroy]
     resources :plans do
       member do
         post :publish

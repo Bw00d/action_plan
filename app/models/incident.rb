@@ -8,6 +8,9 @@ class Incident < ApplicationRecord
   has_many :org_unit_assignments, through: :org_units
   has_many :requests, dependent: :destroy
   has_many :personnel_requests, -> { personnel }, class_name: 'Request'
+  has_many :schedules, dependent: :destroy
+
+  after_create :seed_default_schedule
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id', optional: true
   has_and_belongs_to_many :users  # shared users who can edit
@@ -42,6 +45,12 @@ class Incident < ApplicationRecord
   end
 
   # def owner
-  #     User.find(self.user_id) 
+  #     User.find(self.user_id)
   # end
+
+  private
+
+  def seed_default_schedule
+    Schedule.seed_defaults!(self)
+  end
 end

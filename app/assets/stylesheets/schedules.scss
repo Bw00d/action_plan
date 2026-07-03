@@ -1,0 +1,154 @@
+.schedule-page {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 0 20px;
+  color: #172b4d;
+  font-size: 14px;
+
+  .schedule-header {
+    margin-bottom: 12px;
+
+    h2 { margin: 0 0 4px; font-size: 22px; }
+    p  { margin: 0; color: #6b778c; font-size: 13px; }
+  }
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.04);
+  margin-bottom: 24px;
+
+  thead th {
+    background: #f7f8fa;
+    color: #5e6c84;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #e6e8ec;
+  }
+
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eef0f3;
+    vertical-align: middle;
+    color: #172b4d;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) td { background: #fafbfc; }
+  tbody tr:hover td { background: #eef4ff; }
+
+  .col-name     { width: 45%; font-weight: 600; }
+  .col-time     { width: 20%; }
+  .col-location { width: 30%; }
+  .col-actions  { width: 5%; text-align: center; white-space: nowrap; }
+
+  .best_in_place {
+    display: inline-block;
+    min-width: 60px;
+    min-height: 22px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: transparent;
+
+    &:hover { background: #eef4ff; box-shadow: inset 0 0 0 1px #b3c7ff; cursor: text; }
+  }
+
+  .schedule-delete {
+    display: inline-block;
+    line-height: 1;
+
+    &:hover img { opacity: 0.75; }
+  }
+}
+
+.schedule-add {
+  margin-top: 8px;
+
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #5e6c84;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+  }
+}
+
+.schedule-add-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .form-control {
+    flex: 1 1 180px;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .btn {
+    flex: 0 0 auto;
+  }
+}
+
+.schedule-table {
+  .col-check {
+    width: 32px;
+    text-align: center;
+  }
+}
+
+.schedule-print-actions {
+  margin: 16px 0;
+  text-align: right;
+}
+
+.print-only { display: none; }
+
+.schedule-print-header {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+@media print {
+  body.printing-schedule {
+    header,
+    footer,
+    #flash-messages,
+    .schedule-header,
+    .schedule-add,
+    .no-print,
+    .schedule-page > .incident-name,
+    .schedule-table thead,
+    .schedule-table .col-location {
+      display: none !important;
+    }
+
+    .print-only { display: block !important; }
+
+    tr.is-print-hidden { display: none !important; }
+
+    .schedule-table {
+      border: 0 !important;
+      box-shadow: none !important;
+
+      tbody td {
+        border: 0 !important;
+        padding: 4px 8px !important;
+        background: transparent !important;
+      }
+    }
+  }
+}

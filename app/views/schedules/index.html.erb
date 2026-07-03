@@ -1,0 +1,133 @@
+<%= content_for :title, "Meeting Schedule" %>
+
+<div class="schedule-page">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <div class="schedule-header">
+    <h2>Meeting Schedule</h2>
+    <p class="muted">Click a time or location to edit in place. Uncheck any meetings you don't want on the printed schedule.</p>
+  </div>
+
+  <h2 class="schedule-print-header print-only">
+    <%= @incident.name %> <%= @incident.incident_type %> Meeting Schedule
+  </h2>
+
+  <% if @schedules.empty? %>
+    <p>No meetings on the schedule yet.</p>
+  <% else %>
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th class="col-check no-print">
+            <input type="checkbox" id="schedule-check-all" checked title="Select / clear all">
+          </th>
+          <th class="col-name">Meeting</th>
+          <th class="col-time">Time</th>
+          <th class="col-location">Location</th>
+          <th class="col-actions no-print"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @schedules.each do |meeting| %>
+          <tr id="schedule-<%= meeting.id %>">
+            <td class="col-check no-print">
+              <input type="checkbox" class="schedule-check" data-row="schedule-<%= meeting.id %>" checked>
+            </td>
+            <td class="col-name"><%= meeting.meeting_name %></td>
+            <td class="col-time">
+              <%= best_in_place meeting, :time,
+                                url: incident_schedule_path(@incident, meeting),
+                                as: :input,
+                                place_holder: "—" %>
+            </td>
+            <td class="col-location">
+              <%= best_in_place meeting, :location,
+                                url: incident_schedule_path(@incident, meeting),
+                                as: :input,
+                                place_holder: "—" %>
+            </td>
+            <td class="col-actions no-print">
+              <%= link_to incident_schedule_path(@incident, meeting),
+                          method: :delete,
+                          data: { confirm: "Remove \"#{meeting.meeting_name}\" from this schedule?" },
+                          class: "schedule-delete",
+                          title: "Remove meeting" do %>
+                <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% unless @schedules.empty? %>
+    <div class="schedule-print-actions no-print">
+      <button type="button" id="print-schedule" class="btn btn-primary" onclick="printSchedule()">
+        <%= fa_icon 'print' %> Print Schedule
+      </button>
+    </div>
+  <% end %>
+
+  <script>
+    document.addEventListener('turbolinks:load', function () {
+      var all = document.getElementById('schedule-check-all');
+      if (!all) return;
+      all.addEventListener('change', function () {
+        document.querySelectorAll('.schedule-check').forEach(function (cb) { cb.checked = all.checked; });
+      });
+    });
+
+    function printSchedule() {
+      var body = document.body;
+      var checks = document.querySelectorAll('.schedule-check');
+      checks.forEach(function (cb) {
+        var row = document.getElementById(cb.dataset.row);
+        if (row) row.classList.toggle('is-print-hidden', !cb.checked);
+      });
+
+      body.classList.add('printing-schedule');
+      var style = document.createElement('style');
+      style.id = 'print-orientation';
+      style.textContent = '@page { size: portrait; margin: 0.5in; }';
+      document.head.appendChild(style);
+
+      var cleanup = function () {
+        body.classList.remove('printing-schedule');
+        var s = document.getElementById('print-orientation');
+        if (s) s.remove();
+        document.querySelectorAll('tr.is-print-hidden').forEach(function (r) {
+          r.classList.remove('is-print-hidden');
+        });
+        window.removeEventListener('afterprint', cleanup);
+      };
+      window.addEventListener('afterprint', cleanup);
+      window.print();
+    }
+  </script>
+
+  <div class="schedule-add">
+    <h3>Add a meeting</h3>
+    <%= form_with url: incident_schedules_path(@incident),
+                  scope: :schedule,
+                  method: :post,
+                  local: true,
+                  html: { class: 'schedule-add-form' } do |f| %>
+      <% if @schedule.errors.any? %>
+        <div class="alert alert-danger">
+          <strong>Could not add meeting:</strong>
+          <ul>
+            <% @schedule.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= f.text_field :meeting_name, placeholder: "MEETING NAME", class: 'form-control', required: true %>
+      <%= f.text_field :time,         placeholder: "TIME (optional)", class: 'form-control' %>
+      <%= f.text_field :location,     placeholder: "LOCATION (optional)", class: 'form-control' %>
+      <%= f.submit "Add", class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
