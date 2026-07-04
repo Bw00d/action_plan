@@ -68,7 +68,7 @@ Rails.application.routes.draw do
   resources :contact_forms, only: [:create]
   # A non-resourceful route was used to place the contact form at /contact
   get 'contact' => 'contact_forms#new', as: 'contact'
-  get 'incidents/:id/users'   => 'incidents#users'
+  get 'incidents/:id/users'   => 'incidents#users', as: :incident_users
   get 'incidents/:id/plans/:id/202'        => 'plans#incident_objectives'
   get 'incidents/:id/plans/:id/202-pdf'        => 'plans#objectives_to_pdf'
   get 'incidents/:id/plans/:id/203'        => 'plans#incident_organization'
@@ -81,5 +81,13 @@ Rails.application.routes.draw do
   # get 'incidents/:id/invite', to: 'incidents#invite'
   post '/incidents/invite', to: 'incidents#invite'
   post '/incidents/remove-user', to: 'incidents#remove_user'
+
+  # Invite-acceptance flow: token in URL, GET shows form, PATCH submits.
+  get   '/invitations/:invitation_token/accept',
+        to: 'invitations#edit',
+        as: :accept_invitation
+  patch '/invitations/:invitation_token/accept',
+        to: 'invitations#update',
+        as: :invitation
 
 end

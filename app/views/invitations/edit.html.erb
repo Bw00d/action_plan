@@ -1,0 +1,50 @@
+<%= content_for :title, "Accept invitation" %>
+
+<div class="container invitation-page" style="max-width:520px;margin:40px auto;">
+  <h2>Complete your account</h2>
+  <p class="text-muted">You've been invited to Action Plan by another user. Fill in your name and pick a password to finish setting up your account.</p>
+
+  <%= form_with model: @user,
+                url: invitation_path(invitation_token: params[:invitation_token]),
+                method: :patch,
+                local: true do |f| %>
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <strong>Please fix the following:</strong>
+        <ul>
+          <% @user.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" class="form-control" value="<%= @user.email %>" disabled>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :first_name, "First name" %>
+      <%= f.text_field :first_name, class: "form-control", required: true, autofocus: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :last_name, "Last name" %>
+      <%= f.text_field :last_name, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, "Password" %>
+      <%= f.password_field :password, class: "form-control", required: true, autocomplete: "new-password" %>
+      <small class="text-muted">Minimum 8 characters, with at least one upper case, one lower case, and one digit.</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Confirm password" %>
+      <%= f.password_field :password_confirmation, class: "form-control", required: true, autocomplete: "new-password" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit "Set my password", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

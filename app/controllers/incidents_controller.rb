@@ -79,18 +79,48 @@ class IncidentsController < ApplicationController
 
   def invite
     @incident = Incident.find(params[:incident_id])
-    @invite = params[:invite]
-    # @invitee = User.where('email LIKE ?', "%#{@invite}%")
-    @invitee = User.find_by(email: params[:invite])
-    if @invitee
-      @incident.users << @invitee
-    else
-      @invited = User.create!(email: params[:invite], password: "Changm3!", password_confirmation: "Changm3!", 
-                              first_name: "Firstname", last_name: "Lastname")
-      @incident.users << @invited
+    email = params[:invite].to_s.strip.downcase
+
+    if email.blank?
+      redirect_back(fallback_location: incident_users_path(@incident), alert: "Please enter an email address.")
+      return
     end
-    respond_to do |format|
-      format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
+
+    existing = User.find_by(email: email)
+
+    if existing
+      if @incident.users.exists?(existing.id)
+        notice = "#{existing.email} is already a collaborator on this incident."
+      else
+        @incident.users << existing
+        InvitationMailer.added_to_incident(existing, @incident, current_user).deliver_later
+        notice = "Added #{existing.email} and sent them a notification."
+      end
+      redirect_to incident_users_path(@incident), notice: notice
+    else
+      # Fresh invite: create a placeholder user with a random password so
+      # Devise's :validatable is satisfied, generate a raw invitation token
+      # (piggybacks on Devise's confirmation_token infrastructure), and send
+      # the accept-invitation email.
+      raw_token, digest = Devise.token_generator.generate(User, :confirmation_token)
+      new_user = User.new(
+        email:                 email,
+        first_name:            "Pending",
+        last_name:             "Invitee",
+        password:              SecureRandom.hex(16) + "Aa1", # meets password_strength rules
+        password_confirmation: nil
+      )
+      new_user.password_confirmation = new_user.password
+      new_user.skip_confirmation_notification! if new_user.respond_to?(:skip_confirmation_notification!)
+      new_user.confirmation_token   = digest
+      new_user.confirmation_sent_at = Time.current
+      if new_user.save
+        @incident.users << new_user
+        InvitationMailer.invite_new_user(new_user, @incident, current_user, raw_token).deliver_later
+        redirect_to incident_users_path(@incident), notice: "Invitation sent to #{email}."
+      else
+        redirect_to incident_users_path(@incident), alert: "Couldn't invite #{email}: #{new_user.errors.full_messages.to_sentence}"
+      end
     end
   end
 

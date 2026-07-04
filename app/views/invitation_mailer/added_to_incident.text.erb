@@ -1,0 +1,6 @@
+Hi <%= @user.first_name %>,
+
+<%= @inviter.full_name %> (<%= @inviter.email %>) has added you to the incident "<%= @incident.display_incident_name %>" in Action Plan.
+
+Open it here:
+<%= @incident_url %>
