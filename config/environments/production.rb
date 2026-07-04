@@ -67,6 +67,26 @@ Rails.application.configure do
   # link back to themselves.
   config.action_mailer.default_url_options = { host: ENV.fetch('APP_HOST', 'incident-action-plan.herokuapp.com'), protocol: 'https' }
 
+  # SMTP delivery via Mailgun (Heroku add-on).
+  # The add-on provisions MAILGUN_SMTP_LOGIN / MAILGUN_SMTP_PASSWORD /
+  # MAILGUN_SMTP_SERVER / MAILGUN_SMTP_PORT env vars. We only enable SMTP
+  # when the credentials are present so apps without the add-on don't
+  # crash on boot trying to connect to localhost:25.
+  if ENV['MAILGUN_SMTP_LOGIN'].present? && ENV['MAILGUN_SMTP_PASSWORD'].present?
+    config.action_mailer.delivery_method     = :smtp
+    config.action_mailer.perform_deliveries  = true
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_settings = {
+      address:              ENV.fetch('MAILGUN_SMTP_SERVER', 'smtp.mailgun.org'),
+      port:                 ENV.fetch('MAILGUN_SMTP_PORT', 587).to_i,
+      authentication:       :plain,
+      user_name:            ENV['MAILGUN_SMTP_LOGIN'],
+      password:             ENV['MAILGUN_SMTP_PASSWORD'],
+      domain:               ENV.fetch('APP_HOST', 'incident-action-plan.herokuapp.com'),
+      enable_starttls_auto: true
+    }
+  end
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
