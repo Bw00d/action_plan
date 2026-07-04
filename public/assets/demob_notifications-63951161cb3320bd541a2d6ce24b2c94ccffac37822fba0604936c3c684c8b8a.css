@@ -1,0 +1,197 @@
+/* line 1, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page {
+  max-width: 1400px;
+  margin: 24px auto;
+  padding: 0 16px;
+  color: #000;
+  font-size: 14px;
+}
+
+/* line 8, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-header {
+  margin: 8px 0 16px;
+}
+
+/* line 11, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-header h2 {
+  margin: 0 0 4px;
+}
+
+/* line 12, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-header p {
+  margin: 0;
+  color: #6b778c;
+  font-size: 13px;
+}
+
+/* line 15, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-actions {
+  margin-top: 10px;
+}
+
+/* line 18, app/assets/stylesheets/demob_notifications.scss */
+.print-only {
+  display: none;
+}
+
+/* line 20, app/assets/stylesheets/demob_notifications.scss */
+.dn-print-title {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* line 26, app/assets/stylesheets/demob_notifications.scss */
+.dn-print-title .dn-print-date {
+  font-weight: 400;
+  color: #333;
+  margin-left: 8px;
+}
+
+/* line 33, app/assets/stylesheets/demob_notifications.scss */
+.demob-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 24px;
+}
+
+/* line 40, app/assets/stylesheets/demob_notifications.scss */
+.demob-table th, .demob-table td {
+  border: 2px solid #000;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* line 47, app/assets/stylesheets/demob_notifications.scss */
+.demob-table thead th {
+  text-align: center;
+  font-weight: 700;
+  vertical-align: middle;
+  background: #f5f5f5;
+}
+
+/* line 54, app/assets/stylesheets/demob_notifications.scss */
+.demob-table tbody tr.dn-remarks-row td {
+  border-top: 0;
+}
+
+/* line 55, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-remarks {
+  font-weight: 400;
+}
+
+/* line 57, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .best_in_place {
+  display: inline-block;
+  min-width: 40px;
+  min-height: 18px;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* line 64, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 67, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .ron-cell {
+  text-align: center;
+}
+
+/* line 69, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-row-actions {
+  white-space: nowrap;
+}
+
+/* line 72, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-row-actions form {
+  display: inline-block;
+  margin: 0 2px;
+}
+
+/* line 75, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-delete {
+  color: #b71c1c;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+/* line 82, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block {
+  margin-top: 32px;
+}
+
+/* line 85, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* line 87, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* line 92, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table th, .dn-transmitted-block .dn-transmitted-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #e6e8ec;
+  text-align: left;
+}
+
+/* line 98, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table thead th {
+  background: #f7f8fa;
+  font-weight: 600;
+  color: #5e6c84;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+/* line 106, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table form {
+  display: inline;
+  margin: 0;
+}
+
+@media print {
+  /* line 112, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs header,
+body.printing-demob-notifs footer,
+body.printing-demob-notifs #flash-messages,
+body.printing-demob-notifs .no-print {
+    display: none !important;
+  }
+  /* line 119, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .print-only {
+    display: block !important;
+  }
+  /* line 121, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-notifications-page {
+    margin: 0;
+    padding: 0;
+  }
+  /* line 126, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-table {
+    page-break-inside: auto;
+  }
+  /* line 129, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  /* line 130, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-table thead {
+    display: table-header-group;
+  }
+}
