@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     end
     resources :dump_imports, only: [:new, :create]
     resources :schedules, only: [:index, :create, :update, :destroy]
+    resources :demob_notifications, only: [:index, :update, :destroy] do
+      member { patch :transmit }
+    end
     resources :plans do
       member do
         post :publish

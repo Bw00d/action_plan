@@ -9,6 +9,7 @@ class Incident < ApplicationRecord
   has_many :requests, dependent: :destroy
   has_many :personnel_requests, -> { personnel }, class_name: 'Request'
   has_many :schedules, dependent: :destroy
+  has_many :demob_notifications, dependent: :destroy
 
   after_create :seed_default_schedule
 

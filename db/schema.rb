@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_02_093501) do
+ActiveRecord::Schema.define(version: 2026_07_04_143256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,33 @@ ActiveRecord::Schema.define(version: 2026_07_02_093501) do
     t.integer "plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "demob_notifications", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "resource_id", null: false
+    t.bigint "demob_id"
+    t.string "request_number"
+    t.string "unit_id"
+    t.string "name"
+    t.date "actual_release_date"
+    t.string "actual_release_time"
+    t.string "return_travel_method"
+    t.string "demob_city_state"
+    t.boolean "ron", default: false
+    t.string "ron_location"
+    t.date "est_arrival_date"
+    t.string "est_arrival_time"
+    t.text "remarks"
+    t.boolean "transmitted", default: false, null: false
+    t.datetime "transmitted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["demob_id"], name: "index_demob_notifications_on_demob_id"
+    t.index ["incident_id", "transmitted"], name: "index_demob_notifications_on_incident_id_and_transmitted"
+    t.index ["incident_id"], name: "index_demob_notifications_on_incident_id"
+    t.index ["resource_id"], name: "index_demob_notifications_on_resource_id"
+    t.index ["transmitted"], name: "index_demob_notifications_on_transmitted"
   end
 
   create_table "demobs", force: :cascade do |t|
@@ -454,6 +481,9 @@ ActiveRecord::Schema.define(version: 2026_07_02_093501) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "org_units"
+  add_foreign_key "demob_notifications", "demobs"
+  add_foreign_key "demob_notifications", "incidents"
+  add_foreign_key "demob_notifications", "resources"
   add_foreign_key "org_unit_assignments", "org_units"
   add_foreign_key "org_unit_assignments", "resources"
   add_foreign_key "org_units", "incidents"

@@ -1,0 +1,148 @@
+<%= content_for :title, "Demob Notifications" %>
+
+<div class="demob-notifications-page">
+  <div class="incident-name no-print">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <div class="dn-header no-print">
+    <h2>Demob Notifications</h2>
+    <p class="muted">
+      One row per resource being demobilized. Click any cell to edit in place.
+      Mark as transmitted after sending to dispatch so it won't reprint.
+    </p>
+    <div class="dn-actions">
+      <button type="button" id="print-demob-notifs" class="btn btn-primary" onclick="printDemobNotifications()">
+        <%= fa_icon 'print' %> Print pending
+      </button>
+    </div>
+  </div>
+
+  <h2 class="dn-print-title print-only">
+    <%= @incident.name %> &mdash; Demob Notifications
+    <span class="dn-print-date"><%= Date.today.strftime('%B %-d, %Y') %></span>
+  </h2>
+
+  <% if @pending.empty? %>
+    <p class="muted no-print"><em>No pending demob notifications.</em></p>
+  <% else %>
+    <table class="demob-table">
+      <thead>
+        <tr>
+          <th rowspan="2">Request<br>Number</th>
+          <th rowspan="2">Unit ID</th>
+          <th rowspan="2">Name</th>
+          <th colspan="2">Actual Release</th>
+          <th rowspan="2">Return<br>Travel<br>Method</th>
+          <th rowspan="2">Demob City/State</th>
+          <th rowspan="2">RON<br>Y/N</th>
+          <th rowspan="2">RON Location</th>
+          <th colspan="2">Estimated Arrival</th>
+          <th rowspan="2" class="no-print">Actions</th>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @pending.each do |n| %>
+          <% url = incident_demob_notification_path(@incident, n) %>
+          <tr id="dn-<%= n.id %>">
+            <td><%= best_in_place n, :request_number, url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :unit_id,        url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :name,           url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :actual_release_date, url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :actual_release_time, url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :return_travel_method, url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :demob_city_state, url: url, as: :input, place_holder: '—' %></td>
+            <td class="ron-cell">
+              <%= best_in_place n, :ron, url: url, as: :checkbox, collection: { true => 'Y', false => 'N' } %>
+            </td>
+            <td><%= best_in_place n, :ron_location, url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :est_arrival_date, url: url, as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place n, :est_arrival_time, url: url, as: :input, place_holder: '—' %></td>
+            <td class="no-print dn-row-actions">
+              <%= button_to "Transmitted",
+                             transmit_incident_demob_notification_path(@incident, n),
+                             method: :patch,
+                             class: "btn btn-xs btn-success",
+                             data: { confirm: "Mark #{n.request_number} #{n.name} as transmitted?" } %>
+              <%= button_to "Delete",
+                             incident_demob_notification_path(@incident, n),
+                             method: :delete,
+                             class: "btn btn-xs btn-link dn-delete",
+                             data: { confirm: "Delete this notification? (Doesn't touch the underlying Demob record.)" } %>
+            </td>
+          </tr>
+          <tr class="dn-remarks-row">
+            <td colspan="2"></td>
+            <td colspan="9" class="dn-remarks">
+              Remarks:
+              <%= best_in_place n, :remarks, url: url, as: :textarea, place_holder: '—',
+                                             html_attrs: { style: 'width:100%; min-height:40px;' },
+                                             ok_button: 'Save', ok_button_class: 'btn btn-info tiny',
+                                             cancel_button: 'Cancel', cancel_button_class: 'btn btn-default sm-margin-left tiny' %>
+            </td>
+            <td class="no-print"></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% if @transmitted.any? %>
+    <div class="no-print dn-transmitted-block">
+      <h3>Transmitted <span class="muted">(<%= @transmitted.size %>)</span></h3>
+      <table class="dn-transmitted-table">
+        <thead>
+          <tr>
+            <th>Request #</th>
+            <th>Name</th>
+            <th>Actual Release</th>
+            <th>Transmitted At</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @transmitted.each do |n| %>
+            <tr>
+              <td><%= n.request_number %></td>
+              <td><%= n.name %></td>
+              <td><%= n.actual_release_date %> <%= n.actual_release_time %></td>
+              <td><%= n.transmitted_at&.strftime('%Y-%m-%d %H:%M') %></td>
+              <td>
+                <%= button_to "Delete",
+                               incident_demob_notification_path(@incident, n),
+                               method: :delete,
+                               class: "btn btn-xs btn-link dn-delete",
+                               data: { confirm: "Delete this transmitted notification permanently?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  function printDemobNotifications() {
+    document.body.classList.add('printing-demob-notifs');
+    var style = document.createElement('style');
+    style.id = 'print-orientation';
+    // Landscape needed to fit the 11-column table comfortably
+    style.textContent = '@page { size: landscape; margin: 0.4in; }';
+    document.head.appendChild(style);
+    var cleanup = function () {
+      document.body.classList.remove('printing-demob-notifs');
+      var s = document.getElementById('print-orientation');
+      if (s) s.remove();
+      window.removeEventListener('afterprint', cleanup);
+    };
+    window.addEventListener('afterprint', cleanup);
+    window.print();
+  }
+</script>
