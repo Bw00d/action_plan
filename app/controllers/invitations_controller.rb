@@ -3,6 +3,9 @@ class InvitationsController < ApplicationController
   # Devise's auth. Existing users who happen to be signed in still land here
   # fine — the accept form just sets their password and clears the token.
   skip_before_action :authenticate_user!
+  # Pundit expects every action to authorize something; nothing to authorize
+  # here since the token itself is the credential.
+  include SkipAuthorization
 
   before_action :find_user_by_token, only: [:edit, :update]
 
