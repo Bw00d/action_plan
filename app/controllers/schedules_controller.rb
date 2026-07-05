@@ -5,7 +5,12 @@ class SchedulesController < ApplicationController
   before_action :set_schedule, only: [:update, :destroy]
 
   def index
-    @schedules = @incident.schedules
+    # Sort by meeting time; meetings with no time set drop to the bottom in
+    # their canonical Planning-P (position) order so unscheduled ones still
+    # show a sensible sequence.
+    @schedules = @incident.schedules.reorder(
+      Arel.sql("(CASE WHEN NULLIF(time, '') IS NULL THEN 1 ELSE 0 END), time, position, id")
+    )
     # NOTE: build @schedule via Schedule.new (not @incident.schedules.new)
     # to avoid appending the unsaved record to @schedules — an association
     # proxy .new pollutes the in-memory collection.
