@@ -10,8 +10,14 @@
     div {
       line-height: 1.7em;
     }
-    input, textarea {
-      border: none;
+
+    input {
+      border-color: lightgray !important;
+      height: 1.5em;
+    }
+    textarea {
+      border-color: lightgray !important;
+      width: 100%;
     }
   }
   .small {
@@ -69,12 +75,14 @@
       border-bottom: 1px solid black !important;
     }
 }
+
 #demob-remarks {
   height: 100px;
   overflow: hidden;
 }
 #demob-transportation {
   font-size: 0.7em;
+  padding-top: 5px;
   input {
     font-weight: 777;
   }
@@ -94,6 +102,7 @@
 #prepared-by-row {
   font-size: 0.7em;
   overflow: hidden;
+  height: 50px;
 }
 #prepared-by-header {
   font-weight: 777;
@@ -110,6 +119,96 @@
 }
 #demob-form-button {
   display: none;
+}
+
+@media print {
+  body.printing-demob-checkout {
+    padding: 0 !important;
+    // Kill site chrome so only the form prints.
+    header,
+    footer,
+    #flash-messages,
+    .no-print {
+      display: none !important;
+    }
+    input, textarea {
+      border: none !important;
+    }
+    // Bootstrap column wrappers → full page width.
+    #demob-sheet .container,
+    #demob-sheet .col-lg-8,
+    #demob-sheet .col-xs-12 {
+      max-width: 100% !important;
+      width: 100% !important;
+      float: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    // Any element whose bottom border defines a row divider must contain
+    // its floated children — otherwise the parent collapses to zero height
+    // and its border-bottom visually overlaps the row above.
+    .bb,
+    #demob-sheet .row,
+    #demob-sheet .col-xs-12,
+    #demob-sheet .col-xs-4,
+    #demob-sheet .col-xs-6 {
+      overflow: hidden !important;
+    }
+
+    // The main form container has a hard-coded 740px width that overflows
+    // Letter after margins. Fit to the printable area and tighten spacing.
+    #form-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 2px !important;
+      font-size: 9pt;
+
+      div { line-height: 1.1em !important; }
+
+    }
+
+    // Tighter body-level type so the whole ICS-221 fits on one page.
+    h1, h2, h3, h4, h5, h6 { margin: 2px 0 !important; }
+    h4 { font-size: 11pt !important; }
+    h6 { font-size: 8pt !important; }
+    p  { font-size: 8pt !important; line-height: 1.15em !important; margin: 2px 0 !important; padding: 0 !important; }
+
+    // Section-level fonts.
+    span#release-date-highlight {
+      background-color: transparent !important;
+    }
+    #demob-transportation,
+    #reassignment-info,
+    #prepared-by-row { font-size: 8pt !important;}
+    span#reassignment-header { margin-top: 0 !important}
+    
+    // Signature tables — the biggest space consumers.
+    .custom-table td   { font-size: 7pt !important; padding: 1px 3px !important; }
+    .custom-table th   { font-size: 8pt !important; padding: 1px 3px !important; }
+    .custom-table       { margin-bottom: 2px !important; }
+
+    // Compact remarks and form inputs so they don't inflate rows.
+    #demob-remarks     { height: 150px !important; }
+    input, textarea    { padding: 0 !important; line-height: 1.1em !important; }
+    textarea           { min-height: 30px !important; height: 50px !important; border: none !important; }
+
+    // Tighten row gutters.
+    .row               { margin: 0 !important; }
+    .row > [class*="col-"] { padding-left: 3px !important; padding-right: 3px !important; }
+
+    // Small-caps labels used throughout the form.
+    .small { font-size: 7pt !important; }
+
+    // Keep signature-table rows from being split across pages, and prevent
+    // stray double page breaks from headings.
+    table tr           { page-break-inside: avoid; }
+    h4, h6             { page-break-after: avoid; }
+
+    // Neutralise Bootstrap's default page background so the form has
+    // predictable white space.
+    body { background: #fff !important; }
+  }
 }
 .strong {
   font-weight: 777;

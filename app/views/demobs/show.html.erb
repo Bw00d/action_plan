@@ -3,7 +3,7 @@
 <div id="demob-sheet">
   <div class="container center-vh-containe">
     <div class="col-xs-12 col-lg-8 center-block ">
-      <div>
+      <div class="no-print">
         <div><%= link_to "BACK to RESOURCES", incident_resources_path(@incident), class: "btn btn-success tiny" %></div>
       </div>
 
@@ -166,10 +166,10 @@
 
             <div class="col-xs-6"> Estimated Time of Departure <%= f.text_field :edt, :place_holder => "(ESTIMATED DEPARTURE TIME)"  %>
             </div>
-            <div class="col-xs-6"> <span class="md-margin-right yellow">Actual Release Date: <%= f.text_field :actual_release_date, class: 'datepicker', display_as: :formatted_date, :place_holder => "(DATE)", size: '13' %></span>  Time <%= f.text_field :actual_release_time, :place_holder => "(TIME)", size: '13' %>
+            <div class="col-xs-6"> <span id="release-date-highlight" class="md-margin-right yellow">Actual Release Date: <%= f.text_field :actual_release_date, class: 'datepicker', display_as: :formatted_date, :place_holder => "(DATE)", size: '10' %></span>  Time <%= f.text_field :actual_release_time, :place_holder => "(TIME)", size: '10' %>
             </div>
 
-            <div class="col-xs-6"> Destination <%= f.text_field :destination, size: '25'  %>
+            <div class="col-xs-6"> Destination <%= f.text_field :destination  %>
             </div>
             <div class="col-xs-6"> Estimated Time of Arrival <%= f.text_field :eta %>
             </div>
@@ -215,13 +215,39 @@
           </div>
         </div>
       </div>
-      <div class="print-button"><%= link_to "PRINT", '#', class: "btn btn-success float-left tiny", target: :_blank, id: "print-demob-button" %></div>
+      <div class="print-button no-print">
+        <%= button_tag "PRINT",
+                       type: "button",
+                       class: "btn btn-success float-left tiny",
+                       id: "print-demob-button",
+                       onclick: "printDemobCheckout()" %>
+      </div>
 
-      <div class=""><%= f.submit "Submit", class: "btn btn-success float-left tiny", id: "demob-form-button" %></div>
+      <div class="no-print"><%= f.submit "Submit", class: "btn btn-success float-left tiny", id: "demob-form-button" %></div>
         <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  function printDemobCheckout() {
+    document.body.classList.add('printing-demob-checkout');
+    var style = document.createElement('style');
+    style.id = 'print-orientation';
+    // Explicit Letter size + generous, even margins on all four sides.
+    style.textContent = '@page { size: letter portrait; margin: 0.4in; }';
+    document.head.appendChild(style);
+
+    var cleanup = function () {
+      document.body.classList.remove('printing-demob-checkout');
+      var s = document.getElementById('print-orientation');
+      if (s) s.remove();
+      window.removeEventListener('afterprint', cleanup);
+    };
+    window.addEventListener('afterprint', cleanup);
+    window.print();
+  }
+</script>
 
 <%#= best_in_place @demob, :remarks, as: :input, :display_with => :simple_format, :place_holder => "(ADD CONTENT)" %>
 
