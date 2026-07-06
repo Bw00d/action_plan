@@ -79,6 +79,6 @@ class DemobsController < ApplicationController
                                     :manifest, :manifest_number, :ron, :actual_release_date, :actual_release_time, 
                                     :eta, :contact_enroute, :agency_notified, :reassigned, :new_incident, 
                                     :new_incident_number, :new_order_number, :prepared_by, :pb_position, :date,
-                                    :new_location, :time)
+                                    :new_location, :time, :estimated_arrival_date)
     end
 end

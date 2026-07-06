@@ -17,6 +17,24 @@ class Schedule < ApplicationRecord
   ].freeze
 
   validates :meeting_name, presence: true
+  # 24-hour military time, four digits (00-23 hours, 00-59 minutes). Blank
+  # is allowed so meetings can be added without a time set yet.
+  validates :time,
+            format: { with: /\A([01]\d|2[0-3])[0-5]\d\z/,
+                      message: "must be 4 digits in 24-hour format (e.g. 0700, 1330)" },
+            allow_blank: true
+
+  before_validation :normalize_time
+
+  private
+
+  def normalize_time
+    self.time = time.to_s.strip.gsub(/\D/, '') if time.present?
+    # Left-pad three-digit entries: "700" → "0700"
+    self.time = time.rjust(4, '0') if time.present? && time.length.between?(1, 3)
+  end
+
+  public
 
   default_scope -> { order(:position, :id) }
 

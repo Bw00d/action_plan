@@ -171,7 +171,9 @@
 
             <div class="col-xs-6"> Destination <%= f.text_field :destination  %>
             </div>
-            <div class="col-xs-6"> Estimated Time of Arrival <%= f.text_field :eta %>
+            <div class="col-xs-6"> Estimated Arrival
+              Date <%= f.text_field :estimated_arrival_date, class: 'datepicker', display_as: :formatted_date, size: '10' %>
+              Time <%= f.text_field :eta, size: '6', placeholder: '(TIME)' %>
             </div>
 
             <div class="col-xs-6"> Travel Method <%= f.text_field :travel_method  %>

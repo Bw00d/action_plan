@@ -125,7 +125,13 @@
       <% end %>
 
       <%= f.text_field :meeting_name, placeholder: "MEETING NAME", class: 'form-control', required: true %>
-      <%= f.text_field :time,         placeholder: "TIME (optional)", class: 'form-control' %>
+      <%= f.text_field :time,
+                       placeholder: "TIME (24-hour, e.g. 0700)",
+                       pattern: "\\d{4}",
+                       maxlength: 4,
+                       inputmode: "numeric",
+                       title: "24-hour format, four digits (e.g. 0700, 1330)",
+                       class: 'form-control' %>
       <%= f.text_field :location,     placeholder: "LOCATION (optional)", class: 'form-control' %>
       <%= f.submit "Add", class: 'btn btn-primary' %>
     <% end %>
