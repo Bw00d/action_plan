@@ -110,6 +110,144 @@ h4.incident-feed {
 #resource-panel {
   /*padding-bottom: 20px;*/
 }
+
+.resources-summary-panel {
+  .resources-panel-manage {
+    color: #444;
+    font-weight: 400;
+    font-size: 13px;
+
+    &:hover { color: #0052cc; text-decoration: none; }
+    .fa { margin-left: 4px; font-size: 11px; }
+  }
+}
+
+.resources-summary-body {
+  padding: 16px 20px;
+  color: #172b4d;
+}
+
+.resources-summary-headline {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.rs-hero {
+  min-width: 140px;
+
+  .rs-hero-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #172b4d;
+    line-height: 1;
+  }
+
+  .rs-hero-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b778c;
+    margin-top: 4px;
+  }
+}
+
+.rs-hero-muted .rs-hero-number { color: #6b778c; }
+
+.resources-summary-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rs-cat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f7f8fa;
+  border-radius: 6px;
+
+  &.rs-cat-empty { opacity: 0.55; }
+
+  .rs-cat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border-radius: 50%;
+    color: #5e6c84;
+    font-size: 16px;
+    flex: 0 0 auto;
+  }
+
+  .rs-cat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #5e6c84;
+  }
+
+  .rs-cat-counts {
+    font-size: 13px;
+    color: #172b4d;
+    margin-top: 2px;
+  }
+
+  .rs-cat-primary,
+  .rs-cat-personnel {
+    font-weight: 700;
+    font-size: 14px;
+  }
+}
+
+.resources-summary-demobs {
+  h5 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #5e6c84;
+    margin: 0 0 8px;
+  }
+
+  .muted {
+    color: #6b778c;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 11px;
+    margin-left: 4px;
+  }
+
+  .rs-demob-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      gap: 10px;
+      padding: 6px 8px;
+      border-bottom: 1px solid #eef0f3;
+      font-size: 13px;
+
+      &:last-child { border-bottom: none; }
+    }
+  }
+
+  .rs-demob-num  { font-weight: 700; min-width: 50px; }
+  .rs-demob-name { flex: 1; color: #42526e; }
+  .rs-demob-lwd  { color: #c62828; font-weight: 600; font-size: 12px; white-space: nowrap; }
+}
 .panel-foot {
   margin-top: 10px;
   background-color: #f5f5f5;

@@ -1,56 +1,105 @@
-<div id="resource-panel" class="panel panel-default">
-<!-- Default panel contents -->
-  <div class="panel-heading"><strong>Resources</strong> <%#= link_to (fa_icon('user-plus')), "javascript:;", class: "float-right", id: 'new-resource' %>
+<%
+  # Snapshot counts for the summary. Uses the existing Resource scopes so
+  # this stays in sync with what's shown on ICS-211, T-Cards, etc.
+  assigned  = @incident.resources.assigned
+  on_rnr    = @incident.resources.on_rnr
+  released  = @incident.resources.where.not(release_date: nil)
 
-    <!-- <%#= link_to "javascript:;" do %>  this removes functionality of resoruce form on this page-->
-    <%= link_to incident_resources_path(@incident) do %>
-      <%= image_tag 'user-plus.svg', class: "float-right", id: 'new-resource' %>
+  total_personnel = assigned.sum { |r| r.number_personnel.to_i }
+
+  by_category = {
+    'OVERHEAD'  => assigned.overhead,
+    'CREW'      => assigned.crew,
+    'EQUIPMENT' => assigned.equipment,
+    'AIRCRAFT'  => assigned.aircraft
+  }
+
+  category_icons = {
+    'OVERHEAD'  => 'user',
+    'CREW'      => 'users',
+    'EQUIPMENT' => 'truck',
+    'AIRCRAFT'  => 'plane'
+  }
+
+  upcoming_demobs = assigned.select do |r|
+    lwd = r.last_work_day
+    lwd.is_a?(Date) && lwd >= Date.today && lwd <= Date.today + 5.days
+  end.sort_by(&:last_work_day)
+%>
+
+<div id="resource-panel" class="panel panel-default resources-summary-panel">
+  <div class="panel-heading">
+    <strong>Resources</strong>
+    <%= link_to incident_resources_path(@incident), class: "float-right resources-panel-manage" do %>
+      Manage <%= fa_icon('external-link') %>
     <% end %>
   </div>
-  <div id="resource-form">
-    <h4><strong>New Resource</strong></h4>
-    <%= render 'new_resource_form' %>
-  </div>
-  <% if !@incident.resources.empty? %>
-    <!-- Table -->
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Order #</th>
-          <th scope="col">Name</th>
-          <th scope="col">Position</th>
-          <th scope="col">Leader</th>
-          <th scope="col"># personnel</th>
-          <th scope="col">Agency</th>
-          <th scope="col">LWD</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @resources.assigned.each do |r|  %>
-        <tr>
-          <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
-          <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
-          <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
-          <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input %></td>
-          <td class="sm-bip-input">
-            <% if r.number_personnel != nil  %> 
-              <%= best_in_place r, :number_personnel, :as => :input %>
-            <% end %>
-              </td>
-          <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input %></td>
-          <td class="lg-bip-input"><%= r.last_work_day %> <td>
-        </tr>
-        <% end %>
 
-      </tbody>
-    </table>
-
-    <% else %>
+  <% if assigned.empty? && on_rnr.empty? && released.empty? %>
     <div class="sm-padding-top md-padding-left">
       <h4>There are no resources assigned to this incident.</h4>
     </div>
+  <% else %>
+    <div class="resources-summary-body">
+      <div class="resources-summary-headline">
+        <div class="rs-hero">
+          <div class="rs-hero-number"><%= assigned.size %></div>
+          <div class="rs-hero-label">Assigned Resources</div>
+        </div>
+        <div class="rs-hero">
+          <div class="rs-hero-number"><%= total_personnel %></div>
+          <div class="rs-hero-label">Total Personnel</div>
+        </div>
+        <% if on_rnr.any? %>
+          <div class="rs-hero rs-hero-muted">
+            <div class="rs-hero-number"><%= on_rnr.size %></div>
+            <div class="rs-hero-label">On R&amp;R</div>
+          </div>
+        <% end %>
+        <% if released.any? %>
+          <div class="rs-hero rs-hero-muted">
+            <div class="rs-hero-number"><%= released.size %></div>
+            <div class="rs-hero-label">Released</div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="resources-summary-categories">
+        <% by_category.each do |cat, resources| %>
+          <div class="rs-cat <%= 'rs-cat-empty' if resources.empty? %>">
+            <div class="rs-cat-icon"><%= fa_icon(category_icons[cat]) %></div>
+            <div class="rs-cat-body">
+              <div class="rs-cat-label"><%= cat.titleize %></div>
+              <div class="rs-cat-counts">
+                <span class="rs-cat-primary"><%= resources.size %></span>
+                resource<%= 's' unless resources.size == 1 %>
+                &middot;
+                <span class="rs-cat-personnel"><%= resources.sum { |r| r.number_personnel.to_i } %></span>
+                personnel
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="resources-summary-demobs">
+        <h5>Upcoming demobs <span class="muted">(next 5 days)</span></h5>
+        <% if upcoming_demobs.empty? %>
+          <p class="muted"><em>None scheduled in the next 5 days.</em></p>
+        <% else %>
+          <ul class="rs-demob-list">
+            <% upcoming_demobs.each do |r| %>
+              <li>
+                <span class="rs-demob-num"><%= r.full_order_number %></span>
+                <span class="rs-demob-name"><%= r.name %></span>
+                <span class="rs-demob-lwd">LWD <%= r.last_work_day.strftime('%b %-d') %></span>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 
-  
   <div class="panel-foot"></div>
 </div>
