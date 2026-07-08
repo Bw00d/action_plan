@@ -1,0 +1,302 @@
+/* line 2, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container {
+  margin: 0px;
+  padding: 0 10px;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden;
+  width: 740px;
+}
+
+/* line 10, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container div {
+  line-height: 1.7em;
+}
+
+/* line 14, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container input {
+  border-color: lightgray !important;
+  height: 1.5em;
+}
+
+/* line 18, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container textarea {
+  border-color: lightgray !important;
+  width: 100%;
+}
+
+/* line 23, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet .small {
+  font-weight: 777;
+}
+
+/* line 26, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet p {
+  font-size: .80em;
+  padding: 0 10px;
+  line-height: 1.7em;
+}
+
+/* line 31, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet h1, #demob-sheet h2, #demob-sheet h3, #demob-sheet h4, #demob-sheet h5, #demob-sheet h6 {
+  font-weight: 777;
+  color: #444;
+}
+
+/* line 35, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet .units-container {
+  /*border-bottom: 1px solid black;*/
+  margin-left: 20px;
+  margin-right: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* line 43, app/assets/stylesheets/demobs.css.scss */
+.custom-table {
+  margin-bottom: 0;
+}
+
+/* line 45, app/assets/stylesheets/demobs.css.scss */
+.custom-table th {
+  font-size: 0.9em;
+  font-weight: 777;
+  padding-top: 0;
+}
+
+/* line 50, app/assets/stylesheets/demobs.css.scss */
+.custom-table thead {
+  border-bottom: 1px solid black;
+}
+
+/* line 53, app/assets/stylesheets/demobs.css.scss */
+.custom-table td {
+  padding: 4px 0 0 3px !important;
+  font-size: 0.7em;
+  border-top: 1px solid black !important;
+}
+
+/* line 58, app/assets/stylesheets/demobs.css.scss */
+.custom-table .head-row {
+  padding-top: 0 !important;
+  border-bottom: 1px solid black !important;
+}
+
+/* line 64, app/assets/stylesheets/demobs.css.scss */
+#finance-table tbody tr:last-child {
+  border-bottom: 1px solid black !important;
+}
+
+/* line 69, app/assets/stylesheets/demobs.css.scss */
+#logs-table tbody tr:last-child {
+  border-bottom: 1px solid black !important;
+}
+
+/* line 74, app/assets/stylesheets/demobs.css.scss */
+#other-table tbody tr:last-child {
+  border-bottom: 1px solid black !important;
+}
+
+/* line 79, app/assets/stylesheets/demobs.css.scss */
+#demob-remarks {
+  height: 100px;
+  overflow: hidden;
+}
+
+/* line 83, app/assets/stylesheets/demobs.css.scss */
+#demob-transportation {
+  font-size: 0.7em;
+  padding-top: 5px;
+}
+
+/* line 86, app/assets/stylesheets/demobs.css.scss */
+#demob-transportation input {
+  font-weight: 777;
+}
+
+/* line 90, app/assets/stylesheets/demobs.css.scss */
+#transportation-header {
+  font-weight: 777;
+  margin-left: -15px;
+}
+
+/* line 94, app/assets/stylesheets/demobs.css.scss */
+#reassignment-header {
+  font-weight: 777;
+}
+
+/* line 98, app/assets/stylesheets/demobs.css.scss */
+#reassignment-info {
+  font-size: 0.7em;
+  overflow: hidden;
+}
+
+/* line 102, app/assets/stylesheets/demobs.css.scss */
+#prepared-by-row {
+  font-size: 0.7em;
+  overflow: hidden;
+  height: 50px;
+}
+
+/* line 107, app/assets/stylesheets/demobs.css.scss */
+#prepared-by-header {
+  font-weight: 777;
+  margin-left: -15px;
+  margin-right: 10px;
+}
+
+/* line 112, app/assets/stylesheets/demobs.css.scss */
+#remarks-content {
+  font-size: 0.9em;
+  overflow: hidden;
+}
+
+/* line 115, app/assets/stylesheets/demobs.css.scss */
+#remarks-content input {
+  width: 100%;
+  min-height: 60px;
+}
+
+/* line 120, app/assets/stylesheets/demobs.css.scss */
+#demob-form-button {
+  display: none;
+}
+
+@media print {
+  /* line 125, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout {
+    padding: 0 !important;
+  }
+  /* line 128, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout header,
+body.printing-demob-checkout footer,
+body.printing-demob-checkout #flash-messages,
+body.printing-demob-checkout .no-print {
+    display: none !important;
+  }
+  /* line 134, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout input, body.printing-demob-checkout textarea {
+    border: none !important;
+  }
+  /* line 138, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-sheet .container,
+body.printing-demob-checkout #demob-sheet .col-lg-8,
+body.printing-demob-checkout #demob-sheet .col-xs-12 {
+    max-width: 100% !important;
+    width: 100% !important;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* line 151, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .bb,
+body.printing-demob-checkout #demob-sheet .row,
+body.printing-demob-checkout #demob-sheet .col-xs-12,
+body.printing-demob-checkout #demob-sheet .col-xs-4,
+body.printing-demob-checkout #demob-sheet .col-xs-6 {
+    overflow: hidden !important;
+  }
+  /* line 161, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #form-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2px !important;
+    font-size: 9pt;
+  }
+  /* line 167, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #form-container div {
+    line-height: 1.1em !important;
+  }
+  /* line 172, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h1, body.printing-demob-checkout h2, body.printing-demob-checkout h3, body.printing-demob-checkout h4, body.printing-demob-checkout h5, body.printing-demob-checkout h6 {
+    margin: 2px 0 !important;
+  }
+  /* line 173, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h4 {
+    font-size: 11pt !important;
+  }
+  /* line 174, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h6 {
+    font-size: 8pt !important;
+  }
+  /* line 175, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout p {
+    font-size: 8pt !important;
+    line-height: 1.15em !important;
+    margin: 2px 0 !important;
+    padding: 0 !important;
+  }
+  /* line 178, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout span#release-date-highlight {
+    background-color: transparent !important;
+  }
+  /* line 181, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-transportation,
+body.printing-demob-checkout #reassignment-info,
+body.printing-demob-checkout #prepared-by-row {
+    font-size: 8pt !important;
+  }
+  /* line 184, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout span#reassignment-header {
+    margin-top: 0 !important;
+  }
+  /* line 187, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table td {
+    font-size: 7pt !important;
+    padding: 1px 3px !important;
+  }
+  /* line 188, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table th {
+    font-size: 8pt !important;
+    padding: 1px 3px !important;
+  }
+  /* line 189, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table {
+    margin-bottom: 2px !important;
+  }
+  /* line 192, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-remarks {
+    height: 150px !important;
+  }
+  /* line 193, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout input, body.printing-demob-checkout textarea {
+    padding: 0 !important;
+    line-height: 1.1em !important;
+  }
+  /* line 194, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout textarea {
+    min-height: 30px !important;
+    height: 50px !important;
+    border: none !important;
+  }
+  /* line 197, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .row {
+    margin: 0 !important;
+  }
+  /* line 198, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .row > [class*="col-"] {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+  }
+  /* line 201, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .small {
+    font-size: 7pt !important;
+  }
+  /* line 205, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout table tr {
+    page-break-inside: avoid;
+  }
+  /* line 206, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h4, body.printing-demob-checkout h6 {
+    page-break-after: avoid;
+  }
+  /* line 210, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout body {
+    background: #fff !important;
+  }
+}
+
+/* line 213, app/assets/stylesheets/demobs.css.scss */
+.strong {
+  font-weight: 777;
+}

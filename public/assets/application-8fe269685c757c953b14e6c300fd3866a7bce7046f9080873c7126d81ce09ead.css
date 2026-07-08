@@ -37,41 +37,46 @@ h1, .h1 {
 }
 
 /*$btn-primary-border:             $gray-lighter;*/
-/* line 100, app/assets/stylesheets/global.scss */
+/* line 99, app/assets/stylesheets/global.scss */
+.btn {
+  border: none !important;
+}
+
+/* line 103, app/assets/stylesheets/global.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
   background: #115599 !important;
   border-colorbackground: #115599 !important;
 }
 
-/* line 119, app/assets/stylesheets/global.scss */
+/* line 122, app/assets/stylesheets/global.scss */
 .field_with_errors input, .field_with_errors select {
   border: 1px solid #A94442;
 }
 
-/* line 125, app/assets/stylesheets/global.scss */
+/* line 128, app/assets/stylesheets/global.scss */
 label, dt {
   font-weight: 600 !important;
 }
 
-/* line 130, app/assets/stylesheets/global.scss */
+/* line 133, app/assets/stylesheets/global.scss */
 .required label {
   font-weight: bold;
 }
 
-/* line 134, app/assets/stylesheets/global.scss */
+/* line 137, app/assets/stylesheets/global.scss */
 .required label:after {
   color: #e32;
   content: ' *';
   display: inline;
 }
 
-/* line 142, app/assets/stylesheets/global.scss */
+/* line 145, app/assets/stylesheets/global.scss */
 .filter > .panel-heading, panel > .panel-heading {
   background-color: #eeeeee !important;
   font-weight: 500;
 }
 
-/* line 146, app/assets/stylesheets/global.scss */
+/* line 149, app/assets/stylesheets/global.scss */
 .filter > .panel-body, panel > .panel-body {
   background-color: #fafafa !important;
   font-size: 13px !important;
@@ -81,66 +86,66 @@ label, dt {
 /*$navbar-default-link-hover-bg:             $brand-light;*/
 /*$navbar-default-link-active-bg:            $brand-light;*/
 /*$navbar-default-link-disabled-bg:          $brand-light;*/
-/* line 166, app/assets/stylesheets/global.scss */
+/* line 169, app/assets/stylesheets/global.scss */
 .nav > li > a {
   font-weight: 500;
 }
 
-/* line 171, app/assets/stylesheets/global.scss */
+/* line 174, app/assets/stylesheets/global.scss */
 body {
   padding-top: 80px;
 }
 
-/* line 176, app/assets/stylesheets/global.scss */
+/* line 179, app/assets/stylesheets/global.scss */
 .navbar-brand {
   padding-top: 20px !important;
   font-size: 2em;
 }
 
-/* line 206, app/assets/stylesheets/global.scss */
+/* line 209, app/assets/stylesheets/global.scss */
 dt, dd {
   padding: 5px 0 5px 0;
 }
 
-/* line 212, app/assets/stylesheets/global.scss */
+/* line 215, app/assets/stylesheets/global.scss */
 .center-block {
   float: none !important;
 }
 
-/* line 215, app/assets/stylesheets/global.scss */
+/* line 218, app/assets/stylesheets/global.scss */
 .footer {
   margin-top: 10px;
 }
 
-/* line 222, app/assets/stylesheets/global.scss */
+/* line 225, app/assets/stylesheets/global.scss */
 .custom-index-table th:last-of-type {
   width: 120px;
 }
 
-/* line 225, app/assets/stylesheets/global.scss */
+/* line 228, app/assets/stylesheets/global.scss */
 .custom-index-table td:last-of-type {
   text-align: center;
 }
 
-/* line 227, app/assets/stylesheets/global.scss */
+/* line 230, app/assets/stylesheets/global.scss */
 .custom-index-table td:last-of-type a {
   text-decoration: none !important;
 }
 
-/* line 231, app/assets/stylesheets/global.scss */
+/* line 234, app/assets/stylesheets/global.scss */
 .custom-index-table th, .custom-index-table td {
   vertical-align: middle !important;
   padding: 10px !important;
 }
 
-/* line 235, app/assets/stylesheets/global.scss */
+/* line 238, app/assets/stylesheets/global.scss */
 .custom-index-table th {
   text-align: center;
   background-color: #eeeeee;
   font-weight: 500;
 }
 
-/* line 245, app/assets/stylesheets/global.scss */
+/* line 248, app/assets/stylesheets/global.scss */
 .table-curved, .custom-index-table {
   border-collapse: separate;
   border: solid #eeeeee 1px;
@@ -149,40 +154,40 @@ dt, dd {
   border-top: 0px;
 }
 
-/* line 252, app/assets/stylesheets/global.scss */
+/* line 255, app/assets/stylesheets/global.scss */
 .table-curved thead:first-child tr:first-child th, .custom-index-table thead:first-child tr:first-child th {
   border-bottom: 0px;
   border-top: solid #eeeeee 1px;
 }
 
-/* line 257, app/assets/stylesheets/global.scss */
+/* line 260, app/assets/stylesheets/global.scss */
 .table-curved td, .custom-index-table td, .table-curved th, .custom-index-table th {
   border-left: 1px solid #eeeeee;
   border-top: 1px solid #eeeeee;
 }
 
-/* line 263, app/assets/stylesheets/global.scss */
+/* line 266, app/assets/stylesheets/global.scss */
 .table-curved :first-child :first-child :first-child, .custom-index-table :first-child :first-child :first-child {
   border-top-left-radius: 6px;
 }
 
-/* line 266, app/assets/stylesheets/global.scss */
+/* line 269, app/assets/stylesheets/global.scss */
 .table-curved :first-child :first-child :last-child, .custom-index-table :first-child :first-child :last-child {
   border-top-right-radius: 6px;
 }
 
-/* line 272, app/assets/stylesheets/global.scss */
+/* line 275, app/assets/stylesheets/global.scss */
 .table-curved :last-child :last-child :first-child, .custom-index-table :last-child :last-child :first-child {
   border-bottom-left-radius: 6px;
 }
 
-/* line 275, app/assets/stylesheets/global.scss */
+/* line 278, app/assets/stylesheets/global.scss */
 .table-curved :last-child :last-child :last-child, .custom-index-table :last-child :last-child :last-child {
   border-bottom-right-radius: 6px;
 }
 
 /* Buttons*/
-/* line 281, app/assets/stylesheets/global.scss */
+/* line 284, app/assets/stylesheets/global.scss */
 .new-btn {
   height: 40px;
   width: 40px;
@@ -191,35 +196,35 @@ dt, dd {
   font-size: 2.5em;
 }
 
-/* line 288, app/assets/stylesheets/global.scss */
+/* line 291, app/assets/stylesheets/global.scss */
 .btn-wide {
   width: 100%;
 }
 
-/* line 291, app/assets/stylesheets/global.scss */
+/* line 294, app/assets/stylesheets/global.scss */
 .btn-default {
   background-color: #e6e6e6;
   border: 1px solid #e6e6e6;
 }
 
-/* line 296, app/assets/stylesheets/global.scss */
+/* line 299, app/assets/stylesheets/global.scss */
 .action-icon {
   font-size: 1.2em;
   margin: 2px;
   color: #002f5e !important;
 }
 
-/* line 300, app/assets/stylesheets/global.scss */
+/* line 303, app/assets/stylesheets/global.scss */
 .action-icon:hover, .action-icon:focus {
   color: #115599 !important;
 }
 
-/* line 305, app/assets/stylesheets/global.scss */
+/* line 308, app/assets/stylesheets/global.scss */
 a.btn-danger {
   color: white;
 }
 
-/* line 309, app/assets/stylesheets/global.scss */
+/* line 312, app/assets/stylesheets/global.scss */
 div.alert {
   margin-right: 2% !important;
   margin-left: 2% !important;
@@ -18308,15 +18313,29 @@ div.solid {
 }
 
 /* line 13, app/assets/stylesheets/boards.scss */
+.board-layout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* line 19, app/assets/stylesheets/boards.scss */
+.board-fixed {
+  flex: 0 0 260px;
+}
+
+/* line 23, app/assets/stylesheets/boards.scss */
 .board-columns {
   display: flex;
   gap: 12px;
   overflow-x: auto;
   padding-bottom: 12px;
   align-items: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-/* line 21, app/assets/stylesheets/boards.scss */
+/* line 33, app/assets/stylesheets/boards.scss */
 .board-column {
   flex: 0 0 260px;
   background: #f4f5f7;
@@ -18327,13 +18346,13 @@ div.solid {
   flex-direction: column;
 }
 
-/* line 31, app/assets/stylesheets/boards.scss */
+/* line 43, app/assets/stylesheets/boards.scss */
 .board-column-header {
   margin-bottom: 8px;
   padding: 0 4px;
 }
 
-/* line 36, app/assets/stylesheets/boards.scss */
+/* line 48, app/assets/stylesheets/boards.scss */
 .board-column-subtitle {
   font-size: 11px;
   color: #6b778c;
@@ -18341,7 +18360,7 @@ div.solid {
   letter-spacing: 0.4px;
 }
 
-/* line 43, app/assets/stylesheets/boards.scss */
+/* line 55, app/assets/stylesheets/boards.scss */
 .board-column-title-row {
   display: flex;
   align-items: center;
@@ -18349,7 +18368,7 @@ div.solid {
   gap: 4px;
 }
 
-/* line 50, app/assets/stylesheets/boards.scss */
+/* line 62, app/assets/stylesheets/boards.scss */
 .board-column-title {
   font-size: 14px;
   font-weight: 600;
@@ -18361,13 +18380,32 @@ div.solid {
   white-space: nowrap;
 }
 
-/* line 61, app/assets/stylesheets/boards.scss */
+/* line 73, app/assets/stylesheets/boards.scss */
+.board-column-personnel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #5e6c84;
+  white-space: nowrap;
+  margin-left: 6px;
+}
+
+/* line 80, app/assets/stylesheets/boards.scss */
+.board-column-personnel .fa {
+  margin-right: 3px;
+}
+
+/* line 84, app/assets/stylesheets/boards.scss */
+.board-column-personnel.is-empty {
+  display: none;
+}
+
+/* line 89, app/assets/stylesheets/boards.scss */
 .board-column-delete-form {
   display: inline-block;
   margin: 0;
 }
 
-/* line 66, app/assets/stylesheets/boards.scss */
+/* line 94, app/assets/stylesheets/boards.scss */
 .board-column-delete {
   background: none;
   border: none;
@@ -18379,13 +18417,13 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 76, app/assets/stylesheets/boards.scss */
+/* line 104, app/assets/stylesheets/boards.scss */
 .board-column-delete:hover {
   background: #ebecf0;
   color: #c62828;
 }
 
-/* line 82, app/assets/stylesheets/boards.scss */
+/* line 110, app/assets/stylesheets/boards.scss */
 .board-cards {
   list-style: none;
   margin: 0;
@@ -18395,7 +18433,7 @@ div.solid {
   flex: 1;
 }
 
-/* line 91, app/assets/stylesheets/boards.scss */
+/* line 119, app/assets/stylesheets/boards.scss */
 .board-card {
   background: #fff;
   border-radius: 4px;
@@ -18406,12 +18444,12 @@ div.solid {
   overflow: hidden;
 }
 
-/* line 100, app/assets/stylesheets/boards.scss */
+/* line 128, app/assets/stylesheets/boards.scss */
 .board-card:hover {
   background: #fafbfc;
 }
 
-/* line 105, app/assets/stylesheets/boards.scss */
+/* line 133, app/assets/stylesheets/boards.scss */
 .board-card-strip {
   display: flex;
   align-items: center;
@@ -18424,7 +18462,7 @@ div.solid {
   text-transform: uppercase;
 }
 
-/* line 117, app/assets/stylesheets/boards.scss */
+/* line 145, app/assets/stylesheets/boards.scss */
 .board-card-icon {
   display: inline-flex;
   align-items: center;
@@ -18432,45 +18470,84 @@ div.solid {
   line-height: 1;
 }
 
-/* line 123, app/assets/stylesheets/boards.scss */
+/* line 151, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg {
   width: 18px;
   height: 14px;
   fill: currentColor;
 }
 
-/* line 130, app/assets/stylesheets/boards.scss */
+/* line 158, app/assets/stylesheets/boards.scss */
 .board-card-agency {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* line 136, app/assets/stylesheets/boards.scss */
+/* line 164, app/assets/stylesheets/boards.scss */
 .board-card-body {
-  padding: 8px 10px;
+  padding: 8px 10px 22px;
+  position: relative;
 }
 
-/* line 140, app/assets/stylesheets/boards.scss */
+/* line 169, app/assets/stylesheets/boards.scss */
+.board-card-lwd {
+  position: absolute;
+  right: 8px;
+  bottom: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* line 179, app/assets/stylesheets/boards.scss */
+.board-card-lwd .fa {
+  margin-right: 2px;
+  font-size: 10px;
+}
+
+/* line 184, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-future {
+  color: #c9a227;
+}
+
+/* line 185, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-soon {
+  color: #e65100;
+}
+
+/* line 186, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-today {
+  color: #c62828;
+}
+
+/* line 187, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-past {
+  color: #000;
+}
+
+/* line 190, app/assets/stylesheets/boards.scss */
 .board-card-order {
   font-size: 11px;
   color: #6b778c;
   font-weight: 600;
 }
 
-/* line 146, app/assets/stylesheets/boards.scss */
+/* line 196, app/assets/stylesheets/boards.scss */
 .board-card-name {
   font-weight: 600;
   color: #172b4d;
 }
 
-/* line 151, app/assets/stylesheets/boards.scss */
+/* line 201, app/assets/stylesheets/boards.scss */
 .board-card-position {
   font-size: 12px;
   color: #5e6c84;
 }
 
-/* line 156, app/assets/stylesheets/boards.scss */
+/* line 206, app/assets/stylesheets/boards.scss */
 .board-card-details {
   background: #fafbfc;
   border-top: 1px solid #ebecf0;
@@ -18479,7 +18556,7 @@ div.solid {
   cursor: default;
 }
 
-/* line 164, app/assets/stylesheets/boards.scss */
+/* line 214, app/assets/stylesheets/boards.scss */
 .board-card-details-header {
   display: flex;
   align-items: center;
@@ -18487,7 +18564,7 @@ div.solid {
   margin-bottom: 6px;
 }
 
-/* line 171, app/assets/stylesheets/boards.scss */
+/* line 221, app/assets/stylesheets/boards.scss */
 .board-card-details-title {
   font-weight: 600;
   color: #172b4d;
@@ -18496,7 +18573,7 @@ div.solid {
   font-size: 11px;
 }
 
-/* line 179, app/assets/stylesheets/boards.scss */
+/* line 229, app/assets/stylesheets/boards.scss */
 .board-card-details-close {
   background: none;
   border: none;
@@ -18507,12 +18584,12 @@ div.solid {
   padding: 0 4px;
 }
 
-/* line 188, app/assets/stylesheets/boards.scss */
+/* line 238, app/assets/stylesheets/boards.scss */
 .board-card-details-close:hover {
   color: #172b4d;
 }
 
-/* line 193, app/assets/stylesheets/boards.scss */
+/* line 243, app/assets/stylesheets/boards.scss */
 .board-card-fields {
   display: grid;
   grid-template-columns: 80px 1fr;
@@ -18521,7 +18598,7 @@ div.solid {
   margin: 0;
 }
 
-/* line 200, app/assets/stylesheets/boards.scss */
+/* line 250, app/assets/stylesheets/boards.scss */
 .board-card-fields dt {
   color: #6b778c;
   font-weight: 500;
@@ -18531,19 +18608,19 @@ div.solid {
   align-self: center;
 }
 
-/* line 209, app/assets/stylesheets/boards.scss */
+/* line 259, app/assets/stylesheets/boards.scss */
 .board-card-fields dd {
   margin: 0;
   color: #172b4d;
   word-break: break-word;
 }
 
-/* line 215, app/assets/stylesheets/boards.scss */
+/* line 265, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.full-width {
   grid-column: 1 / -1;
 }
 
-/* line 219, app/assets/stylesheets/boards.scss */
+/* line 269, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place {
   display: inline-block;
   min-width: 60px;
@@ -18551,14 +18628,14 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 225, app/assets/stylesheets/boards.scss */
+/* line 275, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place:hover {
   background: #fff;
   box-shadow: inset 0 0 0 1px #dfe1e6;
   cursor: text;
 }
 
-/* line 233, app/assets/stylesheets/boards.scss */
+/* line 283, app/assets/stylesheets/boards.scss */
 .board-card-placeholder {
   background: #dfe1e6;
   border: 2px dashed #c1c7d0;
@@ -18567,12 +18644,12 @@ div.solid {
   height: 56px;
 }
 
-/* line 241, app/assets/stylesheets/boards.scss */
+/* line 291, app/assets/stylesheets/boards.scss */
 .board-add-child {
   margin-top: 8px;
 }
 
-/* line 245, app/assets/stylesheets/boards.scss */
+/* line 295, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle {
   background: none;
   border: 1px dashed #c1c7d0;
@@ -18584,13 +18661,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 255, app/assets/stylesheets/boards.scss */
+/* line 305, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle:hover {
   background: #ebecf0;
   color: #172b4d;
 }
 
-/* line 261, app/assets/stylesheets/boards.scss */
+/* line 311, app/assets/stylesheets/boards.scss */
 .board-add-child-form {
   background: #fff;
   border-radius: 4px;
@@ -18599,17 +18676,17 @@ div.solid {
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
 }
 
-/* line 268, app/assets/stylesheets/boards.scss */
+/* line 318, app/assets/stylesheets/boards.scss */
 .board-add-child-form .form-group {
   margin-bottom: 6px;
 }
 
-/* line 272, app/assets/stylesheets/boards.scss */
+/* line 322, app/assets/stylesheets/boards.scss */
 .board-add-child-form .input-sm {
   font-size: 12px;
 }
 
-/* line 277, app/assets/stylesheets/boards.scss */
+/* line 327, app/assets/stylesheets/boards.scss */
 .board-add-child-actions {
   display: flex;
   gap: 6px;
@@ -19545,6 +19622,203 @@ input.new-commo-item {
 .split-block-wrapper .resizers {
   transition: transform 0.3s ease;
 }
+/* line 1, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page {
+  max-width: 1400px;
+  margin: 24px auto;
+  padding: 0 16px;
+  color: #000;
+  font-size: 14px;
+}
+
+/* line 8, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-header {
+  margin: 8px 0 16px;
+}
+
+/* line 11, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-header h2 {
+  margin: 0 0 4px;
+}
+
+/* line 12, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-header p {
+  margin: 0;
+  color: #6b778c;
+  font-size: 13px;
+}
+
+/* line 15, app/assets/stylesheets/demob_notifications.scss */
+.demob-notifications-page .dn-actions {
+  margin-top: 10px;
+}
+
+/* line 18, app/assets/stylesheets/demob_notifications.scss */
+.print-only {
+  display: none;
+}
+
+/* line 20, app/assets/stylesheets/demob_notifications.scss */
+.dn-print-title {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* line 26, app/assets/stylesheets/demob_notifications.scss */
+.dn-print-title .dn-print-date {
+  font-weight: 400;
+  color: #333;
+  margin-left: 8px;
+}
+
+/* line 33, app/assets/stylesheets/demob_notifications.scss */
+.demob-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 24px;
+}
+
+/* line 40, app/assets/stylesheets/demob_notifications.scss */
+.demob-table th, .demob-table td {
+  border: 2px solid #000;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* line 47, app/assets/stylesheets/demob_notifications.scss */
+.demob-table thead th {
+  text-align: center;
+  font-weight: 700;
+  vertical-align: middle;
+  background: #f5f5f5;
+}
+
+/* line 54, app/assets/stylesheets/demob_notifications.scss */
+.demob-table tbody tr.dn-remarks-row td {
+  border-top: 0;
+}
+
+/* line 55, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-remarks {
+  font-weight: 400;
+}
+
+/* line 57, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .best_in_place {
+  display: inline-block;
+  min-width: 40px;
+  min-height: 18px;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* line 64, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 67, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .ron-cell {
+  text-align: center;
+}
+
+/* line 69, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-row-actions {
+  white-space: nowrap;
+}
+
+/* line 72, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-row-actions form {
+  display: inline-block;
+  margin: 0 2px;
+}
+
+/* line 75, app/assets/stylesheets/demob_notifications.scss */
+.demob-table .dn-delete {
+  color: #b71c1c;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+/* line 82, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block {
+  margin-top: 32px;
+}
+
+/* line 85, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* line 87, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* line 92, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table th, .dn-transmitted-block .dn-transmitted-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #e6e8ec;
+  text-align: left;
+}
+
+/* line 98, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table thead th {
+  background: #f7f8fa;
+  font-weight: 600;
+  color: #5e6c84;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+/* line 106, app/assets/stylesheets/demob_notifications.scss */
+.dn-transmitted-block .dn-transmitted-table form {
+  display: inline;
+  margin: 0;
+}
+
+@media print {
+  /* line 112, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs header,
+body.printing-demob-notifs footer,
+body.printing-demob-notifs #flash-messages,
+body.printing-demob-notifs .no-print {
+    display: none !important;
+  }
+  /* line 119, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .print-only {
+    display: block !important;
+  }
+  /* line 121, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-notifications-page {
+    margin: 0;
+    padding: 0;
+  }
+  /* line 126, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-table {
+    page-break-inside: auto;
+  }
+  /* line 129, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  /* line 130, app/assets/stylesheets/demob_notifications.scss */
+  body.printing-demob-notifs .demob-table thead {
+    display: table-header-group;
+  }
+}
 /* line 2, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet #form-container {
   margin: 0px;
@@ -19552,7 +19826,6 @@ input.new-commo-item {
   border: 1px solid black;
   position: relative;
   overflow: hidden;
-  height: 1070px !important;
   width: 740px;
 }
 
@@ -19561,30 +19834,37 @@ input.new-commo-item {
   line-height: 1.7em;
 }
 
-/* line 13, app/assets/stylesheets/demobs.css.scss */
-#demob-sheet #form-container input, #demob-sheet #form-container textarea {
-  border: none;
+/* line 14, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container input {
+  border-color: lightgray !important;
+  height: 1.5em;
 }
 
-/* line 17, app/assets/stylesheets/demobs.css.scss */
+/* line 18, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container textarea {
+  border-color: lightgray !important;
+  width: 100%;
+}
+
+/* line 23, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet .small {
   font-weight: 777;
 }
 
-/* line 20, app/assets/stylesheets/demobs.css.scss */
+/* line 26, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet p {
   font-size: .80em;
   padding: 0 10px;
   line-height: 1.7em;
 }
 
-/* line 25, app/assets/stylesheets/demobs.css.scss */
+/* line 31, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet h1, #demob-sheet h2, #demob-sheet h3, #demob-sheet h4, #demob-sheet h5, #demob-sheet h6 {
   font-weight: 777;
   color: #444;
 }
 
-/* line 29, app/assets/stylesheets/demobs.css.scss */
+/* line 35, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet .units-container {
   /*border-bottom: 1px solid black;*/
   margin-left: 20px;
@@ -19593,115 +19873,251 @@ input.new-commo-item {
   overflow: hidden;
 }
 
-/* line 37, app/assets/stylesheets/demobs.css.scss */
+/* line 43, app/assets/stylesheets/demobs.css.scss */
 .custom-table {
   margin-bottom: 0;
 }
 
-/* line 39, app/assets/stylesheets/demobs.css.scss */
+/* line 45, app/assets/stylesheets/demobs.css.scss */
 .custom-table th {
   font-size: 0.9em;
   font-weight: 777;
   padding-top: 0;
 }
 
-/* line 44, app/assets/stylesheets/demobs.css.scss */
+/* line 50, app/assets/stylesheets/demobs.css.scss */
 .custom-table thead {
   border-bottom: 1px solid black;
 }
 
-/* line 47, app/assets/stylesheets/demobs.css.scss */
+/* line 53, app/assets/stylesheets/demobs.css.scss */
 .custom-table td {
   padding: 4px 0 0 3px !important;
   font-size: 0.7em;
   border-top: 1px solid black !important;
 }
 
-/* line 52, app/assets/stylesheets/demobs.css.scss */
+/* line 58, app/assets/stylesheets/demobs.css.scss */
 .custom-table .head-row {
   padding-top: 0 !important;
   border-bottom: 1px solid black !important;
 }
 
-/* line 58, app/assets/stylesheets/demobs.css.scss */
+/* line 64, app/assets/stylesheets/demobs.css.scss */
 #finance-table tbody tr:last-child {
   border-bottom: 1px solid black !important;
 }
 
-/* line 63, app/assets/stylesheets/demobs.css.scss */
+/* line 69, app/assets/stylesheets/demobs.css.scss */
 #logs-table tbody tr:last-child {
   border-bottom: 1px solid black !important;
 }
 
-/* line 68, app/assets/stylesheets/demobs.css.scss */
+/* line 74, app/assets/stylesheets/demobs.css.scss */
 #other-table tbody tr:last-child {
   border-bottom: 1px solid black !important;
 }
 
-/* line 72, app/assets/stylesheets/demobs.css.scss */
+/* line 79, app/assets/stylesheets/demobs.css.scss */
 #demob-remarks {
   height: 100px;
   overflow: hidden;
 }
 
-/* line 76, app/assets/stylesheets/demobs.css.scss */
+/* line 83, app/assets/stylesheets/demobs.css.scss */
 #demob-transportation {
   font-size: 0.7em;
+  padding-top: 5px;
 }
 
-/* line 78, app/assets/stylesheets/demobs.css.scss */
+/* line 86, app/assets/stylesheets/demobs.css.scss */
 #demob-transportation input {
   font-weight: 777;
 }
 
-/* line 82, app/assets/stylesheets/demobs.css.scss */
+/* line 90, app/assets/stylesheets/demobs.css.scss */
 #transportation-header {
   font-weight: 777;
   margin-left: -15px;
 }
 
-/* line 86, app/assets/stylesheets/demobs.css.scss */
+/* line 94, app/assets/stylesheets/demobs.css.scss */
 #reassignment-header {
   font-weight: 777;
 }
 
-/* line 90, app/assets/stylesheets/demobs.css.scss */
+/* line 98, app/assets/stylesheets/demobs.css.scss */
 #reassignment-info {
   font-size: 0.7em;
   overflow: hidden;
 }
 
-/* line 94, app/assets/stylesheets/demobs.css.scss */
+/* line 102, app/assets/stylesheets/demobs.css.scss */
 #prepared-by-row {
   font-size: 0.7em;
   overflow: hidden;
+  height: 50px;
 }
 
-/* line 98, app/assets/stylesheets/demobs.css.scss */
+/* line 107, app/assets/stylesheets/demobs.css.scss */
 #prepared-by-header {
   font-weight: 777;
   margin-left: -15px;
   margin-right: 10px;
 }
 
-/* line 103, app/assets/stylesheets/demobs.css.scss */
+/* line 112, app/assets/stylesheets/demobs.css.scss */
 #remarks-content {
   font-size: 0.9em;
   overflow: hidden;
 }
 
-/* line 106, app/assets/stylesheets/demobs.css.scss */
+/* line 115, app/assets/stylesheets/demobs.css.scss */
 #remarks-content input {
   width: 100%;
   min-height: 60px;
 }
 
-/* line 111, app/assets/stylesheets/demobs.css.scss */
+/* line 120, app/assets/stylesheets/demobs.css.scss */
 #demob-form-button {
   display: none;
 }
 
-/* line 114, app/assets/stylesheets/demobs.css.scss */
+@media print {
+  /* line 125, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout {
+    padding: 0 !important;
+  }
+  /* line 128, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout header,
+body.printing-demob-checkout footer,
+body.printing-demob-checkout #flash-messages,
+body.printing-demob-checkout .no-print {
+    display: none !important;
+  }
+  /* line 134, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout input, body.printing-demob-checkout textarea {
+    border: none !important;
+  }
+  /* line 138, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-sheet .container,
+body.printing-demob-checkout #demob-sheet .col-lg-8,
+body.printing-demob-checkout #demob-sheet .col-xs-12 {
+    max-width: 100% !important;
+    width: 100% !important;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* line 151, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .bb,
+body.printing-demob-checkout #demob-sheet .row,
+body.printing-demob-checkout #demob-sheet .col-xs-12,
+body.printing-demob-checkout #demob-sheet .col-xs-4,
+body.printing-demob-checkout #demob-sheet .col-xs-6 {
+    overflow: hidden !important;
+  }
+  /* line 161, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #form-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2px !important;
+    font-size: 9pt;
+  }
+  /* line 167, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #form-container div {
+    line-height: 1.1em !important;
+  }
+  /* line 172, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h1, body.printing-demob-checkout h2, body.printing-demob-checkout h3, body.printing-demob-checkout h4, body.printing-demob-checkout h5, body.printing-demob-checkout h6 {
+    margin: 2px 0 !important;
+  }
+  /* line 173, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h4 {
+    font-size: 11pt !important;
+  }
+  /* line 174, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h6 {
+    font-size: 8pt !important;
+  }
+  /* line 175, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout p {
+    font-size: 8pt !important;
+    line-height: 1.15em !important;
+    margin: 2px 0 !important;
+    padding: 0 !important;
+  }
+  /* line 178, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout span#release-date-highlight {
+    background-color: transparent !important;
+  }
+  /* line 181, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-transportation,
+body.printing-demob-checkout #reassignment-info,
+body.printing-demob-checkout #prepared-by-row {
+    font-size: 8pt !important;
+  }
+  /* line 184, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout span#reassignment-header {
+    margin-top: 0 !important;
+  }
+  /* line 187, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table td {
+    font-size: 7pt !important;
+    padding: 1px 3px !important;
+  }
+  /* line 188, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table th {
+    font-size: 8pt !important;
+    padding: 1px 3px !important;
+  }
+  /* line 189, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table {
+    margin-bottom: 2px !important;
+  }
+  /* line 192, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-remarks {
+    height: 150px !important;
+  }
+  /* line 193, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout input, body.printing-demob-checkout textarea {
+    padding: 0 !important;
+    line-height: 1.1em !important;
+  }
+  /* line 194, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout textarea {
+    min-height: 30px !important;
+    height: 50px !important;
+    border: none !important;
+  }
+  /* line 197, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .row {
+    margin: 0 !important;
+  }
+  /* line 198, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .row > [class*="col-"] {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+  }
+  /* line 201, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .small {
+    font-size: 7pt !important;
+  }
+  /* line 205, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout table tr {
+    page-break-inside: avoid;
+  }
+  /* line 206, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h4, body.printing-demob-checkout h6 {
+    page-break-after: avoid;
+  }
+  /* line 210, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout body {
+    background: #fff !important;
+  }
+}
+
+/* line 213, app/assets/stylesheets/demobs.css.scss */
 .strong {
   font-weight: 777;
 }
@@ -19733,41 +20149,46 @@ h1, .h1 {
 }
 
 /*$btn-primary-border:             $gray-lighter;*/
-/* line 100, app/assets/stylesheets/global.scss */
+/* line 99, app/assets/stylesheets/global.scss */
+.btn {
+  border: none !important;
+}
+
+/* line 103, app/assets/stylesheets/global.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
   background: #115599 !important;
   border-colorbackground: #115599 !important;
 }
 
-/* line 119, app/assets/stylesheets/global.scss */
+/* line 122, app/assets/stylesheets/global.scss */
 .field_with_errors input, .field_with_errors select {
   border: 1px solid #A94442;
 }
 
-/* line 125, app/assets/stylesheets/global.scss */
+/* line 128, app/assets/stylesheets/global.scss */
 label, dt {
   font-weight: 600 !important;
 }
 
-/* line 130, app/assets/stylesheets/global.scss */
+/* line 133, app/assets/stylesheets/global.scss */
 .required label {
   font-weight: bold;
 }
 
-/* line 134, app/assets/stylesheets/global.scss */
+/* line 137, app/assets/stylesheets/global.scss */
 .required label:after {
   color: #e32;
   content: ' *';
   display: inline;
 }
 
-/* line 142, app/assets/stylesheets/global.scss */
+/* line 145, app/assets/stylesheets/global.scss */
 .filter > .panel-heading, panel > .panel-heading {
   background-color: #eeeeee !important;
   font-weight: 500;
 }
 
-/* line 146, app/assets/stylesheets/global.scss */
+/* line 149, app/assets/stylesheets/global.scss */
 .filter > .panel-body, panel > .panel-body {
   background-color: #fafafa !important;
   font-size: 13px !important;
@@ -19777,66 +20198,66 @@ label, dt {
 /*$navbar-default-link-hover-bg:             $brand-light;*/
 /*$navbar-default-link-active-bg:            $brand-light;*/
 /*$navbar-default-link-disabled-bg:          $brand-light;*/
-/* line 166, app/assets/stylesheets/global.scss */
+/* line 169, app/assets/stylesheets/global.scss */
 .nav > li > a {
   font-weight: 500;
 }
 
-/* line 171, app/assets/stylesheets/global.scss */
+/* line 174, app/assets/stylesheets/global.scss */
 body {
   padding-top: 80px;
 }
 
-/* line 176, app/assets/stylesheets/global.scss */
+/* line 179, app/assets/stylesheets/global.scss */
 .navbar-brand {
   padding-top: 20px !important;
   font-size: 2em;
 }
 
-/* line 206, app/assets/stylesheets/global.scss */
+/* line 209, app/assets/stylesheets/global.scss */
 dt, dd {
   padding: 5px 0 5px 0;
 }
 
-/* line 212, app/assets/stylesheets/global.scss */
+/* line 215, app/assets/stylesheets/global.scss */
 .center-block {
   float: none !important;
 }
 
-/* line 215, app/assets/stylesheets/global.scss */
+/* line 218, app/assets/stylesheets/global.scss */
 .footer {
   margin-top: 10px;
 }
 
-/* line 222, app/assets/stylesheets/global.scss */
+/* line 225, app/assets/stylesheets/global.scss */
 .custom-index-table th:last-of-type {
   width: 120px;
 }
 
-/* line 225, app/assets/stylesheets/global.scss */
+/* line 228, app/assets/stylesheets/global.scss */
 .custom-index-table td:last-of-type {
   text-align: center;
 }
 
-/* line 227, app/assets/stylesheets/global.scss */
+/* line 230, app/assets/stylesheets/global.scss */
 .custom-index-table td:last-of-type a {
   text-decoration: none !important;
 }
 
-/* line 231, app/assets/stylesheets/global.scss */
+/* line 234, app/assets/stylesheets/global.scss */
 .custom-index-table th, .custom-index-table td {
   vertical-align: middle !important;
   padding: 10px !important;
 }
 
-/* line 235, app/assets/stylesheets/global.scss */
+/* line 238, app/assets/stylesheets/global.scss */
 .custom-index-table th {
   text-align: center;
   background-color: #eeeeee;
   font-weight: 500;
 }
 
-/* line 245, app/assets/stylesheets/global.scss */
+/* line 248, app/assets/stylesheets/global.scss */
 .table-curved, .custom-index-table {
   border-collapse: separate;
   border: solid #eeeeee 1px;
@@ -19845,40 +20266,40 @@ dt, dd {
   border-top: 0px;
 }
 
-/* line 252, app/assets/stylesheets/global.scss */
+/* line 255, app/assets/stylesheets/global.scss */
 .table-curved thead:first-child tr:first-child th, .custom-index-table thead:first-child tr:first-child th {
   border-bottom: 0px;
   border-top: solid #eeeeee 1px;
 }
 
-/* line 257, app/assets/stylesheets/global.scss */
+/* line 260, app/assets/stylesheets/global.scss */
 .table-curved td, .custom-index-table td, .table-curved th, .custom-index-table th {
   border-left: 1px solid #eeeeee;
   border-top: 1px solid #eeeeee;
 }
 
-/* line 263, app/assets/stylesheets/global.scss */
+/* line 266, app/assets/stylesheets/global.scss */
 .table-curved :first-child :first-child :first-child, .custom-index-table :first-child :first-child :first-child {
   border-top-left-radius: 6px;
 }
 
-/* line 266, app/assets/stylesheets/global.scss */
+/* line 269, app/assets/stylesheets/global.scss */
 .table-curved :first-child :first-child :last-child, .custom-index-table :first-child :first-child :last-child {
   border-top-right-radius: 6px;
 }
 
-/* line 272, app/assets/stylesheets/global.scss */
+/* line 275, app/assets/stylesheets/global.scss */
 .table-curved :last-child :last-child :first-child, .custom-index-table :last-child :last-child :first-child {
   border-bottom-left-radius: 6px;
 }
 
-/* line 275, app/assets/stylesheets/global.scss */
+/* line 278, app/assets/stylesheets/global.scss */
 .table-curved :last-child :last-child :last-child, .custom-index-table :last-child :last-child :last-child {
   border-bottom-right-radius: 6px;
 }
 
 /* Buttons*/
-/* line 281, app/assets/stylesheets/global.scss */
+/* line 284, app/assets/stylesheets/global.scss */
 .new-btn {
   height: 40px;
   width: 40px;
@@ -19887,35 +20308,35 @@ dt, dd {
   font-size: 2.5em;
 }
 
-/* line 288, app/assets/stylesheets/global.scss */
+/* line 291, app/assets/stylesheets/global.scss */
 .btn-wide {
   width: 100%;
 }
 
-/* line 291, app/assets/stylesheets/global.scss */
+/* line 294, app/assets/stylesheets/global.scss */
 .btn-default {
   background-color: #e6e6e6;
   border: 1px solid #e6e6e6;
 }
 
-/* line 296, app/assets/stylesheets/global.scss */
+/* line 299, app/assets/stylesheets/global.scss */
 .action-icon {
   font-size: 1.2em;
   margin: 2px;
   color: #002f5e !important;
 }
 
-/* line 300, app/assets/stylesheets/global.scss */
+/* line 303, app/assets/stylesheets/global.scss */
 .action-icon:hover, .action-icon:focus {
   color: #115599 !important;
 }
 
-/* line 305, app/assets/stylesheets/global.scss */
+/* line 308, app/assets/stylesheets/global.scss */
 a.btn-danger {
   color: white;
 }
 
-/* line 309, app/assets/stylesheets/global.scss */
+/* line 312, app/assets/stylesheets/global.scss */
 div.alert {
   margin-right: 2% !important;
   margin-left: 2% !important;
@@ -20053,7 +20474,191 @@ select {
   /*padding-bottom: 20px;*/
 }
 
-/* line 113, app/assets/stylesheets/incidents.scss */
+/* line 115, app/assets/stylesheets/incidents.scss */
+.resources-summary-panel .resources-panel-manage {
+  color: #444;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+/* line 120, app/assets/stylesheets/incidents.scss */
+.resources-summary-panel .resources-panel-manage:hover {
+  color: #0052cc;
+  text-decoration: none;
+}
+
+/* line 121, app/assets/stylesheets/incidents.scss */
+.resources-summary-panel .resources-panel-manage .fa {
+  margin-left: 4px;
+  font-size: 11px;
+}
+
+/* line 125, app/assets/stylesheets/incidents.scss */
+.resources-summary-body {
+  padding: 16px 20px;
+  color: #172b4d;
+}
+
+/* line 130, app/assets/stylesheets/incidents.scss */
+.resources-summary-headline {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+/* line 139, app/assets/stylesheets/incidents.scss */
+.rs-hero {
+  min-width: 140px;
+}
+
+/* line 142, app/assets/stylesheets/incidents.scss */
+.rs-hero .rs-hero-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #172b4d;
+  line-height: 1;
+}
+
+/* line 149, app/assets/stylesheets/incidents.scss */
+.rs-hero .rs-hero-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b778c;
+  margin-top: 4px;
+}
+
+/* line 159, app/assets/stylesheets/incidents.scss */
+.rs-hero-muted .rs-hero-number {
+  color: #6b778c;
+}
+
+/* line 161, app/assets/stylesheets/incidents.scss */
+.resources-summary-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* line 168, app/assets/stylesheets/incidents.scss */
+.rs-cat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f7f8fa;
+  border-radius: 6px;
+}
+
+/* line 176, app/assets/stylesheets/incidents.scss */
+.rs-cat.rs-cat-empty {
+  opacity: 0.55;
+}
+
+/* line 178, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border-radius: 50%;
+  color: #5e6c84;
+  font-size: 16px;
+  flex: 0 0 auto;
+}
+
+/* line 191, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #5e6c84;
+}
+
+/* line 199, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-counts {
+  font-size: 13px;
+  color: #172b4d;
+  margin-top: 2px;
+}
+
+/* line 205, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-primary,
+.rs-cat .rs-cat-personnel {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* line 213, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs h5 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #5e6c84;
+  margin: 0 0 8px;
+}
+
+/* line 222, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .muted {
+  color: #6b778c;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+/* line 231, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 236, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-list li {
+  display: flex;
+  gap: 10px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #eef0f3;
+  font-size: 13px;
+}
+
+/* line 243, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-list li:last-child {
+  border-bottom: none;
+}
+
+/* line 247, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-num {
+  font-weight: 700;
+  min-width: 50px;
+}
+
+/* line 248, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-name {
+  flex: 1;
+  color: #42526e;
+}
+
+/* line 249, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-lwd {
+  color: #c62828;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* line 251, app/assets/stylesheets/incidents.scss */
 .panel-foot {
   margin-top: 10px;
   background-color: #f5f5f5;
@@ -20063,74 +20668,80 @@ select {
   border-top: 1px solid #D7d7d7;
 }
 
-/* line 122, app/assets/stylesheets/incidents.scss */
+/* line 260, app/assets/stylesheets/incidents.scss */
 .incidents-panel h4 {
   color: #3d3d3d;
 }
 
-/* line 125, app/assets/stylesheets/incidents.scss */
+/* line 263, app/assets/stylesheets/incidents.scss */
 .incidents-panel a {
   color: #3d3d3d;
 }
 
-/* line 130, app/assets/stylesheets/incidents.scss */
+/* line 268, app/assets/stylesheets/incidents.scss */
 .incident-index-content {
   display: none;
 }
 
-/* line 135, app/assets/stylesheets/incidents.scss */
+/* line 273, app/assets/stylesheets/incidents.scss */
 .sm-bip-input input {
-  width: 30px;
+  min-width: 30px;
+  width: auto;
+  field-sizing: content;
 }
 
-/* line 141, app/assets/stylesheets/incidents.scss */
+/* line 281, app/assets/stylesheets/incidents.scss */
 .md-bip-input input {
-  width: 60px;
+  min-width: 60px;
+  width: auto;
+  field-sizing: content;
 }
 
-/* line 147, app/assets/stylesheets/incidents.scss */
+/* line 289, app/assets/stylesheets/incidents.scss */
 .lg-bip-input input {
-  width: 120px;
+  min-width: 120px;
+  width: auto;
+  field-sizing: content;
 }
 
-/* line 151, app/assets/stylesheets/incidents.scss */
+/* line 295, app/assets/stylesheets/incidents.scss */
 #share-incident-button {
   position: absolute;
   right: 30px;
   top: 14px;
 }
 
-/* line 158, app/assets/stylesheets/incidents.scss */
+/* line 302, app/assets/stylesheets/incidents.scss */
 .incident-name a {
   color: #3d3d3d !important;
 }
 
-/* line 161, app/assets/stylesheets/incidents.scss */
+/* line 305, app/assets/stylesheets/incidents.scss */
 .incident-name h1 {
   font-weight: 777;
   margin-bottom: 20px;
 }
 
-/* line 166, app/assets/stylesheets/incidents.scss */
+/* line 310, app/assets/stylesheets/incidents.scss */
 #invite-user-panel {
   display: none;
 }
 
-/* line 169, app/assets/stylesheets/incidents.scss */
+/* line 313, app/assets/stylesheets/incidents.scss */
 #invite-container {
   position: relative;
   overflow: hidden;
   padding: 20px;
 }
 
-/* line 174, app/assets/stylesheets/incidents.scss */
+/* line 318, app/assets/stylesheets/incidents.scss */
 #invite-button {
   position: absolute;
   right: 15px;
   margin-top: -35px;
 }
 
-/* line 180, app/assets/stylesheets/incidents.scss */
+/* line 324, app/assets/stylesheets/incidents.scss */
 .remove-user img {
   height: 11px;
   width: 11px;
@@ -23331,13 +23942,404 @@ img#add-freqs-button {
 .ui-group .next-btn {
   max-width: 60px;
 }
+/* line 3, app/assets/stylesheets/requests.scss */
+.requests-index {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 20px;
+  color: #2c2c2c;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* line 11, app/assets/stylesheets/requests.scss */
+.requests-index h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+/* line 18, app/assets/stylesheets/requests.scss */
+.requests-index h3 {
+  margin: 24px 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #e6e8ec;
+}
+
+/* line 29, app/assets/stylesheets/requests.scss */
+.requests-index .muted {
+  color: #6b778c;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+/* line 37, app/assets/stylesheets/requests.scss */
+.requests-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+/* line 46, app/assets/stylesheets/requests.scss */
+.requests-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* line 51, app/assets/stylesheets/requests.scss */
+.requests-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+
+/* line 58, app/assets/stylesheets/requests.scss */
+.requests-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 16px;
+}
+
+/* line 64, app/assets/stylesheets/requests.scss */
+.requests-search input[type="search"] {
+  flex: 1 1 auto;
+  max-width: 420px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+/* line 71, app/assets/stylesheets/requests.scss */
+.requests-search .btn-link {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* line 76, app/assets/stylesheets/requests.scss */
+.requests-search .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 82, app/assets/stylesheets/requests.scss */
+.catalog-section.is-empty {
+  display: none;
+}
+
+/* line 86, app/assets/stylesheets/requests.scss */
+.catalog-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #f4f5f7;
+  border: 1px solid #e6e8ec;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #172b4d;
+}
+
+/* line 95, app/assets/stylesheets/requests.scss */
+.catalog-pill strong {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* line 101, app/assets/stylesheets/requests.scss */
+.requests-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 24px;
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.04);
+}
+
+/* line 112, app/assets/stylesheets/requests.scss */
+.requests-table thead th {
+  background: #f7f8fa;
+  color: #5e6c84;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e6e8ec;
+  white-space: nowrap;
+}
+
+/* line 125, app/assets/stylesheets/requests.scss */
+.requests-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef0f3;
+  vertical-align: top;
+  color: #172b4d;
+}
+
+/* line 132, app/assets/stylesheets/requests.scss */
+.requests-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* line 136, app/assets/stylesheets/requests.scss */
+.requests-table tbody tr:nth-child(even) td {
+  background: #fafbfc;
+}
+
+/* line 140, app/assets/stylesheets/requests.scss */
+.requests-table tbody tr:hover td {
+  background: #eef4ff;
+}
+
+/* line 146, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(1), .requests-table td:nth-child(1) {
+  width: 10%;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* line 147, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(2), .requests-table td:nth-child(2) {
+  width: 6%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* line 148, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(3), .requests-table td:nth-child(3) {
+  width: 28%;
+}
+
+/* line 149, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(4), .requests-table td:nth-child(4) {
+  width: 26%;
+  color: #42526e;
+}
+
+/* line 150, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(5), .requests-table td:nth-child(5) {
+  width: 15%;
+  color: #5e6c84;
+  white-space: nowrap;
+}
+
+/* line 151, app/assets/stylesheets/requests.scss */
+.requests-table th:nth-child(6), .requests-table td:nth-child(6) {
+  width: 15%;
+  color: #5e6c84;
+  white-space: nowrap;
+}
+
+/* line 155, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-cell {
+  position: relative;
+  padding-left: 28px;
+}
+
+/* line 160, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #a1a8b4;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+}
+
+/* line 172, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle:hover {
+  color: #172b4d;
+}
+
+/* line 173, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle:focus {
+  outline: none;
+}
+
+/* line 174, app/assets/stylesheets/requests.scss */
+.requests-table .request-toggle[aria-expanded="true"] .toggle-caret {
+  transform: rotate(90deg);
+}
+
+/* line 177, app/assets/stylesheets/requests.scss */
+.requests-table .toggle-caret {
+  display: inline-block;
+  transition: transform 0.12s ease;
+  transform-origin: center;
+  width: auto;
+  height: auto;
+  border: 0;
+  vertical-align: baseline;
+}
+
+/* line 188, app/assets/stylesheets/requests.scss */
+.requests-table .child-count {
+  margin-left: 6px;
+  color: #6b778c;
+  font-weight: 400;
+  font-size: 11px;
+}
+
+/* line 195, app/assets/stylesheets/requests.scss */
+.requests-table .child-indent {
+  display: none;
+}
+
+/* line 199, app/assets/stylesheets/requests.scss */
+.requests-table .request-child {
+  background: #fafbfc;
+}
+
+/* line 202, app/assets/stylesheets/requests.scss */
+.requests-table .request-child td {
+  color: #5e6c84;
+}
+
+/* line 203, app/assets/stylesheets/requests.scss */
+.requests-table .request-child td:first-child {
+  font-weight: 400;
+}
+
+/* line 206, app/assets/stylesheets/requests.scss */
+.requests-table .is-hidden {
+  display: none;
+}
+
+/* line 211, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-text {
+  cursor: pointer;
+}
+
+/* line 213, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-text:hover {
+  text-decoration: underline;
+}
+
+/* line 214, app/assets/stylesheets/requests.scss */
+.requests-table .req-number-text:focus {
+  outline: none;
+}
+
+/* line 218, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill {
+  display: inline-block;
+  min-width: 22px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+  color: #fff;
+}
+
+/* line 229, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill.status-filled {
+  background: #6b778c;
+}
+
+/* line 230, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill.status-checked_in {
+  background: #2e7d32;
+}
+
+/* line 231, app/assets/stylesheets/requests.scss */
+.requests-table .status-pill.status-released {
+  background: #212121;
+}
+
+/* line 235, app/assets/stylesheets/requests.scss */
+.requests-table .request-detail {
+  background: #f7f8fa;
+}
+
+/* line 238, app/assets/stylesheets/requests.scss */
+.requests-table .request-detail td {
+  padding: 10px 12px 12px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+/* line 243, app/assets/stylesheets/requests.scss */
+.requests-table .request-detail-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 28px;
+}
+
+/* line 250, app/assets/stylesheets/requests.scss */
+.requests-table .check-in-btn {
+  font-size: 12px;
+  padding: 6px 14px;
+}
+
+/* line 254, app/assets/stylesheets/requests.scss */
+.requests-table .check-in-btn.is-disabled {
+  background: #dfe1e6;
+  border-color: #dfe1e6;
+  color: #42526e;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* line 268, app/assets/stylesheets/requests.scss */
+.checkin-page {
+  max-width: 720px;
+  margin: 24px auto;
+  padding: 0 20px;
+  color: #172b4d;
+}
+
+/* line 274, app/assets/stylesheets/requests.scss */
+.checkin-page #glide-info {
+  display: block;
+}
+
+/* line 275, app/assets/stylesheets/requests.scss */
+.checkin-page #resource-form {
+  display: block;
+}
+
+/* line 277, app/assets/stylesheets/requests.scss */
+.checkin-page .checkin-header {
+  margin: 8px 0 16px;
+}
+
+/* line 280, app/assets/stylesheets/requests.scss */
+.checkin-page .checkin-header h2 {
+  margin: 0 0 4px;
+}
+
+/* line 281, app/assets/stylesheets/requests.scss */
+.checkin-page .checkin-header p {
+  margin: 0;
+  color: #5e6c84;
+  font-size: 13px;
+}
 /* line 1, app/assets/stylesheets/resources.scss */
 .resources-panel-head {
   background-color: #F5F5F5;
   border: 1px solid #DDD;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  height: 40px;
+  height: 50px;
   padding-right: 10px;
 }
 
@@ -23353,18 +24355,49 @@ img#add-freqs-button {
   position: relative;
 }
 
-/* line 19, app/assets/stylesheets/resources.scss */
+/* line 24, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow:after {
+  content: none;
+}
+
+/* line 26, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow li {
+  margin: 0 4px;
+  padding: 4px 16px;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  text-shadow: none;
+  background: #ECECEC;
+}
+
+/* line 34, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow li:before, .resource-tabs.tabrow li:after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* line 43, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow li.selected {
+  background: #FFF;
+  border-color: #C9C9C9;
+  border-bottom-color: #C9C9C9;
+}
+
+/* line 50, app/assets/stylesheets/resources.scss */
 #resource_order_number {
   padding-left: 30px;
 }
 
-/* line 22, app/assets/stylesheets/resources.scss */
+/* line 53, app/assets/stylesheets/resources.scss */
 #order-number-input {
   display: none;
   /*overflow: hidden;*/
 }
 
-/* line 26, app/assets/stylesheets/resources.scss */
+/* line 57, app/assets/stylesheets/resources.scss */
 .order-number-prefix {
   position: absolute;
   margin-left: 10px;
@@ -23372,14 +24405,14 @@ img#add-freqs-button {
   color: #999;
 }
 
-/* line 33, app/assets/stylesheets/resources.scss */
+/* line 64, app/assets/stylesheets/resources.scss */
 #resource-form select {
   border: 1px solid #CCC;
   color: #999;
   padding-left: 10px;
 }
 
-/* line 39, app/assets/stylesheets/resources.scss */
+/* line 70, app/assets/stylesheets/resources.scss */
 a.delete-resource {
   color: white;
   font-weight: 900;
@@ -23390,169 +24423,435 @@ a.delete-resource {
   top: 5px;
 }
 
-/* line 49, app/assets/stylesheets/resources.scss */
+/* line 80, app/assets/stylesheets/resources.scss */
 a.delete-resource:hover {
   text-decoration: none;
   color: red;
 }
 
-/* line 54, app/assets/stylesheets/resources.scss */
+/* line 85, app/assets/stylesheets/resources.scss */
 .panel-head li {
   display: inline-block;
   list-style: underline;
 }
 
-/* line 58, app/assets/stylesheets/resources.scss */
+/* line 89, app/assets/stylesheets/resources.scss */
 .panel-head a#new-resource {
   clear: both;
   margin-right: 10px !important;
 }
 
-/* line 63, app/assets/stylesheets/resources.scss */
+/* line 94, app/assets/stylesheets/resources.scss */
 .glide-header {
   color: #424242 !important;
 }
 
-/* line 66, app/assets/stylesheets/resources.scss */
+/* line 97, app/assets/stylesheets/resources.scss */
 .glide-calendar {
   border: 1px solid #e6e6e6;
   text-align: center;
   color: white;
 }
 
-/* line 74, app/assets/stylesheets/resources.scss */
+/* line 105, app/assets/stylesheets/resources.scss */
 .yellow {
   background-color: yellow !important;
 }
 
-/* line 77, app/assets/stylesheets/resources.scss */
+/* line 108, app/assets/stylesheets/resources.scss */
 .orange {
   background-color: orange;
 }
 
-/* line 80, app/assets/stylesheets/resources.scss */
+/* line 111, app/assets/stylesheets/resources.scss */
 .red {
   background-color: red;
 }
 
-/* line 83, app/assets/stylesheets/resources.scss */
+/* line 114, app/assets/stylesheets/resources.scss */
 .black {
   background-color: black;
 }
 
-/* line 86, app/assets/stylesheets/resources.scss */
+/* line 117, app/assets/stylesheets/resources.scss */
+.green {
+  background-color: #4caf50;
+}
+
+/* line 120, app/assets/stylesheets/resources.scss */
+.glide-row.red,
+.glide-row.black {
+  color: white !important;
+}
+
+/* line 124, app/assets/stylesheets/resources.scss */
 #glide-info {
   display: none;
 }
 
-/* line 89, app/assets/stylesheets/resources.scss */
+/* line 128, app/assets/stylesheets/resources.scss */
+.glide-print-actions,
+.demob-print-actions {
+  margin: 16px 0;
+  text-align: right;
+}
+
+/* line 134, app/assets/stylesheets/resources.scss */
+.print-only {
+  display: none;
+}
+
+/* line 138, app/assets/stylesheets/resources.scss */
+.glide-print-header {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* line 145, app/assets/stylesheets/resources.scss */
+.glide-title-cell {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+@media print {
+  /* line 155, app/assets/stylesheets/resources.scss */
+  body.printing-demob header,
+body.printing-demob footer,
+body.printing-demob .incident-name,
+body.printing-demob .resources-panel-head,
+body.printing-demob .masking-tape,
+body.printing-demob #notice,
+body.printing-demob #ics-211-info,
+body.printing-demob #glide-info,
+body.printing-demob #tally-info,
+body.printing-demob #resource-form,
+body.printing-demob .no-print {
+    display: none !important;
+  }
+  /* line 169, app/assets/stylesheets/resources.scss */
+  body.printing-demob #demob-info {
+    display: block !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  /* line 176, app/assets/stylesheets/resources.scss */
+  body.printing-demob #demob-info .panel-foot {
+    display: none !important;
+  }
+  /* line 181, app/assets/stylesheets/resources.scss */
+  body.printing-glide {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* line 185, app/assets/stylesheets/resources.scss */
+  body.printing-glide header,
+body.printing-glide footer,
+body.printing-glide .incident-name,
+body.printing-glide .resources-panel-head,
+body.printing-glide .masking-tape,
+body.printing-glide #notice,
+body.printing-glide #ics-211-info,
+body.printing-glide #demob-info,
+body.printing-glide #tally-info,
+body.printing-glide #resource-form,
+body.printing-glide .no-print {
+    display: none !important;
+  }
+  /* line 199, app/assets/stylesheets/resources.scss */
+  body.printing-glide #glide-info {
+    display: block !important;
+  }
+  /* line 203, app/assets/stylesheets/resources.scss */
+  body.printing-glide .print-only {
+    display: block !important;
+  }
+  /* line 207, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-calendar,
+body.printing-glide .glide-row,
+body.printing-glide .yellow,
+body.printing-glide .orange,
+body.printing-glide .red,
+body.printing-glide .black,
+body.printing-glide .green {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* line 221, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.yellow {
+    box-shadow: inset 0 0 0 999px yellow !important;
+  }
+  /* line 224, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.orange {
+    box-shadow: inset 0 0 0 999px orange !important;
+  }
+  /* line 227, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.red {
+    box-shadow: inset 0 0 0 999px red !important;
+  }
+  /* line 230, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.black {
+    box-shadow: inset 0 0 0 999px black !important;
+  }
+  /* line 233, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.green {
+    box-shadow: inset 0 0 0 999px #4caf50 !important;
+  }
+  /* line 238, app/assets/stylesheets/resources.scss */
+  body.printing-glide table.table,
+body.printing-glide table.table th,
+body.printing-glide table.table td {
+    border-color: #555 !important;
+  }
+  /* line 243, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-calendar {
+    border-color: #555 !important;
+  }
+}
+
+/* line 250, app/assets/stylesheets/resources.scss */
 .table-col {
   min-width: 25px !important;
 }
 
+/* line 253, app/assets/stylesheets/resources.scss */
+.name-col {
+  white-space: nowrap;
+}
+
+/* line 259, app/assets/stylesheets/resources.scss */
+.ics-211-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 12px 12px;
+}
+
+/* line 265, app/assets/stylesheets/resources.scss */
+.ics-211-search .form-control {
+  flex: 1 1 auto;
+  max-width: 420px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+/* line 272, app/assets/stylesheets/resources.scss */
+.ics-211-search .btn-link {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* line 277, app/assets/stylesheets/resources.scss */
+.ics-211-search .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
 /* Demob Info */
-/* line 96, app/assets/stylesheets/resources.scss */
+/* line 284, app/assets/stylesheets/resources.scss */
 #demob-info {
   display: none;
 }
 
-/* line 98, app/assets/stylesheets/resources.scss */
+/* line 286, app/assets/stylesheets/resources.scss */
 #demob-info #demob-dates {
   text-align: center;
 }
 
-/* line 102, app/assets/stylesheets/resources.scss */
+/* line 290, app/assets/stylesheets/resources.scss */
 #demob-dates {
   margin: 5% 0;
 }
 
-/* line 104, app/assets/stylesheets/resources.scss */
+/* line 292, app/assets/stylesheets/resources.scss */
 #demob-dates h1, #demob-dates h2, #demob-dates h3, #demob-dates h4 {
   font-weight: 666;
 }
 
 /* Resource Tally Info*/
-/* line 110, app/assets/stylesheets/resources.scss */
+/* line 298, app/assets/stylesheets/resources.scss */
 #tally-info {
   display: none;
   padding-top: 5%;
 }
 
-/* line 113, app/assets/stylesheets/resources.scss */
+/* line 301, app/assets/stylesheets/resources.scss */
 #tally-info h1, #tally-info h2 {
   text-align: center;
   font-weight: 666;
   margin-bottom: 20px;
 }
 
-/* line 118, app/assets/stylesheets/resources.scss */
+/* line 306, app/assets/stylesheets/resources.scss */
 #tally-info h3, #tally-info h4 {
   font-weight: 666;
 }
 
-/* line 121, app/assets/stylesheets/resources.scss */
+/* line 309, app/assets/stylesheets/resources.scss */
 #tally-info ul {
   padding-left: 5px;
   list-style: none;
 }
 
-/* line 126, app/assets/stylesheets/resources.scss */
+/* line 314, app/assets/stylesheets/resources.scss */
 .dashed {
   border: 1px dashed orange;
 }
 
-/* line 129, app/assets/stylesheets/resources.scss */
+/* line 317, app/assets/stylesheets/resources.scss */
 img#new-resource {
   height: 20px;
   width: 20px;
 }
 
-/* line 133, app/assets/stylesheets/resources.scss */
+/* line 321, app/assets/stylesheets/resources.scss */
 .grayed {
   background-color: #f5f5f5;
 }
 
-/* line 136, app/assets/stylesheets/resources.scss */
+/* line 324, app/assets/stylesheets/resources.scss */
 .resource-information {
   background-color: yellow;
 }
 
-/* line 140, app/assets/stylesheets/resources.scss */
+/* line 328, app/assets/stylesheets/resources.scss */
 .view-resource img {
   width: 20px;
   height: auto;
 }
 
-/* line 145, app/assets/stylesheets/resources.scss */
-.resource-comment {
+/* line 336, app/assets/stylesheets/resources.scss */
+.resource-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 30, 66, 0.45);
+  z-index: 1050;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5vh 16px;
+  overflow-y: auto;
+}
+
+/* line 347, app/assets/stylesheets/resources.scss */
+.resource-panel.is-hidden {
   display: none;
-  z-index: 4;
-  box-shadow: 9px 11px 8px -8px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 9px 11px 8px -8px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 9px 11px 8px -8px rgba(0, 0, 0, 0.2);
-  height: 300px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+/* line 350, app/assets/stylesheets/resources.scss */
+.resource-panel-inner {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(9, 30, 66, 0.35);
+  width: 100%;
+  max-width: 720px;
+  padding: 20px 24px 24px;
+}
+
+/* line 360, app/assets/stylesheets/resources.scss */
+.resource-panel-close {
   position: absolute;
-  background-color: white;
-  top: 75px;
-  border: 1px solid #d8d8d8;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: 0;
+  font-size: 22px;
+  line-height: 1;
+  color: #6b778c;
+  cursor: pointer;
+  padding: 4px 8px;
 }
 
-/* line 160, app/assets/stylesheets/resources.scss */
-.resource-comment h2 {
-  font-weight: 555;
+/* line 372, app/assets/stylesheets/resources.scss */
+.resource-panel-close:hover {
+  color: #172b4d;
 }
 
-/* line 163, app/assets/stylesheets/resources.scss */
-.resource-comment textarea {
-  /*width:100%;*/
-  /*height: 150px;*/
+/* line 374, app/assets/stylesheets/resources.scss */
+button.resource-panel-close {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
-/* line 168, app/assets/stylesheets/resources.scss */
+/* line 382, app/assets/stylesheets/resources.scss */
+button.resource-panel-close:hover, button.resource-panel-close:focus, button.resource-panel-close:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* line 392, app/assets/stylesheets/resources.scss */
+.resource-panel-title {
+  margin: 0 32px 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+/* line 399, app/assets/stylesheets/resources.scss */
+.resource-panel-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 10px 16px;
+}
+
+/* line 405, app/assets/stylesheets/resources.scss */
+.resource-panel-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* line 410, app/assets/stylesheets/resources.scss */
+.resource-panel-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #5e6c84;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 2px;
+}
+
+/* line 419, app/assets/stylesheets/resources.scss */
+.resource-panel-field .best_in_place {
+  display: inline-block;
+  min-height: 20px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #f4f5f7;
+  color: #172b4d;
+  cursor: text;
+}
+
+/* line 428, app/assets/stylesheets/resources.scss */
+.resource-panel-field .best_in_place:hover {
+  background: #e6effd;
+}
+
+/* line 431, app/assets/stylesheets/resources.scss */
+.resource-panel-field .static-field {
+  padding: 2px 6px;
+  color: #6b778c;
+}
+
+/* line 437, app/assets/stylesheets/resources.scss */
+.resource-panel-field-wide {
+  grid-column: 1 / -1;
+}
+
+/* line 440, app/assets/stylesheets/resources.scss */
 input.fwd-datepicker {
   border: none !important;
   width: 36px;
@@ -23602,6 +24901,226 @@ input.fwd-datepicker {
   border-left: 1px solid black;
   border-right: 1px solid black;
   border-top: 1px solid black;
+}
+/* line 1, app/assets/stylesheets/schedules.scss */
+.schedule-page {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 0 20px;
+  color: #172b4d;
+  font-size: 14px;
+}
+
+/* line 8, app/assets/stylesheets/schedules.scss */
+.schedule-page .schedule-header {
+  margin-bottom: 12px;
+}
+
+/* line 11, app/assets/stylesheets/schedules.scss */
+.schedule-page .schedule-header h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+
+/* line 12, app/assets/stylesheets/schedules.scss */
+.schedule-page .schedule-header p {
+  margin: 0;
+  color: #6b778c;
+  font-size: 13px;
+}
+
+/* line 16, app/assets/stylesheets/schedules.scss */
+.schedule-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.04);
+  margin-bottom: 24px;
+}
+
+/* line 27, app/assets/stylesheets/schedules.scss */
+.schedule-table thead th {
+  background: #f7f8fa;
+  color: #5e6c84;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e6e8ec;
+}
+
+/* line 39, app/assets/stylesheets/schedules.scss */
+.schedule-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef0f3;
+  vertical-align: middle;
+  color: #172b4d;
+}
+
+/* line 46, app/assets/stylesheets/schedules.scss */
+.schedule-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* line 47, app/assets/stylesheets/schedules.scss */
+.schedule-table tbody tr:nth-child(even) td {
+  background: #fafbfc;
+}
+
+/* line 48, app/assets/stylesheets/schedules.scss */
+.schedule-table tbody tr:hover td {
+  background: #eef4ff;
+}
+
+/* line 50, app/assets/stylesheets/schedules.scss */
+.schedule-table .col-name {
+  width: 45%;
+  font-weight: 600;
+}
+
+/* line 51, app/assets/stylesheets/schedules.scss */
+.schedule-table .col-time {
+  width: 20%;
+}
+
+/* line 52, app/assets/stylesheets/schedules.scss */
+.schedule-table .col-location {
+  width: 30%;
+}
+
+/* line 53, app/assets/stylesheets/schedules.scss */
+.schedule-table .col-actions {
+  width: 5%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* line 55, app/assets/stylesheets/schedules.scss */
+.schedule-table .best_in_place {
+  display: inline-block;
+  min-width: 60px;
+  min-height: 22px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: transparent;
+}
+
+/* line 63, app/assets/stylesheets/schedules.scss */
+.schedule-table .best_in_place:hover {
+  background: #eef4ff;
+  box-shadow: inset 0 0 0 1px #b3c7ff;
+  cursor: text;
+}
+
+/* line 66, app/assets/stylesheets/schedules.scss */
+.schedule-table .schedule-delete {
+  display: inline-block;
+  line-height: 1;
+}
+
+/* line 70, app/assets/stylesheets/schedules.scss */
+.schedule-table .schedule-delete:hover img {
+  opacity: 0.75;
+}
+
+/* line 74, app/assets/stylesheets/schedules.scss */
+.schedule-add {
+  margin-top: 8px;
+}
+
+/* line 77, app/assets/stylesheets/schedules.scss */
+.schedule-add h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #5e6c84;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 8px;
+}
+
+/* line 87, app/assets/stylesheets/schedules.scss */
+.schedule-add-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* line 93, app/assets/stylesheets/schedules.scss */
+.schedule-add-form .form-control {
+  flex: 1 1 180px;
+  font-size: 13px;
+  padding: 6px 10px;
+}
+
+/* line 99, app/assets/stylesheets/schedules.scss */
+.schedule-add-form .btn {
+  flex: 0 0 auto;
+}
+
+/* line 105, app/assets/stylesheets/schedules.scss */
+.schedule-table .col-check {
+  width: 32px;
+  text-align: center;
+}
+
+/* line 111, app/assets/stylesheets/schedules.scss */
+.schedule-print-actions {
+  margin: 16px 0;
+  text-align: right;
+}
+
+/* line 116, app/assets/stylesheets/schedules.scss */
+.print-only {
+  display: none;
+}
+
+/* line 118, app/assets/stylesheets/schedules.scss */
+.schedule-print-header {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+@media print {
+  /* line 127, app/assets/stylesheets/schedules.scss */
+  body.printing-schedule header,
+body.printing-schedule footer,
+body.printing-schedule #flash-messages,
+body.printing-schedule .schedule-header,
+body.printing-schedule .schedule-add,
+body.printing-schedule .no-print,
+body.printing-schedule .schedule-page > .incident-name,
+body.printing-schedule .schedule-table thead,
+body.printing-schedule .schedule-table .col-location {
+    display: none !important;
+  }
+  /* line 139, app/assets/stylesheets/schedules.scss */
+  body.printing-schedule .print-only {
+    display: block !important;
+  }
+  /* line 141, app/assets/stylesheets/schedules.scss */
+  body.printing-schedule tr.is-print-hidden {
+    display: none !important;
+  }
+  /* line 143, app/assets/stylesheets/schedules.scss */
+  body.printing-schedule .schedule-table {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  /* line 147, app/assets/stylesheets/schedules.scss */
+  body.printing-schedule .schedule-table tbody td {
+    border: 0 !important;
+    padding: 4px 8px !important;
+    background: transparent !important;
+  }
 }
 /* line 1, app/assets/stylesheets/tabs.css.scss */
 .tabrow {
@@ -23792,41 +25311,46 @@ h1, .h1 {
 }
 
 /*$btn-primary-border:             $gray-lighter;*/
-/* line 100, app/assets/stylesheets/global.scss */
+/* line 99, app/assets/stylesheets/global.scss */
+.btn {
+  border: none !important;
+}
+
+/* line 103, app/assets/stylesheets/global.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
   background: #115599 !important;
   border-colorbackground: #115599 !important;
 }
 
-/* line 119, app/assets/stylesheets/global.scss */
+/* line 122, app/assets/stylesheets/global.scss */
 .field_with_errors input, .field_with_errors select {
   border: 1px solid #A94442;
 }
 
-/* line 125, app/assets/stylesheets/global.scss */
+/* line 128, app/assets/stylesheets/global.scss */
 label, dt {
   font-weight: 600 !important;
 }
 
-/* line 130, app/assets/stylesheets/global.scss */
+/* line 133, app/assets/stylesheets/global.scss */
 .required label {
   font-weight: bold;
 }
 
-/* line 134, app/assets/stylesheets/global.scss */
+/* line 137, app/assets/stylesheets/global.scss */
 .required label:after {
   color: #e32;
   content: ' *';
   display: inline;
 }
 
-/* line 142, app/assets/stylesheets/global.scss */
+/* line 145, app/assets/stylesheets/global.scss */
 .filter > .panel-heading, panel > .panel-heading {
   background-color: #eeeeee !important;
   font-weight: 500;
 }
 
-/* line 146, app/assets/stylesheets/global.scss */
+/* line 149, app/assets/stylesheets/global.scss */
 .filter > .panel-body, panel > .panel-body {
   background-color: #fafafa !important;
   font-size: 13px !important;
@@ -23836,66 +25360,66 @@ label, dt {
 /*$navbar-default-link-hover-bg:             $brand-light;*/
 /*$navbar-default-link-active-bg:            $brand-light;*/
 /*$navbar-default-link-disabled-bg:          $brand-light;*/
-/* line 166, app/assets/stylesheets/global.scss */
+/* line 169, app/assets/stylesheets/global.scss */
 .nav > li > a {
   font-weight: 500;
 }
 
-/* line 171, app/assets/stylesheets/global.scss */
+/* line 174, app/assets/stylesheets/global.scss */
 body {
   padding-top: 80px;
 }
 
-/* line 176, app/assets/stylesheets/global.scss */
+/* line 179, app/assets/stylesheets/global.scss */
 .navbar-brand {
   padding-top: 20px !important;
   font-size: 2em;
 }
 
-/* line 206, app/assets/stylesheets/global.scss */
+/* line 209, app/assets/stylesheets/global.scss */
 dt, dd {
   padding: 5px 0 5px 0;
 }
 
-/* line 212, app/assets/stylesheets/global.scss */
+/* line 215, app/assets/stylesheets/global.scss */
 .center-block {
   float: none !important;
 }
 
-/* line 215, app/assets/stylesheets/global.scss */
+/* line 218, app/assets/stylesheets/global.scss */
 .footer {
   margin-top: 10px;
 }
 
-/* line 222, app/assets/stylesheets/global.scss */
+/* line 225, app/assets/stylesheets/global.scss */
 .custom-index-table th:last-of-type {
   width: 120px;
 }
 
-/* line 225, app/assets/stylesheets/global.scss */
+/* line 228, app/assets/stylesheets/global.scss */
 .custom-index-table td:last-of-type {
   text-align: center;
 }
 
-/* line 227, app/assets/stylesheets/global.scss */
+/* line 230, app/assets/stylesheets/global.scss */
 .custom-index-table td:last-of-type a {
   text-decoration: none !important;
 }
 
-/* line 231, app/assets/stylesheets/global.scss */
+/* line 234, app/assets/stylesheets/global.scss */
 .custom-index-table th, .custom-index-table td {
   vertical-align: middle !important;
   padding: 10px !important;
 }
 
-/* line 235, app/assets/stylesheets/global.scss */
+/* line 238, app/assets/stylesheets/global.scss */
 .custom-index-table th {
   text-align: center;
   background-color: #eeeeee;
   font-weight: 500;
 }
 
-/* line 245, app/assets/stylesheets/global.scss */
+/* line 248, app/assets/stylesheets/global.scss */
 .table-curved, .custom-index-table {
   border-collapse: separate;
   border: solid #eeeeee 1px;
@@ -23904,40 +25428,40 @@ dt, dd {
   border-top: 0px;
 }
 
-/* line 252, app/assets/stylesheets/global.scss */
+/* line 255, app/assets/stylesheets/global.scss */
 .table-curved thead:first-child tr:first-child th, .custom-index-table thead:first-child tr:first-child th {
   border-bottom: 0px;
   border-top: solid #eeeeee 1px;
 }
 
-/* line 257, app/assets/stylesheets/global.scss */
+/* line 260, app/assets/stylesheets/global.scss */
 .table-curved td, .custom-index-table td, .table-curved th, .custom-index-table th {
   border-left: 1px solid #eeeeee;
   border-top: 1px solid #eeeeee;
 }
 
-/* line 263, app/assets/stylesheets/global.scss */
+/* line 266, app/assets/stylesheets/global.scss */
 .table-curved :first-child :first-child :first-child, .custom-index-table :first-child :first-child :first-child {
   border-top-left-radius: 6px;
 }
 
-/* line 266, app/assets/stylesheets/global.scss */
+/* line 269, app/assets/stylesheets/global.scss */
 .table-curved :first-child :first-child :last-child, .custom-index-table :first-child :first-child :last-child {
   border-top-right-radius: 6px;
 }
 
-/* line 272, app/assets/stylesheets/global.scss */
+/* line 275, app/assets/stylesheets/global.scss */
 .table-curved :last-child :last-child :first-child, .custom-index-table :last-child :last-child :first-child {
   border-bottom-left-radius: 6px;
 }
 
-/* line 275, app/assets/stylesheets/global.scss */
+/* line 278, app/assets/stylesheets/global.scss */
 .table-curved :last-child :last-child :last-child, .custom-index-table :last-child :last-child :last-child {
   border-bottom-right-radius: 6px;
 }
 
 /* Buttons*/
-/* line 281, app/assets/stylesheets/global.scss */
+/* line 284, app/assets/stylesheets/global.scss */
 .new-btn {
   height: 40px;
   width: 40px;
@@ -23946,35 +25470,35 @@ dt, dd {
   font-size: 2.5em;
 }
 
-/* line 288, app/assets/stylesheets/global.scss */
+/* line 291, app/assets/stylesheets/global.scss */
 .btn-wide {
   width: 100%;
 }
 
-/* line 291, app/assets/stylesheets/global.scss */
+/* line 294, app/assets/stylesheets/global.scss */
 .btn-default {
   background-color: #e6e6e6;
   border: 1px solid #e6e6e6;
 }
 
-/* line 296, app/assets/stylesheets/global.scss */
+/* line 299, app/assets/stylesheets/global.scss */
 .action-icon {
   font-size: 1.2em;
   margin: 2px;
   color: #002f5e !important;
 }
 
-/* line 300, app/assets/stylesheets/global.scss */
+/* line 303, app/assets/stylesheets/global.scss */
 .action-icon:hover, .action-icon:focus {
   color: #115599 !important;
 }
 
-/* line 305, app/assets/stylesheets/global.scss */
+/* line 308, app/assets/stylesheets/global.scss */
 a.btn-danger {
   color: white;
 }
 
-/* line 309, app/assets/stylesheets/global.scss */
+/* line 312, app/assets/stylesheets/global.scss */
 div.alert {
   margin-right: 2% !important;
   margin-left: 2% !important;
