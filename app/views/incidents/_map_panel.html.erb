@@ -1,0 +1,94 @@
+<%# Fire-perimeter map for the incident, backed by WFIGS. %>
+
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+
+<div class="panel panel-default incident-map-panel">
+  <div class="panel-heading">
+    <h4><strong>Fire Perimeter</strong>
+      <small class="pull-right" id="perimeter-status">Loading…</small>
+    </h4>
+  </div>
+  <div id="incident-map"
+       data-perimeter-url="<%= incident_perimeter_path(@incident) %>"
+       style="height: 420px; width: 100%; background: #eef2f5;">
+  </div>
+  <div class="panel-body" id="perimeter-info" style="display:none;">
+    <div class="row">
+      <div class="col-sm-3"><strong>Start Date:</strong> <span id="perimeter-start-date">—</span></div>
+      <div class="col-sm-3"><strong>Size:</strong> <span id="perimeter-acres">—</span></div>
+      <div class="col-sm-3"><strong>Containment:</strong> <span id="perimeter-contained">—</span></div>
+      <div class="col-sm-3"><strong>Cause:</strong> <span id="perimeter-cause">—</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<script>
+(function () {
+  var mapEl = document.getElementById('incident-map');
+  if (!mapEl || typeof L === 'undefined') return;
+
+  var status = document.getElementById('perimeter-status');
+  var info   = document.getElementById('perimeter-info');
+  var url    = mapEl.dataset.perimeterUrl;
+
+  // Alaska fallback if we can't get bounds from the perimeter data.
+  var map = L.map('incident-map').setView([64.5, -152.0], 5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+  }).addTo(map);
+
+  fetch(url, { headers: { 'Accept': 'application/geo+json' } })
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      if (!geo || !geo.features || geo.features.length === 0) {
+        status.textContent = 'No perimeter available yet';
+        return;
+      }
+      var layer = L.geoJSON(geo, {
+        style: { color: '#c62828', weight: 2, fillColor: '#ef5350', fillOpacity: 0.25 }
+      }).addTo(map);
+      map.fitBounds(layer.getBounds(), { padding: [16, 16] });
+
+      var props = geo.features[0].properties || {};
+
+      var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      function formatDate(ms) {
+        if (!ms) return '—';
+        var d = new Date(ms);
+        return MONTHS[d.getUTCMonth()] + ' ' + d.getUTCDate() + ', ' + d.getUTCFullYear();
+      }
+      function formatAcres(n) {
+        if (n === null || n === undefined) return '—';
+        return Math.round(n).toLocaleString('en-US') + ' ac';
+      }
+      function formatPercent(n) {
+        if (n === null || n === undefined) return '—';
+        return Math.round(n) + '%';
+      }
+
+      var acres = props.attr_IncidentSize
+               || props.attr_CalculatedAcres
+               || props.attr_FinalAcres;
+
+      document.getElementById('perimeter-start-date').textContent = formatDate(props.attr_FireDiscoveryDateTime);
+      document.getElementById('perimeter-acres').textContent      = formatAcres(acres);
+      document.getElementById('perimeter-contained').textContent  = formatPercent(props.attr_PercentContained);
+      document.getElementById('perimeter-cause').textContent      = props.attr_FireCause || '—';
+
+      info.style.display = 'block';
+      status.textContent = geo.features.length + ' feature' + (geo.features.length === 1 ? '' : 's');
+    })
+    .catch(function (err) {
+      status.textContent = 'Perimeter unavailable';
+      console.error('perimeter fetch failed', err);
+    });
+})();
+</script>

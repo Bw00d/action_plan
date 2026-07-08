@@ -1,3 +1,6 @@
+require 'net/http'
+require 'uri'
+
 class IncidentsController < ApplicationController
   before_action :set_incident, only: [:show, :edit, :update, :destroy]
   include SkipAuthorization
@@ -7,6 +10,54 @@ class IncidentsController < ApplicationController
   def users
     @incident = Incident.find(params[:id])
     @users = @incident.users
+  end
+
+  # GET /incidents/:id/perimeter.json
+  # Fetches the fire perimeter for this incident from Wildland Fire
+  # Interagency Geospatial Services (WFIGS) by matching on incident name +
+  # state. Returns a GeoJSON FeatureCollection. Cached for an hour so a
+  # burst of page reloads doesn't hammer the upstream service.
+  def perimeter
+    incident = Incident.find(params[:id])
+    name  = incident.name.to_s.strip
+    state = incident.state.to_s.strip.upcase
+
+    if name.blank? || state.blank?
+      render json: { type: 'FeatureCollection', features: [] } and return
+    end
+
+    # WFIGS uses "US-XX" for state codes.
+    state_code = state.start_with?('US-') ? state : "US-#{state}"
+
+    cache_key = "wfigs_perimeter/#{name}/#{state_code}"
+    body =
+      begin
+        Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+          escaped_name = name.gsub("'", "''")
+          query = {
+            where:          "poly_IncidentName='#{escaped_name}' AND attr_POOState='#{state_code}'",
+            outFields:      'poly_IncidentName,attr_POOState,attr_FireDiscoveryDateTime,attr_FinalAcres,attr_IncidentSize,attr_CalculatedAcres,attr_PercentContained,attr_FireCause,attr_IrwinID',
+            returnGeometry: true,
+            f:              'geojson'
+          }
+          uri = URI("https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters/FeatureServer/0/query")
+          uri.query = query.to_query
+          http_response = nil
+          Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: 5, read_timeout: 10) do |http|
+            http_response = http.request(Net::HTTP::Get.new(uri.request_uri))
+          end
+          http_response&.body
+        end
+      rescue StandardError => e
+        Rails.logger.error("WFIGS perimeter fetch failed: #{e.class} #{e.message}")
+        nil
+      end
+
+    if body.blank?
+      render json: { type: 'FeatureCollection', features: [], error: 'upstream_unavailable' }, status: :bad_gateway
+    else
+      render body: body, content_type: 'application/geo+json'
+    end
   end
   # GET /incidents
   # GET /incidents.json
