@@ -111,6 +111,19 @@ h4.incident-feed {
   /*padding-bottom: 20px;*/
 }
 
+// Incident-origin marker on the map panel — a Font Awesome icon styled to
+// look like a pin, drawn via Leaflet's L.divIcon.
+.incident-origin-marker {
+  background: transparent;
+  border: 0;
+}
+.incident-origin-pin {
+  display: inline-block;
+  font-size: 34px;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
 .resources-summary-panel {
   .resources-panel-manage {
     color: #444;

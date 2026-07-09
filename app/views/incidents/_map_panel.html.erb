@@ -1,4 +1,5 @@
-<%# Fire-perimeter map for the incident, backed by WFIGS. %>
+<%# Incident map. Prefers a WFIGS perimeter polygon when available; falls
+    back to a marker at the incident's lat/long if not. %>
 
 <link rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -7,12 +8,17 @@
 
 <div class="panel panel-default incident-map-panel">
   <div class="panel-heading">
-    <h4><strong>Fire Perimeter</strong>
+    <h4><strong>Incident Map</strong>
       <small class="pull-right" id="perimeter-status">Loading…</small>
     </h4>
   </div>
   <div id="incident-map"
        data-perimeter-url="<%= incident_perimeter_path(@incident) %>"
+       data-lat="<%= @incident.latitude %>"
+       data-lng="<%= @incident.longitude %>"
+       data-incident-type="<%= @incident.incident_type %>"
+       data-incident-name="<%= @incident.name %>"
+       data-incident-location="<%= @incident.location %>"
        style="height: 420px; width: 100%; background: #eef2f5;">
   </div>
   <div class="panel-body" id="perimeter-info" style="display:none;">
@@ -38,20 +44,71 @@
   var info   = document.getElementById('perimeter-info');
   var url    = mapEl.dataset.perimeterUrl;
 
-  // Alaska fallback if we can't get bounds from the perimeter data.
-  var map = L.map('incident-map').setView([64.5, -152.0], 5);
+  var lat = parseFloat(mapEl.dataset.lat);
+  var lng = parseFloat(mapEl.dataset.lng);
+  var hasLatLng = !isNaN(lat) && !isNaN(lng);
+  var incidentType     = (mapEl.dataset.incidentType || '').toLowerCase();
+  var incidentName     = mapEl.dataset.incidentName || 'Incident';
+  var incidentLocation = mapEl.dataset.incidentLocation || '';
+
+  // Font Awesome (v4) icon per incident type, styled to look like a pin.
+  // Keys must be lowercase — the lookup lowercases incident_type first.
+  var TYPE_ICONS = {
+    'wildfire': { icon: 'fire',                 color: '#d32f2f' },  // red
+    'fire':     { icon: 'fire',                 color: '#d32f2f' },  // red
+    'hazmat':   { icon: 'flask',                color: '#7b1fa2' },  // toxic purple
+    'flood':    { icon: 'tint',                 color: '#1976d2' },  // blue
+    'spill':    { icon: 'flask',                color: '#5d4037' },  // oil brown
+    'slide':    { icon: 'exclamation-triangle', color: '#795548' },  // earth brown
+    'shooting': { icon: 'crosshairs',           color: '#b71c1c' },  // dark red
+    'epidemic': { icon: 'heartbeat',            color: '#c2185b' },  // biohazard magenta
+    'event':    { icon: 'calendar',             color: '#1565c0' },  // civic blue
+    'other':    { icon: 'map-marker',           color: '#616161' }   // neutral grey (fallback)
+  };
+
+  function iconForType(t) {
+    var cfg = TYPE_ICONS[t] || TYPE_ICONS['other'];
+    return L.divIcon({
+      html: '<span class="incident-origin-pin" style="color:' + cfg.color + '">' +
+              '<i class="fa fa-' + cfg.icon + '"></i>' +
+            '</span>',
+      className: 'incident-origin-marker',
+      iconSize:   [40, 48],
+      iconAnchor: [20, 44],
+      popupAnchor:[0, -40]
+    });
+  }
+
+  // Sensible default view: continental US. If nothing to show, this is what
+  // the user sees.
+  var map = L.map('incident-map').setView([39.5, -98.0], 4);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
   }).addTo(map);
 
+  function dropOriginMarker(reason) {
+    if (!hasLatLng) return false;
+    var marker = L.marker([lat, lng], { icon: iconForType(incidentType) }).addTo(map);
+    var popupHtml = '<strong>' + incidentName + '</strong>';
+    if (incidentLocation) popupHtml += '<br>' + incidentLocation;
+    marker.bindPopup(popupHtml);
+    map.setView([lat, lng], 10);
+    status.textContent = reason;
+    return true;
+  }
+
   fetch(url, { headers: { 'Accept': 'application/geo+json' } })
     .then(function (r) { return r.json(); })
     .then(function (geo) {
       if (!geo || !geo.features || geo.features.length === 0) {
-        status.textContent = 'No perimeter available yet';
+        // No perimeter — fall back to origin marker.
+        if (!dropOriginMarker('No perimeter available · showing origin')) {
+          status.textContent = 'No location data available';
+        }
         return;
       }
+      // Perimeter path.
       var layer = L.geoJSON(geo, {
         style: { color: '#c62828', weight: 2, fillColor: '#ef5350', fillOpacity: 0.25 }
       }).addTo(map);
@@ -87,8 +144,10 @@
       status.textContent = geo.features.length + ' feature' + (geo.features.length === 1 ? '' : 's');
     })
     .catch(function (err) {
-      status.textContent = 'Perimeter unavailable';
       console.error('perimeter fetch failed', err);
+      if (!dropOriginMarker('Perimeter unavailable · showing origin')) {
+        status.textContent = 'Map unavailable';
+      }
     });
 })();
 </script>
