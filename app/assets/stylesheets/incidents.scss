@@ -111,6 +111,22 @@ h4.incident-feed {
   /*padding-bottom: 20px;*/
 }
 
+// "Populate from IRWIN" button + diff modal on the info panel.
+.irwin-populate-row {
+  clear: both;
+  padding: 14px 0 4px;
+  border-top: 1px solid #eef0f3;
+  margin-top: 12px;
+
+  .btn .fa { margin-right: 4px; }
+  .muted   { color: #6b778c; font-size: 12px; }
+}
+
+#irwin-diff-table {
+  td, th { vertical-align: middle; }
+  td.text-muted { font-size: 12px; }
+}
+
 // Incident-origin marker on the map panel — a Font Awesome icon styled to
 // look like a pin, drawn via Leaflet's L.divIcon.
 .incident-origin-marker {

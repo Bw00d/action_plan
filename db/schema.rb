@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_06_070259) do
+ActiveRecord::Schema.define(version: 2026_07_09_113420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(version: 2026_07_06_070259) do
     t.boolean "merged_inc_flag"
     t.string "previous_inc_number"
     t.string "time_zone"
+    t.decimal "cost", precision: 14, scale: 2
     t.index ["iroc_inc_id"], name: "index_incidents_on_iroc_inc_id", unique: true
   end
 

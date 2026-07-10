@@ -9,11 +9,19 @@
         <% if @incident.wildfire? %>
           <div>
             <div class="col-md-6 col-sm-12"><strong>Location:</strong> <%= best_in_place @incident, :location %></div>
+            <div class="col-md-6 col-sm-12"><strong>State:</strong>
+              <%= best_in_place @incident, :state, as: :select,
+                                collection: IncidentsHelper::US_STATES,
+                                place_holder: "—" %>
+            </div>
             <div class="col-md-6 col-sm-12"><strong>Number:</strong> <%= best_in_place @incident, :number %></div>
             <div class="col-md-6 col-sm-12"><strong>Coordinates:</strong> <%= best_in_place @incident, 
             :latitude %> x <%= best_in_place @incident, :longitude %></div>
          
               <div class="col-md-6 col-sm-12"><strong>Size:</strong> <%= best_in_place @incident, :size %> acres  </div>
+              <div class="col-md-6 col-sm-12"><strong>Cost to Date:</strong>
+                <%= best_in_place @incident, :cost, display_with: :number_to_currency, place_holder: "—" %>
+              </div>
               <div class="col-md-6 col-sm-12"><strong>Cause:</strong> <%= best_in_place @incident, :cause %></div>
               <div class="col-md-6 col-sm-12"><strong>Fuels:</strong> <%= best_in_place @incident, :fuel_type %></div>
               <div class="col-md-6 col-sm-12"><strong>Activity:</strong> <%= best_in_place @incident, :fire_behavior %></div>
@@ -21,7 +29,7 @@
               <div class="col-md-6 col-sm-12"><strong>Complexity:</strong> <%= best_in_place @incident, :complexity %>  </div>
               <div class="col-md-6 col-sm-12"><strong>IC:</strong> <%= best_in_place @incident, :ic %>   </div>
               <div class="col-md-6 col-sm-12"><strong>Status:</strong> <%= best_in_place @incident, :status %></div>
-              <div class="col-md-6 col-sm-12"><strong>% Contained:</strong> <%= best_in_place @incident, :percent_contained %></div>
+              <div class="col-md-6 col-sm-12"><strong>Containment:</strong> <%= best_in_place @incident, :percent_contained %> %</div>
               <div class="col-md-6 col-sm-12"><strong>Start Date:</strong> <%= best_in_place @incident, :start_date %>  </div>
               <div class="col-md-6 col-sm-12"><strong>Contained Date:</strong> <%= best_in_place @incident, :containment_date %></div>
               <div class="col-md-6 col-sm-12"><strong>Controlled Date:</strong> <%= best_in_place @incident, :control_date %></div>
@@ -40,7 +48,12 @@
           
           <div class="col-sm-12 col-xs-12">
             <div class="col-md-6 col-sm-12"><strong>Location:</strong> <%= best_in_place @incident, :location %></div>
-            <div class="col-md-6 col-sm-12"><strong>Coordinates:</strong> <%= best_in_place @incident, 
+            <div class="col-md-6 col-sm-12"><strong>State:</strong>
+              <%= best_in_place @incident, :state, as: :select,
+                                collection: IncidentsHelper::US_STATES,
+                                place_holder: "—" %>
+            </div>
+            <div class="col-md-6 col-sm-12"><strong>Coordinates:</strong> <%= best_in_place @incident,
             :latitude %> x <%= best_in_place @incident, :longitude %></div>
             <div class="col-md-6 col-sm-12"><strong>Complexity:</strong> <%= best_in_place @incident, :complexity %>  </div>
               <div class="col-md-6 col-sm-12"><strong>IC:</strong> <%= best_in_place @incident, :ic %>   </div>
@@ -53,6 +66,50 @@
       </div>
       <%#= link_to (fa_icon('edit')), edit_incident_path(@incident), class: "float-right", id: 'edit-incident' %>
       <%= link_to 'Edit', edit_incident_path(@incident), class: "float-right", id: 'edit-incident' %>
-      
+
+      <% if @incident.wildfire? %>
+        <div class="irwin-populate-row">
+          <button type="button" class="btn btn-primary btn-sm" id="irwin-populate-btn"
+                  data-url="<%= incident_irwin_data_path(@incident) %>"
+                  data-update-url="<%= incident_path(@incident) %>">
+            <%= fa_icon 'cloud-download' %> Populate from IRWIN
+          </button>
+          <span id="irwin-status" class="muted" style="margin-left:10px;"></span>
+        </div>
+
+        <div id="irwin-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="irwin-modal-title">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="irwin-modal-title">Update from IRWIN <small>via WFIGS</small></h4>
+              </div>
+              <div class="modal-body">
+                <p class="text-muted">Check any field to overwrite its current value with what IRWIN reports. Leave unchecked to keep the current value.</p>
+                <%= form_with model: @incident, method: :patch, local: true, id: 'irwin-apply-form' do |f| %>
+                  <table class="table table-condensed" id="irwin-diff-table">
+                    <thead>
+                      <tr>
+                        <th style="width:24px;"></th>
+                        <th>Field</th>
+                        <th>Current</th>
+                        <th>Proposed (IRWIN)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="irwin-diff-body">
+                      <!-- filled in by JS -->
+                    </tbody>
+                  </table>
+                <% end %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="irwin-apply-btn">Apply selected</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
   </div> <!-- panel body -->
 

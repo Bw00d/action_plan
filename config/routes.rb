@@ -73,6 +73,7 @@ Rails.application.routes.draw do
   get 'contact' => 'contact_forms#new', as: 'contact'
   get 'incidents/:id/users'   => 'incidents#users', as: :incident_users
   get 'incidents/:id/perimeter' => 'incidents#perimeter', as: :incident_perimeter, defaults: { format: :json }
+  get 'incidents/:id/irwin_data' => 'incidents#irwin_data', as: :incident_irwin_data, defaults: { format: :json }
   get 'incidents/:id/plans/:id/202'        => 'plans#incident_objectives'
   get 'incidents/:id/plans/:id/202-pdf'        => 'plans#objectives_to_pdf'
   get 'incidents/:id/plans/:id/203'        => 'plans#incident_organization'

@@ -87,32 +87,42 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
   }).addTo(map);
 
-  function dropOriginMarker(reason) {
+  // Drop the origin marker unconditionally when we have coords — for wildfires
+  // this represents the ignition point and stays visible even when there's
+  // also a perimeter polygon. Returns true if a marker was actually placed.
+  function dropOriginMarker() {
     if (!hasLatLng) return false;
     var marker = L.marker([lat, lng], { icon: iconForType(incidentType) }).addTo(map);
     var popupHtml = '<strong>' + incidentName + '</strong>';
     if (incidentLocation) popupHtml += '<br>' + incidentLocation;
     marker.bindPopup(popupHtml);
-    map.setView([lat, lng], 10);
-    status.textContent = reason;
     return true;
   }
+
+  var originMarkerPlaced = dropOriginMarker();
 
   fetch(url, { headers: { 'Accept': 'application/geo+json' } })
     .then(function (r) { return r.json(); })
     .then(function (geo) {
       if (!geo || !geo.features || geo.features.length === 0) {
-        // No perimeter — fall back to origin marker.
-        if (!dropOriginMarker('No perimeter available · showing origin')) {
+        // No perimeter — center on origin if we have one, otherwise stay
+        // on the default view.
+        if (originMarkerPlaced) {
+          map.setView([lat, lng], 10);
+          status.textContent = 'No perimeter available · showing origin';
+        } else {
           status.textContent = 'No location data available';
         }
         return;
       }
-      // Perimeter path.
+      // Perimeter path. Draw the polygon and fit the map so both the
+      // perimeter and (if present) the ignition marker are visible.
       var layer = L.geoJSON(geo, {
         style: { color: '#c62828', weight: 2, fillColor: '#ef5350', fillOpacity: 0.25 }
       }).addTo(map);
-      map.fitBounds(layer.getBounds(), { padding: [16, 16] });
+      var bounds = layer.getBounds();
+      if (originMarkerPlaced) bounds.extend([lat, lng]);
+      map.fitBounds(bounds, { padding: [16, 16] });
 
       var props = geo.features[0].properties || {};
 
@@ -145,7 +155,10 @@
     })
     .catch(function (err) {
       console.error('perimeter fetch failed', err);
-      if (!dropOriginMarker('Perimeter unavailable · showing origin')) {
+      if (originMarkerPlaced) {
+        map.setView([lat, lng], 10);
+        status.textContent = 'Perimeter unavailable · showing origin';
+      } else {
         status.textContent = 'Map unavailable';
       }
     });
