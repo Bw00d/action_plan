@@ -31,6 +31,9 @@ Rails.application.routes.draw do
 
   resources :incidents do
     get 'invite', on: :collection
+    resources :financial_codes, only: [:create, :update, :destroy] do
+      collection { post :apply_irwin }
+    end
     resources :checkins do
       collection do
         patch :sort

@@ -40,8 +40,8 @@ $(document).on('turbolinks:load', function () {
     longitude: 'Longitude',
     ic: 'IC',
     complexity: 'Complexity',
-    ownership: 'Ownership',
-    p_code: 'P Code'
+    ownership: 'Ownership'
+    // 'p_code' removed — financial codes are now a separate first-class model
   };
 
   $btn.on('click', function () {
@@ -51,16 +51,35 @@ $(document).on('turbolinks:load', function () {
     $.getJSON($btn.data('url'))
       .done(function (data) {
         var proposed = data.proposed || {};
+        var proposedCodes = data.financial_codes || {};
         var rows = '';
+
+        // Standard incident fields.
         Object.keys(FIELD_LABELS).forEach(function (field) {
           if (!(field in proposed)) return;
           var current  = currentValue(field);
           var newValue = proposed[field];
-          if (current === String(newValue)) return; // no change; hide it
+          if (current === String(newValue)) return;
           var checkboxId = 'irwin-check-' + field;
           rows += '<tr>' +
             '<td><input type="checkbox" class="irwin-check" checked id="' + checkboxId + '" data-field="' + field + '" data-value="' + $('<div>').text(newValue).html().replace(/"/g, '&quot;') + '"></td>' +
             '<td><label for="' + checkboxId + '">' + FIELD_LABELS[field] + '</label></td>' +
+            '<td class="text-muted">' + $('<div>').text(current || '—').html() + '</td>' +
+            '<td><strong>' + $('<div>').text(newValue).html() + '</strong></td>' +
+            '</tr>';
+        });
+
+        // Financial codes (BLM, USFS). Compared against the current value
+        // of the matching agency row in the info panel.
+        Object.keys(proposedCodes).forEach(function (agency) {
+          var newValue = proposedCodes[agency];
+          if (!newValue) return;
+          var current = currentFinancialCode(agency);
+          if (current === String(newValue)) return;
+          var checkboxId = 'irwin-check-fc-' + agency;
+          rows += '<tr>' +
+            '<td><input type="checkbox" class="irwin-check-fc" checked id="' + checkboxId + '" data-agency="' + agency + '" data-value="' + $('<div>').text(newValue).html().replace(/"/g, '&quot;') + '"></td>' +
+            '<td><label for="' + checkboxId + '">' + agency + ' code</label></td>' +
             '<td class="text-muted">' + $('<div>').text(current || '—').html() + '</td>' +
             '<td><strong>' + $('<div>').text(newValue).html() + '</strong></td>' +
             '</tr>';
@@ -73,7 +92,8 @@ $(document).on('turbolinks:load', function () {
           $apply.prop('disabled', false);
         }
         $body.html(rows);
-        $status.text('Fetched ' + Object.keys(proposed).length + ' fields from IRWIN.');
+        var fieldCount = Object.keys(proposed).length + Object.keys(proposedCodes).length;
+        $status.text('Fetched ' + fieldCount + ' fields from IRWIN.');
         $modal.modal('show');
       })
       .fail(function (xhr) {
@@ -83,34 +103,63 @@ $(document).on('turbolinks:load', function () {
       });
   });
 
+  // Read the current code value for an agency from the info panel's
+  // financial-codes table. Agencies are stored uppercase.
+  function currentFinancialCode(agency) {
+    var wanted = agency.toString().toUpperCase();
+    var found = '';
+    $('.financial-codes-table tr').each(function () {
+      var rowAgency = $.trim($(this).find('.fc-agency .best_in_place').text()).toUpperCase();
+      if (rowAgency === wanted) {
+        found = $.trim($(this).find('.fc-code .best_in_place').text());
+        return false; // break
+      }
+    });
+    return found;
+  }
+
   $apply.on('click', function () {
     var selected = {};
     $('.irwin-check:checked').each(function () {
       selected[$(this).data('field')] = $(this).data('value');
     });
-    if ($.isEmptyObject(selected)) {
+
+    var codes = {};
+    $('.irwin-check-fc:checked').each(function () {
+      codes[$(this).data('agency')] = $(this).data('value');
+    });
+
+    if ($.isEmptyObject(selected) && $.isEmptyObject(codes)) {
       $modal.modal('hide');
       return;
     }
 
-    // Build the same nested params shape Rails expects: incident[field].
-    var payload = { incident: selected, _method: 'patch',
-                    authenticity_token: $('meta[name=csrf-token]').attr('content') };
+    var csrf = $('meta[name=csrf-token]').attr('content');
+    var updateUrl = $btn.data('update-url');
+    var codesUrl  = updateUrl + '/financial_codes/apply_irwin';
 
-    $.ajax({
-      url: $btn.data('update-url'),
-      method: 'POST',
-      data: payload,
-      dataType: 'text'
-    })
-      .done(function () {
-        // The IncidentsController#update action redirects to the plans
-        // page by default; force navigation back to the incident show
-        // page so users land somewhere useful for reviewing IRWIN edits.
-        window.location.href = $btn.data('update-url');
-      })
-      .fail(function (xhr) {
-        alert('Update failed: ' + xhr.status + ' ' + (xhr.responseText || ''));
+    // Chain the two requests: incident update first, then financial codes.
+    var incidentReq = $.isEmptyObject(selected)
+      ? $.Deferred().resolve()
+      : $.ajax({
+          url: updateUrl,
+          method: 'POST',
+          data: { incident: selected, _method: 'patch', authenticity_token: csrf },
+          dataType: 'text'
+        });
+
+    incidentReq.then(function () {
+      if ($.isEmptyObject(codes)) return $.Deferred().resolve();
+      return $.ajax({
+        url: codesUrl,
+        method: 'POST',
+        data: { codes: codes, authenticity_token: csrf },
+        dataType: 'json'
       });
+    }).done(function () {
+      window.location.href = updateUrl;
+    }).fail(function (xhr) {
+      alert('Update failed: ' + xhr.status + ' ' + (xhr.responseText || ''));
+    });
   });
 });

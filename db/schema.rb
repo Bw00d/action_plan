@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_09_113420) do
+ActiveRecord::Schema.define(version: 2026_07_10_085426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,6 +198,19 @@ ActiveRecord::Schema.define(version: 2026_07_09_113420) do
     t.datetime "updated_at", null: false
     t.string "new_location"
     t.date "estimated_arrival_date"
+  end
+
+  create_table "financial_codes", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.string "agency", null: false
+    t.string "code", null: false
+    t.integer "position", default: 0
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id", "agency"], name: "index_financial_codes_on_incident_id_and_agency", unique: true
+    t.index ["incident_id", "position"], name: "index_financial_codes_on_incident_id_and_position"
+    t.index ["incident_id"], name: "index_financial_codes_on_incident_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -486,6 +499,7 @@ ActiveRecord::Schema.define(version: 2026_07_09_113420) do
   add_foreign_key "demob_notifications", "demobs"
   add_foreign_key "demob_notifications", "incidents"
   add_foreign_key "demob_notifications", "resources"
+  add_foreign_key "financial_codes", "incidents"
   add_foreign_key "org_unit_assignments", "org_units"
   add_foreign_key "org_unit_assignments", "resources"
   add_foreign_key "org_units", "incidents"

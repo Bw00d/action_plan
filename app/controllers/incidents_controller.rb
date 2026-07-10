@@ -120,7 +120,12 @@ class IncidentsController < ApplicationController
       render json: { error: 'No matching incident found in WFIGS.' }, status: :not_found and return
     end
 
-    render json: { proposed: normalize_wfigs_attrs(attrs), source: 'WFIGS / IRWIN', fetched_at: Time.current }
+    render json: {
+      proposed:         normalize_wfigs_attrs(attrs),
+      financial_codes:  proposed_financial_codes(attrs),
+      source:           'WFIGS / IRWIN',
+      fetched_at:       Time.current
+    }
   end
 
   private
@@ -175,6 +180,25 @@ class IncidentsController < ApplicationController
       cost:              attrs['attr_EstimatedCostToDate']&.to_i,
       p_code:            p_code
     }.compact.reject { |_, v| v.respond_to?(:empty?) && v.empty? }
+  end
+
+  # Financial codes we can derive from WFIGS attributes. BLM's fire-tracking
+  # identifier is the FireCode; USFS uses a composite of JobCode + FireCode +
+  # OverrideCode. Everything else (SOA, state DNRs, compacts, etc.) has to
+  # be entered manually and is left untouched.
+  def proposed_financial_codes(attrs)
+    codes = {}
+    fire_code = attrs['attr_FireCode'].to_s.strip
+    codes['BLM'] = fire_code if fire_code.present?
+
+    job = attrs['attr_FSJobCode'].to_s.strip
+    override = attrs['attr_FSOverrideCode'].to_s.strip
+    usfs_parts = [job, fire_code].reject(&:blank?)
+    usfs = usfs_parts.join(' ')
+    usfs += " (#{override})" if override.present? && usfs.present?
+    codes['USFS'] = usfs if usfs.present?
+
+    codes
   end
 
   # Derives a human-readable status by walking the fire's lifecycle
