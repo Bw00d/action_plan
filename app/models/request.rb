@@ -74,12 +74,13 @@ class Request < ApplicationRecord
     map
   end
 
-  # All descendants of req_num walked depth-first (children first, then
-  # their children, etc). Used both to size the # of personnel and to
-  # populate the Roster on check-in.
+  # All descendants of req_num walked depth-first in natural numeric order
+  # at every level, so C-3.1, C-3.2, ..., C-3.10 land in the right sequence
+  # regardless of insertion order in the IROC dump. Used both to size the
+  # # of personnel and to populate the Roster on check-in.
   def self.descendants_of(req_num, children_map)
     result = []
-    (children_map[req_num] || []).each do |kid|
+    direct_children_of(req_num, children_map).each do |kid|
       result << kid
       result.concat(descendants_of(kid.req_number, children_map))
     end
