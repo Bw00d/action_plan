@@ -74,6 +74,26 @@ class Request < ApplicationRecord
     map
   end
 
+  # All descendants of req_num walked depth-first (children first, then
+  # their children, etc). Used both to size the # of personnel and to
+  # populate the Roster on check-in.
+  def self.descendants_of(req_num, children_map)
+    result = []
+    (children_map[req_num] || []).each do |kid|
+      result << kid
+      result.concat(descendants_of(kid.req_number, children_map))
+    end
+    result
+  end
+
+  # Direct subordinates natural-sorted so ".1" comes before ".10" and the
+  # numerically first one lands at the head of the list (i.e. the leader).
+  def self.direct_children_of(req_num, children_map)
+    (children_map[req_num] || []).sort_by do |r|
+      r.req_number.to_s.scan(/\d+/).map(&:to_i)
+    end
+  end
+
   # Pre-fill for Resource#name on the check-in form.
   #   Person → "LAST, FIRST" (upcased to match the app's resource naming style)
   #   Otherwise → res_name (already carries crew/equipment display name)

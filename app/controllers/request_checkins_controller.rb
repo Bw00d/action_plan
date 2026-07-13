@@ -13,12 +13,24 @@ class RequestCheckinsController < ApplicationController
       return
     end
 
+    # If the request has subordinates, we can pre-fill the leader name (the
+    # first direct subordinate, e.g. C-6.1 = the crew boss) and the personnel
+    # count (total descendants). For a lone request with no subordinates we
+    # can't infer either — user fills them in manually.
+    children_map = Request.build_children_map(@incident.requests)
+    descendants  = Request.descendants_of(@request.req_number, children_map)
+    direct_subs  = Request.direct_children_of(@request.req_number, children_map)
+    leader_name  = direct_subs.first&.suggested_resource_name
+    personnel    = descendants.any? ? descendants.size : nil
+
     @resource = @incident.resources.new(
       name:              @request.suggested_resource_name,
       category:          @request.resource_category,
       position:          @request.filled_catalog_item_code,
       agency:            @request.res_prov_agency_abbrev,
       order_number:      @request.suggested_order_number,
+      leader:            leader_name,
+      number_personnel:  personnel,
       jetport:           @request.jet_port,
       assignment_length: 14
     )
@@ -43,7 +55,7 @@ class RequestCheckinsController < ApplicationController
   # newly-created Resource carries a personnel manifest.
   def populate_roster_from_subordinates(resource, request)
     children_map = Request.build_children_map(@incident.requests)
-    descendants  = collect_descendants(request.req_number, children_map)
+    descendants  = Request.descendants_of(request.req_number, children_map)
     descendants.each_with_index do |req, i|
       resource.rosters.create!(
         request:      req,
@@ -53,15 +65,6 @@ class RequestCheckinsController < ApplicationController
         position_num: i + 1
       )
     end
-  end
-
-  def collect_descendants(req_num, children_map)
-    result = []
-    (children_map[req_num] || []).each do |kid|
-      result << kid
-      result.concat(collect_descendants(kid.req_number, children_map))
-    end
-    result
   end
 
 
