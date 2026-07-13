@@ -37,8 +37,14 @@
 
 
 
-        <tr id="resource-<%= r.id %>" class="incident-resource">
-            <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %> 
+        <tr id="resource-<%= r.id %>" class="incident-resource<%= ' has-roster' if r.rosters.any? %>">
+            <td class="sm-padding-left sm-bip-input">
+              <span class="roster-toggle-slot"><% if r.rosters.any? %><span class="resource-roster-toggle"
+                    role="button"
+                    tabindex="0"
+                    aria-expanded="false"
+                    data-resource-id="<%= r.id %>"
+                    title="Show <%= r.rosters.size %> roster entr<%= r.rosters.size == 1 ? 'y' : 'ies' %>"><span class="roster-toggle-caret" aria-hidden="true">&gt;</span></span><% end %></span><%= r.cat %><%= best_in_place r, :order_number, :as => :input %>
 
             </td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
@@ -77,6 +83,22 @@
               <% end %>
             </td>
           </tr>
+
+          <%# Roster rows — one per RosterEntry, hidden by default. Depth is
+              inferred from the number of dots in the entry's order_number,
+              so E-209.3.1 sits one level deeper than E-209.3 which itself
+              sits one level deeper than E-209. %>
+          <% r.rosters.each do |ros| %>
+            <% depth = ros.order_number.to_s.count('.') %>
+            <tr class="resource-roster-row is-hidden depth-<%= depth %>" data-resource-id="<%= r.id %>">
+              <td class="roster-order-cell" style="padding-left: <%= 20 + depth * 20 %>px">
+                <%= r.cat %><%= ros.order_number %>
+              </td>
+              <td class="roster-position-cell"><%= ros.position %></td>
+              <td class="roster-name-cell"><%= ros.name %></td>
+              <td colspan="9" class="roster-filler-cell"></td>
+            </tr>
+          <% end %>
         <% end %>
 
 

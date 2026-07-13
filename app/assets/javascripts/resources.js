@@ -180,10 +180,31 @@ $(document).on("turbolinks:load", function() {
   // Double-click a resource row → open its floating detail panel with all
   // editable attributes. Close with the X, backdrop click, or Escape.
   $(document).on('dblclick', 'tr.incident-resource', function (e) {
-    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button').length) return;
+    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button, .resource-roster-toggle').length) return;
     var id = $(this).attr('id').replace('resource-', '');
     $('.resource-panel').addClass('is-hidden');
     $('#resource-panel-' + id).removeClass('is-hidden');
+  });
+
+  // Roster expansion — click the caret in the Order # cell to toggle
+  // visibility of the roster rows nested below the parent resource row.
+  function toggleRosterExpansion($btn) {
+    var id = $btn.data('resource-id');
+    var expanded = $btn.attr('aria-expanded') === 'true';
+    $btn.attr('aria-expanded', String(!expanded));
+    $('tr.resource-roster-row[data-resource-id="' + id + '"]').toggleClass('is-hidden', expanded);
+  }
+
+  $(document).on('click', '.resource-roster-toggle', function (e) {
+    e.stopPropagation();
+    toggleRosterExpansion($(this));
+  });
+
+  $(document).on('keydown', '.resource-roster-toggle', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleRosterExpansion($(this));
+    }
   });
 
   $(document).on('click', '.resource-panel-close', function () {

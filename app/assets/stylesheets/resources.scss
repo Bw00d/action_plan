@@ -443,7 +443,61 @@ input.fwd-datepicker {
   height: 20px;
   margin: 0 !important;
   /*padding: none !important;*/
-  -webkit-box-sizing: content-box; 
+  -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+}
+
+// ── Roster expansion on ICS-211 rows ────────────────────────────────────
+// A caret in the Order # cell reveals roster rows nested below the parent
+// resource row. Rendered as siblings in the table body so they scroll with
+// the same columns; depth-based padding on the Order # cell provides the
+// visual nesting.
+.roster-toggle-slot {
+  display: inline-block;
+  width: 14px;
+  text-align: left;
+  vertical-align: baseline;
+  color: #a1a8b4;
+}
+
+.resource-roster-toggle {
+  display: inline;
+  cursor: pointer;
+  color: #a1a8b4;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+
+  &:hover { color: #172b4d; }
+  &:focus { outline: none; }
+  &[aria-expanded="true"] .roster-toggle-caret { transform: rotate(90deg); }
+}
+
+.roster-toggle-caret {
+  display: inline-block;
+  transition: transform 0.12s ease;
+  transform-origin: center;
+  vertical-align: baseline;
+}
+
+.resource-roster-row {
+  background: #f7f8fa;
+
+  &.is-hidden { display: none; }
+
+  td {
+    color: #5e6c84;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-top: 1px dashed #e6e8ec;
+  }
+
+  .roster-order-cell {
+    font-family: Menlo, Consolas, monospace;
+    white-space: nowrap;
+  }
+
+  &.depth-2 { background: #eef1f5; }
 }

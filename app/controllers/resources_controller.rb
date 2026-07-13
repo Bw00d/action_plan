@@ -8,7 +8,7 @@ class ResourcesController < ApplicationController
   def index
     @incident = Incident.find(params[:incident_id])
     @resource = Resource.new
-    @resources = @incident.resources.order(:category, :order_number)
+    @resources = @incident.resources.includes(:rosters).order(:category, :order_number)
     @overhead = @resources.overhead
     @equipment = @resources.equipment
     @crews = @resources.crew
