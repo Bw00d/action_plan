@@ -49350,6 +49350,171 @@ $(document).on("turbolinks:load", function() {
 
  
 });
+// IRWIN populate — fetches WFIGS/IRWIN attributes for the current incident,
+// shows a modal with a current-vs-proposed diff, and PATCHes the incident
+// with only the fields the user checked.
+$(document).on('turbolinks:load', function () {
+  var $btn = $('#irwin-populate-btn');
+  if (!$btn.length) return;
+
+  var $status = $('#irwin-status');
+  var $modal  = $('#irwin-modal');
+  var $body   = $('#irwin-diff-body');
+  var $apply  = $('#irwin-apply-btn');
+  var $form   = $('#irwin-apply-form');
+
+  // Display helpers for the current values in the info panel. We reach into
+  // the panel's rendered text so we don't have to duplicate model → label
+  // knowledge in JS.
+  function currentValue(field) {
+    // best_in_place spans have data-attribute matching the field name.
+    var $span = $('.best_in_place[data-attribute="' + field + '"]').first();
+    if ($span.length) return $.trim($span.text());
+    return '';
+  }
+
+  var FIELD_LABELS = {
+    name: 'Name',
+    number: 'Number',
+    size: 'Size (acres)',
+    percent_contained: '% Contained',
+    status: 'Status',
+    cost: 'Estimated Cost',
+    cause: 'Cause',
+    fire_behavior: 'Activity',
+    fuel_type: 'Fuels',
+    start_date: 'Start Date',
+    containment_date: 'Contained Date',
+    control_date: 'Controlled Date',
+    out_date: 'Out Date',
+    location: 'Location',
+    latitude: 'Latitude',
+    longitude: 'Longitude',
+    ic: 'IC',
+    complexity: 'Complexity',
+    ownership: 'Ownership'
+    // 'p_code' removed — financial codes are now a separate first-class model
+  };
+
+  $btn.on('click', function () {
+    $status.text('Fetching from IRWIN…');
+    $body.empty();
+
+    $.getJSON($btn.data('url'))
+      .done(function (data) {
+        var proposed = data.proposed || {};
+        var proposedCodes = data.financial_codes || {};
+        var rows = '';
+
+        // Standard incident fields.
+        Object.keys(FIELD_LABELS).forEach(function (field) {
+          if (!(field in proposed)) return;
+          var current  = currentValue(field);
+          var newValue = proposed[field];
+          if (current === String(newValue)) return;
+          var checkboxId = 'irwin-check-' + field;
+          rows += '<tr>' +
+            '<td><input type="checkbox" class="irwin-check" checked id="' + checkboxId + '" data-field="' + field + '" data-value="' + $('<div>').text(newValue).html().replace(/"/g, '&quot;') + '"></td>' +
+            '<td><label for="' + checkboxId + '">' + FIELD_LABELS[field] + '</label></td>' +
+            '<td class="text-muted">' + $('<div>').text(current || '—').html() + '</td>' +
+            '<td><strong>' + $('<div>').text(newValue).html() + '</strong></td>' +
+            '</tr>';
+        });
+
+        // Financial codes (BLM, USFS). Compared against the current value
+        // of the matching agency row in the info panel.
+        Object.keys(proposedCodes).forEach(function (agency) {
+          var newValue = proposedCodes[agency];
+          if (!newValue) return;
+          var current = currentFinancialCode(agency);
+          if (current === String(newValue)) return;
+          var checkboxId = 'irwin-check-fc-' + agency;
+          rows += '<tr>' +
+            '<td><input type="checkbox" class="irwin-check-fc" checked id="' + checkboxId + '" data-agency="' + agency + '" data-value="' + $('<div>').text(newValue).html().replace(/"/g, '&quot;') + '"></td>' +
+            '<td><label for="' + checkboxId + '">' + agency + ' code</label></td>' +
+            '<td class="text-muted">' + $('<div>').text(current || '—').html() + '</td>' +
+            '<td><strong>' + $('<div>').text(newValue).html() + '</strong></td>' +
+            '</tr>';
+        });
+
+        if (!rows) {
+          rows = '<tr><td colspan="4" class="text-center text-muted"><em>IRWIN has no fields that differ from what\'s already saved.</em></td></tr>';
+          $apply.prop('disabled', true);
+        } else {
+          $apply.prop('disabled', false);
+        }
+        $body.html(rows);
+        var fieldCount = Object.keys(proposed).length + Object.keys(proposedCodes).length;
+        $status.text('Fetched ' + fieldCount + ' fields from IRWIN.');
+        $modal.modal('show');
+      })
+      .fail(function (xhr) {
+        var msg = (xhr.responseJSON && xhr.responseJSON.error) ||
+                  ('Fetch failed (' + xhr.status + ')');
+        $status.text(msg).css('color', '#b71c1c');
+      });
+  });
+
+  // Read the current code value for an agency from the info panel's
+  // financial-codes table. Agencies are stored uppercase.
+  function currentFinancialCode(agency) {
+    var wanted = agency.toString().toUpperCase();
+    var found = '';
+    $('.financial-codes-table tr').each(function () {
+      var rowAgency = $.trim($(this).find('.fc-agency .best_in_place').text()).toUpperCase();
+      if (rowAgency === wanted) {
+        found = $.trim($(this).find('.fc-code .best_in_place').text());
+        return false; // break
+      }
+    });
+    return found;
+  }
+
+  $apply.on('click', function () {
+    var selected = {};
+    $('.irwin-check:checked').each(function () {
+      selected[$(this).data('field')] = $(this).data('value');
+    });
+
+    var codes = {};
+    $('.irwin-check-fc:checked').each(function () {
+      codes[$(this).data('agency')] = $(this).data('value');
+    });
+
+    if ($.isEmptyObject(selected) && $.isEmptyObject(codes)) {
+      $modal.modal('hide');
+      return;
+    }
+
+    var csrf = $('meta[name=csrf-token]').attr('content');
+    var updateUrl = $btn.data('update-url');
+    var codesUrl  = updateUrl + '/financial_codes/apply_irwin';
+
+    // Chain the two requests: incident update first, then financial codes.
+    var incidentReq = $.isEmptyObject(selected)
+      ? $.Deferred().resolve()
+      : $.ajax({
+          url: updateUrl,
+          method: 'POST',
+          data: { incident: selected, _method: 'patch', authenticity_token: csrf },
+          dataType: 'text'
+        });
+
+    incidentReq.then(function () {
+      if ($.isEmptyObject(codes)) return $.Deferred().resolve();
+      return $.ajax({
+        url: codesUrl,
+        method: 'POST',
+        data: { codes: codes, authenticity_token: csrf },
+        dataType: 'json'
+      });
+    }).done(function () {
+      window.location.href = updateUrl;
+    }).fail(function (xhr) {
+      alert('Update failed: ' + xhr.status + ' ' + (xhr.responseText || ''));
+    });
+  });
+});
 $(document).on("turbolinks:load", function() {
    /* Activating Best In Place */
     jQuery(".best_in_place").best_in_place();
@@ -49434,29 +49599,77 @@ $(document).on('turbolinks:load', function () {
   var $index = $('.requests-index');
   if (!$index.length) return;
 
-  // Individual caret toggle (click or keyboard-activate on the span[role=button])
-  function toggleRequest($btn) {
-    var key = $btn.data('target');
+  // Persistent search filter state. When a search is active this is an
+  // object { rowId: true, ... } listing every row that survives the
+  // filter (matches plus their ancestor chain). Null when no search.
+  var searchVisibleIds = null;
+
+  // Refresh visibility of every tree row from three inputs:
+  //   1. ancestor-collapse — hide if any ancestor toggle is collapsed
+  //   2. detail user-open — details only show when the user opened them
+  //   3. search filter — if active, hide rows outside the visible set
+  // All three combine; a row is visible only if none of them hide it.
+  function refreshTreeVisibility() {
+    var collapsedKeys = {};
+    $index.find('.request-toggle[aria-expanded="false"]').each(function () {
+      collapsedKeys[$(this).data('target')] = true;
+    });
+
+    var searchActive = searchVisibleIds !== null;
+
+    $index.find('tr[data-ancestors]').each(function () {
+      var $row = $(this);
+      var attr = String($row.attr('data-ancestors') || '').trim();
+      var ancestors = attr.length ? attr.split(/\s+/) : [];
+      var ancestorCollapsed = false;
+      for (var i = 0; i < ancestors.length; i++) {
+        if (collapsedKeys[ancestors[i]]) { ancestorCollapsed = true; break; }
+      }
+
+      if ($row.hasClass('request-detail')) {
+        var userOpen = $row.hasClass('is-detail-open');
+        var searchHidden = false;
+        if (searchActive) {
+          searchHidden = !searchVisibleIds[$row.data('detail-of')];
+        }
+        $row.toggleClass('is-hidden', !userOpen || ancestorCollapsed || searchHidden);
+      } else {
+        var searchHiddenRow = false;
+        if (searchActive) {
+          searchHiddenRow = !searchVisibleIds[$row.data('parent-key')];
+        }
+        $row.toggleClass('is-hidden', ancestorCollapsed || searchHiddenRow);
+      }
+    });
+  }
+
+  // Caret click: toggle this node's expanded state, then refresh visibility
+  // for the whole tree.
+  function toggleTreeNode($btn) {
     var expanded = $btn.attr('aria-expanded') === 'true';
     $btn.attr('aria-expanded', String(!expanded));
-    $btn.closest('table').find('tr.request-child[data-child-of="' + key + '"]').toggleClass('is-hidden', expanded);
+    refreshTreeVisibility();
   }
 
   $index.on('click', '.request-toggle', function () {
-    toggleRequest($(this));
+    toggleTreeNode($(this));
   });
 
   $index.on('keydown', '.request-toggle', function (e) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleRequest($(this));
+      toggleTreeNode($(this));
     }
   });
 
-  // Click on Req # text expands the detail row (check-in area).
+  // Detail toggle: user clicks the Req # text to open/close the inline
+  // detail area (Check In button, etc.). Tracked with is-detail-open so
+  // tree collapses can cascade without losing the user's intent.
   function toggleDetail($el) {
     var key = $el.data('detail-target');
-    $el.closest('table').find('tr.request-detail[data-detail-of="' + key + '"]').toggleClass('is-hidden');
+    var $detail = $index.find('tr.request-detail[data-detail-of="' + key + '"]');
+    $detail.toggleClass('is-detail-open');
+    refreshTreeVisibility();
   }
 
   $index.on('click', '.req-number-text[data-detail-target]', function () {
@@ -49471,6 +49684,9 @@ $(document).on('turbolinks:load', function () {
   });
 
   // ── Search filter ─────────────────────────────────────────────────────
+  // When a search is active, matching rows and all their ancestors become
+  // visible (ancestor toggles flip to expanded). Clearing the search
+  // returns the tree to its default collapsed state.
   var $searchInput   = $('#requests-search-input');
   var $searchClear   = $('#requests-search-clear');
   var $searchSummary = $('#requests-search-summary');
@@ -49482,62 +49698,57 @@ $(document).on('turbolinks:load', function () {
     var hasQuery = q.length > 0;
     $searchClear.toggle(hasQuery);
 
+    if (!hasQuery) {
+      // Reset: clear search filter, collapse everything, close details,
+      // then recompute visibility.
+      searchVisibleIds = null;
+      $index.find('.request-toggle').attr('aria-expanded', 'false');
+      $index.find('tr.request-detail').removeClass('is-detail-open');
+      refreshTreeVisibility();
+      $searchSummary.text('');
+      $('.catalog-section', $index).removeClass('is-empty');
+      return;
+    }
+
+    // Walk every row and gather the visible set: matches, plus every
+    // ancestor of a match (so the tree context stays visible). Expand
+    // matching ancestors' toggles so the tree opens up around the match.
+    var visibleIds = {};
     var totalMatches = 0;
 
     $('.catalog-section', $index).each(function () {
       var $section = $(this);
       var sectionMatches = 0;
 
-      $section.find('tr.request-parent').each(function () {
-        var $parent = $(this);
-        var key = $parent.data('parent-key');
-        var $children = $section.find('tr.request-child[data-child-of="' + key + '"]');
+      $section.find('tr.request-row').each(function () {
+        var $row = $(this);
+        var text = normalize($row.text());
+        if (text.indexOf(q) === -1) return;
 
-        var parentText = normalize($parent.text());
-        var parentMatch = !hasQuery || parentText.indexOf(q) !== -1;
+        sectionMatches += 1;
+        visibleIds[$row.data('parent-key')] = true;
 
-        var childMatchCount = 0;
-        $children.each(function () {
-          var $c = $(this);
-          var match = !hasQuery || normalize($c.text()).indexOf(q) !== -1;
-          if (match) childMatchCount += 1;
-
-          if (!hasQuery) {
-            $c.addClass('is-hidden');
-          } else if (match) {
-            $c.removeClass('is-hidden');
-          } else {
-            $c.addClass('is-hidden');
-          }
+        var attr = String($row.attr('data-ancestors') || '').trim();
+        var ancestors = attr.length ? attr.split(/\s+/) : [];
+        ancestors.forEach(function (a) {
+          visibleIds[a] = true;
+          $section.find('.request-toggle[data-target="' + a + '"]').attr('aria-expanded', 'true');
         });
-
-        var visibleParent = parentMatch || childMatchCount > 0;
-        $parent.toggleClass('is-hidden', !visibleParent);
-
-        // The detail row follows the parent — hide it while filtering.
-        $section.find('tr.request-detail[data-detail-of="' + key + '"]').addClass('is-hidden');
-
-        // Sync the caret expanded-state to reflect what's visible.
-        var $toggle = $parent.find('.request-toggle');
-        if ($toggle.length) {
-          var expanded = childMatchCount > 0 && hasQuery;
-          $toggle.attr('aria-expanded', String(expanded));
-        }
-
-        if (visibleParent) {
-          sectionMatches += 1 + childMatchCount;
-        }
       });
 
-      $section.toggleClass('is-empty', hasQuery && sectionMatches === 0);
+      $section.toggleClass('is-empty', sectionMatches === 0);
       totalMatches += sectionMatches;
     });
 
-    if (hasQuery) {
-      $searchSummary.text(totalMatches + ' match' + (totalMatches === 1 ? '' : 'es'));
-    } else {
-      $searchSummary.text('');
-    }
+    // Close any open detail rows so the search view starts clean, then
+    // stash the visible set and let refreshTreeVisibility apply it. Toggle
+    // clicks that follow (caret, detail) also call refreshTreeVisibility,
+    // so the search filter stays in force through those interactions.
+    $index.find('tr.request-detail').removeClass('is-detail-open');
+    searchVisibleIds = visibleIds;
+    refreshTreeVisibility();
+
+    $searchSummary.text(totalMatches + ' match' + (totalMatches === 1 ? '' : 'es'));
   }
 
   $searchInput.on('input', applySearch);
@@ -49971,10 +50182,34 @@ $(document).on("turbolinks:load", function() {
   // Double-click a resource row → open its floating detail panel with all
   // editable attributes. Close with the X, backdrop click, or Escape.
   $(document).on('dblclick', 'tr.incident-resource', function (e) {
-    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button').length) return;
+    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button, .resource-roster-toggle').length) return;
     var id = $(this).attr('id').replace('resource-', '');
     $('.resource-panel').addClass('is-hidden');
     $('#resource-panel-' + id).removeClass('is-hidden');
+  });
+
+  // Roster expansion — click the caret in the Order # cell to toggle
+  // visibility of the roster rows nested below the parent resource row.
+  function toggleRosterExpansion($btn) {
+    var id = $btn.data('resource-id');
+    var expanded = $btn.attr('aria-expanded') === 'true';
+    $btn.attr('aria-expanded', String(!expanded));
+    $('tr.resource-roster-row[data-resource-id="' + id + '"]').toggleClass('is-hidden', expanded);
+  }
+
+  // Namespaced + off/on so turbolinks:load re-firing (e.g. after a remote
+  // form redirect) doesn't stack multiple handlers on document. Two handlers
+  // would flip aria-expanded twice per click and the caret would look dead.
+  $(document).off('click.rosterToggle').on('click.rosterToggle', '.resource-roster-toggle', function (e) {
+    e.stopPropagation();
+    toggleRosterExpansion($(this));
+  });
+
+  $(document).off('keydown.rosterToggle').on('keydown.rosterToggle', '.resource-roster-toggle', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleRosterExpansion($(this));
+    }
   });
 
   $(document).on('click', '.resource-panel-close', function () {
