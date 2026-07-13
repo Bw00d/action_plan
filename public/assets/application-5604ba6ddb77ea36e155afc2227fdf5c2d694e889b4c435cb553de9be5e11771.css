@@ -19834,30 +19834,37 @@ body.printing-demob-notifs .no-print {
   line-height: 1.7em;
 }
 
-/* line 13, app/assets/stylesheets/demobs.css.scss */
-#demob-sheet #form-container input, #demob-sheet #form-container textarea {
-  border: none;
+/* line 14, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container input {
+  border-color: lightgray !important;
+  height: 1.5em;
 }
 
-/* line 17, app/assets/stylesheets/demobs.css.scss */
+/* line 18, app/assets/stylesheets/demobs.css.scss */
+#demob-sheet #form-container textarea {
+  border-color: lightgray !important;
+  width: 100%;
+}
+
+/* line 23, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet .small {
   font-weight: 777;
 }
 
-/* line 20, app/assets/stylesheets/demobs.css.scss */
+/* line 26, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet p {
   font-size: .80em;
   padding: 0 10px;
   line-height: 1.7em;
 }
 
-/* line 25, app/assets/stylesheets/demobs.css.scss */
+/* line 31, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet h1, #demob-sheet h2, #demob-sheet h3, #demob-sheet h4, #demob-sheet h5, #demob-sheet h6 {
   font-weight: 777;
   color: #444;
 }
 
-/* line 29, app/assets/stylesheets/demobs.css.scss */
+/* line 35, app/assets/stylesheets/demobs.css.scss */
 #demob-sheet .units-container {
   /*border-bottom: 1px solid black;*/
   margin-left: 20px;
@@ -19866,115 +19873,251 @@ body.printing-demob-notifs .no-print {
   overflow: hidden;
 }
 
-/* line 37, app/assets/stylesheets/demobs.css.scss */
+/* line 43, app/assets/stylesheets/demobs.css.scss */
 .custom-table {
   margin-bottom: 0;
 }
 
-/* line 39, app/assets/stylesheets/demobs.css.scss */
+/* line 45, app/assets/stylesheets/demobs.css.scss */
 .custom-table th {
   font-size: 0.9em;
   font-weight: 777;
   padding-top: 0;
 }
 
-/* line 44, app/assets/stylesheets/demobs.css.scss */
+/* line 50, app/assets/stylesheets/demobs.css.scss */
 .custom-table thead {
   border-bottom: 1px solid black;
 }
 
-/* line 47, app/assets/stylesheets/demobs.css.scss */
+/* line 53, app/assets/stylesheets/demobs.css.scss */
 .custom-table td {
   padding: 4px 0 0 3px !important;
   font-size: 0.7em;
   border-top: 1px solid black !important;
 }
 
-/* line 52, app/assets/stylesheets/demobs.css.scss */
+/* line 58, app/assets/stylesheets/demobs.css.scss */
 .custom-table .head-row {
   padding-top: 0 !important;
   border-bottom: 1px solid black !important;
 }
 
-/* line 58, app/assets/stylesheets/demobs.css.scss */
+/* line 64, app/assets/stylesheets/demobs.css.scss */
 #finance-table tbody tr:last-child {
   border-bottom: 1px solid black !important;
 }
 
-/* line 63, app/assets/stylesheets/demobs.css.scss */
+/* line 69, app/assets/stylesheets/demobs.css.scss */
 #logs-table tbody tr:last-child {
   border-bottom: 1px solid black !important;
 }
 
-/* line 68, app/assets/stylesheets/demobs.css.scss */
+/* line 74, app/assets/stylesheets/demobs.css.scss */
 #other-table tbody tr:last-child {
   border-bottom: 1px solid black !important;
 }
 
-/* line 72, app/assets/stylesheets/demobs.css.scss */
+/* line 79, app/assets/stylesheets/demobs.css.scss */
 #demob-remarks {
   height: 100px;
   overflow: hidden;
 }
 
-/* line 76, app/assets/stylesheets/demobs.css.scss */
+/* line 83, app/assets/stylesheets/demobs.css.scss */
 #demob-transportation {
   font-size: 0.7em;
+  padding-top: 5px;
 }
 
-/* line 78, app/assets/stylesheets/demobs.css.scss */
+/* line 86, app/assets/stylesheets/demobs.css.scss */
 #demob-transportation input {
   font-weight: 777;
 }
 
-/* line 82, app/assets/stylesheets/demobs.css.scss */
+/* line 90, app/assets/stylesheets/demobs.css.scss */
 #transportation-header {
   font-weight: 777;
   margin-left: -15px;
 }
 
-/* line 86, app/assets/stylesheets/demobs.css.scss */
+/* line 94, app/assets/stylesheets/demobs.css.scss */
 #reassignment-header {
   font-weight: 777;
 }
 
-/* line 90, app/assets/stylesheets/demobs.css.scss */
+/* line 98, app/assets/stylesheets/demobs.css.scss */
 #reassignment-info {
   font-size: 0.7em;
   overflow: hidden;
 }
 
-/* line 94, app/assets/stylesheets/demobs.css.scss */
+/* line 102, app/assets/stylesheets/demobs.css.scss */
 #prepared-by-row {
   font-size: 0.7em;
   overflow: hidden;
+  height: 50px;
 }
 
-/* line 98, app/assets/stylesheets/demobs.css.scss */
+/* line 107, app/assets/stylesheets/demobs.css.scss */
 #prepared-by-header {
   font-weight: 777;
   margin-left: -15px;
   margin-right: 10px;
 }
 
-/* line 103, app/assets/stylesheets/demobs.css.scss */
+/* line 112, app/assets/stylesheets/demobs.css.scss */
 #remarks-content {
   font-size: 0.9em;
   overflow: hidden;
 }
 
-/* line 106, app/assets/stylesheets/demobs.css.scss */
+/* line 115, app/assets/stylesheets/demobs.css.scss */
 #remarks-content input {
   width: 100%;
   min-height: 60px;
 }
 
-/* line 111, app/assets/stylesheets/demobs.css.scss */
+/* line 120, app/assets/stylesheets/demobs.css.scss */
 #demob-form-button {
   display: none;
 }
 
-/* line 114, app/assets/stylesheets/demobs.css.scss */
+@media print {
+  /* line 125, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout {
+    padding: 0 !important;
+  }
+  /* line 128, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout header,
+body.printing-demob-checkout footer,
+body.printing-demob-checkout #flash-messages,
+body.printing-demob-checkout .no-print {
+    display: none !important;
+  }
+  /* line 134, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout input, body.printing-demob-checkout textarea {
+    border: none !important;
+  }
+  /* line 138, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-sheet .container,
+body.printing-demob-checkout #demob-sheet .col-lg-8,
+body.printing-demob-checkout #demob-sheet .col-xs-12 {
+    max-width: 100% !important;
+    width: 100% !important;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* line 151, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .bb,
+body.printing-demob-checkout #demob-sheet .row,
+body.printing-demob-checkout #demob-sheet .col-xs-12,
+body.printing-demob-checkout #demob-sheet .col-xs-4,
+body.printing-demob-checkout #demob-sheet .col-xs-6 {
+    overflow: hidden !important;
+  }
+  /* line 161, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #form-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2px !important;
+    font-size: 9pt;
+  }
+  /* line 167, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #form-container div {
+    line-height: 1.1em !important;
+  }
+  /* line 172, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h1, body.printing-demob-checkout h2, body.printing-demob-checkout h3, body.printing-demob-checkout h4, body.printing-demob-checkout h5, body.printing-demob-checkout h6 {
+    margin: 2px 0 !important;
+  }
+  /* line 173, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h4 {
+    font-size: 11pt !important;
+  }
+  /* line 174, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h6 {
+    font-size: 8pt !important;
+  }
+  /* line 175, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout p {
+    font-size: 8pt !important;
+    line-height: 1.15em !important;
+    margin: 2px 0 !important;
+    padding: 0 !important;
+  }
+  /* line 178, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout span#release-date-highlight {
+    background-color: transparent !important;
+  }
+  /* line 181, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-transportation,
+body.printing-demob-checkout #reassignment-info,
+body.printing-demob-checkout #prepared-by-row {
+    font-size: 8pt !important;
+  }
+  /* line 184, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout span#reassignment-header {
+    margin-top: 0 !important;
+  }
+  /* line 187, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table td {
+    font-size: 7pt !important;
+    padding: 1px 3px !important;
+  }
+  /* line 188, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table th {
+    font-size: 8pt !important;
+    padding: 1px 3px !important;
+  }
+  /* line 189, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .custom-table {
+    margin-bottom: 2px !important;
+  }
+  /* line 192, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout #demob-remarks {
+    height: 150px !important;
+  }
+  /* line 193, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout input, body.printing-demob-checkout textarea {
+    padding: 0 !important;
+    line-height: 1.1em !important;
+  }
+  /* line 194, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout textarea {
+    min-height: 30px !important;
+    height: 50px !important;
+    border: none !important;
+  }
+  /* line 197, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .row {
+    margin: 0 !important;
+  }
+  /* line 198, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .row > [class*="col-"] {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+  }
+  /* line 201, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout .small {
+    font-size: 7pt !important;
+  }
+  /* line 205, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout table tr {
+    page-break-inside: avoid;
+  }
+  /* line 206, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout h4, body.printing-demob-checkout h6 {
+    page-break-after: avoid;
+  }
+  /* line 210, app/assets/stylesheets/demobs.css.scss */
+  body.printing-demob-checkout body {
+    background: #fff !important;
+  }
+}
+
+/* line 213, app/assets/stylesheets/demobs.css.scss */
 .strong {
   font-weight: 777;
 }
@@ -20331,7 +20474,740 @@ select {
   /*padding-bottom: 20px;*/
 }
 
-/* line 113, app/assets/stylesheets/incidents.scss */
+/* line 117, app/assets/stylesheets/incidents.scss */
+.info-panel {
+  padding: 20px 22px 24px;
+  color: #172b4d;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* line 124, app/assets/stylesheets/incidents.scss */
+.info-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef0f3;
+  margin-bottom: 18px;
+}
+
+/* line 133, app/assets/stylesheets/incidents.scss */
+.info-panel-header h4 {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+/* line 135, app/assets/stylesheets/incidents.scss */
+.info-panel-header .info-edit-link {
+  margin-left: auto;
+  font-size: 13px;
+  color: #0052cc;
+}
+
+/* line 140, app/assets/stylesheets/incidents.scss */
+.info-panel-header .info-edit-link:hover {
+  text-decoration: underline;
+}
+
+/* line 144, app/assets/stylesheets/incidents.scss */
+.info-status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* line 154, app/assets/stylesheets/incidents.scss */
+.info-status-pill.status-uncontained {
+  background: #c62828;
+}
+
+/* line 155, app/assets/stylesheets/incidents.scss */
+.info-status-pill.status-contained {
+  background: #f57c00;
+}
+
+/* line 156, app/assets/stylesheets/incidents.scss */
+.info-status-pill.status-controlled {
+  background: #1565c0;
+}
+
+/* line 157, app/assets/stylesheets/incidents.scss */
+.info-status-pill.status-out {
+  background: #2e7d32;
+}
+
+/* line 161, app/assets/stylesheets/incidents.scss */
+.info-hero-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+/* line 168, app/assets/stylesheets/incidents.scss */
+.info-hero {
+  background: #f4f5f7;
+  border-radius: 6px;
+  padding: 14px 16px;
+  min-height: 90px;
+}
+
+/* line 174, app/assets/stylesheets/incidents.scss */
+.info-hero .info-hero-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #5e6c84;
+  margin-bottom: 4px;
+}
+
+/* line 183, app/assets/stylesheets/incidents.scss */
+.info-hero .info-hero-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #172b4d;
+  line-height: 1.1;
+}
+
+/* line 189, app/assets/stylesheets/incidents.scss */
+.info-hero .info-hero-number .best_in_place {
+  display: inline-block;
+  min-width: 24px;
+}
+
+/* line 192, app/assets/stylesheets/incidents.scss */
+.info-hero .info-hero-currency {
+  font-size: 20px;
+}
+
+/* line 194, app/assets/stylesheets/incidents.scss */
+.info-hero .info-hero-unit {
+  font-size: 12px;
+  font-weight: 500;
+  color: #5e6c84;
+  margin-left: 4px;
+}
+
+/* line 202, app/assets/stylesheets/incidents.scss */
+.info-progress {
+  margin-top: 10px;
+  height: 6px;
+  background: #dfe1e6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* line 210, app/assets/stylesheets/incidents.scss */
+.info-progress-fill {
+  height: 100%;
+  background: #2e7d32;
+  transition: width 0.3s ease;
+}
+
+/* line 217, app/assets/stylesheets/incidents.scss */
+.info-section {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  background: #fafbfc;
+  border: 1px solid #eef0f3;
+  border-radius: 6px;
+}
+
+/* line 225, app/assets/stylesheets/incidents.scss */
+.info-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #5e6c84;
+  margin: 0 0 12px;
+}
+
+/* line 233, app/assets/stylesheets/incidents.scss */
+.info-section-title .fa {
+  margin-right: 6px;
+  color: #7a869a;
+}
+
+/* line 239, app/assets/stylesheets/incidents.scss */
+.info-section-hint {
+  font-size: 12px;
+  color: #6b778c;
+  margin: 0 0 10px;
+}
+
+/* line 245, app/assets/stylesheets/incidents.scss */
+.info-section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 20px;
+}
+
+/* line 251, app/assets/stylesheets/incidents.scss */
+.info-field {
+  min-width: 0;
+}
+
+/* line 254, app/assets/stylesheets/incidents.scss */
+.info-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5e6c84;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 2px;
+}
+
+/* line 264, app/assets/stylesheets/incidents.scss */
+.info-field .best_in_place {
+  display: inline-block;
+  color: #172b4d;
+  padding: 1px 4px;
+  margin-left: -4px;
+  border-radius: 3px;
+  min-width: 40px;
+}
+
+/* line 272, app/assets/stylesheets/incidents.scss */
+.info-field .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 278, app/assets/stylesheets/incidents.scss */
+.info-field .info-coord-sep {
+  color: #a5adba;
+  margin: 0 2px;
+}
+
+/* line 284, app/assets/stylesheets/incidents.scss */
+.info-field-wide {
+  grid-column: 1 / -1;
+}
+
+/* line 286, app/assets/stylesheets/incidents.scss */
+.info-required-hint {
+  color: #c62828;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+
+/* line 296, app/assets/stylesheets/incidents.scss */
+.info-timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+/* line 303, app/assets/stylesheets/incidents.scss */
+.info-timeline-step {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+}
+
+/* line 308, app/assets/stylesheets/incidents.scss */
+.info-timeline-step .info-timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #dfe1e6;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #dfe1e6;
+  margin: 0 auto 8px;
+}
+
+/* line 318, app/assets/stylesheets/incidents.scss */
+.info-timeline-step .info-timeline-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #97a0af;
+  margin-bottom: 4px;
+}
+
+/* line 327, app/assets/stylesheets/incidents.scss */
+.info-timeline-step .info-timeline-date {
+  font-size: 12px;
+  color: #97a0af;
+}
+
+/* line 331, app/assets/stylesheets/incidents.scss */
+.info-timeline-step .info-timeline-date .best_in_place {
+  display: inline-block;
+  padding: 1px 4px;
+  border-radius: 3px;
+  min-width: 40px;
+}
+
+/* line 337, app/assets/stylesheets/incidents.scss */
+.info-timeline-step .info-timeline-date .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 342, app/assets/stylesheets/incidents.scss */
+.info-timeline-step.is-active .info-timeline-dot {
+  background: #2e7d32;
+  box-shadow: 0 0 0 1px #2e7d32;
+}
+
+/* line 343, app/assets/stylesheets/incidents.scss */
+.info-timeline-step.is-active .info-timeline-label {
+  color: #172b4d;
+}
+
+/* line 344, app/assets/stylesheets/incidents.scss */
+.info-timeline-step.is-active .info-timeline-date {
+  color: #172b4d;
+  font-weight: 500;
+}
+
+/* line 348, app/assets/stylesheets/incidents.scss */
+.info-timeline-bar {
+  flex: 0 0 auto;
+  align-self: center;
+  margin-top: -34px;
+  width: 20px;
+  height: 2px;
+  background: #dfe1e6;
+}
+
+/* line 356, app/assets/stylesheets/incidents.scss */
+.info-timeline-bar.is-active {
+  background: #2e7d32;
+}
+
+/* line 360, app/assets/stylesheets/incidents.scss */
+.financial-codes-block {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #eef0f3;
+}
+
+/* line 366, app/assets/stylesheets/incidents.scss */
+.financial-codes-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+/* line 373, app/assets/stylesheets/incidents.scss */
+.financial-codes-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #5e6c84;
+}
+
+/* line 381, app/assets/stylesheets/incidents.scss */
+.financial-code-add-toggle {
+  font-size: 12px;
+  padding: 0 4px !important;
+  color: #0052cc;
+}
+
+/* line 386, app/assets/stylesheets/incidents.scss */
+.financial-code-add-toggle:hover {
+  text-decoration: underline;
+}
+
+/* line 389, app/assets/stylesheets/incidents.scss */
+.financial-codes-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* line 395, app/assets/stylesheets/incidents.scss */
+.financial-codes-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #eef0f3;
+  vertical-align: middle;
+}
+
+/* line 401, app/assets/stylesheets/incidents.scss */
+.financial-codes-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* line 403, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .fc-agency {
+  width: 30%;
+  font-weight: 600;
+  color: #172b4d;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* line 411, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .fc-code {
+  color: #42526e;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+/* line 412, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .fc-actions {
+  width: 32px;
+  text-align: right;
+}
+
+/* line 415, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .fc-actions .fc-delete-form {
+  display: inline-block;
+  margin: 0;
+}
+
+/* line 418, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .fc-delete {
+  background: none;
+  border: 0;
+  color: #97a0af;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+/* line 427, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .fc-delete:hover {
+  color: #c62828;
+}
+
+/* line 430, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .best_in_place {
+  display: inline-block;
+  min-width: 40px;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* line 436, app/assets/stylesheets/incidents.scss */
+.financial-codes-table .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 440, app/assets/stylesheets/incidents.scss */
+.financial-code-add-form {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 8px;
+  background: #f4f5f7;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+/* line 449, app/assets/stylesheets/incidents.scss */
+.financial-code-add-form .form-control {
+  flex: 1 1 auto;
+}
+
+/* line 450, app/assets/stylesheets/incidents.scss */
+.financial-code-add-form .btn {
+  flex: 0 0 auto;
+}
+
+/* line 454, app/assets/stylesheets/incidents.scss */
+.info-irwin-section {
+  border-color: #dbe4ff;
+  background: #f0f4ff;
+}
+
+/* line 458, app/assets/stylesheets/incidents.scss */
+.info-irwin-section .info-section-title .fa {
+  color: #4c6ef5;
+}
+
+/* line 461, app/assets/stylesheets/incidents.scss */
+.info-warning {
+  background: #fff4e5;
+  border: 1px solid #ffcc80;
+  color: #7a4600;
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin: 8px 0 12px;
+  font-size: 13px;
+}
+
+/* line 470, app/assets/stylesheets/incidents.scss */
+.info-warning .fa {
+  margin-right: 6px;
+  color: #ef6c00;
+}
+
+/* line 476, app/assets/stylesheets/incidents.scss */
+.irwin-populate-row {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* line 481, app/assets/stylesheets/incidents.scss */
+.irwin-populate-row .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* line 482, app/assets/stylesheets/incidents.scss */
+.irwin-populate-row .btn .fa {
+  margin-right: 4px;
+}
+
+/* line 483, app/assets/stylesheets/incidents.scss */
+.irwin-populate-row .muted {
+  color: #6b778c;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+/* line 490, app/assets/stylesheets/incidents.scss */
+.irwin-populate-row {
+  clear: both;
+  padding: 14px 0 4px;
+  border-top: 1px solid #eef0f3;
+  margin-top: 12px;
+}
+
+/* line 496, app/assets/stylesheets/incidents.scss */
+.irwin-populate-row .btn .fa {
+  margin-right: 4px;
+}
+
+/* line 497, app/assets/stylesheets/incidents.scss */
+.irwin-populate-row .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 501, app/assets/stylesheets/incidents.scss */
+#irwin-diff-table td, #irwin-diff-table th {
+  vertical-align: middle;
+}
+
+/* line 502, app/assets/stylesheets/incidents.scss */
+#irwin-diff-table td.text-muted {
+  font-size: 12px;
+}
+
+/* line 507, app/assets/stylesheets/incidents.scss */
+.incident-origin-marker {
+  background: transparent;
+  border: 0;
+}
+
+/* line 511, app/assets/stylesheets/incidents.scss */
+.incident-origin-pin {
+  display: inline-block;
+  font-size: 34px;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* line 519, app/assets/stylesheets/incidents.scss */
+.resources-summary-panel .resources-panel-manage {
+  color: #444;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+/* line 524, app/assets/stylesheets/incidents.scss */
+.resources-summary-panel .resources-panel-manage:hover {
+  color: #0052cc;
+  text-decoration: none;
+}
+
+/* line 525, app/assets/stylesheets/incidents.scss */
+.resources-summary-panel .resources-panel-manage .fa {
+  margin-left: 4px;
+  font-size: 11px;
+}
+
+/* line 529, app/assets/stylesheets/incidents.scss */
+.resources-summary-body {
+  padding: 16px 20px;
+  color: #172b4d;
+}
+
+/* line 534, app/assets/stylesheets/incidents.scss */
+.resources-summary-headline {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+/* line 543, app/assets/stylesheets/incidents.scss */
+.rs-hero {
+  min-width: 140px;
+}
+
+/* line 546, app/assets/stylesheets/incidents.scss */
+.rs-hero .rs-hero-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #172b4d;
+  line-height: 1;
+}
+
+/* line 553, app/assets/stylesheets/incidents.scss */
+.rs-hero .rs-hero-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b778c;
+  margin-top: 4px;
+}
+
+/* line 563, app/assets/stylesheets/incidents.scss */
+.rs-hero-muted .rs-hero-number {
+  color: #6b778c;
+}
+
+/* line 565, app/assets/stylesheets/incidents.scss */
+.resources-summary-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* line 572, app/assets/stylesheets/incidents.scss */
+.rs-cat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f7f8fa;
+  border-radius: 6px;
+}
+
+/* line 580, app/assets/stylesheets/incidents.scss */
+.rs-cat.rs-cat-empty {
+  opacity: 0.55;
+}
+
+/* line 582, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border-radius: 50%;
+  color: #5e6c84;
+  font-size: 16px;
+  flex: 0 0 auto;
+}
+
+/* line 595, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #5e6c84;
+}
+
+/* line 603, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-counts {
+  font-size: 13px;
+  color: #172b4d;
+  margin-top: 2px;
+}
+
+/* line 609, app/assets/stylesheets/incidents.scss */
+.rs-cat .rs-cat-primary,
+.rs-cat .rs-cat-personnel {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* line 617, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs h5 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #5e6c84;
+  margin: 0 0 8px;
+}
+
+/* line 626, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .muted {
+  color: #6b778c;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+/* line 635, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 640, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-list li {
+  display: flex;
+  gap: 10px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #eef0f3;
+  font-size: 13px;
+}
+
+/* line 647, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-list li:last-child {
+  border-bottom: none;
+}
+
+/* line 651, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-num {
+  font-weight: 700;
+  min-width: 50px;
+}
+
+/* line 652, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-name {
+  flex: 1;
+  color: #42526e;
+}
+
+/* line 653, app/assets/stylesheets/incidents.scss */
+.resources-summary-demobs .rs-demob-lwd {
+  color: #c62828;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* line 655, app/assets/stylesheets/incidents.scss */
 .panel-foot {
   margin-top: 10px;
   background-color: #f5f5f5;
@@ -20341,80 +21217,80 @@ select {
   border-top: 1px solid #D7d7d7;
 }
 
-/* line 122, app/assets/stylesheets/incidents.scss */
+/* line 664, app/assets/stylesheets/incidents.scss */
 .incidents-panel h4 {
   color: #3d3d3d;
 }
 
-/* line 125, app/assets/stylesheets/incidents.scss */
+/* line 667, app/assets/stylesheets/incidents.scss */
 .incidents-panel a {
   color: #3d3d3d;
 }
 
-/* line 130, app/assets/stylesheets/incidents.scss */
+/* line 672, app/assets/stylesheets/incidents.scss */
 .incident-index-content {
   display: none;
 }
 
-/* line 135, app/assets/stylesheets/incidents.scss */
+/* line 677, app/assets/stylesheets/incidents.scss */
 .sm-bip-input input {
   min-width: 30px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 143, app/assets/stylesheets/incidents.scss */
+/* line 685, app/assets/stylesheets/incidents.scss */
 .md-bip-input input {
   min-width: 60px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 151, app/assets/stylesheets/incidents.scss */
+/* line 693, app/assets/stylesheets/incidents.scss */
 .lg-bip-input input {
   min-width: 120px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 157, app/assets/stylesheets/incidents.scss */
+/* line 699, app/assets/stylesheets/incidents.scss */
 #share-incident-button {
   position: absolute;
   right: 30px;
   top: 14px;
 }
 
-/* line 164, app/assets/stylesheets/incidents.scss */
+/* line 706, app/assets/stylesheets/incidents.scss */
 .incident-name a {
   color: #3d3d3d !important;
 }
 
-/* line 167, app/assets/stylesheets/incidents.scss */
+/* line 709, app/assets/stylesheets/incidents.scss */
 .incident-name h1 {
   font-weight: 777;
   margin-bottom: 20px;
 }
 
-/* line 172, app/assets/stylesheets/incidents.scss */
+/* line 714, app/assets/stylesheets/incidents.scss */
 #invite-user-panel {
   display: none;
 }
 
-/* line 175, app/assets/stylesheets/incidents.scss */
+/* line 717, app/assets/stylesheets/incidents.scss */
 #invite-container {
   position: relative;
   overflow: hidden;
   padding: 20px;
 }
 
-/* line 180, app/assets/stylesheets/incidents.scss */
+/* line 722, app/assets/stylesheets/incidents.scss */
 #invite-button {
   position: absolute;
   right: 15px;
   margin-top: -35px;
 }
 
-/* line 186, app/assets/stylesheets/incidents.scss */
+/* line 728, app/assets/stylesheets/incidents.scss */
 .remove-user img {
   height: 11px;
   width: 11px;
@@ -23816,18 +24692,23 @@ img#add-freqs-button {
   white-space: nowrap;
 }
 
-/* line 155, app/assets/stylesheets/requests.scss */
+/* line 157, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-cell {
-  position: relative;
-  padding-left: 28px;
+  padding-left: 12px;
 }
 
-/* line 160, app/assets/stylesheets/requests.scss */
+/* line 161, app/assets/stylesheets/requests.scss */
+.requests-table .toggle-slot {
+  display: inline-block;
+  width: 16px;
+  text-align: left;
+  vertical-align: baseline;
+  color: #a1a8b4;
+}
+
+/* line 169, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle {
-  position: absolute;
-  left: 6px;
-  top: 50%;
-  transform: translateY(-50%);
+  display: inline;
   cursor: pointer;
   color: #a1a8b4;
   font-size: 17px;
@@ -23836,22 +24717,22 @@ img#add-freqs-button {
   user-select: none;
 }
 
-/* line 172, app/assets/stylesheets/requests.scss */
+/* line 178, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle:hover {
   color: #172b4d;
 }
 
-/* line 173, app/assets/stylesheets/requests.scss */
+/* line 179, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle:focus {
   outline: none;
 }
 
-/* line 174, app/assets/stylesheets/requests.scss */
+/* line 180, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle[aria-expanded="true"] .toggle-caret {
   transform: rotate(90deg);
 }
 
-/* line 177, app/assets/stylesheets/requests.scss */
+/* line 183, app/assets/stylesheets/requests.scss */
 .requests-table .toggle-caret {
   display: inline-block;
   transition: transform 0.12s ease;
@@ -23862,7 +24743,7 @@ img#add-freqs-button {
   vertical-align: baseline;
 }
 
-/* line 188, app/assets/stylesheets/requests.scss */
+/* line 194, app/assets/stylesheets/requests.scss */
 .requests-table .child-count {
   margin-left: 6px;
   color: #6b778c;
@@ -23870,47 +24751,68 @@ img#add-freqs-button {
   font-size: 11px;
 }
 
-/* line 195, app/assets/stylesheets/requests.scss */
+/* line 201, app/assets/stylesheets/requests.scss */
 .requests-table .child-indent {
   display: none;
 }
 
-/* line 199, app/assets/stylesheets/requests.scss */
-.requests-table .request-child {
+/* line 207, app/assets/stylesheets/requests.scss */
+.requests-table .request-row.depth-1 {
   background: #fafbfc;
 }
 
-/* line 202, app/assets/stylesheets/requests.scss */
-.requests-table .request-child td {
+/* line 208, app/assets/stylesheets/requests.scss */
+.requests-table .request-row.depth-1 td {
+  color: #42526e;
+}
+
+/* line 210, app/assets/stylesheets/requests.scss */
+.requests-table .request-row.depth-2 {
+  background: #f4f6f9;
+}
+
+/* line 211, app/assets/stylesheets/requests.scss */
+.requests-table .request-row.depth-2 td {
   color: #5e6c84;
 }
 
-/* line 203, app/assets/stylesheets/requests.scss */
-.requests-table .request-child td:first-child {
+/* line 212, app/assets/stylesheets/requests.scss */
+.requests-table .request-row.depth-2 td:first-child {
   font-weight: 400;
 }
 
-/* line 206, app/assets/stylesheets/requests.scss */
+/* line 214, app/assets/stylesheets/requests.scss */
+.requests-table .request-row.depth-3 {
+  background: #eef1f5;
+}
+
+/* line 215, app/assets/stylesheets/requests.scss */
+.requests-table .request-row.depth-3 td {
+  color: #5e6c84;
+  font-size: 12px;
+}
+
+/* line 218, app/assets/stylesheets/requests.scss */
 .requests-table .is-hidden {
   display: none;
 }
 
-/* line 211, app/assets/stylesheets/requests.scss */
+/* line 223, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text {
   cursor: pointer;
 }
 
-/* line 213, app/assets/stylesheets/requests.scss */
+/* line 225, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text:hover {
   text-decoration: underline;
 }
 
-/* line 214, app/assets/stylesheets/requests.scss */
+/* line 226, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text:focus {
   outline: none;
 }
 
-/* line 218, app/assets/stylesheets/requests.scss */
+/* line 230, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill {
   display: inline-block;
   min-width: 22px;
@@ -23923,47 +24825,46 @@ img#add-freqs-button {
   color: #fff;
 }
 
-/* line 229, app/assets/stylesheets/requests.scss */
+/* line 241, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-filled {
   background: #6b778c;
 }
 
-/* line 230, app/assets/stylesheets/requests.scss */
+/* line 242, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-checked_in {
   background: #2e7d32;
 }
 
-/* line 231, app/assets/stylesheets/requests.scss */
+/* line 243, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-released {
   background: #212121;
 }
 
-/* line 235, app/assets/stylesheets/requests.scss */
+/* line 247, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail {
   background: #f7f8fa;
 }
 
-/* line 238, app/assets/stylesheets/requests.scss */
+/* line 250, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail td {
   padding: 10px 12px 12px;
   border-bottom: 1px solid #eef0f3;
 }
 
-/* line 243, app/assets/stylesheets/requests.scss */
+/* line 255, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail-inner {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-left: 28px;
 }
 
-/* line 250, app/assets/stylesheets/requests.scss */
+/* line 262, app/assets/stylesheets/requests.scss */
 .requests-table .check-in-btn {
   font-size: 12px;
   padding: 6px 14px;
 }
 
-/* line 254, app/assets/stylesheets/requests.scss */
+/* line 266, app/assets/stylesheets/requests.scss */
 .requests-table .check-in-btn.is-disabled {
   background: #dfe1e6;
   border-color: #dfe1e6;
@@ -23972,7 +24873,7 @@ img#add-freqs-button {
   pointer-events: none;
 }
 
-/* line 268, app/assets/stylesheets/requests.scss */
+/* line 280, app/assets/stylesheets/requests.scss */
 .checkin-page {
   max-width: 720px;
   margin: 24px auto;
@@ -23980,27 +24881,27 @@ img#add-freqs-button {
   color: #172b4d;
 }
 
-/* line 274, app/assets/stylesheets/requests.scss */
+/* line 286, app/assets/stylesheets/requests.scss */
 .checkin-page #glide-info {
   display: block;
 }
 
-/* line 275, app/assets/stylesheets/requests.scss */
+/* line 287, app/assets/stylesheets/requests.scss */
 .checkin-page #resource-form {
   display: block;
 }
 
-/* line 277, app/assets/stylesheets/requests.scss */
+/* line 289, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header {
   margin: 8px 0 16px;
 }
 
-/* line 280, app/assets/stylesheets/requests.scss */
+/* line 292, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header h2 {
   margin: 0 0 4px;
 }
 
-/* line 281, app/assets/stylesheets/requests.scss */
+/* line 293, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header p {
   margin: 0;
   color: #5e6c84;
@@ -24534,6 +25435,78 @@ input.fwd-datepicker {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+}
+
+/* line 456, app/assets/stylesheets/resources.scss */
+.roster-toggle-slot {
+  display: inline-block;
+  width: 14px;
+  text-align: left;
+  vertical-align: baseline;
+  color: #a1a8b4;
+}
+
+/* line 464, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle {
+  display: inline;
+  cursor: pointer;
+  color: #a1a8b4;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+}
+
+/* line 473, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle:hover {
+  color: #172b4d;
+}
+
+/* line 474, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle:focus {
+  outline: none;
+}
+
+/* line 475, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle[aria-expanded="true"] .roster-toggle-caret {
+  transform: rotate(90deg);
+}
+
+/* line 478, app/assets/stylesheets/resources.scss */
+.roster-toggle-caret {
+  display: inline-block;
+  transition: transform 0.12s ease;
+  transform-origin: center;
+  vertical-align: baseline;
+}
+
+/* line 485, app/assets/stylesheets/resources.scss */
+.resource-roster-row {
+  background: #f7f8fa;
+}
+
+/* line 488, app/assets/stylesheets/resources.scss */
+.resource-roster-row.is-hidden {
+  display: none;
+}
+
+/* line 490, app/assets/stylesheets/resources.scss */
+.resource-roster-row td {
+  color: #5e6c84;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-top: 1px dashed #e6e8ec;
+}
+
+/* line 497, app/assets/stylesheets/resources.scss */
+.resource-roster-row .roster-order-cell {
+  font-family: Menlo, Consolas, monospace;
+  white-space: nowrap;
+}
+
+/* line 502, app/assets/stylesheets/resources.scss */
+.resource-roster-row.depth-2 {
+  background: #eef1f5;
 }
 /* line 2, app/assets/stylesheets/safety_messages.scss */
 .hazards-form textarea {

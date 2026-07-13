@@ -1,0 +1,601 @@
+/* line 1, app/assets/stylesheets/resources.scss */
+.resources-panel-head {
+  background-color: #F5F5F5;
+  border: 1px solid #DDD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: 50px;
+  padding-right: 10px;
+}
+
+/* line 8, app/assets/stylesheets/resources.scss */
+.resources-panel-head .tabrow {
+  text-align: left;
+  list-style: none;
+  margin: 0;
+  margin-top: 7px;
+  margin-left: 10px;
+  padding: 0;
+  line-height: 24px;
+  position: relative;
+}
+
+/* line 24, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow:after {
+  content: none;
+}
+
+/* line 26, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow li {
+  margin: 0 4px;
+  padding: 4px 16px;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  text-shadow: none;
+  background: #ECECEC;
+}
+
+/* line 34, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow li:before, .resource-tabs.tabrow li:after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* line 43, app/assets/stylesheets/resources.scss */
+.resource-tabs.tabrow li.selected {
+  background: #FFF;
+  border-color: #C9C9C9;
+  border-bottom-color: #C9C9C9;
+}
+
+/* line 50, app/assets/stylesheets/resources.scss */
+#resource_order_number {
+  padding-left: 30px;
+}
+
+/* line 53, app/assets/stylesheets/resources.scss */
+#order-number-input {
+  display: none;
+  /*overflow: hidden;*/
+}
+
+/* line 57, app/assets/stylesheets/resources.scss */
+.order-number-prefix {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 8px;
+  color: #999;
+}
+
+/* line 64, app/assets/stylesheets/resources.scss */
+#resource-form select {
+  border: 1px solid #CCC;
+  color: #999;
+  padding-left: 10px;
+}
+
+/* line 70, app/assets/stylesheets/resources.scss */
+a.delete-resource {
+  color: white;
+  font-weight: 900;
+  font-size: 1.3em;
+  position: absolute;
+  width: 15px;
+  right: 5px;
+  top: 5px;
+}
+
+/* line 80, app/assets/stylesheets/resources.scss */
+a.delete-resource:hover {
+  text-decoration: none;
+  color: red;
+}
+
+/* line 85, app/assets/stylesheets/resources.scss */
+.panel-head li {
+  display: inline-block;
+  list-style: underline;
+}
+
+/* line 89, app/assets/stylesheets/resources.scss */
+.panel-head a#new-resource {
+  clear: both;
+  margin-right: 10px !important;
+}
+
+/* line 94, app/assets/stylesheets/resources.scss */
+.glide-header {
+  color: #424242 !important;
+}
+
+/* line 97, app/assets/stylesheets/resources.scss */
+.glide-calendar {
+  border: 1px solid #e6e6e6;
+  text-align: center;
+  color: white;
+}
+
+/* line 105, app/assets/stylesheets/resources.scss */
+.yellow {
+  background-color: yellow !important;
+}
+
+/* line 108, app/assets/stylesheets/resources.scss */
+.orange {
+  background-color: orange;
+}
+
+/* line 111, app/assets/stylesheets/resources.scss */
+.red {
+  background-color: red;
+}
+
+/* line 114, app/assets/stylesheets/resources.scss */
+.black {
+  background-color: black;
+}
+
+/* line 117, app/assets/stylesheets/resources.scss */
+.green {
+  background-color: #4caf50;
+}
+
+/* line 120, app/assets/stylesheets/resources.scss */
+.glide-row.red,
+.glide-row.black {
+  color: white !important;
+}
+
+/* line 124, app/assets/stylesheets/resources.scss */
+#glide-info {
+  display: none;
+}
+
+/* line 128, app/assets/stylesheets/resources.scss */
+.glide-print-actions,
+.demob-print-actions {
+  margin: 16px 0;
+  text-align: right;
+}
+
+/* line 134, app/assets/stylesheets/resources.scss */
+.print-only {
+  display: none;
+}
+
+/* line 138, app/assets/stylesheets/resources.scss */
+.glide-print-header {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* line 145, app/assets/stylesheets/resources.scss */
+.glide-title-cell {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+@media print {
+  /* line 155, app/assets/stylesheets/resources.scss */
+  body.printing-demob header,
+body.printing-demob footer,
+body.printing-demob .incident-name,
+body.printing-demob .resources-panel-head,
+body.printing-demob .masking-tape,
+body.printing-demob #notice,
+body.printing-demob #ics-211-info,
+body.printing-demob #glide-info,
+body.printing-demob #tally-info,
+body.printing-demob #resource-form,
+body.printing-demob .no-print {
+    display: none !important;
+  }
+  /* line 169, app/assets/stylesheets/resources.scss */
+  body.printing-demob #demob-info {
+    display: block !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  /* line 176, app/assets/stylesheets/resources.scss */
+  body.printing-demob #demob-info .panel-foot {
+    display: none !important;
+  }
+  /* line 181, app/assets/stylesheets/resources.scss */
+  body.printing-glide {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* line 185, app/assets/stylesheets/resources.scss */
+  body.printing-glide header,
+body.printing-glide footer,
+body.printing-glide .incident-name,
+body.printing-glide .resources-panel-head,
+body.printing-glide .masking-tape,
+body.printing-glide #notice,
+body.printing-glide #ics-211-info,
+body.printing-glide #demob-info,
+body.printing-glide #tally-info,
+body.printing-glide #resource-form,
+body.printing-glide .no-print {
+    display: none !important;
+  }
+  /* line 199, app/assets/stylesheets/resources.scss */
+  body.printing-glide #glide-info {
+    display: block !important;
+  }
+  /* line 203, app/assets/stylesheets/resources.scss */
+  body.printing-glide .print-only {
+    display: block !important;
+  }
+  /* line 207, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-calendar,
+body.printing-glide .glide-row,
+body.printing-glide .yellow,
+body.printing-glide .orange,
+body.printing-glide .red,
+body.printing-glide .black,
+body.printing-glide .green {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* line 221, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.yellow {
+    box-shadow: inset 0 0 0 999px yellow !important;
+  }
+  /* line 224, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.orange {
+    box-shadow: inset 0 0 0 999px orange !important;
+  }
+  /* line 227, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.red {
+    box-shadow: inset 0 0 0 999px red !important;
+  }
+  /* line 230, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.black {
+    box-shadow: inset 0 0 0 999px black !important;
+  }
+  /* line 233, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-row.green {
+    box-shadow: inset 0 0 0 999px #4caf50 !important;
+  }
+  /* line 238, app/assets/stylesheets/resources.scss */
+  body.printing-glide table.table,
+body.printing-glide table.table th,
+body.printing-glide table.table td {
+    border-color: #555 !important;
+  }
+  /* line 243, app/assets/stylesheets/resources.scss */
+  body.printing-glide .glide-calendar {
+    border-color: #555 !important;
+  }
+}
+
+/* line 250, app/assets/stylesheets/resources.scss */
+.table-col {
+  min-width: 25px !important;
+}
+
+/* line 253, app/assets/stylesheets/resources.scss */
+.name-col {
+  white-space: nowrap;
+}
+
+/* line 259, app/assets/stylesheets/resources.scss */
+.ics-211-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 12px 12px;
+}
+
+/* line 265, app/assets/stylesheets/resources.scss */
+.ics-211-search .form-control {
+  flex: 1 1 auto;
+  max-width: 420px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+/* line 272, app/assets/stylesheets/resources.scss */
+.ics-211-search .btn-link {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* line 277, app/assets/stylesheets/resources.scss */
+.ics-211-search .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* Demob Info */
+/* line 284, app/assets/stylesheets/resources.scss */
+#demob-info {
+  display: none;
+}
+
+/* line 286, app/assets/stylesheets/resources.scss */
+#demob-info #demob-dates {
+  text-align: center;
+}
+
+/* line 290, app/assets/stylesheets/resources.scss */
+#demob-dates {
+  margin: 5% 0;
+}
+
+/* line 292, app/assets/stylesheets/resources.scss */
+#demob-dates h1, #demob-dates h2, #demob-dates h3, #demob-dates h4 {
+  font-weight: 666;
+}
+
+/* Resource Tally Info*/
+/* line 298, app/assets/stylesheets/resources.scss */
+#tally-info {
+  display: none;
+  padding-top: 5%;
+}
+
+/* line 301, app/assets/stylesheets/resources.scss */
+#tally-info h1, #tally-info h2 {
+  text-align: center;
+  font-weight: 666;
+  margin-bottom: 20px;
+}
+
+/* line 306, app/assets/stylesheets/resources.scss */
+#tally-info h3, #tally-info h4 {
+  font-weight: 666;
+}
+
+/* line 309, app/assets/stylesheets/resources.scss */
+#tally-info ul {
+  padding-left: 5px;
+  list-style: none;
+}
+
+/* line 314, app/assets/stylesheets/resources.scss */
+.dashed {
+  border: 1px dashed orange;
+}
+
+/* line 317, app/assets/stylesheets/resources.scss */
+img#new-resource {
+  height: 20px;
+  width: 20px;
+}
+
+/* line 321, app/assets/stylesheets/resources.scss */
+.grayed {
+  background-color: #f5f5f5;
+}
+
+/* line 324, app/assets/stylesheets/resources.scss */
+.resource-information {
+  background-color: yellow;
+}
+
+/* line 328, app/assets/stylesheets/resources.scss */
+.view-resource img {
+  width: 20px;
+  height: auto;
+}
+
+/* line 336, app/assets/stylesheets/resources.scss */
+.resource-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 30, 66, 0.45);
+  z-index: 1050;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5vh 16px;
+  overflow-y: auto;
+}
+
+/* line 347, app/assets/stylesheets/resources.scss */
+.resource-panel.is-hidden {
+  display: none;
+}
+
+/* line 350, app/assets/stylesheets/resources.scss */
+.resource-panel-inner {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(9, 30, 66, 0.35);
+  width: 100%;
+  max-width: 720px;
+  padding: 20px 24px 24px;
+}
+
+/* line 360, app/assets/stylesheets/resources.scss */
+.resource-panel-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: 0;
+  font-size: 22px;
+  line-height: 1;
+  color: #6b778c;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+/* line 372, app/assets/stylesheets/resources.scss */
+.resource-panel-close:hover {
+  color: #172b4d;
+}
+
+/* line 374, app/assets/stylesheets/resources.scss */
+button.resource-panel-close {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* line 382, app/assets/stylesheets/resources.scss */
+button.resource-panel-close:hover, button.resource-panel-close:focus, button.resource-panel-close:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* line 392, app/assets/stylesheets/resources.scss */
+.resource-panel-title {
+  margin: 0 32px 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+/* line 399, app/assets/stylesheets/resources.scss */
+.resource-panel-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 10px 16px;
+}
+
+/* line 405, app/assets/stylesheets/resources.scss */
+.resource-panel-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* line 410, app/assets/stylesheets/resources.scss */
+.resource-panel-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #5e6c84;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 2px;
+}
+
+/* line 419, app/assets/stylesheets/resources.scss */
+.resource-panel-field .best_in_place {
+  display: inline-block;
+  min-height: 20px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #f4f5f7;
+  color: #172b4d;
+  cursor: text;
+}
+
+/* line 428, app/assets/stylesheets/resources.scss */
+.resource-panel-field .best_in_place:hover {
+  background: #e6effd;
+}
+
+/* line 431, app/assets/stylesheets/resources.scss */
+.resource-panel-field .static-field {
+  padding: 2px 6px;
+  color: #6b778c;
+}
+
+/* line 437, app/assets/stylesheets/resources.scss */
+.resource-panel-field-wide {
+  grid-column: 1 / -1;
+}
+
+/* line 440, app/assets/stylesheets/resources.scss */
+input.fwd-datepicker {
+  border: none !important;
+  width: 36px;
+  height: 20px;
+  margin: 0 !important;
+  /*padding: none !important;*/
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+/* line 456, app/assets/stylesheets/resources.scss */
+.roster-toggle-slot {
+  display: inline-block;
+  width: 14px;
+  text-align: left;
+  vertical-align: baseline;
+  color: #a1a8b4;
+}
+
+/* line 464, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle {
+  display: inline;
+  cursor: pointer;
+  color: #a1a8b4;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+}
+
+/* line 473, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle:hover {
+  color: #172b4d;
+}
+
+/* line 474, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle:focus {
+  outline: none;
+}
+
+/* line 475, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle[aria-expanded="true"] .roster-toggle-caret {
+  transform: rotate(90deg);
+}
+
+/* line 478, app/assets/stylesheets/resources.scss */
+.roster-toggle-caret {
+  display: inline-block;
+  transition: transform 0.12s ease;
+  transform-origin: center;
+  vertical-align: baseline;
+}
+
+/* line 485, app/assets/stylesheets/resources.scss */
+.resource-roster-row {
+  background: #f7f8fa;
+}
+
+/* line 488, app/assets/stylesheets/resources.scss */
+.resource-roster-row.is-hidden {
+  display: none;
+}
+
+/* line 490, app/assets/stylesheets/resources.scss */
+.resource-roster-row td {
+  color: #5e6c84;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-top: 1px dashed #e6e8ec;
+}
+
+/* line 497, app/assets/stylesheets/resources.scss */
+.resource-roster-row .roster-order-cell {
+  font-family: Menlo, Consolas, monospace;
+  white-space: nowrap;
+}
+
+/* line 502, app/assets/stylesheets/resources.scss */
+.resource-roster-row.depth-2 {
+  background: #eef1f5;
+}

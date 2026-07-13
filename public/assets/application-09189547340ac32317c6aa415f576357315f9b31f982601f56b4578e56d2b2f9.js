@@ -48281,6 +48281,19 @@ document.addEventListener("turbolinks:load", function() {
     var moveUrl = '/incidents/' + incidentId + '/board/move';
     var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
+    function recomputePersonnel() {
+      $('.board-column', page).each(function () {
+        var $col = $(this);
+        var total = 0;
+        $col.find('.board-card').each(function () {
+          total += parseInt($(this).data('personnel'), 10) || 0;
+        });
+        var $badge = $col.find('.board-column-personnel');
+        $badge.find('.board-column-personnel-count').text(total);
+        $badge.toggleClass('is-empty', total === 0);
+      });
+    }
+
     $('.board-cards').sortable({
       connectWith: '.board-cards',
       placeholder: 'board-card-placeholder',
@@ -48299,6 +48312,7 @@ document.addEventListener("turbolinks:load", function() {
         var position = column.find('.board-card').index(ui.item) + 1;
 
         var $sortable = $('.board-cards').sortable('disable');
+        recomputePersonnel();
 
         $.ajax({
           url: moveUrl,
@@ -48312,6 +48326,7 @@ document.addEventListener("turbolinks:load", function() {
         })
           .fail(function () {
             $(event.target).sortable('cancel');
+            recomputePersonnel();
             alert('Move failed. Refresh the page.');
           })
           .always(function () {
@@ -49335,6 +49350,171 @@ $(document).on("turbolinks:load", function() {
 
  
 });
+// IRWIN populate — fetches WFIGS/IRWIN attributes for the current incident,
+// shows a modal with a current-vs-proposed diff, and PATCHes the incident
+// with only the fields the user checked.
+$(document).on('turbolinks:load', function () {
+  var $btn = $('#irwin-populate-btn');
+  if (!$btn.length) return;
+
+  var $status = $('#irwin-status');
+  var $modal  = $('#irwin-modal');
+  var $body   = $('#irwin-diff-body');
+  var $apply  = $('#irwin-apply-btn');
+  var $form   = $('#irwin-apply-form');
+
+  // Display helpers for the current values in the info panel. We reach into
+  // the panel's rendered text so we don't have to duplicate model → label
+  // knowledge in JS.
+  function currentValue(field) {
+    // best_in_place spans have data-attribute matching the field name.
+    var $span = $('.best_in_place[data-attribute="' + field + '"]').first();
+    if ($span.length) return $.trim($span.text());
+    return '';
+  }
+
+  var FIELD_LABELS = {
+    name: 'Name',
+    number: 'Number',
+    size: 'Size (acres)',
+    percent_contained: '% Contained',
+    status: 'Status',
+    cost: 'Estimated Cost',
+    cause: 'Cause',
+    fire_behavior: 'Activity',
+    fuel_type: 'Fuels',
+    start_date: 'Start Date',
+    containment_date: 'Contained Date',
+    control_date: 'Controlled Date',
+    out_date: 'Out Date',
+    location: 'Location',
+    latitude: 'Latitude',
+    longitude: 'Longitude',
+    ic: 'IC',
+    complexity: 'Complexity',
+    ownership: 'Ownership'
+    // 'p_code' removed — financial codes are now a separate first-class model
+  };
+
+  $btn.on('click', function () {
+    $status.text('Fetching from IRWIN…');
+    $body.empty();
+
+    $.getJSON($btn.data('url'))
+      .done(function (data) {
+        var proposed = data.proposed || {};
+        var proposedCodes = data.financial_codes || {};
+        var rows = '';
+
+        // Standard incident fields.
+        Object.keys(FIELD_LABELS).forEach(function (field) {
+          if (!(field in proposed)) return;
+          var current  = currentValue(field);
+          var newValue = proposed[field];
+          if (current === String(newValue)) return;
+          var checkboxId = 'irwin-check-' + field;
+          rows += '<tr>' +
+            '<td><input type="checkbox" class="irwin-check" checked id="' + checkboxId + '" data-field="' + field + '" data-value="' + $('<div>').text(newValue).html().replace(/"/g, '&quot;') + '"></td>' +
+            '<td><label for="' + checkboxId + '">' + FIELD_LABELS[field] + '</label></td>' +
+            '<td class="text-muted">' + $('<div>').text(current || '—').html() + '</td>' +
+            '<td><strong>' + $('<div>').text(newValue).html() + '</strong></td>' +
+            '</tr>';
+        });
+
+        // Financial codes (BLM, USFS). Compared against the current value
+        // of the matching agency row in the info panel.
+        Object.keys(proposedCodes).forEach(function (agency) {
+          var newValue = proposedCodes[agency];
+          if (!newValue) return;
+          var current = currentFinancialCode(agency);
+          if (current === String(newValue)) return;
+          var checkboxId = 'irwin-check-fc-' + agency;
+          rows += '<tr>' +
+            '<td><input type="checkbox" class="irwin-check-fc" checked id="' + checkboxId + '" data-agency="' + agency + '" data-value="' + $('<div>').text(newValue).html().replace(/"/g, '&quot;') + '"></td>' +
+            '<td><label for="' + checkboxId + '">' + agency + ' code</label></td>' +
+            '<td class="text-muted">' + $('<div>').text(current || '—').html() + '</td>' +
+            '<td><strong>' + $('<div>').text(newValue).html() + '</strong></td>' +
+            '</tr>';
+        });
+
+        if (!rows) {
+          rows = '<tr><td colspan="4" class="text-center text-muted"><em>IRWIN has no fields that differ from what\'s already saved.</em></td></tr>';
+          $apply.prop('disabled', true);
+        } else {
+          $apply.prop('disabled', false);
+        }
+        $body.html(rows);
+        var fieldCount = Object.keys(proposed).length + Object.keys(proposedCodes).length;
+        $status.text('Fetched ' + fieldCount + ' fields from IRWIN.');
+        $modal.modal('show');
+      })
+      .fail(function (xhr) {
+        var msg = (xhr.responseJSON && xhr.responseJSON.error) ||
+                  ('Fetch failed (' + xhr.status + ')');
+        $status.text(msg).css('color', '#b71c1c');
+      });
+  });
+
+  // Read the current code value for an agency from the info panel's
+  // financial-codes table. Agencies are stored uppercase.
+  function currentFinancialCode(agency) {
+    var wanted = agency.toString().toUpperCase();
+    var found = '';
+    $('.financial-codes-table tr').each(function () {
+      var rowAgency = $.trim($(this).find('.fc-agency .best_in_place').text()).toUpperCase();
+      if (rowAgency === wanted) {
+        found = $.trim($(this).find('.fc-code .best_in_place').text());
+        return false; // break
+      }
+    });
+    return found;
+  }
+
+  $apply.on('click', function () {
+    var selected = {};
+    $('.irwin-check:checked').each(function () {
+      selected[$(this).data('field')] = $(this).data('value');
+    });
+
+    var codes = {};
+    $('.irwin-check-fc:checked').each(function () {
+      codes[$(this).data('agency')] = $(this).data('value');
+    });
+
+    if ($.isEmptyObject(selected) && $.isEmptyObject(codes)) {
+      $modal.modal('hide');
+      return;
+    }
+
+    var csrf = $('meta[name=csrf-token]').attr('content');
+    var updateUrl = $btn.data('update-url');
+    var codesUrl  = updateUrl + '/financial_codes/apply_irwin';
+
+    // Chain the two requests: incident update first, then financial codes.
+    var incidentReq = $.isEmptyObject(selected)
+      ? $.Deferred().resolve()
+      : $.ajax({
+          url: updateUrl,
+          method: 'POST',
+          data: { incident: selected, _method: 'patch', authenticity_token: csrf },
+          dataType: 'text'
+        });
+
+    incidentReq.then(function () {
+      if ($.isEmptyObject(codes)) return $.Deferred().resolve();
+      return $.ajax({
+        url: codesUrl,
+        method: 'POST',
+        data: { codes: codes, authenticity_token: csrf },
+        dataType: 'json'
+      });
+    }).done(function () {
+      window.location.href = updateUrl;
+    }).fail(function (xhr) {
+      alert('Update failed: ' + xhr.status + ' ' + (xhr.responseText || ''));
+    });
+  });
+});
 $(document).on("turbolinks:load", function() {
    /* Activating Best In Place */
     jQuery(".best_in_place").best_in_place();
@@ -49415,6 +49595,168 @@ $(document).on("turbolinks:load", function() {
  
 });
 
+$(document).on('turbolinks:load', function () {
+  var $index = $('.requests-index');
+  if (!$index.length) return;
+
+  // Persistent search filter state. When a search is active this is an
+  // object { rowId: true, ... } listing every row that survives the
+  // filter (matches plus their ancestor chain). Null when no search.
+  var searchVisibleIds = null;
+
+  // Refresh visibility of every tree row from three inputs:
+  //   1. ancestor-collapse — hide if any ancestor toggle is collapsed
+  //   2. detail user-open — details only show when the user opened them
+  //   3. search filter — if active, hide rows outside the visible set
+  // All three combine; a row is visible only if none of them hide it.
+  function refreshTreeVisibility() {
+    var collapsedKeys = {};
+    $index.find('.request-toggle[aria-expanded="false"]').each(function () {
+      collapsedKeys[$(this).data('target')] = true;
+    });
+
+    var searchActive = searchVisibleIds !== null;
+
+    $index.find('tr[data-ancestors]').each(function () {
+      var $row = $(this);
+      var attr = String($row.attr('data-ancestors') || '').trim();
+      var ancestors = attr.length ? attr.split(/\s+/) : [];
+      var ancestorCollapsed = false;
+      for (var i = 0; i < ancestors.length; i++) {
+        if (collapsedKeys[ancestors[i]]) { ancestorCollapsed = true; break; }
+      }
+
+      if ($row.hasClass('request-detail')) {
+        var userOpen = $row.hasClass('is-detail-open');
+        var searchHidden = false;
+        if (searchActive) {
+          searchHidden = !searchVisibleIds[$row.data('detail-of')];
+        }
+        $row.toggleClass('is-hidden', !userOpen || ancestorCollapsed || searchHidden);
+      } else {
+        var searchHiddenRow = false;
+        if (searchActive) {
+          searchHiddenRow = !searchVisibleIds[$row.data('parent-key')];
+        }
+        $row.toggleClass('is-hidden', ancestorCollapsed || searchHiddenRow);
+      }
+    });
+  }
+
+  // Caret click: toggle this node's expanded state, then refresh visibility
+  // for the whole tree.
+  function toggleTreeNode($btn) {
+    var expanded = $btn.attr('aria-expanded') === 'true';
+    $btn.attr('aria-expanded', String(!expanded));
+    refreshTreeVisibility();
+  }
+
+  $index.on('click', '.request-toggle', function () {
+    toggleTreeNode($(this));
+  });
+
+  $index.on('keydown', '.request-toggle', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleTreeNode($(this));
+    }
+  });
+
+  // Detail toggle: user clicks the Req # text to open/close the inline
+  // detail area (Check In button, etc.). Tracked with is-detail-open so
+  // tree collapses can cascade without losing the user's intent.
+  function toggleDetail($el) {
+    var key = $el.data('detail-target');
+    var $detail = $index.find('tr.request-detail[data-detail-of="' + key + '"]');
+    $detail.toggleClass('is-detail-open');
+    refreshTreeVisibility();
+  }
+
+  $index.on('click', '.req-number-text[data-detail-target]', function () {
+    toggleDetail($(this));
+  });
+
+  $index.on('keydown', '.req-number-text[data-detail-target]', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleDetail($(this));
+    }
+  });
+
+  // ── Search filter ─────────────────────────────────────────────────────
+  // When a search is active, matching rows and all their ancestors become
+  // visible (ancestor toggles flip to expanded). Clearing the search
+  // returns the tree to its default collapsed state.
+  var $searchInput   = $('#requests-search-input');
+  var $searchClear   = $('#requests-search-clear');
+  var $searchSummary = $('#requests-search-summary');
+
+  function normalize(s) { return (s || '').toString().toLowerCase(); }
+
+  function applySearch() {
+    var q = normalize($searchInput.val()).trim();
+    var hasQuery = q.length > 0;
+    $searchClear.toggle(hasQuery);
+
+    if (!hasQuery) {
+      // Reset: clear search filter, collapse everything, close details,
+      // then recompute visibility.
+      searchVisibleIds = null;
+      $index.find('.request-toggle').attr('aria-expanded', 'false');
+      $index.find('tr.request-detail').removeClass('is-detail-open');
+      refreshTreeVisibility();
+      $searchSummary.text('');
+      $('.catalog-section', $index).removeClass('is-empty');
+      return;
+    }
+
+    // Walk every row and gather the visible set: matches, plus every
+    // ancestor of a match (so the tree context stays visible). Expand
+    // matching ancestors' toggles so the tree opens up around the match.
+    var visibleIds = {};
+    var totalMatches = 0;
+
+    $('.catalog-section', $index).each(function () {
+      var $section = $(this);
+      var sectionMatches = 0;
+
+      $section.find('tr.request-row').each(function () {
+        var $row = $(this);
+        var text = normalize($row.text());
+        if (text.indexOf(q) === -1) return;
+
+        sectionMatches += 1;
+        visibleIds[$row.data('parent-key')] = true;
+
+        var attr = String($row.attr('data-ancestors') || '').trim();
+        var ancestors = attr.length ? attr.split(/\s+/) : [];
+        ancestors.forEach(function (a) {
+          visibleIds[a] = true;
+          $section.find('.request-toggle[data-target="' + a + '"]').attr('aria-expanded', 'true');
+        });
+      });
+
+      $section.toggleClass('is-empty', sectionMatches === 0);
+      totalMatches += sectionMatches;
+    });
+
+    // Close any open detail rows so the search view starts clean, then
+    // stash the visible set and let refreshTreeVisibility apply it. Toggle
+    // clicks that follow (caret, detail) also call refreshTreeVisibility,
+    // so the search filter stays in force through those interactions.
+    $index.find('tr.request-detail').removeClass('is-detail-open');
+    searchVisibleIds = visibleIds;
+    refreshTreeVisibility();
+
+    $searchSummary.text(totalMatches + ' match' + (totalMatches === 1 ? '' : 'es'));
+  }
+
+  $searchInput.on('input', applySearch);
+  $searchClear.on('click', function () {
+    $searchInput.val('').focus();
+    applySearch();
+  });
+});
 $(document).on("turbolinks:load", function() {
 
 // Resize image 
@@ -49665,6 +50007,77 @@ $(document).on("turbolinks:load", function() {
     autoclose: true,
     todayHighlight: true
   });
+
+  // ICS-211 client-side search
+  (function () {
+    var $panel = $('#ics-211-info');
+    if (!$panel.length) return;
+    var $search  = $panel.find('.ics-211-search-input');
+    var $clear   = $panel.find('.ics-211-search-clear');
+    var $summary = $panel.find('.ics-211-search-summary');
+    var $tbody   = $panel.find('#incident-resources');
+    if (!$search.length || !$tbody.length) return;
+
+    function normalize(s) { return (s || '').toString().toLowerCase(); }
+    function isHeaderRow($tr) { return $tr.find('td.grayed strong').length > 0; }
+
+    function applySearch() {
+      var q = normalize($search.val()).trim();
+      var hasQuery = q.length > 0;
+      $clear.toggle(hasQuery);
+
+      if (!hasQuery) {
+        $tbody.find('tr').show();
+        $summary.text('');
+        return;
+      }
+
+      var matches = 0;
+      var $currentHeader = null;
+      var currentHeaderHasMatch = false;
+
+      $tbody.find('tr').each(function () {
+        var $tr = $(this);
+        if (isHeaderRow($tr)) {
+          if ($currentHeader) $currentHeader.toggle(currentHeaderHasMatch);
+          $currentHeader = $tr;
+          currentHeaderHasMatch = false;
+          return;
+        }
+        var match = normalize($tr.text()).indexOf(q) !== -1;
+        $tr.toggle(match);
+        if (match) {
+          matches += 1;
+          currentHeaderHasMatch = true;
+        }
+      });
+      if ($currentHeader) $currentHeader.toggle(currentHeaderHasMatch);
+
+      $summary.text(matches + ' match' + (matches === 1 ? '' : 'es'));
+    }
+
+    $search.on('input', applySearch);
+    $clear.on('click', function () {
+      $search.val('').focus();
+      applySearch();
+    });
+  })();
+
+  // Auto-size best_in_place inputs to fit their content. Modern browsers
+  // handle this via CSS `field-sizing: content`; this is the fallback that
+  // sets the `size` attribute for browsers that don't yet support it.
+  var supportsFieldSizing = window.CSS && CSS.supports && CSS.supports('field-sizing', 'content');
+  if (!supportsFieldSizing) {
+    $(document).on('focus', '.sm-bip-input input, .md-bip-input input, .lg-bip-input input', function () {
+      var $input = $(this);
+      function resize() {
+        $input.attr('size', Math.max(($input.val() || '').length + 2, 4));
+      }
+      resize();
+      $input.on('input.bipResize', resize);
+      $input.one('blur.bipResize', function () { $input.off('.bipResize'); });
+    });
+  }
   
   $('select#resource_category').change(function() {
     var text = $(this).val();
@@ -49691,21 +50104,29 @@ $(document).on("turbolinks:load", function() {
   });
 
  // Style glide rows
+ //   demob day (LWD + 1) → black
+ //   LWD                 → red
+ //   LWD - 1, LWD - 2    → orange   (2 days before)
+ //   LWD - 3..LWD - 5    → yellow   (3 days before that)
+ //   anything earlier    → green
    $( ".glide-row" ).each( function( index, element ) {
       const day = Date.parse($(this).attr('data-day'))
       const lwd = Date.parse($(this).attr('data-lwd'))
-      const d_day =  Date.parse($(this).attr('data-lwd')) + 86400000
-      const warning_day = Date.parse($(this).attr('data-lwd')) - 259200000
-      if ($(this).attr('data-day') == $(this).attr('data-lwd')) {
-          $(this).addClass('red');  
-          $(this).text("LWD");  
-      } else if ( day == d_day ) {
+      if (isNaN(lwd)) return;
+      const ONE_DAY = 86400000;
+      const demob_day = lwd + ONE_DAY;
+      if (day === lwd) {
+        $(this).addClass('red');
+        $(this).text('LWD');
+      } else if (day === demob_day) {
         $(this).addClass('black');
         $(this).text('DMB');
-      } else if (day < lwd && day >= warning_day) {
+      } else if (day < lwd && day >= lwd - 2 * ONE_DAY) {
         $(this).addClass('orange');
-      } else if (day <  warning_day) {
+      } else if (day < lwd - 2 * ONE_DAY && day >= lwd - 5 * ONE_DAY) {
         $(this).addClass('yellow');
+      } else if (day < lwd - 5 * ONE_DAY) {
+        $(this).addClass('green');
       }
   });
 
@@ -49758,16 +50179,47 @@ $(document).on("turbolinks:load", function() {
   });
 
 
-  $("tr.incident-resource").dblclick(function (){
-    var id = $(this).attr('id').replace('resource-','');;
-    var coord = ($(this).offset().top);
-    $(".resource-comment").hide();
-    $(`#comment-${id}`).css({ top: coord -100 }).show();
-
+  // Double-click a resource row → open its floating detail panel with all
+  // editable attributes. Close with the X, backdrop click, or Escape.
+  $(document).on('dblclick', 'tr.incident-resource', function (e) {
+    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button, .resource-roster-toggle').length) return;
+    var id = $(this).attr('id').replace('resource-', '');
+    $('.resource-panel').addClass('is-hidden');
+    $('#resource-panel-' + id).removeClass('is-hidden');
   });
 
-  $("a.hide-comment").click(function (){
-    $(".resource-comment").hide();
+  // Roster expansion — click the caret in the Order # cell to toggle
+  // visibility of the roster rows nested below the parent resource row.
+  function toggleRosterExpansion($btn) {
+    var id = $btn.data('resource-id');
+    var expanded = $btn.attr('aria-expanded') === 'true';
+    $btn.attr('aria-expanded', String(!expanded));
+    $('tr.resource-roster-row[data-resource-id="' + id + '"]').toggleClass('is-hidden', expanded);
+  }
+
+  $(document).on('click', '.resource-roster-toggle', function (e) {
+    e.stopPropagation();
+    toggleRosterExpansion($(this));
+  });
+
+  $(document).on('keydown', '.resource-roster-toggle', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleRosterExpansion($(this));
+    }
+  });
+
+  $(document).on('click', '.resource-panel-close', function () {
+    $(this).closest('.resource-panel').addClass('is-hidden');
+  });
+
+  // Backdrop click closes; clicks inside .resource-panel-inner don't bubble to hide.
+  $(document).on('click', '.resource-panel', function (e) {
+    if (e.target === this) $(this).addClass('is-hidden');
+  });
+
+  $(document).on('keydown', function (e) {
+    if (e.key === 'Escape') $('.resource-panel').addClass('is-hidden');
   });
 
   
