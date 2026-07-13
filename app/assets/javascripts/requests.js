@@ -2,29 +2,77 @@ $(document).on('turbolinks:load', function () {
   var $index = $('.requests-index');
   if (!$index.length) return;
 
-  // Individual caret toggle (click or keyboard-activate on the span[role=button])
-  function toggleRequest($btn) {
-    var key = $btn.data('target');
+  // Persistent search filter state. When a search is active this is an
+  // object { rowId: true, ... } listing every row that survives the
+  // filter (matches plus their ancestor chain). Null when no search.
+  var searchVisibleIds = null;
+
+  // Refresh visibility of every tree row from three inputs:
+  //   1. ancestor-collapse — hide if any ancestor toggle is collapsed
+  //   2. detail user-open — details only show when the user opened them
+  //   3. search filter — if active, hide rows outside the visible set
+  // All three combine; a row is visible only if none of them hide it.
+  function refreshTreeVisibility() {
+    var collapsedKeys = {};
+    $index.find('.request-toggle[aria-expanded="false"]').each(function () {
+      collapsedKeys[$(this).data('target')] = true;
+    });
+
+    var searchActive = searchVisibleIds !== null;
+
+    $index.find('tr[data-ancestors]').each(function () {
+      var $row = $(this);
+      var attr = String($row.attr('data-ancestors') || '').trim();
+      var ancestors = attr.length ? attr.split(/\s+/) : [];
+      var ancestorCollapsed = false;
+      for (var i = 0; i < ancestors.length; i++) {
+        if (collapsedKeys[ancestors[i]]) { ancestorCollapsed = true; break; }
+      }
+
+      if ($row.hasClass('request-detail')) {
+        var userOpen = $row.hasClass('is-detail-open');
+        var searchHidden = false;
+        if (searchActive) {
+          searchHidden = !searchVisibleIds[$row.data('detail-of')];
+        }
+        $row.toggleClass('is-hidden', !userOpen || ancestorCollapsed || searchHidden);
+      } else {
+        var searchHiddenRow = false;
+        if (searchActive) {
+          searchHiddenRow = !searchVisibleIds[$row.data('parent-key')];
+        }
+        $row.toggleClass('is-hidden', ancestorCollapsed || searchHiddenRow);
+      }
+    });
+  }
+
+  // Caret click: toggle this node's expanded state, then refresh visibility
+  // for the whole tree.
+  function toggleTreeNode($btn) {
     var expanded = $btn.attr('aria-expanded') === 'true';
     $btn.attr('aria-expanded', String(!expanded));
-    $btn.closest('table').find('tr.request-child[data-child-of="' + key + '"]').toggleClass('is-hidden', expanded);
+    refreshTreeVisibility();
   }
 
   $index.on('click', '.request-toggle', function () {
-    toggleRequest($(this));
+    toggleTreeNode($(this));
   });
 
   $index.on('keydown', '.request-toggle', function (e) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleRequest($(this));
+      toggleTreeNode($(this));
     }
   });
 
-  // Click on Req # text expands the detail row (check-in area).
+  // Detail toggle: user clicks the Req # text to open/close the inline
+  // detail area (Check In button, etc.). Tracked with is-detail-open so
+  // tree collapses can cascade without losing the user's intent.
   function toggleDetail($el) {
     var key = $el.data('detail-target');
-    $el.closest('table').find('tr.request-detail[data-detail-of="' + key + '"]').toggleClass('is-hidden');
+    var $detail = $index.find('tr.request-detail[data-detail-of="' + key + '"]');
+    $detail.toggleClass('is-detail-open');
+    refreshTreeVisibility();
   }
 
   $index.on('click', '.req-number-text[data-detail-target]', function () {
@@ -39,6 +87,9 @@ $(document).on('turbolinks:load', function () {
   });
 
   // ── Search filter ─────────────────────────────────────────────────────
+  // When a search is active, matching rows and all their ancestors become
+  // visible (ancestor toggles flip to expanded). Clearing the search
+  // returns the tree to its default collapsed state.
   var $searchInput   = $('#requests-search-input');
   var $searchClear   = $('#requests-search-clear');
   var $searchSummary = $('#requests-search-summary');
@@ -50,62 +101,57 @@ $(document).on('turbolinks:load', function () {
     var hasQuery = q.length > 0;
     $searchClear.toggle(hasQuery);
 
+    if (!hasQuery) {
+      // Reset: clear search filter, collapse everything, close details,
+      // then recompute visibility.
+      searchVisibleIds = null;
+      $index.find('.request-toggle').attr('aria-expanded', 'false');
+      $index.find('tr.request-detail').removeClass('is-detail-open');
+      refreshTreeVisibility();
+      $searchSummary.text('');
+      $('.catalog-section', $index).removeClass('is-empty');
+      return;
+    }
+
+    // Walk every row and gather the visible set: matches, plus every
+    // ancestor of a match (so the tree context stays visible). Expand
+    // matching ancestors' toggles so the tree opens up around the match.
+    var visibleIds = {};
     var totalMatches = 0;
 
     $('.catalog-section', $index).each(function () {
       var $section = $(this);
       var sectionMatches = 0;
 
-      $section.find('tr.request-parent').each(function () {
-        var $parent = $(this);
-        var key = $parent.data('parent-key');
-        var $children = $section.find('tr.request-child[data-child-of="' + key + '"]');
+      $section.find('tr.request-row').each(function () {
+        var $row = $(this);
+        var text = normalize($row.text());
+        if (text.indexOf(q) === -1) return;
 
-        var parentText = normalize($parent.text());
-        var parentMatch = !hasQuery || parentText.indexOf(q) !== -1;
+        sectionMatches += 1;
+        visibleIds[$row.data('parent-key')] = true;
 
-        var childMatchCount = 0;
-        $children.each(function () {
-          var $c = $(this);
-          var match = !hasQuery || normalize($c.text()).indexOf(q) !== -1;
-          if (match) childMatchCount += 1;
-
-          if (!hasQuery) {
-            $c.addClass('is-hidden');
-          } else if (match) {
-            $c.removeClass('is-hidden');
-          } else {
-            $c.addClass('is-hidden');
-          }
+        var attr = String($row.attr('data-ancestors') || '').trim();
+        var ancestors = attr.length ? attr.split(/\s+/) : [];
+        ancestors.forEach(function (a) {
+          visibleIds[a] = true;
+          $section.find('.request-toggle[data-target="' + a + '"]').attr('aria-expanded', 'true');
         });
-
-        var visibleParent = parentMatch || childMatchCount > 0;
-        $parent.toggleClass('is-hidden', !visibleParent);
-
-        // The detail row follows the parent — hide it while filtering.
-        $section.find('tr.request-detail[data-detail-of="' + key + '"]').addClass('is-hidden');
-
-        // Sync the caret expanded-state to reflect what's visible.
-        var $toggle = $parent.find('.request-toggle');
-        if ($toggle.length) {
-          var expanded = childMatchCount > 0 && hasQuery;
-          $toggle.attr('aria-expanded', String(expanded));
-        }
-
-        if (visibleParent) {
-          sectionMatches += 1 + childMatchCount;
-        }
       });
 
-      $section.toggleClass('is-empty', hasQuery && sectionMatches === 0);
+      $section.toggleClass('is-empty', sectionMatches === 0);
       totalMatches += sectionMatches;
     });
 
-    if (hasQuery) {
-      $searchSummary.text(totalMatches + ' match' + (totalMatches === 1 ? '' : 'es'));
-    } else {
-      $searchSummary.text('');
-    }
+    // Close any open detail rows so the search view starts clean, then
+    // stash the visible set and let refreshTreeVisibility apply it. Toggle
+    // clicks that follow (caret, detail) also call refreshTreeVisibility,
+    // so the search filter stays in force through those interactions.
+    $index.find('tr.request-detail').removeClass('is-detail-open');
+    searchVisibleIds = visibleIds;
+    refreshTreeVisibility();
+
+    $searchSummary.text(totalMatches + ' match' + (totalMatches === 1 ? '' : 'es'));
   }
 
   $searchInput.on('input', applySearch);

@@ -3,6 +3,7 @@ class Resource < ApplicationRecord
   has_one :demob
   has_one :org_unit_assignment, dependent: :destroy
   has_one :org_unit, through: :org_unit_assignment
+  has_many :rosters, dependent: :destroy
 
   scope :unassigned, lambda {
     left_outer_joins(:org_unit_assignment)

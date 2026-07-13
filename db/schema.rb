@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_10_085426) do
+ActiveRecord::Schema.define(version: 2026_07_13_140000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -405,7 +405,7 @@ ActiveRecord::Schema.define(version: 2026_07_10_085426) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
-    t.integer "order_number"
+    t.string "order_number"
     t.integer "assignment_length"
     t.string "phone"
     t.string "email"
@@ -416,6 +416,20 @@ ActiveRecord::Schema.define(version: 2026_07_10_085426) do
     t.string "jetport"
     t.string "return_city"
     t.string "return_state"
+  end
+
+  create_table "rosters", force: :cascade do |t|
+    t.bigint "resource_id", null: false
+    t.bigint "request_id"
+    t.string "name"
+    t.string "position"
+    t.string "order_number"
+    t.integer "position_num"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_rosters_on_request_id"
+    t.index ["resource_id"], name: "index_rosters_on_resource_id"
   end
 
   create_table "safety_messages", force: :cascade do |t|
@@ -508,5 +522,7 @@ ActiveRecord::Schema.define(version: 2026_07_10_085426) do
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
   add_foreign_key "requests", "incidents"
+  add_foreign_key "rosters", "requests"
+  add_foreign_key "rosters", "resources"
   add_foreign_key "schedules", "incidents"
 end

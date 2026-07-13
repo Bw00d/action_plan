@@ -27,10 +27,12 @@ class RequestsController < ApplicationController
       end
     end
 
-    # Promote orphan subordinates (parent record missing) to top-level so
-    # nothing goes unrendered.
-    parent_numbers = all_parents.map(&:req_number).to_set
-    @children_by_parent.keys.reject { |k| parent_numbers.include?(k) }.each do |orphan|
+    # Promote genuine orphans (parent record missing anywhere in the tree)
+    # to top-level so nothing goes unrendered. Compare against ALL request
+    # numbers, not just root ones — otherwise nested parents like E-209.3
+    # get treated as orphans and their kids float up to root.
+    all_req_numbers = @requests.map(&:req_number).to_set
+    @children_by_parent.keys.reject { |k| all_req_numbers.include?(k) }.each do |orphan|
       all_parents.concat(@children_by_parent.delete(orphan))
     end
 
@@ -45,6 +47,7 @@ class RequestsController < ApplicationController
       key = r.full_order_number
       h[key] = r if key.present?
     end
+
   end
 
   private

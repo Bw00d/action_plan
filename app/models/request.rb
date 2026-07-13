@@ -43,22 +43,35 @@ class Request < ApplicationRecord
     resource_category.present?
   end
 
-  # Subordinate requests have a "." in the number (e.g. "C-1.5"); their tie
-  # to a Resource requires decimal order numbers, which the Resource model
-  # doesn't currently support. Skip check-in for those.
+  # True when the req_number contains a dot — indicates this request sits
+  # somewhere beneath a root parent in the request tree.
   def subordinate?
     req_number.to_s.include?('.')
   end
 
-  # Numeric portion of req_number, used as Resource.order_number.
-  #   "E-24"  → 24
-  #   "C-1"   → 1
-  # Returns nil for subordinates.
-  def suggested_order_number
-    return nil if subordinate?
+  # Direct parent's req_number ("E-209.3.1" → "E-209.3", "E-209.3" → "E-209",
+  # "E-24" → "E-24" (self, no parent)).
+  def parent_req_number
+    req_number.to_s.sub(/\.[^.]+\z/, '')
+  end
 
-    match = req_number.to_s.match(/\A[A-Z]-(\d+)\z/)
-    match && match[1].to_i
+  # Numeric portion of req_number for the check-in form's Resource#
+  # order_number pre-fill. Strips the "X-" category prefix; whatever
+  # remains ("24", "209.3", "1.5", etc.) is the order number.
+  def suggested_order_number
+    req_number.to_s.sub(/\A[A-Z]-/, '').presence
+  end
+
+  # Group an incident's requests as { parent_req_number => [Request, ...] }.
+  # Useful for the requests index tree and for populating a Roster from a
+  # strike team's subordinates on check-in.
+  def self.build_children_map(requests)
+    map = Hash.new { |h, k| h[k] = [] }
+    requests.each do |r|
+      next unless r.subordinate?
+      map[r.parent_req_number] << r
+    end
+    map
   end
 
   # Pre-fill for Resource#name on the check-in form.

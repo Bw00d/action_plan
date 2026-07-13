@@ -27,6 +27,7 @@ class RequestCheckinsController < ApplicationController
   def create
     @resource = @incident.resources.new(resource_params)
     if @resource.save
+      populate_roster_from_subordinates(@resource, @request)
       redirect_to incident_requests_path(@incident),
                   notice: "Checked in #{@resource.name} (#{@resource.full_order_number})."
     else
@@ -35,6 +36,34 @@ class RequestCheckinsController < ApplicationController
   end
 
   private
+
+  # When a checkinable request has subordinate requests (e.g. a strike team
+  # E-209 with STENs, engines, and crew members below, or a crew C-1 with
+  # crew members below), snapshot the whole subtree into rosters so the
+  # newly-created Resource carries a personnel manifest.
+  def populate_roster_from_subordinates(resource, request)
+    children_map = Request.build_children_map(@incident.requests)
+    descendants  = collect_descendants(request.req_number, children_map)
+    descendants.each_with_index do |req, i|
+      resource.rosters.create!(
+        request:      req,
+        name:         req.suggested_resource_name,
+        position:     req.filled_catalog_item_code,
+        order_number: req.suggested_order_number,
+        position_num: i + 1
+      )
+    end
+  end
+
+  def collect_descendants(req_num, children_map)
+    result = []
+    (children_map[req_num] || []).each do |kid|
+      result << kid
+      result.concat(collect_descendants(kid.req_number, children_map))
+    end
+    result
+  end
+
 
   def set_context
     @incident = Incident.find(params[:incident_id])

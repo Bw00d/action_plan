@@ -150,18 +150,24 @@
   th:nth-child(5), td:nth-child(5) { width: 15%; color: #5e6c84; white-space: nowrap; }
   th:nth-child(6), td:nth-child(6) { width: 15%; color: #5e6c84; white-space: nowrap; }
 
-  // Parent/child nesting — caret sits in a fixed gutter on the left so
-  // Req # values align regardless of whether a row has children.
+  // Parent/child nesting — each row's cell gets depth-based padding inline
+  // (12 + depth * 20 px), and inside the cell a fixed-width toggle slot
+  // holds the caret. That way carets and text indent together as depth
+  // increases, and rows with no children still align via the empty slot.
   .req-number-cell {
-    position: relative;
-    padding-left: 28px;  // gutter for caret + a little margin
+    padding-left: 12px;  // overridden inline for deeper rows
+  }
+
+  .toggle-slot {
+    display: inline-block;
+    width: 16px;
+    text-align: left;
+    vertical-align: baseline;
+    color: #a1a8b4;
   }
 
   .request-toggle {
-    position: absolute;
-    left: 6px;
-    top: 50%;
-    transform: translateY(-50%);
+    display: inline;
     cursor: pointer;
     color: #a1a8b4;     // same muted tone as the child-count label
     font-size: 17px;    // slightly larger than the 14px body text
@@ -196,11 +202,17 @@
     display: none;
   }
 
-  .request-child {
-    background: #fafbfc;
-
+  // Depth-based tint so multi-level nesting reads visually. Root rows keep
+  // the default white/zebra background; deeper rows shade progressively.
+  .request-row.depth-1 { background: #fafbfc;
+    td { color: #42526e; }
+  }
+  .request-row.depth-2 { background: #f4f6f9;
     td { color: #5e6c84; }
     td:first-child { font-weight: 400; }
+  }
+  .request-row.depth-3 { background: #eef1f5;
+    td { color: #5e6c84; font-size: 12px; }
   }
 
   .is-hidden {
@@ -244,7 +256,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding-left: 28px; // align with req number gutter
+    // padding-left set inline per row so detail aligns with req number
   }
 
   .check-in-btn {

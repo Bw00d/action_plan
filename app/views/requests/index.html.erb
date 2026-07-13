@@ -50,68 +50,7 @@
         </thead>
         <tbody>
           <% parents.each do |r| %>
-            <% kids = @children_by_parent[r.req_number] || [] %>
-            <% row_id = "req-#{r.id}" %>
-            <% status = request_status(r, @resources_by_order) %>
-            <tr class="request-parent <%= 'has-children' if kids.any? %>" data-parent-key="<%= row_id %>">
-              <td class="req-number-cell">
-                <% if kids.any? %>
-                  <span class="request-toggle"
-                        role="button"
-                        tabindex="0"
-                        aria-expanded="false"
-                        aria-controls="<%= row_id %>-children"
-                        data-target="<%= row_id %>"
-                        title="Show <%= kids.size %> subordinate<%= 's' if kids.size != 1 %>">
-                    <span class="toggle-caret" aria-hidden="true">&gt;</span>
-                  </span>
-                <% end %>
-                <span class="req-number-text"
-                      role="button"
-                      tabindex="0"
-                      data-detail-target="<%= row_id %>"
-                      title="Show details"><%= r.req_number %></span>
-                <% if kids.any? %>
-                  <span class="child-count">(<%= kids.size %>)</span>
-                <% end %>
-              </td>
-              <td class="status-col">
-                <% if status %>
-                  <span class="status-pill status-<%= status %>" title="<%= request_status_title(status) %>"><%= request_status_label(status) %></span>
-                <% end %>
-              </td>
-              <td><%= r.res_name %></td>
-              <td><%= [r.filled_catalog_item_code, r.filled_catalog_item_name].compact.join(" — ") %></td>
-              <td><%= [r.res_prov_agency_abbrev, r.res_prov_unit_code].compact.join(" / ") %></td>
-              <td><%= r.mob_etd&.strftime("%Y-%m-%d %H:%M") %></td>
-            </tr>
-            <tr class="request-detail is-hidden" data-detail-of="<%= row_id %>">
-              <td colspan="6">
-                <div class="request-detail-inner">
-                  <% if !r.checkinable? %>
-                    <span class="muted">Supplies aren't checked in as Resources.</span>
-                  <% elsif status == :filled %>
-                    <%= link_to "Check In", new_incident_request_checkin_path(@incident, r), class: "btn btn-primary btn-sm check-in-btn" %>
-                  <% elsif status == :checked_in %>
-                    <span class="btn btn-sm check-in-btn is-disabled" aria-disabled="true">Resource Checked In</span>
-                  <% elsif status == :released %>
-                    <span class="btn btn-sm check-in-btn is-disabled" aria-disabled="true">Resource Released</span>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
-            <% kids.each do |c| %>
-              <tr class="request-child is-hidden" data-child-of="<%= row_id %>">
-                <td class="req-number-cell">
-                  <span class="req-number-text"><%= c.req_number %></span>
-                </td>
-                <td class="status-col"></td>
-                <td><%= c.res_name %></td>
-                <td><%= [c.filled_catalog_item_code, c.filled_catalog_item_name].compact.join(" — ") %></td>
-                <td><%= [c.res_prov_agency_abbrev, c.res_prov_unit_code].compact.join(" / ") %></td>
-                <td><%= c.mob_etd&.strftime("%Y-%m-%d %H:%M") %></td>
-              </tr>
-            <% end %>
+            <%= render 'request_row', request: r %>
           <% end %>
         </tbody>
       </table>

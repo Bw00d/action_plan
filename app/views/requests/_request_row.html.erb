@@ -1,0 +1,75 @@
+<%# Renders one Request row, its check-in detail row, and recursively any
+    of its children. Depth-based padding gives visual nesting; ancestor
+    row-ids are stored on each row so JS can hide entire subtrees when a
+    parent is collapsed. Only top-level (non-subordinate) requests can be
+    checked in — subordinates display in the tree for context only.
+
+    Locals:
+      request        — the Request record
+      depth          — nesting level (default 0)
+      ancestor_keys  — array of parent row_ids (default []) %>
+<% depth         = local_assigns[:depth] || 0 %>
+<% ancestor_keys = local_assigns[:ancestor_keys] || [] %>
+<% row_id        = "req-#{request.id}" %>
+<% kids          = @children_by_parent[request.req_number] || [] %>
+<% status        = request_status(request, @resources_by_order) %>
+<% ancestors_attr = ancestor_keys.join(' ') %>
+<% has_ancestor  = ancestor_keys.any? %>
+<% cell_indent   = 12 + depth * 20 %>
+
+<tr class="request-row depth-<%= depth %> <%= 'has-children' if kids.any? %> <%= 'is-hidden' if has_ancestor %>"
+    data-parent-key="<%= row_id %>"
+    data-ancestors="<%= ancestors_attr %>">
+  <td class="req-number-cell" style="padding-left: <%= cell_indent %>px">
+    <span class="toggle-slot"><% if kids.any? %><span class="request-toggle"
+            role="button"
+            tabindex="0"
+            aria-expanded="false"
+            data-target="<%= row_id %>"
+            title="Show <%= kids.size %> subordinate<%= 's' if kids.size != 1 %>"><span class="toggle-caret" aria-hidden="true">&gt;</span></span><% end %></span><span class="req-number-text"
+          role="button"
+          tabindex="0"
+          data-detail-target="<%= row_id %>"
+          title="Show details"><%= request.req_number %></span>
+    <% if kids.any? %>
+      <span class="child-count">(<%= kids.size %>)</span>
+    <% end %>
+  </td>
+  <td class="status-col">
+    <% if status %>
+      <span class="status-pill status-<%= status %>" title="<%= request_status_title(status) %>"><%= request_status_label(status) %></span>
+    <% end %>
+  </td>
+  <td><%= request.res_name %></td>
+  <td><%= [request.filled_catalog_item_code, request.filled_catalog_item_name].compact.join(" — ") %></td>
+  <td><%= [request.res_prov_agency_abbrev, request.res_prov_unit_code].compact.join(" / ") %></td>
+  <td><%= request.mob_etd&.strftime("%Y-%m-%d %H:%M") %></td>
+</tr>
+
+<%# Detail row (check-in area). Ancestors include the request itself so
+    tree collapse cascades down; user-triggered visibility is a separate
+    is-detail-open class handled by JS. %>
+<tr class="request-detail is-hidden"
+    data-detail-of="<%= row_id %>"
+    data-ancestors="<%= (ancestor_keys + [row_id]).join(' ') %>">
+  <td colspan="6">
+    <div class="request-detail-inner" style="padding-left: <%= cell_indent + 16 %>px">
+      <% if !request.checkinable? %>
+        <span class="muted">Supplies aren't checked in as Resources.</span>
+      <% elsif request.subordinate? %>
+        <span class="muted">Subordinate of <%= request.parent_req_number %> — check in the parent instead.</span>
+      <% elsif status == :filled %>
+        <%= link_to "Check In", new_incident_request_checkin_path(@incident, request), class: "btn btn-primary btn-sm check-in-btn" %>
+      <% elsif status == :checked_in %>
+        <span class="btn btn-sm check-in-btn is-disabled" aria-disabled="true">Resource Checked In</span>
+      <% elsif status == :released %>
+        <span class="btn btn-sm check-in-btn is-disabled" aria-disabled="true">Resource Released</span>
+      <% end %>
+    </div>
+  </td>
+</tr>
+
+<%# Recurse into children. %>
+<% kids.each do |kid| %>
+  <%= render 'request_row', request: kid, depth: depth + 1, ancestor_keys: ancestor_keys + [row_id] %>
+<% end %>
