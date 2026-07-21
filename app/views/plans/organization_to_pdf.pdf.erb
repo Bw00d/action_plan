@@ -24,12 +24,11 @@
           <!-- BEGIN Command Staff -->
           <% @plan.command_staff.order(:created_at).each do |s| %>
             <div class="staff-row row">
-              <div class="content-box col-xs-6">  
-                <%= best_in_place s, :position, :as => :select, :collection => 
-                        { "1" => "(CHOOSE POSITION)", "2" =>'IC', "3" =>'Deputy IC', "4" =>'IC Trainee', "5" =>'SOFR', "6" =>'LOFR', "7" => "PIO" } %>
-              </div>     
+              <div class="content-box col-xs-6">
+                <%= best_in_place s, :position, :as => :input %>
+              </div>
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-              </div>    
+              </div>
             </div>
           <% end %>
             <div class="row blank-row">
@@ -78,14 +77,11 @@
           </div>
           <% @plan.plans.order(:created_at).each do |s| %>
             <div class="staff-row row">
-              <div class="content-box col-xs-6">  
-                <%= best_in_place s, :position, :as => :select, :collection => 
-                        { "1" => "(CHOOSE POSITION)", "2" => 'PSC', "3" => 'Deputy PSC', "4" => 'SITL', "5" => 'RESL', "6" => "DMOB",
-                          "7" => "GISS", "8" => "FOBS", "9" => "AOBS", "10" => "SCKN", "11" => "DOCL", "12" => "FBAN", "13" => "LTAN",
-                          "14" => "FEMO", "15" => "TNSP", "16" => "HRSP", "17" => "IRIN" } %>
-              </div>     
+              <div class="content-box col-xs-6">
+                <%= best_in_place s, :position, :as => :input %>
+              </div>
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-              </div>    
+              </div>
             </div>
           <% end %>
             <div class="row blank-row">
@@ -107,14 +103,11 @@
           </div>
             <% @plan.finance.order(:created_at).each do |s| %>
               <div class="staff-row row">
-                <div class="content-box col-xs-6">  
-                  <%= best_in_place s, :position, :as => :select, :collection => 
-                      { "1" => "(CHOOSE POSITION)", "2" => 'FSC', "3" => 'Deputy FSC', "4" => 'COST', "5" => 'TIME', "6" => "PTRC",
-                        "7" => "EQTR", "8" => "COMP", "9" => "INBA", "10" => "PROC" } %>
-                </div>     
+                <div class="content-box col-xs-6">
+                  <%= best_in_place s, :position, :as => :input %>
+                </div>
                 <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-
-                </div>    
+                </div>
               </div>
             <% end %>
               <div class="row blank-row">
@@ -179,15 +172,11 @@
           </div>
           <% @plan.logistics.order(:created_at).each do |s| %>
             <div class="staff-row row">
-              <div class="content-box col-xs-6">  
-                <%= best_in_place s, :position, :as => :select, :collection => 
-                        { "1" => "(CHOOSE POSITION)", "2" => 'LSC', "3" => 'Deputy LSC', "4" => 'SBVD', "5" => 'SUVD', "6" => "MEDL",
-                          "7" => "COML", "8" => "COMT", "9" => "RADO", "10" => "SUPL", "11" => "FDUL", "12" => "ORDM", "13" => "RCDM",
-                          "14" => "FACL", "15" => "BCMG", "16" => "EQPM", "17" => "SECM", "18" => "IADP", "19" => "ACDP", "20" => "EDRC",
-                          "21" => "EDSD" } %>
-              </div>     
+              <div class="content-box col-xs-6">
+                <%= best_in_place s, :position, :as => :input %>
+              </div>
               <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-              </div>    
+              </div>
             </div>
           <% end %>
             <div class="row blank-row">
