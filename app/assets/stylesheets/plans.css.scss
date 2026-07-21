@@ -489,10 +489,32 @@ h1.header {
 }
 
 .org-columns {
+  // Grow to fill remaining vertical space between the tabs (HTML) or top
+  // rows (PDF) and the bottom row. Inside each column, the last pad row
+  // then flex-grows again to absorb any residual pixels — so there's no
+  // visible gap between the pad rows and the Prepared by / Approved by
+  // row, whatever the page dimensions turn out to be.
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   align-items: stretch;
+}
+
+// Make the very last row in each column stretch to fill any residual
+// column height. The row becomes a flex container itself so its two
+// content-box cells also grow, preserving the vertical dividers all the
+// way to the row above Prepared by / Approved by.
+#organization-assignments .left-column  > .row:last-child,
+#organization-assignments .right-column > .row:last-child {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+
+  > .content-box {
+    flex: 1 1 50%;
+    height: auto !important;
+    min-height: var(--row-height, 30px);
+  }
 }
 
 .org-columns > .left-column,
@@ -510,19 +532,9 @@ h1.header {
 // col-xs-6 cells for "Prepared by:" and "Approved by:", leaving gaps at
 // 25% and 75%. Draw a 1px pseudo-line at 50% inside each bottom-row cell
 // so those inner dividers continue through to the very bottom.
-.bottom-row .content-box {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: black;
-  }
-}
+// The bottom-row now has four col-xs-3 cells so its border-lefts line up
+// with the four cell borders in the section rows above. No pseudo-elements
+// needed.
 
 // Section-level "add row" icon buttons on the 203. user-plus.svg for
 // position rows (both populated-with-placeholder-text and blank), and a

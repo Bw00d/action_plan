@@ -14,7 +14,7 @@
 
   left_used   = 2 + cmd_rows + agy_rows + pln_rows + log_rows
   right_used  = 2 + ops_rows + fin_rows
-  column_target = [left_used, right_used, 42].max
+  column_target = [left_used, right_used, 43].max
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
 %>
@@ -349,8 +349,10 @@
         </div> <!-- END RIGHT COLUMN -->
       </div> 
         <div class="row bottom-row">
-          <div class="content-box col-xs-6">Prepared by:</div>
-          <div class="content-box col-xs-6">Approved by:</div>
+          <div class="content-box col-xs-3">Prepared by:</div>
+          <div class="content-box col-xs-3"></div>
+          <div class="content-box col-xs-3">Approved by:</div>
+          <div class="content-box col-xs-3"></div>
         </div>
 
     <div class="print-button"><%= link_to "PRINT", "../#{@plan.id}/203-pdf.pdf", class: "btn btn-success tiny", target: :_blank %></div>
