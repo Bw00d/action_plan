@@ -461,6 +461,69 @@ h1.header {
   overflow: hidden;
 }
 
+// Step 3/4 layout: the entire 203 chart fills the available viewport (or
+// page area, when rendered as PDF) so the columns extend all the way down
+// to the Prepared by / Approved by row with even margin at the bottom.
+// A flex chain from #organization-assignments down to .org-columns lets
+// the columns claim the remaining vertical space; each column's
+// .column-spacer grows to fill within it.
+#organization-assignments {
+  --row-height: 30px;   // HTML view; PDF layout overrides to 22px
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  > .container {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  > .container > .col-xs-12 {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
+.org-columns {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.org-columns > .left-column,
+.org-columns > .right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Padding rows are now rendered as real DOM .row elements in the ERB
+// (@left_pad_rows / @right_pad_rows) instead of a gradient spacer, so
+// borders match the section rows exactly. No .column-spacer styles needed.
+
+// The section rows above have four col-xs-6 cells (four vertical borders
+// at 0%, 25%, 50%, 75% of the page). The bottom-row only has two
+// col-xs-6 cells for "Prepared by:" and "Approved by:", leaving gaps at
+// 25% and 75%. Draw a 1px pseudo-line at 50% inside each bottom-row cell
+// so those inner dividers continue through to the very bottom.
+.bottom-row .content-box {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: black;
+  }
+}
+
 // Section-level "add row" icon buttons on the 203. user-plus.svg for
 // position rows (both populated-with-placeholder-text and blank), and a
 // Font Awesome "H" for header rows. Kept minimal so the icons carry the
@@ -510,14 +573,17 @@ img.add-org-icon {
   position: relative;   // hover-zone + button position relative to this
 }
 
-// Thin transparent strip straddling the border between this row and the
-// next. Hovering here (or the button itself) reveals the button.
+// Thin transparent strip along the bottom edge of the row (fully inside
+// the row, not overlapping into the next). Hovering it (or the button
+// itself) reveals the button. Previously extended 4px below the border,
+// which meant the last section row's hover-zone sat on top of the
+// team-form add button in the following blank-row and swallowed clicks.
 .insert-hover-zone {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -4px;
-  height: 8px;
+  bottom: 0;
+  height: 6px;
   z-index: 6;
   cursor: pointer;
 }
@@ -537,7 +603,7 @@ form.insert-below-form {
   justify-content: center;
   box-sizing: border-box;
   position: absolute;
-  right: 12px;
+  right: 85px;
   bottom: -11px;         // half above the border, half below
   top: auto;
   width: 22px !important;
@@ -545,9 +611,9 @@ form.insert-below-form {
   min-width: 0;
   padding: 0;
   background: #fff;
-  border: 1px solid #999;
+  border: 1px solid #000;
   border-radius: 50%;
-  color: #999;
+  color: #000;
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;

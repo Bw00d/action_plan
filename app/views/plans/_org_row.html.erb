@@ -25,10 +25,13 @@
   <div class="staff-row row">
     <div class="insert-hover-zone"></div>
     <div class="content-box col-xs-6">
-      <%= best_in_place team, :position, :as => :input, place_holder: "..." %>
+      <%# place_holder text renders on-screen when the value is blank so users
+          have a clickable target, but it's a display attribute — not stored,
+          so it doesn't appear in the printed PDF. %>
+      <%= best_in_place team, :position, :as => :input, place_holder: "(POSITION)" %>
     </div>
     <div class="content-box col-xs-6">
-      <%= best_in_place team, :resource_name, :as => :input, place_holder: "..." %>
+      <%= best_in_place team, :resource_name, :as => :input, place_holder: "(NAME)" %>
       <%= button_to '+', teams_path,
                     method:  :post,
                     params:  { team: { staff: team.staff, plan_id: team.plan_id },

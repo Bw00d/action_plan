@@ -1,10 +1,25 @@
 
+<%
+  # Same column-target math as the HTML view — see incident_organization.html.erb.
+  cmd_rows = 1 + [6,  @plan.command_staff.count].max + 1
+  agy_rows = 1 + [6,  @plan.agency_reps.count  ].max + 1
+  pln_rows = 1 + [8,  @plan.plans.count        ].max + 1
+  log_rows = 1 + [6,  @plan.logistics.count    ].max + 1
+  ops_rows = 1 + [20, @plan.operations.count   ].max + 1
+  fin_rows = 1 + [3,  @plan.finance.count      ].max + 1
+
+  left_used   = 2 + cmd_rows + agy_rows + pln_rows + log_rows
+  right_used  = 2 + ops_rows + fin_rows
+  column_target = [left_used, right_used, 42].max
+  @left_pad_rows  = column_target - left_used
+  @right_pad_rows = column_target - right_used
+%>
 <div id="organization-assignments">
   <div class="container">
       
     <div class="col-xs-12 col-lg-8 center-block">
 
-      <div class="row">
+      <div class="row org-columns">
         <div class="left-column col-xs-6"> <!-- Left Column-->
           <div class="row">
             <div class="col-xs-12 content-box top-row">
@@ -71,36 +86,42 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (6 - @plan.plans.count).times do %>
+            <% (8 - @plan.plans.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>             
             </div>
           <% end %>
           <!-- END Plans -->
-          <!-- START Finance -->
+          <!-- START Logistics (left column) -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>     <!-- Logistics Section-->        
+            <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>
           </div>
-            <% @plan.finance.each do |s| %>
+            <% @plan.logistics.each do |s| %>
               <%= render 'org_row_pdf', team: s %>
             <% end %>
               <div class="row blank-row">
                 <div class="content-box col-xs-6">
-                  
-              </div>      
-                <div class="content-box col-xs-6"></div>      
+
               </div>
-              <% (6 - @plan.finance.count).times do %>
+                <div class="content-box col-xs-6"></div>
+              </div>
+              <% (6 - @plan.logistics.count).times do %>
               <div class="row">
-                <div class="content-box col-xs-6"></div>      
-                <div class="content-box col-xs-6"></div>             
+                <div class="content-box col-xs-6"></div>
+                <div class="content-box col-xs-6"></div>
               </div>
             <% end %>
-          <!-- END Finance -->
-          
+          <!-- END Logistics (left column) -->
 
-        </div> <!-- END LEFT COLUMN-->    
+          <% @left_pad_rows.times do %>
+            <div class="row">
+              <div class="col-xs-6 content-box"></div>
+              <div class="col-xs-6 content-box"></div>
+            </div>
+          <% end %>
+
+        </div> <!-- END LEFT COLUMN-->
 
         <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
           <div class="row">
@@ -128,38 +149,45 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-            <% (14 - @plan.operations.count).times do %>
+            <% (20 - @plan.operations.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>       
             </div>
           <% end %>
           <!-- END Ops -->
-          <!-- BEGIN Logs -->
+          <!-- BEGIN Finance (right column) -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>     <!-- Finance Section-->        
+            <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>
           </div>
-          <% @plan.logistics.each do |s| %>
+          <% @plan.finance.each do |s| %>
             <%= render 'org_row_pdf', team: s %>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
-            </div>      
-              <div class="content-box col-xs-6"></div>      
             </div>
-            <% (14 - @plan.logistics.count).times do %>
+              <div class="content-box col-xs-6"></div>
+            </div>
+            <% (3 - @plan.finance.count).times do %>
             <div class="row">
-              <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>
+              <div class="content-box col-xs-6"></div>
             </div>
           <% end %>
-          <!-- END Logs -->
-          
+          <!-- END Finance (right column) -->
+
+          <% @right_pad_rows.times do %>
+            <div class="row">
+              <div class="col-xs-6 content-box"></div>
+              <div class="col-xs-6 content-box"></div>
+            </div>
+          <% end %>
 
         </div> <!-- END RIGHT COLUMN -->
       </div> 
         <div class="row bottom-row">
-          <div class="content-box col-xs-12">Prepared by:</div> 
+          <div class="content-box col-xs-6">Prepared by:</div>
+          <div class="content-box col-xs-6">Approved by:</div>
         </div>
 
     </div>

@@ -1,4 +1,23 @@
 <%= content_for :title, "203" %>
+<%
+  # Compute how many empty pad rows to render at the bottom of each column
+  # so both columns end at the same y. Each section takes
+  # 1 header + max(min, count) data + 1 blank-add row. Column target is the
+  # taller of the two columns' natural row count, floored at 42 (the row
+  # capacity of a Letter page at 22px so PDFs fill cleanly).
+  cmd_rows = 1 + [6,  @plan.command_staff.count].max + 1
+  agy_rows = 1 + [6,  @plan.agency_reps.count  ].max + 1
+  pln_rows = 1 + [8,  @plan.plans.count        ].max + 1
+  log_rows = 1 + [6,  @plan.logistics.count    ].max + 1
+  ops_rows = 1 + [20, @plan.operations.count   ].max + 1
+  fin_rows = 1 + [3,  @plan.finance.count      ].max + 1
+
+  left_used   = 2 + cmd_rows + agy_rows + pln_rows + log_rows
+  right_used  = 2 + ops_rows + fin_rows
+  column_target = [left_used, right_used, 42].max
+  @left_pad_rows  = column_target - left_used
+  @right_pad_rows = column_target - right_used
+%>
 <div id="organization-assignments">
   <div class="container">
     <div class="col-xs-12 col-lg-8 center-block">
@@ -23,7 +42,7 @@
   
 
 
-      <div class="row">
+      <div class="row org-columns">
         <div class="left-column col-xs-6"> <!-- Left Column-->
           <div class="row">
             <div id='title-box'class="col-xs-12 content-box top-row">
@@ -50,8 +69,10 @@
                   <%= form_for @team do |f| %>
                     <%= f.hidden_field :staff, value: "Command" %>
                     <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "(POSITION)" %>
+                  <%# resource_name and position deliberately not set —
+                      the row starts nil and the _org_row.html.erb partial
+                      renders "(POSITION)" / "(NAME)" as a place_holder
+                      only, so the PDF prints blank cells. %>
                   <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
                     <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
                   <% end %>
@@ -89,8 +110,10 @@
                   <%= form_for @team do |f| %>
                     <%= f.hidden_field :staff, value: "Agency" %>
                     <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "(POSITION)" %>
+                  <%# resource_name and position deliberately not set —
+                      the row starts nil and the _org_row.html.erb partial
+                      renders "(POSITION)" / "(NAME)" as a place_holder
+                      only, so the PDF prints blank cells. %>
                   <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
                     <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
                   <% end %>
@@ -128,8 +151,10 @@
                   <%= form_for @team do |f| %>
                     <%= f.hidden_field :staff, value: "Plans" %>
                     <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "(POSITION)" %>
+                  <%# resource_name and position deliberately not set —
+                      the row starts nil and the _org_row.html.erb partial
+                      renders "(POSITION)" / "(NAME)" as a place_holder
+                      only, so the PDF prints blank cells. %>
                   <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
                     <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
                   <% end %>
@@ -147,28 +172,27 @@
             </div>
               <div class="content-box col-xs-6"></div>
             </div>
-            <% (6 - @plan.plans.count).times do %>
+            <% (8 - @plan.plans.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>              
             </div>
           <% end %>
           <!-- END Plans -->
-          <!-- START Finance -->
+          <!-- START Logistics (left column) -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>     <!-- Logistics Section-->        
+            <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>
           </div>
-            <% @plan.finance.each do |s| %>
+            <% @plan.logistics.each do |s| %>
               <%= render 'org_row', team: s %>
             <% end %>
               <div class="row blank-row">
                 <div class="content-box col-xs-6">
                   <span class="team-form">
                     <%= form_for @team do |f| %>
-                      <%= f.hidden_field :staff, value: "Finance" %>
+                      <%= f.hidden_field :staff, value: "Logistics" %>
                       <%= f.hidden_field :plan_id, value: @plan.id %>
-                      <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                      <%= f.hidden_field :position, value: "(POSITION)" %>
+                    <%# See partial for place_holder rendering; row starts nil. %>
                     <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
                       <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
                     <% end %>
@@ -176,7 +200,7 @@
                 </span>
                 <span class="team-form">
                   <%= form_for @team do |f| %>
-                    <%= f.hidden_field :staff, value: "Finance" %>
+                    <%= f.hidden_field :staff, value: "Logistics" %>
                     <%= f.hidden_field :plan_id, value: @plan.id %>
                     <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
                       <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
@@ -186,16 +210,26 @@
               </div>
                 <div class="content-box col-xs-6"></div>
               </div>
-              <% (6 - @plan.finance.count).times do %>
+              <% (6 - @plan.logistics.count).times do %>
               <div class="row">
-                <div class="content-box col-xs-6"></div>      
-                <div class="content-box col-xs-6"></div>              
+                <div class="content-box col-xs-6"></div>
+                <div class="content-box col-xs-6"></div>
               </div>
             <% end %>
-          <!-- END Finance -->
-          
+          <!-- END Logistics (left column) -->
 
-        </div> <!-- END LEFT COLUMN-->    
+          <%# Real DOM rows to pad the column down to the target height so
+              its bottom lands at the same y as the right column's bottom.
+              Real rows render crisp 1px borders (unlike the gradient
+              approach, which anti-aliased into gray in the PDF). %>
+          <% @left_pad_rows.times do %>
+            <div class="row">
+              <div class="col-xs-6 content-box"></div>
+              <div class="col-xs-6 content-box"></div>
+            </div>
+          <% end %>
+
+        </div> <!-- END LEFT COLUMN-->
 
         <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
           <div class="row">
@@ -223,8 +257,10 @@
                   <%= form_for @team do |f| %>
                     <%= f.hidden_field :staff, value: "Operations" %>
                     <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "(POSITION)" %>
+                  <%# resource_name and position deliberately not set —
+                      the row starts nil and the _org_row.html.erb partial
+                      renders "(POSITION)" / "(NAME)" as a place_holder
+                      only, so the PDF prints blank cells. %>
                   <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
                     <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
                   <% end %>
@@ -253,28 +289,30 @@
               </span>
               </div>
             </div>
-            <% (14 - @plan.operations.count).times do %>
+            <% (20 - @plan.operations.count).times do %>
             <div class="row">
               <div class="content-box col-xs-6"></div>      
               <div class="content-box col-xs-6"></div>       
             </div>
           <% end %>
           <!-- END Ops -->
-          <!-- BEGIN Logs -->
+          <!-- BEGIN Finance (right column) -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>     <!-- Finance Section-->        
+            <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>
           </div>
-          <% @plan.logistics.each do |s| %>
+          <% @plan.finance.each do |s| %>
             <%= render 'org_row', team: s %>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
                 <span class="team-form">
                   <%= form_for @team do |f| %>
-                    <%= f.hidden_field :staff, value: "Logistics" %>
+                    <%= f.hidden_field :staff, value: "Finance" %>
                     <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.hidden_field :resource_name, value: "(NAME)" %>
-                    <%= f.hidden_field :position, value: "(POSITION)" %>
+                  <%# resource_name and position deliberately not set —
+                      the row starts nil and the _org_row.html.erb partial
+                      renders "(POSITION)" / "(NAME)" as a place_holder
+                      only, so the PDF prints blank cells. %>
                   <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
                     <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
                   <% end %>
@@ -282,7 +320,7 @@
               </span>
               <span class="team-form">
                 <%= form_for @team do |f| %>
-                  <%= f.hidden_field :staff, value: "Logistics" %>
+                  <%= f.hidden_field :staff, value: "Finance" %>
                   <%= f.hidden_field :plan_id, value: @plan.id %>
                   <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
                     <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
@@ -292,20 +330,27 @@
             </div>
               <div class="content-box col-xs-6"></div>
             </div>
-            <% (14 - @plan.logistics.count).times do %>
+            <% (3 - @plan.finance.count).times do %>
             <div class="row">
-              <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
+              <div class="content-box col-xs-6"></div>
+              <div class="content-box col-xs-6"></div>
             </div>
           <% end %>
-          <!-- END Logs -->
-          
+          <!-- END Finance (right column) -->
+
+          <%# Real DOM rows to pad the column down to the target height. %>
+          <% @right_pad_rows.times do %>
+            <div class="row">
+              <div class="col-xs-6 content-box"></div>
+              <div class="col-xs-6 content-box"></div>
+            </div>
+          <% end %>
 
         </div> <!-- END RIGHT COLUMN -->
       </div> 
         <div class="row bottom-row">
-          <div class="content-box col-xs-12">Prepared by:</div> 
-                 
+          <div class="content-box col-xs-6">Prepared by:</div>
+          <div class="content-box col-xs-6">Approved by:</div>
         </div>
 
     <div class="print-button"><%= link_to "PRINT", "../#{@plan.id}/203-pdf.pdf", class: "btn btn-success tiny", target: :_blank %></div>

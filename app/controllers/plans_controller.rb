@@ -173,9 +173,19 @@ class PlansController < ApplicationController
           layout: 'layouts/pdf.html.erb',
           locals: { plan: @plan, incident: @incident, team: @team }
         )
-        
-        pdf = Grover.new(html, display_url: request.base_url).to_pdf
-        
+
+        # Fit the 203 on a single Letter page with even margins. print_background
+        # keeps the header-row grey; prefer_css_page_size lets the layout's
+        # @page rule (also letter) take precedence if it disagrees.
+        pdf = Grover.new(html,
+          display_url:            request.base_url,
+          format:                 'Letter',
+          margin:                 { top: '0.4in', right: '0.4in', bottom: '0.4in', left: '0.4in' },
+          print_background:       true,
+          prefer_css_page_size:   true,
+          display_header_footer:  false  # kill Chrome's default header/footer text
+        ).to_pdf
+
         send_data pdf, filename: "organization_plan_#{@plan.id}.pdf", type: 'application/pdf', disposition: 'inline'
       end
     end

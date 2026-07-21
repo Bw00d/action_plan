@@ -8,8 +8,67 @@
       /* PDF-specific overrides and essential styles */
       @page {
         size: letter;
-        margin: -50px 10px 10px 10px !important;
+        margin: 0.4in !important;
       }
+      html, body { margin: 0 !important; padding: 0 !important; }
+      .page-wrapper { min-height: 100vh; }
+
+      /* Force the org chart to fill the printable width — Bootstrap's
+         .col-lg-8 would otherwise clamp it to 66% and center it. */
+      #organization-assignments > .container,
+      #organization-assignments > .container > .col-xs-12.col-lg-8.center-block {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        float: none !important;
+      }
+      /* Bootstrap .row has margin-left/right: -15px, which normally cancels
+         col padding. With outer col padding zeroed out above, those negative
+         margins push cell borders past the @page margin and clip content.
+         Also zero the col padding inside the chart so nothing overshoots. */
+      #organization-assignments .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      #organization-assignments .col-xs-6,
+      #organization-assignments .col-xs-12 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      /* Row size for the 203 PDF: tighter than the HTML view. Used both
+         directly and as --row-height for the column-spacer stripe pattern
+         so the spacer renders as continuing empty rows. */
+      #organization-assignments {
+        --row-height: 22px;
+      }
+      #organization-assignments .content-box {
+        height: var(--row-height) !important;
+        padding: 3px 5px !important;
+        font-size: 11px !important;
+      }
+      /* Column pad rows are real DOM rows (see the ERB); nothing extra
+         needed to make them render — they inherit .content-box borders. */
+      html, body, .page-wrapper, #organization-assignments {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      #organization-assignments .header-row {
+        padding-top: 2px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      #organization-assignments #title-box h4 {
+        font-size: 10px !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+        margin: 0 !important;
+      }
+      #organization-assignments .top-row {
+        height: 26px !important;
+      }
+      #organization-assignments .print-button { display: none !important; }
       
       
       /* Hide elements that shouldn't appear in PDFs */
