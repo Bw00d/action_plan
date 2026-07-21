@@ -1,0 +1,20 @@
+<%# PDF-only rendering: same shape as _org_row but no delete link and no
+    best_in_place decorators. If team.header? we render a full-width
+    header cell; otherwise the plain position/name row.
+    Locals: team %>
+<% if team.header? %>
+  <div class="staff-row row">
+    <div class="content-box col-xs-12 header-row">
+      <%= team.header_label %>
+    </div>
+  </div>
+<% else %>
+  <div class="staff-row row">
+    <div class="content-box col-xs-6">
+      <%= team.position %>
+    </div>
+    <div class="content-box col-xs-6">
+      <%= team.resource_name %>
+    </div>
+  </div>
+<% end %>

@@ -41,15 +41,8 @@
           </div>
 
           <!-- BEGIN Command Staff -->
-          <% @plan.command_staff.order(:created_at).each do |s| %>
-            <div class="staff-row row">
-              <div class="content-box col-xs-6">
-                <%= best_in_place s, :position, :as => :input %>
-              </div>
-              <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
-              </div>
-            </div>
+          <% @plan.command_staff.each do |s| %>
+            <%= render 'org_row', team: s %>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
@@ -59,7 +52,18 @@
                     <%= f.hidden_field :plan_id, value: @plan.id %>
                     <%= f.hidden_field :resource_name, value: "(NAME)" %>
                     <%= f.hidden_field :position, value: "(POSITION)" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
+                <% end %>
+              </span>
+              <span class="team-form">
+                <%= form_for @team do |f| %>
+                  <%= f.hidden_field :staff, value: "Command" %>
+                  <%= f.hidden_field :plan_id, value: @plan.id %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
                 <% end %>
               </span>
             </div>
@@ -76,16 +80,8 @@
           <div class="row">
             <div class="content-box col-xs-12 header-row">AGENCY REPRESENTATIVES</div>     <!-- Agency Reps-->        
           </div>
-          <% @plan.agency_reps.order(:created_at).each do |s| %>
-            <div class="staff-row row">
-              <div class="content-box col-xs-6">  
-                <%= best_in_place s, :position, :as => :input %>
-              </div>     
-              <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
-                  
-                </div>    
-            </div>
+          <% @plan.agency_reps.each do |s| %>
+            <%= render 'org_row', team: s %>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
@@ -95,7 +91,18 @@
                     <%= f.hidden_field :plan_id, value: @plan.id %>
                     <%= f.hidden_field :resource_name, value: "(NAME)" %>
                     <%= f.hidden_field :position, value: "(POSITION)" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
+                <% end %>
+              </span>
+              <span class="team-form">
+                <%= form_for @team do |f| %>
+                  <%= f.hidden_field :staff, value: "Agency" %>
+                  <%= f.hidden_field :plan_id, value: @plan.id %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
                 <% end %>
               </span>
             </div>      
@@ -112,15 +119,8 @@
           <div class="row">
             <div class="content-box col-xs-12 header-row">PLANNING SECTION</div>     <!-- Planning Section-->        
           </div>
-          <% @plan.plans.order(:created_at).each do |s| %>
-            <div class="staff-row row">
-              <div class="content-box col-xs-6">
-                <%= best_in_place s, :position, :as => :input %>
-              </div>
-              <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
-              </div>
-            </div>
+          <% @plan.plans.each do |s| %>
+            <%= render 'org_row', team: s %>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
@@ -130,7 +130,18 @@
                     <%= f.hidden_field :plan_id, value: @plan.id %>
                     <%= f.hidden_field :resource_name, value: "(NAME)" %>
                     <%= f.hidden_field :position, value: "(POSITION)" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
+                <% end %>
+              </span>
+              <span class="team-form">
+                <%= form_for @team do |f| %>
+                  <%= f.hidden_field :staff, value: "Plans" %>
+                  <%= f.hidden_field :plan_id, value: @plan.id %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
                 <% end %>
               </span>
             </div>
@@ -147,15 +158,8 @@
           <div class="row">
             <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>     <!-- Logistics Section-->        
           </div>
-            <% @plan.finance.order(:created_at).each do |s| %>
-              <div class="staff-row row">
-                <div class="content-box col-xs-6">
-                  <%= best_in_place s, :position, :as => :input %>
-                </div>
-                <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                  <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
-                </div>
-              </div>
+            <% @plan.finance.each do |s| %>
+              <%= render 'org_row', team: s %>
             <% end %>
               <div class="row blank-row">
                 <div class="content-box col-xs-6">
@@ -165,7 +169,18 @@
                       <%= f.hidden_field :plan_id, value: @plan.id %>
                       <%= f.hidden_field :resource_name, value: "(NAME)" %>
                       <%= f.hidden_field :position, value: "(POSITION)" %>
-                    <%= f.submit '+', class: "new-commo-item" %>
+                    <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
+                      <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                    <% end %>
+                  <% end %>
+                </span>
+                <span class="team-form">
+                  <%= form_for @team do |f| %>
+                    <%= f.hidden_field :staff, value: "Finance" %>
+                    <%= f.hidden_field :plan_id, value: @plan.id %>
+                    <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
+                      <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                    <% end %>
                   <% end %>
                 </span>
               </div>
@@ -199,15 +214,8 @@
           <div class="row">
             <div class="col-xs-12 content-box header-row"> OPERATIONS </div>
           </div>
-          <% @plan.operations.order(:created_at).each do |s| %>
-            <div class="staff-row row">
-              <div class="content-box col-xs-6">  
-                <%= best_in_place s, :position, :as => :input %>
-              </div>     
-              <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
-              </div>    
-            </div>
+          <% @plan.operations.each do |s| %>
+            <%= render 'org_row', team: s %>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
@@ -217,11 +225,33 @@
                     <%= f.hidden_field :plan_id, value: @plan.id %>
                     <%= f.hidden_field :resource_name, value: "(NAME)" %>
                     <%= f.hidden_field :position, value: "(POSITION)" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
                 <% end %>
               </span>
-            </div>      
-              <div class="content-box col-xs-6"></div>      
+              <span class="team-form">
+                <%= form_for @team do |f| %>
+                  <%= f.hidden_field :staff, value: "Operations" %>
+                  <%= f.hidden_field :plan_id, value: @plan.id %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
+                <% end %>
+              </span>
+            </div>
+              <div class="content-box col-xs-6">
+                <span class="team-form">
+                  <%= form_for @team do |f| %>
+                    <%= f.hidden_field :staff, value: "Operations" %>
+                    <%= f.hidden_field :plan_id, value: @plan.id %>
+                    <%= f.hidden_field :header_label, value: "HEADER" %>
+                  <%= f.button type: :submit, class: "add-org-btn add-header-btn", title: "Add header row" do %>
+                    <%= fa_icon 'header' %>
+                  <% end %>
+                <% end %>
+              </span>
+              </div>
             </div>
             <% (14 - @plan.operations.count).times do %>
             <div class="row">
@@ -234,15 +264,8 @@
           <div class="row">
             <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>     <!-- Finance Section-->        
           </div>
-          <% @plan.logistics.order(:created_at).each do |s| %>
-            <div class="staff-row row">
-              <div class="content-box col-xs-6">
-                <%= best_in_place s, :position, :as => :input %>
-              </div>
-              <div class="content-box col-xs-6"><%= best_in_place s, :resource_name, :as => :input %>
-                <%= link_to 'X', s, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
-              </div>
-            </div>
+          <% @plan.logistics.each do |s| %>
+            <%= render 'org_row', team: s %>
           <% end %>
             <div class="row blank-row">
               <div class="content-box col-xs-6">
@@ -252,7 +275,18 @@
                     <%= f.hidden_field :plan_id, value: @plan.id %>
                     <%= f.hidden_field :resource_name, value: "(NAME)" %>
                     <%= f.hidden_field :position, value: "(POSITION)" %>
-                  <%= f.submit '+', class: "new-commo-item" %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
+                <% end %>
+              </span>
+              <span class="team-form">
+                <%= form_for @team do |f| %>
+                  <%= f.hidden_field :staff, value: "Logistics" %>
+                  <%= f.hidden_field :plan_id, value: @plan.id %>
+                  <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
+                    <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                  <% end %>
                 <% end %>
               </span>
             </div>

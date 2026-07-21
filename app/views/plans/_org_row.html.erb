@@ -1,0 +1,42 @@
+<%# Renders one Team row on the 203. If team.header? we render a
+    full-width, center-aligned section separator (e.g. "Branch I" inside
+    Operations); otherwise the normal name/position row. Both variants get
+    an "insert blank row below" button so users can slot in a new row
+    between two existing rows. The button only reveals when hovering the
+    thin .insert-hover-zone straddling the row's bottom border, so it
+    doesn't fight the delete X for attention on regular row hover.
+    Locals: team %>
+<% if team.header? %>
+  <div class="staff-row row">
+    <div class="insert-hover-zone"></div>
+    <div class="content-box col-xs-12 header-row">
+      <%= best_in_place team, :header_label, :as => :input, place_holder: "(HEADER)" %>
+      <%= button_to '+', teams_path,
+                    method:  :post,
+                    params:  { team: { staff: team.staff, plan_id: team.plan_id },
+                               after_id: team.id },
+                    form:    { class: "insert-below-form" },
+                    class:   "insert-below",
+                    title:   "Insert blank row below" %>
+      <%= link_to 'X', team, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
+    </div>
+  </div>
+<% else %>
+  <div class="staff-row row">
+    <div class="insert-hover-zone"></div>
+    <div class="content-box col-xs-6">
+      <%= best_in_place team, :position, :as => :input, place_holder: "..." %>
+    </div>
+    <div class="content-box col-xs-6">
+      <%= best_in_place team, :resource_name, :as => :input, place_holder: "..." %>
+      <%= button_to '+', teams_path,
+                    method:  :post,
+                    params:  { team: { staff: team.staff, plan_id: team.plan_id },
+                               after_id: team.id },
+                    form:    { class: "insert-below-form" },
+                    class:   "insert-below",
+                    title:   "Insert blank row below" %>
+      <%= link_to 'X', team, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-resource" %>
+    </div>
+  </div>
+<% end %>

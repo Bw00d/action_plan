@@ -86,27 +86,27 @@ class Plan < ApplicationRecord
   end
 
   def command_staff
-    Team.where(plan_id: self.id, staff: "Command")
+    Team.where(plan_id: self.id, staff: "Command").order(:list_position, :created_at)
   end
 
   def agency_reps
-    Team.where(plan_id: self.id, staff: "Agency")
+    Team.where(plan_id: self.id, staff: "Agency").order(:list_position, :created_at)
   end
 
   def plans
-    Team.where(plan_id: self.id, staff: "Plans")
+    Team.where(plan_id: self.id, staff: "Plans").order(:list_position, :created_at)
   end
 
   def finance
-    Team.where(plan_id: self.id, staff: "Finance")
+    Team.where(plan_id: self.id, staff: "Finance").order(:list_position, :created_at)
   end
 
   def operations
-    Team.where(plan_id: self.id, staff: "Operations")
+    Team.where(plan_id: self.id, staff: "Operations").order(:list_position, :created_at)
   end
 
   def logistics
-    Team.where(plan_id: self.id, staff: "Logistics")
+    Team.where(plan_id: self.id, staff: "Logistics").order(:list_position, :created_at)
   end
 
 end

@@ -49,7 +49,7 @@
             <% unless @assignment.plan.operations.empty? %>
               <%= javascript_tag "var opsIds = #{@assignment.ops_personnel_ids.to_json}" %>
 
-              <% @plan.operations.order(:position).each do |r| %>
+              <% @plan.operations.not_headers.order(:position).each do |r| %>
                 <li class=""><%= f.check_box :ops_personnel_ids, {multiple: true}, r.id, nil %>
                 
                         <%= f.label :ops_personnel_ids, r.position %>  -  <%= f.label :ops_personnel_ids, r.resource_name %></li>

@@ -30,6 +30,17 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
+        # Optional insertion: if the caller passed after_id, move the new
+        # row into the slot right after that row. acts_as_list handles the
+        # shift-down of every subsequent row in the same [plan_id, staff]
+        # scope. Silently ignore mismatched scope so a stale after_id can't
+        # move a row into a different section.
+        if params[:after_id].present?
+          source = Team.find_by(id: params[:after_id])
+          if source && source.plan_id == @team.plan_id && source.staff == @team.staff
+            @team.insert_at(source.list_position + 1)
+          end
+        end
         format.html { redirect_back(fallback_location: root_path) }
         format.json { redirect_back(fallback_location: root_path) }
       else
@@ -73,6 +84,6 @@ class TeamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def team_params
-      params.require(:team).permit(:resource_name, :position, :staff, :plan_id)
+      params.require(:team).permit(:resource_name, :position, :staff, :plan_id, :header_label)
     end
 end
