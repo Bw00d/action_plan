@@ -1,44 +1,82 @@
 <%= content_for :title, "Cover" %>
 <div class="container">
   <div class="col-xs-12 col-lg-8 center-block">
-<!-- Begin the tabrows -->
     <%= render 'tabrows' %>
-<!-- End the tabrows -->
-    <div class="row">
-      <div id="cover" class="bordered" data-url="<%= 'sort_checkins_path' %>">
-<!-- Display blocks -->
-      <%= render 'new_block_type' %>
-       <% processed_blocks = [] %>
-       <% @blocks.each do |b| %>
-         <% next if processed_blocks.include?(b.id) %>
-         
-         <% if b.split_block? && b.pair_id.present? %>
-           <% # Find the paired block %>
-           <% paired_block = @blocks.find { |pb| pb.pair_id == b.pair_id && pb.id != b.id } %>
-           <% if paired_block %>
-             <% processed_blocks << b.id << paired_block.id %>
-             <div class="split-block-container">
-               <div class="split-block-wrapper">
-                 <%= render 'block_content', block: b %>
-               </div>
-               <div class="split-block-wrapper">
-                 <%= render 'block_content', block: paired_block %>
-               </div>
-             </div>
-           <% else %>
-             <div>
-               <%= render 'block_content', block: b %>
-             </div>
-           <% end %>
-         <% else %>
-           <div>
-             <%= render 'block_content', block: b %>
-           </div>
-         <% end %>
-       <% end %>
-<!-- End blocks display -->   
+
+    <%# Canvas takes the full width of the plan column. Style panel is
+        pulled out of the flex row and positioned absolutely against the
+        column's right edge (straddling into the whitespace outside the
+        plan) so the canvas isn't squeezed. %>
+    <div class="cover-workspace">
+      <div id="cover-canvas" data-cover-id="<%= @cover.id %>">
+        <%# Snap guides at 16.5% / 50% / 83.5% of canvas width. %>
+        <div class="cover-guide" data-guide-x="16.5"></div>
+        <div class="cover-guide" data-guide-x="50"></div>
+        <div class="cover-guide" data-guide-x="83.5"></div>
+
+        <% @blocks.each do |b| %>
+          <%= render 'block_content', body: nil, block: b %>
+        <% end %>
+      </div>
+
+      <div class="cover-style-panel" data-cover-id="<%= @cover.id %>">
+        <%# Font size — also acts as "add text" when no block is selected. %>
+        <button type="button" class="csp-btn csp-h1" data-attr="font_size" data-value="h1">H1</button>
+        <button type="button" class="csp-btn csp-h2" data-attr="font_size" data-value="h2">H2</button>
+        <button type="button" class="csp-btn csp-h3" data-attr="font_size" data-value="h3">H3</button>
+        <button type="button" class="csp-btn csp-h4" data-attr="font_size" data-value="h4">H4</button>
+
+        <%# Custom pixel size for text blocks. Number input; on change,
+            saves the value into font_size (as a plain integer string). %>
+        <input type="number" class="csp-px-input" min="6" max="240" step="1" placeholder="px" title="Custom pixel size">
+
+        <div class="csp-sep"></div>
+
+        <%# Font weight (only meaningful when a text block is selected). %>
+        <button type="button" class="csp-btn" data-attr="font_weight" data-value="normal">Norm</button>
+        <button type="button" class="csp-btn" data-attr="font_weight" data-value="semi-bold"><strong>Semi</strong></button>
+        <button type="button" class="csp-btn" data-attr="font_weight" data-value="bold"><strong>Bold</strong></button>
+
+        <div class="csp-sep"></div>
+
+        <%# Italic toggle. Click to add italic; click again to go back to normal. %>
+        <button type="button" class="csp-btn csp-italic" data-attr="text_style" data-value="italic"><em>Italic</em></button>
+
+        <div class="csp-sep"></div>
+
+        <%# Alignment — icons for left / center / right. %>
+        <button type="button" class="csp-btn csp-align-btn" data-attr="text_align" data-value="left"   title="Align left"  >L</button>
+        <button type="button" class="csp-btn csp-align-btn" data-attr="text_align" data-value="center" title="Align center">C</button>
+        <button type="button" class="csp-btn csp-align-btn" data-attr="text_align" data-value="right"  title="Align right" >R</button>
+
+        <div class="csp-sep"></div>
+
+        <%# Add / replace image. If an image block is selected, opens the
+            upload form for it. Otherwise creates a new placeholder image
+            block and opens the form for that block. %>
+        <button type="button" class="csp-btn csp-icon csp-add-image" title="Add / change image">
+          <%= image_tag('white-image.png') %>
+        </button>
+
+        <%# Delete the selected block. Sends a JS DELETE via covers_canvas.js. %>
+        <button type="button" class="csp-btn csp-icon csp-delete-selected" title="Delete selected">
+          <%= image_tag('white-trash.png') %>
+        </button>
       </div>
     </div>
-    <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/covers/#{@cover.id}/cover_to_pdf" + ".pdf", target: :_blank, class: "btn btn-success tiny" %></div>
+
+    <%# Image upload form. Hidden by default (via .cover-upload-form
+        without .is-open); JS toggles .is-open to show it. %>
+    <div class="cover-upload-form" data-target-block-id="">
+      <input type="file" class="cui-file-input" accept="image/*">
+      <button type="button" class="cui-choose-btn btn btn-default btn-sm">Choose File</button>
+      <span class="cui-filename">No file chosen</span>
+      <button type="button" class="cui-upload-btn btn btn-primary btn-sm" disabled>Upload</button>
+      <button type="button" class="cui-cancel-btn btn btn-danger  btn-sm">Cancel</button>
+    </div>
+
+    <div class="print-button">
+      <%= link_to "PRINT", "../../#{@plan.id}/covers/#{@cover.id}/cover_to_pdf.pdf", target: :_blank, class: "btn btn-success tiny" %>
+    </div>
   </div>
 </div>

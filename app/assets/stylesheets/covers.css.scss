@@ -177,10 +177,9 @@
 .bordered {
     border: 2px solid #DDD;
 }
-.cover-block {
-  border: 1px dashed orange;
-  overflow: hidden;
-}
+// Legacy .cover-block rule removed — the canvas-era rules further down
+// this file (~line 654) define the block; the orange dashed border and
+// overflow: hidden here clipped the resize handles at each corner.
 .sm-spacer {
   height: 25px;
   overflow: hidden;
@@ -506,3 +505,352 @@
 
 
 
+
+// ─────────────────────────────────────────────────────────────────────
+// Canvas-based cover editor (Phase 1). The canvas is a fixed-aspect
+// (letter portrait) container; blocks are absolutely-positioned inside
+// it using x/y/width/height as percentages, so the editor and PDF stay
+// in sync at any render size.
+// ─────────────────────────────────────────────────────────────────────
+
+// Workspace: canvas at full column width; style panel is absolutely
+// positioned just outside (straddling) the right edge so it doesn't
+// squeeze the canvas. .cover-workspace establishes the positioning
+// context.
+.cover-workspace {
+  position: relative;
+  // Cancel the parent .col-xs-12's 15px horizontal padding — same trick
+  // Bootstrap's .row uses natively — so the canvas spans the full column
+  // width just like the tabs row above it.
+  margin: 0 -15px;
+  padding: 0;
+}
+// Pull the canvas up to sit flush with the tabs above. Fine-tuned to
+// match the org chart's flush look — -20px was too aggressive and
+// overlapped the tab labels.
+.cover-workspace > #cover-canvas {
+  margin-top: -5px !important;
+}
+
+.cover-workspace #cover-canvas {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+// Vertical style panel — dark rounded strip. Each style button previews
+// its own style so it doubles as the "add new element" picker. When
+// nothing is selected, size buttons (H1–H4) and the image icon add a new
+// block. When a block is selected, all buttons modify it in place.
+//
+// Positioned absolutely inside .cover-workspace, straddling the canvas's
+// right edge and offset down so it sits comfortably alongside the page.
+.cover-style-panel {
+  position: absolute;
+  top: 20%;
+  right: -90px;    // straddles: ~10px inside the canvas, ~50px outside
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  padding: 10px 8px;
+  background: #3d3d3d;
+  // border-radius: 8px;
+  color: #fff;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  .csp-sep {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 6px 4px;
+  }
+
+  .csp-inline-form { display: block; margin: 0; }
+
+  .csp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 32px;
+    padding: 4px 0;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 4px;
+    transition: background-color 0.1s ease;
+
+    &:hover  { background: rgba(255, 255, 255, 0.10); }
+    &:focus  { outline: none; }
+    &.is-active {
+      background: #1976d2;
+    }
+    // Text-only style buttons when an image block is selected — grey
+    // them out and block interaction (JS also short-circuits the click).
+    &.is-disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+      &:hover { background: transparent; }
+    }
+    em, strong { font-style: inherit; font-weight: inherit; }
+  }
+
+  // Preview-style each font-size button at its own size.
+  .csp-h1 { font-size: 22px; font-weight: 700; }
+  .csp-h2 { font-size: 18px; font-weight: 700; }
+  .csp-h3 { font-size: 15px; font-weight: 500; }
+  .csp-h4 { font-size: 13px; font-weight: 400; }
+
+  // Pixel size input — matches the panel's dark strip aesthetic.
+  .csp-px-input {
+    width: 100%;
+    height: 26px;
+    margin-top: 2px;
+    padding: 0 6px;
+    background: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    font: inherit;
+    font-size: 12px;
+    text-align: center;
+    -moz-appearance: textfield;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    &:focus { outline: none; border-color: #1976d2; }
+    &.is-disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  .csp-italic em { font-style: italic; }
+
+  .csp-align-btn {
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .csp-icon img {
+    width: 22px;
+    height: 22px;
+    // Fallback for images that aren't already white/transparent.
+    filter: brightness(0) invert(1);
+  }
+}
+
+// Selected block: solid blue border and slight tint so the target of
+// style panel changes is obvious.
+.cover-block.is-selected {
+  border-style: solid;
+  border-color: #1976d2;
+  background: rgba(25, 118, 210, 0.04);
+}
+
+// Image upload form — shown below the canvas when the user clicks the
+// image button in the style panel. Hidden by default; JS adds .is-open
+// to reveal it. Uses .is-open (not the [hidden] attribute) so we don't
+// get burned by CSS specificity fights with display: flex.
+.cover-upload-form {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: #f4f5f7;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  font-size: 13px;
+
+  &.is-open { display: flex; }
+
+  // The native file input must stay invisible — its browser-rendered
+  // Choose File button would otherwise sit next to our custom one.
+  .cui-file-input { display: none !important; }
+
+  .cui-filename {
+    flex: 1 1 auto;
+    color: #5e6c84;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+#cover-canvas {
+  position: relative;
+  width: 100%;
+  // Letter portrait aspect ratio. Using CSS `aspect-ratio` (not the
+  // padding-top hack) so the content box has a real measured height —
+  // jQuery UI's containment math and our percent conversions depend on
+  // $canvas.height() returning a non-zero value.
+  aspect-ratio: 8.5 / 11;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 16px;
+  // Overflow visible so the resize handles (positioned -6px outside each
+  // block corner) remain fully rendered even when the block is at the
+  // canvas edge. Blocks themselves don't drift much because the drag
+  // containment only lets a block center reach x=0/100%.
+  overflow: visible;
+}
+
+.cover-block {
+  color: #333;
+  font-family: cambria;
+  position: absolute;
+  // left/top are the block's TOP-LEFT (computed in the partial as center
+  // x/y minus half the width/height). This keeps jQuery UI's containment
+  // math simple: no transform to fight the drag pixel positions.
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px dashed transparent;
+  cursor: move;
+  // Text font-size is set as an inline pixel value on the block itself
+  // (see _block_content.html.erb and applyFontSize in covers_canvas.js).
+  // The text element inherits it — no container-query units needed.
+
+  &:hover {
+    border-color: #90a4ae;
+    background: rgba(9, 30, 66, 0.02);
+  }
+
+  &.ui-draggable-dragging {
+    border-color: #1976d2;
+    background: rgba(25, 118, 210, 0.05);
+    cursor: grabbing;
+    z-index: 10;
+  }
+
+  // Horizontal alignment maps to flex justify-content, since the text
+  // container is a flex box (see .cover-block-text below).
+  &.align-left   .cover-block-text { justify-content: flex-start; }
+  &.align-center .cover-block-text { justify-content: center; }
+  &.align-right  .cover-block-text { justify-content: flex-end; }
+
+  // Font size is applied inline (pixel value) on the block — text
+  // inherits it. The old .cover-block.h1 / h2 / h3 / h4 cqh rules
+  // used to scale text with block dimensions; that was retired when
+  // text sizing became preset+pixel-input driven.
+
+  &.weight-bold      .cover-block-text { font-weight: 700; }
+  &.weight-semi-bold .cover-block-text { font-weight: 600; }
+  &.weight-normal    .cover-block-text { font-weight: 400; }
+  &.style-italic     .cover-block-text { font-style: italic; }
+  &.style-normal     .cover-block-text { font-style: normal; }
+}
+
+// Resize handles: small white circles with a blue border at each of the
+// four corners. Only visible when the block is selected; use the panel
+// trash icon to delete (the old per-block "×" is gone).
+.cover-block {
+  .ui-resizable-handle {
+    // jQuery UI's stylesheet isn't loaded in this app (only the JS is
+    // required in application.js), so its default base styles never
+    // apply — set position/display here.
+    position: absolute;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 2px solid #1976d2;
+    border-radius: 50%;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    z-index: 4;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  // Corner offsets: half the handle's outer dimension so the circle sits
+  // centered on each corner of the block.
+  .ui-resizable-nw { left:  -6px; top:    -6px; cursor: nw-resize; }
+  .ui-resizable-ne { right: -6px; top:    -6px; cursor: ne-resize; }
+  .ui-resizable-sw { left:  -6px; bottom: -6px; cursor: sw-resize; }
+  .ui-resizable-se { right: -6px; bottom: -6px; cursor: se-resize; }
+
+  // Only show handles when the block is selected.
+  &.is-selected .ui-resizable-handle { opacity: 1; }
+}
+
+// Alignment guides — vertical hairlines that appear during drag when the
+// block's center is within snap threshold of one of the target x's.
+.cover-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #1976d2;
+  opacity: 0;
+  transition: opacity 0.08s ease;
+  pointer-events: none;
+  z-index: 4;
+}
+.cover-guide[data-guide-x="16.5"] { left: 16.5%; }
+.cover-guide[data-guide-x="50"]   { left: 50%; }
+.cover-guide[data-guide-x="83.5"] { left: 83.5%; }
+.cover-guide.is-active { opacity: 1; }
+
+.cover-block-text {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;    // vertical center
+  line-height: 1;         // tight around the glyphs
+  white-space: nowrap;    // stay on one line; user resizes to fit
+  user-select: none;      // no accidental text selection during drag
+
+  &[contenteditable="true"] {
+    user-select: text;
+    outline: 2px solid #1976d2;
+    outline-offset: 1px;
+    cursor: text;
+  }
+}
+.cover-block-image { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+// Image blocks: the label wraps the whole content area so clicking
+// anywhere on the block opens the file picker (via the hidden input
+// inside). Hover the block to hint that it's clickable.
+.cover-block-image-area {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.cover-block.is-image:hover .cover-block-image {
+  opacity: 0.8;
+  transition: opacity 0.12s ease;
+}
+
+.cover-block-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f5f7;
+  color: #6b778c;
+  font-size: 12px;
+  border: 1px dashed #b0b7c3;
+  border-radius: 3px;
+}
+
+// .cover-block-delete removed — delete is via the trash icon in the
+// style panel now.

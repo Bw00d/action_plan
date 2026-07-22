@@ -53,13 +53,11 @@ class BlocksController < ApplicationController
   # DELETE /blocks/1
   # DELETE /blocks/1.json
   def destroy
-    # If this block has a pair, destroy both
-    if @block.pair_id.present?
-      Block.where(pair_id: @block.pair_id).destroy_all
-    else
-      @block.destroy
-    end
-    
+    # Delete this single block. (The old split-block cascade via pair_id
+    # is intentionally removed — the canvas cover model doesn't use
+    # pair_id, and the cascade was a landmine if the field was ever set.)
+    @block.destroy
+
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
       format.json { head :no_content }
@@ -74,10 +72,12 @@ class BlocksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def block_params
-      params.require(:block).permit(:cover_id, :font_size ,:font_family ,:content, :number, :remove_main_image, 
-                                    :main_image, :bottom_padding, :id, :font_weight, :text_align, 
-                                    :text_style, :image_block, :is_blank, :position, :insertion_type, :split_block, 
-                                    :pair_id, :image_width, :image_height, :image_position_x, other_images: [])
+      params.require(:block).permit(:cover_id, :font_size, :font_family, :content, :number, :remove_main_image,
+                                    :main_image, :bottom_padding, :id, :font_weight, :text_align,
+                                    :text_style, :image_block, :is_blank, :position, :insertion_type, :split_block,
+                                    :pair_id, :image_width, :image_height, :image_position_x,
+                                    :x, :y, :width, :height, :kind,
+                                    other_images: [])
     end
     
     def create_single_block

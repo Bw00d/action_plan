@@ -1,27 +1,11 @@
 class Cover < ApplicationRecord
-  has_many :blocks, -> { order(position: :asc) }, dependent: :destroy
+  # Canvas-model rewrite: blocks are positioned free-form on the cover.
+  # Order the collection by created_at so newer blocks sit on top when
+  # z-index ties are needed.
+  has_many :blocks, -> { order(created_at: :asc) }, dependent: :destroy
   belongs_to :plan
-  after_create :set_blocks
 
   def plan
     Plan.find(self.plan_id)
   end
-
-  private
-  def set_blocks
-      Block.create!(position: 1, is_blank: true, bottom_padding: '100px', cover_id: self.id)
-      Block.create!(position: 2, content: 'Incident Action Plan', font_size: 'h1', font_weight: 'bold', 
-                    text_align: 'center', bottom_padding: '25px', cover_id: self.id)
-      Block.create!(position: 3, content: 'Incident Name', font_size: 'h1', font_weight: 'bold', 
-                    text_align: 'center', bottom_padding: '25px', cover_id: self.id)
-      Block.create!(position: 4, content: self.plan.date.strftime('%B %d, %Y'), font_size: 'h2', font_weight: 'bold', 
-                    text_align: 'center',bottom_padding: '20px', cover_id: self.id)
-      Block.create!(position: 5, content: '0700 - 2200 ', font_size: 'h2', font_weight: 'bold', 
-                    text_align: 'center', bottom_padding: '25px', cover_id: self.id)
-      Block.create(position: 6, content: 'ADD AN IMAGE', font_size: 'h2', font_weight: 'bold', 
-                   text_align: 'center', bottom_padding: '50px', cover_id: self.id, image_block: true )
-      Block.create!(position: 7, content: 'charge code', font_size: 'h3', font_weight: 'bold', 
-                    text_align: 'center', cover_id: self.id)
-      
-    end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_21_140000) do
+ActiveRecord::Schema.define(version: 2026_07_21_143000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,11 @@ ActiveRecord::Schema.define(version: 2026_07_21_140000) do
     t.string "image_width"
     t.string "image_height"
     t.string "image_position_x"
+    t.decimal "x", precision: 6, scale: 3, default: "50.0"
+    t.decimal "y", precision: 6, scale: 3, default: "10.0"
+    t.decimal "width", precision: 6, scale: 3, default: "60.0"
+    t.decimal "height", precision: 6, scale: 3, default: "8.0"
+    t.string "kind", default: "text"
   end
 
   create_table "checkins", force: :cascade do |t|

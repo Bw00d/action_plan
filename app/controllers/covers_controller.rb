@@ -26,7 +26,7 @@ class CoversController < ApplicationController
     @plan = Plan.find(@cover.plan_id)
     @incident = Incident.find(@plan.incident_id)
     @block = Block.new
-    @blocks = @cover.blocks.includes(:main_image_attachment).order(position: :asc)
+    @blocks = @cover.blocks.includes(:main_image_attachment).order(:created_at)
   end
 
   def cover_to_pdf
@@ -34,8 +34,8 @@ class CoversController < ApplicationController
     @plan = @cover.plan
     @incident = @plan.incident    
     @block = Block.new
-    @blocks = @cover.blocks.includes(:main_image_attachment).order(position: :asc)
-    
+    @blocks = @cover.blocks.includes(:main_image_attachment).order(:created_at)
+
     respond_to do |format|
       format.pdf do
         # Set up for absolute URLs in PDF
@@ -43,12 +43,22 @@ class CoversController < ApplicationController
         Rails.application.routes.default_url_options[:protocol] = request.protocol
         
         html = render_to_string(
-          template: 'covers/cover_to_pdf.pdf.erb', 
+          template: 'covers/cover_to_pdf.pdf.erb',
           layout: 'layouts/pdf.html.erb',
           locals: { cover: @cover, blocks: @blocks }
         )
-        
-        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+
+        # Single Letter page with zero margins — the cover fills bleed-to-
+        # bleed. Kill Chrome's default page header/footer, honor background
+        # colors, and let the layout's @page rule win.
+        pdf = Grover.new(html,
+          display_url:            request.base_url,
+          format:                 'Letter',
+          margin:                 { top: '0in', right: '0in', bottom: '0in', left: '0in' },
+          print_background:       true,
+          prefer_css_page_size:   true,
+          display_header_footer:  false
+        ).to_pdf
         
         send_data pdf, filename: "cover_#{@cover.id}.pdf", type: 'application/pdf', disposition: 'inline'
       end
@@ -101,6 +111,9 @@ class CoversController < ApplicationController
   # DELETE /covers/1
   # DELETE /covers/1.json
   def destroy
+    # Log where the request came from so we can trace any accidental
+    # cover-destroy that the UI shouldn't have triggered.
+    Rails.logger.warn "CoversController#destroy called: cover_id=#{@cover.id} referer=#{request.referer.inspect} method=#{request.request_method} params=#{params.to_unsafe_h.except("_method").inspect}"
     @cover.destroy
     respond_to do |format|
       format.html { redirect_to covers_url, notice: 'Cover was successfully destroyed.' }

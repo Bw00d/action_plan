@@ -1,34 +1,78 @@
-<div class="container">
-  <div id="cover">
-<!-- Display blocks -->
-       <% processed_blocks = [] %>
-       <% @blocks.each do |b| %>
-         <% next if processed_blocks.include?(b.id) %>
-         
-         <% if b.split_block? && b.pair_id.present? %>
-           <% # Find the paired block %>
-           <% paired_block = @blocks.find { |pb| pb.pair_id == b.pair_id && pb.id != b.id } %>
-           <% if paired_block %>
-             <% processed_blocks << b.id << paired_block.id %>
-             <div class="split-block-container">
-               <div class="split-block-wrapper">
-                 <%= render 'pdf_block_content', block: b %>
-               </div>
-               <div class="split-block-wrapper">
-                 <%= render 'pdf_block_content', block: paired_block %>
-               </div>
-             </div>
-           <% else %>
-             <div>
-               <%= render 'pdf_block_content', block: b %>
-             </div>
-           <% end %>
-         <% else %>
-           <div>
-             <%= render 'pdf_block_content', block: b %>
-           </div>
-         <% end %>
-       <% end %>
-<!-- End blocks display -->   
-  </div>
+<%# Cover PDF — one full Letter page. Every block is absolute-positioned
+    using the same x/y/width/height % as the editor. Font size is computed
+    inline in points (from the block's height + the h1-h4 ratio) instead
+    of using CSS cqh — Chrome's print pipeline via Grover doesn't resolve
+    container-query units reliably. %>
+<%
+  # Absolute pixel sizes matching the editor (H1–H4 presets or a plain
+  # pixel number in block.font_size). At CSS 96dpi, 1px = 0.75pt.
+  preset_px = { "h1" => 48, "h2" => 32, "h3" => 24, "h4" => 18 }
+%>
+<style>
+  @page { size: letter; margin: 0 !important; }
+  html, body { margin: 0 !important; padding: 0 !important; }
+
+  .cover-page {
+    position: relative;
+    width: 8.5in;
+    height: 11in;
+    background: #fff;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cover-block {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+  }
+
+  .cover-block-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .cover-block-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .cover-block.weight-bold      .cover-block-text { font-weight: 700; }
+  .cover-block.weight-semi-bold .cover-block-text { font-weight: 600; }
+  .cover-block.weight-normal    .cover-block-text { font-weight: 400; }
+  .cover-block.style-italic     .cover-block-text { font-style: italic; }
+  .cover-block.style-normal     .cover-block-text { font-style: normal; }
+
+  .cover-block.align-left   .cover-block-text { justify-content: flex-start; }
+  .cover-block.align-center .cover-block-text { justify-content: center; }
+  .cover-block.align-right  .cover-block-text { justify-content: flex-end; }
+</style>
+
+<div class="cover-page">
+  <% @blocks.each do |b| %>
+    <% left_pct = b.x.to_f - b.width.to_f  / 2.0 %>
+    <% top_pct  = b.y.to_f - b.height.to_f / 2.0 %>
+    <% font_px = preset_px[b.font_size] || b.font_size.to_i %>
+    <% font_px = 24 if font_px <= 0 %>
+    <div class="cover-block <%= b.font_size %> weight-<%= b.font_weight %> style-<%= b.text_style %> align-<%= b.text_align %>"
+         style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= b.width %>%; height: <%= b.height %>%;">
+      <% if b.image_block? %>
+        <% if b.main_image.attached? %>
+          <%= image_tag b.main_image, class: "cover-block-image" %>
+        <% end %>
+      <% else %>
+        <div class="cover-block-text" style="font-size: <%= font_px %>px"><%= b.content %></div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
