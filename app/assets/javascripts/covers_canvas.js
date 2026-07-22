@@ -13,7 +13,7 @@ $(document).on("turbolinks:load", function () {
   if (!$canvas.length) return;
 
   var SNAP_THRESHOLD_PX = 8;
-  var GRID_PX = 5;   // snap drag/resize to a 10px grid for uniformity
+  var GRID_PX = 6;   // snap drag/resize to a 10px grid for uniformity
   var $guides = $canvas.find(".cover-guide");
 
   function csrfToken() {
