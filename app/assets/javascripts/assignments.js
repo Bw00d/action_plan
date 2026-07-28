@@ -16,33 +16,36 @@ $(document).on("turbolinks:load", function() {
     }
   );
 
-  $('#commo-table').hover(function() {
-      $('#add-freqs-button').show();
-    }, 
-    function () {
-      $('#add-freqs-button').hide();
+  // ICS 204 WF Section 8: open/close the freq picker and pre-check
+  // previously selected freqs when the form is shown.
+  $(document).on("click", "#add-freqs-button", function () {
+    $("#freq-form").show();
+    if (typeof freqIds !== "undefined") {
+      for (var i = 0; i < freqIds.length; i++) {
+        $("#assignment_commo_item_ids_" + freqIds[i]).prop("checked", true);
+      }
     }
-  );
-  $('#add-freqs-button').hover(function() {
-      $(this).show();
-    }, 
-    function () {
-      $(this).hide();
-    }
-  );
-
-  $('#ops-resources').click(function() {    // adding operations
-    $('#ops-resource-form').show();
-  
-    var i;
-     for (i = 0; i < opsIds.length; i++) {
-      $("#assignment_ops_personnel_ids_" + opsIds[i] ).prop("checked","true");
-    }
-  }); 
-  $('#cancel-ops-form').click(function() {
-    $('#ops-resource-form').hide();
+  });
+  $(document).on("click", "#cancel-freq-form", function () {
+    $("#freq-form").hide();
   });
 
+  // ICS 204 WF: 24h flatpickr date/time pickers for Section 2 ops period.
+  // The picker's onChange fires the AJAX PATCH to auto-save.
+  if (typeof flatpickr !== "undefined") {
+    flatpickr(".op-dt-picker", {
+      enableTime: true,
+      time_24hr: true,
+      dateFormat: "m/d/Y H:i",
+      allowInput: true,
+      onChange: function (selectedDates, dateStr, instance) {
+        var $el  = $(instance.input);
+        var data = {};
+        data[$el.data("field")] = dateStr;
+        $.ajax({ url: $el.data("url"), type: "PATCH", data: data, dataType: "json" });
+      }
+    });
+  }
 
   $('#assign-resources-button').click(function() {    // adding resources
     $('#resource-assignments-form').show();
@@ -56,23 +59,5 @@ $(document).on("turbolinks:load", function() {
     $('#resource-assignments-form').hide();
   });
 
-
-  $('#ops-box-container').hover(function() {
-        $('#ops-resources').show();
-      }, 
-      function () {
-        $('#ops-resources').hide();
-      }
-    );
-  $('#ops-resources').hover(function() {
-      $(this).show();
-    }, 
-    function () {
-      $(this).hide();
-    }
-  );
-  $('#ops-resources').click(function() {
-    $('#ops-resource-form').show();
-  });
 
 });

@@ -1,0 +1,206 @@
+<%
+  dt_display = ->(dt) { dt&.strftime("%m/%d/%Y %H%M %a").to_s.upcase }
+  resource_rows = @assignment.assigned_resources.to_a
+  blank_resource_rows = [14 - resource_rows.count, 0].max
+  assigned_freqs = @assignment.freqs
+  comm_row_count = [5, assigned_freqs.count].max
+%>
+
+<div class="ics-204-wf-page">
+  <div class="doc-title">DIVISION/GROUP ASSIGNMENT LIST (ICS 204 WF)</div>
+  <div class="doc-sub">Controlled Unclassified Information//Basic</div>
+
+  <!-- ===== Blocks 1, 2, 3 ===== -->
+  <table>
+    <tr>
+      <td class="num shade" colspan="2" style="width:57%">1. Incident Name</td>
+      <td class="banner-num" colspan="2" style="width:43%">3.</td>
+    </tr>
+    <tr>
+      <td class="hdr-entry" colspan="2"><%= @incident.name %></td>
+      <td class="id-cell" style="width:14%" rowspan="4">
+        <div class="id-label">Branch:</div>
+        <div class="id-value"><%= @assignment.branch&.name %></div>
+      </td>
+      <td class="id-cell" style="width:29%" rowspan="4">
+        <div class="id-label">Division/Group:</div>
+        <div class="id-value"><%= best_in_place @assignment, :designator, as: :input, place_holder: "(DESIGNATOR)" %></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num shade" colspan="2">2. Operational Period</td>
+    </tr>
+    <tr>
+      <td class="ctr" style="width:28.5%">Date/Time From:</td>
+      <td class="ctr" style="width:28.5%">Date/Time To:</td>
+    </tr>
+    <tr>
+      <% [:ops_period_from, :ops_period_to].each do |field| %>
+        <td class="op-entry">
+          <input type="text"
+                 class="op-dt-picker"
+                 data-url="<%= incident_plan_assignment_path(@incident, @plan, @assignment) %>"
+                 data-field="assignment[<%= field %>]"
+                 value="<%= @assignment.public_send(field)&.strftime("%m/%d/%Y %H:%M") %>"
+                 placeholder="MM/DD/YYYY HH:MM">
+        </td>
+      <% end %>
+    </tr>
+  </table>
+
+  <!-- ===== Block 4 ===== -->
+  <table>
+    <tr>
+      <td class="num shade seam-num" style="width:5%">4.</td>
+      <td class="banner seam-banner" colspan="4">Operations Personnel</td>
+    </tr>
+    <tr>
+      <td class="pers-label" colspan="2">Operations Chief</td>
+      <td class="pers-fill"></td>
+      <td class="pers-label">Division/Group Supervisor</td>
+      <td class="pers-fill"></td>
+    </tr>
+    <tr>
+      <td class="pers-label" colspan="2">Branch Director</td>
+      <td class="pers-fill"></td>
+      <td class="pers-label">Air Attack Supervisor</td>
+      <td class="pers-fill"></td>
+    </tr>
+  </table>
+
+  <!-- ===== Block 5 ===== -->
+  <table>
+    <tr>
+      <td class="num shade seam-num" style="width:5%">5.</td>
+      <td class="banner seam-banner" colspan="5">Resources Assigned this Period:</td>
+    </tr>
+  </table>
+
+  <table>
+    <tr class="res-head">
+      <td class="r-desig">Strike Team / Task Force / Resource Designator</td>
+      <td class="r-lwd">LWD</td>
+      <td class="r-lead">Leader</td>
+      <td class="r-pers">Number<br>Persons</td>
+      <td class="r-drop">Drop Off PT./Time</td>
+      <td class="r-pick">Pick Up PT./Time</td>
+    </tr>
+    <% resource_rows.each do |r| %>
+      <tr class="res-row">
+        <td class="r-desig"><%= [r.cat, r.order_number, r.position, r.name].compact.join(" ") %></td>
+        <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
+        <td class="r-lead"><%= r.leader %></td>
+        <td class="r-pers ctr"><%= r.number_personnel %></td>
+        <td class="r-drop"></td>
+        <td class="r-pick"></td>
+      </tr>
+    <% end %>
+    <% blank_resource_rows.times do %>
+      <tr class="res-row">
+        <td class="r-desig"></td>
+        <td class="r-lwd"></td>
+        <td class="r-lead"></td>
+        <td class="r-pers"></td>
+        <td class="r-drop"></td>
+        <td class="r-pick"></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <!-- ===== Blocks 6 & 7 ===== -->
+  <div class="narrative">
+    <table>
+      <tr>
+        <td class="box-6">
+          <span class="num">6.</span> Control Operations/Work Assignments:<br>
+          <%= best_in_place @assignment, :control_operations, as: :textarea, place_holder: "(click to add content)", display_with: :simple_format, ok_button: "Save", ok_button_class: "btn btn-info tiny", cancel_button: "Cancel", cancel_button_class: "btn btn-default sm-margin-left tiny" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="box-7">
+          <span class="num">7.</span> Special Instructions:<br>
+          <%= best_in_place @assignment, :special_instructions, as: :textarea, place_holder: "(add content or leave blank)", display_with: :simple_format, ok_button: "Save", ok_button_class: "btn btn-info tiny", cancel_button: "Cancel", cancel_button_class: "btn btn-default sm-margin-left tiny" %>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== Block 8 ===== -->
+  <table class="commo-banner">
+    <tr>
+      <td class="num shade seam-num" style="width:5%">8.</td>
+      <td class="banner seam-banner" colspan="7">
+        Division/Group Communication Summary
+        <a href="javascript:;" id="add-freqs-button" class="banner-add-freqs" title="Add frequencies from ICS 205">
+          <%= image_tag 'bolt.png', class: 'banner-icon', size: '14x14' %>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+  <div id="freq-form">
+    <%= javascript_tag "var freqIds = #{@assignment.commo_item_ids.to_json}" %>
+    <%= form_for @assignment do |f| %>
+      <ul>
+        <% if @plan.commo_plan.present? && @plan.commo_plan.commo_items.any? %>
+          <% @plan.commo_plan.commo_items.each do |item| %>
+            <li class="commo-items">
+              <%= f.check_box :commo_item_ids, {multiple: true}, item.id, nil %>
+              <%= f.label :commo_item_ids, [item.function, item.channel_name].compact.join(" - ") %>
+            </li>
+          <% end %>
+        <% else %>
+          <li>No frequencies in the <%= link_to "ICS 205", incident_plan_commo_plans_path(@incident, @plan) %> yet.</li>
+        <% end %>
+      </ul>
+      <div class="float-right lg-margin-right">
+        <%= f.submit "SAVE", class: "btn btn-success tiny" %>
+        <%= link_to "CANCEL", 'javascript:;', id: 'cancel-freq-form', class: 'btn btn-default tiny' %>
+      </div>
+      <br><br>
+    <% end %>
+  </div>
+
+  <table id="commo-table">
+    <tr class="comm-head">
+      <td class="c-func shade">Function</td>
+      <td class="c-chan">Channel</td>
+      <td class="c-name">Channel Name</td>
+      <td class="c-rxf">RX Frequency</td>
+      <td class="c-rxt">RX Tone/NAC</td>
+      <td class="c-txf">TX Frequency</td>
+      <td class="c-txt">TX Tone/NAC</td>
+      <td class="c-mode">Mode</td>
+    </tr>
+    <% comm_row_count.times do |i| %>
+      <% f = assigned_freqs[i] %>
+      <tr class="comm-row">
+        <td class="c-func"><%= f&.function %></td>
+        <td class="c-chan"><%= f&.ch_num %></td>
+        <td class="c-name"><%= f&.channel_name %></td>
+        <td class="c-rxf"><%= f&.rx_freq %></td>
+        <td class="c-rxt"><%= f&.rx_tone %></td>
+        <td class="c-txf"><%= f&.tx_freq %></td>
+        <td class="c-txt"><%= f&.tx_tone %></td>
+        <td class="c-mode"><%= f&.mode %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <!-- ===== Block 9 ===== -->
+  <table>
+    <tr class="sig-row">
+      <td style="width:35%"><span class="num">9.</span> Prepared by (Resource Unit Leader)</td>
+      <td style="width:33%">Approved by (Planning Section Chief)</td>
+      <td style="width:17%">Date</td>
+      <td style="width:15%">Time</td>
+    </tr>
+  </table>
+
+  <!-- ===== Footer ===== -->
+  <div class="footer">
+    <div class="left">ICS 204 WF (08/25)</div>
+    <div class="mid">Controlled Unclassified Information//Basic</div>
+    <div class="right"></div>
+  </div>
+</div>

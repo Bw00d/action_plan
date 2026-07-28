@@ -77,6 +77,7 @@ gem 'datejs-rails'
 # for generating pdfs
 gem 'grover', '~> 1.1.2'
 gem 'jquery-validation-rails'
+gem 'flatpickr'
 
 group :test do
   gem 'database_cleaner'

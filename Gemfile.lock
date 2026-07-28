@@ -162,6 +162,7 @@ GEM
       i18n (>= 1.6, < 2)
     ffi (1.15.5)
     flamegraph (0.9.5)
+    flatpickr (4.6.13.1)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
     font_awesome5_rails (1.5.0)
@@ -451,6 +452,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   flamegraph
+  flatpickr
   font-awesome-rails
   font_awesome5_rails
   friendly_id

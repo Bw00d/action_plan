@@ -284,10 +284,10 @@ class IncidentsController < ApplicationController
   def update
     respond_to do |format|
       if @incident.update(incident_params)
-        format.html { redirect_to incident_plans_path(@incident) }
+        format.html { redirect_back(fallback_location: incident_plans_path(@incident)) }
         format.json { render :show, status: :ok, location: @incident }
       else
-        format.html { redirect_to incident_plans_path(@incident) }
+        format.html { redirect_back(fallback_location: incident_plans_path(@incident)) }
         format.json { render json: @incident.errors, status: :unprocessable_entity }
       end
     end
@@ -371,6 +371,7 @@ class IncidentsController < ApplicationController
                                        :incident_type, :complexity, :status, :cause, :fuel_type,
                                        :start_date, :containment_date, :control_date, :out_date,
                                        :percent_contained, :location, :ownership, :protection,
-                                       :latitude, :longitude, :ic, :fire_behavior, :state, :cost )
+                                       :latitude, :longitude, :ic, :fire_behavior, :state, :cost,
+                                       :assignment_style )
     end
 end

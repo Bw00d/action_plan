@@ -35,6 +35,20 @@ class Assignment < ApplicationRecord
     assigned_resources.sum { |r| r.number_personnel.to_i }
   end
 
+  def branch
+    node = org_unit
+    node = node.parent while node && !node.kind_branch?
+    node
+  end
+
+  def ops_period_from=(value)
+    super(parse_ops_datetime(value))
+  end
+
+  def ops_period_to=(value)
+    super(parse_ops_datetime(value))
+  end
+
   def operations_resources
     items = []
     if self.ops_personnel_ids
@@ -51,6 +65,24 @@ class Assignment < ApplicationRecord
   end
 
   private
+
+  # Accepts "MM/DD/YYYY HHMM" (military time, no colon) as well as anything
+  # Time.zone.parse can handle. Returns nil for blank/invalid input.
+  def parse_ops_datetime(value)
+    return value unless value.is_a?(String)
+    return nil if value.blank?
+
+    s = value.strip
+    if s =~ %r{\A(\d{1,2})/(\d{1,2})/(\d{4})\s+(\d{2})(\d{2})\z}
+      Time.zone.local(Regexp.last_match(3).to_i, Regexp.last_match(1).to_i,
+                      Regexp.last_match(2).to_i, Regexp.last_match(4).to_i,
+                      Regexp.last_match(5).to_i)
+    else
+      Time.zone.parse(s)
+    end
+  rescue ArgumentError
+    nil
+  end
 
   def legacy_assigned_resources
     return [] if resource_ids.blank?

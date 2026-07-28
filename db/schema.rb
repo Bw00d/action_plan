@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_21_143000) do
+ActiveRecord::Schema.define(version: 2026_07_27_150000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 2026_07_21_143000) do
     t.string "resource_ids", array: true
     t.string "ops_personnel_ids", array: true
     t.bigint "org_unit_id"
+    t.datetime "ops_period_from"
+    t.datetime "ops_period_to"
     t.index ["org_unit_id"], name: "index_assignments_on_org_unit_id"
   end
 
@@ -265,6 +267,7 @@ ActiveRecord::Schema.define(version: 2026_07_21_143000) do
     t.string "previous_inc_number"
     t.string "time_zone"
     t.decimal "cost", precision: 14, scale: 2
+    t.string "assignment_style", default: "ics_204_wf", null: false
     t.index ["iroc_inc_id"], name: "index_incidents_on_iroc_inc_id", unique: true
   end
 

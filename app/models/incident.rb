@@ -19,6 +19,9 @@ class Incident < ApplicationRecord
 
   validates :iroc_inc_id, uniqueness: true, allow_nil: true
 
+  ASSIGNMENT_STYLES = %w[ics_204_wf ics_204].freeze
+  validates :assignment_style, inclusion: { in: ASSIGNMENT_STYLES }
+
   def section(name)
     org_units.kind_section.find_by(name: name.to_s.titleize)
   end

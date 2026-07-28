@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="assignment-style-toggle">
+    <span class="small text-muted">204 style:</span>
+    <%= form_with model: @incident, url: incident_path(@incident), method: :patch, local: true, class: "inline-form" do |f| %>
+      <% Incident::ASSIGNMENT_STYLES.each do |style| %>
+        <%
+          selected = @incident.assignment_style == style
+          label    = style == "ics_204_wf" ? "ICS 204 WF" : "ICS 204"
+        %>
+        <button type="submit"
+                name="incident[assignment_style]"
+                value="<%= style %>"
+                class="btn btn-xs <%= selected ? "btn-aqua" : "btn-default" %>">
+          <%= label %>
+        </button>
+      <% end %>
+    <% end %>
+  </div>
+</div>

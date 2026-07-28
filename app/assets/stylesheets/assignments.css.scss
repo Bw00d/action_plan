@@ -75,6 +75,11 @@ table.assigned-resources {
   textarea {
     width: 100%;
   }
+  > .container,
+  > .container > .col-xs-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 a.new-freq-button {
   width: 25px;
@@ -300,6 +305,233 @@ ul#action-buttons {
   position: absolute;
   left: 3px;
   top: 2px;
+}
+.assignment-style-toggle {
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+
+  text-align: right;
+  form.inline-form {
+    display: inline-block;
+    margin-left: 6px;
+  }
+  form.inline-form button {
+    margin-left: 4px;
+  }
+}
+
+/* ---------- ICS 204 WF form (scoped) ---------- */
+.ics-204-wf-page {
+  margin-bottom: 20px;
+  --rule: 1px solid #000;
+  --shade: #ebebeb;
+
+  background: #fff;
+  color: #000;
+  padding: 0.35in 0.4in;
+  box-shadow: 0 1px 6px rgba(0,0,0,.25);
+
+  * { box-sizing: border-box; }
+
+  .doc-title {
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold;
+    line-height: 1.15;
+  }
+  .doc-sub {
+    text-align: center;
+    font-size: 9.5pt;
+    font-weight: bold;
+    margin: 2pt 0 6pt;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 0;
+  }
+  td, th {
+    border: var(--rule);
+    vertical-align: top;
+    padding: 1pt 3pt;
+    font-size: 8pt;
+    font-weight: normal;
+    text-align: left;
+    color: #000;
+  }
+
+  .num { font-size: 9.5pt; }
+  .banner {
+    text-align: center;
+    font-size: 10pt;
+    background: var(--shade);
+  }
+  .banner-num {
+    background: var(--shade);
+    font-size: 9.5pt;
+  }
+  .shade { background: var(--shade); }
+  .seam-num { border-right: 0; }
+  .seam-banner { border-left: 0; padding-right: 5%; }
+  .ctr { text-align: center; }
+
+  .hdr-entry { 
+    height: 26pt; 
+    padding-top: 5px;
+    padding-left: 15px;
+  }
+  .op-entry  {
+    height: 22pt;
+    text-align: center;
+    padding-top: 5px;
+  }
+  .op-entry .op-dt-picker {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    padding: 0;
+    outline: 0;
+    text-align: center;
+  }
+  .op-entry .op-dt-picker:focus { background: #fffbe6; }
+
+  .op-dt-picker {
+    border: none !important;
+  }
+
+  /* Section 3 (Branch / Division-Group) cells: label pinned top-left,
+     value centered large. */
+  .id-cell {
+    position: relative;
+    padding: 0;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .id-cell .id-label {
+    position: absolute;
+    top: 2pt;
+    left: 4pt;
+    font-size: 8pt;
+    text-align: left;
+  }
+  .id-cell .id-value {
+    font-size: 22pt;
+    font-weight: bold;
+    line-height: 1;
+    padding: 14pt 0 10pt;
+  }
+
+  .pers-label { width: 17.5%; }
+  .pers-fill  { width: 26%; height: 17pt; }
+
+  .r-desig { width: 38.4%; }
+  .r-lwd   { width: 6.7%; }
+  .r-lead  { width: 23.0%; }
+  .r-pers  { width: 7.6%; }
+  .r-drop  { width: 11.2%; }
+  .r-pick  { width: 13.1%; }
+
+  .res-head td { text-align: center; font-size: 7.5pt; padding: 2pt 2pt; }
+  .res-row td  { height: 15.5pt; }
+
+  .narrative { display: flex; flex-direction: column; }
+  .box-6 { height: 1.15in; }
+  .box-7 { height: 0.75in; }
+
+  .c-func { width: 15%; }
+  .c-chan { width: 11%; }
+  .c-name { width: 15%; }
+  .c-rxf  { width: 14%; }
+  .c-rxt  { width: 11%; }
+  .c-txf  { width: 14%; }
+  .c-txt  { width: 11%; }
+  .c-mode { width: 8%; }
+
+  tr.comm-row td {
+    text-align: center;
+  }
+
+  .comm-head td { text-align: center; font-size: 7.5pt; }
+  .comm-row td  { height: 14pt; }
+  .comm-row .c-func {
+    background: var(--shade);
+    text-align: center;
+    padding-top: 3pt;
+  }
+
+  /* Section 8 lightning bolt affordance in the banner header.
+     Hidden until the banner row is hovered. The ID in the selector
+     out-specifies the legacy #add-freqs-button { margin-top: 75px }
+     rule from the pre-WF layout. */
+  #add-freqs-button.banner-add-freqs {
+    display: inline-block;
+    margin: 0 0 0 8px;
+    padding: 0;
+    left: auto;
+    vertical-align: middle;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease-in;
+  }
+  #add-freqs-button.banner-add-freqs .banner-icon {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    opacity: 0.85;
+  }
+  .commo-banner tr:hover #add-freqs-button.banner-add-freqs {
+    opacity: 1;
+    pointer-events: auto;
+  }
+ 
+  /* Section 8 freq picker (checkbox list of ICS 205 items). */
+  #freq-form {
+    display: none;
+    padding: 8pt 10pt;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    margin: 4pt 0;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 6pt;
+      li {
+        display: inline-block;
+        margin-right: 12pt;
+        font-size: 9pt;
+      }
+    }
+  }
+
+  .sig-row td { height: 30pt; }
+
+  .footer {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 10pt;
+    font-size: 10pt;
+    font-weight: bold;
+  }
+  .footer .left  { width: 25%; }
+  .footer .mid   { width: 50%; text-align: center; }
+  .footer .right { width: 25%; }
+
+  /* best_in_place inputs sit inside cells; keep them borderless / flush. */
+  .best_in_place, input.best_in_place, textarea.best_in_place {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    display: inline;
+  }
+  textarea.best_in_place { width: 100%; }
 }
 td.no-padding {
   padding-right: none !important;

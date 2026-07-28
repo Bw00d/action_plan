@@ -26,4 +26,5 @@
 //= require best_in_place
 //= require date/extras
 //= require jquery.validate
+//= require flatpickr
 //= require_tree .
