@@ -27,7 +27,7 @@
       tolerance: 'pointer',
       cursor: 'grabbing',
       distance: 6,
-      cancel: '.board-card-details, .best_in_place, input, textarea, select, button, a',
+      cancel: '.board-card-details, .board-card-move-toggle, .board-card-move-menu, .best_in_place, input, textarea, select, button, a',
       update: function (event, ui) {
         // Only fire on the receiving list to avoid two calls per drop
         if (this !== ui.item.parent()[0]) return;
@@ -78,6 +78,68 @@
     $(page).on('click', '.board-card-details-close', function (e) {
       e.stopPropagation();
       $(this).closest('.board-card-details').hide();
+    });
+
+    // --- Hover move affordance --------------------------------------------
+    // Build the target list from the DOM at click time so it reflects any
+    // columns that were just added/deleted without a page reload.
+    function buildMoveMenu($menu, currentOrgUnitId) {
+      var $list = $menu.find('.board-card-move-menu-list').empty();
+      $('.board-column', page).each(function () {
+        var $col = $(this);
+        var orgUnitId = String($col.data('org-unit-id') || '');
+        if (orgUnitId === String(currentOrgUnitId || '')) return; // skip current
+        var label = $col.find('.board-column-title').first().text().trim();
+        var subtitle = $col.find('.board-column-subtitle').first().text().trim();
+        var display = subtitle ? subtitle + ' — ' + label : label;
+        $list.append(
+          $('<li>').addClass('board-card-move-menu-item')
+                   .attr('data-target-org-unit-id', orgUnitId)
+                   .text(display || 'Unassigned')
+        );
+      });
+    }
+
+    $(page).on('click', '.board-card-move-toggle', function (e) {
+      e.stopPropagation();
+      var $card = $(this).closest('.board-card');
+      var $menu = $card.find('.board-card-move-menu');
+      var currentOrgUnitId = $card.closest('.board-column').data('org-unit-id') || '';
+      $('.board-card-move-menu').not($menu).hide();
+      if ($menu.is(':visible')) { $menu.hide(); return; }
+      buildMoveMenu($menu, currentOrgUnitId);
+      $menu.show();
+    });
+
+    $(page).on('click', '.board-card-move-menu-item', function (e) {
+      e.stopPropagation();
+      var $item = $(this);
+      var targetOrgUnitId = String($item.data('target-org-unit-id') || '');
+      var $card = $item.closest('.board-card');
+      var resourceId = $card.data('resource-id');
+      var $target = $('.board-column[data-org-unit-id="' + targetOrgUnitId + '"] .board-cards', page);
+
+      $.ajax({
+        url: moveUrl,
+        method: 'PATCH',
+        data: {
+          resource_id: resourceId,
+          org_unit_id: targetOrgUnitId === '' ? null : targetOrgUnitId,
+          position: $target.children('.board-card').length + 1
+        },
+        headers: { 'X-CSRF-Token': csrfToken }
+      })
+        .done(function () {
+          $card.find('.board-card-move-menu').hide();
+          $card.appendTo($target);
+          recomputePersonnel();
+        })
+        .fail(function () { alert('Move failed. Refresh the page.'); });
+    });
+
+    // Click outside closes any open menu.
+    $(document).on('click.boardMoveMenu', function () {
+      $('.board-card-move-menu', page).hide();
     });
   }
 

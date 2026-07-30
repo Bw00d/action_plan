@@ -96,7 +96,18 @@
               </td>
               <td class="roster-position-cell"><%= ros.position %></td>
               <td class="roster-name-cell"><%= ros.name %></td>
-              <td colspan="9" class="roster-filler-cell"></td>
+              <td colspan="9" class="roster-filler-cell">
+                <% if ros.promoted? %>
+                  <span class="text-muted small">&rarr; Promoted to <%= ros.promoted_resource.full_order_number %></span>
+                <% elsif !ros.released? %>
+                  <%= button_to "Promote to T-card",
+                                promote_roster_path(ros),
+                                method: :post,
+                                class: "btn btn-xs btn-default",
+                                form: { style: "display:inline" },
+                                data: { confirm: "Carve #{ros.name} out as a standalone T-card?" } %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         <% end %>

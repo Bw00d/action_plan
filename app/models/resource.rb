@@ -75,6 +75,20 @@ class Resource < ApplicationRecord
     return true if self.release_date
   end
 
+  # Breaks the resource's personnel count down by agency. When a roster
+  # exists (imported subordinates), each active roster row is one person
+  # in its own agency; when no roster exists, the whole crew rolls up
+  # under the parent resource's agency using number_personnel.
+  def personnel_by_agency
+    if rosters.exists?
+      rosters.active.unpromoted
+             .group_by { |r| r.agency.presence || agency }
+             .transform_values(&:count)
+    else
+      { agency => number_personnel.to_i }
+    end
+  end
+
   def rnr?
     return true if self.r_and_r
   end

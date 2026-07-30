@@ -4,6 +4,11 @@
   blank_resource_rows = [14 - resource_rows.count, 0].max
   assigned_freqs = @assignment.freqs
   comm_row_count = [5, assigned_freqs.count].max
+
+  ops_team          = @plan.operations.not_headers.order(:list_position, :created_at).to_a
+  ops_collection    = ops_team.map { |t| [t.id, [t.position, t.resource_name].compact.reject(&:empty?).join(" — ")] }
+  ops_by_id         = ops_team.index_by(&:id)
+  ops_display_name  = ->(id) { ops_by_id[id.to_i]&.resource_name.to_s }
 %>
 
 <div class="ics-204-wf-page">
@@ -56,15 +61,39 @@
     </tr>
     <tr>
       <td class="pers-label" colspan="2">Operations Chief</td>
-      <td class="pers-fill"></td>
+      <td class="pers-fill">
+        <%= best_in_place @assignment, :operations_chief_id,
+              as: :select,
+              collection: ops_collection,
+              nil: "—",
+              display_with: ops_display_name %>
+      </td>
       <td class="pers-label">Division/Group Supervisor</td>
-      <td class="pers-fill"></td>
+      <td class="pers-fill">
+        <%= best_in_place @assignment, :division_group_supervisor_id,
+              as: :select,
+              collection: ops_collection,
+              nil: "—",
+              display_with: ops_display_name %>
+      </td>
     </tr>
     <tr>
       <td class="pers-label" colspan="2">Branch Director</td>
-      <td class="pers-fill"></td>
+      <td class="pers-fill">
+        <%= best_in_place @assignment, :branch_director_id,
+              as: :select,
+              collection: ops_collection,
+              nil: "—",
+              display_with: ops_display_name %>
+      </td>
       <td class="pers-label">Air Attack Supervisor</td>
-      <td class="pers-fill"></td>
+      <td class="pers-fill">
+        <%= best_in_place @assignment, :air_attack_supervisor_id,
+              as: :select,
+              collection: ops_collection,
+              nil: "—",
+              display_with: ops_display_name %>
+      </td>
     </tr>
   </table>
 
@@ -91,8 +120,8 @@
         <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
         <td class="r-lead"><%= r.leader %></td>
         <td class="r-pers ctr"><%= r.number_personnel %></td>
-        <td class="r-drop"></td>
-        <td class="r-pick"></td>
+        <td class="r-drop"><%= best_in_place r, :drop_off_pt_time, as: :input, place_holder: "&mdash;".html_safe, class: "r-drop" %></td>
+        <td class="r-pick"><%= best_in_place r, :pick_up_pt_time,  as: :input, place_holder: "&mdash;".html_safe %></td>
       </tr>
     <% end %>
     <% blank_resource_rows.times do %>
@@ -192,8 +221,24 @@
     <tr class="sig-row">
       <td style="width:35%"><span class="num">9.</span> Prepared by (Resource Unit Leader)</td>
       <td style="width:33%">Approved by (Planning Section Chief)</td>
-      <td style="width:17%">Date</td>
-      <td style="width:15%">Time</td>
+      <td style="width:17%">
+        <div class="sig-label">Date</div>
+        <input type="text"
+               class="prepared-date-picker sig-input"
+               data-url="<%= incident_plan_assignment_path(@incident, @plan, @assignment) %>"
+               data-field="assignment[prepared_date]"
+               value="<%= @assignment.prepared_date&.strftime("%m/%d/%Y") %>"
+               placeholder="MM/DD/YYYY">
+      </td>
+      <td style="width:15%">
+        <div class="sig-label">Time</div>
+        <input type="text"
+               class="prepared-time-picker sig-input"
+               data-url="<%= incident_plan_assignment_path(@incident, @plan, @assignment) %>"
+               data-field="assignment[prepared_time]"
+               value="<%= @assignment.prepared_time %>"
+               placeholder="HH:MM">
+      </td>
     </tr>
   </table>
 

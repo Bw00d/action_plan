@@ -30,20 +30,37 @@ $(document).on("turbolinks:load", function() {
     $("#freq-form").hide();
   });
 
-  // ICS 204 WF: 24h flatpickr date/time pickers for Section 2 ops period.
-  // The picker's onChange fires the AJAX PATCH to auto-save.
+  // ICS 204 WF: flatpickr date/time pickers with auto-save PATCH.
   if (typeof flatpickr !== "undefined") {
+    var autoSave = function (selectedDates, dateStr, instance) {
+      var $el  = $(instance.input);
+      var data = {};
+      data[$el.data("field")] = dateStr;
+      $.ajax({ url: $el.data("url"), type: "PATCH", data: data, dataType: "json" });
+    };
+
+    // Section 2: full date + time for ops period.
     flatpickr(".op-dt-picker", {
       enableTime: true,
       time_24hr: true,
       dateFormat: "m/d/Y H:i",
       allowInput: true,
-      onChange: function (selectedDates, dateStr, instance) {
-        var $el  = $(instance.input);
-        var data = {};
-        data[$el.data("field")] = dateStr;
-        $.ajax({ url: $el.data("url"), type: "PATCH", data: data, dataType: "json" });
-      }
+      onChange: autoSave
+    });
+
+    // Section 9: separate date and 24h time for "prepared by" fields.
+    flatpickr(".prepared-date-picker", {
+      dateFormat: "m/d/Y",
+      allowInput: true,
+      onChange: autoSave
+    });
+    flatpickr(".prepared-time-picker", {
+      enableTime: true,
+      noCalendar: true,
+      time_24hr: true,
+      dateFormat: "H:i",
+      allowInput: true,
+      onChange: autoSave
     });
   }
 

@@ -62,7 +62,8 @@ class RequestCheckinsController < ApplicationController
         name:         req.suggested_resource_name,
         position:     req.filled_catalog_item_code,
         order_number: req.suggested_order_number,
-        position_num: i + 1
+        position_num: i + 1,
+        agency:       req.res_prov_agency_abbrev
       )
     end
   end

@@ -72,14 +72,96 @@
       
       
       /* Hide elements that shouldn't appear in PDFs */
-      .no-print, 
+      .no-print,
       .resources-button,
       .header-button,
       .new-freq-button,
-      #header, 
-      nav, 
-      .footer {
+      #header,
+      nav,
+      .footer:not(.ics-204-wf-page .footer) {
         display: none !important;
+      }
+
+      /* ---------- ICS 204 WF PDF pagination ---------- */
+      /* Server-side page splitting: each .wf-page is a complete
+         self-contained page (sections 1-4 header, middle content,
+         sections 8-9 footer). page-break-after: always forces the
+         browser to start a new physical page after every block; the
+         last block naturally ends without a trailing blank page. */
+
+      @page {
+        size: letter;
+        margin: 0.35in 0.4in;
+      }
+
+      .ics-204-wf-pdf {
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+      }
+
+      .ics-204-wf-pdf .wf-page {
+        page-break-after: always;
+        break-after: page;
+        min-height: 10.15in;         /* Letter height minus @page margins */
+        display: flex;
+        flex-direction: column;
+      }
+      .ics-204-wf-pdf .wf-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+
+      /* Header (blocks 1-4) sits at the top of every page. */
+      .ics-204-wf-pdf .wf-page-header {
+        flex: 0 0 auto;
+      }
+      /* Middle (block 5 + optional 6/7) fills the space between the
+         page-header and page-footer. On page 1, section 7 uses its
+         own flex so it stretches to fill any leftover height. */
+      .ics-204-wf-pdf .wf-page-middle {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Footer (blocks 8-9) sits at the bottom of every page. */
+      .ics-204-wf-pdf .wf-page-footer {
+        flex: 0 0 auto;
+      }
+
+      /* Sections 6 & 7 wrapper: single-column flex so section 7 can
+         grow. Bordered to match the target template. */
+      .ics-204-wf-pdf .narrative-print {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid #000;
+        border-right: 1px solid #000;
+        border-bottom: 1px solid #000;
+      }
+      .ics-204-wf-pdf .narrative-print .box-6,
+      .ics-204-wf-pdf .narrative-print .box-7 {
+        border-top: 1px solid #000;
+        padding: 3pt 4pt;
+        font-size: 8pt;
+        vertical-align: top;
+      }
+      .ics-204-wf-pdf .narrative-print .box-6 { min-height: 1.15in; }
+      .ics-204-wf-pdf .narrative-print .box-7 {
+        flex: 1 1 auto;            /* expand to fill leftover space */
+        min-height: 0.75in;
+      }
+
+      /* Keep a resource row from being split across pages mid-line. */
+      .ics-204-wf-pdf .res-row { page-break-inside: avoid; }
+
+      /* Force gray shading in PDF (Chrome strips backgrounds by default). */
+      .ics-204-wf-pdf .shade,
+      .ics-204-wf-pdf .banner,
+      .ics-204-wf-pdf .banner-num,
+      .ics-204-wf-pdf .comm-row .c-func {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       
       /* Ensure print background colors */

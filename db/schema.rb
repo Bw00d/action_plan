@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_27_150000) do
+ActiveRecord::Schema.define(version: 2026_07_28_200000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,16 @@ ActiveRecord::Schema.define(version: 2026_07_27_150000) do
     t.bigint "org_unit_id"
     t.datetime "ops_period_from"
     t.datetime "ops_period_to"
+    t.bigint "operations_chief_id"
+    t.bigint "division_group_supervisor_id"
+    t.bigint "branch_director_id"
+    t.bigint "air_attack_supervisor_id"
+    t.date "prepared_date"
+    t.string "prepared_time"
+    t.index ["air_attack_supervisor_id"], name: "index_assignments_on_air_attack_supervisor_id"
+    t.index ["branch_director_id"], name: "index_assignments_on_branch_director_id"
+    t.index ["division_group_supervisor_id"], name: "index_assignments_on_division_group_supervisor_id"
+    t.index ["operations_chief_id"], name: "index_assignments_on_operations_chief_id"
     t.index ["org_unit_id"], name: "index_assignments_on_org_unit_id"
   end
 
@@ -424,6 +434,8 @@ ActiveRecord::Schema.define(version: 2026_07_27_150000) do
     t.string "jetport"
     t.string "return_city"
     t.string "return_state"
+    t.string "drop_off_pt_time"
+    t.string "pick_up_pt_time"
   end
 
   create_table "rosters", force: :cascade do |t|
@@ -436,6 +448,11 @@ ActiveRecord::Schema.define(version: 2026_07_27_150000) do
     t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "agency"
+    t.datetime "released_at"
+    t.bigint "promoted_resource_id"
+    t.index ["promoted_resource_id"], name: "index_rosters_on_promoted_resource_id"
+    t.index ["released_at"], name: "index_rosters_on_released_at"
     t.index ["request_id"], name: "index_rosters_on_request_id"
     t.index ["resource_id"], name: "index_rosters_on_resource_id"
   end
@@ -521,6 +538,10 @@ ActiveRecord::Schema.define(version: 2026_07_27_150000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "org_units"
+  add_foreign_key "assignments", "teams", column: "air_attack_supervisor_id"
+  add_foreign_key "assignments", "teams", column: "branch_director_id"
+  add_foreign_key "assignments", "teams", column: "division_group_supervisor_id"
+  add_foreign_key "assignments", "teams", column: "operations_chief_id"
   add_foreign_key "demob_notifications", "demobs"
   add_foreign_key "demob_notifications", "incidents"
   add_foreign_key "demob_notifications", "resources"
@@ -535,5 +556,6 @@ ActiveRecord::Schema.define(version: 2026_07_27_150000) do
   add_foreign_key "requests", "incidents"
   add_foreign_key "rosters", "requests"
   add_foreign_key "rosters", "resources"
+  add_foreign_key "rosters", "resources", column: "promoted_resource_id"
   add_foreign_key "schedules", "incidents"
 end

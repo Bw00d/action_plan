@@ -1,0 +1,204 @@
+<%
+  # ------------------------------------------------------------------
+  # Server-side pagination for the ICS 204 WF PDF.
+  #
+  # Rules (per user):
+  #   - Sections 1-4 pinned to top and 8-9 pinned to bottom of every page.
+  #   - Sections 6+7 always live on the LAST page. They take the vertical
+  #     space of ~8 resource rows, so a page carrying 6+7 can only fit 14
+  #     resources; a page without 6+7 fits 22.
+  #   - Fill earlier pages first (22 resources each), then put whatever
+  #     remains on the last page with 6+7.
+  #     N ≤ 14  → 1 page (all + 6+7)
+  #     15..36  → 2 pages (up to 22 on pg.1, remainder + 6+7 on pg.2)
+  #     37..58  → 3 pages, etc.
+  # ------------------------------------------------------------------
+  full_page_cap   = 22   # resources on a page WITHOUT 6+7
+  last_page_cap   = 14   # resources on the LAST page (with 6+7)
+
+  all_resources  = @assignment.assigned_resources.to_a
+  assigned_freqs = @assignment.freqs
+  comm_row_count = [5, assigned_freqs.count].max
+
+  pages = []
+  if all_resources.count <= last_page_cap
+    # One-page 204: everything fits alongside 6+7.
+    pages << { resources: all_resources, include_6_7: true }
+  else
+    # Multi-page: fill earlier pages with 22 each until what's left fits
+    # on the last page with 6+7 (≤ 14 resources).
+    offset = 0
+    while (all_resources.count - offset) > last_page_cap
+      take = [full_page_cap, all_resources.count - offset].min
+      pages << { resources: all_resources[offset, take], include_6_7: false }
+      offset += take
+    end
+    # Whatever remains (0..14) goes on the last page with 6+7.
+    pages << { resources: all_resources[offset..] || [], include_6_7: true }
+  end
+  total_pages = pages.count
+%>
+
+<div class="ics-204-wf-page ics-204-wf-pdf">
+<% pages.each_with_index do |page, idx| %>
+  <div class="wf-page">
+    <div class="wf-page-header">
+      <div class="doc-title">DIVISION/GROUP ASSIGNMENT LIST (ICS 204 WF)</div>
+      <div class="doc-sub">Controlled Unclassified Information//Basic</div>
+
+      <!-- ===== Blocks 1, 2, 3 ===== -->
+      <table>
+        <tr>
+          <td class="num shade" colspan="2" style="width:57%">1. Incident Name</td>
+          <td class="banner-num" colspan="2" style="width:43%">3.</td>
+        </tr>
+        <tr>
+          <td class="hdr-entry" colspan="2"><%= @incident.name %></td>
+          <td class="id-cell" style="width:14%" rowspan="4">
+            <div class="id-label">Branch:</div>
+            <div class="id-value"><%= @assignment.branch&.name %></div>
+          </td>
+          <td class="id-cell" style="width:29%" rowspan="4">
+            <div class="id-label">Division/Group:</div>
+            <div class="id-value"><%= @assignment.designator %></div>
+          </td>
+        </tr>
+        <tr><td class="num shade" colspan="2">2. Operational Period</td></tr>
+        <tr>
+          <td class="ctr" style="width:28.5%">Date/Time From:</td>
+          <td class="ctr" style="width:28.5%">Date/Time To:</td>
+        </tr>
+        <tr>
+          <td class="op-entry"><%= @assignment.ops_period_from&.strftime("%m/%d/%Y %H:%M") %></td>
+          <td class="op-entry"><%= @assignment.ops_period_to&.strftime("%m/%d/%Y %H:%M") %></td>
+        </tr>
+      </table>
+
+      <!-- ===== Block 4 ===== -->
+      <table>
+        <tr>
+          <td class="num shade seam-num" style="width:5%">4.</td>
+          <td class="banner seam-banner" colspan="4">Operations Personnel</td>
+        </tr>
+        <tr>
+          <td class="pers-label" colspan="2">Operations Chief</td>
+          <td class="pers-fill"><%= @assignment.operations_chief&.resource_name %></td>
+          <td class="pers-label">Division/Group Supervisor</td>
+          <td class="pers-fill"><%= @assignment.division_group_supervisor&.resource_name %></td>
+        </tr>
+        <tr>
+          <td class="pers-label" colspan="2">Branch Director</td>
+          <td class="pers-fill"><%= @assignment.branch_director&.resource_name %></td>
+          <td class="pers-label">Air Attack Supervisor</td>
+          <td class="pers-fill"><%= @assignment.air_attack_supervisor&.resource_name %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="wf-page-middle">
+      <% if page[:resources].any? %>
+        <!-- ===== Block 5 (banner + column headers only when this page carries resources) ===== -->
+        <table>
+          <tr>
+            <td class="num shade seam-num" style="width:5%">5.</td>
+            <td class="banner seam-banner" colspan="5">
+              Resources Assigned this Period:<% if idx > 0 %> (continued)<% end %>
+            </td>
+          </tr>
+        </table>
+        <table>
+          <tr class="res-head">
+            <td class="r-desig">Strike Team / Task Force / Resource Designator</td>
+            <td class="r-lwd">LWD</td>
+            <td class="r-lead">Leader</td>
+            <td class="r-pers">Number<br>Persons</td>
+            <td class="r-drop">Drop Off PT./Time</td>
+            <td class="r-pick">Pick Up PT./Time</td>
+          </tr>
+          <% page[:resources].each do |r| %>
+            <tr class="res-row">
+              <td class="r-desig"><%= [r.cat, r.order_number, r.position, r.name].compact.join(" ") %></td>
+              <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
+              <td class="r-lead"><%= r.leader %></td>
+              <td class="r-pers ctr"><%= r.number_personnel %></td>
+              <td class="r-drop"><%= r.drop_off_pt_time %></td>
+              <td class="r-pick"><%= r.pick_up_pt_time %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+
+      <% if page[:include_6_7] %>
+        <!-- ===== Blocks 6 & 7 (only on page 1) ===== -->
+        <div class="narrative-print">
+          <div class="box-6">
+            <span class="num">6.</span> Control Operations/Work Assignments:<br>
+            <%= simple_format(@assignment.control_operations.to_s) %>
+          </div>
+          <div class="box-7">
+            <span class="num">7.</span> Special Instructions:<br>
+            <%= simple_format(@assignment.special_instructions.to_s) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="wf-page-footer">
+      <!-- ===== Block 8 ===== -->
+      <table>
+        <tr>
+          <td class="num shade seam-num" style="width:5%">8.</td>
+          <td class="banner seam-banner" colspan="7">Division/Group Communication Summary</td>
+        </tr>
+      </table>
+      <table>
+        <tr class="comm-head">
+          <td class="c-func shade">Function</td>
+          <td class="c-chan">Channel</td>
+          <td class="c-name">Channel Name</td>
+          <td class="c-rxf">RX Frequency</td>
+          <td class="c-rxt">RX Tone/NAC</td>
+          <td class="c-txf">TX Frequency</td>
+          <td class="c-txt">TX Tone/NAC</td>
+          <td class="c-mode">Mode</td>
+        </tr>
+        <% comm_row_count.times do |i| %>
+          <% f = assigned_freqs[i] %>
+          <tr class="comm-row">
+            <td class="c-func"><%= f&.function %></td>
+            <td class="c-chan"><%= f&.ch_num %></td>
+            <td class="c-name"><%= f&.channel_name %></td>
+            <td class="c-rxf"><%= f&.rx_freq %></td>
+            <td class="c-rxt"><%= f&.rx_tone %></td>
+            <td class="c-txf"><%= f&.tx_freq %></td>
+            <td class="c-txt"><%= f&.tx_tone %></td>
+            <td class="c-mode"><%= f&.mode %></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <!-- ===== Block 9 ===== -->
+      <table>
+        <tr class="sig-row">
+          <td style="width:35%"><div class="sig-label"><span class="num">9.</span> Prepared by (Resource Unit Leader)</div></td>
+          <td style="width:33%"><div class="sig-label">Approved by (Planning Section Chief)</div></td>
+          <td style="width:17%">
+            <div class="sig-label">Date</div>
+            <div><%= @assignment.prepared_date&.strftime("%m/%d/%Y") %></div>
+          </td>
+          <td style="width:15%">
+            <div class="sig-label">Time</div>
+            <div><%= @assignment.prepared_time %></div>
+          </td>
+        </tr>
+      </table>
+
+      <div class="footer">
+        <div class="left">ICS 204 WF (08/25)</div>
+        <div class="mid">Controlled Unclassified Information//Basic</div>
+        <div class="right">Page <%= idx + 1 %> of <%= total_pages %></div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>

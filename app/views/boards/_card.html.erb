@@ -2,6 +2,12 @@
   <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
     <span class="board-card-agency"><%= resource.agency %></span>
+    <button type="button" class="board-card-move-toggle" title="Move to another section">
+      <i class="fa fa-arrows" aria-hidden="true"></i> Move
+    </button>
+    <div class="board-card-move-menu" style="display:none;">
+      <ul class="board-card-move-menu-list"></ul>
+    </div>
   </div>
 
   <div class="board-card-body">

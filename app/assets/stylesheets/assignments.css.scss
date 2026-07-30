@@ -404,6 +404,12 @@ ul#action-buttons {
   .op-dt-picker {
     border: none !important;
   }
+  .prepared-time-picker {
+    border: none !important;
+  }
+  .prepared-date-picker {
+    border: none !important;
+  }
 
   /* Section 3 (Branch / Division-Group) cells: label pinned top-left,
      value centered large. */
@@ -421,7 +427,7 @@ ul#action-buttons {
     text-align: left;
   }
   .id-cell .id-value {
-    font-size: 22pt;
+    font-size: 16pt;
     font-weight: bold;
     line-height: 1;
     padding: 14pt 0 10pt;
@@ -430,15 +436,26 @@ ul#action-buttons {
   .pers-label { width: 17.5%; }
   .pers-fill  { width: 26%; height: 17pt; }
 
-  .r-desig { width: 38.4%; }
+  .r-desig { width: 35.4%; }
   .r-lwd   { width: 6.7%; }
   .r-lead  { width: 23.0%; }
   .r-pers  { width: 7.6%; }
-  .r-drop  { width: 11.2%; }
+  .r-drop  { width: 14.2%; }
   .r-pick  { width: 13.1%; }
 
   .res-head td { text-align: center; font-size: 7.5pt; padding: 2pt 2pt; }
   .res-row td  { height: 15.5pt; }
+  /* Constrain best_in_place inputs in Drop Off / Pick Up cells so they
+     stay inside the narrow columns instead of using the browser's
+     default text-input width. */
+  .res-row .r-drop input,
+  .res-row .r-pick input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font: inherit;
+    padding: 0 2px;
+  }
 
   .narrative { display: flex; flex-direction: column; }
   .box-6 { height: 1.15in; }
@@ -512,6 +529,23 @@ ul#action-buttons {
   }
 
   .sig-row td { height: 30pt; }
+  .sig-row .sig-label {
+    font-size: 8pt;
+    color: #000;
+  }
+  .sig-row .sig-input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    outline: 0;
+    text-align: left;
+  }
+  .sig-row .sig-input:focus { background: #fffbe6; }
 
   .footer {
     display: flex;

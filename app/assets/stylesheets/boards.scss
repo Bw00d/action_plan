@@ -123,10 +123,15 @@
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
   cursor: grab;
   font-size: 13px;
-  overflow: hidden;
+  overflow: visible; /* let the move popover escape the card */
+  position: relative;
 
   &:hover {
     background: #fafbfc;
+  }
+  &:hover .board-card-move-toggle {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
@@ -140,6 +145,57 @@
   font-weight: 600;
   letter-spacing: 0.4px;
   text-transform: uppercase;
+  position: relative; /* anchor for .board-card-move-menu */
+}
+
+.board-card-move-toggle {
+  background: rgba(255, 255, 255, 0.85);
+  color: #222;
+  border: 0;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
+  margin-left: 6px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease-in;
+
+  .fa { margin-right: 3px; }
+  &:hover  { background: #fff; }
+  &:focus  { outline: 0; box-shadow: 0 0 0 2px rgba(9, 30, 66, 0.15); }
+}
+
+.board-card-move-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  min-width: 180px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: #fff;
+  color: #222;
+  border: 1px solid #d0d5db;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.18);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+
+  ul {
+    list-style: none;
+    padding: 4px 0;
+    margin: 0;
+  }
+  li {
+    padding: 5px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    &:hover { background: #eef4ff; }
+  }
 }
 
 .board-card-icon {

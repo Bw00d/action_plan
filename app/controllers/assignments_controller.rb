@@ -118,6 +118,9 @@ class AssignmentsController < ApplicationController
     def assignment_params
       params.require(:assignment).permit(:designator, :org_unit_id, :control_operations, :special_instructions,
                                          :plan_id, :ops_period, :ops_period_from, :ops_period_to,
+                                         :operations_chief_id, :division_group_supervisor_id,
+                                         :branch_director_id, :air_attack_supervisor_id,
+                                         :prepared_date, :prepared_time,
                                          commo_item_ids: [], resource_ids: [],
                                          ops_personnel_ids: [])
     end

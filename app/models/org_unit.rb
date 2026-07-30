@@ -27,7 +27,7 @@ class OrgUnit < ApplicationRecord
   ALLOWED_PARENT_KINDS = {
     'command'  => [nil],
     'section'  => [nil],
-    'branch'   => ['section'],
+    'branch'   => ['section', 'command'],
     'division' => ['section', 'branch'],
     'group'    => ['section', 'branch']
   }.freeze
