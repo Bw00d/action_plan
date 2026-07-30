@@ -1,0 +1,3143 @@
+/* show */
+/* line 4, app/assets/stylesheets/plans.css.scss */
+.plan-panel-head {
+  background-color: #F5F5F5;
+  border: 1px solid #DDD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: 40px;
+}
+
+/* line 10, app/assets/stylesheets/plans.css.scss */
+.plan-panel-head .tabrow {
+  text-align: left;
+  list-style: none;
+  margin: 0;
+  margin-top: 7px;
+  margin-left: 10px;
+  padding: 0;
+  line-height: 24px;
+  position: relative;
+}
+
+/* line 21, app/assets/stylesheets/plans.css.scss */
+.masking-tape {
+  height: 5px;
+  width: 50px;
+  color: blue;
+  background-color: white;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+/* line 34, app/assets/stylesheets/plans.css.scss */
+.date-row {
+  margin-bottom: 2px;
+  padding-bottom: 0;
+  position: relative;
+}
+
+/* line 39, app/assets/stylesheets/plans.css.scss */
+.date-tab {
+  list-style: none;
+  position: relative;
+  /*margin-bottom: -7px;*/
+  margin-left: -10px;
+  display: inline-block;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* line 47, app/assets/stylesheets/plans.css.scss */
+.date-tab .top {
+  width: 60px;
+  background-color: white;
+  border: 1px solid #DDD;
+  height: 30px;
+  border-radius: 30px;
+  display: inline-block;
+  border-bottom: none;
+  z-index: 1 !important;
+  position: relative;
+}
+
+/* line 60, app/assets/stylesheets/plans.css.scss */
+.date-tab .bottom {
+  width: 60px;
+  background-color: white;
+  border: 1px solid #DDD;
+  height: 20px;
+  position: absolute;
+  margin-top: -18px;
+  z-index: 2 !important;
+  border-bottom: 1px solid white;
+  border-top: none;
+  text-align: center;
+}
+
+/* line 72, app/assets/stylesheets/plans.css.scss */
+.date-tab .active {
+  height: 21px;
+}
+
+/* line 76, app/assets/stylesheets/plans.css.scss */
+.new-plan {
+  font-size: 2.5em;
+  color: #B4B4B4;
+}
+
+/* line 80, app/assets/stylesheets/plans.css.scss */
+.expanded {
+  border-bottom: none !important;
+}
+
+/* line 84, app/assets/stylesheets/plans.css.scss */
+.plan-row {
+  z-index: 2;
+  overflow: hidden;
+  border-bottom: 1px solid #DDD;
+  padding: 10px;
+  font-weight: 700;
+  background-color: white;
+}
+
+/* line 91, app/assets/stylesheets/plans.css.scss */
+.plan-row a {
+  color: #3D3D3D !important;
+}
+
+/* line 95, app/assets/stylesheets/plans.css.scss */
+.list-content {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 99, app/assets/stylesheets/plans.css.scss */
+.situation {
+  /*border-top: 1px solid #DDD;*/
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 104, app/assets/stylesheets/plans.css.scss */
+.situation-content {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 20px;
+  display: none;
+}
+
+/* line 108, app/assets/stylesheets/plans.css.scss */
+.situation-content textarea {
+  width: 100%;
+}
+
+/* line 111, app/assets/stylesheets/plans.css.scss */
+.situation-content input {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* line 116, app/assets/stylesheets/plans.css.scss */
+span.plans-button {
+  margin-top: -7px;
+}
+
+/* Incident Objectives */
+/* line 120, app/assets/stylesheets/plans.css.scss */
+#objectives-list {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 124, app/assets/stylesheets/plans.css.scss */
+.objectives-list {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 5px;
+  display: none;
+}
+
+/* line 128, app/assets/stylesheets/plans.css.scss */
+.objectives-list .new-objective {
+  color: #a19afc;
+  size: 1.2em;
+}
+
+/* line 132, app/assets/stylesheets/plans.css.scss */
+.objectives-list ol {
+  padding-left: 20px;
+}
+
+/* line 136, app/assets/stylesheets/plans.css.scss */
+#objective-form {
+  display: none;
+  position: relative;
+}
+
+/* line 139, app/assets/stylesheets/plans.css.scss */
+#objective-form textarea {
+  width: 100%;
+}
+
+/* line 142, app/assets/stylesheets/plans.css.scss */
+#objective-form input {
+  /*width: 100px;*/
+}
+
+/* line 147, app/assets/stylesheets/plans.css.scss */
+#objectives input {
+  width: 100%;
+}
+
+/* line 151, app/assets/stylesheets/plans.css.scss */
+.delete-objective {
+  width: 15px;
+  height: 15px;
+  font-size: 10px;
+  text-align: center;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  font-weight: 666;
+  position: absolute;
+  left: 10px;
+}
+
+/* line 164, app/assets/stylesheets/plans.css.scss */
+a.delete-objective:hover {
+  color: white;
+}
+
+/* Activities */
+/* line 169, app/assets/stylesheets/plans.css.scss */
+#activity-list {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 173, app/assets/stylesheets/plans.css.scss */
+.activities-list {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 5px;
+  display: none;
+}
+
+/* line 177, app/assets/stylesheets/plans.css.scss */
+.activities-list ul {
+  padding-left: 20px;
+}
+
+/* line 181, app/assets/stylesheets/plans.css.scss */
+#activity-form {
+  display: none;
+  position: relative;
+}
+
+/* line 184, app/assets/stylesheets/plans.css.scss */
+#activity-form textarea {
+  width: 100%;
+}
+
+/* line 187, app/assets/stylesheets/plans.css.scss */
+#activity-form input {
+  /*width: 100%;*/
+}
+
+/* line 191, app/assets/stylesheets/plans.css.scss */
+.forms-list {
+  display: none;
+  padding: 10px 5px;
+}
+
+/* line 194, app/assets/stylesheets/plans.css.scss */
+.forms-list ul {
+  padding-left: 20px;
+}
+
+/* line 198, app/assets/stylesheets/plans.css.scss */
+#iap-content {
+  border-bottom: 1px solid #DDD !important;
+}
+
+/* line 200, app/assets/stylesheets/plans.css.scss */
+#iap-content a {
+  color: #3d3d3d;
+}
+
+/* line 203, app/assets/stylesheets/plans.css.scss */
+#iap-content a:hover {
+  color: #3d3d3d;
+}
+
+/* line 206, app/assets/stylesheets/plans.css.scss */
+#iap-content a:visited {
+  color: #3d3d3d;
+}
+
+/* line 210, app/assets/stylesheets/plans.css.scss */
+.title-row {
+  border-right: 1px solid black;
+}
+
+/* line 212, app/assets/stylesheets/plans.css.scss */
+.title-row div {
+  height: 40px;
+}
+
+/* Resources*/
+/* line 218, app/assets/stylesheets/plans.css.scss */
+#resource-list {
+  border-left: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 223, app/assets/stylesheets/plans.css.scss */
+.resources-list {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 5px;
+  display: none;
+}
+
+/* line 227, app/assets/stylesheets/plans.css.scss */
+.resources-list .new-resource {
+  color: #a19afc;
+  size: 1.2em;
+}
+
+/* line 231, app/assets/stylesheets/plans.css.scss */
+.resources-list ul {
+  padding-left: 20px;
+}
+
+/* line 235, app/assets/stylesheets/plans.css.scss */
+#resource-form {
+  display: none;
+  position: relative;
+}
+
+/* line 238, app/assets/stylesheets/plans.css.scss */
+#resource-form textarea {
+  width: 100%;
+}
+
+/* line 241, app/assets/stylesheets/plans.css.scss */
+#resource-form input {
+  width: 100%;
+}
+
+/* IAP */
+/* line 248, app/assets/stylesheets/plans.css.scss */
+#iap-row {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 253, app/assets/stylesheets/plans.css.scss */
+.form-row {
+  position: relative;
+  border-top: 1px solid black;
+  height: 30px;
+  border-right: 1px solid black;
+}
+
+/* line 259, app/assets/stylesheets/plans.css.scss */
+.top-row {
+  border-top: 1px solid black;
+}
+
+/* line 263, app/assets/stylesheets/plans.css.scss */
+.bottom-row {
+  border-right: 1px solid black;
+}
+
+/* line 266, app/assets/stylesheets/plans.css.scss */
+.small {
+  font-size: .70em;
+}
+
+/* line 269, app/assets/stylesheets/plans.css.scss */
+.small-box {
+  padding-right: 0;
+  padding-left: 5px;
+  min-height: 30px;
+}
+
+/* line 274, app/assets/stylesheets/plans.css.scss */
+.bl {
+  border-left: 1px solid black;
+}
+
+/* line 277, app/assets/stylesheets/plans.css.scss */
+.bt {
+  border-top: 1px solid black;
+  margin-top: -1px;
+}
+
+/* ICS 202 Incident Objectives*/
+/* line 284, app/assets/stylesheets/plans.css.scss */
+#title-box {
+  text-align: center;
+}
+
+/* line 287, app/assets/stylesheets/plans.css.scss */
+#print-container {
+  margin: 10px 20px;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* line 294, app/assets/stylesheets/plans.css.scss */
+#incident-objectives {
+  overflow: hidden;
+}
+
+/* line 296, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #ops-period {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 300, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  overflow: hidden;
+}
+
+/* line 305, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives ul {
+  line-height: 2em;
+}
+
+/* line 309, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives-pdf {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  overflow: hidden;
+}
+
+/* line 314, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives-pdf ul {
+  line-height: 2em;
+}
+
+/* line 318, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #operational-emphasis {
+  border-left: 1px solid black;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+/* line 323, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #operational-emphasis-pdf {
+  border-left: 1px solid black;
+  overflow: hidden;
+}
+
+/* line 327, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #general-safety-message {
+  border-top: 1px solid black;
+  height: 100%;
+  overflow: hidden;
+  padding-bottom: 10px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 335, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #general-safety-message-pdf {
+  border-top: 1px solid black;
+  overflow: hidden;
+  padding-bottom: 10px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 343, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .prepared-by-row {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  hieght: 60px;
+}
+
+/* line 352, app/assets/stylesheets/plans.css.scss */
+.tall-rows {
+  min-height: 300px;
+}
+
+/* line 355, app/assets/stylesheets/plans.css.scss */
+.medium-rows {
+  min-height: 200px;
+}
+
+/* line 358, app/assets/stylesheets/plans.css.scss */
+.short-rows {
+  min-height: 100px;
+}
+
+/* line 361, app/assets/stylesheets/plans.css.scss */
+.padded-box {
+  padding-left: 20px;
+}
+
+/* line 364, app/assets/stylesheets/plans.css.scss */
+.new-button {
+  font-size: 2em;
+  color: #333;
+}
+
+/* line 368, app/assets/stylesheets/plans.css.scss */
+.header-row {
+  text-align: center;
+  background-color: #f3f3f3;
+  padding-top: 5px;
+  border-left: 1px solid black;
+}
+
+/* line 375, app/assets/stylesheets/plans.css.scss */
+#weather-form textarea {
+  width: 100%;
+  height: 80%;
+}
+
+/* line 381, app/assets/stylesheets/plans.css.scss */
+#safety-form textarea {
+  width: 100%;
+  height: 75%;
+}
+
+/* line 387, app/assets/stylesheets/plans.css.scss */
+.bip-input input {
+  margin-right: 5px;
+}
+
+/* line 391, app/assets/stylesheets/plans.css.scss */
+h1.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* line 396, app/assets/stylesheets/plans.css.scss */
+.print-button {
+  margin-top: 25px;
+}
+
+/* line 400, app/assets/stylesheets/plans.css.scss */
+.resize-handle {
+  height: 1px;
+  background: #999;
+  cursor: ns-resize;
+  position: relative;
+  z-index: 10;
+}
+
+/* line 411, app/assets/stylesheets/plans.css.scss */
+.resize-handle:hover {
+  background: #bbb;
+}
+
+/* line 415, app/assets/stylesheets/plans.css.scss */
+.resize-handle:active {
+  background: #999;
+}
+
+/* line 419, app/assets/stylesheets/plans.css.scss */
+.resizable-row {
+  position: relative;
+  min-height: 100px;
+  overflow: hidden;
+  max-height: 400px;
+}
+
+/* ICS 202 Incident Organization */
+/* line 428, app/assets/stylesheets/plans.css.scss */
+.split-right {
+  position: relative;
+  border-bottom: 1px solid black;
+  min-height: 40px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 435, app/assets/stylesheets/plans.css.scss */
+.split-left {
+  position: relative;
+  border-bottom: 1px solid black;
+  min-height: 35px;
+  border-left: 1px solid black;
+}
+
+/* line 442, app/assets/stylesheets/plans.css.scss */
+.content-box {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  height: 30px;
+  margin: 0;
+  padding: 8px 5px;
+}
+
+/* line 449, app/assets/stylesheets/plans.css.scss */
+.right-column {
+  border-right: 1px solid black;
+}
+
+/* line 453, app/assets/stylesheets/plans.css.scss */
+#organization-assignments h4 {
+  padding-bottom: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+/* line 460, app/assets/stylesheets/plans.css.scss */
+.team-form {
+  overflow: hidden;
+}
+
+/* line 470, app/assets/stylesheets/plans.css.scss */
+#organization-assignments {
+  --row-height: 30px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 476, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 483, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container > .col-xs-12 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 491, app/assets/stylesheets/plans.css.scss */
+.org-columns {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 507, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child,
+#organization-assignments .right-column > .row:last-child {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 513, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child > .content-box,
+#organization-assignments .right-column > .row:last-child > .content-box {
+  flex: 1 1 50%;
+  height: auto !important;
+  min-height: var(--row-height, 30px);
+}
+
+/* line 520, app/assets/stylesheets/plans.css.scss */
+.org-columns > .left-column,
+.org-columns > .right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 543, app/assets/stylesheets/plans.css.scss */
+.add-org-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* line 560, app/assets/stylesheets/plans.css.scss */
+.add-org-btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* line 562, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:hover {
+  opacity: 0.7;
+}
+
+/* line 563, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:focus {
+  outline: none;
+}
+
+/* line 566, app/assets/stylesheets/plans.css.scss */
+img.add-org-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* line 573, app/assets/stylesheets/plans.css.scss */
+.add-header-btn i.fa {
+  font-size: 18px;
+  color: #555;
+  width: 20px;
+  text-align: center;
+}
+
+/* line 584, app/assets/stylesheets/plans.css.scss */
+.staff-row {
+  position: relative;
+}
+
+/* line 593, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  z-index: 6;
+  cursor: pointer;
+}
+
+/* line 603, app/assets/stylesheets/plans.css.scss */
+form.insert-below-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 609, app/assets/stylesheets/plans.css.scss */
+.insert-below {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: absolute;
+  right: 85px;
+  bottom: -11px;
+  top: auto;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 50%;
+  color: #000;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  z-index: 5;
+}
+
+/* line 638, app/assets/stylesheets/plans.css.scss */
+.insert-below:hover {
+  color: #000;
+  border-color: #000;
+}
+
+/* line 642, app/assets/stylesheets/plans.css.scss */
+.insert-below:focus {
+  outline: none;
+}
+
+/* line 648, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone:hover ~ .content-box .insert-below,
+.insert-below:hover,
+.insert-below:focus {
+  opacity: 1;
+}
+
+/* line 651, app/assets/stylesheets/plans.css.scss */
+img.small-icon {
+  height: 15px;
+  width: 15px;
+}
+
+/* line 655, app/assets/stylesheets/plans.css.scss */
+img.medium-icon {
+  height: 25px;
+  width: 25px;
+}
+
+/* line 659, app/assets/stylesheets/plans.css.scss */
+#add-freqs-button {
+  text-align: center;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+/* line 664, app/assets/stylesheets/plans.css.scss */
+img#add-freqs-button {
+  height: 30px;
+  width: 30px;
+}
+
+/* Attachments */
+/* line 671, app/assets/stylesheets/plans.css.scss */
+#attachments {
+  overflow: hidden;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  height: 95px;
+  overflow: hidden;
+}
+
+/* line 678, app/assets/stylesheets/plans.css.scss */
+#attachments ul {
+  list-style: none;
+}
+
+/* line 681, app/assets/stylesheets/plans.css.scss */
+#attachments li.attachment {
+  list-style: none;
+  float: left;
+  width: 200px;
+}
+
+/* line 688, app/assets/stylesheets/plans.css.scss */
+.checkboxes img {
+  height: 17px !important;
+  width: 17px !important;
+}
+
+/* line 692, app/assets/stylesheets/plans.css.scss */
+.bip-checkbox {
+  cursor: pointer;
+  font-size: 17px;
+  margin-right: 5px;
+}
+
+/* New Incident conversation UI form*/
+/* line 700, app/assets/stylesheets/plans.css.scss */
+.ui-group {
+  /*.form-incident-type {
+    display: none;
+  }
+  .form-incident-complexity {
+    display: none;
+  }*/
+}
+
+/* line 707, app/assets/stylesheets/plans.css.scss */
+.ui-group .form-attributes {
+  display: none;
+}
+
+/* line 712, app/assets/stylesheets/plans.css.scss */
+.ui-group p {
+  color: #979797;
+  font-size: 1.1em;
+}
+
+/* line 716, app/assets/stylesheets/plans.css.scss */
+.ui-group label {
+  font-size: 1.6em;
+  font-weight: 999;
+  margin-bottom: 20px;
+}
+
+/* line 721, app/assets/stylesheets/plans.css.scss */
+.ui-group div.next-btn-container {
+  margin-top: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* line 726, app/assets/stylesheets/plans.css.scss */
+.ui-group div.hideable {
+  visibility: hidden;
+}
+
+/* line 729, app/assets/stylesheets/plans.css.scss */
+.ui-group .next-btn {
+  max-width: 60px;
+}
+
+/* line 3, app/assets/stylesheets/assignments.css.scss */
+.wide-textarea {
+  width: 100%;
+}
+
+/* line 6, app/assets/stylesheets/assignments.css.scss */
+.commo-row {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 10, app/assets/stylesheets/assignments.css.scss */
+.commo-row div {
+  min-height: 30px;
+}
+
+/* line 14, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists {
+  margin-top: 0;
+  border-top: 1px solid #DDD;
+  list-style: none;
+  padding-left: 0;
+}
+
+/* line 19, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists li {
+  padding: 10px;
+}
+
+/* line 22, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists a {
+  text-decoration: none;
+}
+
+/* line 24, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists a :hover {
+  text-decoration: underline;
+}
+
+/* line 28, app/assets/stylesheets/assignments.css.scss */
+.assignments-lists p {
+  padding-left: 10px;
+}
+
+/* line 32, app/assets/stylesheets/assignments.css.scss */
+.assignment-box {
+  border-right: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+}
+
+/* line 33, app/assets/stylesheets/assignments.css.scss */
+.assignment-box .header {
+  margin-bottom: 15px;
+  padding-top: 5px;
+}
+
+/* line 41, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources {
+  border-top: 1px solid black;
+  width: 100%;
+}
+
+/* line 44, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources thead {
+  border-right: 1px solid black;
+}
+
+/* line 47, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources tr {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 51, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources td {
+  height: 30px;
+  border-right: 1px solid black;
+  font-size: .9em;
+}
+
+/* line 56, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources td.centered {
+  text-align: center !important;
+  padding: 0 auto;
+}
+
+/* line 60, app/assets/stylesheets/assignments.css.scss */
+table.assigned-resources th {
+  font-weight: 400;
+  font-size: .70em;
+  height: 30px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  padding: 5px;
+}
+
+/* line 69, app/assets/stylesheets/assignments.css.scss */
+.form-box {
+  height: 30px;
+  border-left: 1px solid black;
+  padding: 0px 5px;
+}
+
+/* line 75, app/assets/stylesheets/assignments.css.scss */
+#incident-assignments textarea {
+  width: 100%;
+}
+
+/* line 78, app/assets/stylesheets/assignments.css.scss */
+#incident-assignments > .container,
+#incident-assignments > .container > .col-xs-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* line 84, app/assets/stylesheets/assignments.css.scss */
+a.new-freq-button {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d2d2d2;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #242424;
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -12px;
+  display: none;
+}
+
+/* line 99, app/assets/stylesheets/assignments.css.scss */
+a.new-freq-button:hover {
+  text-decoration: none;
+  color: black;
+}
+
+/* line 105, app/assets/stylesheets/assignments.css.scss */
+#freq-form {
+  display: none;
+  width: 100%;
+  background-color: white;
+  z-index: 3;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  padding: 15px 0;
+}
+
+/* line 115, app/assets/stylesheets/assignments.css.scss */
+#freq-form li {
+  display: inline;
+}
+
+/* line 121, app/assets/stylesheets/assignments.css.scss */
+.header-button {
+  background-color: #3d3d3d;
+  color: white;
+  position: absolute;
+  left: 10px;
+  padding: 2px 10px;
+  margin-top: -3px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  z-index: 3px;
+  display: none;
+}
+
+/* line 135, app/assets/stylesheets/assignments.css.scss */
+.header-button:hover {
+  padding: 3px 11px;
+  margin-top: -3px;
+  cursor: pointer;
+}
+
+/* line 140, app/assets/stylesheets/assignments.css.scss */
+#resource-assignments-form {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  margin-bottom: -5px;
+  display: none;
+}
+
+/* line 148, app/assets/stylesheets/assignments.css.scss */
+#resource-assignments-form li {
+  list-style: none;
+}
+
+/* line 152, app/assets/stylesheets/assignments.css.scss */
+.personnel_num {
+  padding-left: 15px;
+  padding-top: 5px;
+  position: absolute;
+}
+
+/* line 157, app/assets/stylesheets/assignments.css.scss */
+.ops-box {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  overflow: hidden;
+  height: 30px;
+  float: left;
+  padding-top: 6px;
+  padding-left: 10px;
+}
+
+/* line 166, app/assets/stylesheets/assignments.css.scss */
+#ops-box-container {
+  border-left: 1px solid black;
+  overflow: hidden;
+}
+
+/* line 170, app/assets/stylesheets/assignments.css.scss */
+.resources-button {
+  overflow: hidden;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  -moz-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(191, 163, 163, 0.75);
+  background-color: #f5f5f5;
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding-left: 4px;
+  display: none;
+  color: #3d3d3d;
+}
+
+/* line 189, app/assets/stylesheets/assignments.css.scss */
+.resources-button i {
+  margin-top: 10px;
+  margin-left: 6px;
+}
+
+/* line 193, app/assets/stylesheets/assignments.css.scss */
+.resources-button a {
+  color: #3d3d3d !important;
+}
+
+/* line 196, app/assets/stylesheets/assignments.css.scss */
+.resources-button a:hover {
+  color: #3d3d3d !important;
+}
+
+/* line 200, app/assets/stylesheets/assignments.css.scss */
+#ops-resources {
+  left: -16px;
+  margin-top: 13px;
+}
+
+/* line 205, app/assets/stylesheets/assignments.css.scss */
+#assign-resources-button {
+  left: -15px;
+  margin-top: 133px;
+}
+
+/* line 210, app/assets/stylesheets/assignments.css.scss */
+#control-operations {
+  min-height: 160px;
+}
+
+/* line 213, app/assets/stylesheets/assignments.css.scss */
+#ops-resource-form {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  padding-bottom: 25px;
+  padding-top: 20px;
+  display: none;
+}
+
+/* line 220, app/assets/stylesheets/assignments.css.scss */
+#ops-resource-form li {
+  list-style: none;
+}
+
+/* line 224, app/assets/stylesheets/assignments.css.scss */
+#add-freqs-button {
+  left: -15px;
+  margin-top: 75px;
+  padding-left: 8px;
+  padding-top: 2px;
+}
+
+/* line 230, app/assets/stylesheets/assignments.css.scss */
+#new-204-button {
+  margin-left: 20px;
+  overflow: hidden;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  -moz-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(191, 163, 163, 0.75);
+  background-color: #f5f5f5;
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding-left: 0;
+  font-size: 1.3em;
+  color: #3d3d3d;
+  padding-top: 0;
+}
+
+/* line 251, app/assets/stylesheets/assignments.css.scss */
+#new-204-button i {
+  margin-top: 0px;
+  margin-left: 2px;
+}
+
+/* line 255, app/assets/stylesheets/assignments.css.scss */
+#new-204-button a {
+  color: #3d3d3d !important;
+}
+
+/* line 259, app/assets/stylesheets/assignments.css.scss */
+a#new-204-button:hover {
+  text-decoration: none;
+}
+
+/* line 264, app/assets/stylesheets/assignments.css.scss */
+li.assigned-204-resources input {
+  display: inline;
+}
+
+/* line 267, app/assets/stylesheets/assignments.css.scss */
+li.assigned-204-resources label {
+  display: inline;
+}
+
+/* line 271, app/assets/stylesheets/assignments.css.scss */
+.float-button {
+  clear: both;
+}
+
+/* line 274, app/assets/stylesheets/assignments.css.scss */
+ul#action-buttons {
+  list-style-type: none !important;
+  padding: 0 !important;
+  clear: both;
+}
+
+/* line 278, app/assets/stylesheets/assignments.css.scss */
+ul#action-buttons li {
+  display: inline !important;
+}
+
+/* line 282, app/assets/stylesheets/assignments.css.scss */
+.action-buttons {
+  display: inline;
+  clear: both;
+  margin-left: 0;
+}
+
+/* line 288, app/assets/stylesheets/assignments.css.scss */
+.tabrow {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+/* line 292, app/assets/stylesheets/assignments.css.scss */
+.new-page {
+  height: 20px;
+}
+
+/* line 295, app/assets/stylesheets/assignments.css.scss */
+.page-number {
+  font-size: 0.70em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/* line 301, app/assets/stylesheets/assignments.css.scss */
+.clear {
+  clear: all;
+}
+
+/* line 304, app/assets/stylesheets/assignments.css.scss */
+.div-grp-branch {
+  position: absolute;
+  left: 3px;
+  top: 2px;
+}
+
+/* line 309, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle {
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: right;
+}
+
+/* line 316, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle form.inline-form {
+  display: inline-block;
+  margin-left: 6px;
+}
+
+/* line 320, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle form.inline-form button {
+  margin-left: 4px;
+}
+
+/* ---------- ICS 204 WF form (scoped) ---------- */
+/* line 326, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page {
+  margin-bottom: 20px;
+  --rule: 1px solid #000;
+  --shade: #ebebeb;
+  background: #fff;
+  color: #000;
+  padding: 0.35in 0.4in;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  /* Section 3 (Branch / Division-Group) cells: label pinned top-left,
+     value centered large. */
+  /* Constrain best_in_place inputs in Drop Off / Pick Up cells so they
+     stay inside the narrow columns instead of using the browser's
+     default text-input width. */
+  /* Section 8 lightning bolt affordance in the banner header.
+     Hidden until the banner row is hovered. The ID in the selector
+     out-specifies the legacy #add-freqs-button { margin-top: 75px }
+     rule from the pre-WF layout. */
+  /* Section 8 freq picker (checkbox list of ICS 205 items). */
+  /* best_in_place inputs sit inside cells; keep them borderless / flush. */
+}
+
+/* line 336, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page * {
+  box-sizing: border-box;
+}
+
+/* line 338, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .doc-title {
+  text-align: center;
+  font-size: 15pt;
+  font-weight: bold;
+  line-height: 1.15;
+}
+
+/* line 344, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .doc-sub {
+  text-align: center;
+  font-size: 9.5pt;
+  font-weight: bold;
+  margin: 2pt 0 6pt;
+}
+
+/* line 351, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0;
+}
+
+/* line 357, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page td, .ics-204-wf-page th {
+  border: var(--rule);
+  vertical-align: top;
+  padding: 1pt 3pt;
+  font-size: 8pt;
+  font-weight: normal;
+  text-align: left;
+  color: #000;
+}
+
+/* line 367, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .num {
+  font-size: 9.5pt;
+}
+
+/* line 368, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .banner {
+  text-align: center;
+  font-size: 10pt;
+  background: var(--shade);
+}
+
+/* line 373, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .banner-num {
+  background: var(--shade);
+  font-size: 9.5pt;
+}
+
+/* line 377, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .shade {
+  background: var(--shade);
+}
+
+/* line 378, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .seam-num {
+  border-right: 0;
+}
+
+/* line 379, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .seam-banner {
+  border-left: 0;
+  padding-right: 5%;
+}
+
+/* line 380, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .ctr {
+  text-align: center;
+}
+
+/* line 382, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .hdr-entry {
+  height: 26pt;
+  padding-top: 5px;
+  padding-left: 15px;
+}
+
+/* line 387, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry {
+  height: 22pt;
+  text-align: center;
+  padding-top: 5px;
+}
+
+/* line 392, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry .op-dt-picker {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  outline: 0;
+  text-align: center;
+}
+
+/* line 402, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry .op-dt-picker:focus {
+  background: #fffbe6;
+}
+
+/* line 404, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-dt-picker {
+  border: none !important;
+}
+
+/* line 407, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .prepared-time-picker {
+  border: none !important;
+}
+
+/* line 410, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .prepared-date-picker {
+  border: none !important;
+}
+
+/* line 416, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell {
+  position: relative;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* line 422, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell .id-label {
+  position: absolute;
+  top: 2pt;
+  left: 4pt;
+  font-size: 8pt;
+  text-align: left;
+}
+
+/* line 429, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell .id-value {
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 1;
+  padding: 14pt 0 10pt;
+}
+
+/* line 436, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .pers-label {
+  width: 17.5%;
+}
+
+/* line 437, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .pers-fill {
+  width: 26%;
+  height: 17pt;
+}
+
+/* line 439, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-desig {
+  width: 35.4%;
+}
+
+/* line 440, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-lwd {
+  width: 6.7%;
+}
+
+/* line 441, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-lead {
+  width: 23.0%;
+}
+
+/* line 442, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-pers {
+  width: 7.6%;
+}
+
+/* line 443, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-drop {
+  width: 14.2%;
+}
+
+/* line 444, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-pick {
+  width: 13.1%;
+}
+
+/* line 446, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-head td {
+  text-align: center;
+  font-size: 7.5pt;
+  padding: 2pt 2pt;
+}
+
+/* line 447, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-row td {
+  height: 15.5pt;
+}
+
+/* line 451, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-row .r-drop input,
+.ics-204-wf-page .res-row .r-pick input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0 2px;
+}
+
+/* line 460, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .narrative {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 461, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .box-6 {
+  height: 1.15in;
+}
+
+/* line 462, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .box-7 {
+  height: 0.75in;
+}
+
+/* line 464, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-func {
+  width: 15%;
+}
+
+/* line 465, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-chan {
+  width: 11%;
+}
+
+/* line 466, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-name {
+  width: 15%;
+}
+
+/* line 467, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-rxf {
+  width: 14%;
+}
+
+/* line 468, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-rxt {
+  width: 11%;
+}
+
+/* line 469, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-txf {
+  width: 14%;
+}
+
+/* line 470, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-txt {
+  width: 11%;
+}
+
+/* line 471, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-mode {
+  width: 8%;
+}
+
+/* line 473, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page tr.comm-row td {
+  text-align: center;
+}
+
+/* line 477, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-head td {
+  text-align: center;
+  font-size: 7.5pt;
+}
+
+/* line 478, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-row td {
+  height: 14pt;
+}
+
+/* line 479, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-row .c-func {
+  background: var(--shade);
+  text-align: center;
+  padding-top: 3pt;
+}
+
+/* line 489, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs {
+  display: inline-block;
+  margin: 0 0 0 8px;
+  padding: 0;
+  left: auto;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in;
+}
+
+/* line 501, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs .banner-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+/* line 507, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .commo-banner tr:hover #add-freqs-button.banner-add-freqs {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* line 513, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form {
+  display: none;
+  padding: 8pt 10pt;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  margin: 4pt 0;
+}
+
+/* line 519, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 6pt;
+}
+
+/* line 523, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form ul li {
+  display: inline-block;
+  margin-right: 12pt;
+  font-size: 9pt;
+}
+
+/* line 531, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row td {
+  height: 30pt;
+}
+
+/* line 532, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-label {
+  font-size: 8pt;
+  color: #000;
+}
+
+/* line 536, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  outline: 0;
+  text-align: left;
+}
+
+/* line 548, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-input:focus {
+  background: #fffbe6;
+}
+
+/* line 550, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 10pt;
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+/* line 557, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .left {
+  width: 25%;
+}
+
+/* line 558, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .mid {
+  width: 50%;
+  text-align: center;
+}
+
+/* line 559, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .right {
+  width: 25%;
+}
+
+/* line 562, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .best_in_place, .ics-204-wf-page input.best_in_place, .ics-204-wf-page textarea.best_in_place {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  display: inline;
+}
+
+/* line 568, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page textarea.best_in_place {
+  width: 100%;
+}
+
+/* line 570, app/assets/stylesheets/assignments.css.scss */
+td.no-padding {
+  padding-right: none !important;
+  padding-left: 15px !important;
+  padding-top: 10px !important;
+}
+
+@media print {
+  /* line 576, app/assets/stylesheets/assignments.css.scss */
+  div.header-row {
+    background-color: #f3f3f3 !important;
+  }
+}
+
+/* line 580, app/assets/stylesheets/assignments.css.scss */
+div.solid {
+  z-index: 7 !important;
+  position: relative;
+}
+
+/* line 1, app/assets/stylesheets/covers.css.scss */
+.block {
+  min-height: 30px;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* line 6, app/assets/stylesheets/covers.css.scss */
+.block:hover {
+  border: 2px dashed #484848;
+}
+
+/* line 10, app/assets/stylesheets/covers.css.scss */
+.block-selected {
+  border: 2px dashed #c3c3c3;
+}
+
+/* line 13, app/assets/stylesheets/covers.css.scss */
+.style-controls {
+  position: absolute;
+  left: -25px;
+  display: none;
+  padding: 10px;
+  color: white;
+  background-color: #3c3c3c;
+  line-height: 2.5em;
+}
+
+/* line 21, app/assets/stylesheets/covers.css.scss */
+.style-controls h1 {
+  font-size: 2em !important;
+  color: white;
+}
+
+/* line 25, app/assets/stylesheets/covers.css.scss */
+.style-controls h2 {
+  font-size: 1.75em !important;
+  color: white;
+}
+
+/* line 29, app/assets/stylesheets/covers.css.scss */
+.style-controls h3 {
+  font-size: 1.25em !important;
+  color: white;
+}
+
+/* line 33, app/assets/stylesheets/covers.css.scss */
+.style-controls h4 {
+  font-size: 1em !important;
+  color: white;
+}
+
+/* line 37, app/assets/stylesheets/covers.css.scss */
+.style-controls label {
+  font-size: 1.5em;
+}
+
+/* line 40, app/assets/stylesheets/covers.css.scss */
+.style-controls select {
+  color: black;
+}
+
+/* line 43, app/assets/stylesheets/covers.css.scss */
+.style-controls #font-size {
+  width: 40px;
+}
+
+/* line 47, app/assets/stylesheets/covers.css.scss */
+.style-controls li {
+  list-style: none;
+}
+
+/* line 50, app/assets/stylesheets/covers.css.scss */
+.style-controls i {
+  font-size: 2em;
+}
+
+/* line 53, app/assets/stylesheets/covers.css.scss */
+.style-controls img {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 15px;
+}
+
+/* line 58, app/assets/stylesheets/covers.css.scss */
+.style-controls div {
+  cursor: pointer;
+}
+
+/* line 61, app/assets/stylesheets/covers.css.scss */
+.style-controls div:hover {
+  opacity: 0.8;
+}
+
+/* line 66, app/assets/stylesheets/covers.css.scss */
+.new-block-type {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 25%;
+  width: 600px;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background-color: #3c3c3c;
+  line-height: 2.0em;
+  z-index: 3;
+}
+
+/* line 80, app/assets/stylesheets/covers.css.scss */
+.new-block-type span {
+  display: inline-block;
+  padding: 10px;
+}
+
+/* line 84, app/assets/stylesheets/covers.css.scss */
+.new-block-type span {
+  cursor: pointer;
+}
+
+/* line 87, app/assets/stylesheets/covers.css.scss */
+.new-block-type span:hover {
+  opacity: 0.8;
+}
+
+/* line 92, app/assets/stylesheets/covers.css.scss */
+.new-block-type .cancel-block {
+  cursor: pointer;
+}
+
+/* line 95, app/assets/stylesheets/covers.css.scss */
+.new-block-type .cancel-block:hover {
+  opacity: 0.8;
+}
+
+/* line 99, app/assets/stylesheets/covers.css.scss */
+.new-block-type h1 {
+  font-size: 2em !important;
+  color: white;
+}
+
+/* line 103, app/assets/stylesheets/covers.css.scss */
+.new-block-type h2 {
+  font-size: 1.75em !important;
+  color: white;
+}
+
+/* line 107, app/assets/stylesheets/covers.css.scss */
+.new-block-type h3 {
+  font-size: 1.25em !important;
+  color: white;
+}
+
+/* line 111, app/assets/stylesheets/covers.css.scss */
+.new-block-type h4 {
+  font-size: 1em !important;
+  color: white;
+}
+
+/* line 115, app/assets/stylesheets/covers.css.scss */
+.new-block-type label {
+  font-size: 1.5em;
+}
+
+/* line 118, app/assets/stylesheets/covers.css.scss */
+.new-block-type select {
+  color: black;
+}
+
+/* line 121, app/assets/stylesheets/covers.css.scss */
+.new-block-type #font-size {
+  width: 40px;
+}
+
+/* line 125, app/assets/stylesheets/covers.css.scss */
+.new-block-type li {
+  list-style: none;
+}
+
+/* line 128, app/assets/stylesheets/covers.css.scss */
+.new-block-type i {
+  font-size: 2em;
+}
+
+/* line 132, app/assets/stylesheets/covers.css.scss */
+.new-block-type .add-image-block img {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 15px;
+}
+
+/* line 140, app/assets/stylesheets/covers.css.scss */
+.new-block-type .split-block img {
+  width: 50px;
+  height: 25px;
+  margin-bottom: 15px;
+}
+
+/* line 147, app/assets/stylesheets/covers.css.scss */
+.cancel-block {
+  right: 12px;
+  top: -5px;
+  position: absolute;
+}
+
+/* line 152, app/assets/stylesheets/covers.css.scss */
+#cover {
+  padding-top: 0px;
+  min-height: 936px;
+  text-align: center;
+}
+
+/* line 156, app/assets/stylesheets/covers.css.scss */
+#cover h1 {
+  font-weight: 700;
+  font-size: 3em;
+}
+
+/* line 160, app/assets/stylesheets/covers.css.scss */
+#cover h2 {
+  font-weight: 700;
+  font-size: 2em;
+}
+
+/* line 164, app/assets/stylesheets/covers.css.scss */
+#cover #picture {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 75%;
+  height: auto;
+}
+
+/* line 170, app/assets/stylesheets/covers.css.scss */
+#cover .cost-code {
+  margin-top: 30px;
+}
+
+/* line 172, app/assets/stylesheets/covers.css.scss */
+#cover .cost-code h3 {
+  font-weight: 700;
+}
+
+/* line 177, app/assets/stylesheets/covers.css.scss */
+.bordered {
+  border: 2px solid #DDD;
+}
+
+/* line 183, app/assets/stylesheets/covers.css.scss */
+.sm-spacer {
+  height: 25px;
+  overflow: hidden;
+}
+
+/* line 187, app/assets/stylesheets/covers.css.scss */
+.md-spacer {
+  height: 50px;
+  overflow: hidden;
+}
+
+/* line 191, app/assets/stylesheets/covers.css.scss */
+.lg-spacer {
+  height: 75px;
+  overflow: hidden;
+}
+
+/* line 196, app/assets/stylesheets/covers.css.scss */
+.add-block-button {
+  z-index: 3;
+  overflow: hidden;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  -moz-box-shadow: 10px 10px 43px 21px rgba(191, 163, 163, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(191, 163, 163, 0.75);
+  background-color: #f5f5f5;
+  z-index: 3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding-left: 0px;
+  padding-bottom: 7px;
+  display: none;
+  margin-top: 5px;
+  color: #3d3d3d;
+  left: -16px;
+  font-size: 2em;
+  font-weight: 300;
+}
+
+/* line 219, app/assets/stylesheets/covers.css.scss */
+.add-block-button i {
+  margin-top: 10px;
+  margin-left: 6px;
+}
+
+/* line 226, app/assets/stylesheets/covers.css.scss */
+.add-block-button a {
+  color: #3d3d3d !important;
+}
+
+/* line 230, app/assets/stylesheets/covers.css.scss */
+.new-block-form {
+  float: left;
+  text-align: center;
+  width: 100%;
+  margin-top: -11px;
+  display: none;
+  height: 25px;
+}
+
+/* line 239, app/assets/stylesheets/covers.css.scss */
+#new_block {
+  height: 15px;
+  /*display: none;*/
+}
+
+/* line 243, app/assets/stylesheets/covers.css.scss */
+.new-block-button {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #d2d2d2;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 7px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-top: 1px;
+  color: #242424;
+  margin-bottom: 5px;
+}
+
+/* line 259, app/assets/stylesheets/covers.css.scss */
+.block-form {
+  display: none;
+}
+
+/* line 262, app/assets/stylesheets/covers.css.scss */
+.edit_block {
+  display: none;
+}
+
+/* line 265, app/assets/stylesheets/covers.css.scss */
+.save-block-button {
+  font-size: 10px;
+  position: absolute;
+  right: 10px;
+}
+
+/*content styles*/
+/* line 273, app/assets/stylesheets/covers.css.scss */
+.style-controls {
+  z-index: 3;
+}
+
+/* line 277, app/assets/stylesheets/covers.css.scss */
+.h1 {
+  /*font-size: 40px;*/
+  font-size: 5vh;
+}
+
+/* line 281, app/assets/stylesheets/covers.css.scss */
+.h2 {
+  font-size: 30px;
+}
+
+/* line 284, app/assets/stylesheets/covers.css.scss */
+.h3 {
+  font-size: 25px;
+}
+
+/* line 287, app/assets/stylesheets/covers.css.scss */
+.h4 {
+  font-size: 20px;
+}
+
+/* line 290, app/assets/stylesheets/covers.css.scss */
+.bold {
+  font-weight: 900;
+}
+
+/* line 293, app/assets/stylesheets/covers.css.scss */
+.semi-bold {
+  font-weight: 600;
+}
+
+/* line 296, app/assets/stylesheets/covers.css.scss */
+.normal {
+  font-weight: 300;
+}
+
+/* line 299, app/assets/stylesheets/covers.css.scss */
+.italic {
+  font-style: italic;
+}
+
+/* line 302, app/assets/stylesheets/covers.css.scss */
+.image-block {
+  padding: 0 50px;
+}
+
+/* line 306, app/assets/stylesheets/covers.css.scss */
+.cover-image {
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+/* line 311, app/assets/stylesheets/covers.css.scss */
+.image-field {
+  margin: 0 auto;
+  text-align: center;
+  min-width: 100%;
+  min-height: 250px;
+  width: 65%;
+  height: auto;
+  background-color: #e1e1e1;
+  z-index: 1;
+}
+
+/* line 321, app/assets/stylesheets/covers.css.scss */
+.image-form {
+  font-size: 1em;
+  overflow: hidden;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  display: none;
+  margin: 5px auto;
+  width: 50%;
+  position: relative;
+  background-color: white;
+  bottom: 0;
+}
+
+/* line 333, app/assets/stylesheets/covers.css.scss */
+.image-form input {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* line 338, app/assets/stylesheets/covers.css.scss */
+.image-form .cancel-image-upload {
+  margin-left: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+}
+
+/* line 348, app/assets/stylesheets/covers.css.scss */
+.image-form .cancel-image-upload:hover {
+  background-color: #c82333;
+}
+
+/* resizable image */
+/* line 358, app/assets/stylesheets/covers.css.scss */
+.resizable {
+  margin-top: 15px;
+}
+
+/* line 362, app/assets/stylesheets/covers.css.scss */
+.resizable .resizers {
+  /* width: 65%; - removed to allow inline styles to take precedence */
+  height: auto;
+  display: inline-block;
+  /*border: 3px solid #4286f4;*/
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  min-width: 50px;
+}
+
+/* Show gray background only when no image is uploaded */
+/* line 374, app/assets/stylesheets/covers.css.scss */
+.resizable .resizers.no-image {
+  background-color: #f0f0f0;
+  min-height: 200px;
+}
+
+/* line 378, app/assets/stylesheets/covers.css.scss */
+.resizable .bordered {
+  border: 3px solid #4286f4;
+}
+
+/* line 381, app/assets/stylesheets/covers.css.scss */
+.resizers .bordered {
+  border: 3px solid #4286f4;
+}
+
+/* line 385, app/assets/stylesheets/covers.css.scss */
+.resizable .resizers .resizer {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  /*magic to turn square into circle*/
+  background: white;
+  border: 2px solid #4286f4;
+  position: absolute;
+  display: none;
+}
+
+/* line 394, app/assets/stylesheets/covers.css.scss */
+.resizable .resizers .resizer.top-left {
+  left: -5px;
+  top: -5px;
+  cursor: nwse-resize;
+}
+
+/* line 399, app/assets/stylesheets/covers.css.scss */
+.resizable .resizers .resizer.top-right {
+  right: -5px;
+  top: -5px;
+  cursor: nesw-resize;
+}
+
+/* line 404, app/assets/stylesheets/covers.css.scss */
+.resizable .resizers .resizer.bottom-left {
+  left: -5px;
+  bottom: -5px;
+  cursor: nesw-resize;
+}
+
+/* line 409, app/assets/stylesheets/covers.css.scss */
+.resizable .resizers .resizer.bottom-right {
+  right: -5px;
+  bottom: -5px;
+  cursor: nwse-resize;
+}
+
+/* resize block */
+/* line 416, app/assets/stylesheets/covers.css.scss */
+.resize-padding {
+  /*background-color: orange;*/
+  height: 8px;
+  width: 100%;
+  cursor: ns-resize;
+  position: absolute;
+  bottom: 0;
+}
+
+/* line 424, app/assets/stylesheets/covers.css.scss */
+.bottom-padding {
+  /*background-color: yellow;*/
+  height: 25px;
+  width: 100%;
+  position: relative;
+}
+
+/* line 430, app/assets/stylesheets/covers.css.scss */
+.selected-resizer {
+  /*background-color: blue !important;*/
+}
+
+/* line 433, app/assets/stylesheets/covers.css.scss */
+#temp-image {
+  width: 490px;
+  height: auto;
+  display: none;
+}
+
+/* line 439, app/assets/stylesheets/covers.css.scss */
+#small-temp-image {
+  width: 50px;
+  height: auto;
+  display: none;
+}
+
+/* Split block styles */
+/* line 446, app/assets/stylesheets/covers.css.scss */
+.split-block-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  overflow: hidden;
+  /* Prevent horizontal scroll from dragged images */
+}
+
+/* line 453, app/assets/stylesheets/covers.css.scss */
+.split-block-wrapper {
+  flex: 1;
+  width: 50%;
+}
+
+/* line 458, app/assets/stylesheets/covers.css.scss */
+.split-block-wrapper .block {
+  width: 100%;
+}
+
+/* line 462, app/assets/stylesheets/covers.css.scss */
+.split-block-wrapper .resizers {
+  /*width: 90% !important;*/
+  /*min-width: 50px;*/
+}
+
+/* line 467, app/assets/stylesheets/covers.css.scss */
+.split-block-wrapper .cover-image {
+  /*max-width: 100%;*/
+  /*height: auto;*/
+}
+
+/* Drag handle for split blocks */
+/* line 473, app/assets/stylesheets/covers.css.scss */
+.drag-handle {
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 40px;
+  background-color: #666;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ew-resize;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 12px;
+  border-radius: 3px 0 0 3px;
+  user-select: none;
+}
+
+/* line 493, app/assets/stylesheets/covers.css.scss */
+.split-block-wrapper .resizers:hover .drag-handle {
+  opacity: 0.7;
+}
+
+/* line 497, app/assets/stylesheets/covers.css.scss */
+.split-block-wrapper .resizers.dragging {
+  cursor: ew-resize;
+  opacity: 0.8;
+}
+
+/* line 502, app/assets/stylesheets/covers.css.scss */
+.split-block-wrapper .resizers {
+  transition: transform 0.3s ease;
+}
+
+/* line 520, app/assets/stylesheets/covers.css.scss */
+.cover-workspace {
+  position: relative;
+  margin: 0 -15px;
+  padding: 0;
+}
+
+/* line 531, app/assets/stylesheets/covers.css.scss */
+.cover-workspace > #cover-canvas {
+  margin-top: -5px !important;
+}
+
+/* line 535, app/assets/stylesheets/covers.css.scss */
+.cover-workspace #cover-canvas {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* line 547, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel {
+  position: absolute;
+  top: 20%;
+  right: -90px;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  padding: 10px 8px;
+  background: #3d3d3d;
+  color: #fff;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* line 563, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-sep {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 6px 4px;
+}
+
+/* line 569, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-inline-form {
+  display: block;
+  margin: 0;
+}
+
+/* line 571, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 32px;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 4px;
+  transition: background-color 0.1s ease;
+}
+
+/* line 591, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* line 592, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn:focus {
+  outline: none;
+}
+
+/* line 593, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-active {
+  background: #1976d2;
+}
+
+/* line 598, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+/* line 601, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-disabled:hover {
+  background: transparent;
+}
+
+/* line 603, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn em, .cover-style-panel .csp-btn strong {
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+/* line 607, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* line 608, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* line 609, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h3 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* line 610, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h4 {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* line 613, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input {
+  width: 100%;
+  height: 26px;
+  margin-top: 2px;
+  padding: 0 6px;
+  background: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+/* line 626, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input::-webkit-inner-spin-button, .cover-style-panel .csp-px-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 631, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+/* line 632, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input.is-disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* line 639, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-italic em {
+  font-style: italic;
+}
+
+/* line 641, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-align-btn {
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* line 647, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-icon img {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
+}
+
+/* line 657, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-selected {
+  border-style: solid;
+  border-color: #1976d2;
+  background: rgba(25, 118, 210, 0.04);
+}
+
+/* line 667, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: #f4f5f7;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* line 678, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form.is-open {
+  display: flex;
+}
+
+/* line 682, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form .cui-file-input {
+  display: none !important;
+}
+
+/* line 684, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form .cui-filename {
+  flex: 1 1 auto;
+  color: #5e6c84;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 693, app/assets/stylesheets/covers.css.scss */
+#cover-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8.5 / 11;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  overflow: visible;
+}
+
+/* line 712, app/assets/stylesheets/covers.css.scss */
+.cover-block {
+  color: #333;
+  font-family: cambria;
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px dashed transparent;
+  cursor: move;
+}
+
+/* line 727, app/assets/stylesheets/covers.css.scss */
+.cover-block:hover {
+  border-color: #90a4ae;
+  background: rgba(9, 30, 66, 0.02);
+}
+
+/* line 732, app/assets/stylesheets/covers.css.scss */
+.cover-block.ui-draggable-dragging {
+  border-color: #1976d2;
+  background: rgba(25, 118, 210, 0.05);
+  cursor: grabbing;
+  z-index: 10;
+}
+
+/* line 741, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-left .cover-block-text {
+  justify-content: flex-start;
+}
+
+/* line 742, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-center .cover-block-text {
+  justify-content: center;
+}
+
+/* line 743, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-right .cover-block-text {
+  justify-content: flex-end;
+}
+
+/* line 750, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-bold .cover-block-text {
+  font-weight: 700;
+}
+
+/* line 751, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-semi-bold .cover-block-text {
+  font-weight: 600;
+}
+
+/* line 752, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-normal .cover-block-text {
+  font-weight: 400;
+}
+
+/* line 753, app/assets/stylesheets/covers.css.scss */
+.cover-block.style-italic .cover-block-text {
+  font-style: italic;
+}
+
+/* line 754, app/assets/stylesheets/covers.css.scss */
+.cover-block.style-normal .cover-block-text {
+  font-style: normal;
+}
+
+/* line 761, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-handle {
+  position: absolute;
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border: 2px solid #1976d2;
+  border-radius: 50%;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  z-index: 4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* line 781, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-nw {
+  left: -6px;
+  top: -6px;
+  cursor: nw-resize;
+}
+
+/* line 782, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-ne {
+  right: -6px;
+  top: -6px;
+  cursor: ne-resize;
+}
+
+/* line 783, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-sw {
+  left: -6px;
+  bottom: -6px;
+  cursor: sw-resize;
+}
+
+/* line 784, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-se {
+  right: -6px;
+  bottom: -6px;
+  cursor: se-resize;
+}
+
+/* line 787, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-selected .ui-resizable-handle {
+  opacity: 1;
+}
+
+/* line 792, app/assets/stylesheets/covers.css.scss */
+.cover-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #1976d2;
+  opacity: 0;
+  transition: opacity 0.08s ease;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* line 803, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="16.5"] {
+  left: 16.5%;
+}
+
+/* line 804, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="50"] {
+  left: 50%;
+}
+
+/* line 805, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="83.5"] {
+  left: 83.5%;
+}
+
+/* line 806, app/assets/stylesheets/covers.css.scss */
+.cover-guide.is-active {
+  opacity: 1;
+}
+
+/* line 808, app/assets/stylesheets/covers.css.scss */
+.cover-block-text {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* line 818, app/assets/stylesheets/covers.css.scss */
+.cover-block-text[contenteditable="true"] {
+  user-select: text;
+  outline: 2px solid #1976d2;
+  outline-offset: 1px;
+  cursor: text;
+}
+
+/* line 825, app/assets/stylesheets/covers.css.scss */
+.cover-block-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* line 830, app/assets/stylesheets/covers.css.scss */
+.cover-block-image-area {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* line 837, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-image:hover .cover-block-image {
+  opacity: 0.8;
+  transition: opacity 0.12s ease;
+}
+
+/* line 842, app/assets/stylesheets/covers.css.scss */
+.cover-block-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f5f7;
+  color: #6b778c;
+  font-size: 12px;
+  border: 1px dashed #b0b7c3;
+  border-radius: 3px;
+}
+
+/* line 2, app/assets/stylesheets/safety_messages.scss */
+.hazards-form textarea {
+  width: 100%;
+  height: 150px;
+}
+
+/* line 7, app/assets/stylesheets/safety_messages.scss */
+#major-hazards {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  min-height: 300px;
+}
+
+/* line 13, app/assets/stylesheets/safety_messages.scss */
+#narrative {
+  min-height: 500px;
+}
+
+/* line 15, app/assets/stylesheets/safety_messages.scss */
+#narrative textarea {
+  width: 100%;
+  min-height: 300px;
+  height: 400px;
+}
+
+/* line 21, app/assets/stylesheets/safety_messages.scss */
+.safety-prep {
+  height: 35px;
+  border-bottom: 1px solid black;
+}
+
+/* line 25, app/assets/stylesheets/safety_messages.scss */
+#safety-message {
+  min-height: 650px;
+  overflow: hidden;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+}
+
+/* line 1, app/assets/stylesheets/commo_plans.scss */
+#commo-plan {
+  font-size: .70em;
+}
+
+/* line 2, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table {
+  width: 100%;
+}
+
+/* line 4, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table thead {
+  height: 20px;
+  border: 1px solid black;
+}
+
+/* line 8, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table th {
+  text-align: center;
+  border-right: 1px solid black;
+}
+
+/* line 12, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table tr {
+  height: 30px;
+}
+
+/* line 15, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table td {
+  border-right: 1px solid black;
+}
+
+/* line 20, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .plan-panel-head {
+  font-size: 1em !important;
+}
+
+/* line 23, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .top-row {
+  text-align: center;
+}
+
+/* line 26, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c1 {
+  width: 5%;
+}
+
+/* line 30, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c2 {
+  width: 8%;
+}
+
+/* line 34, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c3 {
+  width: 15%;
+}
+
+/* line 38, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c4 {
+  width: 13%;
+}
+
+/* line 42, app/assets/stylesheets/commo_plans.scss */
+#commo-plan h4 {
+  margin-top: 5px;
+}
+
+/* line 46, app/assets/stylesheets/commo_plans.scss */
+.r-b {
+  border-right: 1px solid black;
+  min-height: 30px;
+}
+
+/* line 50, app/assets/stylesheets/commo_plans.scss */
+.tall-row {
+  height: 30px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+/* line 56, app/assets/stylesheets/commo_plans.scss */
+.tbl-hd {
+  padding: 0px;
+  text-align: center;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* line 64, app/assets/stylesheets/commo_plans.scss */
+.head-spacer {
+  background-color: #f3f3f3;
+  min-height: 13px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 70, app/assets/stylesheets/commo_plans.scss */
+.wrapper {
+  /* this is to make sure border comes all the way to edge. */
+  margin-right: -1px;
+  /*  otherwise it is 1px shy */
+}
+
+/* line 74, app/assets/stylesheets/commo_plans.scss */
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: pink;
+}
+
+/* line 77, app/assets/stylesheets/commo_plans.scss */
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: pink;
+}
+
+/* line 80, app/assets/stylesheets/commo_plans.scss */
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: pink;
+}
+
+/* line 83, app/assets/stylesheets/commo_plans.scss */
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: pink;
+}
+
+/* line 87, app/assets/stylesheets/commo_plans.scss */
+.radio-channel {
+  min-height: 30px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  text-align: center;
+  verticle-align: middle;
+}
+
+/* line 93, app/assets/stylesheets/commo_plans.scss */
+.radio-channel :hover .new-channel {
+  display: block;
+}
+
+/* line 98, app/assets/stylesheets/commo_plans.scss */
+.radio-channel input {
+  width: 100%;
+}
+
+/* line 102, app/assets/stylesheets/commo_plans.scss */
+.new-channel {
+  postion: absolute;
+  background-color: yellow;
+  margin-left: -35px;
+  height: 30px;
+  width: 30px;
+}
+
+/* line 109, app/assets/stylesheets/commo_plans.scss */
+.special-instructions {
+  padding: 0px 10px;
+  height: 50px;
+  max-height: 50px;
+}
+
+/* line 111, app/assets/stylesheets/commo_plans.scss */
+.special-instructions textarea {
+  width: 100%;
+}
+
+/* line 117, app/assets/stylesheets/commo_plans.scss */
+.commo-item-form {
+  display: none;
+}
+
+/* line 120, app/assets/stylesheets/commo_plans.scss */
+input.new-commo-item {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d2d2d2;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 7px;
+  padding-bottom: 6px;
+  padding-left: 4px;
+  color: #242424;
+}
+
+/* line 134, app/assets/stylesheets/commo_plans.scss */
+.br {
+  border-right: 1px solid black;
+}
+
+/* line 137, app/assets/stylesheets/commo_plans.scss */
+.bb {
+  border-bottom: 1px solid black;
+}
+
+/* line 140, app/assets/stylesheets/commo_plans.scss */
+.commo-items {
+  margin-right: 20px;
+  font-weight: 500;
+}
+
+@media all {
+  /* line 14, app/assets/stylesheets/pdf.scss */
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  /* line 19, app/assets/stylesheets/pdf.scss */
+  #print-container {
+    height: calc(100vh - 30px);
+    box-sizing: border-box;
+    position: relative;
+  }
+  /* line 25, app/assets/stylesheets/pdf.scss */
+  .fixed-height-row {
+    position: relative;
+  }
+  /* line 33, app/assets/stylesheets/pdf.scss */
+  #attachments {
+    height: 95px;
+  }
+  /* line 37, app/assets/stylesheets/pdf.scss */
+  .prepared-by-row {
+    height: 60px;
+  }
+  /* line 41, app/assets/stylesheets/pdf.scss */
+  .resizable-row {
+    position: relative;
+    min-height: 50px;
+    max-height: 200px;
+    overflow: hidden;
+  }
+  /* line 48, app/assets/stylesheets/pdf.scss */
+  .row-content {
+    height: 100%;
+    overflow: hidden;
+    padding: 5px;
+  }
+  /* line 54, app/assets/stylesheets/pdf.scss */
+  .resize-handle {
+    border-top: 1px solid #FFF;
+    border-bottom: 1px solid #FFF;
+    cursor: ns-resize;
+    position: relative;
+    z-index: 10;
+  }
+  /* line 73, app/assets/stylesheets/pdf.scss */
+  .btn, button, .form-control, input[type="text"], textarea {
+    border: 1px solid #000 !important;
+    /*background: white !important;*/
+  }
+}
