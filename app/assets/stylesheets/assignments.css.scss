@@ -437,14 +437,19 @@ ul#action-buttons {
   .pers-fill  { width: 26%; height: 17pt; }
 
   .r-desig { width: 35.4%; }
-  .r-lwd   { width: 6.7%; }
-  .r-lead  { width: 23.0%; }
-  .r-pers  { width: 7.6%; }
-  .r-drop  { width: 14.2%; }
-  .r-pick  { width: 13.1%; }
+  .r-lwd   { width: 5.7%; }
+  .r-lead  { width: 21.0%; }
+  .r-pers  { width: 6.6%; }
+  .r-drop  { width: 15.7%; }
+  .r-pick  { width: 15.6%; }
 
   .res-head td { text-align: center; font-size: 7.5pt; padding: 2pt 2pt; }
-  .res-row td  { height: 15.5pt; }
+  .res-row td  {
+    height: 15.5pt;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   /* Constrain best_in_place inputs in Drop Off / Pick Up cells so they
      stay inside the narrow columns instead of using the browser's
      default text-input width. */

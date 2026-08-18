@@ -91,7 +91,7 @@
 
       @page {
         size: letter;
-        margin: 0.35in 0.4in;
+        margin: 0.25in 0.4in;
       }
 
       .ics-204-wf-pdf {
@@ -103,7 +103,15 @@
       .ics-204-wf-pdf .wf-page {
         page-break-after: always;
         break-after: page;
-        min-height: 10.15in;         /* Letter height minus @page margins */
+        /* Printable area is 10.5in with Grover margin 0.25in top/bottom.
+           Undershoot by 0.7in to absorb puppeteer's rounding + any
+           default margin fallback (Grover's default is ~0.39in). Content
+           caps upstream keep the flowing content shorter, and the flex
+           middle stretches to keep sections 8-9 pinned to the block's
+           bottom edge. */
+        height: 10.2in;
+        max-height: 10.2in;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
       }

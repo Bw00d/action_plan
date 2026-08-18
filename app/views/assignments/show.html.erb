@@ -23,7 +23,11 @@
         <div class="row">
           <ul id="action-buttons">
                   
-                  <li class="action-buttons "><%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: " btn btn-danger float-right" %><%= link_to "PRINT", "../../#{@plan.id}/assignments/#{@assignment.id}/assignment_to_pdf.pdf", class: "btn btn-success tiny", target: :_blank %></li>
+                  <li class="action-buttons ">
+                    <%= link_to 'Delete Assignment', @assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: " btn btn-danger float-right" %>
+                    <%= link_to "PRINT", "../../#{@plan.id}/assignments/#{@assignment.id}/assignment_to_pdf.pdf", class: "btn btn-success tiny", target: :_blank %>
+                    <%= link_to "SAVE PDF", "../../#{@plan.id}/assignments/#{@assignment.id}/assignment_to_pdf.pdf?download=1", class: "btn btn-info tiny" %>
+                  </li>
               
                 </ul></div>
     </div>

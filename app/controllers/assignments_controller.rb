@@ -43,9 +43,19 @@ class AssignmentsController < ApplicationController
           }
         )
         
-        pdf = Grover.new(html, display_url: request.base_url).to_pdf
-        
-        send_data pdf, filename: "assignment_#{@assignment.id}.pdf", type: 'application/pdf', disposition: 'inline'
+        # Explicit margins so puppeteer doesn't fall back to its 1cm
+        # defaults, which shrink the printable area below what the
+        # server-paginated .wf-page blocks assume.
+        pdf = Grover.new(
+          html,
+          display_url: request.base_url,
+          format: 'Letter',
+          margin: { top: '0.25in', right: '0.4in', bottom: '0.25in', left: '0.4in' },
+          prefer_css_page_size: false
+        ).to_pdf
+
+        disposition = params[:download].present? ? 'attachment' : 'inline'
+        send_data pdf, filename: "assignment_#{@assignment.id}.pdf", type: 'application/pdf', disposition: disposition
       end
     end
   end
