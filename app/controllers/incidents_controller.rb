@@ -241,7 +241,26 @@ class IncidentsController < ApplicationController
     # deduped so an owner who is also in the join table isn't listed twice.
     owned  = Incident.where(user_id: current_user.id)
     shared = Incident.joins(:users).where(users: { id: current_user.id })
-    @incidents = Incident.where(id: (owned.pluck(:id) + shared.pluck(:id)).uniq)
+    scope  = Incident.where(id: (owned.pluck(:id) + shared.pluck(:id)).uniq)
+                     .order(Arel.sql('COALESCE(start_date, created_at) DESC'))
+
+    # Group by year (start_date, else created_at). Current year shows
+    # inline; older years live inside a collapsed <details> disclosure
+    # so a long list doesn't dominate the page.
+    current_year = Date.current.year
+    @current_year_incidents = []
+    prior_by_year = {}
+    scope.each do |incident|
+      year = (incident.start_date || incident.created_at)&.year
+      if year == current_year
+        @current_year_incidents << incident
+      else
+        prior_by_year[year] ||= []
+        prior_by_year[year] << incident
+      end
+    end
+    @prior_incidents_by_year = prior_by_year.sort_by { |year, _| -year.to_i }.to_h
+    @prior_incident_count    = @prior_incidents_by_year.values.sum(&:size)
   end
 
   # GET /incidents/1

@@ -4,6 +4,31 @@ $blue: #008cba;
 $goodGray: #878e8b;
 $aqua: #07c5ff;
 
+/* Incident index: year groupings + collapsible prior years */
+.incident-year-heading {
+  margin: 24px 0 8px;
+  color: #555;
+  font-weight: 400;
+}
+details.prior-incidents {
+  margin-top: 32px;
+  border-top: 1px solid $grayLighter;
+  padding-top: 12px;
+
+  > summary {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 4px;
+    list-style: revert;      /* keep the native disclosure triangle */
+    outline: none;
+    color: #333;
+    &:hover { color: $blue; }
+    .text-muted { margin-left: 6px; }
+  }
+  &[open] > summary { margin-bottom: 8px; }
+}
+
 ul.incidents-list {
   margin: 0;
   padding:0;

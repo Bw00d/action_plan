@@ -2,67 +2,38 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-xs-12 center-block">
-      
+
       <h1><strong>Incidents</strong></h1>
 
-      <% if @incidents.empty?  %>
-      <h3>Begin by adding an incident.</h3>
+      <% if @current_year_incidents.empty? && @prior_incidents_by_year.empty? %>
+        <h3>Begin by adding an incident.</h3>
       <% end %>
-        <% @incidents.each do |incident| %>
-          <%= link_to incident_path(incident) do  %>
-        <div class="incidents-panel panel panel-default devise-bs center-block">
-          <div class="panel-heading">
-            <h4>
-              <strong><%= link_to incident.name, incident %>  – <%= incident.incident_type %>  <%= incident.number %></strong>
-              </h4>
-          </div>
-          <div class="incident-index-content panel-body">
-            <div class="incident-content-block">
-              <h4><strong>Incident Information</strong></h4>
-                <!-- wildfire specific -->
-                <% if incident.wildfire? %>
-                  <div>
-                    
-                    <div class="col-lg-12 col-xs-12">
-                      <div class="col-lg-4 col-xs-4">Size: <%= incident.size %> acres  </div>
-                      <div class="col-lg-4 col-xs-4">Contained: </div> 
-                      <div class="col-lg-4 col-xs-4">Status: <%#= @incident.status %></div>
-                    </div>
-                    <div class="col-lg-12 col-xs-12">
-                      <div class="col-lg-4 col-xs-4">Location</div>
-                      <div class="col-lg-4 col-xs-4"> </div>
-                      <div class="col-lg-4 col-xs-4"></div>
-                    </div>
-                    <div class="col-lg-12 col-xs-12">
-                      <div class="col-lg-4 col-xs-4">Financial Code: <%= incident.financial_code %> </div>
-                      <div class="col-lg-4 col-xs-4">P Code:  <%= incident.p_code %></div>
-                      <div class="col-lg-4 col-xs-4"></div>
-                    </div>
-                  </div>
-                <% end %>
-                <!-- All Hazard -->
-                <% unless incident.wildfire? %>
-                  
-                  <div class="col-lg-12 col-xs-12">
-                    <div class="col-lg-4 col-xs-4">Location</div>
-                    <div class="col-lg-4 col-xs-4"> </div>
-                    <div class="col-lg-4 col-xs-4"></div>
-                  </div>
-                  <div class="col-lg-12 col-xs-12">
-                    <div class="col-lg-4 col-xs-4">Financial Code: <%= incident.financial_code %> </div>
-                    <div class="col-lg-4 col-xs-4">P Code:  <%= incident.p_code %></div>
-                    <div class="col-lg-4 col-xs-4"></div>
-                  </div>
-                <% end %>
-              </div>
-        
-            </div> 
-          </div>
-          <% end %>
-          
-          <% end %> 
-      <br>
 
+      <% if @current_year_incidents.any? %>
+        <h3 class="incident-year-heading"><%= Date.current.year %></h3>
+        <% @current_year_incidents.each do |incident| %>
+          <%= render 'incident_card', incident: incident %>
+        <% end %>
+      <% elsif @prior_incidents_by_year.any? %>
+        <p class="text-muted">No incidents this year yet.</p>
+      <% end %>
+
+      <% if @prior_incidents_by_year.any? %>
+        <details class="prior-incidents">
+          <summary>
+            Previous years
+            <span class="text-muted">(<%= @prior_incident_count %> incident<%= @prior_incident_count == 1 ? '' : 's' %>)</span>
+          </summary>
+          <% @prior_incidents_by_year.each do |year, incidents| %>
+            <h3 class="incident-year-heading"><%= year %></h3>
+            <% incidents.each do |incident| %>
+              <%= render 'incident_card', incident: incident %>
+            <% end %>
+          <% end %>
+        </details>
+      <% end %>
+
+      <br>
       <%= link_to 'New Incident', new_incident_path, class: 'btn btn-success tiny' %>
     </div>
   </div>
