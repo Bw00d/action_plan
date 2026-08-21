@@ -10,12 +10,20 @@
   font_px   = preset_px[block.font_size] || block.font_size.to_i
   font_px   = 24 if font_px <= 0
 %>
+<% is_notes = block.kind == "notes" %>
 <div id="<%= dom_id(block) %>"
-     class="cover-block <%= 'is-image' if block.image_block? %> <%= block.font_size %> weight-<%= block.font_weight %> style-<%= block.text_style %> align-<%= block.text_align %>"
+     class="cover-block <%= 'is-image' if block.image_block? %> <%= 'is-notes' if is_notes %> <%= block.font_size %> weight-<%= block.font_weight %> style-<%= block.text_style %> align-<%= block.text_align %>"
      data-block-id="<%= block.id %>"
      data-font-size="<%= block.font_size %>"
-     style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= block.width %>%; height: <%= block.height %>%; <%= "font-size: #{font_px}px;" unless block.image_block? %>">
-  <% if block.image_block? %>
+     style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= block.width %>%; height: <%= block.height %>%; <%= "font-size: #{font_px}px;" unless block.image_block? || is_notes %>">
+  <% if is_notes %>
+    <div class="cover-notes">
+      <div class="cover-notes-header">NOTES</div>
+      <div class="cover-notes-lines">
+        <% 12.times do %><div class="cover-notes-line"></div><% end %>
+      </div>
+    </div>
+  <% elsif block.image_block? %>
     <% if block.main_image.attached? %>
       <%= image_tag block.main_image, class: "cover-block-image" %>
     <% else %>

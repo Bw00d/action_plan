@@ -852,5 +852,40 @@
   border-radius: 3px;
 }
 
+// Notes block — a bordered box with a "NOTES" header and ruled writing lines
+// that stretch to fill the block's height as the user resizes it.
+.cover-block.is-notes {
+  cursor: move;
+}
+.cover-notes {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: #fff;
+}
+.cover-notes-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 0;
+  border-bottom: 1px solid #000;
+  user-select: none;
+}
+.cover-notes-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.cover-notes-line {
+  flex: 1;
+  border-bottom: 1px solid #000;
+  min-height: 0;
+}
+.cover-notes-line:last-child { border-bottom: 0; }
+
 // .cover-block-delete removed — delete is via the trash icon in the
 // style panel now.

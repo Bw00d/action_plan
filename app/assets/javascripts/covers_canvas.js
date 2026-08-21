@@ -138,14 +138,16 @@ $(document).on("turbolinks:load", function () {
       if ($block.data("uiResizable")) return;
 
       // Text blocks aren't resizable — their size comes from the H1–H4
-      // buttons or the pixel input in the style panel. Only image
+      // buttons or the pixel input in the style panel. Image and notes
       // blocks get corner handles.
-      if (!$block.hasClass("is-image")) return;
+      if (!$block.hasClass("is-image") && !$block.hasClass("is-notes")) return;
       $block.resizable({
         handles: "ne, nw, se, sw",
         minWidth: 24,
         minHeight: 20,
-        aspectRatio: true,
+        // Images stay proportional; notes blocks resize freely so users
+        // can make them tall or wide as needed.
+        aspectRatio: $block.hasClass("is-image"),
         grid: [GRID_PX, GRID_PX],   // resize in 10px steps for uniformity
         // On stop: recompute center + w/h as % of canvas and persist.
         // Resize handles that aren't the SE corner also shift the block's
@@ -292,23 +294,23 @@ $(document).on("turbolinks:load", function () {
   var $pxInput = $panel.find(".csp-px-input");
 
   function refreshPanelFromBlock($block) {
-    // Image blocks don't have font/weight/style/align — disable those
-    // panel buttons so they can't be clicked and don't light up.
-    var isImage = $block && $block.hasClass("is-image");
+    // Image and notes blocks don't have font/weight/style/align — disable
+    // those panel buttons so they can't be clicked and don't light up.
+    var isNonText = $block && ($block.hasClass("is-image") || $block.hasClass("is-notes"));
 
     $panel.find(".csp-btn[data-attr]").each(function () {
       var attr = $(this).data("attr");
       var val = $(this).data("value");
-      var applies = !isImage; // all data-attr controls are text-only
+      var applies = !isNonText; // all data-attr controls are text-only
       var active = applies && $block && currentValue($block, attr) === val;
       $(this).toggleClass("is-active", !!active);
-      $(this).toggleClass("is-disabled", !!(isImage && $block));
+      $(this).toggleClass("is-disabled", !!(isNonText && $block));
     });
 
     // Sync the pixel-size input with the selected block; disable it for
-    // images and clear it when nothing is selected.
-    $pxInput.toggleClass("is-disabled", !!(isImage && $block));
-    if ($block && !isImage) {
+    // non-text and clear it when nothing is selected.
+    $pxInput.toggleClass("is-disabled", !!(isNonText && $block));
+    if ($block && !isNonText) {
       $pxInput.val(fontSizeToPx($block.attr("data-font-size")));
     } else {
       $pxInput.val("");
@@ -713,6 +715,25 @@ $(document).on("turbolinks:load", function () {
         window.location.reload();
       })
       .catch(function (err) { alert(err.message || "Could not create image block."); });
+  });
+
+  // Notes button in the panel — create a new notes block on the cover.
+  $panel.off("click.coverAddNotes").on("click.coverAddNotes", ".csp-add-notes", function () {
+    var params = new URLSearchParams();
+    params.append("block[cover_id]", $canvas.data("cover-id"));
+    params.append("block[kind]",     "notes");
+    params.append("block[x]",        75);
+    params.append("block[y]",        55);
+    params.append("block[width]",    35);
+    params.append("block[height]",   35);
+    fetch("/blocks", {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": csrfToken(),
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    }).then(function () { window.location.reload(); });
   });
 
   // Trash icon: delete the currently selected block. (Moved here from

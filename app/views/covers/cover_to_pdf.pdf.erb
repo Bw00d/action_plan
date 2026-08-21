@@ -56,6 +56,25 @@
   .cover-block.align-left   .cover-block-text { justify-content: flex-start; }
   .cover-block.align-center .cover-block-text { justify-content: center; }
   .cover-block.align-right  .cover-block-text { justify-content: flex-end; }
+
+  .cover-notes {
+    width: 100%;
+    height: 100%;
+    border: 1pt solid #000;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  .cover-notes-header {
+    text-align: center;
+    font-weight: 600;
+    font-size: 11pt;
+    padding: 2pt 0;
+    border-bottom: 1pt solid #000;
+  }
+  .cover-notes-lines { flex: 1; display: flex; flex-direction: column; }
+  .cover-notes-line  { flex: 1; border-bottom: 0.75pt solid #000; }
+  .cover-notes-line:last-child { border-bottom: 0; }
 </style>
 
 <div class="cover-page">
@@ -64,9 +83,17 @@
     <% top_pct  = b.y.to_f - b.height.to_f / 2.0 %>
     <% font_px = preset_px[b.font_size] || b.font_size.to_i %>
     <% font_px = 24 if font_px <= 0 %>
-    <div class="cover-block <%= b.font_size %> weight-<%= b.font_weight %> style-<%= b.text_style %> align-<%= b.text_align %>"
+    <% is_notes = b.kind == "notes" %>
+    <div class="cover-block <%= 'is-notes' if is_notes %> <%= b.font_size %> weight-<%= b.font_weight %> style-<%= b.text_style %> align-<%= b.text_align %>"
          style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= b.width %>%; height: <%= b.height %>%;">
-      <% if b.image_block? %>
+      <% if is_notes %>
+        <div class="cover-notes">
+          <div class="cover-notes-header">NOTES</div>
+          <div class="cover-notes-lines">
+            <% 12.times do %><div class="cover-notes-line"></div><% end %>
+          </div>
+        </div>
+      <% elsif b.image_block? %>
         <% if b.main_image.attached? %>
           <%= image_tag b.main_image, class: "cover-block-image" %>
         <% end %>
