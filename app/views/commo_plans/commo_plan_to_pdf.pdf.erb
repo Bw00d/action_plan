@@ -1,3 +1,9 @@
+<style>
+  /* ICS 205 prints landscape. Overrides the portrait @page rules from
+     layouts/pdf.html.erb (later declarations win in CSS cascade). */
+  @page { size: letter landscape; margin: 0.4in !important; }
+</style>
+
 <div class="container">
   <div class="col-xs-12 col-lg-10 center-block">
 
@@ -29,13 +35,14 @@
           <thead class="">
             <th class="c1"><span class="">Zone</span></th>
             <th class="c1"><span class="">Ch #</span></th>
-            <th class="c3"><span class="">Channel Name</span></th>
+            <th class="c-name"><span class="">Channel Name</span></th>
             <th class="c3"><span class="">Function</span></th>
             <th class="c2"><span class="">RX Freq</span></th>
-            <th class="c2"><span class="">Tone</span></th>
+            <th class="c-tone"><span class="">Tone</span></th>
             <th class="c2"><span class="">TX Freq</span></th>
-            <th class="c2"><span class="">Tone</span></th>
+            <th class="c-tone"><span class="">Tone</span></th>
             <th class="c4"><span class="">Assignment</span></th>
+            <th class="c-mode"><span class="">Mode</span></th>
             <th class="c3"><span class="">Remarks</span></th>
           </thead>
 
@@ -43,14 +50,15 @@
             <tr class="radio-channel">
                 <td class="c1"><span class=""><%= best_in_place i,  :zone, :as => :input %></span></td>
                 <td class="c1"><span class=""><%= best_in_place i,  :ch_num, :as => :input %></span></td>
-                <td class="c3"><span class=""><%= best_in_place i,  :channel_name, :as => :input %></span></td>
+                <td class="c-name"><span class=""><%= best_in_place i,  :channel_name, :as => :input %></span></td>
                 <td class="c3"><span class=""><%= best_in_place i,  :function, :as => :input %></span></td>
                 <td class="c2"><span class=""><%= best_in_place i,  :rx_freq, :as => :input %></span></td>
-                <td class="c2"><span class=""><%= best_in_place i,  :rx_tone, :as => :input %></span></td>
+                <td class="c-tone"><span class=""><%= best_in_place i,  :rx_tone, :as => :input %></span></td>
                 <td class="c2"><span class=""><%= best_in_place i,  :tx_freq, :as => :input %></span></td>
-                <td class="c2"><span class=""><%= best_in_place i,  :tx_tone, :as => :input %></span></td>
+                <td class="c-tone"><span class=""><%= best_in_place i,  :tx_tone, :as => :input %></span></td>
                 <td class="c4"><span class=""><%= best_in_place i,  :assignment, :as => :input %></span></td>
-                <td class="c3"><span class=""><%= best_in_place i,  :mode, :as => :input %></span></td>
+                <td class="c-mode"><span class=""><%= best_in_place i,  :mode, :as => :input %></span></td>
+                <td class="c3"><span class=""><%= best_in_place i,  :remarks, :as => :input %></span></td>
               </tr>
           <% end %>
             <% (12 - @commo_plan.commo_items.count).times do %>
@@ -66,13 +74,14 @@
 
                 </td>
                 <td class="c1"><span class=""></span></td>
+                <td class="c-name"><span class=""></span></td>
                 <td class="c3"><span class=""></span></td>
-                <td class="c3"><span class=""></span></td>
                 <td class="c2"><span class=""></span></td>
+                <td class="c-tone"><span class=""></span></td>
                 <td class="c2"><span class=""></span></td>
-                <td class="c2"><span class=""></span></td>
-                <td class="c2"><span class=""></span></td>
+                <td class="c-tone"><span class=""></span></td>
                 <td class="c4"><span class=""></span></td>
+                <td class="c-mode"><span class=""></span></td>
                 <td class="c3"><span class=""></span></td>
               </tr>
             <% end %>

@@ -73,6 +73,6 @@ class CommoItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def commo_item_params
-      params.require(:commo_item).permit(:zone, :ch_num, :function, :channel_name, :assignment, :rx_freq, :rx_tone, :tx_freq, :tx_tone, :mode, :commo_plan_id)
+      params.require(:commo_item).permit(:zone, :ch_num, :function, :channel_name, :assignment, :rx_freq, :rx_tone, :tx_freq, :tx_tone, :mode, :remarks, :commo_plan_id)
     end
 end

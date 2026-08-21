@@ -39,6 +39,14 @@
     width:13%;
 
   }
+  // Narrower variants introduced when the Mode column was added between
+  // Assignment and Remarks. Totals still sum to 100%:
+  //   c1×2 + c-name + c3×2 (Function+Remarks) + c2×2 (RX/TX Freq)
+  //     + c-tone×2 + c4 + c-mode
+  //   = 10 + 13 + 30 + 16 + 12 + 13 + 6 = 100
+  .c-name { width: 13%; }
+  .c-tone { width: 6%; }
+  .c-mode { width: 6%; }
   h4 {
     margin-top: 5px;
   }
