@@ -19841,54 +19841,61 @@ div.solid {
   letter-spacing: 0.2px;
   line-height: 1;
   white-space: nowrap;
+  padding: 2px 6px;
+  border-radius: 3px;
 }
 
-/* line 235, app/assets/stylesheets/boards.scss */
+/* line 237, app/assets/stylesheets/boards.scss */
 .board-card-lwd .fa {
   margin-right: 2px;
   font-size: 10px;
 }
 
-/* line 240, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-future {
-  color: #c9a227;
-}
-
-/* line 241, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-soon {
-  color: #e65100;
-}
-
-/* line 242, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-today {
-  color: #c62828;
-}
-
 /* line 243, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-past {
+.board-card-lwd.lwd-normal {
   color: #000;
+  padding: 0;
+  background: transparent;
 }
 
-/* line 246, app/assets/stylesheets/boards.scss */
+/* line 250, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-soon {
+  background: #e65100;
+  color: #fff;
+}
+
+/* line 256, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-today {
+  background: #c62828;
+  color: #fff;
+}
+
+/* line 262, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-past {
+  background: #000;
+  color: #fff;
+}
+
+/* line 268, app/assets/stylesheets/boards.scss */
 .board-card-order {
   font-size: 11px;
   color: #6b778c;
   font-weight: 600;
 }
 
-/* line 252, app/assets/stylesheets/boards.scss */
+/* line 274, app/assets/stylesheets/boards.scss */
 .board-card-name {
   font-weight: 600;
   color: #172b4d;
 }
 
-/* line 257, app/assets/stylesheets/boards.scss */
+/* line 279, app/assets/stylesheets/boards.scss */
 .board-card-position {
   font-size: 12px;
   color: #5e6c84;
 }
 
-/* line 262, app/assets/stylesheets/boards.scss */
+/* line 284, app/assets/stylesheets/boards.scss */
 .board-card-details {
   background: #fafbfc;
   border-top: 1px solid #ebecf0;
@@ -19897,7 +19904,7 @@ div.solid {
   cursor: default;
 }
 
-/* line 270, app/assets/stylesheets/boards.scss */
+/* line 292, app/assets/stylesheets/boards.scss */
 .board-card-details-header {
   display: flex;
   align-items: center;
@@ -19905,7 +19912,7 @@ div.solid {
   margin-bottom: 6px;
 }
 
-/* line 277, app/assets/stylesheets/boards.scss */
+/* line 299, app/assets/stylesheets/boards.scss */
 .board-card-details-title {
   font-weight: 600;
   color: #172b4d;
@@ -19914,7 +19921,7 @@ div.solid {
   font-size: 11px;
 }
 
-/* line 285, app/assets/stylesheets/boards.scss */
+/* line 307, app/assets/stylesheets/boards.scss */
 .board-card-details-close {
   background: none;
   border: none;
@@ -19925,12 +19932,12 @@ div.solid {
   padding: 0 4px;
 }
 
-/* line 294, app/assets/stylesheets/boards.scss */
+/* line 316, app/assets/stylesheets/boards.scss */
 .board-card-details-close:hover {
   color: #172b4d;
 }
 
-/* line 299, app/assets/stylesheets/boards.scss */
+/* line 321, app/assets/stylesheets/boards.scss */
 .board-card-fields {
   display: grid;
   grid-template-columns: 80px 1fr;
@@ -19939,7 +19946,7 @@ div.solid {
   margin: 0;
 }
 
-/* line 306, app/assets/stylesheets/boards.scss */
+/* line 328, app/assets/stylesheets/boards.scss */
 .board-card-fields dt {
   color: #6b778c;
   font-weight: 500;
@@ -19949,19 +19956,19 @@ div.solid {
   align-self: center;
 }
 
-/* line 315, app/assets/stylesheets/boards.scss */
+/* line 337, app/assets/stylesheets/boards.scss */
 .board-card-fields dd {
   margin: 0;
   color: #172b4d;
   word-break: break-word;
 }
 
-/* line 321, app/assets/stylesheets/boards.scss */
+/* line 343, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.full-width {
   grid-column: 1 / -1;
 }
 
-/* line 325, app/assets/stylesheets/boards.scss */
+/* line 347, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place {
   display: inline-block;
   min-width: 60px;
@@ -19969,14 +19976,14 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 331, app/assets/stylesheets/boards.scss */
+/* line 353, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place:hover {
   background: #fff;
   box-shadow: inset 0 0 0 1px #dfe1e6;
   cursor: text;
 }
 
-/* line 339, app/assets/stylesheets/boards.scss */
+/* line 361, app/assets/stylesheets/boards.scss */
 .board-card-placeholder {
   background: #dfe1e6;
   border: 2px dashed #c1c7d0;
@@ -19985,12 +19992,12 @@ div.solid {
   height: 56px;
 }
 
-/* line 347, app/assets/stylesheets/boards.scss */
+/* line 369, app/assets/stylesheets/boards.scss */
 .board-add-child {
   margin-top: 8px;
 }
 
-/* line 351, app/assets/stylesheets/boards.scss */
+/* line 373, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle {
   background: none;
   border: 1px dashed #c1c7d0;
@@ -20002,13 +20009,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 361, app/assets/stylesheets/boards.scss */
+/* line 383, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle:hover {
   background: #ebecf0;
   color: #172b4d;
 }
 
-/* line 367, app/assets/stylesheets/boards.scss */
+/* line 389, app/assets/stylesheets/boards.scss */
 .board-add-child-form {
   background: #fff;
   border-radius: 4px;
@@ -20017,20 +20024,92 @@ div.solid {
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
 }
 
-/* line 374, app/assets/stylesheets/boards.scss */
+/* line 396, app/assets/stylesheets/boards.scss */
 .board-add-child-form .form-group {
   margin-bottom: 6px;
 }
 
-/* line 378, app/assets/stylesheets/boards.scss */
+/* line 400, app/assets/stylesheets/boards.scss */
 .board-add-child-form .input-sm {
   font-size: 12px;
 }
 
-/* line 383, app/assets/stylesheets/boards.scss */
+/* line 405, app/assets/stylesheets/boards.scss */
 .board-add-child-actions {
   display: flex;
   gap: 6px;
+}
+
+/* line 410, app/assets/stylesheets/boards.scss */
+.board-footer {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e6ea;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* line 419, app/assets/stylesheets/boards.scss */
+.board-footer-hint {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+/* line 424, app/assets/stylesheets/boards.scss */
+.board-card--spacer {
+  background: repeating-linear-gradient(45deg, #f4f5f7, #f4f5f7 6px, #ebedf0 6px, #ebedf0 12px);
+  border: 1px dashed #b0b7c1;
+  box-shadow: none;
+}
+
+/* line 435, app/assets/stylesheets/boards.scss */
+.board-card--spacer:hover {
+  background: #eef0f3;
+}
+
+/* line 436, app/assets/stylesheets/boards.scss */
+.board-card--spacer:hover .board-card-delete-spacer {
+  opacity: 1;
+}
+
+/* line 439, app/assets/stylesheets/boards.scss */
+.board-card-strip--spacer {
+  background: transparent;
+  color: #4a5361;
+}
+
+/* line 444, app/assets/stylesheets/boards.scss */
+.board-card-spacer-label {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+}
+
+/* line 449, app/assets/stylesheets/boards.scss */
+.board-card-delete-spacer {
+  background: rgba(255, 255, 255, 0.9);
+  color: #b32020;
+  border: 0;
+  border-radius: 3px;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 6px;
+  margin-left: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease-in;
+}
+
+/* line 462, app/assets/stylesheets/boards.scss */
+.board-card-delete-spacer:hover {
+  background: #fff;
+  color: #7a1414;
+}
+
+/* line 463, app/assets/stylesheets/boards.scss */
+.board-card-delete-spacer:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(179, 32, 32, 0.25);
 }
 /* line 1, app/assets/stylesheets/checkins.scss */
 #checkin-order-number-input {
@@ -21392,6 +21471,52 @@ input.new-commo-item {
   border: 1px dashed #b0b7c3;
   border-radius: 3px;
 }
+
+/* line 857, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-notes {
+  cursor: move;
+}
+
+/* line 860, app/assets/stylesheets/covers.css.scss */
+.cover-notes {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* line 869, app/assets/stylesheets/covers.css.scss */
+.cover-notes-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 0;
+  border-bottom: 1px solid #000;
+  user-select: none;
+}
+
+/* line 877, app/assets/stylesheets/covers.css.scss */
+.cover-notes-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 883, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line {
+  flex: 1;
+  border-bottom: 1px solid #000;
+  min-height: 0;
+}
+
+/* line 888, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line:last-child {
+  border-bottom: 0;
+}
 /* line 1, app/assets/stylesheets/demob_notifications.scss */
 .demob-notifications-page {
   max-width: 1400px;
@@ -22115,13 +22240,55 @@ div.alert {
 .nav-up {
   top: -60px;
 }
-/* line 7, app/assets/stylesheets/incidents.scss */
+/* Incident index: year groupings + collapsible prior years */
+/* line 8, app/assets/stylesheets/incidents.scss */
+.incident-year-heading {
+  margin: 24px 0 8px;
+  color: #555;
+  font-weight: 400;
+}
+
+/* line 13, app/assets/stylesheets/incidents.scss */
+details.prior-incidents {
+  margin-top: 32px;
+  border-top: 1px solid #e1e1e1;
+  padding-top: 12px;
+}
+
+/* line 18, app/assets/stylesheets/incidents.scss */
+details.prior-incidents > summary {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 4px;
+  list-style: revert;
+  /* keep the native disclosure triangle */
+  outline: none;
+  color: #333;
+}
+
+/* line 26, app/assets/stylesheets/incidents.scss */
+details.prior-incidents > summary:hover {
+  color: #008cba;
+}
+
+/* line 27, app/assets/stylesheets/incidents.scss */
+details.prior-incidents > summary .text-muted {
+  margin-left: 6px;
+}
+
+/* line 29, app/assets/stylesheets/incidents.scss */
+details.prior-incidents[open] > summary {
+  margin-bottom: 8px;
+}
+
+/* line 32, app/assets/stylesheets/incidents.scss */
 ul.incidents-list {
   margin: 0;
   padding: 0;
 }
 
-/* line 10, app/assets/stylesheets/incidents.scss */
+/* line 35, app/assets/stylesheets/incidents.scss */
 ul.incidents-list li {
   padding: 20px;
   background-color: #e1e1e1;
@@ -22132,24 +22299,24 @@ ul.incidents-list li {
   list-style: none;
 }
 
-/* line 19, app/assets/stylesheets/incidents.scss */
+/* line 44, app/assets/stylesheets/incidents.scss */
 ul.incidents-list li:hover {
   background-color: #07c5ff;
   color: white;
 }
 
-/* line 23, app/assets/stylesheets/incidents.scss */
+/* line 48, app/assets/stylesheets/incidents.scss */
 ul.incidents-list a {
   text-decoration: none;
 }
 
-/* line 28, app/assets/stylesheets/incidents.scss */
+/* line 53, app/assets/stylesheets/incidents.scss */
 #edit-incident-form {
   display: none;
 }
 
 /* incidents */
-/* line 34, app/assets/stylesheets/incidents.scss */
+/* line 59, app/assets/stylesheets/incidents.scss */
 h4.incident-feed {
   margin-top: -1px;
   font-weight: bold;
@@ -22157,68 +22324,68 @@ h4.incident-feed {
   padding-bottom: 10px;
 }
 
-/* line 42, app/assets/stylesheets/incidents.scss */
+/* line 67, app/assets/stylesheets/incidents.scss */
 .incident-info {
   padding: 8px 10px;
 }
 
-/* line 47, app/assets/stylesheets/incidents.scss */
+/* line 72, app/assets/stylesheets/incidents.scss */
 .info-container {
   margin-bottom: 30px;
   background-color: #ffffff;
   padding-bottom: 10px;
 }
 
-/* line 50, app/assets/stylesheets/incidents.scss */
+/* line 75, app/assets/stylesheets/incidents.scss */
 .info-container li {
   list-style: none;
 }
 
-/* line 54, app/assets/stylesheets/incidents.scss */
+/* line 79, app/assets/stylesheets/incidents.scss */
 .info-container h4 {
   padding: 10px 0;
 }
 
-/* line 59, app/assets/stylesheets/incidents.scss */
+/* line 84, app/assets/stylesheets/incidents.scss */
 select {
   width: 100%;
   height: 35px;
 }
 
-/* line 65, app/assets/stylesheets/incidents.scss */
+/* line 90, app/assets/stylesheets/incidents.scss */
 .pad-left-10 {
   margin-left: 10px;
 }
 
-/* line 68, app/assets/stylesheets/incidents.scss */
+/* line 93, app/assets/stylesheets/incidents.scss */
 .bold {
   font-weight: bold;
 }
 
-/* line 72, app/assets/stylesheets/incidents.scss */
+/* line 97, app/assets/stylesheets/incidents.scss */
 #incident-toolbar {
   margin: 10px 0 20px 0;
   padding: 15px 15px 0 15px;
   background-color: #ffffff;
 }
 
-/* line 76, app/assets/stylesheets/incidents.scss */
+/* line 101, app/assets/stylesheets/incidents.scss */
 #incident-toolbar a {
   margin-right: 10px;
 }
 
-/* line 86, app/assets/stylesheets/incidents.scss */
+/* line 111, app/assets/stylesheets/incidents.scss */
 #active-incidents {
   text-align: left;
 }
 
-/* line 89, app/assets/stylesheets/incidents.scss */
+/* line 114, app/assets/stylesheets/incidents.scss */
 #active-incidents ul li {
   list-style: none;
   margin-bottom: 15px;
 }
 
-/* line 95, app/assets/stylesheets/incidents.scss */
+/* line 120, app/assets/stylesheets/incidents.scss */
 .incident-content-block {
   margin-bottom: 10px;
   position: relative;
@@ -22226,12 +22393,12 @@ select {
   line-height: 2em;
 }
 
-/* line 100, app/assets/stylesheets/incidents.scss */
+/* line 125, app/assets/stylesheets/incidents.scss */
 .incident-content-block h4 {
   margin-left: 30px;
 }
 
-/* line 104, app/assets/stylesheets/incidents.scss */
+/* line 129, app/assets/stylesheets/incidents.scss */
 #resource-form {
   padding: 10px;
   border-top: 1px solid #e1e1e1;
@@ -22239,12 +22406,12 @@ select {
   padding-bottom: 50px;
 }
 
-/* line 110, app/assets/stylesheets/incidents.scss */
+/* line 135, app/assets/stylesheets/incidents.scss */
 #resource-panel {
   /*padding-bottom: 20px;*/
 }
 
-/* line 117, app/assets/stylesheets/incidents.scss */
+/* line 142, app/assets/stylesheets/incidents.scss */
 .info-panel {
   padding: 20px 22px 24px;
   color: #172b4d;
@@ -22252,7 +22419,7 @@ select {
   line-height: 1.45;
 }
 
-/* line 124, app/assets/stylesheets/incidents.scss */
+/* line 149, app/assets/stylesheets/incidents.scss */
 .info-panel-header {
   display: flex;
   align-items: center;
@@ -22263,25 +22430,25 @@ select {
   margin-bottom: 18px;
 }
 
-/* line 133, app/assets/stylesheets/incidents.scss */
+/* line 158, app/assets/stylesheets/incidents.scss */
 .info-panel-header h4 {
   margin: 0;
   flex: 0 0 auto;
 }
 
-/* line 135, app/assets/stylesheets/incidents.scss */
+/* line 160, app/assets/stylesheets/incidents.scss */
 .info-panel-header .info-edit-link {
   margin-left: auto;
   font-size: 13px;
   color: #0052cc;
 }
 
-/* line 140, app/assets/stylesheets/incidents.scss */
+/* line 165, app/assets/stylesheets/incidents.scss */
 .info-panel-header .info-edit-link:hover {
   text-decoration: underline;
 }
 
-/* line 144, app/assets/stylesheets/incidents.scss */
+/* line 169, app/assets/stylesheets/incidents.scss */
 .info-status-pill {
   display: inline-block;
   padding: 3px 10px;
@@ -22293,27 +22460,27 @@ select {
   color: #fff;
 }
 
-/* line 154, app/assets/stylesheets/incidents.scss */
+/* line 179, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-uncontained {
   background: #c62828;
 }
 
-/* line 155, app/assets/stylesheets/incidents.scss */
+/* line 180, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-contained {
   background: #f57c00;
 }
 
-/* line 156, app/assets/stylesheets/incidents.scss */
+/* line 181, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-controlled {
   background: #1565c0;
 }
 
-/* line 157, app/assets/stylesheets/incidents.scss */
+/* line 182, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-out {
   background: #2e7d32;
 }
 
-/* line 161, app/assets/stylesheets/incidents.scss */
+/* line 186, app/assets/stylesheets/incidents.scss */
 .info-hero-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -22321,7 +22488,7 @@ select {
   margin-bottom: 22px;
 }
 
-/* line 168, app/assets/stylesheets/incidents.scss */
+/* line 193, app/assets/stylesheets/incidents.scss */
 .info-hero {
   background: #f4f5f7;
   border-radius: 6px;
@@ -22329,7 +22496,7 @@ select {
   min-height: 90px;
 }
 
-/* line 174, app/assets/stylesheets/incidents.scss */
+/* line 199, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-label {
   font-size: 11px;
   font-weight: 600;
@@ -22339,7 +22506,7 @@ select {
   margin-bottom: 4px;
 }
 
-/* line 183, app/assets/stylesheets/incidents.scss */
+/* line 208, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-number {
   font-size: 24px;
   font-weight: 700;
@@ -22347,18 +22514,18 @@ select {
   line-height: 1.1;
 }
 
-/* line 189, app/assets/stylesheets/incidents.scss */
+/* line 214, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-number .best_in_place {
   display: inline-block;
   min-width: 24px;
 }
 
-/* line 192, app/assets/stylesheets/incidents.scss */
+/* line 217, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-currency {
   font-size: 20px;
 }
 
-/* line 194, app/assets/stylesheets/incidents.scss */
+/* line 219, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-unit {
   font-size: 12px;
   font-weight: 500;
@@ -22366,7 +22533,7 @@ select {
   margin-left: 4px;
 }
 
-/* line 202, app/assets/stylesheets/incidents.scss */
+/* line 227, app/assets/stylesheets/incidents.scss */
 .info-progress {
   margin-top: 10px;
   height: 6px;
@@ -22375,14 +22542,14 @@ select {
   overflow: hidden;
 }
 
-/* line 210, app/assets/stylesheets/incidents.scss */
+/* line 235, app/assets/stylesheets/incidents.scss */
 .info-progress-fill {
   height: 100%;
   background: #2e7d32;
   transition: width 0.3s ease;
 }
 
-/* line 217, app/assets/stylesheets/incidents.scss */
+/* line 242, app/assets/stylesheets/incidents.scss */
 .info-section {
   margin-bottom: 18px;
   padding: 14px 16px;
@@ -22391,7 +22558,7 @@ select {
   border-radius: 6px;
 }
 
-/* line 225, app/assets/stylesheets/incidents.scss */
+/* line 250, app/assets/stylesheets/incidents.scss */
 .info-section-title {
   font-size: 11px;
   font-weight: 700;
@@ -22401,32 +22568,32 @@ select {
   margin: 0 0 12px;
 }
 
-/* line 233, app/assets/stylesheets/incidents.scss */
+/* line 258, app/assets/stylesheets/incidents.scss */
 .info-section-title .fa {
   margin-right: 6px;
   color: #7a869a;
 }
 
-/* line 239, app/assets/stylesheets/incidents.scss */
+/* line 264, app/assets/stylesheets/incidents.scss */
 .info-section-hint {
   font-size: 12px;
   color: #6b778c;
   margin: 0 0 10px;
 }
 
-/* line 245, app/assets/stylesheets/incidents.scss */
+/* line 270, app/assets/stylesheets/incidents.scss */
 .info-section-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px 20px;
 }
 
-/* line 251, app/assets/stylesheets/incidents.scss */
+/* line 276, app/assets/stylesheets/incidents.scss */
 .info-field {
   min-width: 0;
 }
 
-/* line 254, app/assets/stylesheets/incidents.scss */
+/* line 279, app/assets/stylesheets/incidents.scss */
 .info-field label {
   display: block;
   font-size: 11px;
@@ -22437,7 +22604,7 @@ select {
   margin: 0 0 2px;
 }
 
-/* line 264, app/assets/stylesheets/incidents.scss */
+/* line 289, app/assets/stylesheets/incidents.scss */
 .info-field .best_in_place {
   display: inline-block;
   color: #172b4d;
@@ -22447,24 +22614,24 @@ select {
   min-width: 40px;
 }
 
-/* line 272, app/assets/stylesheets/incidents.scss */
+/* line 297, app/assets/stylesheets/incidents.scss */
 .info-field .best_in_place:hover {
   background: #eef4ff;
   cursor: text;
 }
 
-/* line 278, app/assets/stylesheets/incidents.scss */
+/* line 303, app/assets/stylesheets/incidents.scss */
 .info-field .info-coord-sep {
   color: #a5adba;
   margin: 0 2px;
 }
 
-/* line 284, app/assets/stylesheets/incidents.scss */
+/* line 309, app/assets/stylesheets/incidents.scss */
 .info-field-wide {
   grid-column: 1 / -1;
 }
 
-/* line 286, app/assets/stylesheets/incidents.scss */
+/* line 311, app/assets/stylesheets/incidents.scss */
 .info-required-hint {
   color: #c62828;
   font-size: 10px;
@@ -22474,7 +22641,7 @@ select {
   margin-left: 4px;
 }
 
-/* line 296, app/assets/stylesheets/incidents.scss */
+/* line 321, app/assets/stylesheets/incidents.scss */
 .info-timeline {
   display: flex;
   align-items: flex-start;
@@ -22482,14 +22649,14 @@ select {
   padding-top: 4px;
 }
 
-/* line 303, app/assets/stylesheets/incidents.scss */
+/* line 328, app/assets/stylesheets/incidents.scss */
 .info-timeline-step {
   flex: 1 1 0;
   min-width: 0;
   text-align: center;
 }
 
-/* line 308, app/assets/stylesheets/incidents.scss */
+/* line 333, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-dot {
   width: 14px;
   height: 14px;
@@ -22500,7 +22667,7 @@ select {
   margin: 0 auto 8px;
 }
 
-/* line 318, app/assets/stylesheets/incidents.scss */
+/* line 343, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-label {
   font-size: 11px;
   font-weight: 600;
@@ -22510,13 +22677,13 @@ select {
   margin-bottom: 4px;
 }
 
-/* line 327, app/assets/stylesheets/incidents.scss */
+/* line 352, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-date {
   font-size: 12px;
   color: #97a0af;
 }
 
-/* line 331, app/assets/stylesheets/incidents.scss */
+/* line 356, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-date .best_in_place {
   display: inline-block;
   padding: 1px 4px;
@@ -22524,30 +22691,30 @@ select {
   min-width: 40px;
 }
 
-/* line 337, app/assets/stylesheets/incidents.scss */
+/* line 362, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-date .best_in_place:hover {
   background: #eef4ff;
   cursor: text;
 }
 
-/* line 342, app/assets/stylesheets/incidents.scss */
+/* line 367, app/assets/stylesheets/incidents.scss */
 .info-timeline-step.is-active .info-timeline-dot {
   background: #2e7d32;
   box-shadow: 0 0 0 1px #2e7d32;
 }
 
-/* line 343, app/assets/stylesheets/incidents.scss */
+/* line 368, app/assets/stylesheets/incidents.scss */
 .info-timeline-step.is-active .info-timeline-label {
   color: #172b4d;
 }
 
-/* line 344, app/assets/stylesheets/incidents.scss */
+/* line 369, app/assets/stylesheets/incidents.scss */
 .info-timeline-step.is-active .info-timeline-date {
   color: #172b4d;
   font-weight: 500;
 }
 
-/* line 348, app/assets/stylesheets/incidents.scss */
+/* line 373, app/assets/stylesheets/incidents.scss */
 .info-timeline-bar {
   flex: 0 0 auto;
   align-self: center;
@@ -22557,19 +22724,19 @@ select {
   background: #dfe1e6;
 }
 
-/* line 356, app/assets/stylesheets/incidents.scss */
+/* line 381, app/assets/stylesheets/incidents.scss */
 .info-timeline-bar.is-active {
   background: #2e7d32;
 }
 
-/* line 360, app/assets/stylesheets/incidents.scss */
+/* line 385, app/assets/stylesheets/incidents.scss */
 .financial-codes-block {
   margin-top: 14px;
   padding-top: 12px;
   border-top: 1px solid #eef0f3;
 }
 
-/* line 366, app/assets/stylesheets/incidents.scss */
+/* line 391, app/assets/stylesheets/incidents.scss */
 .financial-codes-header {
   display: flex;
   align-items: center;
@@ -22577,7 +22744,7 @@ select {
   margin-bottom: 6px;
 }
 
-/* line 373, app/assets/stylesheets/incidents.scss */
+/* line 398, app/assets/stylesheets/incidents.scss */
 .financial-codes-title {
   font-size: 11px;
   font-weight: 700;
@@ -22586,19 +22753,19 @@ select {
   color: #5e6c84;
 }
 
-/* line 381, app/assets/stylesheets/incidents.scss */
+/* line 406, app/assets/stylesheets/incidents.scss */
 .financial-code-add-toggle {
   font-size: 12px;
   padding: 0 4px !important;
   color: #0052cc;
 }
 
-/* line 386, app/assets/stylesheets/incidents.scss */
+/* line 411, app/assets/stylesheets/incidents.scss */
 .financial-code-add-toggle:hover {
   text-decoration: underline;
 }
 
-/* line 389, app/assets/stylesheets/incidents.scss */
+/* line 414, app/assets/stylesheets/incidents.scss */
 .financial-codes-table {
   width: 100%;
   border-collapse: collapse;
@@ -22606,19 +22773,19 @@ select {
   margin-bottom: 4px;
 }
 
-/* line 395, app/assets/stylesheets/incidents.scss */
+/* line 420, app/assets/stylesheets/incidents.scss */
 .financial-codes-table td {
   padding: 4px 8px;
   border-bottom: 1px solid #eef0f3;
   vertical-align: middle;
 }
 
-/* line 401, app/assets/stylesheets/incidents.scss */
+/* line 426, app/assets/stylesheets/incidents.scss */
 .financial-codes-table tr:last-child td {
   border-bottom: none;
 }
 
-/* line 403, app/assets/stylesheets/incidents.scss */
+/* line 428, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-agency {
   width: 30%;
   font-weight: 600;
@@ -22627,26 +22794,26 @@ select {
   letter-spacing: 0.3px;
 }
 
-/* line 411, app/assets/stylesheets/incidents.scss */
+/* line 436, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-code {
   color: #42526e;
   font-family: 'SF Mono', Menlo, Consolas, monospace;
   font-size: 12px;
 }
 
-/* line 412, app/assets/stylesheets/incidents.scss */
+/* line 437, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-actions {
   width: 32px;
   text-align: right;
 }
 
-/* line 415, app/assets/stylesheets/incidents.scss */
+/* line 440, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-actions .fc-delete-form {
   display: inline-block;
   margin: 0;
 }
 
-/* line 418, app/assets/stylesheets/incidents.scss */
+/* line 443, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-delete {
   background: none;
   border: 0;
@@ -22657,12 +22824,12 @@ select {
   cursor: pointer;
 }
 
-/* line 427, app/assets/stylesheets/incidents.scss */
+/* line 452, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-delete:hover {
   color: #c62828;
 }
 
-/* line 430, app/assets/stylesheets/incidents.scss */
+/* line 455, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .best_in_place {
   display: inline-block;
   min-width: 40px;
@@ -22670,13 +22837,13 @@ select {
   border-radius: 3px;
 }
 
-/* line 436, app/assets/stylesheets/incidents.scss */
+/* line 461, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .best_in_place:hover {
   background: #eef4ff;
   cursor: text;
 }
 
-/* line 440, app/assets/stylesheets/incidents.scss */
+/* line 465, app/assets/stylesheets/incidents.scss */
 .financial-code-add-form {
   display: flex;
   gap: 6px;
@@ -22687,28 +22854,28 @@ select {
   margin-top: 4px;
 }
 
-/* line 449, app/assets/stylesheets/incidents.scss */
+/* line 474, app/assets/stylesheets/incidents.scss */
 .financial-code-add-form .form-control {
   flex: 1 1 auto;
 }
 
-/* line 450, app/assets/stylesheets/incidents.scss */
+/* line 475, app/assets/stylesheets/incidents.scss */
 .financial-code-add-form .btn {
   flex: 0 0 auto;
 }
 
-/* line 454, app/assets/stylesheets/incidents.scss */
+/* line 479, app/assets/stylesheets/incidents.scss */
 .info-irwin-section {
   border-color: #dbe4ff;
   background: #f0f4ff;
 }
 
-/* line 458, app/assets/stylesheets/incidents.scss */
+/* line 483, app/assets/stylesheets/incidents.scss */
 .info-irwin-section .info-section-title .fa {
   color: #4c6ef5;
 }
 
-/* line 461, app/assets/stylesheets/incidents.scss */
+/* line 486, app/assets/stylesheets/incidents.scss */
 .info-warning {
   background: #fff4e5;
   border: 1px solid #ffcc80;
@@ -22719,38 +22886,38 @@ select {
   font-size: 13px;
 }
 
-/* line 470, app/assets/stylesheets/incidents.scss */
+/* line 495, app/assets/stylesheets/incidents.scss */
 .info-warning .fa {
   margin-right: 6px;
   color: #ef6c00;
 }
 
-/* line 476, app/assets/stylesheets/incidents.scss */
+/* line 501, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row {
   margin: 0;
   padding: 0;
   border: 0;
 }
 
-/* line 481, app/assets/stylesheets/incidents.scss */
+/* line 506, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* line 482, app/assets/stylesheets/incidents.scss */
+/* line 507, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .btn .fa {
   margin-right: 4px;
 }
 
-/* line 483, app/assets/stylesheets/incidents.scss */
+/* line 508, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .muted {
   color: #6b778c;
   font-size: 12px;
   margin-left: 10px;
 }
 
-/* line 490, app/assets/stylesheets/incidents.scss */
+/* line 515, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row {
   clear: both;
   padding: 14px 0 4px;
@@ -22758,34 +22925,34 @@ select {
   margin-top: 12px;
 }
 
-/* line 496, app/assets/stylesheets/incidents.scss */
+/* line 521, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .btn .fa {
   margin-right: 4px;
 }
 
-/* line 497, app/assets/stylesheets/incidents.scss */
+/* line 522, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .muted {
   color: #6b778c;
   font-size: 12px;
 }
 
-/* line 501, app/assets/stylesheets/incidents.scss */
+/* line 526, app/assets/stylesheets/incidents.scss */
 #irwin-diff-table td, #irwin-diff-table th {
   vertical-align: middle;
 }
 
-/* line 502, app/assets/stylesheets/incidents.scss */
+/* line 527, app/assets/stylesheets/incidents.scss */
 #irwin-diff-table td.text-muted {
   font-size: 12px;
 }
 
-/* line 507, app/assets/stylesheets/incidents.scss */
+/* line 532, app/assets/stylesheets/incidents.scss */
 .incident-origin-marker {
   background: transparent;
   border: 0;
 }
 
-/* line 511, app/assets/stylesheets/incidents.scss */
+/* line 536, app/assets/stylesheets/incidents.scss */
 .incident-origin-pin {
   display: inline-block;
   font-size: 34px;
@@ -22793,32 +22960,32 @@ select {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
 }
 
-/* line 519, app/assets/stylesheets/incidents.scss */
+/* line 544, app/assets/stylesheets/incidents.scss */
 .resources-summary-panel .resources-panel-manage {
   color: #444;
   font-weight: 400;
   font-size: 13px;
 }
 
-/* line 524, app/assets/stylesheets/incidents.scss */
+/* line 549, app/assets/stylesheets/incidents.scss */
 .resources-summary-panel .resources-panel-manage:hover {
   color: #0052cc;
   text-decoration: none;
 }
 
-/* line 525, app/assets/stylesheets/incidents.scss */
+/* line 550, app/assets/stylesheets/incidents.scss */
 .resources-summary-panel .resources-panel-manage .fa {
   margin-left: 4px;
   font-size: 11px;
 }
 
-/* line 529, app/assets/stylesheets/incidents.scss */
+/* line 554, app/assets/stylesheets/incidents.scss */
 .resources-summary-body {
   padding: 16px 20px;
   color: #172b4d;
 }
 
-/* line 534, app/assets/stylesheets/incidents.scss */
+/* line 559, app/assets/stylesheets/incidents.scss */
 .resources-summary-headline {
   display: flex;
   gap: 20px;
@@ -22828,12 +22995,12 @@ select {
   border-bottom: 1px solid #eef0f3;
 }
 
-/* line 543, app/assets/stylesheets/incidents.scss */
+/* line 568, app/assets/stylesheets/incidents.scss */
 .rs-hero {
   min-width: 140px;
 }
 
-/* line 546, app/assets/stylesheets/incidents.scss */
+/* line 571, app/assets/stylesheets/incidents.scss */
 .rs-hero .rs-hero-number {
   font-size: 32px;
   font-weight: 700;
@@ -22841,7 +23008,7 @@ select {
   line-height: 1;
 }
 
-/* line 553, app/assets/stylesheets/incidents.scss */
+/* line 578, app/assets/stylesheets/incidents.scss */
 .rs-hero .rs-hero-label {
   font-size: 11px;
   font-weight: 600;
@@ -22851,12 +23018,12 @@ select {
   margin-top: 4px;
 }
 
-/* line 563, app/assets/stylesheets/incidents.scss */
+/* line 588, app/assets/stylesheets/incidents.scss */
 .rs-hero-muted .rs-hero-number {
   color: #6b778c;
 }
 
-/* line 565, app/assets/stylesheets/incidents.scss */
+/* line 590, app/assets/stylesheets/incidents.scss */
 .resources-summary-categories {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -22864,7 +23031,7 @@ select {
   margin-bottom: 20px;
 }
 
-/* line 572, app/assets/stylesheets/incidents.scss */
+/* line 597, app/assets/stylesheets/incidents.scss */
 .rs-cat {
   display: flex;
   align-items: center;
@@ -22874,12 +23041,12 @@ select {
   border-radius: 6px;
 }
 
-/* line 580, app/assets/stylesheets/incidents.scss */
+/* line 605, app/assets/stylesheets/incidents.scss */
 .rs-cat.rs-cat-empty {
   opacity: 0.55;
 }
 
-/* line 582, app/assets/stylesheets/incidents.scss */
+/* line 607, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-icon {
   display: flex;
   align-items: center;
@@ -22893,7 +23060,7 @@ select {
   flex: 0 0 auto;
 }
 
-/* line 595, app/assets/stylesheets/incidents.scss */
+/* line 620, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-label {
   font-size: 11px;
   font-weight: 600;
@@ -22902,21 +23069,21 @@ select {
   color: #5e6c84;
 }
 
-/* line 603, app/assets/stylesheets/incidents.scss */
+/* line 628, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-counts {
   font-size: 13px;
   color: #172b4d;
   margin-top: 2px;
 }
 
-/* line 609, app/assets/stylesheets/incidents.scss */
+/* line 634, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-primary,
 .rs-cat .rs-cat-personnel {
   font-weight: 700;
   font-size: 14px;
 }
 
-/* line 617, app/assets/stylesheets/incidents.scss */
+/* line 642, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs h5 {
   font-size: 12px;
   font-weight: 600;
@@ -22926,7 +23093,7 @@ select {
   margin: 0 0 8px;
 }
 
-/* line 626, app/assets/stylesheets/incidents.scss */
+/* line 651, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .muted {
   color: #6b778c;
   font-weight: 400;
@@ -22936,14 +23103,14 @@ select {
   margin-left: 4px;
 }
 
-/* line 635, app/assets/stylesheets/incidents.scss */
+/* line 660, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* line 640, app/assets/stylesheets/incidents.scss */
+/* line 665, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-list li {
   display: flex;
   gap: 10px;
@@ -22952,24 +23119,24 @@ select {
   font-size: 13px;
 }
 
-/* line 647, app/assets/stylesheets/incidents.scss */
+/* line 672, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-list li:last-child {
   border-bottom: none;
 }
 
-/* line 651, app/assets/stylesheets/incidents.scss */
+/* line 676, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-num {
   font-weight: 700;
   min-width: 50px;
 }
 
-/* line 652, app/assets/stylesheets/incidents.scss */
+/* line 677, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-name {
   flex: 1;
   color: #42526e;
 }
 
-/* line 653, app/assets/stylesheets/incidents.scss */
+/* line 678, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-lwd {
   color: #c62828;
   font-weight: 600;
@@ -22977,7 +23144,7 @@ select {
   white-space: nowrap;
 }
 
-/* line 655, app/assets/stylesheets/incidents.scss */
+/* line 680, app/assets/stylesheets/incidents.scss */
 .panel-foot {
   margin-top: 10px;
   background-color: #f5f5f5;
@@ -22987,83 +23154,213 @@ select {
   border-top: 1px solid #D7d7d7;
 }
 
-/* line 664, app/assets/stylesheets/incidents.scss */
+/* line 689, app/assets/stylesheets/incidents.scss */
 .incidents-panel h4 {
   color: #3d3d3d;
 }
 
-/* line 667, app/assets/stylesheets/incidents.scss */
+/* line 692, app/assets/stylesheets/incidents.scss */
 .incidents-panel a {
   color: #3d3d3d;
 }
 
-/* line 672, app/assets/stylesheets/incidents.scss */
+/* line 697, app/assets/stylesheets/incidents.scss */
 .incident-index-content {
   display: none;
 }
 
-/* line 677, app/assets/stylesheets/incidents.scss */
+/* line 702, app/assets/stylesheets/incidents.scss */
 .sm-bip-input input {
   min-width: 30px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 685, app/assets/stylesheets/incidents.scss */
+/* line 710, app/assets/stylesheets/incidents.scss */
 .md-bip-input input {
   min-width: 60px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 693, app/assets/stylesheets/incidents.scss */
+/* line 718, app/assets/stylesheets/incidents.scss */
 .lg-bip-input input {
   min-width: 120px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 699, app/assets/stylesheets/incidents.scss */
+/* line 724, app/assets/stylesheets/incidents.scss */
 #share-incident-button {
   position: absolute;
   right: 30px;
   top: 14px;
 }
 
-/* line 706, app/assets/stylesheets/incidents.scss */
+/* line 731, app/assets/stylesheets/incidents.scss */
 .incident-name a {
   color: #3d3d3d !important;
 }
 
-/* line 709, app/assets/stylesheets/incidents.scss */
+/* line 734, app/assets/stylesheets/incidents.scss */
 .incident-name h1 {
   font-weight: 777;
   margin-bottom: 20px;
 }
 
-/* line 714, app/assets/stylesheets/incidents.scss */
+/* line 739, app/assets/stylesheets/incidents.scss */
 #invite-user-panel {
   display: none;
 }
 
-/* line 717, app/assets/stylesheets/incidents.scss */
+/* line 742, app/assets/stylesheets/incidents.scss */
 #invite-container {
   position: relative;
   overflow: hidden;
   padding: 20px;
 }
 
-/* line 722, app/assets/stylesheets/incidents.scss */
+/* line 747, app/assets/stylesheets/incidents.scss */
 #invite-button {
   position: absolute;
   right: 15px;
   margin-top: -35px;
+  padding: 8px 12px;
 }
 
-/* line 728, app/assets/stylesheets/incidents.scss */
+/* line 754, app/assets/stylesheets/incidents.scss */
 .remove-user img {
   height: 11px;
   width: 11px;
+}
+/* line 1, app/assets/stylesheets/ops.scss */
+.ops-container {
+  padding: 12px 4px 32px;
+}
+
+/* line 5, app/assets/stylesheets/ops.scss */
+.ops-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px 16px;
+}
+
+/* line 11, app/assets/stylesheets/ops.scss */
+.ops-toolbar label {
+  font-weight: 600;
+  margin: 0;
+}
+
+/* line 12, app/assets/stylesheets/ops.scss */
+.ops-toolbar select {
+  min-width: 220px;
+  padding: 4px 6px;
+}
+
+/* line 13, app/assets/stylesheets/ops.scss */
+.ops-toolbar .ops-day-range {
+  margin-left: auto;
+  font-size: 12px;
+}
+
+/* line 16, app/assets/stylesheets/ops.scss */
+table.ops-215-table,
+table.ops-projections-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* line 22, app/assets/stylesheets/ops.scss */
+table.ops-215-table th, table.ops-215-table td,
+table.ops-projections-table th,
+table.ops-projections-table td {
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 28, app/assets/stylesheets/ops.scss */
+table.ops-215-table thead th,
+table.ops-projections-table thead th {
+  background: #f2f2f2;
+  font-weight: 600;
+}
+
+/* line 32, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-kind,
+table.ops-projections-table .ops-215-kind {
+  text-align: left;
+  background: #fafafa;
+  font-weight: 500;
+  width: 22%;
+}
+
+/* line 38, app/assets/stylesheets/ops.scss */
+table.ops-215-table .empty,
+table.ops-projections-table .empty {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 16px;
+}
+
+/* line 44, app/assets/stylesheets/ops.scss */
+table.ops-215-table .centered,
+table.ops-projections-table .centered {
+  text-align: center;
+}
+
+/* line 48, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-day {
+  background: #eaeaea;
+}
+
+/* line 49, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-have {
+  background: #f8fbff;
+}
+
+/* line 50, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req {
+  background: #fff8ee;
+}
+
+/* line 51, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-need {
+  background: #fff;
+  font-weight: 600;
+}
+
+/* line 53, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  padding: 2px 0;
+  font: inherit;
+  outline: 0;
+  /* Chrome number input spinners are noisy in narrow cells. */
+  -moz-appearance: textfield;
+}
+
+/* line 61, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input:focus {
+  background: #fffbe6;
+}
+
+/* line 64, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input::-webkit-outer-spin-button, table.ops-215-table .ops-215-req-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 73, app/assets/stylesheets/ops.scss */
+table.ops-projections-table .ops-total-row td {
+  background: #f0f5ff;
 }
 /* show */
 /* line 4, app/assets/stylesheets/plans.css.scss */
@@ -25911,6 +26208,52 @@ div.solid {
   font-size: 12px;
   border: 1px dashed #b0b7c3;
   border-radius: 3px;
+}
+
+/* line 857, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-notes {
+  cursor: move;
+}
+
+/* line 860, app/assets/stylesheets/covers.css.scss */
+.cover-notes {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* line 869, app/assets/stylesheets/covers.css.scss */
+.cover-notes-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 0;
+  border-bottom: 1px solid #000;
+  user-select: none;
+}
+
+/* line 877, app/assets/stylesheets/covers.css.scss */
+.cover-notes-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 883, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line {
+  flex: 1;
+  border-bottom: 1px solid #000;
+  min-height: 0;
+}
+
+/* line 888, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line:last-child {
+  border-bottom: 0;
 }
 
 /* line 2, app/assets/stylesheets/safety_messages.scss */
