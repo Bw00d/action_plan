@@ -21,8 +21,8 @@
   # row eats ~one resource-row of vertical space, so subtract them off
   # the resource caps to keep the total block from overflowing the page.
   extra_comm_rows = [comm_row_count - 5, 0].max
-  full_page_cap   = [20 - extra_comm_rows, 1].max  # non-last page (no 6+7)
-  last_page_cap   = [12 - extra_comm_rows, 1].max  # last page (with 6+7)
+  full_page_cap   = [22 - extra_comm_rows, 1].max  # non-last page (no 6+7)
+  last_page_cap   = [14 - extra_comm_rows, 1].max  # last page (with 6+7)
 
   pages = []
   if all_resources.count <= last_page_cap
