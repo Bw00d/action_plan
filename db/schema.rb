@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_28_200000) do
+ActiveRecord::Schema.define(version: 2026_08_21_140000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,16 +58,16 @@ ActiveRecord::Schema.define(version: 2026_07_28_200000) do
     t.bigint "org_unit_id"
     t.datetime "ops_period_from"
     t.datetime "ops_period_to"
-    t.bigint "operations_chief_id"
-    t.bigint "division_group_supervisor_id"
-    t.bigint "branch_director_id"
-    t.bigint "air_attack_supervisor_id"
     t.date "prepared_date"
     t.string "prepared_time"
-    t.index ["air_attack_supervisor_id"], name: "index_assignments_on_air_attack_supervisor_id"
-    t.index ["branch_director_id"], name: "index_assignments_on_branch_director_id"
-    t.index ["division_group_supervisor_id"], name: "index_assignments_on_division_group_supervisor_id"
-    t.index ["operations_chief_id"], name: "index_assignments_on_operations_chief_id"
+    t.string "slot_1_role", default: "Operations Chief"
+    t.string "slot_1_person"
+    t.string "slot_2_role", default: "Division/Group Supervisor"
+    t.string "slot_2_person"
+    t.string "slot_3_role", default: "Branch Director"
+    t.string "slot_3_person"
+    t.string "slot_4_role", default: "Air Attack Supervisor"
+    t.string "slot_4_person"
     t.index ["org_unit_id"], name: "index_assignments_on_org_unit_id"
   end
 
@@ -294,6 +294,19 @@ ActiveRecord::Schema.define(version: 2026_07_28_200000) do
     t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ops_215_lines", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "org_unit_id", null: false
+    t.date "day", null: false
+    t.string "position", null: false
+    t.integer "req", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id", "org_unit_id", "day", "position"], name: "idx_ops_215_lines_key", unique: true
+    t.index ["incident_id"], name: "index_ops_215_lines_on_incident_id"
+    t.index ["org_unit_id"], name: "index_ops_215_lines_on_org_unit_id"
   end
 
   create_table "org_unit_assignments", force: :cascade do |t|
@@ -538,14 +551,12 @@ ActiveRecord::Schema.define(version: 2026_07_28_200000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "org_units"
-  add_foreign_key "assignments", "teams", column: "air_attack_supervisor_id"
-  add_foreign_key "assignments", "teams", column: "branch_director_id"
-  add_foreign_key "assignments", "teams", column: "division_group_supervisor_id"
-  add_foreign_key "assignments", "teams", column: "operations_chief_id"
   add_foreign_key "demob_notifications", "demobs"
   add_foreign_key "demob_notifications", "incidents"
   add_foreign_key "demob_notifications", "resources"
   add_foreign_key "financial_codes", "incidents"
+  add_foreign_key "ops_215_lines", "incidents"
+  add_foreign_key "ops_215_lines", "org_units"
   add_foreign_key "org_unit_assignments", "org_units"
   add_foreign_key "org_unit_assignments", "resources"
   add_foreign_key "org_units", "incidents"

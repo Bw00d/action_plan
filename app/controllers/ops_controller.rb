@@ -1,0 +1,119 @@
+class OpsController < ApplicationController
+  include SkipAuthorization
+
+  before_action :set_incident
+  before_action :load_org_units
+
+  # GET /incidents/:incident_id/ops
+  def show
+    @tab = params[:tab].in?(%w[ics_215 projections]) ? params[:tab] : 'ics_215'
+    @selected_org_unit = @org_units.find_by(id: params[:org_unit_id]) || @org_units.first
+    return unless @selected_org_unit
+
+    @days = compute_day_range
+    if @tab == 'ics_215'
+      @rows = build_215_rows
+    else
+      @projection_rows = build_projection_rows
+      @day_personnel   = compute_day_personnel_totals
+    end
+  end
+
+  # PATCH /incidents/:incident_id/ops/update_line
+  # Body: org_unit_id, day (YYYY-MM-DD), position, req
+  def update_line
+    line = @incident.ops_215_lines.find_or_initialize_by(
+      org_unit_id: params[:org_unit_id],
+      day:         Date.parse(params[:day]),
+      position:    params[:position]
+    )
+    line.req = params[:req].to_i
+    if line.req.zero? && line.persisted?
+      line.destroy!
+    else
+      line.save!
+    end
+    head :ok
+  rescue ArgumentError, ActiveRecord::RecordInvalid => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  private
+
+  def set_incident
+    @incident = Incident.find(params[:incident_id])
+  end
+
+  def load_org_units
+    @org_units = @incident.org_units
+                          .where(kind: [OrgUnit.kinds[:division], OrgUnit.kinds[:group]])
+                          .order(:kind, :name)
+  end
+
+  # Day 1 = ops_period_from of the latest plan's first assignment, else today.
+  # Days 2 and 3 are the two days after that.
+  def compute_day_range
+    plan  = @incident.plans.order(:created_at).last
+    from  = plan&.assignments&.detect { |a| a.ops_period_from.present? }&.ops_period_from
+    start = (from || Time.current).to_date
+    [start, start + 1, start + 2]
+  end
+
+  # Resource is "present" on a given day when it's assigned, not R&R, not
+  # released, and its last_work_day (fwd + assignment_length - 1) covers
+  # that day inclusive. R&R and released are strong exclusions; missing
+  # LWD means we treat the resource as open-ended (still present).
+  def resource_present_on?(resource, day)
+    return false if resource.release_date.present?
+    return false if resource.r_and_r
+    lwd = resource.last_work_day
+    return true if lwd.is_a?(String)   # fallback: no fwd/length set
+    lwd >= day
+  end
+
+  def resources_for_selected_unit
+    @resources_for_selected_unit ||= @selected_org_unit.resources.assigned.to_a
+  end
+
+  def build_215_rows
+    resources    = resources_for_selected_unit
+    positions    = resources.map(&:position).compact.uniq
+    stored_lines = @incident.ops_215_lines
+                            .where(org_unit_id: @selected_org_unit.id, day: @days)
+    positions   |= stored_lines.pluck(:position)
+    positions    = positions.sort
+
+    positions.map do |position|
+      day_data = @days.map do |day|
+        have = resources.count { |r| r.position == position && resource_present_on?(r, day) }
+        req  = stored_lines.find { |l| l.day == day && l.position == position }&.req.to_i
+        need = [req - have, 0].max
+        { day: day, have: have, req: req, need: need }
+      end
+      { position: position, days: day_data }
+    end
+  end
+
+  def build_projection_rows
+    resources = resources_for_selected_unit
+    positions = resources.map(&:position).compact.uniq.sort
+
+    positions.map do |position|
+      per_position = resources.select { |r| r.position == position }
+      day_data = @days.map do |day|
+        present = per_position.select { |r| resource_present_on?(r, day) }
+        { day: day, count: present.count, personnel: present.sum { |r| r.number_personnel.to_i } }
+      end
+      { position: position, days: day_data }
+    end
+  end
+
+  def compute_day_personnel_totals
+    @days.map do |day|
+      total = resources_for_selected_unit
+                .select { |r| resource_present_on?(r, day) }
+                .sum { |r| r.number_personnel.to_i }
+      { day: day, total: total }
+    end
+  end
+end

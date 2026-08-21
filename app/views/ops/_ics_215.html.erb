@@ -1,0 +1,44 @@
+<table class="ops-215-table"
+       data-update-url="<%= update_line_incident_ops_path(@incident) %>"
+       data-org-unit-id="<%= @selected_org_unit.id %>">
+  <thead>
+    <tr>
+      <th rowspan="2" class="ops-215-kind">Kind / Type</th>
+      <% @days.each do |day| %>
+        <th colspan="3" class="ops-215-day"><%= day.strftime('%a %-m/%-d') %></th>
+      <% end %>
+    </tr>
+    <tr>
+      <% @days.count.times do %>
+        <th>Have</th>
+        <th>Req</th>
+        <th>Need</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @rows.empty? %>
+      <tr><td colspan="<%= 1 + @days.count * 3 %>" class="empty">
+        No resources currently assigned to <%= @selected_org_unit.name %>.
+      </td></tr>
+    <% else %>
+      <% @rows.each do |row| %>
+        <tr>
+          <td class="ops-215-kind"><%= row[:position] %></td>
+          <% row[:days].each do |cell| %>
+            <td class="ops-215-have"><%= cell[:have] %></td>
+            <td class="ops-215-req">
+              <input type="number"
+                     min="0"
+                     value="<%= cell[:req].zero? ? '' : cell[:req] %>"
+                     class="ops-215-req-input"
+                     data-day="<%= cell[:day].strftime('%Y-%m-%d') %>"
+                     data-position="<%= row[:position] %>">
+            </td>
+            <td class="ops-215-need"><%= cell[:need].zero? ? '' : cell[:need] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

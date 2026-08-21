@@ -69,6 +69,10 @@ Rails.application.routes.draw do
       patch :move
     end
 
+    resource :ops, only: [:show], controller: 'ops' do
+      patch :update_line
+    end
+
     resources :org_units, only: [:create, :destroy]
   end
  

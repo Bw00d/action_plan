@@ -53,8 +53,13 @@ module ResourceVisualsHelper
   end
 
   # Returns a CSS class describing how close `today` is to the resource's
-  # last work day: yellow when comfortably ahead, orange within 4 days, red on
-  # the day itself, black once past. Returns nil when there's no LWD to show.
+  # last work day. Applied as a filled "field" behind the LWD date on the
+  # T-card so it stands out at a glance:
+  #   past LWD (still assigned) → black field
+  #   day of LWD                → red field, white text
+  #   within 2 days of LWD      → orange field
+  #   otherwise                 → plain black text (lwd-normal)
+  # Returns nil only when the resource has no LWD to display.
   def lwd_status_class(resource)
     lwd = resource.last_work_day
     return nil if lwd.blank? || !lwd.respond_to?(:to_date)
@@ -63,8 +68,8 @@ module ResourceVisualsHelper
     case
     when days_until <  0 then 'lwd-past'
     when days_until == 0 then 'lwd-today'
-    when days_until <= 4 then 'lwd-soon'
-    else 'lwd-future'
+    when days_until <= 2 then 'lwd-soon'
+    else 'lwd-normal'
     end
   end
 

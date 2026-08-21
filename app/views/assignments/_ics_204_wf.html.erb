@@ -5,10 +5,7 @@
   assigned_freqs = @assignment.freqs
   comm_row_count = [5, assigned_freqs.count].max
 
-  ops_team          = @plan.operations.not_headers.order(:list_position, :created_at).to_a
-  ops_collection    = ops_team.map { |t| [t.id, [t.position, t.resource_name].compact.reject(&:empty?).join(" — ")] }
-  ops_by_id         = ops_team.index_by(&:id)
-  ops_display_name  = ->(id) { ops_by_id[id.to_i]&.resource_name.to_s }
+  role_collection = Assignment::OPS_ROLE_OPTIONS.map { |r| [r, r] }
 %>
 
 <div class="ics-204-wf-page">
@@ -60,39 +57,31 @@
       <td class="banner seam-banner" colspan="4">Operations Personnel</td>
     </tr>
     <tr>
-      <td class="pers-label" colspan="2">Operations Chief</td>
-      <td class="pers-fill">
-        <%= best_in_place @assignment, :operations_chief_id,
-              as: :select,
-              collection: ops_collection,
-              nil: "—",
-              display_with: ops_display_name %>
+      <td class="pers-label" colspan="2">
+        <%= best_in_place @assignment, :slot_1_role, as: :select, collection: role_collection %>
       </td>
-      <td class="pers-label">Division/Group Supervisor</td>
       <td class="pers-fill">
-        <%= best_in_place @assignment, :division_group_supervisor_id,
-              as: :select,
-              collection: ops_collection,
-              nil: "—",
-              display_with: ops_display_name %>
+        <%= best_in_place @assignment, :slot_1_person, as: :input, place_holder: "&mdash;".html_safe %>
+      </td>
+      <td class="pers-label">
+        <%= best_in_place @assignment, :slot_2_role, as: :select, collection: role_collection %>
+      </td>
+      <td class="pers-fill">
+        <%= best_in_place @assignment, :slot_2_person, as: :input, place_holder: "&mdash;".html_safe %>
       </td>
     </tr>
     <tr>
-      <td class="pers-label" colspan="2">Branch Director</td>
-      <td class="pers-fill">
-        <%= best_in_place @assignment, :branch_director_id,
-              as: :select,
-              collection: ops_collection,
-              nil: "—",
-              display_with: ops_display_name %>
+      <td class="pers-label" colspan="2">
+        <%= best_in_place @assignment, :slot_3_role, as: :select, collection: role_collection %>
       </td>
-      <td class="pers-label">Air Attack Supervisor</td>
       <td class="pers-fill">
-        <%= best_in_place @assignment, :air_attack_supervisor_id,
-              as: :select,
-              collection: ops_collection,
-              nil: "—",
-              display_with: ops_display_name %>
+        <%= best_in_place @assignment, :slot_3_person, as: :input, place_holder: "&mdash;".html_safe %>
+      </td>
+      <td class="pers-label">
+        <%= best_in_place @assignment, :slot_4_role, as: :select, collection: role_collection %>
+      </td>
+      <td class="pers-fill">
+        <%= best_in_place @assignment, :slot_4_person, as: :input, place_holder: "&mdash;".html_safe %>
       </td>
     </tr>
   </table>

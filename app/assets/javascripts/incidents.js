@@ -1,6 +1,7 @@
 $(document).on("turbolinks:load", function() {
 
   $('.datepicker').datepicker({
+    format: 'mm/dd/yyyy',        // force 4-digit year output
     assumeNearbyYear: true,
     autoclose: true,
     todayHighlight: true

@@ -1,17 +1,16 @@
 class Assignment < ApplicationRecord
   belongs_to :plan
   belongs_to :org_unit, optional: true
-  belongs_to :operations_chief,          class_name: 'Team', optional: true
-  belongs_to :division_group_supervisor, class_name: 'Team', optional: true
-  belongs_to :branch_director,           class_name: 'Team', optional: true
-  belongs_to :air_attack_supervisor,     class_name: 'Team', optional: true
 
-  OPS_PERSONNEL_SLOTS = {
-    operations_chief_id:          'Operations Chief',
-    division_group_supervisor_id: 'Division/Group Supervisor',
-    branch_director_id:           'Branch Director',
-    air_attack_supervisor_id:     'Air Attack Supervisor'
-  }.freeze
+  OPS_ROLE_OPTIONS = [
+    'Operations Chief',
+    'Planning Operations',
+    'Lead Operations',
+    'Branch Director',
+    'Division/Group Supervisor',
+    'Air Attack Supervisor',
+    'Air Operations'
+  ].freeze
 
   def freqs
     items = []

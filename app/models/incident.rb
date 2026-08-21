@@ -11,6 +11,7 @@ class Incident < ApplicationRecord
   has_many :schedules, dependent: :destroy
   has_many :demob_notifications, dependent: :destroy
   has_many :financial_codes, dependent: :destroy
+  has_many :ops_215_lines, dependent: :destroy
 
   after_create :seed_default_schedule
 

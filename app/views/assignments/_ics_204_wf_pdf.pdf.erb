@@ -85,16 +85,16 @@
           <td class="banner seam-banner" colspan="4">Operations Personnel</td>
         </tr>
         <tr>
-          <td class="pers-label" colspan="2">Operations Chief</td>
-          <td class="pers-fill"><%= @assignment.operations_chief&.resource_name %></td>
-          <td class="pers-label">Division/Group Supervisor</td>
-          <td class="pers-fill"><%= @assignment.division_group_supervisor&.resource_name %></td>
+          <td class="pers-label" colspan="2"><%= @assignment.slot_1_role %></td>
+          <td class="pers-fill"><%= @assignment.slot_1_person %></td>
+          <td class="pers-label"><%= @assignment.slot_2_role %></td>
+          <td class="pers-fill"><%= @assignment.slot_2_person %></td>
         </tr>
         <tr>
-          <td class="pers-label" colspan="2">Branch Director</td>
-          <td class="pers-fill"><%= @assignment.branch_director&.resource_name %></td>
-          <td class="pers-label">Air Attack Supervisor</td>
-          <td class="pers-fill"><%= @assignment.air_attack_supervisor&.resource_name %></td>
+          <td class="pers-label" colspan="2"><%= @assignment.slot_3_role %></td>
+          <td class="pers-fill"><%= @assignment.slot_3_person %></td>
+          <td class="pers-label"><%= @assignment.slot_4_role %></td>
+          <td class="pers-fill"><%= @assignment.slot_4_person %></td>
         </tr>
       </table>
     </div>

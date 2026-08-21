@@ -34,6 +34,20 @@ class Resource < ApplicationRecord
  
   after_create :create_demob
 
+  # Guard against ActiveRecord's stricter date coercion turning
+  # "8/20/26" (from the datepicker or a form typo) into year 0026.
+  # Any parsed date whose year is below 100 gets bumped by 2000 so it
+  # lands in the intended 21st century range.
+  %i[fwd checkin_date].each do |attr|
+    define_method("#{attr}=") do |value|
+      super(value)
+      current = self[attr]
+      if current.is_a?(Date) && current.year < 100
+        self[attr] = Date.new(current.year + 2000, current.month, current.day)
+      end
+    end
+  end
+
 
   def cat
     case self.category

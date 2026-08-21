@@ -1,0 +1,47 @@
+<%= content_for :title, "Ops" %>
+<div class="incident-name">
+  <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+</div>
+
+<div class="resources-panel-head">
+  <ul class="tabrow resource-tabs">
+    <li class="resource-tab <%= 'selected' if @tab == 'ics_215' %>">
+      <%= link_to 'ICS-215', incident_ops_path(@incident, tab: 'ics_215', org_unit_id: @selected_org_unit&.id),
+                  class: "resource-tab-link" %>
+    </li>
+    <li class="resource-tab <%= 'selected' if @tab == 'projections' %>">
+      <%= link_to 'Projections', incident_ops_path(@incident, tab: 'projections', org_unit_id: @selected_org_unit&.id),
+                  class: "resource-tab-link" %>
+    </li>
+  </ul>
+</div>
+<div class="masking-tape"></div>
+
+<div class="ops-container">
+  <% if @org_units.empty? %>
+    <p class="text-muted lg-padding-top">
+      No divisions or groups yet — add them on the <%= link_to 'T Cards board', incident_board_path(@incident) %>.
+    </p>
+  <% else %>
+    <div class="ops-toolbar">
+      <label for="ops-org-unit-picker">Division / Group:</label>
+      <select id="ops-org-unit-picker"
+              data-base-url="<%= incident_ops_path(@incident, tab: @tab) %>">
+        <% @org_units.each do |unit| %>
+          <option value="<%= unit.id %>" <%= 'selected' if unit.id == @selected_org_unit&.id %>>
+            <%= "#{unit.kind.titleize}: #{unit.name}" %>
+          </option>
+        <% end %>
+      </select>
+      <span class="ops-day-range text-muted">
+        Days: <%= @days.map { |d| d.strftime('%a %-m/%-d') }.join(' · ') %>
+      </span>
+    </div>
+
+    <% if @tab == 'ics_215' %>
+      <%= render 'ics_215' %>
+    <% else %>
+      <%= render 'projections' %>
+    <% end %>
+  <% end %>
+</div>

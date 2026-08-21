@@ -1,0 +1,36 @@
+<table class="ops-projections-table">
+  <thead>
+    <tr>
+      <th class="ops-215-kind">Kind / Type</th>
+      <% @days.each do |day| %>
+        <th><%= day.strftime('%a %-m/%-d') %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @projection_rows.empty? %>
+      <tr><td colspan="<%= 1 + @days.count %>" class="empty">
+        No resources currently assigned to <%= @selected_org_unit.name %>.
+      </td></tr>
+    <% else %>
+      <% @projection_rows.each do |row| %>
+        <tr>
+          <td class="ops-215-kind"><%= row[:position] %></td>
+          <% row[:days].each do |cell| %>
+            <td class="centered"><%= cell[:count] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+  <% if @projection_rows.any? %>
+    <tfoot>
+      <tr class="ops-total-row">
+        <td class="ops-215-kind"><strong>Total Personnel</strong></td>
+        <% @day_personnel.each do |cell| %>
+          <td class="centered"><strong><%= cell[:total] %></strong></td>
+        <% end %>
+      </tr>
+    </tfoot>
+  <% end %>
+</table>

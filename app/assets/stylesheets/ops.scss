@@ -1,0 +1,74 @@
+.ops-container {
+  padding: 12px 4px 32px;
+}
+
+.ops-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px 16px;
+
+  label { font-weight: 600; margin: 0; }
+  select { min-width: 220px; padding: 4px 6px; }
+  .ops-day-range { margin-left: auto; font-size: 12px; }
+}
+
+table.ops-215-table,
+table.ops-projections-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 4px 6px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  thead th {
+    background: #f2f2f2;
+    font-weight: 600;
+  }
+  .ops-215-kind {
+    text-align: left;
+    background: #fafafa;
+    font-weight: 500;
+    width: 22%;
+  }
+  .empty {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 16px;
+  }
+  .centered { text-align: center; }
+}
+
+table.ops-215-table {
+  .ops-215-day { background: #eaeaea; }
+  .ops-215-have { background: #f8fbff; }
+  .ops-215-req  { background: #fff8ee; }
+  .ops-215-need { background: #fff; font-weight: 600; }
+
+  .ops-215-req-input {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: center;
+    padding: 2px 0;
+    font: inherit;
+    outline: 0;
+    &:focus { background: #fffbe6; }
+    /* Chrome number input spinners are noisy in narrow cells. */
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+table.ops-projections-table {
+  .ops-total-row td { background: #f0f5ff; }
+}
