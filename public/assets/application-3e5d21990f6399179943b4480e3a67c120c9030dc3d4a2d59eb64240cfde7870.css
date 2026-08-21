@@ -8,6 +8,7 @@
 
 
 
+
  */
 /* line 35, app/assets/stylesheets/global.scss */
 .page-header {
@@ -13051,12 +13052,12 @@ td.visible-print {
   font-style: normal;
 }
 
-/* line 37, app/assets/stylesheets/application.css.scss */
+/* line 38, app/assets/stylesheets/application.css.scss */
 h3.centered {
   text-align: center;
 }
 
-/* line 40, app/assets/stylesheets/application.css.scss */
+/* line 41, app/assets/stylesheets/application.css.scss */
 td.centered {
   text-align: center !important;
 }
@@ -14832,6 +14833,801 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.focus {
   border-width: 1px 0;
   margin-left: -5px;
   margin-right: -5px;
+}
+.flatpickr-calendar {
+  background: transparent;
+  opacity: 0;
+  display: none;
+  text-align: center;
+  visibility: hidden;
+  padding: 0;
+  -webkit-animation: none;
+          animation: none;
+  direction: ltr;
+  border: 0;
+  font-size: 14px;
+  line-height: 24px;
+  border-radius: 5px;
+  position: absolute;
+  width: 307.875px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  background: #fff;
+  -webkit-box-shadow: 1px 0 0 #e6e6e6, -1px 0 0 #e6e6e6, 0 1px 0 #e6e6e6, 0 -1px 0 #e6e6e6, 0 3px 13px rgba(0,0,0,0.08);
+          box-shadow: 1px 0 0 #e6e6e6, -1px 0 0 #e6e6e6, 0 1px 0 #e6e6e6, 0 -1px 0 #e6e6e6, 0 3px 13px rgba(0,0,0,0.08);
+}
+.flatpickr-calendar.open,
+.flatpickr-calendar.inline {
+  opacity: 1;
+  max-height: 640px;
+  visibility: visible;
+}
+.flatpickr-calendar.open {
+  display: inline-block;
+  z-index: 99999;
+}
+.flatpickr-calendar.animate.open {
+  -webkit-animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
+          animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.flatpickr-calendar.inline {
+  display: block;
+  position: relative;
+  top: 2px;
+}
+.flatpickr-calendar.static {
+  position: absolute;
+  top: calc(100% + 2px);
+}
+.flatpickr-calendar.static.open {
+  z-index: 999;
+  display: block;
+}
+.flatpickr-calendar.multiMonth .flatpickr-days .dayContainer:nth-child(n+1) .flatpickr-day.inRange:nth-child(7n+7) {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+.flatpickr-calendar.multiMonth .flatpickr-days .dayContainer:nth-child(n+2) .flatpickr-day.inRange:nth-child(7n+1) {
+  -webkit-box-shadow: -2px 0 0 #e6e6e6, 5px 0 0 #e6e6e6;
+          box-shadow: -2px 0 0 #e6e6e6, 5px 0 0 #e6e6e6;
+}
+.flatpickr-calendar .hasWeeks .dayContainer,
+.flatpickr-calendar .hasTime .dayContainer {
+  border-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.flatpickr-calendar .hasWeeks .dayContainer {
+  border-left: 0;
+}
+.flatpickr-calendar.hasTime .flatpickr-time {
+  height: 40px;
+  border-top: 1px solid #e6e6e6;
+}
+.flatpickr-calendar.noCalendar.hasTime .flatpickr-time {
+  height: auto;
+}
+.flatpickr-calendar:before,
+.flatpickr-calendar:after {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  border: solid transparent;
+  content: '';
+  height: 0;
+  width: 0;
+  left: 22px;
+}
+.flatpickr-calendar.rightMost:before,
+.flatpickr-calendar.arrowRight:before,
+.flatpickr-calendar.rightMost:after,
+.flatpickr-calendar.arrowRight:after {
+  left: auto;
+  right: 22px;
+}
+.flatpickr-calendar.arrowCenter:before,
+.flatpickr-calendar.arrowCenter:after {
+  left: 50%;
+  right: 50%;
+}
+.flatpickr-calendar:before {
+  border-width: 5px;
+  margin: 0 -5px;
+}
+.flatpickr-calendar:after {
+  border-width: 4px;
+  margin: 0 -4px;
+}
+.flatpickr-calendar.arrowTop:before,
+.flatpickr-calendar.arrowTop:after {
+  bottom: 100%;
+}
+.flatpickr-calendar.arrowTop:before {
+  border-bottom-color: #e6e6e6;
+}
+.flatpickr-calendar.arrowTop:after {
+  border-bottom-color: #fff;
+}
+.flatpickr-calendar.arrowBottom:before,
+.flatpickr-calendar.arrowBottom:after {
+  top: 100%;
+}
+.flatpickr-calendar.arrowBottom:before {
+  border-top-color: #e6e6e6;
+}
+.flatpickr-calendar.arrowBottom:after {
+  border-top-color: #fff;
+}
+.flatpickr-calendar:focus {
+  outline: 0;
+}
+.flatpickr-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.flatpickr-months {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.flatpickr-months .flatpickr-month {
+  background: transparent;
+  color: rgba(0,0,0,0.9);
+  fill: rgba(0,0,0,0.9);
+  height: 34px;
+  line-height: 1;
+  text-align: center;
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  overflow: hidden;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  height: 34px;
+  padding: 10px;
+  z-index: 3;
+  color: rgba(0,0,0,0.9);
+  fill: rgba(0,0,0,0.9);
+}
+.flatpickr-months .flatpickr-prev-month.flatpickr-disabled,
+.flatpickr-months .flatpickr-next-month.flatpickr-disabled {
+  display: none;
+}
+.flatpickr-months .flatpickr-prev-month i,
+.flatpickr-months .flatpickr-next-month i {
+  position: relative;
+}
+.flatpickr-months .flatpickr-prev-month.flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month.flatpickr-prev-month {
+/*
+      /*rtl:begin:ignore*/
+/*
+      */
+  left: 0;
+/*
+      /*rtl:end:ignore*/
+/*
+      */
+}
+/*
+      /*rtl:begin:ignore*/
+/*
+      /*rtl:end:ignore*/
+.flatpickr-months .flatpickr-prev-month.flatpickr-next-month,
+.flatpickr-months .flatpickr-next-month.flatpickr-next-month {
+/*
+      /*rtl:begin:ignore*/
+/*
+      */
+  right: 0;
+/*
+      /*rtl:end:ignore*/
+/*
+      */
+}
+/*
+      /*rtl:begin:ignore*/
+/*
+      /*rtl:end:ignore*/
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+  color: #959ea9;
+}
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+  fill: #f64747;
+}
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
+  width: 14px;
+  height: 14px;
+}
+.flatpickr-months .flatpickr-prev-month svg path,
+.flatpickr-months .flatpickr-next-month svg path {
+  -webkit-transition: fill 0.1s;
+  transition: fill 0.1s;
+  fill: inherit;
+}
+.numInputWrapper {
+  position: relative;
+  height: auto;
+}
+.numInputWrapper input,
+.numInputWrapper span {
+  display: inline-block;
+}
+.numInputWrapper input {
+  width: 100%;
+}
+.numInputWrapper input::-ms-clear {
+  display: none;
+}
+.numInputWrapper input::-webkit-outer-spin-button,
+.numInputWrapper input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+.numInputWrapper span {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  cursor: pointer;
+  border: 1px solid rgba(57,57,57,0.15);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.numInputWrapper span:hover {
+  background: rgba(0,0,0,0.1);
+}
+.numInputWrapper span:active {
+  background: rgba(0,0,0,0.2);
+}
+.numInputWrapper span:after {
+  display: block;
+  content: "";
+  position: absolute;
+}
+.numInputWrapper span.arrowUp {
+  top: 0;
+  border-bottom: 0;
+}
+.numInputWrapper span.arrowUp:after {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57,57,57,0.6);
+  top: 26%;
+}
+.numInputWrapper span.arrowDown {
+  top: 50%;
+}
+.numInputWrapper span.arrowDown:after {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgba(57,57,57,0.6);
+  top: 40%;
+}
+.numInputWrapper span svg {
+  width: inherit;
+  height: auto;
+}
+.numInputWrapper span svg path {
+  fill: rgba(0,0,0,0.5);
+}
+.numInputWrapper:hover {
+  background: rgba(0,0,0,0.05);
+}
+.numInputWrapper:hover span {
+  opacity: 1;
+}
+.flatpickr-current-month {
+  font-size: 135%;
+  line-height: inherit;
+  font-weight: 300;
+  color: inherit;
+  position: absolute;
+  width: 75%;
+  left: 12.5%;
+  padding: 7.48px 0 0 0;
+  line-height: 1;
+  height: 34px;
+  display: inline-block;
+  text-align: center;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+          transform: translate3d(0px, 0px, 0px);
+}
+.flatpickr-current-month span.cur-month {
+  font-family: inherit;
+  font-weight: 700;
+  color: inherit;
+  display: inline-block;
+  margin-left: 0.5ch;
+  padding: 0;
+}
+.flatpickr-current-month span.cur-month:hover {
+  background: rgba(0,0,0,0.05);
+}
+.flatpickr-current-month .numInputWrapper {
+  width: 6ch;
+  width: 7ch\0;
+  display: inline-block;
+}
+.flatpickr-current-month .numInputWrapper span.arrowUp:after {
+  border-bottom-color: rgba(0,0,0,0.9);
+}
+.flatpickr-current-month .numInputWrapper span.arrowDown:after {
+  border-top-color: rgba(0,0,0,0.9);
+}
+.flatpickr-current-month input.cur-year {
+  background: transparent;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: inherit;
+  cursor: text;
+  padding: 0 0 0 0.5ch;
+  margin: 0;
+  display: inline-block;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 300;
+  line-height: inherit;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  vertical-align: initial;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.flatpickr-current-month input.cur-year:focus {
+  outline: 0;
+}
+.flatpickr-current-month input.cur-year[disabled],
+.flatpickr-current-month input.cur-year[disabled]:hover {
+  font-size: 100%;
+  color: rgba(0,0,0,0.5);
+  background: transparent;
+  pointer-events: none;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  appearance: menulist;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  color: inherit;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 300;
+  height: auto;
+  line-height: inherit;
+  margin: -1px 0 0 0;
+  outline: none;
+  padding: 0 0 0 0.5ch;
+  position: relative;
+  vertical-align: initial;
+  -webkit-box-sizing: border-box;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  width: auto;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months:focus,
+.flatpickr-current-month .flatpickr-monthDropdown-months:active {
+  outline: none;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+  background: rgba(0,0,0,0.05);
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+  background-color: transparent;
+  outline: none;
+  padding: 0;
+}
+.flatpickr-weekdays {
+  background: transparent;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 28px;
+}
+.flatpickr-weekdays .flatpickr-weekdaycontainer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+span.flatpickr-weekday {
+  cursor: default;
+  font-size: 90%;
+  background: transparent;
+  color: rgba(0,0,0,0.54);
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+  display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  font-weight: bolder;
+}
+.dayContainer,
+.flatpickr-weeks {
+  padding: 1px 0 0 0;
+}
+.flatpickr-days {
+  position: relative;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 307.875px;
+}
+.flatpickr-days:focus {
+  outline: 0;
+}
+.dayContainer {
+  padding: 0;
+  outline: 0;
+  text-align: left;
+  width: 307.875px;
+  min-width: 307.875px;
+  max-width: 307.875px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: inline-block;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+          transform: translate3d(0px, 0px, 0px);
+  opacity: 1;
+}
+.dayContainer + .dayContainer {
+  -webkit-box-shadow: -1px 0 0 #e6e6e6;
+          box-shadow: -1px 0 0 #e6e6e6;
+}
+.flatpickr-day {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 150px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #393939;
+  cursor: pointer;
+  font-weight: 400;
+  width: 14.2857143%;
+  -webkit-flex-basis: 14.2857143%;
+      -ms-flex-preferred-size: 14.2857143%;
+          flex-basis: 14.2857143%;
+  max-width: 39px;
+  height: 39px;
+  line-height: 39px;
+  margin: 0;
+  display: inline-block;
+  position: relative;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+}
+.flatpickr-day.inRange,
+.flatpickr-day.prevMonthDay.inRange,
+.flatpickr-day.nextMonthDay.inRange,
+.flatpickr-day.today.inRange,
+.flatpickr-day.prevMonthDay.today.inRange,
+.flatpickr-day.nextMonthDay.today.inRange,
+.flatpickr-day:hover,
+.flatpickr-day.prevMonthDay:hover,
+.flatpickr-day.nextMonthDay:hover,
+.flatpickr-day:focus,
+.flatpickr-day.prevMonthDay:focus,
+.flatpickr-day.nextMonthDay:focus {
+  cursor: pointer;
+  outline: 0;
+  background: #e6e6e6;
+  border-color: #e6e6e6;
+}
+.flatpickr-day.today {
+  border-color: #959ea9;
+}
+.flatpickr-day.today:hover,
+.flatpickr-day.today:focus {
+  border-color: #959ea9;
+  background: #959ea9;
+  color: #fff;
+}
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+  background: #569ff7;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  color: #fff;
+  border-color: #569ff7;
+}
+.flatpickr-day.selected.startRange,
+.flatpickr-day.startRange.startRange,
+.flatpickr-day.endRange.startRange {
+  border-radius: 50px 0 0 50px;
+}
+.flatpickr-day.selected.endRange,
+.flatpickr-day.startRange.endRange,
+.flatpickr-day.endRange.endRange {
+  border-radius: 0 50px 50px 0;
+}
+.flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n+1)),
+.flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n+1)),
+.flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n+1)) {
+  -webkit-box-shadow: -10px 0 0 #569ff7;
+          box-shadow: -10px 0 0 #569ff7;
+}
+.flatpickr-day.selected.startRange.endRange,
+.flatpickr-day.startRange.startRange.endRange,
+.flatpickr-day.endRange.startRange.endRange {
+  border-radius: 50px;
+}
+.flatpickr-day.inRange {
+  border-radius: 0;
+  -webkit-box-shadow: -5px 0 0 #e6e6e6, 5px 0 0 #e6e6e6;
+          box-shadow: -5px 0 0 #e6e6e6, 5px 0 0 #e6e6e6;
+}
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay,
+.flatpickr-day.notAllowed,
+.flatpickr-day.notAllowed.prevMonthDay,
+.flatpickr-day.notAllowed.nextMonthDay {
+  color: rgba(57,57,57,0.3);
+  background: transparent;
+  border-color: transparent;
+  cursor: default;
+}
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+  cursor: not-allowed;
+  color: rgba(57,57,57,0.1);
+}
+.flatpickr-day.week.selected {
+  border-radius: 0;
+  -webkit-box-shadow: -5px 0 0 #569ff7, 5px 0 0 #569ff7;
+          box-shadow: -5px 0 0 #569ff7, 5px 0 0 #569ff7;
+}
+.flatpickr-day.hidden {
+  visibility: hidden;
+}
+.rangeMode .flatpickr-day {
+  margin-top: 1px;
+}
+.flatpickr-weekwrapper {
+  float: left;
+}
+.flatpickr-weekwrapper .flatpickr-weeks {
+  padding: 0 12px;
+  -webkit-box-shadow: 1px 0 0 #e6e6e6;
+          box-shadow: 1px 0 0 #e6e6e6;
+}
+.flatpickr-weekwrapper .flatpickr-weekday {
+  float: none;
+  width: 100%;
+  line-height: 28px;
+}
+.flatpickr-weekwrapper span.flatpickr-day,
+.flatpickr-weekwrapper span.flatpickr-day:hover {
+  display: block;
+  width: 100%;
+  max-width: none;
+  color: rgba(57,57,57,0.3);
+  background: transparent;
+  cursor: default;
+  border: none;
+}
+.flatpickr-innerContainer {
+  display: block;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+}
+.flatpickr-rContainer {
+  display: inline-block;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.flatpickr-time {
+  text-align: center;
+  outline: 0;
+  display: block;
+  height: 0;
+  line-height: 40px;
+  max-height: 40px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.flatpickr-time:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.flatpickr-time .numInputWrapper {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  width: 40%;
+  height: 40px;
+  float: left;
+}
+.flatpickr-time .numInputWrapper span.arrowUp:after {
+  border-bottom-color: #393939;
+}
+.flatpickr-time .numInputWrapper span.arrowDown:after {
+  border-top-color: #393939;
+}
+.flatpickr-time.hasSeconds .numInputWrapper {
+  width: 26%;
+}
+.flatpickr-time.time24hr .numInputWrapper {
+  width: 49%;
+}
+.flatpickr-time input {
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: inherit;
+  line-height: inherit;
+  color: #393939;
+  font-size: 14px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.flatpickr-time input.flatpickr-hour {
+  font-weight: bold;
+}
+.flatpickr-time input.flatpickr-minute,
+.flatpickr-time input.flatpickr-second {
+  font-weight: 400;
+}
+.flatpickr-time input:focus {
+  outline: 0;
+  border: 0;
+}
+.flatpickr-time .flatpickr-time-separator,
+.flatpickr-time .flatpickr-am-pm {
+  height: inherit;
+  float: left;
+  line-height: inherit;
+  color: #393939;
+  font-weight: bold;
+  width: 2%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center;
+}
+.flatpickr-time .flatpickr-am-pm {
+  outline: 0;
+  width: 18%;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 400;
+}
+.flatpickr-time input:hover,
+.flatpickr-time .flatpickr-am-pm:hover,
+.flatpickr-time input:focus,
+.flatpickr-time .flatpickr-am-pm:focus {
+  background: #eee;
+}
+.flatpickr-input[readonly] {
+  cursor: pointer;
+}
+@-webkit-keyframes fpFadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+            transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fpFadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+            transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
 }
 body.swal2-shown {
   overflow-y: hidden; }
@@ -17993,7 +18789,14 @@ table.assigned-resources th {
   width: 100%;
 }
 
-/* line 79, app/assets/stylesheets/assignments.css.scss */
+/* line 78, app/assets/stylesheets/assignments.css.scss */
+#incident-assignments > .container,
+#incident-assignments > .container > .col-xs-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* line 84, app/assets/stylesheets/assignments.css.scss */
 a.new-freq-button {
   width: 25px;
   height: 25px;
@@ -18010,13 +18813,13 @@ a.new-freq-button {
   display: none;
 }
 
-/* line 94, app/assets/stylesheets/assignments.css.scss */
+/* line 99, app/assets/stylesheets/assignments.css.scss */
 a.new-freq-button:hover {
   text-decoration: none;
   color: black;
 }
 
-/* line 100, app/assets/stylesheets/assignments.css.scss */
+/* line 105, app/assets/stylesheets/assignments.css.scss */
 #freq-form {
   display: none;
   width: 100%;
@@ -18028,12 +18831,12 @@ a.new-freq-button:hover {
   padding: 15px 0;
 }
 
-/* line 110, app/assets/stylesheets/assignments.css.scss */
+/* line 115, app/assets/stylesheets/assignments.css.scss */
 #freq-form li {
   display: inline;
 }
 
-/* line 116, app/assets/stylesheets/assignments.css.scss */
+/* line 121, app/assets/stylesheets/assignments.css.scss */
 .header-button {
   background-color: #3d3d3d;
   color: white;
@@ -18048,14 +18851,14 @@ a.new-freq-button:hover {
   display: none;
 }
 
-/* line 130, app/assets/stylesheets/assignments.css.scss */
+/* line 135, app/assets/stylesheets/assignments.css.scss */
 .header-button:hover {
   padding: 3px 11px;
   margin-top: -3px;
   cursor: pointer;
 }
 
-/* line 135, app/assets/stylesheets/assignments.css.scss */
+/* line 140, app/assets/stylesheets/assignments.css.scss */
 #resource-assignments-form {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -18066,19 +18869,19 @@ a.new-freq-button:hover {
   display: none;
 }
 
-/* line 143, app/assets/stylesheets/assignments.css.scss */
+/* line 148, app/assets/stylesheets/assignments.css.scss */
 #resource-assignments-form li {
   list-style: none;
 }
 
-/* line 147, app/assets/stylesheets/assignments.css.scss */
+/* line 152, app/assets/stylesheets/assignments.css.scss */
 .personnel_num {
   padding-left: 15px;
   padding-top: 5px;
   position: absolute;
 }
 
-/* line 152, app/assets/stylesheets/assignments.css.scss */
+/* line 157, app/assets/stylesheets/assignments.css.scss */
 .ops-box {
   border-top: 1px solid black;
   border-right: 1px solid black;
@@ -18089,13 +18892,13 @@ a.new-freq-button:hover {
   padding-left: 10px;
 }
 
-/* line 161, app/assets/stylesheets/assignments.css.scss */
+/* line 166, app/assets/stylesheets/assignments.css.scss */
 #ops-box-container {
   border-left: 1px solid black;
   overflow: hidden;
 }
 
-/* line 165, app/assets/stylesheets/assignments.css.scss */
+/* line 170, app/assets/stylesheets/assignments.css.scss */
 .resources-button {
   overflow: hidden;
   position: absolute;
@@ -18117,40 +18920,40 @@ a.new-freq-button:hover {
   color: #3d3d3d;
 }
 
-/* line 184, app/assets/stylesheets/assignments.css.scss */
+/* line 189, app/assets/stylesheets/assignments.css.scss */
 .resources-button i {
   margin-top: 10px;
   margin-left: 6px;
 }
 
-/* line 188, app/assets/stylesheets/assignments.css.scss */
+/* line 193, app/assets/stylesheets/assignments.css.scss */
 .resources-button a {
   color: #3d3d3d !important;
 }
 
-/* line 191, app/assets/stylesheets/assignments.css.scss */
+/* line 196, app/assets/stylesheets/assignments.css.scss */
 .resources-button a:hover {
   color: #3d3d3d !important;
 }
 
-/* line 195, app/assets/stylesheets/assignments.css.scss */
+/* line 200, app/assets/stylesheets/assignments.css.scss */
 #ops-resources {
   left: -16px;
   margin-top: 13px;
 }
 
-/* line 200, app/assets/stylesheets/assignments.css.scss */
+/* line 205, app/assets/stylesheets/assignments.css.scss */
 #assign-resources-button {
   left: -15px;
   margin-top: 133px;
 }
 
-/* line 205, app/assets/stylesheets/assignments.css.scss */
+/* line 210, app/assets/stylesheets/assignments.css.scss */
 #control-operations {
   min-height: 160px;
 }
 
-/* line 208, app/assets/stylesheets/assignments.css.scss */
+/* line 213, app/assets/stylesheets/assignments.css.scss */
 #ops-resource-form {
   border-right: 1px solid black;
   border-left: 1px solid black;
@@ -18160,12 +18963,12 @@ a.new-freq-button:hover {
   display: none;
 }
 
-/* line 215, app/assets/stylesheets/assignments.css.scss */
+/* line 220, app/assets/stylesheets/assignments.css.scss */
 #ops-resource-form li {
   list-style: none;
 }
 
-/* line 219, app/assets/stylesheets/assignments.css.scss */
+/* line 224, app/assets/stylesheets/assignments.css.scss */
 #add-freqs-button {
   left: -15px;
   margin-top: 75px;
@@ -18173,7 +18976,7 @@ a.new-freq-button:hover {
   padding-top: 2px;
 }
 
-/* line 225, app/assets/stylesheets/assignments.css.scss */
+/* line 230, app/assets/stylesheets/assignments.css.scss */
 #new-204-button {
   margin-left: 20px;
   overflow: hidden;
@@ -18197,68 +19000,68 @@ a.new-freq-button:hover {
   padding-top: 0;
 }
 
-/* line 246, app/assets/stylesheets/assignments.css.scss */
+/* line 251, app/assets/stylesheets/assignments.css.scss */
 #new-204-button i {
   margin-top: 0px;
   margin-left: 2px;
 }
 
-/* line 250, app/assets/stylesheets/assignments.css.scss */
+/* line 255, app/assets/stylesheets/assignments.css.scss */
 #new-204-button a {
   color: #3d3d3d !important;
 }
 
-/* line 254, app/assets/stylesheets/assignments.css.scss */
+/* line 259, app/assets/stylesheets/assignments.css.scss */
 a#new-204-button:hover {
   text-decoration: none;
 }
 
-/* line 259, app/assets/stylesheets/assignments.css.scss */
+/* line 264, app/assets/stylesheets/assignments.css.scss */
 li.assigned-204-resources input {
   display: inline;
 }
 
-/* line 262, app/assets/stylesheets/assignments.css.scss */
+/* line 267, app/assets/stylesheets/assignments.css.scss */
 li.assigned-204-resources label {
   display: inline;
 }
 
-/* line 266, app/assets/stylesheets/assignments.css.scss */
+/* line 271, app/assets/stylesheets/assignments.css.scss */
 .float-button {
   clear: both;
 }
 
-/* line 269, app/assets/stylesheets/assignments.css.scss */
+/* line 274, app/assets/stylesheets/assignments.css.scss */
 ul#action-buttons {
   list-style-type: none !important;
   padding: 0 !important;
   clear: both;
 }
 
-/* line 273, app/assets/stylesheets/assignments.css.scss */
+/* line 278, app/assets/stylesheets/assignments.css.scss */
 ul#action-buttons li {
   display: inline !important;
 }
 
-/* line 277, app/assets/stylesheets/assignments.css.scss */
+/* line 282, app/assets/stylesheets/assignments.css.scss */
 .action-buttons {
   display: inline;
   clear: both;
   margin-left: 0;
 }
 
-/* line 283, app/assets/stylesheets/assignments.css.scss */
+/* line 288, app/assets/stylesheets/assignments.css.scss */
 .tabrow {
   overflow: auto;
   white-space: nowrap;
 }
 
-/* line 287, app/assets/stylesheets/assignments.css.scss */
+/* line 292, app/assets/stylesheets/assignments.css.scss */
 .new-page {
   height: 20px;
 }
 
-/* line 290, app/assets/stylesheets/assignments.css.scss */
+/* line 295, app/assets/stylesheets/assignments.css.scss */
 .page-number {
   font-size: 0.70em;
   position: absolute;
@@ -18266,19 +19069,476 @@ ul#action-buttons li {
   bottom: 0;
 }
 
-/* line 296, app/assets/stylesheets/assignments.css.scss */
+/* line 301, app/assets/stylesheets/assignments.css.scss */
 .clear {
   clear: all;
 }
 
-/* line 299, app/assets/stylesheets/assignments.css.scss */
+/* line 304, app/assets/stylesheets/assignments.css.scss */
 .div-grp-branch {
   position: absolute;
   left: 3px;
   top: 2px;
 }
 
-/* line 304, app/assets/stylesheets/assignments.css.scss */
+/* line 309, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle {
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: right;
+}
+
+/* line 316, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle form.inline-form {
+  display: inline-block;
+  margin-left: 6px;
+}
+
+/* line 320, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle form.inline-form button {
+  margin-left: 4px;
+}
+
+/* ---------- ICS 204 WF form (scoped) ---------- */
+/* line 326, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page {
+  margin-bottom: 20px;
+  --rule: 1px solid #000;
+  --shade: #ebebeb;
+  background: #fff;
+  color: #000;
+  padding: 0.35in 0.4in;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  /* Section 3 (Branch / Division-Group) cells: label pinned top-left,
+     value centered large. */
+  /* Constrain best_in_place inputs in Drop Off / Pick Up cells so they
+     stay inside the narrow columns instead of using the browser's
+     default text-input width. */
+  /* Section 8 lightning bolt affordance in the banner header.
+     Hidden until the banner row is hovered. The ID in the selector
+     out-specifies the legacy #add-freqs-button { margin-top: 75px }
+     rule from the pre-WF layout. */
+  /* Section 8 freq picker (checkbox list of ICS 205 items). */
+  /* best_in_place inputs sit inside cells; keep them borderless / flush. */
+}
+
+/* line 336, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page * {
+  box-sizing: border-box;
+}
+
+/* line 338, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .doc-title {
+  text-align: center;
+  font-size: 15pt;
+  font-weight: bold;
+  line-height: 1.15;
+}
+
+/* line 344, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .doc-sub {
+  text-align: center;
+  font-size: 9.5pt;
+  font-weight: bold;
+  margin: 2pt 0 6pt;
+}
+
+/* line 351, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0;
+}
+
+/* line 357, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page td, .ics-204-wf-page th {
+  border: var(--rule);
+  vertical-align: top;
+  padding: 1pt 3pt;
+  font-size: 8pt;
+  font-weight: normal;
+  text-align: left;
+  color: #000;
+}
+
+/* line 367, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .num {
+  font-size: 9.5pt;
+}
+
+/* line 368, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .banner {
+  text-align: center;
+  font-size: 10pt;
+  background: var(--shade);
+}
+
+/* line 373, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .banner-num {
+  background: var(--shade);
+  font-size: 9.5pt;
+}
+
+/* line 377, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .shade {
+  background: var(--shade);
+}
+
+/* line 378, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .seam-num {
+  border-right: 0;
+}
+
+/* line 379, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .seam-banner {
+  border-left: 0;
+  padding-right: 5%;
+}
+
+/* line 380, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .ctr {
+  text-align: center;
+}
+
+/* line 382, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .hdr-entry {
+  height: 26pt;
+  padding-top: 5px;
+  padding-left: 15px;
+}
+
+/* line 387, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry {
+  height: 22pt;
+  text-align: center;
+  padding-top: 5px;
+}
+
+/* line 392, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry .op-dt-picker {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  outline: 0;
+  text-align: center;
+}
+
+/* line 402, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry .op-dt-picker:focus {
+  background: #fffbe6;
+}
+
+/* line 404, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-dt-picker {
+  border: none !important;
+}
+
+/* line 407, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .prepared-time-picker {
+  border: none !important;
+}
+
+/* line 410, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .prepared-date-picker {
+  border: none !important;
+}
+
+/* line 416, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell {
+  position: relative;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* line 422, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell .id-label {
+  position: absolute;
+  top: 2pt;
+  left: 4pt;
+  font-size: 8pt;
+  text-align: left;
+}
+
+/* line 429, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell .id-value {
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 1;
+  padding: 14pt 0 10pt;
+}
+
+/* line 436, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .pers-label {
+  width: 17.5%;
+}
+
+/* line 437, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .pers-fill {
+  width: 26%;
+  height: 17pt;
+}
+
+/* line 439, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-desig {
+  width: 35.4%;
+}
+
+/* line 440, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-lwd {
+  width: 5.7%;
+}
+
+/* line 441, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-lead {
+  width: 21.0%;
+}
+
+/* line 442, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-pers {
+  width: 6.6%;
+}
+
+/* line 443, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-drop {
+  width: 15.7%;
+}
+
+/* line 444, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-pick {
+  width: 15.6%;
+}
+
+/* line 446, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-head td {
+  text-align: center;
+  font-size: 7.5pt;
+  padding: 2pt 2pt;
+}
+
+/* line 447, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-row td {
+  height: 15.5pt;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 456, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-row .r-drop input,
+.ics-204-wf-page .res-row .r-pick input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0 2px;
+}
+
+/* line 465, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .narrative {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 466, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .box-6 {
+  height: 1.15in;
+}
+
+/* line 467, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .box-7 {
+  height: 0.75in;
+}
+
+/* line 469, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-func {
+  width: 15%;
+}
+
+/* line 470, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-chan {
+  width: 11%;
+}
+
+/* line 471, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-name {
+  width: 15%;
+}
+
+/* line 472, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-rxf {
+  width: 14%;
+}
+
+/* line 473, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-rxt {
+  width: 11%;
+}
+
+/* line 474, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-txf {
+  width: 14%;
+}
+
+/* line 475, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-txt {
+  width: 11%;
+}
+
+/* line 476, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-mode {
+  width: 8%;
+}
+
+/* line 478, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page tr.comm-row td {
+  text-align: center;
+}
+
+/* line 482, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-head td {
+  text-align: center;
+  font-size: 7.5pt;
+}
+
+/* line 483, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-row td {
+  height: 14pt;
+}
+
+/* line 484, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-row .c-func {
+  background: var(--shade);
+  text-align: center;
+  padding-top: 3pt;
+}
+
+/* line 494, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs {
+  display: inline-block;
+  margin: 0 0 0 8px;
+  padding: 0;
+  left: auto;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in;
+}
+
+/* line 506, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs .banner-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+/* line 512, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .commo-banner tr:hover #add-freqs-button.banner-add-freqs {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* line 518, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form {
+  display: none;
+  padding: 8pt 10pt;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  margin: 4pt 0;
+}
+
+/* line 524, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 6pt;
+}
+
+/* line 528, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form ul li {
+  display: inline-block;
+  margin-right: 12pt;
+  font-size: 9pt;
+}
+
+/* line 536, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row td {
+  height: 30pt;
+}
+
+/* line 537, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-label {
+  font-size: 8pt;
+  color: #000;
+}
+
+/* line 541, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  outline: 0;
+  text-align: left;
+}
+
+/* line 553, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-input:focus {
+  background: #fffbe6;
+}
+
+/* line 555, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 10pt;
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+/* line 562, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .left {
+  width: 25%;
+}
+
+/* line 563, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .mid {
+  width: 50%;
+  text-align: center;
+}
+
+/* line 564, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .right {
+  width: 25%;
+}
+
+/* line 567, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .best_in_place, .ics-204-wf-page input.best_in_place, .ics-204-wf-page textarea.best_in_place {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  display: inline;
+}
+
+/* line 573, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page textarea.best_in_place {
+  width: 100%;
+}
+
+/* line 575, app/assets/stylesheets/assignments.css.scss */
 td.no-padding {
   padding-right: none !important;
   padding-left: 15px !important;
@@ -18286,13 +19546,13 @@ td.no-padding {
 }
 
 @media print {
-  /* line 310, app/assets/stylesheets/assignments.css.scss */
+  /* line 581, app/assets/stylesheets/assignments.css.scss */
   div.header-row {
     background-color: #f3f3f3 !important;
   }
 }
 
-/* line 314, app/assets/stylesheets/assignments.css.scss */
+/* line 585, app/assets/stylesheets/assignments.css.scss */
 div.solid {
   z-index: 7 !important;
   position: relative;
@@ -18441,15 +19701,23 @@ div.solid {
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
   cursor: grab;
   font-size: 13px;
-  overflow: hidden;
+  overflow: visible;
+  /* let the move popover escape the card */
+  position: relative;
 }
 
-/* line 128, app/assets/stylesheets/boards.scss */
+/* line 129, app/assets/stylesheets/boards.scss */
 .board-card:hover {
   background: #fafbfc;
 }
 
-/* line 133, app/assets/stylesheets/boards.scss */
+/* line 132, app/assets/stylesheets/boards.scss */
+.board-card:hover .board-card-move-toggle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* line 138, app/assets/stylesheets/boards.scss */
 .board-card-strip {
   display: flex;
   align-items: center;
@@ -18460,9 +19728,82 @@ div.solid {
   font-weight: 600;
   letter-spacing: 0.4px;
   text-transform: uppercase;
+  position: relative;
+  /* anchor for .board-card-move-menu */
 }
 
-/* line 145, app/assets/stylesheets/boards.scss */
+/* line 151, app/assets/stylesheets/boards.scss */
+.board-card-move-toggle {
+  background: rgba(255, 255, 255, 0.85);
+  color: #222;
+  border: 0;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
+  margin-left: 6px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease-in;
+}
+
+/* line 166, app/assets/stylesheets/boards.scss */
+.board-card-move-toggle .fa {
+  margin-right: 3px;
+}
+
+/* line 167, app/assets/stylesheets/boards.scss */
+.board-card-move-toggle:hover {
+  background: #fff;
+}
+
+/* line 168, app/assets/stylesheets/boards.scss */
+.board-card-move-toggle:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(9, 30, 66, 0.15);
+}
+
+/* line 171, app/assets/stylesheets/boards.scss */
+.board-card-move-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  min-width: 180px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: #fff;
+  color: #222;
+  border: 1px solid #d0d5db;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.18);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* line 188, app/assets/stylesheets/boards.scss */
+.board-card-move-menu ul {
+  list-style: none;
+  padding: 4px 0;
+  margin: 0;
+}
+
+/* line 193, app/assets/stylesheets/boards.scss */
+.board-card-move-menu li {
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* line 197, app/assets/stylesheets/boards.scss */
+.board-card-move-menu li:hover {
+  background: #eef4ff;
+}
+
+/* line 201, app/assets/stylesheets/boards.scss */
 .board-card-icon {
   display: inline-flex;
   align-items: center;
@@ -18470,27 +19811,27 @@ div.solid {
   line-height: 1;
 }
 
-/* line 151, app/assets/stylesheets/boards.scss */
+/* line 207, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg {
   width: 18px;
   height: 14px;
   fill: currentColor;
 }
 
-/* line 158, app/assets/stylesheets/boards.scss */
+/* line 214, app/assets/stylesheets/boards.scss */
 .board-card-agency {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* line 164, app/assets/stylesheets/boards.scss */
+/* line 220, app/assets/stylesheets/boards.scss */
 .board-card-body {
   padding: 8px 10px 22px;
   position: relative;
 }
 
-/* line 169, app/assets/stylesheets/boards.scss */
+/* line 225, app/assets/stylesheets/boards.scss */
 .board-card-lwd {
   position: absolute;
   right: 8px;
@@ -18500,54 +19841,61 @@ div.solid {
   letter-spacing: 0.2px;
   line-height: 1;
   white-space: nowrap;
+  padding: 2px 6px;
+  border-radius: 3px;
 }
 
-/* line 179, app/assets/stylesheets/boards.scss */
+/* line 237, app/assets/stylesheets/boards.scss */
 .board-card-lwd .fa {
   margin-right: 2px;
   font-size: 10px;
 }
 
-/* line 184, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-future {
-  color: #c9a227;
-}
-
-/* line 185, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-soon {
-  color: #e65100;
-}
-
-/* line 186, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-today {
-  color: #c62828;
-}
-
-/* line 187, app/assets/stylesheets/boards.scss */
-.board-card-lwd.lwd-past {
+/* line 243, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-normal {
   color: #000;
+  padding: 0;
+  background: transparent;
 }
 
-/* line 190, app/assets/stylesheets/boards.scss */
+/* line 250, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-soon {
+  background: #e65100;
+  color: #fff;
+}
+
+/* line 256, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-today {
+  background: #c62828;
+  color: #fff;
+}
+
+/* line 262, app/assets/stylesheets/boards.scss */
+.board-card-lwd.lwd-past {
+  background: #000;
+  color: #fff;
+}
+
+/* line 268, app/assets/stylesheets/boards.scss */
 .board-card-order {
   font-size: 11px;
   color: #6b778c;
   font-weight: 600;
 }
 
-/* line 196, app/assets/stylesheets/boards.scss */
+/* line 274, app/assets/stylesheets/boards.scss */
 .board-card-name {
   font-weight: 600;
   color: #172b4d;
 }
 
-/* line 201, app/assets/stylesheets/boards.scss */
+/* line 279, app/assets/stylesheets/boards.scss */
 .board-card-position {
   font-size: 12px;
   color: #5e6c84;
 }
 
-/* line 206, app/assets/stylesheets/boards.scss */
+/* line 284, app/assets/stylesheets/boards.scss */
 .board-card-details {
   background: #fafbfc;
   border-top: 1px solid #ebecf0;
@@ -18556,7 +19904,7 @@ div.solid {
   cursor: default;
 }
 
-/* line 214, app/assets/stylesheets/boards.scss */
+/* line 292, app/assets/stylesheets/boards.scss */
 .board-card-details-header {
   display: flex;
   align-items: center;
@@ -18564,7 +19912,7 @@ div.solid {
   margin-bottom: 6px;
 }
 
-/* line 221, app/assets/stylesheets/boards.scss */
+/* line 299, app/assets/stylesheets/boards.scss */
 .board-card-details-title {
   font-weight: 600;
   color: #172b4d;
@@ -18573,7 +19921,7 @@ div.solid {
   font-size: 11px;
 }
 
-/* line 229, app/assets/stylesheets/boards.scss */
+/* line 307, app/assets/stylesheets/boards.scss */
 .board-card-details-close {
   background: none;
   border: none;
@@ -18584,12 +19932,12 @@ div.solid {
   padding: 0 4px;
 }
 
-/* line 238, app/assets/stylesheets/boards.scss */
+/* line 316, app/assets/stylesheets/boards.scss */
 .board-card-details-close:hover {
   color: #172b4d;
 }
 
-/* line 243, app/assets/stylesheets/boards.scss */
+/* line 321, app/assets/stylesheets/boards.scss */
 .board-card-fields {
   display: grid;
   grid-template-columns: 80px 1fr;
@@ -18598,7 +19946,7 @@ div.solid {
   margin: 0;
 }
 
-/* line 250, app/assets/stylesheets/boards.scss */
+/* line 328, app/assets/stylesheets/boards.scss */
 .board-card-fields dt {
   color: #6b778c;
   font-weight: 500;
@@ -18608,19 +19956,19 @@ div.solid {
   align-self: center;
 }
 
-/* line 259, app/assets/stylesheets/boards.scss */
+/* line 337, app/assets/stylesheets/boards.scss */
 .board-card-fields dd {
   margin: 0;
   color: #172b4d;
   word-break: break-word;
 }
 
-/* line 265, app/assets/stylesheets/boards.scss */
+/* line 343, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.full-width {
   grid-column: 1 / -1;
 }
 
-/* line 269, app/assets/stylesheets/boards.scss */
+/* line 347, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place {
   display: inline-block;
   min-width: 60px;
@@ -18628,14 +19976,14 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 275, app/assets/stylesheets/boards.scss */
+/* line 353, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place:hover {
   background: #fff;
   box-shadow: inset 0 0 0 1px #dfe1e6;
   cursor: text;
 }
 
-/* line 283, app/assets/stylesheets/boards.scss */
+/* line 361, app/assets/stylesheets/boards.scss */
 .board-card-placeholder {
   background: #dfe1e6;
   border: 2px dashed #c1c7d0;
@@ -18644,12 +19992,12 @@ div.solid {
   height: 56px;
 }
 
-/* line 291, app/assets/stylesheets/boards.scss */
+/* line 369, app/assets/stylesheets/boards.scss */
 .board-add-child {
   margin-top: 8px;
 }
 
-/* line 295, app/assets/stylesheets/boards.scss */
+/* line 373, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle {
   background: none;
   border: 1px dashed #c1c7d0;
@@ -18661,13 +20009,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 305, app/assets/stylesheets/boards.scss */
+/* line 383, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle:hover {
   background: #ebecf0;
   color: #172b4d;
 }
 
-/* line 311, app/assets/stylesheets/boards.scss */
+/* line 389, app/assets/stylesheets/boards.scss */
 .board-add-child-form {
   background: #fff;
   border-radius: 4px;
@@ -18676,17 +20024,17 @@ div.solid {
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
 }
 
-/* line 318, app/assets/stylesheets/boards.scss */
+/* line 396, app/assets/stylesheets/boards.scss */
 .board-add-child-form .form-group {
   margin-bottom: 6px;
 }
 
-/* line 322, app/assets/stylesheets/boards.scss */
+/* line 400, app/assets/stylesheets/boards.scss */
 .board-add-child-form .input-sm {
   font-size: 12px;
 }
 
-/* line 327, app/assets/stylesheets/boards.scss */
+/* line 405, app/assets/stylesheets/boards.scss */
 .board-add-child-actions {
   display: flex;
   gap: 6px;
@@ -19217,31 +20565,25 @@ input.new-commo-item {
   border: 2px solid #DDD;
 }
 
-/* line 180, app/assets/stylesheets/covers.css.scss */
-.cover-block {
-  border: 1px dashed orange;
-  overflow: hidden;
-}
-
-/* line 184, app/assets/stylesheets/covers.css.scss */
+/* line 183, app/assets/stylesheets/covers.css.scss */
 .sm-spacer {
   height: 25px;
   overflow: hidden;
 }
 
-/* line 188, app/assets/stylesheets/covers.css.scss */
+/* line 187, app/assets/stylesheets/covers.css.scss */
 .md-spacer {
   height: 50px;
   overflow: hidden;
 }
 
-/* line 192, app/assets/stylesheets/covers.css.scss */
+/* line 191, app/assets/stylesheets/covers.css.scss */
 .lg-spacer {
   height: 75px;
   overflow: hidden;
 }
 
-/* line 197, app/assets/stylesheets/covers.css.scss */
+/* line 196, app/assets/stylesheets/covers.css.scss */
 .add-block-button {
   z-index: 3;
   overflow: hidden;
@@ -19269,18 +20611,18 @@ input.new-commo-item {
   font-weight: 300;
 }
 
-/* line 220, app/assets/stylesheets/covers.css.scss */
+/* line 219, app/assets/stylesheets/covers.css.scss */
 .add-block-button i {
   margin-top: 10px;
   margin-left: 6px;
 }
 
-/* line 227, app/assets/stylesheets/covers.css.scss */
+/* line 226, app/assets/stylesheets/covers.css.scss */
 .add-block-button a {
   color: #3d3d3d !important;
 }
 
-/* line 231, app/assets/stylesheets/covers.css.scss */
+/* line 230, app/assets/stylesheets/covers.css.scss */
 .new-block-form {
   float: left;
   text-align: center;
@@ -19290,13 +20632,13 @@ input.new-commo-item {
   height: 25px;
 }
 
-/* line 240, app/assets/stylesheets/covers.css.scss */
+/* line 239, app/assets/stylesheets/covers.css.scss */
 #new_block {
   height: 15px;
   /*display: none;*/
 }
 
-/* line 244, app/assets/stylesheets/covers.css.scss */
+/* line 243, app/assets/stylesheets/covers.css.scss */
 .new-block-button {
   width: 26px;
   height: 26px;
@@ -19313,17 +20655,17 @@ input.new-commo-item {
   margin-bottom: 5px;
 }
 
-/* line 260, app/assets/stylesheets/covers.css.scss */
+/* line 259, app/assets/stylesheets/covers.css.scss */
 .block-form {
   display: none;
 }
 
-/* line 263, app/assets/stylesheets/covers.css.scss */
+/* line 262, app/assets/stylesheets/covers.css.scss */
 .edit_block {
   display: none;
 }
 
-/* line 266, app/assets/stylesheets/covers.css.scss */
+/* line 265, app/assets/stylesheets/covers.css.scss */
 .save-block-button {
   font-size: 10px;
   position: absolute;
@@ -19331,65 +20673,65 @@ input.new-commo-item {
 }
 
 /*content styles*/
-/* line 274, app/assets/stylesheets/covers.css.scss */
+/* line 273, app/assets/stylesheets/covers.css.scss */
 .style-controls {
   z-index: 3;
 }
 
-/* line 278, app/assets/stylesheets/covers.css.scss */
+/* line 277, app/assets/stylesheets/covers.css.scss */
 .h1 {
   /*font-size: 40px;*/
   font-size: 5vh;
 }
 
-/* line 282, app/assets/stylesheets/covers.css.scss */
+/* line 281, app/assets/stylesheets/covers.css.scss */
 .h2 {
   font-size: 30px;
 }
 
-/* line 285, app/assets/stylesheets/covers.css.scss */
+/* line 284, app/assets/stylesheets/covers.css.scss */
 .h3 {
   font-size: 25px;
 }
 
-/* line 288, app/assets/stylesheets/covers.css.scss */
+/* line 287, app/assets/stylesheets/covers.css.scss */
 .h4 {
   font-size: 20px;
 }
 
-/* line 291, app/assets/stylesheets/covers.css.scss */
+/* line 290, app/assets/stylesheets/covers.css.scss */
 .bold {
   font-weight: 900;
 }
 
-/* line 294, app/assets/stylesheets/covers.css.scss */
+/* line 293, app/assets/stylesheets/covers.css.scss */
 .semi-bold {
   font-weight: 600;
 }
 
-/* line 297, app/assets/stylesheets/covers.css.scss */
+/* line 296, app/assets/stylesheets/covers.css.scss */
 .normal {
   font-weight: 300;
 }
 
-/* line 300, app/assets/stylesheets/covers.css.scss */
+/* line 299, app/assets/stylesheets/covers.css.scss */
 .italic {
   font-style: italic;
 }
 
-/* line 303, app/assets/stylesheets/covers.css.scss */
+/* line 302, app/assets/stylesheets/covers.css.scss */
 .image-block {
   padding: 0 50px;
 }
 
-/* line 307, app/assets/stylesheets/covers.css.scss */
+/* line 306, app/assets/stylesheets/covers.css.scss */
 .cover-image {
   width: 100%;
   height: auto;
   z-index: 1;
 }
 
-/* line 312, app/assets/stylesheets/covers.css.scss */
+/* line 311, app/assets/stylesheets/covers.css.scss */
 .image-field {
   margin: 0 auto;
   text-align: center;
@@ -19401,7 +20743,7 @@ input.new-commo-item {
   z-index: 1;
 }
 
-/* line 322, app/assets/stylesheets/covers.css.scss */
+/* line 321, app/assets/stylesheets/covers.css.scss */
 .image-form {
   font-size: 1em;
   overflow: hidden;
@@ -19416,13 +20758,13 @@ input.new-commo-item {
   bottom: 0;
 }
 
-/* line 334, app/assets/stylesheets/covers.css.scss */
+/* line 333, app/assets/stylesheets/covers.css.scss */
 .image-form input {
   font-size: 15px;
   font-weight: 500;
 }
 
-/* line 339, app/assets/stylesheets/covers.css.scss */
+/* line 338, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload {
   margin-left: 10px;
   background-color: #dc3545;
@@ -19434,18 +20776,18 @@ input.new-commo-item {
   font-size: 15px;
 }
 
-/* line 349, app/assets/stylesheets/covers.css.scss */
+/* line 348, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload:hover {
   background-color: #c82333;
 }
 
 /* resizable image */
-/* line 359, app/assets/stylesheets/covers.css.scss */
+/* line 358, app/assets/stylesheets/covers.css.scss */
 .resizable {
   margin-top: 15px;
 }
 
-/* line 363, app/assets/stylesheets/covers.css.scss */
+/* line 362, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers {
   /* width: 65%; - removed to allow inline styles to take precedence */
   height: auto;
@@ -19458,23 +20800,23 @@ input.new-commo-item {
 }
 
 /* Show gray background only when no image is uploaded */
-/* line 375, app/assets/stylesheets/covers.css.scss */
+/* line 374, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers.no-image {
   background-color: #f0f0f0;
   min-height: 200px;
 }
 
-/* line 379, app/assets/stylesheets/covers.css.scss */
+/* line 378, app/assets/stylesheets/covers.css.scss */
 .resizable .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 382, app/assets/stylesheets/covers.css.scss */
+/* line 381, app/assets/stylesheets/covers.css.scss */
 .resizers .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 386, app/assets/stylesheets/covers.css.scss */
+/* line 385, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer {
   width: 10px;
   height: 10px;
@@ -19486,28 +20828,28 @@ input.new-commo-item {
   display: none;
 }
 
-/* line 395, app/assets/stylesheets/covers.css.scss */
+/* line 394, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-left {
   left: -5px;
   top: -5px;
   cursor: nwse-resize;
 }
 
-/* line 400, app/assets/stylesheets/covers.css.scss */
+/* line 399, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-right {
   right: -5px;
   top: -5px;
   cursor: nesw-resize;
 }
 
-/* line 405, app/assets/stylesheets/covers.css.scss */
+/* line 404, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-left {
   left: -5px;
   bottom: -5px;
   cursor: nesw-resize;
 }
 
-/* line 410, app/assets/stylesheets/covers.css.scss */
+/* line 409, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-right {
   right: -5px;
   bottom: -5px;
@@ -19515,7 +20857,7 @@ input.new-commo-item {
 }
 
 /* resize block */
-/* line 417, app/assets/stylesheets/covers.css.scss */
+/* line 416, app/assets/stylesheets/covers.css.scss */
 .resize-padding {
   /*background-color: orange;*/
   height: 8px;
@@ -19525,7 +20867,7 @@ input.new-commo-item {
   bottom: 0;
 }
 
-/* line 425, app/assets/stylesheets/covers.css.scss */
+/* line 424, app/assets/stylesheets/covers.css.scss */
 .bottom-padding {
   /*background-color: yellow;*/
   height: 25px;
@@ -19533,19 +20875,19 @@ input.new-commo-item {
   position: relative;
 }
 
-/* line 431, app/assets/stylesheets/covers.css.scss */
+/* line 430, app/assets/stylesheets/covers.css.scss */
 .selected-resizer {
   /*background-color: blue !important;*/
 }
 
-/* line 434, app/assets/stylesheets/covers.css.scss */
+/* line 433, app/assets/stylesheets/covers.css.scss */
 #temp-image {
   width: 490px;
   height: auto;
   display: none;
 }
 
-/* line 440, app/assets/stylesheets/covers.css.scss */
+/* line 439, app/assets/stylesheets/covers.css.scss */
 #small-temp-image {
   width: 50px;
   height: auto;
@@ -19553,7 +20895,7 @@ input.new-commo-item {
 }
 
 /* Split block styles */
-/* line 447, app/assets/stylesheets/covers.css.scss */
+/* line 446, app/assets/stylesheets/covers.css.scss */
 .split-block-container {
   display: flex;
   gap: 10px;
@@ -19562,31 +20904,31 @@ input.new-commo-item {
   /* Prevent horizontal scroll from dragged images */
 }
 
-/* line 454, app/assets/stylesheets/covers.css.scss */
+/* line 453, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper {
   flex: 1;
   width: 50%;
 }
 
-/* line 459, app/assets/stylesheets/covers.css.scss */
+/* line 458, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .block {
   width: 100%;
 }
 
-/* line 463, app/assets/stylesheets/covers.css.scss */
+/* line 462, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   /*width: 90% !important;*/
   /*min-width: 50px;*/
 }
 
-/* line 468, app/assets/stylesheets/covers.css.scss */
+/* line 467, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .cover-image {
   /*max-width: 100%;*/
   /*height: auto;*/
 }
 
 /* Drag handle for split blocks */
-/* line 474, app/assets/stylesheets/covers.css.scss */
+/* line 473, app/assets/stylesheets/covers.css.scss */
 .drag-handle {
   position: absolute;
   top: 50%;
@@ -19607,20 +20949,455 @@ input.new-commo-item {
   user-select: none;
 }
 
-/* line 494, app/assets/stylesheets/covers.css.scss */
+/* line 493, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers:hover .drag-handle {
   opacity: 0.7;
 }
 
-/* line 498, app/assets/stylesheets/covers.css.scss */
+/* line 497, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers.dragging {
   cursor: ew-resize;
   opacity: 0.8;
 }
 
-/* line 503, app/assets/stylesheets/covers.css.scss */
+/* line 502, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   transition: transform 0.3s ease;
+}
+
+/* line 520, app/assets/stylesheets/covers.css.scss */
+.cover-workspace {
+  position: relative;
+  margin: 0 -15px;
+  padding: 0;
+}
+
+/* line 531, app/assets/stylesheets/covers.css.scss */
+.cover-workspace > #cover-canvas {
+  margin-top: -5px !important;
+}
+
+/* line 535, app/assets/stylesheets/covers.css.scss */
+.cover-workspace #cover-canvas {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* line 547, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel {
+  position: absolute;
+  top: 20%;
+  right: -90px;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  padding: 10px 8px;
+  background: #3d3d3d;
+  color: #fff;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* line 563, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-sep {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 6px 4px;
+}
+
+/* line 569, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-inline-form {
+  display: block;
+  margin: 0;
+}
+
+/* line 571, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 32px;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 4px;
+  transition: background-color 0.1s ease;
+}
+
+/* line 591, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* line 592, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn:focus {
+  outline: none;
+}
+
+/* line 593, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-active {
+  background: #1976d2;
+}
+
+/* line 598, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+/* line 601, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-disabled:hover {
+  background: transparent;
+}
+
+/* line 603, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn em, .cover-style-panel .csp-btn strong {
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+/* line 607, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* line 608, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* line 609, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h3 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* line 610, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h4 {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* line 613, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input {
+  width: 100%;
+  height: 26px;
+  margin-top: 2px;
+  padding: 0 6px;
+  background: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+/* line 626, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input::-webkit-inner-spin-button, .cover-style-panel .csp-px-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 631, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+/* line 632, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input.is-disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* line 639, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-italic em {
+  font-style: italic;
+}
+
+/* line 641, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-align-btn {
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* line 647, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-icon img {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
+}
+
+/* line 657, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-selected {
+  border-style: solid;
+  border-color: #1976d2;
+  background: rgba(25, 118, 210, 0.04);
+}
+
+/* line 667, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: #f4f5f7;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* line 678, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form.is-open {
+  display: flex;
+}
+
+/* line 682, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form .cui-file-input {
+  display: none !important;
+}
+
+/* line 684, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form .cui-filename {
+  flex: 1 1 auto;
+  color: #5e6c84;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 693, app/assets/stylesheets/covers.css.scss */
+#cover-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8.5 / 11;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  overflow: visible;
+}
+
+/* line 712, app/assets/stylesheets/covers.css.scss */
+.cover-block {
+  color: #333;
+  font-family: cambria;
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px dashed transparent;
+  cursor: move;
+}
+
+/* line 727, app/assets/stylesheets/covers.css.scss */
+.cover-block:hover {
+  border-color: #90a4ae;
+  background: rgba(9, 30, 66, 0.02);
+}
+
+/* line 732, app/assets/stylesheets/covers.css.scss */
+.cover-block.ui-draggable-dragging {
+  border-color: #1976d2;
+  background: rgba(25, 118, 210, 0.05);
+  cursor: grabbing;
+  z-index: 10;
+}
+
+/* line 741, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-left .cover-block-text {
+  justify-content: flex-start;
+}
+
+/* line 742, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-center .cover-block-text {
+  justify-content: center;
+}
+
+/* line 743, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-right .cover-block-text {
+  justify-content: flex-end;
+}
+
+/* line 750, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-bold .cover-block-text {
+  font-weight: 700;
+}
+
+/* line 751, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-semi-bold .cover-block-text {
+  font-weight: 600;
+}
+
+/* line 752, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-normal .cover-block-text {
+  font-weight: 400;
+}
+
+/* line 753, app/assets/stylesheets/covers.css.scss */
+.cover-block.style-italic .cover-block-text {
+  font-style: italic;
+}
+
+/* line 754, app/assets/stylesheets/covers.css.scss */
+.cover-block.style-normal .cover-block-text {
+  font-style: normal;
+}
+
+/* line 761, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-handle {
+  position: absolute;
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border: 2px solid #1976d2;
+  border-radius: 50%;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  z-index: 4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* line 781, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-nw {
+  left: -6px;
+  top: -6px;
+  cursor: nw-resize;
+}
+
+/* line 782, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-ne {
+  right: -6px;
+  top: -6px;
+  cursor: ne-resize;
+}
+
+/* line 783, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-sw {
+  left: -6px;
+  bottom: -6px;
+  cursor: sw-resize;
+}
+
+/* line 784, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-se {
+  right: -6px;
+  bottom: -6px;
+  cursor: se-resize;
+}
+
+/* line 787, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-selected .ui-resizable-handle {
+  opacity: 1;
+}
+
+/* line 792, app/assets/stylesheets/covers.css.scss */
+.cover-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #1976d2;
+  opacity: 0;
+  transition: opacity 0.08s ease;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* line 803, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="16.5"] {
+  left: 16.5%;
+}
+
+/* line 804, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="50"] {
+  left: 50%;
+}
+
+/* line 805, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="83.5"] {
+  left: 83.5%;
+}
+
+/* line 806, app/assets/stylesheets/covers.css.scss */
+.cover-guide.is-active {
+  opacity: 1;
+}
+
+/* line 808, app/assets/stylesheets/covers.css.scss */
+.cover-block-text {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* line 818, app/assets/stylesheets/covers.css.scss */
+.cover-block-text[contenteditable="true"] {
+  user-select: text;
+  outline: 2px solid #1976d2;
+  outline-offset: 1px;
+  cursor: text;
+}
+
+/* line 825, app/assets/stylesheets/covers.css.scss */
+.cover-block-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* line 830, app/assets/stylesheets/covers.css.scss */
+.cover-block-image-area {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* line 837, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-image:hover .cover-block-image {
+  opacity: 0.8;
+  transition: opacity 0.12s ease;
+}
+
+/* line 842, app/assets/stylesheets/covers.css.scss */
+.cover-block-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f5f7;
+  color: #6b778c;
+  font-size: 12px;
+  border: 1px dashed #b0b7c3;
+  border-radius: 3px;
 }
 /* line 1, app/assets/stylesheets/demob_notifications.scss */
 .demob-notifications-page {
@@ -20345,13 +22122,55 @@ div.alert {
 .nav-up {
   top: -60px;
 }
-/* line 7, app/assets/stylesheets/incidents.scss */
+/* Incident index: year groupings + collapsible prior years */
+/* line 8, app/assets/stylesheets/incidents.scss */
+.incident-year-heading {
+  margin: 24px 0 8px;
+  color: #555;
+  font-weight: 400;
+}
+
+/* line 13, app/assets/stylesheets/incidents.scss */
+details.prior-incidents {
+  margin-top: 32px;
+  border-top: 1px solid #e1e1e1;
+  padding-top: 12px;
+}
+
+/* line 18, app/assets/stylesheets/incidents.scss */
+details.prior-incidents > summary {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 4px;
+  list-style: revert;
+  /* keep the native disclosure triangle */
+  outline: none;
+  color: #333;
+}
+
+/* line 26, app/assets/stylesheets/incidents.scss */
+details.prior-incidents > summary:hover {
+  color: #008cba;
+}
+
+/* line 27, app/assets/stylesheets/incidents.scss */
+details.prior-incidents > summary .text-muted {
+  margin-left: 6px;
+}
+
+/* line 29, app/assets/stylesheets/incidents.scss */
+details.prior-incidents[open] > summary {
+  margin-bottom: 8px;
+}
+
+/* line 32, app/assets/stylesheets/incidents.scss */
 ul.incidents-list {
   margin: 0;
   padding: 0;
 }
 
-/* line 10, app/assets/stylesheets/incidents.scss */
+/* line 35, app/assets/stylesheets/incidents.scss */
 ul.incidents-list li {
   padding: 20px;
   background-color: #e1e1e1;
@@ -20362,24 +22181,24 @@ ul.incidents-list li {
   list-style: none;
 }
 
-/* line 19, app/assets/stylesheets/incidents.scss */
+/* line 44, app/assets/stylesheets/incidents.scss */
 ul.incidents-list li:hover {
   background-color: #07c5ff;
   color: white;
 }
 
-/* line 23, app/assets/stylesheets/incidents.scss */
+/* line 48, app/assets/stylesheets/incidents.scss */
 ul.incidents-list a {
   text-decoration: none;
 }
 
-/* line 28, app/assets/stylesheets/incidents.scss */
+/* line 53, app/assets/stylesheets/incidents.scss */
 #edit-incident-form {
   display: none;
 }
 
 /* incidents */
-/* line 34, app/assets/stylesheets/incidents.scss */
+/* line 59, app/assets/stylesheets/incidents.scss */
 h4.incident-feed {
   margin-top: -1px;
   font-weight: bold;
@@ -20387,68 +22206,68 @@ h4.incident-feed {
   padding-bottom: 10px;
 }
 
-/* line 42, app/assets/stylesheets/incidents.scss */
+/* line 67, app/assets/stylesheets/incidents.scss */
 .incident-info {
   padding: 8px 10px;
 }
 
-/* line 47, app/assets/stylesheets/incidents.scss */
+/* line 72, app/assets/stylesheets/incidents.scss */
 .info-container {
   margin-bottom: 30px;
   background-color: #ffffff;
   padding-bottom: 10px;
 }
 
-/* line 50, app/assets/stylesheets/incidents.scss */
+/* line 75, app/assets/stylesheets/incidents.scss */
 .info-container li {
   list-style: none;
 }
 
-/* line 54, app/assets/stylesheets/incidents.scss */
+/* line 79, app/assets/stylesheets/incidents.scss */
 .info-container h4 {
   padding: 10px 0;
 }
 
-/* line 59, app/assets/stylesheets/incidents.scss */
+/* line 84, app/assets/stylesheets/incidents.scss */
 select {
   width: 100%;
   height: 35px;
 }
 
-/* line 65, app/assets/stylesheets/incidents.scss */
+/* line 90, app/assets/stylesheets/incidents.scss */
 .pad-left-10 {
   margin-left: 10px;
 }
 
-/* line 68, app/assets/stylesheets/incidents.scss */
+/* line 93, app/assets/stylesheets/incidents.scss */
 .bold {
   font-weight: bold;
 }
 
-/* line 72, app/assets/stylesheets/incidents.scss */
+/* line 97, app/assets/stylesheets/incidents.scss */
 #incident-toolbar {
   margin: 10px 0 20px 0;
   padding: 15px 15px 0 15px;
   background-color: #ffffff;
 }
 
-/* line 76, app/assets/stylesheets/incidents.scss */
+/* line 101, app/assets/stylesheets/incidents.scss */
 #incident-toolbar a {
   margin-right: 10px;
 }
 
-/* line 86, app/assets/stylesheets/incidents.scss */
+/* line 111, app/assets/stylesheets/incidents.scss */
 #active-incidents {
   text-align: left;
 }
 
-/* line 89, app/assets/stylesheets/incidents.scss */
+/* line 114, app/assets/stylesheets/incidents.scss */
 #active-incidents ul li {
   list-style: none;
   margin-bottom: 15px;
 }
 
-/* line 95, app/assets/stylesheets/incidents.scss */
+/* line 120, app/assets/stylesheets/incidents.scss */
 .incident-content-block {
   margin-bottom: 10px;
   position: relative;
@@ -20456,12 +22275,12 @@ select {
   line-height: 2em;
 }
 
-/* line 100, app/assets/stylesheets/incidents.scss */
+/* line 125, app/assets/stylesheets/incidents.scss */
 .incident-content-block h4 {
   margin-left: 30px;
 }
 
-/* line 104, app/assets/stylesheets/incidents.scss */
+/* line 129, app/assets/stylesheets/incidents.scss */
 #resource-form {
   padding: 10px;
   border-top: 1px solid #e1e1e1;
@@ -20469,12 +22288,12 @@ select {
   padding-bottom: 50px;
 }
 
-/* line 110, app/assets/stylesheets/incidents.scss */
+/* line 135, app/assets/stylesheets/incidents.scss */
 #resource-panel {
   /*padding-bottom: 20px;*/
 }
 
-/* line 117, app/assets/stylesheets/incidents.scss */
+/* line 142, app/assets/stylesheets/incidents.scss */
 .info-panel {
   padding: 20px 22px 24px;
   color: #172b4d;
@@ -20482,7 +22301,7 @@ select {
   line-height: 1.45;
 }
 
-/* line 124, app/assets/stylesheets/incidents.scss */
+/* line 149, app/assets/stylesheets/incidents.scss */
 .info-panel-header {
   display: flex;
   align-items: center;
@@ -20493,25 +22312,25 @@ select {
   margin-bottom: 18px;
 }
 
-/* line 133, app/assets/stylesheets/incidents.scss */
+/* line 158, app/assets/stylesheets/incidents.scss */
 .info-panel-header h4 {
   margin: 0;
   flex: 0 0 auto;
 }
 
-/* line 135, app/assets/stylesheets/incidents.scss */
+/* line 160, app/assets/stylesheets/incidents.scss */
 .info-panel-header .info-edit-link {
   margin-left: auto;
   font-size: 13px;
   color: #0052cc;
 }
 
-/* line 140, app/assets/stylesheets/incidents.scss */
+/* line 165, app/assets/stylesheets/incidents.scss */
 .info-panel-header .info-edit-link:hover {
   text-decoration: underline;
 }
 
-/* line 144, app/assets/stylesheets/incidents.scss */
+/* line 169, app/assets/stylesheets/incidents.scss */
 .info-status-pill {
   display: inline-block;
   padding: 3px 10px;
@@ -20523,27 +22342,27 @@ select {
   color: #fff;
 }
 
-/* line 154, app/assets/stylesheets/incidents.scss */
+/* line 179, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-uncontained {
   background: #c62828;
 }
 
-/* line 155, app/assets/stylesheets/incidents.scss */
+/* line 180, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-contained {
   background: #f57c00;
 }
 
-/* line 156, app/assets/stylesheets/incidents.scss */
+/* line 181, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-controlled {
   background: #1565c0;
 }
 
-/* line 157, app/assets/stylesheets/incidents.scss */
+/* line 182, app/assets/stylesheets/incidents.scss */
 .info-status-pill.status-out {
   background: #2e7d32;
 }
 
-/* line 161, app/assets/stylesheets/incidents.scss */
+/* line 186, app/assets/stylesheets/incidents.scss */
 .info-hero-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -20551,7 +22370,7 @@ select {
   margin-bottom: 22px;
 }
 
-/* line 168, app/assets/stylesheets/incidents.scss */
+/* line 193, app/assets/stylesheets/incidents.scss */
 .info-hero {
   background: #f4f5f7;
   border-radius: 6px;
@@ -20559,7 +22378,7 @@ select {
   min-height: 90px;
 }
 
-/* line 174, app/assets/stylesheets/incidents.scss */
+/* line 199, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-label {
   font-size: 11px;
   font-weight: 600;
@@ -20569,7 +22388,7 @@ select {
   margin-bottom: 4px;
 }
 
-/* line 183, app/assets/stylesheets/incidents.scss */
+/* line 208, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-number {
   font-size: 24px;
   font-weight: 700;
@@ -20577,18 +22396,18 @@ select {
   line-height: 1.1;
 }
 
-/* line 189, app/assets/stylesheets/incidents.scss */
+/* line 214, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-number .best_in_place {
   display: inline-block;
   min-width: 24px;
 }
 
-/* line 192, app/assets/stylesheets/incidents.scss */
+/* line 217, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-currency {
   font-size: 20px;
 }
 
-/* line 194, app/assets/stylesheets/incidents.scss */
+/* line 219, app/assets/stylesheets/incidents.scss */
 .info-hero .info-hero-unit {
   font-size: 12px;
   font-weight: 500;
@@ -20596,7 +22415,7 @@ select {
   margin-left: 4px;
 }
 
-/* line 202, app/assets/stylesheets/incidents.scss */
+/* line 227, app/assets/stylesheets/incidents.scss */
 .info-progress {
   margin-top: 10px;
   height: 6px;
@@ -20605,14 +22424,14 @@ select {
   overflow: hidden;
 }
 
-/* line 210, app/assets/stylesheets/incidents.scss */
+/* line 235, app/assets/stylesheets/incidents.scss */
 .info-progress-fill {
   height: 100%;
   background: #2e7d32;
   transition: width 0.3s ease;
 }
 
-/* line 217, app/assets/stylesheets/incidents.scss */
+/* line 242, app/assets/stylesheets/incidents.scss */
 .info-section {
   margin-bottom: 18px;
   padding: 14px 16px;
@@ -20621,7 +22440,7 @@ select {
   border-radius: 6px;
 }
 
-/* line 225, app/assets/stylesheets/incidents.scss */
+/* line 250, app/assets/stylesheets/incidents.scss */
 .info-section-title {
   font-size: 11px;
   font-weight: 700;
@@ -20631,32 +22450,32 @@ select {
   margin: 0 0 12px;
 }
 
-/* line 233, app/assets/stylesheets/incidents.scss */
+/* line 258, app/assets/stylesheets/incidents.scss */
 .info-section-title .fa {
   margin-right: 6px;
   color: #7a869a;
 }
 
-/* line 239, app/assets/stylesheets/incidents.scss */
+/* line 264, app/assets/stylesheets/incidents.scss */
 .info-section-hint {
   font-size: 12px;
   color: #6b778c;
   margin: 0 0 10px;
 }
 
-/* line 245, app/assets/stylesheets/incidents.scss */
+/* line 270, app/assets/stylesheets/incidents.scss */
 .info-section-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px 20px;
 }
 
-/* line 251, app/assets/stylesheets/incidents.scss */
+/* line 276, app/assets/stylesheets/incidents.scss */
 .info-field {
   min-width: 0;
 }
 
-/* line 254, app/assets/stylesheets/incidents.scss */
+/* line 279, app/assets/stylesheets/incidents.scss */
 .info-field label {
   display: block;
   font-size: 11px;
@@ -20667,7 +22486,7 @@ select {
   margin: 0 0 2px;
 }
 
-/* line 264, app/assets/stylesheets/incidents.scss */
+/* line 289, app/assets/stylesheets/incidents.scss */
 .info-field .best_in_place {
   display: inline-block;
   color: #172b4d;
@@ -20677,24 +22496,24 @@ select {
   min-width: 40px;
 }
 
-/* line 272, app/assets/stylesheets/incidents.scss */
+/* line 297, app/assets/stylesheets/incidents.scss */
 .info-field .best_in_place:hover {
   background: #eef4ff;
   cursor: text;
 }
 
-/* line 278, app/assets/stylesheets/incidents.scss */
+/* line 303, app/assets/stylesheets/incidents.scss */
 .info-field .info-coord-sep {
   color: #a5adba;
   margin: 0 2px;
 }
 
-/* line 284, app/assets/stylesheets/incidents.scss */
+/* line 309, app/assets/stylesheets/incidents.scss */
 .info-field-wide {
   grid-column: 1 / -1;
 }
 
-/* line 286, app/assets/stylesheets/incidents.scss */
+/* line 311, app/assets/stylesheets/incidents.scss */
 .info-required-hint {
   color: #c62828;
   font-size: 10px;
@@ -20704,7 +22523,7 @@ select {
   margin-left: 4px;
 }
 
-/* line 296, app/assets/stylesheets/incidents.scss */
+/* line 321, app/assets/stylesheets/incidents.scss */
 .info-timeline {
   display: flex;
   align-items: flex-start;
@@ -20712,14 +22531,14 @@ select {
   padding-top: 4px;
 }
 
-/* line 303, app/assets/stylesheets/incidents.scss */
+/* line 328, app/assets/stylesheets/incidents.scss */
 .info-timeline-step {
   flex: 1 1 0;
   min-width: 0;
   text-align: center;
 }
 
-/* line 308, app/assets/stylesheets/incidents.scss */
+/* line 333, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-dot {
   width: 14px;
   height: 14px;
@@ -20730,7 +22549,7 @@ select {
   margin: 0 auto 8px;
 }
 
-/* line 318, app/assets/stylesheets/incidents.scss */
+/* line 343, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-label {
   font-size: 11px;
   font-weight: 600;
@@ -20740,13 +22559,13 @@ select {
   margin-bottom: 4px;
 }
 
-/* line 327, app/assets/stylesheets/incidents.scss */
+/* line 352, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-date {
   font-size: 12px;
   color: #97a0af;
 }
 
-/* line 331, app/assets/stylesheets/incidents.scss */
+/* line 356, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-date .best_in_place {
   display: inline-block;
   padding: 1px 4px;
@@ -20754,30 +22573,30 @@ select {
   min-width: 40px;
 }
 
-/* line 337, app/assets/stylesheets/incidents.scss */
+/* line 362, app/assets/stylesheets/incidents.scss */
 .info-timeline-step .info-timeline-date .best_in_place:hover {
   background: #eef4ff;
   cursor: text;
 }
 
-/* line 342, app/assets/stylesheets/incidents.scss */
+/* line 367, app/assets/stylesheets/incidents.scss */
 .info-timeline-step.is-active .info-timeline-dot {
   background: #2e7d32;
   box-shadow: 0 0 0 1px #2e7d32;
 }
 
-/* line 343, app/assets/stylesheets/incidents.scss */
+/* line 368, app/assets/stylesheets/incidents.scss */
 .info-timeline-step.is-active .info-timeline-label {
   color: #172b4d;
 }
 
-/* line 344, app/assets/stylesheets/incidents.scss */
+/* line 369, app/assets/stylesheets/incidents.scss */
 .info-timeline-step.is-active .info-timeline-date {
   color: #172b4d;
   font-weight: 500;
 }
 
-/* line 348, app/assets/stylesheets/incidents.scss */
+/* line 373, app/assets/stylesheets/incidents.scss */
 .info-timeline-bar {
   flex: 0 0 auto;
   align-self: center;
@@ -20787,19 +22606,19 @@ select {
   background: #dfe1e6;
 }
 
-/* line 356, app/assets/stylesheets/incidents.scss */
+/* line 381, app/assets/stylesheets/incidents.scss */
 .info-timeline-bar.is-active {
   background: #2e7d32;
 }
 
-/* line 360, app/assets/stylesheets/incidents.scss */
+/* line 385, app/assets/stylesheets/incidents.scss */
 .financial-codes-block {
   margin-top: 14px;
   padding-top: 12px;
   border-top: 1px solid #eef0f3;
 }
 
-/* line 366, app/assets/stylesheets/incidents.scss */
+/* line 391, app/assets/stylesheets/incidents.scss */
 .financial-codes-header {
   display: flex;
   align-items: center;
@@ -20807,7 +22626,7 @@ select {
   margin-bottom: 6px;
 }
 
-/* line 373, app/assets/stylesheets/incidents.scss */
+/* line 398, app/assets/stylesheets/incidents.scss */
 .financial-codes-title {
   font-size: 11px;
   font-weight: 700;
@@ -20816,19 +22635,19 @@ select {
   color: #5e6c84;
 }
 
-/* line 381, app/assets/stylesheets/incidents.scss */
+/* line 406, app/assets/stylesheets/incidents.scss */
 .financial-code-add-toggle {
   font-size: 12px;
   padding: 0 4px !important;
   color: #0052cc;
 }
 
-/* line 386, app/assets/stylesheets/incidents.scss */
+/* line 411, app/assets/stylesheets/incidents.scss */
 .financial-code-add-toggle:hover {
   text-decoration: underline;
 }
 
-/* line 389, app/assets/stylesheets/incidents.scss */
+/* line 414, app/assets/stylesheets/incidents.scss */
 .financial-codes-table {
   width: 100%;
   border-collapse: collapse;
@@ -20836,19 +22655,19 @@ select {
   margin-bottom: 4px;
 }
 
-/* line 395, app/assets/stylesheets/incidents.scss */
+/* line 420, app/assets/stylesheets/incidents.scss */
 .financial-codes-table td {
   padding: 4px 8px;
   border-bottom: 1px solid #eef0f3;
   vertical-align: middle;
 }
 
-/* line 401, app/assets/stylesheets/incidents.scss */
+/* line 426, app/assets/stylesheets/incidents.scss */
 .financial-codes-table tr:last-child td {
   border-bottom: none;
 }
 
-/* line 403, app/assets/stylesheets/incidents.scss */
+/* line 428, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-agency {
   width: 30%;
   font-weight: 600;
@@ -20857,26 +22676,26 @@ select {
   letter-spacing: 0.3px;
 }
 
-/* line 411, app/assets/stylesheets/incidents.scss */
+/* line 436, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-code {
   color: #42526e;
   font-family: 'SF Mono', Menlo, Consolas, monospace;
   font-size: 12px;
 }
 
-/* line 412, app/assets/stylesheets/incidents.scss */
+/* line 437, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-actions {
   width: 32px;
   text-align: right;
 }
 
-/* line 415, app/assets/stylesheets/incidents.scss */
+/* line 440, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-actions .fc-delete-form {
   display: inline-block;
   margin: 0;
 }
 
-/* line 418, app/assets/stylesheets/incidents.scss */
+/* line 443, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-delete {
   background: none;
   border: 0;
@@ -20887,12 +22706,12 @@ select {
   cursor: pointer;
 }
 
-/* line 427, app/assets/stylesheets/incidents.scss */
+/* line 452, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .fc-delete:hover {
   color: #c62828;
 }
 
-/* line 430, app/assets/stylesheets/incidents.scss */
+/* line 455, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .best_in_place {
   display: inline-block;
   min-width: 40px;
@@ -20900,13 +22719,13 @@ select {
   border-radius: 3px;
 }
 
-/* line 436, app/assets/stylesheets/incidents.scss */
+/* line 461, app/assets/stylesheets/incidents.scss */
 .financial-codes-table .best_in_place:hover {
   background: #eef4ff;
   cursor: text;
 }
 
-/* line 440, app/assets/stylesheets/incidents.scss */
+/* line 465, app/assets/stylesheets/incidents.scss */
 .financial-code-add-form {
   display: flex;
   gap: 6px;
@@ -20917,28 +22736,28 @@ select {
   margin-top: 4px;
 }
 
-/* line 449, app/assets/stylesheets/incidents.scss */
+/* line 474, app/assets/stylesheets/incidents.scss */
 .financial-code-add-form .form-control {
   flex: 1 1 auto;
 }
 
-/* line 450, app/assets/stylesheets/incidents.scss */
+/* line 475, app/assets/stylesheets/incidents.scss */
 .financial-code-add-form .btn {
   flex: 0 0 auto;
 }
 
-/* line 454, app/assets/stylesheets/incidents.scss */
+/* line 479, app/assets/stylesheets/incidents.scss */
 .info-irwin-section {
   border-color: #dbe4ff;
   background: #f0f4ff;
 }
 
-/* line 458, app/assets/stylesheets/incidents.scss */
+/* line 483, app/assets/stylesheets/incidents.scss */
 .info-irwin-section .info-section-title .fa {
   color: #4c6ef5;
 }
 
-/* line 461, app/assets/stylesheets/incidents.scss */
+/* line 486, app/assets/stylesheets/incidents.scss */
 .info-warning {
   background: #fff4e5;
   border: 1px solid #ffcc80;
@@ -20949,38 +22768,38 @@ select {
   font-size: 13px;
 }
 
-/* line 470, app/assets/stylesheets/incidents.scss */
+/* line 495, app/assets/stylesheets/incidents.scss */
 .info-warning .fa {
   margin-right: 6px;
   color: #ef6c00;
 }
 
-/* line 476, app/assets/stylesheets/incidents.scss */
+/* line 501, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row {
   margin: 0;
   padding: 0;
   border: 0;
 }
 
-/* line 481, app/assets/stylesheets/incidents.scss */
+/* line 506, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* line 482, app/assets/stylesheets/incidents.scss */
+/* line 507, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .btn .fa {
   margin-right: 4px;
 }
 
-/* line 483, app/assets/stylesheets/incidents.scss */
+/* line 508, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .muted {
   color: #6b778c;
   font-size: 12px;
   margin-left: 10px;
 }
 
-/* line 490, app/assets/stylesheets/incidents.scss */
+/* line 515, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row {
   clear: both;
   padding: 14px 0 4px;
@@ -20988,34 +22807,34 @@ select {
   margin-top: 12px;
 }
 
-/* line 496, app/assets/stylesheets/incidents.scss */
+/* line 521, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .btn .fa {
   margin-right: 4px;
 }
 
-/* line 497, app/assets/stylesheets/incidents.scss */
+/* line 522, app/assets/stylesheets/incidents.scss */
 .irwin-populate-row .muted {
   color: #6b778c;
   font-size: 12px;
 }
 
-/* line 501, app/assets/stylesheets/incidents.scss */
+/* line 526, app/assets/stylesheets/incidents.scss */
 #irwin-diff-table td, #irwin-diff-table th {
   vertical-align: middle;
 }
 
-/* line 502, app/assets/stylesheets/incidents.scss */
+/* line 527, app/assets/stylesheets/incidents.scss */
 #irwin-diff-table td.text-muted {
   font-size: 12px;
 }
 
-/* line 507, app/assets/stylesheets/incidents.scss */
+/* line 532, app/assets/stylesheets/incidents.scss */
 .incident-origin-marker {
   background: transparent;
   border: 0;
 }
 
-/* line 511, app/assets/stylesheets/incidents.scss */
+/* line 536, app/assets/stylesheets/incidents.scss */
 .incident-origin-pin {
   display: inline-block;
   font-size: 34px;
@@ -21023,32 +22842,32 @@ select {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
 }
 
-/* line 519, app/assets/stylesheets/incidents.scss */
+/* line 544, app/assets/stylesheets/incidents.scss */
 .resources-summary-panel .resources-panel-manage {
   color: #444;
   font-weight: 400;
   font-size: 13px;
 }
 
-/* line 524, app/assets/stylesheets/incidents.scss */
+/* line 549, app/assets/stylesheets/incidents.scss */
 .resources-summary-panel .resources-panel-manage:hover {
   color: #0052cc;
   text-decoration: none;
 }
 
-/* line 525, app/assets/stylesheets/incidents.scss */
+/* line 550, app/assets/stylesheets/incidents.scss */
 .resources-summary-panel .resources-panel-manage .fa {
   margin-left: 4px;
   font-size: 11px;
 }
 
-/* line 529, app/assets/stylesheets/incidents.scss */
+/* line 554, app/assets/stylesheets/incidents.scss */
 .resources-summary-body {
   padding: 16px 20px;
   color: #172b4d;
 }
 
-/* line 534, app/assets/stylesheets/incidents.scss */
+/* line 559, app/assets/stylesheets/incidents.scss */
 .resources-summary-headline {
   display: flex;
   gap: 20px;
@@ -21058,12 +22877,12 @@ select {
   border-bottom: 1px solid #eef0f3;
 }
 
-/* line 543, app/assets/stylesheets/incidents.scss */
+/* line 568, app/assets/stylesheets/incidents.scss */
 .rs-hero {
   min-width: 140px;
 }
 
-/* line 546, app/assets/stylesheets/incidents.scss */
+/* line 571, app/assets/stylesheets/incidents.scss */
 .rs-hero .rs-hero-number {
   font-size: 32px;
   font-weight: 700;
@@ -21071,7 +22890,7 @@ select {
   line-height: 1;
 }
 
-/* line 553, app/assets/stylesheets/incidents.scss */
+/* line 578, app/assets/stylesheets/incidents.scss */
 .rs-hero .rs-hero-label {
   font-size: 11px;
   font-weight: 600;
@@ -21081,12 +22900,12 @@ select {
   margin-top: 4px;
 }
 
-/* line 563, app/assets/stylesheets/incidents.scss */
+/* line 588, app/assets/stylesheets/incidents.scss */
 .rs-hero-muted .rs-hero-number {
   color: #6b778c;
 }
 
-/* line 565, app/assets/stylesheets/incidents.scss */
+/* line 590, app/assets/stylesheets/incidents.scss */
 .resources-summary-categories {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -21094,7 +22913,7 @@ select {
   margin-bottom: 20px;
 }
 
-/* line 572, app/assets/stylesheets/incidents.scss */
+/* line 597, app/assets/stylesheets/incidents.scss */
 .rs-cat {
   display: flex;
   align-items: center;
@@ -21104,12 +22923,12 @@ select {
   border-radius: 6px;
 }
 
-/* line 580, app/assets/stylesheets/incidents.scss */
+/* line 605, app/assets/stylesheets/incidents.scss */
 .rs-cat.rs-cat-empty {
   opacity: 0.55;
 }
 
-/* line 582, app/assets/stylesheets/incidents.scss */
+/* line 607, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-icon {
   display: flex;
   align-items: center;
@@ -21123,7 +22942,7 @@ select {
   flex: 0 0 auto;
 }
 
-/* line 595, app/assets/stylesheets/incidents.scss */
+/* line 620, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-label {
   font-size: 11px;
   font-weight: 600;
@@ -21132,21 +22951,21 @@ select {
   color: #5e6c84;
 }
 
-/* line 603, app/assets/stylesheets/incidents.scss */
+/* line 628, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-counts {
   font-size: 13px;
   color: #172b4d;
   margin-top: 2px;
 }
 
-/* line 609, app/assets/stylesheets/incidents.scss */
+/* line 634, app/assets/stylesheets/incidents.scss */
 .rs-cat .rs-cat-primary,
 .rs-cat .rs-cat-personnel {
   font-weight: 700;
   font-size: 14px;
 }
 
-/* line 617, app/assets/stylesheets/incidents.scss */
+/* line 642, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs h5 {
   font-size: 12px;
   font-weight: 600;
@@ -21156,7 +22975,7 @@ select {
   margin: 0 0 8px;
 }
 
-/* line 626, app/assets/stylesheets/incidents.scss */
+/* line 651, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .muted {
   color: #6b778c;
   font-weight: 400;
@@ -21166,14 +22985,14 @@ select {
   margin-left: 4px;
 }
 
-/* line 635, app/assets/stylesheets/incidents.scss */
+/* line 660, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* line 640, app/assets/stylesheets/incidents.scss */
+/* line 665, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-list li {
   display: flex;
   gap: 10px;
@@ -21182,24 +23001,24 @@ select {
   font-size: 13px;
 }
 
-/* line 647, app/assets/stylesheets/incidents.scss */
+/* line 672, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-list li:last-child {
   border-bottom: none;
 }
 
-/* line 651, app/assets/stylesheets/incidents.scss */
+/* line 676, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-num {
   font-weight: 700;
   min-width: 50px;
 }
 
-/* line 652, app/assets/stylesheets/incidents.scss */
+/* line 677, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-name {
   flex: 1;
   color: #42526e;
 }
 
-/* line 653, app/assets/stylesheets/incidents.scss */
+/* line 678, app/assets/stylesheets/incidents.scss */
 .resources-summary-demobs .rs-demob-lwd {
   color: #c62828;
   font-weight: 600;
@@ -21207,7 +23026,7 @@ select {
   white-space: nowrap;
 }
 
-/* line 655, app/assets/stylesheets/incidents.scss */
+/* line 680, app/assets/stylesheets/incidents.scss */
 .panel-foot {
   margin-top: 10px;
   background-color: #f5f5f5;
@@ -21217,83 +23036,213 @@ select {
   border-top: 1px solid #D7d7d7;
 }
 
-/* line 664, app/assets/stylesheets/incidents.scss */
+/* line 689, app/assets/stylesheets/incidents.scss */
 .incidents-panel h4 {
   color: #3d3d3d;
 }
 
-/* line 667, app/assets/stylesheets/incidents.scss */
+/* line 692, app/assets/stylesheets/incidents.scss */
 .incidents-panel a {
   color: #3d3d3d;
 }
 
-/* line 672, app/assets/stylesheets/incidents.scss */
+/* line 697, app/assets/stylesheets/incidents.scss */
 .incident-index-content {
   display: none;
 }
 
-/* line 677, app/assets/stylesheets/incidents.scss */
+/* line 702, app/assets/stylesheets/incidents.scss */
 .sm-bip-input input {
   min-width: 30px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 685, app/assets/stylesheets/incidents.scss */
+/* line 710, app/assets/stylesheets/incidents.scss */
 .md-bip-input input {
   min-width: 60px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 693, app/assets/stylesheets/incidents.scss */
+/* line 718, app/assets/stylesheets/incidents.scss */
 .lg-bip-input input {
   min-width: 120px;
   width: auto;
   field-sizing: content;
 }
 
-/* line 699, app/assets/stylesheets/incidents.scss */
+/* line 724, app/assets/stylesheets/incidents.scss */
 #share-incident-button {
   position: absolute;
   right: 30px;
   top: 14px;
 }
 
-/* line 706, app/assets/stylesheets/incidents.scss */
+/* line 731, app/assets/stylesheets/incidents.scss */
 .incident-name a {
   color: #3d3d3d !important;
 }
 
-/* line 709, app/assets/stylesheets/incidents.scss */
+/* line 734, app/assets/stylesheets/incidents.scss */
 .incident-name h1 {
   font-weight: 777;
   margin-bottom: 20px;
 }
 
-/* line 714, app/assets/stylesheets/incidents.scss */
+/* line 739, app/assets/stylesheets/incidents.scss */
 #invite-user-panel {
   display: none;
 }
 
-/* line 717, app/assets/stylesheets/incidents.scss */
+/* line 742, app/assets/stylesheets/incidents.scss */
 #invite-container {
   position: relative;
   overflow: hidden;
   padding: 20px;
 }
 
-/* line 722, app/assets/stylesheets/incidents.scss */
+/* line 747, app/assets/stylesheets/incidents.scss */
 #invite-button {
   position: absolute;
   right: 15px;
   margin-top: -35px;
+  padding: 8px 12px;
 }
 
-/* line 728, app/assets/stylesheets/incidents.scss */
+/* line 754, app/assets/stylesheets/incidents.scss */
 .remove-user img {
   height: 11px;
   width: 11px;
+}
+/* line 1, app/assets/stylesheets/ops.scss */
+.ops-container {
+  padding: 12px 4px 32px;
+}
+
+/* line 5, app/assets/stylesheets/ops.scss */
+.ops-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px 16px;
+}
+
+/* line 11, app/assets/stylesheets/ops.scss */
+.ops-toolbar label {
+  font-weight: 600;
+  margin: 0;
+}
+
+/* line 12, app/assets/stylesheets/ops.scss */
+.ops-toolbar select {
+  min-width: 220px;
+  padding: 4px 6px;
+}
+
+/* line 13, app/assets/stylesheets/ops.scss */
+.ops-toolbar .ops-day-range {
+  margin-left: auto;
+  font-size: 12px;
+}
+
+/* line 16, app/assets/stylesheets/ops.scss */
+table.ops-215-table,
+table.ops-projections-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* line 22, app/assets/stylesheets/ops.scss */
+table.ops-215-table th, table.ops-215-table td,
+table.ops-projections-table th,
+table.ops-projections-table td {
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 28, app/assets/stylesheets/ops.scss */
+table.ops-215-table thead th,
+table.ops-projections-table thead th {
+  background: #f2f2f2;
+  font-weight: 600;
+}
+
+/* line 32, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-kind,
+table.ops-projections-table .ops-215-kind {
+  text-align: left;
+  background: #fafafa;
+  font-weight: 500;
+  width: 22%;
+}
+
+/* line 38, app/assets/stylesheets/ops.scss */
+table.ops-215-table .empty,
+table.ops-projections-table .empty {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 16px;
+}
+
+/* line 44, app/assets/stylesheets/ops.scss */
+table.ops-215-table .centered,
+table.ops-projections-table .centered {
+  text-align: center;
+}
+
+/* line 48, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-day {
+  background: #eaeaea;
+}
+
+/* line 49, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-have {
+  background: #f8fbff;
+}
+
+/* line 50, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req {
+  background: #fff8ee;
+}
+
+/* line 51, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-need {
+  background: #fff;
+  font-weight: 600;
+}
+
+/* line 53, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  padding: 2px 0;
+  font: inherit;
+  outline: 0;
+  /* Chrome number input spinners are noisy in narrow cells. */
+  -moz-appearance: textfield;
+}
+
+/* line 61, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input:focus {
+  background: #fffbe6;
+}
+
+/* line 64, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input::-webkit-outer-spin-button, table.ops-215-table .ops-215-req-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 73, app/assets/stylesheets/ops.scss */
+table.ops-projections-table .ops-total-row td {
+  background: #f0f5ff;
 }
 /* show */
 /* line 4, app/assets/stylesheets/plans.css.scss */
@@ -21901,33 +23850,204 @@ h1.header {
   overflow: hidden;
 }
 
-/* line 463, app/assets/stylesheets/plans.css.scss */
+/* line 470, app/assets/stylesheets/plans.css.scss */
+#organization-assignments {
+  --row-height: 30px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 476, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 483, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container > .col-xs-12 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 491, app/assets/stylesheets/plans.css.scss */
+.org-columns {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 507, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child,
+#organization-assignments .right-column > .row:last-child {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 513, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child > .content-box,
+#organization-assignments .right-column > .row:last-child > .content-box {
+  flex: 1 1 50%;
+  height: auto !important;
+  min-height: var(--row-height, 30px);
+}
+
+/* line 520, app/assets/stylesheets/plans.css.scss */
+.org-columns > .left-column,
+.org-columns > .right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 543, app/assets/stylesheets/plans.css.scss */
+.add-org-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* line 560, app/assets/stylesheets/plans.css.scss */
+.add-org-btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* line 562, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:hover {
+  opacity: 0.7;
+}
+
+/* line 563, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:focus {
+  outline: none;
+}
+
+/* line 566, app/assets/stylesheets/plans.css.scss */
+img.add-org-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* line 573, app/assets/stylesheets/plans.css.scss */
+.add-header-btn i.fa {
+  font-size: 18px;
+  color: #555;
+  width: 20px;
+  text-align: center;
+}
+
+/* line 584, app/assets/stylesheets/plans.css.scss */
+.staff-row {
+  position: relative;
+}
+
+/* line 593, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  z-index: 6;
+  cursor: pointer;
+}
+
+/* line 603, app/assets/stylesheets/plans.css.scss */
+form.insert-below-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 609, app/assets/stylesheets/plans.css.scss */
+.insert-below {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: absolute;
+  right: 85px;
+  bottom: -11px;
+  top: auto;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 50%;
+  color: #000;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  z-index: 5;
+}
+
+/* line 638, app/assets/stylesheets/plans.css.scss */
+.insert-below:hover {
+  color: #000;
+  border-color: #000;
+}
+
+/* line 642, app/assets/stylesheets/plans.css.scss */
+.insert-below:focus {
+  outline: none;
+}
+
+/* line 648, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone:hover ~ .content-box .insert-below,
+.insert-below:hover,
+.insert-below:focus {
+  opacity: 1;
+}
+
+/* line 651, app/assets/stylesheets/plans.css.scss */
 img.small-icon {
   height: 15px;
   width: 15px;
 }
 
-/* line 467, app/assets/stylesheets/plans.css.scss */
+/* line 655, app/assets/stylesheets/plans.css.scss */
 img.medium-icon {
   height: 25px;
   width: 25px;
 }
 
-/* line 471, app/assets/stylesheets/plans.css.scss */
+/* line 659, app/assets/stylesheets/plans.css.scss */
 #add-freqs-button {
   text-align: center;
   padding-right: 5px;
   padding-left: 5px;
 }
 
-/* line 476, app/assets/stylesheets/plans.css.scss */
+/* line 664, app/assets/stylesheets/plans.css.scss */
 img#add-freqs-button {
   height: 30px;
   width: 30px;
 }
 
 /* Attachments */
-/* line 483, app/assets/stylesheets/plans.css.scss */
+/* line 671, app/assets/stylesheets/plans.css.scss */
 #attachments {
   overflow: hidden;
   border-top: 1px solid black;
@@ -21937,25 +24057,25 @@ img#add-freqs-button {
   overflow: hidden;
 }
 
-/* line 490, app/assets/stylesheets/plans.css.scss */
+/* line 678, app/assets/stylesheets/plans.css.scss */
 #attachments ul {
   list-style: none;
 }
 
-/* line 493, app/assets/stylesheets/plans.css.scss */
+/* line 681, app/assets/stylesheets/plans.css.scss */
 #attachments li.attachment {
   list-style: none;
   float: left;
   width: 200px;
 }
 
-/* line 500, app/assets/stylesheets/plans.css.scss */
+/* line 688, app/assets/stylesheets/plans.css.scss */
 .checkboxes img {
   height: 17px !important;
   width: 17px !important;
 }
 
-/* line 504, app/assets/stylesheets/plans.css.scss */
+/* line 692, app/assets/stylesheets/plans.css.scss */
 .bip-checkbox {
   cursor: pointer;
   font-size: 17px;
@@ -21963,7 +24083,7 @@ img#add-freqs-button {
 }
 
 /* New Incident conversation UI form*/
-/* line 512, app/assets/stylesheets/plans.css.scss */
+/* line 700, app/assets/stylesheets/plans.css.scss */
 .ui-group {
   /*.form-incident-type {
     display: none;
@@ -21973,37 +24093,37 @@ img#add-freqs-button {
   }*/
 }
 
-/* line 519, app/assets/stylesheets/plans.css.scss */
+/* line 707, app/assets/stylesheets/plans.css.scss */
 .ui-group .form-attributes {
   display: none;
 }
 
-/* line 524, app/assets/stylesheets/plans.css.scss */
+/* line 712, app/assets/stylesheets/plans.css.scss */
 .ui-group p {
   color: #979797;
   font-size: 1.1em;
 }
 
-/* line 528, app/assets/stylesheets/plans.css.scss */
+/* line 716, app/assets/stylesheets/plans.css.scss */
 .ui-group label {
   font-size: 1.6em;
   font-weight: 999;
   margin-bottom: 20px;
 }
 
-/* line 533, app/assets/stylesheets/plans.css.scss */
+/* line 721, app/assets/stylesheets/plans.css.scss */
 .ui-group div.next-btn-container {
   margin-top: 10px;
   width: 100%;
   margin-bottom: 10px;
 }
 
-/* line 538, app/assets/stylesheets/plans.css.scss */
+/* line 726, app/assets/stylesheets/plans.css.scss */
 .ui-group div.hideable {
   visibility: hidden;
 }
 
-/* line 541, app/assets/stylesheets/plans.css.scss */
+/* line 729, app/assets/stylesheets/plans.css.scss */
 .ui-group .next-btn {
   max-width: 60px;
 }
@@ -22118,7 +24238,14 @@ table.assigned-resources th {
   width: 100%;
 }
 
-/* line 79, app/assets/stylesheets/assignments.css.scss */
+/* line 78, app/assets/stylesheets/assignments.css.scss */
+#incident-assignments > .container,
+#incident-assignments > .container > .col-xs-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* line 84, app/assets/stylesheets/assignments.css.scss */
 a.new-freq-button {
   width: 25px;
   height: 25px;
@@ -22135,13 +24262,13 @@ a.new-freq-button {
   display: none;
 }
 
-/* line 94, app/assets/stylesheets/assignments.css.scss */
+/* line 99, app/assets/stylesheets/assignments.css.scss */
 a.new-freq-button:hover {
   text-decoration: none;
   color: black;
 }
 
-/* line 100, app/assets/stylesheets/assignments.css.scss */
+/* line 105, app/assets/stylesheets/assignments.css.scss */
 #freq-form {
   display: none;
   width: 100%;
@@ -22153,12 +24280,12 @@ a.new-freq-button:hover {
   padding: 15px 0;
 }
 
-/* line 110, app/assets/stylesheets/assignments.css.scss */
+/* line 115, app/assets/stylesheets/assignments.css.scss */
 #freq-form li {
   display: inline;
 }
 
-/* line 116, app/assets/stylesheets/assignments.css.scss */
+/* line 121, app/assets/stylesheets/assignments.css.scss */
 .header-button {
   background-color: #3d3d3d;
   color: white;
@@ -22173,14 +24300,14 @@ a.new-freq-button:hover {
   display: none;
 }
 
-/* line 130, app/assets/stylesheets/assignments.css.scss */
+/* line 135, app/assets/stylesheets/assignments.css.scss */
 .header-button:hover {
   padding: 3px 11px;
   margin-top: -3px;
   cursor: pointer;
 }
 
-/* line 135, app/assets/stylesheets/assignments.css.scss */
+/* line 140, app/assets/stylesheets/assignments.css.scss */
 #resource-assignments-form {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -22191,19 +24318,19 @@ a.new-freq-button:hover {
   display: none;
 }
 
-/* line 143, app/assets/stylesheets/assignments.css.scss */
+/* line 148, app/assets/stylesheets/assignments.css.scss */
 #resource-assignments-form li {
   list-style: none;
 }
 
-/* line 147, app/assets/stylesheets/assignments.css.scss */
+/* line 152, app/assets/stylesheets/assignments.css.scss */
 .personnel_num {
   padding-left: 15px;
   padding-top: 5px;
   position: absolute;
 }
 
-/* line 152, app/assets/stylesheets/assignments.css.scss */
+/* line 157, app/assets/stylesheets/assignments.css.scss */
 .ops-box {
   border-top: 1px solid black;
   border-right: 1px solid black;
@@ -22214,13 +24341,13 @@ a.new-freq-button:hover {
   padding-left: 10px;
 }
 
-/* line 161, app/assets/stylesheets/assignments.css.scss */
+/* line 166, app/assets/stylesheets/assignments.css.scss */
 #ops-box-container {
   border-left: 1px solid black;
   overflow: hidden;
 }
 
-/* line 165, app/assets/stylesheets/assignments.css.scss */
+/* line 170, app/assets/stylesheets/assignments.css.scss */
 .resources-button {
   overflow: hidden;
   position: absolute;
@@ -22242,40 +24369,40 @@ a.new-freq-button:hover {
   color: #3d3d3d;
 }
 
-/* line 184, app/assets/stylesheets/assignments.css.scss */
+/* line 189, app/assets/stylesheets/assignments.css.scss */
 .resources-button i {
   margin-top: 10px;
   margin-left: 6px;
 }
 
-/* line 188, app/assets/stylesheets/assignments.css.scss */
+/* line 193, app/assets/stylesheets/assignments.css.scss */
 .resources-button a {
   color: #3d3d3d !important;
 }
 
-/* line 191, app/assets/stylesheets/assignments.css.scss */
+/* line 196, app/assets/stylesheets/assignments.css.scss */
 .resources-button a:hover {
   color: #3d3d3d !important;
 }
 
-/* line 195, app/assets/stylesheets/assignments.css.scss */
+/* line 200, app/assets/stylesheets/assignments.css.scss */
 #ops-resources {
   left: -16px;
   margin-top: 13px;
 }
 
-/* line 200, app/assets/stylesheets/assignments.css.scss */
+/* line 205, app/assets/stylesheets/assignments.css.scss */
 #assign-resources-button {
   left: -15px;
   margin-top: 133px;
 }
 
-/* line 205, app/assets/stylesheets/assignments.css.scss */
+/* line 210, app/assets/stylesheets/assignments.css.scss */
 #control-operations {
   min-height: 160px;
 }
 
-/* line 208, app/assets/stylesheets/assignments.css.scss */
+/* line 213, app/assets/stylesheets/assignments.css.scss */
 #ops-resource-form {
   border-right: 1px solid black;
   border-left: 1px solid black;
@@ -22285,12 +24412,12 @@ a.new-freq-button:hover {
   display: none;
 }
 
-/* line 215, app/assets/stylesheets/assignments.css.scss */
+/* line 220, app/assets/stylesheets/assignments.css.scss */
 #ops-resource-form li {
   list-style: none;
 }
 
-/* line 219, app/assets/stylesheets/assignments.css.scss */
+/* line 224, app/assets/stylesheets/assignments.css.scss */
 #add-freqs-button {
   left: -15px;
   margin-top: 75px;
@@ -22298,7 +24425,7 @@ a.new-freq-button:hover {
   padding-top: 2px;
 }
 
-/* line 225, app/assets/stylesheets/assignments.css.scss */
+/* line 230, app/assets/stylesheets/assignments.css.scss */
 #new-204-button {
   margin-left: 20px;
   overflow: hidden;
@@ -22322,68 +24449,68 @@ a.new-freq-button:hover {
   padding-top: 0;
 }
 
-/* line 246, app/assets/stylesheets/assignments.css.scss */
+/* line 251, app/assets/stylesheets/assignments.css.scss */
 #new-204-button i {
   margin-top: 0px;
   margin-left: 2px;
 }
 
-/* line 250, app/assets/stylesheets/assignments.css.scss */
+/* line 255, app/assets/stylesheets/assignments.css.scss */
 #new-204-button a {
   color: #3d3d3d !important;
 }
 
-/* line 254, app/assets/stylesheets/assignments.css.scss */
+/* line 259, app/assets/stylesheets/assignments.css.scss */
 a#new-204-button:hover {
   text-decoration: none;
 }
 
-/* line 259, app/assets/stylesheets/assignments.css.scss */
+/* line 264, app/assets/stylesheets/assignments.css.scss */
 li.assigned-204-resources input {
   display: inline;
 }
 
-/* line 262, app/assets/stylesheets/assignments.css.scss */
+/* line 267, app/assets/stylesheets/assignments.css.scss */
 li.assigned-204-resources label {
   display: inline;
 }
 
-/* line 266, app/assets/stylesheets/assignments.css.scss */
+/* line 271, app/assets/stylesheets/assignments.css.scss */
 .float-button {
   clear: both;
 }
 
-/* line 269, app/assets/stylesheets/assignments.css.scss */
+/* line 274, app/assets/stylesheets/assignments.css.scss */
 ul#action-buttons {
   list-style-type: none !important;
   padding: 0 !important;
   clear: both;
 }
 
-/* line 273, app/assets/stylesheets/assignments.css.scss */
+/* line 278, app/assets/stylesheets/assignments.css.scss */
 ul#action-buttons li {
   display: inline !important;
 }
 
-/* line 277, app/assets/stylesheets/assignments.css.scss */
+/* line 282, app/assets/stylesheets/assignments.css.scss */
 .action-buttons {
   display: inline;
   clear: both;
   margin-left: 0;
 }
 
-/* line 283, app/assets/stylesheets/assignments.css.scss */
+/* line 288, app/assets/stylesheets/assignments.css.scss */
 .tabrow {
   overflow: auto;
   white-space: nowrap;
 }
 
-/* line 287, app/assets/stylesheets/assignments.css.scss */
+/* line 292, app/assets/stylesheets/assignments.css.scss */
 .new-page {
   height: 20px;
 }
 
-/* line 290, app/assets/stylesheets/assignments.css.scss */
+/* line 295, app/assets/stylesheets/assignments.css.scss */
 .page-number {
   font-size: 0.70em;
   position: absolute;
@@ -22391,19 +24518,476 @@ ul#action-buttons li {
   bottom: 0;
 }
 
-/* line 296, app/assets/stylesheets/assignments.css.scss */
+/* line 301, app/assets/stylesheets/assignments.css.scss */
 .clear {
   clear: all;
 }
 
-/* line 299, app/assets/stylesheets/assignments.css.scss */
+/* line 304, app/assets/stylesheets/assignments.css.scss */
 .div-grp-branch {
   position: absolute;
   left: 3px;
   top: 2px;
 }
 
-/* line 304, app/assets/stylesheets/assignments.css.scss */
+/* line 309, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle {
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: right;
+}
+
+/* line 316, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle form.inline-form {
+  display: inline-block;
+  margin-left: 6px;
+}
+
+/* line 320, app/assets/stylesheets/assignments.css.scss */
+.assignment-style-toggle form.inline-form button {
+  margin-left: 4px;
+}
+
+/* ---------- ICS 204 WF form (scoped) ---------- */
+/* line 326, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page {
+  margin-bottom: 20px;
+  --rule: 1px solid #000;
+  --shade: #ebebeb;
+  background: #fff;
+  color: #000;
+  padding: 0.35in 0.4in;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  /* Section 3 (Branch / Division-Group) cells: label pinned top-left,
+     value centered large. */
+  /* Constrain best_in_place inputs in Drop Off / Pick Up cells so they
+     stay inside the narrow columns instead of using the browser's
+     default text-input width. */
+  /* Section 8 lightning bolt affordance in the banner header.
+     Hidden until the banner row is hovered. The ID in the selector
+     out-specifies the legacy #add-freqs-button { margin-top: 75px }
+     rule from the pre-WF layout. */
+  /* Section 8 freq picker (checkbox list of ICS 205 items). */
+  /* best_in_place inputs sit inside cells; keep them borderless / flush. */
+}
+
+/* line 336, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page * {
+  box-sizing: border-box;
+}
+
+/* line 338, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .doc-title {
+  text-align: center;
+  font-size: 15pt;
+  font-weight: bold;
+  line-height: 1.15;
+}
+
+/* line 344, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .doc-sub {
+  text-align: center;
+  font-size: 9.5pt;
+  font-weight: bold;
+  margin: 2pt 0 6pt;
+}
+
+/* line 351, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0;
+}
+
+/* line 357, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page td, .ics-204-wf-page th {
+  border: var(--rule);
+  vertical-align: top;
+  padding: 1pt 3pt;
+  font-size: 8pt;
+  font-weight: normal;
+  text-align: left;
+  color: #000;
+}
+
+/* line 367, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .num {
+  font-size: 9.5pt;
+}
+
+/* line 368, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .banner {
+  text-align: center;
+  font-size: 10pt;
+  background: var(--shade);
+}
+
+/* line 373, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .banner-num {
+  background: var(--shade);
+  font-size: 9.5pt;
+}
+
+/* line 377, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .shade {
+  background: var(--shade);
+}
+
+/* line 378, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .seam-num {
+  border-right: 0;
+}
+
+/* line 379, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .seam-banner {
+  border-left: 0;
+  padding-right: 5%;
+}
+
+/* line 380, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .ctr {
+  text-align: center;
+}
+
+/* line 382, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .hdr-entry {
+  height: 26pt;
+  padding-top: 5px;
+  padding-left: 15px;
+}
+
+/* line 387, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry {
+  height: 22pt;
+  text-align: center;
+  padding-top: 5px;
+}
+
+/* line 392, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry .op-dt-picker {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  outline: 0;
+  text-align: center;
+}
+
+/* line 402, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-entry .op-dt-picker:focus {
+  background: #fffbe6;
+}
+
+/* line 404, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .op-dt-picker {
+  border: none !important;
+}
+
+/* line 407, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .prepared-time-picker {
+  border: none !important;
+}
+
+/* line 410, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .prepared-date-picker {
+  border: none !important;
+}
+
+/* line 416, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell {
+  position: relative;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* line 422, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell .id-label {
+  position: absolute;
+  top: 2pt;
+  left: 4pt;
+  font-size: 8pt;
+  text-align: left;
+}
+
+/* line 429, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .id-cell .id-value {
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 1;
+  padding: 14pt 0 10pt;
+}
+
+/* line 436, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .pers-label {
+  width: 17.5%;
+}
+
+/* line 437, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .pers-fill {
+  width: 26%;
+  height: 17pt;
+}
+
+/* line 439, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-desig {
+  width: 35.4%;
+}
+
+/* line 440, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-lwd {
+  width: 5.7%;
+}
+
+/* line 441, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-lead {
+  width: 21.0%;
+}
+
+/* line 442, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-pers {
+  width: 6.6%;
+}
+
+/* line 443, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-drop {
+  width: 15.7%;
+}
+
+/* line 444, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .r-pick {
+  width: 15.6%;
+}
+
+/* line 446, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-head td {
+  text-align: center;
+  font-size: 7.5pt;
+  padding: 2pt 2pt;
+}
+
+/* line 447, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-row td {
+  height: 15.5pt;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 456, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .res-row .r-drop input,
+.ics-204-wf-page .res-row .r-pick input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0 2px;
+}
+
+/* line 465, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .narrative {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 466, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .box-6 {
+  height: 1.15in;
+}
+
+/* line 467, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .box-7 {
+  height: 0.75in;
+}
+
+/* line 469, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-func {
+  width: 15%;
+}
+
+/* line 470, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-chan {
+  width: 11%;
+}
+
+/* line 471, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-name {
+  width: 15%;
+}
+
+/* line 472, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-rxf {
+  width: 14%;
+}
+
+/* line 473, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-rxt {
+  width: 11%;
+}
+
+/* line 474, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-txf {
+  width: 14%;
+}
+
+/* line 475, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-txt {
+  width: 11%;
+}
+
+/* line 476, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .c-mode {
+  width: 8%;
+}
+
+/* line 478, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page tr.comm-row td {
+  text-align: center;
+}
+
+/* line 482, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-head td {
+  text-align: center;
+  font-size: 7.5pt;
+}
+
+/* line 483, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-row td {
+  height: 14pt;
+}
+
+/* line 484, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .comm-row .c-func {
+  background: var(--shade);
+  text-align: center;
+  padding-top: 3pt;
+}
+
+/* line 494, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs {
+  display: inline-block;
+  margin: 0 0 0 8px;
+  padding: 0;
+  left: auto;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in;
+}
+
+/* line 506, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs .banner-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+/* line 512, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .commo-banner tr:hover #add-freqs-button.banner-add-freqs {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* line 518, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form {
+  display: none;
+  padding: 8pt 10pt;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  margin: 4pt 0;
+}
+
+/* line 524, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 6pt;
+}
+
+/* line 528, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #freq-form ul li {
+  display: inline-block;
+  margin-right: 12pt;
+  font-size: 9pt;
+}
+
+/* line 536, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row td {
+  height: 30pt;
+}
+
+/* line 537, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-label {
+  font-size: 8pt;
+  color: #000;
+}
+
+/* line 541, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  outline: 0;
+  text-align: left;
+}
+
+/* line 553, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .sig-row .sig-input:focus {
+  background: #fffbe6;
+}
+
+/* line 555, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 10pt;
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+/* line 562, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .left {
+  width: 25%;
+}
+
+/* line 563, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .mid {
+  width: 50%;
+  text-align: center;
+}
+
+/* line 564, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .footer .right {
+  width: 25%;
+}
+
+/* line 567, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page .best_in_place, .ics-204-wf-page input.best_in_place, .ics-204-wf-page textarea.best_in_place {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  display: inline;
+}
+
+/* line 573, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page textarea.best_in_place {
+  width: 100%;
+}
+
+/* line 575, app/assets/stylesheets/assignments.css.scss */
 td.no-padding {
   padding-right: none !important;
   padding-left: 15px !important;
@@ -22411,13 +24995,13 @@ td.no-padding {
 }
 
 @media print {
-  /* line 310, app/assets/stylesheets/assignments.css.scss */
+  /* line 581, app/assets/stylesheets/assignments.css.scss */
   div.header-row {
     background-color: #f3f3f3 !important;
   }
 }
 
-/* line 314, app/assets/stylesheets/assignments.css.scss */
+/* line 585, app/assets/stylesheets/assignments.css.scss */
 div.solid {
   z-index: 7 !important;
   position: relative;
@@ -22673,31 +25257,25 @@ div.solid {
   border: 2px solid #DDD;
 }
 
-/* line 180, app/assets/stylesheets/covers.css.scss */
-.cover-block {
-  border: 1px dashed orange;
-  overflow: hidden;
-}
-
-/* line 184, app/assets/stylesheets/covers.css.scss */
+/* line 183, app/assets/stylesheets/covers.css.scss */
 .sm-spacer {
   height: 25px;
   overflow: hidden;
 }
 
-/* line 188, app/assets/stylesheets/covers.css.scss */
+/* line 187, app/assets/stylesheets/covers.css.scss */
 .md-spacer {
   height: 50px;
   overflow: hidden;
 }
 
-/* line 192, app/assets/stylesheets/covers.css.scss */
+/* line 191, app/assets/stylesheets/covers.css.scss */
 .lg-spacer {
   height: 75px;
   overflow: hidden;
 }
 
-/* line 197, app/assets/stylesheets/covers.css.scss */
+/* line 196, app/assets/stylesheets/covers.css.scss */
 .add-block-button {
   z-index: 3;
   overflow: hidden;
@@ -22725,18 +25303,18 @@ div.solid {
   font-weight: 300;
 }
 
-/* line 220, app/assets/stylesheets/covers.css.scss */
+/* line 219, app/assets/stylesheets/covers.css.scss */
 .add-block-button i {
   margin-top: 10px;
   margin-left: 6px;
 }
 
-/* line 227, app/assets/stylesheets/covers.css.scss */
+/* line 226, app/assets/stylesheets/covers.css.scss */
 .add-block-button a {
   color: #3d3d3d !important;
 }
 
-/* line 231, app/assets/stylesheets/covers.css.scss */
+/* line 230, app/assets/stylesheets/covers.css.scss */
 .new-block-form {
   float: left;
   text-align: center;
@@ -22746,13 +25324,13 @@ div.solid {
   height: 25px;
 }
 
-/* line 240, app/assets/stylesheets/covers.css.scss */
+/* line 239, app/assets/stylesheets/covers.css.scss */
 #new_block {
   height: 15px;
   /*display: none;*/
 }
 
-/* line 244, app/assets/stylesheets/covers.css.scss */
+/* line 243, app/assets/stylesheets/covers.css.scss */
 .new-block-button {
   width: 26px;
   height: 26px;
@@ -22769,17 +25347,17 @@ div.solid {
   margin-bottom: 5px;
 }
 
-/* line 260, app/assets/stylesheets/covers.css.scss */
+/* line 259, app/assets/stylesheets/covers.css.scss */
 .block-form {
   display: none;
 }
 
-/* line 263, app/assets/stylesheets/covers.css.scss */
+/* line 262, app/assets/stylesheets/covers.css.scss */
 .edit_block {
   display: none;
 }
 
-/* line 266, app/assets/stylesheets/covers.css.scss */
+/* line 265, app/assets/stylesheets/covers.css.scss */
 .save-block-button {
   font-size: 10px;
   position: absolute;
@@ -22787,65 +25365,65 @@ div.solid {
 }
 
 /*content styles*/
-/* line 274, app/assets/stylesheets/covers.css.scss */
+/* line 273, app/assets/stylesheets/covers.css.scss */
 .style-controls {
   z-index: 3;
 }
 
-/* line 278, app/assets/stylesheets/covers.css.scss */
+/* line 277, app/assets/stylesheets/covers.css.scss */
 .h1 {
   /*font-size: 40px;*/
   font-size: 5vh;
 }
 
-/* line 282, app/assets/stylesheets/covers.css.scss */
+/* line 281, app/assets/stylesheets/covers.css.scss */
 .h2 {
   font-size: 30px;
 }
 
-/* line 285, app/assets/stylesheets/covers.css.scss */
+/* line 284, app/assets/stylesheets/covers.css.scss */
 .h3 {
   font-size: 25px;
 }
 
-/* line 288, app/assets/stylesheets/covers.css.scss */
+/* line 287, app/assets/stylesheets/covers.css.scss */
 .h4 {
   font-size: 20px;
 }
 
-/* line 291, app/assets/stylesheets/covers.css.scss */
+/* line 290, app/assets/stylesheets/covers.css.scss */
 .bold {
   font-weight: 900;
 }
 
-/* line 294, app/assets/stylesheets/covers.css.scss */
+/* line 293, app/assets/stylesheets/covers.css.scss */
 .semi-bold {
   font-weight: 600;
 }
 
-/* line 297, app/assets/stylesheets/covers.css.scss */
+/* line 296, app/assets/stylesheets/covers.css.scss */
 .normal {
   font-weight: 300;
 }
 
-/* line 300, app/assets/stylesheets/covers.css.scss */
+/* line 299, app/assets/stylesheets/covers.css.scss */
 .italic {
   font-style: italic;
 }
 
-/* line 303, app/assets/stylesheets/covers.css.scss */
+/* line 302, app/assets/stylesheets/covers.css.scss */
 .image-block {
   padding: 0 50px;
 }
 
-/* line 307, app/assets/stylesheets/covers.css.scss */
+/* line 306, app/assets/stylesheets/covers.css.scss */
 .cover-image {
   width: 100%;
   height: auto;
   z-index: 1;
 }
 
-/* line 312, app/assets/stylesheets/covers.css.scss */
+/* line 311, app/assets/stylesheets/covers.css.scss */
 .image-field {
   margin: 0 auto;
   text-align: center;
@@ -22857,7 +25435,7 @@ div.solid {
   z-index: 1;
 }
 
-/* line 322, app/assets/stylesheets/covers.css.scss */
+/* line 321, app/assets/stylesheets/covers.css.scss */
 .image-form {
   font-size: 1em;
   overflow: hidden;
@@ -22872,13 +25450,13 @@ div.solid {
   bottom: 0;
 }
 
-/* line 334, app/assets/stylesheets/covers.css.scss */
+/* line 333, app/assets/stylesheets/covers.css.scss */
 .image-form input {
   font-size: 15px;
   font-weight: 500;
 }
 
-/* line 339, app/assets/stylesheets/covers.css.scss */
+/* line 338, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload {
   margin-left: 10px;
   background-color: #dc3545;
@@ -22890,18 +25468,18 @@ div.solid {
   font-size: 15px;
 }
 
-/* line 349, app/assets/stylesheets/covers.css.scss */
+/* line 348, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload:hover {
   background-color: #c82333;
 }
 
 /* resizable image */
-/* line 359, app/assets/stylesheets/covers.css.scss */
+/* line 358, app/assets/stylesheets/covers.css.scss */
 .resizable {
   margin-top: 15px;
 }
 
-/* line 363, app/assets/stylesheets/covers.css.scss */
+/* line 362, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers {
   /* width: 65%; - removed to allow inline styles to take precedence */
   height: auto;
@@ -22914,23 +25492,23 @@ div.solid {
 }
 
 /* Show gray background only when no image is uploaded */
-/* line 375, app/assets/stylesheets/covers.css.scss */
+/* line 374, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers.no-image {
   background-color: #f0f0f0;
   min-height: 200px;
 }
 
-/* line 379, app/assets/stylesheets/covers.css.scss */
+/* line 378, app/assets/stylesheets/covers.css.scss */
 .resizable .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 382, app/assets/stylesheets/covers.css.scss */
+/* line 381, app/assets/stylesheets/covers.css.scss */
 .resizers .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 386, app/assets/stylesheets/covers.css.scss */
+/* line 385, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer {
   width: 10px;
   height: 10px;
@@ -22942,28 +25520,28 @@ div.solid {
   display: none;
 }
 
-/* line 395, app/assets/stylesheets/covers.css.scss */
+/* line 394, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-left {
   left: -5px;
   top: -5px;
   cursor: nwse-resize;
 }
 
-/* line 400, app/assets/stylesheets/covers.css.scss */
+/* line 399, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-right {
   right: -5px;
   top: -5px;
   cursor: nesw-resize;
 }
 
-/* line 405, app/assets/stylesheets/covers.css.scss */
+/* line 404, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-left {
   left: -5px;
   bottom: -5px;
   cursor: nesw-resize;
 }
 
-/* line 410, app/assets/stylesheets/covers.css.scss */
+/* line 409, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-right {
   right: -5px;
   bottom: -5px;
@@ -22971,7 +25549,7 @@ div.solid {
 }
 
 /* resize block */
-/* line 417, app/assets/stylesheets/covers.css.scss */
+/* line 416, app/assets/stylesheets/covers.css.scss */
 .resize-padding {
   /*background-color: orange;*/
   height: 8px;
@@ -22981,7 +25559,7 @@ div.solid {
   bottom: 0;
 }
 
-/* line 425, app/assets/stylesheets/covers.css.scss */
+/* line 424, app/assets/stylesheets/covers.css.scss */
 .bottom-padding {
   /*background-color: yellow;*/
   height: 25px;
@@ -22989,19 +25567,19 @@ div.solid {
   position: relative;
 }
 
-/* line 431, app/assets/stylesheets/covers.css.scss */
+/* line 430, app/assets/stylesheets/covers.css.scss */
 .selected-resizer {
   /*background-color: blue !important;*/
 }
 
-/* line 434, app/assets/stylesheets/covers.css.scss */
+/* line 433, app/assets/stylesheets/covers.css.scss */
 #temp-image {
   width: 490px;
   height: auto;
   display: none;
 }
 
-/* line 440, app/assets/stylesheets/covers.css.scss */
+/* line 439, app/assets/stylesheets/covers.css.scss */
 #small-temp-image {
   width: 50px;
   height: auto;
@@ -23009,7 +25587,7 @@ div.solid {
 }
 
 /* Split block styles */
-/* line 447, app/assets/stylesheets/covers.css.scss */
+/* line 446, app/assets/stylesheets/covers.css.scss */
 .split-block-container {
   display: flex;
   gap: 10px;
@@ -23018,31 +25596,31 @@ div.solid {
   /* Prevent horizontal scroll from dragged images */
 }
 
-/* line 454, app/assets/stylesheets/covers.css.scss */
+/* line 453, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper {
   flex: 1;
   width: 50%;
 }
 
-/* line 459, app/assets/stylesheets/covers.css.scss */
+/* line 458, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .block {
   width: 100%;
 }
 
-/* line 463, app/assets/stylesheets/covers.css.scss */
+/* line 462, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   /*width: 90% !important;*/
   /*min-width: 50px;*/
 }
 
-/* line 468, app/assets/stylesheets/covers.css.scss */
+/* line 467, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .cover-image {
   /*max-width: 100%;*/
   /*height: auto;*/
 }
 
 /* Drag handle for split blocks */
-/* line 474, app/assets/stylesheets/covers.css.scss */
+/* line 473, app/assets/stylesheets/covers.css.scss */
 .drag-handle {
   position: absolute;
   top: 50%;
@@ -23063,20 +25641,455 @@ div.solid {
   user-select: none;
 }
 
-/* line 494, app/assets/stylesheets/covers.css.scss */
+/* line 493, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers:hover .drag-handle {
   opacity: 0.7;
 }
 
-/* line 498, app/assets/stylesheets/covers.css.scss */
+/* line 497, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers.dragging {
   cursor: ew-resize;
   opacity: 0.8;
 }
 
-/* line 503, app/assets/stylesheets/covers.css.scss */
+/* line 502, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   transition: transform 0.3s ease;
+}
+
+/* line 520, app/assets/stylesheets/covers.css.scss */
+.cover-workspace {
+  position: relative;
+  margin: 0 -15px;
+  padding: 0;
+}
+
+/* line 531, app/assets/stylesheets/covers.css.scss */
+.cover-workspace > #cover-canvas {
+  margin-top: -5px !important;
+}
+
+/* line 535, app/assets/stylesheets/covers.css.scss */
+.cover-workspace #cover-canvas {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* line 547, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel {
+  position: absolute;
+  top: 20%;
+  right: -90px;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  padding: 10px 8px;
+  background: #3d3d3d;
+  color: #fff;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* line 563, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-sep {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 6px 4px;
+}
+
+/* line 569, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-inline-form {
+  display: block;
+  margin: 0;
+}
+
+/* line 571, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 32px;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 4px;
+  transition: background-color 0.1s ease;
+}
+
+/* line 591, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* line 592, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn:focus {
+  outline: none;
+}
+
+/* line 593, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-active {
+  background: #1976d2;
+}
+
+/* line 598, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+/* line 601, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn.is-disabled:hover {
+  background: transparent;
+}
+
+/* line 603, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-btn em, .cover-style-panel .csp-btn strong {
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+/* line 607, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* line 608, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* line 609, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h3 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* line 610, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-h4 {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* line 613, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input {
+  width: 100%;
+  height: 26px;
+  margin-top: 2px;
+  padding: 0 6px;
+  background: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+/* line 626, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input::-webkit-inner-spin-button, .cover-style-panel .csp-px-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 631, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+/* line 632, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-px-input.is-disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* line 639, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-italic em {
+  font-style: italic;
+}
+
+/* line 641, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-align-btn {
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* line 647, app/assets/stylesheets/covers.css.scss */
+.cover-style-panel .csp-icon img {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
+}
+
+/* line 657, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-selected {
+  border-style: solid;
+  border-color: #1976d2;
+  background: rgba(25, 118, 210, 0.04);
+}
+
+/* line 667, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: #f4f5f7;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* line 678, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form.is-open {
+  display: flex;
+}
+
+/* line 682, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form .cui-file-input {
+  display: none !important;
+}
+
+/* line 684, app/assets/stylesheets/covers.css.scss */
+.cover-upload-form .cui-filename {
+  flex: 1 1 auto;
+  color: #5e6c84;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 693, app/assets/stylesheets/covers.css.scss */
+#cover-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8.5 / 11;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  overflow: visible;
+}
+
+/* line 712, app/assets/stylesheets/covers.css.scss */
+.cover-block {
+  color: #333;
+  font-family: cambria;
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px dashed transparent;
+  cursor: move;
+}
+
+/* line 727, app/assets/stylesheets/covers.css.scss */
+.cover-block:hover {
+  border-color: #90a4ae;
+  background: rgba(9, 30, 66, 0.02);
+}
+
+/* line 732, app/assets/stylesheets/covers.css.scss */
+.cover-block.ui-draggable-dragging {
+  border-color: #1976d2;
+  background: rgba(25, 118, 210, 0.05);
+  cursor: grabbing;
+  z-index: 10;
+}
+
+/* line 741, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-left .cover-block-text {
+  justify-content: flex-start;
+}
+
+/* line 742, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-center .cover-block-text {
+  justify-content: center;
+}
+
+/* line 743, app/assets/stylesheets/covers.css.scss */
+.cover-block.align-right .cover-block-text {
+  justify-content: flex-end;
+}
+
+/* line 750, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-bold .cover-block-text {
+  font-weight: 700;
+}
+
+/* line 751, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-semi-bold .cover-block-text {
+  font-weight: 600;
+}
+
+/* line 752, app/assets/stylesheets/covers.css.scss */
+.cover-block.weight-normal .cover-block-text {
+  font-weight: 400;
+}
+
+/* line 753, app/assets/stylesheets/covers.css.scss */
+.cover-block.style-italic .cover-block-text {
+  font-style: italic;
+}
+
+/* line 754, app/assets/stylesheets/covers.css.scss */
+.cover-block.style-normal .cover-block-text {
+  font-style: normal;
+}
+
+/* line 761, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-handle {
+  position: absolute;
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border: 2px solid #1976d2;
+  border-radius: 50%;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  z-index: 4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* line 781, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-nw {
+  left: -6px;
+  top: -6px;
+  cursor: nw-resize;
+}
+
+/* line 782, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-ne {
+  right: -6px;
+  top: -6px;
+  cursor: ne-resize;
+}
+
+/* line 783, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-sw {
+  left: -6px;
+  bottom: -6px;
+  cursor: sw-resize;
+}
+
+/* line 784, app/assets/stylesheets/covers.css.scss */
+.cover-block .ui-resizable-se {
+  right: -6px;
+  bottom: -6px;
+  cursor: se-resize;
+}
+
+/* line 787, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-selected .ui-resizable-handle {
+  opacity: 1;
+}
+
+/* line 792, app/assets/stylesheets/covers.css.scss */
+.cover-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #1976d2;
+  opacity: 0;
+  transition: opacity 0.08s ease;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* line 803, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="16.5"] {
+  left: 16.5%;
+}
+
+/* line 804, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="50"] {
+  left: 50%;
+}
+
+/* line 805, app/assets/stylesheets/covers.css.scss */
+.cover-guide[data-guide-x="83.5"] {
+  left: 83.5%;
+}
+
+/* line 806, app/assets/stylesheets/covers.css.scss */
+.cover-guide.is-active {
+  opacity: 1;
+}
+
+/* line 808, app/assets/stylesheets/covers.css.scss */
+.cover-block-text {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* line 818, app/assets/stylesheets/covers.css.scss */
+.cover-block-text[contenteditable="true"] {
+  user-select: text;
+  outline: 2px solid #1976d2;
+  outline-offset: 1px;
+  cursor: text;
+}
+
+/* line 825, app/assets/stylesheets/covers.css.scss */
+.cover-block-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* line 830, app/assets/stylesheets/covers.css.scss */
+.cover-block-image-area {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* line 837, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-image:hover .cover-block-image {
+  opacity: 0.8;
+  transition: opacity 0.12s ease;
+}
+
+/* line 842, app/assets/stylesheets/covers.css.scss */
+.cover-block-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f5f7;
+  color: #6b778c;
+  font-size: 12px;
+  border: 1px dashed #b0b7c3;
+  border-radius: 3px;
 }
 
 /* line 2, app/assets/stylesheets/safety_messages.scss */
@@ -24385,33 +27398,204 @@ h1.header {
   overflow: hidden;
 }
 
-/* line 463, app/assets/stylesheets/plans.css.scss */
+/* line 470, app/assets/stylesheets/plans.css.scss */
+#organization-assignments {
+  --row-height: 30px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 476, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 483, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container > .col-xs-12 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 491, app/assets/stylesheets/plans.css.scss */
+.org-columns {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 507, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child,
+#organization-assignments .right-column > .row:last-child {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 513, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child > .content-box,
+#organization-assignments .right-column > .row:last-child > .content-box {
+  flex: 1 1 50%;
+  height: auto !important;
+  min-height: var(--row-height, 30px);
+}
+
+/* line 520, app/assets/stylesheets/plans.css.scss */
+.org-columns > .left-column,
+.org-columns > .right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 543, app/assets/stylesheets/plans.css.scss */
+.add-org-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* line 560, app/assets/stylesheets/plans.css.scss */
+.add-org-btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* line 562, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:hover {
+  opacity: 0.7;
+}
+
+/* line 563, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:focus {
+  outline: none;
+}
+
+/* line 566, app/assets/stylesheets/plans.css.scss */
+img.add-org-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* line 573, app/assets/stylesheets/plans.css.scss */
+.add-header-btn i.fa {
+  font-size: 18px;
+  color: #555;
+  width: 20px;
+  text-align: center;
+}
+
+/* line 584, app/assets/stylesheets/plans.css.scss */
+.staff-row {
+  position: relative;
+}
+
+/* line 593, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  z-index: 6;
+  cursor: pointer;
+}
+
+/* line 603, app/assets/stylesheets/plans.css.scss */
+form.insert-below-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 609, app/assets/stylesheets/plans.css.scss */
+.insert-below {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: absolute;
+  right: 85px;
+  bottom: -11px;
+  top: auto;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 50%;
+  color: #000;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  z-index: 5;
+}
+
+/* line 638, app/assets/stylesheets/plans.css.scss */
+.insert-below:hover {
+  color: #000;
+  border-color: #000;
+}
+
+/* line 642, app/assets/stylesheets/plans.css.scss */
+.insert-below:focus {
+  outline: none;
+}
+
+/* line 648, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone:hover ~ .content-box .insert-below,
+.insert-below:hover,
+.insert-below:focus {
+  opacity: 1;
+}
+
+/* line 651, app/assets/stylesheets/plans.css.scss */
 img.small-icon {
   height: 15px;
   width: 15px;
 }
 
-/* line 467, app/assets/stylesheets/plans.css.scss */
+/* line 655, app/assets/stylesheets/plans.css.scss */
 img.medium-icon {
   height: 25px;
   width: 25px;
 }
 
-/* line 471, app/assets/stylesheets/plans.css.scss */
+/* line 659, app/assets/stylesheets/plans.css.scss */
 #add-freqs-button {
   text-align: center;
   padding-right: 5px;
   padding-left: 5px;
 }
 
-/* line 476, app/assets/stylesheets/plans.css.scss */
+/* line 664, app/assets/stylesheets/plans.css.scss */
 img#add-freqs-button {
   height: 30px;
   width: 30px;
 }
 
 /* Attachments */
-/* line 483, app/assets/stylesheets/plans.css.scss */
+/* line 671, app/assets/stylesheets/plans.css.scss */
 #attachments {
   overflow: hidden;
   border-top: 1px solid black;
@@ -24421,25 +27605,25 @@ img#add-freqs-button {
   overflow: hidden;
 }
 
-/* line 490, app/assets/stylesheets/plans.css.scss */
+/* line 678, app/assets/stylesheets/plans.css.scss */
 #attachments ul {
   list-style: none;
 }
 
-/* line 493, app/assets/stylesheets/plans.css.scss */
+/* line 681, app/assets/stylesheets/plans.css.scss */
 #attachments li.attachment {
   list-style: none;
   float: left;
   width: 200px;
 }
 
-/* line 500, app/assets/stylesheets/plans.css.scss */
+/* line 688, app/assets/stylesheets/plans.css.scss */
 .checkboxes img {
   height: 17px !important;
   width: 17px !important;
 }
 
-/* line 504, app/assets/stylesheets/plans.css.scss */
+/* line 692, app/assets/stylesheets/plans.css.scss */
 .bip-checkbox {
   cursor: pointer;
   font-size: 17px;
@@ -24447,7 +27631,7 @@ img#add-freqs-button {
 }
 
 /* New Incident conversation UI form*/
-/* line 512, app/assets/stylesheets/plans.css.scss */
+/* line 700, app/assets/stylesheets/plans.css.scss */
 .ui-group {
   /*.form-incident-type {
     display: none;
@@ -24457,37 +27641,37 @@ img#add-freqs-button {
   }*/
 }
 
-/* line 519, app/assets/stylesheets/plans.css.scss */
+/* line 707, app/assets/stylesheets/plans.css.scss */
 .ui-group .form-attributes {
   display: none;
 }
 
-/* line 524, app/assets/stylesheets/plans.css.scss */
+/* line 712, app/assets/stylesheets/plans.css.scss */
 .ui-group p {
   color: #979797;
   font-size: 1.1em;
 }
 
-/* line 528, app/assets/stylesheets/plans.css.scss */
+/* line 716, app/assets/stylesheets/plans.css.scss */
 .ui-group label {
   font-size: 1.6em;
   font-weight: 999;
   margin-bottom: 20px;
 }
 
-/* line 533, app/assets/stylesheets/plans.css.scss */
+/* line 721, app/assets/stylesheets/plans.css.scss */
 .ui-group div.next-btn-container {
   margin-top: 10px;
   width: 100%;
   margin-bottom: 10px;
 }
 
-/* line 538, app/assets/stylesheets/plans.css.scss */
+/* line 726, app/assets/stylesheets/plans.css.scss */
 .ui-group div.hideable {
   visibility: hidden;
 }
 
-/* line 541, app/assets/stylesheets/plans.css.scss */
+/* line 729, app/assets/stylesheets/plans.css.scss */
 .ui-group .next-btn {
   max-width: 60px;
 }
@@ -26470,14 +29654,29 @@ div.alert {
   width: 9%;
 }
 
+/* line 268, app/assets/stylesheets/utility-classes.scss */
+.p16 {
+  width: 16%;
+}
+
+/* line 271, app/assets/stylesheets/utility-classes.scss */
+.p30 {
+  width: 30%;
+}
+
+/* line 274, app/assets/stylesheets/utility-classes.scss */
+.p40 {
+  width: 40%;
+}
+
 /* Icons */
-/* line 272, app/assets/stylesheets/utility-classes.scss */
+/* line 281, app/assets/stylesheets/utility-classes.scss */
 .sm-icon img {
   width: 25px;
   height: auto;
 }
 
-/* line 277, app/assets/stylesheets/utility-classes.scss */
+/* line 286, app/assets/stylesheets/utility-classes.scss */
 .inline-block {
   display: inline-block;
 }

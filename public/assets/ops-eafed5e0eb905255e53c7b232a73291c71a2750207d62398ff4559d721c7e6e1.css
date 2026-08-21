@@ -1,0 +1,129 @@
+/* line 1, app/assets/stylesheets/ops.scss */
+.ops-container {
+  padding: 12px 4px 32px;
+}
+
+/* line 5, app/assets/stylesheets/ops.scss */
+.ops-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px 16px;
+}
+
+/* line 11, app/assets/stylesheets/ops.scss */
+.ops-toolbar label {
+  font-weight: 600;
+  margin: 0;
+}
+
+/* line 12, app/assets/stylesheets/ops.scss */
+.ops-toolbar select {
+  min-width: 220px;
+  padding: 4px 6px;
+}
+
+/* line 13, app/assets/stylesheets/ops.scss */
+.ops-toolbar .ops-day-range {
+  margin-left: auto;
+  font-size: 12px;
+}
+
+/* line 16, app/assets/stylesheets/ops.scss */
+table.ops-215-table,
+table.ops-projections-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* line 22, app/assets/stylesheets/ops.scss */
+table.ops-215-table th, table.ops-215-table td,
+table.ops-projections-table th,
+table.ops-projections-table td {
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 28, app/assets/stylesheets/ops.scss */
+table.ops-215-table thead th,
+table.ops-projections-table thead th {
+  background: #f2f2f2;
+  font-weight: 600;
+}
+
+/* line 32, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-kind,
+table.ops-projections-table .ops-215-kind {
+  text-align: left;
+  background: #fafafa;
+  font-weight: 500;
+  width: 22%;
+}
+
+/* line 38, app/assets/stylesheets/ops.scss */
+table.ops-215-table .empty,
+table.ops-projections-table .empty {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 16px;
+}
+
+/* line 44, app/assets/stylesheets/ops.scss */
+table.ops-215-table .centered,
+table.ops-projections-table .centered {
+  text-align: center;
+}
+
+/* line 48, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-day {
+  background: #eaeaea;
+}
+
+/* line 49, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-have {
+  background: #f8fbff;
+}
+
+/* line 50, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req {
+  background: #fff8ee;
+}
+
+/* line 51, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-need {
+  background: #fff;
+  font-weight: 600;
+}
+
+/* line 53, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  padding: 2px 0;
+  font: inherit;
+  outline: 0;
+  /* Chrome number input spinners are noisy in narrow cells. */
+  -moz-appearance: textfield;
+}
+
+/* line 61, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input:focus {
+  background: #fffbe6;
+}
+
+/* line 64, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input::-webkit-outer-spin-button, table.ops-215-table .ops-215-req-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 73, app/assets/stylesheets/ops.scss */
+table.ops-projections-table .ops-total-row td {
+  background: #f0f5ff;
+}
