@@ -67,6 +67,8 @@ Rails.application.routes.draw do
 
     resource :board, only: [:show] do
       patch :move
+      post   'spacers',     action: :create_spacer
+      delete 'spacers/:id', action: :destroy_spacer, as: :spacer
     end
 
     resource :ops, only: [:show], controller: 'ops' do

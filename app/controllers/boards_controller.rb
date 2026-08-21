@@ -21,6 +21,19 @@ class BoardsController < ApplicationController
     head :no_content
   end
 
+  def create_spacer
+    resource = @incident.resources.create!(spacer: true)
+    render partial: 'card', locals: { resource: resource }
+  end
+
+  def destroy_spacer
+    resource = @incident.resources.where(spacer: true).find_by(id: params[:id])
+    return head :not_found unless resource
+
+    resource.destroy!
+    head :no_content
+  end
+
   private
 
   def set_incident

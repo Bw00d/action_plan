@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_08_21_140000) do
+ActiveRecord::Schema.define(version: 2026_08_21_150000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -449,6 +449,8 @@ ActiveRecord::Schema.define(version: 2026_08_21_140000) do
     t.string "return_state"
     t.string "drop_off_pt_time"
     t.string "pick_up_pt_time"
+    t.boolean "spacer", default: false, null: false
+    t.index ["spacer"], name: "index_resources_on_spacer"
   end
 
   create_table "rosters", force: :cascade do |t|

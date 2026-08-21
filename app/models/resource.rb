@@ -15,13 +15,15 @@ class Resource < ApplicationRecord
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
   scope :assigned, -> { where(release_date: nil, r_and_r: false)}
   scope :on_rnr, -> { where(r_and_r: true)}
-   validates :name, presence: true
-   validates :position, presence: true
-   validates :agency, presence: true
-   validates :order_number, presence: true
-   validates :number_personnel, presence: true
-   validates :assignment_length, presence: true
-   validates :category, presence: true
+   with_options unless: :spacer? do
+     validates :name, presence: true
+     validates :position, presence: true
+     validates :agency, presence: true
+     validates :order_number, presence: true
+     validates :number_personnel, presence: true
+     validates :assignment_length, presence: true
+     validates :category, presence: true
+   end
    # Prevents manual creation of a Resource whose full_order_number would
    # collide with one already on the incident — otherwise we couldn't rely on
    # the Req# ↔ full_order_number tie to compute check-in status.
@@ -31,8 +33,8 @@ class Resource < ApplicationRecord
                message: "is already used for a resource of this category on this incident"
              },
              if: -> { incident_id.present? && category.present? && order_number.present? }
- 
-  after_create :create_demob
+
+  after_create :create_demob, unless: :spacer?
 
   # Guard against ActiveRecord's stricter date coercion turning
   # "8/20/26" (from the datepicker or a form typo) into year 0026.

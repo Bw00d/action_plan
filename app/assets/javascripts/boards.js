@@ -141,6 +141,44 @@
     $(document).on('click.boardMoveMenu', function () {
       $('.board-card-move-menu', page).hide();
     });
+
+    // --- Blank-row (spacer) create/delete ---------------------------------
+    $(page).on('click', '.board-add-spacer', function () {
+      var $btn = $(this);
+      if ($btn.prop('disabled')) return;
+      $btn.prop('disabled', true);
+
+      $.ajax({
+        url: $btn.data('url'),
+        method: 'POST',
+        headers: { 'X-CSRF-Token': csrfToken },
+        dataType: 'html'
+      })
+        .done(function (html) {
+          var $target = $('#unassigned .board-cards', page);
+          $target.prepend(html);
+          recomputePersonnel();
+        })
+        .fail(function () { alert('Could not add blank row. Refresh the page.'); })
+        .always(function () { $btn.prop('disabled', false); });
+    });
+
+    $(page).on('click', '.board-card-delete-spacer', function (e) {
+      e.stopPropagation();
+      var $btn = $(this);
+      var $card = $btn.closest('.board-card');
+
+      $.ajax({
+        url: $btn.data('url'),
+        method: 'DELETE',
+        headers: { 'X-CSRF-Token': csrfToken }
+      })
+        .done(function () {
+          $card.remove();
+          recomputePersonnel();
+        })
+        .fail(function () { alert('Could not delete blank row. Refresh the page.'); });
+    });
   }
 
   $(document).on('turbolinks:load', init);

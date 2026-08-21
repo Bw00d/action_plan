@@ -32,5 +32,13 @@
       <% end %>
     </div>
   </div>
+
+  <div class="board-footer">
+    <button type="button" class="board-add-spacer btn btn-default"
+            data-url="<%= spacers_incident_board_path(@incident) %>">
+      + Add blank row
+    </button>
+    <span class="board-footer-hint">Drop a blank row into any column to leave a gap on the ICS 204.</span>
+  </div>
 </div>
 

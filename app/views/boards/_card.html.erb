@@ -1,3 +1,19 @@
+<% if resource.spacer? %>
+<li class="board-card board-card--spacer" data-resource-id="<%= resource.id %>" data-personnel="0">
+  <div class="board-card-strip board-card-strip--spacer">
+    <span class="board-card-spacer-label">Blank row</span>
+    <button type="button" class="board-card-move-toggle" title="Move to another section">
+      <i class="fa fa-arrows" aria-hidden="true"></i> Move
+    </button>
+    <button type="button" class="board-card-delete-spacer"
+            data-url="<%= spacer_incident_board_path(@incident, resource) %>"
+            title="Delete blank row">&times;</button>
+    <div class="board-card-move-menu" style="display:none;">
+      <ul class="board-card-move-menu-list"></ul>
+    </div>
+  </div>
+</li>
+<% else %>
 <li class="board-card" data-resource-id="<%= resource.id %>" data-personnel="<%= resource.number_personnel.to_i %>">
   <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
@@ -69,3 +85,4 @@
     </dl>
   </div>
 </li>
+<% end %>
