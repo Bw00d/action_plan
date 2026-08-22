@@ -163,11 +163,18 @@
       /* Keep a resource row from being split across pages mid-line. */
       .ics-204-wf-pdf .res-row { page-break-inside: avoid; }
 
-      /* Force gray shading in PDF (Chrome strips backgrounds by default). */
+      /* Force gray shading in PDF. Chrome strips backgrounds by default,
+         and CSS custom-property fallbacks (var(--shade)) don't always
+         resolve reliably inside Grover's print pipeline — set the color
+         literal here alongside print-color-adjust so shaded cells (all
+         .shade / .banner / .banner-num + section 8 Function column)
+         render the same gray as the on-screen assignment page. */
       .ics-204-wf-pdf .shade,
       .ics-204-wf-pdf .banner,
       .ics-204-wf-pdf .banner-num,
-      .ics-204-wf-pdf .comm-row .c-func {
+      .ics-204-wf-pdf .comm-head .c-func,
+      .ics-204-wf-pdf .comm-row  .c-func {
+        background: #ebebeb !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }

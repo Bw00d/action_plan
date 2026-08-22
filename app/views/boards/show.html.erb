@@ -27,7 +27,7 @@
                    org_unit_id: unit.id,
                    title: unit.name,
                    subtitle: column_subtitle(unit),
-                   resources: unit.resources.assigned.order(:position),
+                   resources: unit.resources.active.order(:position),
                    unit: unit %>
       <% end %>
     </div>

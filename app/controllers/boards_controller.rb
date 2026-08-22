@@ -5,7 +5,7 @@ class BoardsController < ApplicationController
 
   def show
     @columns = build_columns(@incident)
-    @unassigned_resources = @incident.resources.unassigned.assigned.order(:category, :order_number)
+    @unassigned_resources = @incident.resources.unassigned.active.order(:category, :order_number)
   end
 
   def move

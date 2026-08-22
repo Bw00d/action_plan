@@ -13,8 +13,14 @@ class Resource < ApplicationRecord
   scope :equipment, -> { where(category: 'EQUIPMENT') }
   scope :crew, -> { where(category: 'CREW') }
   scope :aircraft, -> { where(category: 'AIRCRAFT') }
-  scope :assigned, -> { where(release_date: nil, r_and_r: false)}
-  scope :on_rnr, -> { where(r_and_r: true)}
+  # "active" = not released, not on R&R (matches historical `assigned`
+  # semantics). "assigned" narrows that to real resources — spacers exist
+  # only as visual gaps on the ICS 204 board and must be filtered out of
+  # every user-facing resource list (ICS 211, demob, plan roster, etc.);
+  # the board itself uses `.active` so spacers still render on columns.
+  scope :active,   -> { where(release_date: nil, r_and_r: false) }
+  scope :assigned, -> { active.where(spacer: false) }
+  scope :on_rnr,   -> { where(r_and_r: true, spacer: false) }
    with_options unless: :spacer? do
      validates :name, presence: true
      validates :position, presence: true
