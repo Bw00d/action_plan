@@ -1,5 +1,6 @@
 <%= content_for :title, "Resources"  %>
-<p id="notice"><%= notice %></p>
+<% if notice %><p id="notice" class="alert alert-success"><%= notice %></p><% end %>
+<% if alert  %><p id="alert"  class="alert alert-danger"><%= alert %></p><% end %>
 <div class="incident-name">
   <h1><%= link_to @incident.display_incident_name, @incident %></h1>
 </div>
@@ -23,6 +24,22 @@
         <%= link_to "javascript:;" do %>
           <%= image_tag 'user-plus.svg', class: "float-right", id: 'new-resource' %>
         <% end %>
+
+        <li class="resource-tab isuite-import-tab">
+          <%= form_with url: import_isuite_incident_resources_path(@incident),
+                        method: :post,
+                        local: true,
+                        multipart: true,
+                        html: { id: 'isuite-import-form', style: 'display:inline' } do |f| %>
+            <%= f.file_field :isuite_csv, accept: '.csv,text/csv',
+                             id: 'isuite-csv-input',
+                             style: 'display:none',
+                             onchange: "document.getElementById('isuite-import-form').submit();" %>
+            <%= link_to 'Import iSuite', 'javascript:;',
+                        class: 'resource-tab-link',
+                        onclick: "document.getElementById('isuite-csv-input').click();" %>
+          <% end %>
+        </li>
 
         </ul>
       </div>

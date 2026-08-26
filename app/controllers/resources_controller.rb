@@ -64,6 +64,30 @@ class ResourcesController < ApplicationController
     end
   end
 
+  # POST /incidents/:incident_id/resources/import_isuite
+  # Accepts an e-iSuite CSV export and upserts Resources + Rosters onto
+  # the incident. Idempotent — re-running never duplicates.
+  def import_isuite
+    incident = Incident.find(params[:incident_id])
+    if params[:isuite_csv].blank?
+      redirect_to incident_resources_path(incident), alert: "Choose an iSuite CSV to import."
+      return
+    end
+
+    result = IsuiteImporter.new(params[:isuite_csv].tempfile).import_into(incident)
+
+    parts  = []
+    parts << "Added #{result.resources_created} resource#{'s' if result.resources_created != 1}"
+    parts << "#{result.rosters_created} roster entr#{result.rosters_created == 1 ? 'y' : 'ies'}"
+    parts << "skipped #{result.resources_skipped + result.rosters_skipped} already present"
+    parts << "#{result.demobed_skipped} demobed"      if result.demobed_skipped.positive?
+    parts << "#{result.service_skipped} service rows" if result.service_skipped.positive?
+    notice  = parts.join(", ") + "."
+    notice += " Errors: #{result.errors.first(3).join(' | ')}#{'…' if result.errors.size > 3}" if result.errors.any?
+
+    redirect_to incident_resources_path(incident), notice: notice
+  end
+
   # DELETE /resources/1
   # DELETE /resources/1.json
   def destroy

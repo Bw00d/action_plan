@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     end
     resources :posts
     resources :resources do
+      collection { post :import_isuite }
       resources :demobs
     end
     resources :requests, only: [:index] do
