@@ -19,7 +19,8 @@
 
 <tr class="request-row depth-<%= depth %> <%= 'has-children' if kids.any? %> <%= 'is-hidden' if has_ancestor %>"
     data-parent-key="<%= row_id %>"
-    data-ancestors="<%= ancestors_attr %>">
+    data-ancestors="<%= ancestors_attr %>"
+    data-status="<%= status %>">
   <td class="req-number-cell" style="padding-left: <%= cell_indent %>px">
     <span class="toggle-slot"><% if kids.any? %><span class="request-toggle"
             role="button"

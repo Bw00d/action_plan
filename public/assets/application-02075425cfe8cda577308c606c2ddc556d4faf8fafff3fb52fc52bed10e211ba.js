@@ -51136,6 +51136,44 @@ document.addEventListener("turbolinks:load", function() {
     $(document).on('click.boardMoveMenu', function () {
       $('.board-card-move-menu', page).hide();
     });
+
+    // --- Blank-row (spacer) create/delete ---------------------------------
+    $(page).on('click', '.board-add-spacer', function () {
+      var $btn = $(this);
+      if ($btn.prop('disabled')) return;
+      $btn.prop('disabled', true);
+
+      $.ajax({
+        url: $btn.data('url'),
+        method: 'POST',
+        headers: { 'X-CSRF-Token': csrfToken },
+        dataType: 'html'
+      })
+        .done(function (html) {
+          var $target = $('#unassigned .board-cards', page);
+          $target.prepend(html);
+          recomputePersonnel();
+        })
+        .fail(function () { alert('Could not add blank row. Refresh the page.'); })
+        .always(function () { $btn.prop('disabled', false); });
+    });
+
+    $(page).on('click', '.board-card-delete-spacer', function (e) {
+      e.stopPropagation();
+      var $btn = $(this);
+      var $card = $btn.closest('.board-card');
+
+      $.ajax({
+        url: $btn.data('url'),
+        method: 'DELETE',
+        headers: { 'X-CSRF-Token': csrfToken }
+      })
+        .done(function () {
+          $card.remove();
+          recomputePersonnel();
+        })
+        .fail(function () { alert('Could not delete blank row. Refresh the page.'); });
+    });
   }
 
   $(document).on('turbolinks:load', init);
@@ -52109,14 +52147,16 @@ $(document).on("turbolinks:load", function () {
       if ($block.data("uiResizable")) return;
 
       // Text blocks aren't resizable — their size comes from the H1–H4
-      // buttons or the pixel input in the style panel. Only image
+      // buttons or the pixel input in the style panel. Image and notes
       // blocks get corner handles.
-      if (!$block.hasClass("is-image")) return;
+      if (!$block.hasClass("is-image") && !$block.hasClass("is-notes")) return;
       $block.resizable({
         handles: "ne, nw, se, sw",
         minWidth: 24,
         minHeight: 20,
-        aspectRatio: true,
+        // Images stay proportional; notes blocks resize freely so users
+        // can make them tall or wide as needed.
+        aspectRatio: $block.hasClass("is-image"),
         grid: [GRID_PX, GRID_PX],   // resize in 10px steps for uniformity
         // On stop: recompute center + w/h as % of canvas and persist.
         // Resize handles that aren't the SE corner also shift the block's
@@ -52263,23 +52303,23 @@ $(document).on("turbolinks:load", function () {
   var $pxInput = $panel.find(".csp-px-input");
 
   function refreshPanelFromBlock($block) {
-    // Image blocks don't have font/weight/style/align — disable those
-    // panel buttons so they can't be clicked and don't light up.
-    var isImage = $block && $block.hasClass("is-image");
+    // Image and notes blocks don't have font/weight/style/align — disable
+    // those panel buttons so they can't be clicked and don't light up.
+    var isNonText = $block && ($block.hasClass("is-image") || $block.hasClass("is-notes"));
 
     $panel.find(".csp-btn[data-attr]").each(function () {
       var attr = $(this).data("attr");
       var val = $(this).data("value");
-      var applies = !isImage; // all data-attr controls are text-only
+      var applies = !isNonText; // all data-attr controls are text-only
       var active = applies && $block && currentValue($block, attr) === val;
       $(this).toggleClass("is-active", !!active);
-      $(this).toggleClass("is-disabled", !!(isImage && $block));
+      $(this).toggleClass("is-disabled", !!(isNonText && $block));
     });
 
     // Sync the pixel-size input with the selected block; disable it for
-    // images and clear it when nothing is selected.
-    $pxInput.toggleClass("is-disabled", !!(isImage && $block));
-    if ($block && !isImage) {
+    // non-text and clear it when nothing is selected.
+    $pxInput.toggleClass("is-disabled", !!(isNonText && $block));
+    if ($block && !isNonText) {
       $pxInput.val(fontSizeToPx($block.attr("data-font-size")));
     } else {
       $pxInput.val("");
@@ -52684,6 +52724,25 @@ $(document).on("turbolinks:load", function () {
         window.location.reload();
       })
       .catch(function (err) { alert(err.message || "Could not create image block."); });
+  });
+
+  // Notes button in the panel — create a new notes block on the cover.
+  $panel.off("click.coverAddNotes").on("click.coverAddNotes", ".csp-add-notes", function () {
+    var params = new URLSearchParams();
+    params.append("block[cover_id]", $canvas.data("cover-id"));
+    params.append("block[kind]",     "notes");
+    params.append("block[x]",        75);
+    params.append("block[y]",        55);
+    params.append("block[width]",    35);
+    params.append("block[height]",   35);
+    fetch("/blocks", {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": csrfToken(),
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    }).then(function () { window.location.reload(); });
   });
 
   // Trash icon: delete the currently selected block. (Moved here from
@@ -53158,10 +53217,14 @@ $(document).on('turbolinks:load', function () {
   var $index = $('.requests-index');
   if (!$index.length) return;
 
-  // Persistent search filter state. When a search is active this is an
-  // object { rowId: true, ... } listing every row that survives the
-  // filter (matches plus their ancestor chain). Null when no search.
-  var searchVisibleIds = null;
+  // Persistent filter state. When any filter (search or status) is active
+  // this is an object { rowId: true, ... } listing every row that survives
+  // — matches plus their ancestor chain. Null when no filter is active.
+  var filterVisibleIds = null;
+
+  // Active status filter set. Empty object = no status filter (show all
+  // statuses). Populated by clicking the status filter pills.
+  var activeStatuses = {};
 
   // Refresh visibility of every tree row from three inputs:
   //   1. ancestor-collapse — hide if any ancestor toggle is collapsed
@@ -53174,7 +53237,7 @@ $(document).on('turbolinks:load', function () {
       collapsedKeys[$(this).data('target')] = true;
     });
 
-    var searchActive = searchVisibleIds !== null;
+    var filterActive = filterVisibleIds !== null;
 
     $index.find('tr[data-ancestors]').each(function () {
       var $row = $(this);
@@ -53187,17 +53250,17 @@ $(document).on('turbolinks:load', function () {
 
       if ($row.hasClass('request-detail')) {
         var userOpen = $row.hasClass('is-detail-open');
-        var searchHidden = false;
-        if (searchActive) {
-          searchHidden = !searchVisibleIds[$row.data('detail-of')];
+        var filterHidden = false;
+        if (filterActive) {
+          filterHidden = !filterVisibleIds[$row.data('detail-of')];
         }
-        $row.toggleClass('is-hidden', !userOpen || ancestorCollapsed || searchHidden);
+        $row.toggleClass('is-hidden', !userOpen || ancestorCollapsed || filterHidden);
       } else {
-        var searchHiddenRow = false;
-        if (searchActive) {
-          searchHiddenRow = !searchVisibleIds[$row.data('parent-key')];
+        var filterHiddenRow = false;
+        if (filterActive) {
+          filterHiddenRow = !filterVisibleIds[$row.data('parent-key')];
         }
-        $row.toggleClass('is-hidden', ancestorCollapsed || searchHiddenRow);
+        $row.toggleClass('is-hidden', ancestorCollapsed || filterHiddenRow);
       }
     });
   }
@@ -53249,25 +53312,30 @@ $(document).on('turbolinks:load', function () {
     }
   });
 
-  // ── Search filter ─────────────────────────────────────────────────────
-  // When a search is active, matching rows and all their ancestors become
-  // visible (ancestor toggles flip to expanded). Clearing the search
-  // returns the tree to its default collapsed state.
+  // ── Search + status filter ────────────────────────────────────────────
+  // A row survives if it matches the search text (if any) AND has one of
+  // the active statuses (if any status pill is selected). Matches plus
+  // their ancestor chain stay visible so tree context is preserved, and
+  // ancestor toggles flip open so the tree expands around each match.
+  // Clearing all filters returns the tree to its default collapsed state.
   var $searchInput   = $('#requests-search-input');
   var $searchClear   = $('#requests-search-clear');
   var $searchSummary = $('#requests-search-summary');
 
   function normalize(s) { return (s || '').toString().toLowerCase(); }
 
-  function applySearch() {
+  function applyFilters() {
     var q = normalize($searchInput.val()).trim();
     var hasQuery = q.length > 0;
+    var hasStatusFilter = false;
+    for (var _k in activeStatuses) { hasStatusFilter = true; break; }
+    var hasAnyFilter = hasQuery || hasStatusFilter;
+
     $searchClear.toggle(hasQuery);
 
-    if (!hasQuery) {
-      // Reset: clear search filter, collapse everything, close details,
-      // then recompute visibility.
-      searchVisibleIds = null;
+    if (!hasAnyFilter) {
+      // Full reset: no filters, collapse everything, close details.
+      filterVisibleIds = null;
       $index.find('.request-toggle').attr('aria-expanded', 'false');
       $index.find('tr.request-detail').removeClass('is-detail-open');
       refreshTreeVisibility();
@@ -53276,9 +53344,6 @@ $(document).on('turbolinks:load', function () {
       return;
     }
 
-    // Walk every row and gather the visible set: matches, plus every
-    // ancestor of a match (so the tree context stays visible). Expand
-    // matching ancestors' toggles so the tree opens up around the match.
     var visibleIds = {};
     var totalMatches = 0;
 
@@ -53288,8 +53353,16 @@ $(document).on('turbolinks:load', function () {
 
       $section.find('tr.request-row').each(function () {
         var $row = $(this);
-        var text = normalize($row.text());
-        if (text.indexOf(q) === -1) return;
+
+        if (hasQuery) {
+          var text = normalize($row.text());
+          if (text.indexOf(q) === -1) return;
+        }
+
+        if (hasStatusFilter) {
+          var rowStatus = String($row.attr('data-status') || '');
+          if (!activeStatuses[rowStatus]) return;
+        }
 
         sectionMatches += 1;
         visibleIds[$row.data('parent-key')] = true;
@@ -53306,21 +53379,34 @@ $(document).on('turbolinks:load', function () {
       totalMatches += sectionMatches;
     });
 
-    // Close any open detail rows so the search view starts clean, then
+    // Close any open detail rows so the filtered view starts clean, then
     // stash the visible set and let refreshTreeVisibility apply it. Toggle
     // clicks that follow (caret, detail) also call refreshTreeVisibility,
-    // so the search filter stays in force through those interactions.
+    // so the filters stay in force through those interactions.
     $index.find('tr.request-detail').removeClass('is-detail-open');
-    searchVisibleIds = visibleIds;
+    filterVisibleIds = visibleIds;
     refreshTreeVisibility();
 
     $searchSummary.text(totalMatches + ' match' + (totalMatches === 1 ? '' : 'es'));
   }
 
-  $searchInput.on('input', applySearch);
+  $searchInput.on('input', applyFilters);
   $searchClear.on('click', function () {
     $searchInput.val('').focus();
-    applySearch();
+    applyFilters();
+  });
+
+  $index.on('click', '.status-filter', function () {
+    var $btn = $(this);
+    var status = String($btn.attr('data-status') || '');
+    var pressed = $btn.attr('aria-pressed') === 'true';
+    $btn.attr('aria-pressed', String(!pressed));
+    if (pressed) {
+      delete activeStatuses[status];
+    } else {
+      activeStatuses[status] = true;
+    }
+    applyFilters();
   });
 });
 $(document).on("turbolinks:load", function() {

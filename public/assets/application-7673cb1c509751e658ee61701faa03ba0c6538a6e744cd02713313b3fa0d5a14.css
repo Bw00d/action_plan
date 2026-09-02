@@ -20244,18 +20244,33 @@ input#checkin_order_number {
   width: 13%;
 }
 
-/* line 42, app/assets/stylesheets/commo_plans.scss */
+/* line 47, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-name {
+  width: 13%;
+}
+
+/* line 48, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-tone {
+  width: 6%;
+}
+
+/* line 49, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-mode {
+  width: 6%;
+}
+
+/* line 50, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 46, app/assets/stylesheets/commo_plans.scss */
+/* line 54, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 58, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -20263,7 +20278,7 @@ input#checkin_order_number {
   border-bottom: 1px solid black;
 }
 
-/* line 56, app/assets/stylesheets/commo_plans.scss */
+/* line 64, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -20273,7 +20288,7 @@ input#checkin_order_number {
   overflow: hidden;
 }
 
-/* line 64, app/assets/stylesheets/commo_plans.scss */
+/* line 72, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -20281,38 +20296,38 @@ input#checkin_order_number {
   border-left: 1px solid black;
 }
 
-/* line 70, app/assets/stylesheets/commo_plans.scss */
+/* line 78, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 74, app/assets/stylesheets/commo_plans.scss */
+/* line 82, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 77, app/assets/stylesheets/commo_plans.scss */
+/* line 85, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 80, app/assets/stylesheets/commo_plans.scss */
+/* line 88, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 83, app/assets/stylesheets/commo_plans.scss */
+/* line 91, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 87, app/assets/stylesheets/commo_plans.scss */
+/* line 95, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -20321,17 +20336,17 @@ input#checkin_order_number {
   verticle-align: middle;
 }
 
-/* line 93, app/assets/stylesheets/commo_plans.scss */
+/* line 101, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 98, app/assets/stylesheets/commo_plans.scss */
+/* line 106, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 102, app/assets/stylesheets/commo_plans.scss */
+/* line 110, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -20340,24 +20355,24 @@ input#checkin_order_number {
   width: 30px;
 }
 
-/* line 109, app/assets/stylesheets/commo_plans.scss */
+/* line 117, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 111, app/assets/stylesheets/commo_plans.scss */
+/* line 119, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 117, app/assets/stylesheets/commo_plans.scss */
+/* line 125, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 120, app/assets/stylesheets/commo_plans.scss */
+/* line 128, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -20372,17 +20387,17 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 134, app/assets/stylesheets/commo_plans.scss */
+/* line 142, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 137, app/assets/stylesheets/commo_plans.scss */
+/* line 145, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 140, app/assets/stylesheets/commo_plans.scss */
+/* line 148, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
@@ -21470,6 +21485,52 @@ input.new-commo-item {
   font-size: 12px;
   border: 1px dashed #b0b7c3;
   border-radius: 3px;
+}
+
+/* line 857, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-notes {
+  cursor: move;
+}
+
+/* line 860, app/assets/stylesheets/covers.css.scss */
+.cover-notes {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* line 869, app/assets/stylesheets/covers.css.scss */
+.cover-notes-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 0;
+  border-bottom: 1px solid #000;
+  user-select: none;
+}
+
+/* line 877, app/assets/stylesheets/covers.css.scss */
+.cover-notes-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 883, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line {
+  flex: 1;
+  border-bottom: 1px solid #000;
+  min-height: 0;
+}
+
+/* line 888, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line:last-child {
+  border-bottom: 0;
 }
 /* line 1, app/assets/stylesheets/demob_notifications.scss */
 .demob-notifications-page {
@@ -26164,6 +26225,52 @@ div.solid {
   border-radius: 3px;
 }
 
+/* line 857, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-notes {
+  cursor: move;
+}
+
+/* line 860, app/assets/stylesheets/covers.css.scss */
+.cover-notes {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* line 869, app/assets/stylesheets/covers.css.scss */
+.cover-notes-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 0;
+  border-bottom: 1px solid #000;
+  user-select: none;
+}
+
+/* line 877, app/assets/stylesheets/covers.css.scss */
+.cover-notes-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 883, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line {
+  flex: 1;
+  border-bottom: 1px solid #000;
+  min-height: 0;
+}
+
+/* line 888, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line:last-child {
+  border-bottom: 0;
+}
+
 /* line 2, app/assets/stylesheets/safety_messages.scss */
 .hazards-form textarea {
   width: 100%;
@@ -26267,18 +26374,33 @@ div.solid {
   width: 13%;
 }
 
-/* line 42, app/assets/stylesheets/commo_plans.scss */
+/* line 47, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-name {
+  width: 13%;
+}
+
+/* line 48, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-tone {
+  width: 6%;
+}
+
+/* line 49, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-mode {
+  width: 6%;
+}
+
+/* line 50, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 46, app/assets/stylesheets/commo_plans.scss */
+/* line 54, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 58, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -26286,7 +26408,7 @@ div.solid {
   border-bottom: 1px solid black;
 }
 
-/* line 56, app/assets/stylesheets/commo_plans.scss */
+/* line 64, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -26296,7 +26418,7 @@ div.solid {
   overflow: hidden;
 }
 
-/* line 64, app/assets/stylesheets/commo_plans.scss */
+/* line 72, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -26304,38 +26426,38 @@ div.solid {
   border-left: 1px solid black;
 }
 
-/* line 70, app/assets/stylesheets/commo_plans.scss */
+/* line 78, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 74, app/assets/stylesheets/commo_plans.scss */
+/* line 82, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 77, app/assets/stylesheets/commo_plans.scss */
+/* line 85, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 80, app/assets/stylesheets/commo_plans.scss */
+/* line 88, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 83, app/assets/stylesheets/commo_plans.scss */
+/* line 91, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 87, app/assets/stylesheets/commo_plans.scss */
+/* line 95, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -26344,17 +26466,17 @@ div.solid {
   verticle-align: middle;
 }
 
-/* line 93, app/assets/stylesheets/commo_plans.scss */
+/* line 101, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 98, app/assets/stylesheets/commo_plans.scss */
+/* line 106, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 102, app/assets/stylesheets/commo_plans.scss */
+/* line 110, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -26363,24 +26485,24 @@ div.solid {
   width: 30px;
 }
 
-/* line 109, app/assets/stylesheets/commo_plans.scss */
+/* line 117, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 111, app/assets/stylesheets/commo_plans.scss */
+/* line 119, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 117, app/assets/stylesheets/commo_plans.scss */
+/* line 125, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 120, app/assets/stylesheets/commo_plans.scss */
+/* line 128, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -26395,17 +26517,17 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 134, app/assets/stylesheets/commo_plans.scss */
+/* line 142, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 137, app/assets/stylesheets/commo_plans.scss */
+/* line 145, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 140, app/assets/stylesheets/commo_plans.scss */
+/* line 148, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
@@ -27838,11 +27960,90 @@ img#add-freqs-button {
 }
 
 /* line 82, app/assets/stylesheets/requests.scss */
+.requests-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: -8px 0 16px;
+}
+
+/* line 89, app/assets/stylesheets/requests.scss */
+.requests-filters .filters-label {
+  font-size: 12px;
+  color: #6b778c;
+  margin-right: 2px;
+}
+
+/* line 95, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 6px;
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #5e6c84;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+/* line 108, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter:hover {
+  background: #f4f5f7;
+  border-color: #c1c7d0;
+}
+
+/* line 113, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 154, 255, 0.35);
+}
+
+/* line 118, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter[aria-pressed="true"] {
+  background: #e6f0ff;
+  border-color: #4c9aff;
+  color: #172b4d;
+  font-weight: 600;
+}
+
+/* line 125, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill {
+  display: inline-block;
+  min-width: 20px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+  color: #fff;
+}
+
+/* line 136, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill.status-filled {
+  background: #6b778c;
+}
+
+/* line 137, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill.status-checked_in {
+  background: #2e7d32;
+}
+
+/* line 138, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill.status-released {
+  background: #212121;
+}
+
+/* line 143, app/assets/stylesheets/requests.scss */
 .catalog-section.is-empty {
   display: none;
 }
 
-/* line 86, app/assets/stylesheets/requests.scss */
+/* line 147, app/assets/stylesheets/requests.scss */
 .catalog-pill {
   display: inline-block;
   padding: 4px 10px;
@@ -27853,13 +28054,13 @@ img#add-freqs-button {
   color: #172b4d;
 }
 
-/* line 95, app/assets/stylesheets/requests.scss */
+/* line 156, app/assets/stylesheets/requests.scss */
 .catalog-pill strong {
   font-weight: 600;
   margin-right: 4px;
 }
 
-/* line 101, app/assets/stylesheets/requests.scss */
+/* line 162, app/assets/stylesheets/requests.scss */
 .requests-table {
   width: 100%;
   border-collapse: separate;
@@ -27872,7 +28073,7 @@ img#add-freqs-button {
   box-shadow: 0 1px 2px rgba(9, 30, 66, 0.04);
 }
 
-/* line 112, app/assets/stylesheets/requests.scss */
+/* line 173, app/assets/stylesheets/requests.scss */
 .requests-table thead th {
   background: #f7f8fa;
   color: #5e6c84;
@@ -27886,7 +28087,7 @@ img#add-freqs-button {
   white-space: nowrap;
 }
 
-/* line 125, app/assets/stylesheets/requests.scss */
+/* line 186, app/assets/stylesheets/requests.scss */
 .requests-table tbody td {
   padding: 10px 12px;
   border-bottom: 1px solid #eef0f3;
@@ -27894,66 +28095,66 @@ img#add-freqs-button {
   color: #172b4d;
 }
 
-/* line 132, app/assets/stylesheets/requests.scss */
+/* line 193, app/assets/stylesheets/requests.scss */
 .requests-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* line 136, app/assets/stylesheets/requests.scss */
+/* line 197, app/assets/stylesheets/requests.scss */
 .requests-table tbody tr:nth-child(even) td {
   background: #fafbfc;
 }
 
-/* line 140, app/assets/stylesheets/requests.scss */
+/* line 201, app/assets/stylesheets/requests.scss */
 .requests-table tbody tr:hover td {
   background: #eef4ff;
 }
 
-/* line 146, app/assets/stylesheets/requests.scss */
+/* line 207, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(1), .requests-table td:nth-child(1) {
   width: 10%;
   white-space: nowrap;
   font-weight: 600;
 }
 
-/* line 147, app/assets/stylesheets/requests.scss */
+/* line 208, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(2), .requests-table td:nth-child(2) {
   width: 6%;
   white-space: nowrap;
   text-align: center;
 }
 
-/* line 148, app/assets/stylesheets/requests.scss */
+/* line 209, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(3), .requests-table td:nth-child(3) {
   width: 28%;
 }
 
-/* line 149, app/assets/stylesheets/requests.scss */
+/* line 210, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(4), .requests-table td:nth-child(4) {
   width: 26%;
   color: #42526e;
 }
 
-/* line 150, app/assets/stylesheets/requests.scss */
+/* line 211, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(5), .requests-table td:nth-child(5) {
   width: 15%;
   color: #5e6c84;
   white-space: nowrap;
 }
 
-/* line 151, app/assets/stylesheets/requests.scss */
+/* line 212, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(6), .requests-table td:nth-child(6) {
   width: 15%;
   color: #5e6c84;
   white-space: nowrap;
 }
 
-/* line 157, app/assets/stylesheets/requests.scss */
+/* line 218, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-cell {
   padding-left: 12px;
 }
 
-/* line 161, app/assets/stylesheets/requests.scss */
+/* line 222, app/assets/stylesheets/requests.scss */
 .requests-table .toggle-slot {
   display: inline-block;
   width: 16px;
@@ -27962,7 +28163,7 @@ img#add-freqs-button {
   color: #a1a8b4;
 }
 
-/* line 169, app/assets/stylesheets/requests.scss */
+/* line 230, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle {
   display: inline;
   cursor: pointer;
@@ -27973,22 +28174,22 @@ img#add-freqs-button {
   user-select: none;
 }
 
-/* line 178, app/assets/stylesheets/requests.scss */
+/* line 239, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle:hover {
   color: #172b4d;
 }
 
-/* line 179, app/assets/stylesheets/requests.scss */
+/* line 240, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle:focus {
   outline: none;
 }
 
-/* line 180, app/assets/stylesheets/requests.scss */
+/* line 241, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle[aria-expanded="true"] .toggle-caret {
   transform: rotate(90deg);
 }
 
-/* line 183, app/assets/stylesheets/requests.scss */
+/* line 244, app/assets/stylesheets/requests.scss */
 .requests-table .toggle-caret {
   display: inline-block;
   transition: transform 0.12s ease;
@@ -27999,7 +28200,7 @@ img#add-freqs-button {
   vertical-align: baseline;
 }
 
-/* line 194, app/assets/stylesheets/requests.scss */
+/* line 255, app/assets/stylesheets/requests.scss */
 .requests-table .child-count {
   margin-left: 6px;
   color: #6b778c;
@@ -28007,68 +28208,68 @@ img#add-freqs-button {
   font-size: 11px;
 }
 
-/* line 201, app/assets/stylesheets/requests.scss */
+/* line 262, app/assets/stylesheets/requests.scss */
 .requests-table .child-indent {
   display: none;
 }
 
-/* line 207, app/assets/stylesheets/requests.scss */
+/* line 268, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-1 {
   background: #fafbfc;
 }
 
-/* line 208, app/assets/stylesheets/requests.scss */
+/* line 269, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-1 td {
   color: #42526e;
 }
 
-/* line 210, app/assets/stylesheets/requests.scss */
+/* line 271, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-2 {
   background: #f4f6f9;
 }
 
-/* line 211, app/assets/stylesheets/requests.scss */
+/* line 272, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-2 td {
   color: #5e6c84;
 }
 
-/* line 212, app/assets/stylesheets/requests.scss */
+/* line 273, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-2 td:first-child {
   font-weight: 400;
 }
 
-/* line 214, app/assets/stylesheets/requests.scss */
+/* line 275, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-3 {
   background: #eef1f5;
 }
 
-/* line 215, app/assets/stylesheets/requests.scss */
+/* line 276, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-3 td {
   color: #5e6c84;
   font-size: 12px;
 }
 
-/* line 218, app/assets/stylesheets/requests.scss */
+/* line 279, app/assets/stylesheets/requests.scss */
 .requests-table .is-hidden {
   display: none;
 }
 
-/* line 223, app/assets/stylesheets/requests.scss */
+/* line 284, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text {
   cursor: pointer;
 }
 
-/* line 225, app/assets/stylesheets/requests.scss */
+/* line 286, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text:hover {
   text-decoration: underline;
 }
 
-/* line 226, app/assets/stylesheets/requests.scss */
+/* line 287, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text:focus {
   outline: none;
 }
 
-/* line 230, app/assets/stylesheets/requests.scss */
+/* line 291, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill {
   display: inline-block;
   min-width: 22px;
@@ -28081,46 +28282,46 @@ img#add-freqs-button {
   color: #fff;
 }
 
-/* line 241, app/assets/stylesheets/requests.scss */
+/* line 302, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-filled {
   background: #6b778c;
 }
 
-/* line 242, app/assets/stylesheets/requests.scss */
+/* line 303, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-checked_in {
   background: #2e7d32;
 }
 
-/* line 243, app/assets/stylesheets/requests.scss */
+/* line 304, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-released {
   background: #212121;
 }
 
-/* line 247, app/assets/stylesheets/requests.scss */
+/* line 308, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail {
   background: #f7f8fa;
 }
 
-/* line 250, app/assets/stylesheets/requests.scss */
+/* line 311, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail td {
   padding: 10px 12px 12px;
   border-bottom: 1px solid #eef0f3;
 }
 
-/* line 255, app/assets/stylesheets/requests.scss */
+/* line 316, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail-inner {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* line 262, app/assets/stylesheets/requests.scss */
+/* line 323, app/assets/stylesheets/requests.scss */
 .requests-table .check-in-btn {
   font-size: 12px;
   padding: 6px 14px;
 }
 
-/* line 266, app/assets/stylesheets/requests.scss */
+/* line 327, app/assets/stylesheets/requests.scss */
 .requests-table .check-in-btn.is-disabled {
   background: #dfe1e6;
   border-color: #dfe1e6;
@@ -28129,7 +28330,7 @@ img#add-freqs-button {
   pointer-events: none;
 }
 
-/* line 280, app/assets/stylesheets/requests.scss */
+/* line 341, app/assets/stylesheets/requests.scss */
 .checkin-page {
   max-width: 720px;
   margin: 24px auto;
@@ -28137,27 +28338,27 @@ img#add-freqs-button {
   color: #172b4d;
 }
 
-/* line 286, app/assets/stylesheets/requests.scss */
+/* line 347, app/assets/stylesheets/requests.scss */
 .checkin-page #glide-info {
   display: block;
 }
 
-/* line 287, app/assets/stylesheets/requests.scss */
+/* line 348, app/assets/stylesheets/requests.scss */
 .checkin-page #resource-form {
   display: block;
 }
 
-/* line 289, app/assets/stylesheets/requests.scss */
+/* line 350, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header {
   margin: 8px 0 16px;
 }
 
-/* line 292, app/assets/stylesheets/requests.scss */
+/* line 353, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header h2 {
   margin: 0 0 4px;
 }
 
-/* line 293, app/assets/stylesheets/requests.scss */
+/* line 354, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header p {
   margin: 0;
   color: #5e6c84;

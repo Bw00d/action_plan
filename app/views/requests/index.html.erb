@@ -31,6 +31,22 @@
       <span id="requests-search-summary" class="muted"></span>
     </div>
 
+    <div class="requests-filters" role="group" aria-label="Filter by status">
+      <span class="filters-label">Filter:</span>
+      <button type="button" class="status-filter" data-status="filled" aria-pressed="false">
+        <span class="status-pill status-filled">F</span>
+        <span class="filter-label">Filled</span>
+      </button>
+      <button type="button" class="status-filter" data-status="checked_in" aria-pressed="false">
+        <span class="status-pill status-checked_in">C</span>
+        <span class="filter-label">Checked In</span>
+      </button>
+      <button type="button" class="status-filter" data-status="released" aria-pressed="false">
+        <span class="status-pill status-released">D</span>
+        <span class="filter-label">Demobed</span>
+      </button>
+    </div>
+
     <% @parents_by_catalog.each do |catalog, parents| %>
       <% catalog_key = catalog.to_s.parameterize %>
 
