@@ -33,7 +33,7 @@
         </tr>
       </thead>
       <tbody id="incident-resources">
-        <% @resources.assigned.each do |r|  %>
+        <% natural_order_sort(@resources.assigned).each do |r|  %>
 
 
 
@@ -128,7 +128,7 @@
           <td class="grayed"></td>
           <td class="grayed"></td>
         </tr>
-        <% @resources.each do |r|  %>
+        <% natural_order_sort(@resources).each do |r|  %>
           <% if r.released? %>
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
@@ -177,7 +177,7 @@
           <td class="grayed"></td>
           <td class="grayed"></td>
         </tr>
-        <% @resources.on_rnr.each do |r|  %>
+        <% natural_order_sort(@resources.on_rnr).each do |r|  %>
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input, place_holder: "------" %></td>
             <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input, place_holder: "------" %></td>
@@ -212,7 +212,7 @@
       </tbody>
     </table>
 
-    <% @resources.assigned.each do |r| %>
+    <% natural_order_sort(@resources.assigned).each do |r| %>
       <div id="resource-panel-<%= r.id %>" class="resource-panel is-hidden" data-resource-panel="<%= r.id %>">
         <div class="resource-panel-inner">
           <button type="button" class="resource-panel-close" aria-label="Close">&times;</button>

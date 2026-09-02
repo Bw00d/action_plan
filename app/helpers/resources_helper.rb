@@ -1,4 +1,15 @@
 module ResourcesHelper
+  # Sort resources by category, then by order_number treated as a natural
+  # number so E-2 comes before E-10 and subordinate numbers like E-24.1..3
+  # sort by each dotted segment. String column ordering in SQL sorts
+  # lexicographically ("1", "10", "102", "2"), which is wrong for these
+  # display lists — do it in Ruby instead.
+  def natural_order_sort(resources)
+    resources.sort_by do |r|
+      [r.category.to_s, *r.order_number.to_s.scan(/\d+/).map(&:to_i)]
+    end
+  end
+
   # Overhead-style tally: { "AGENCY" => count }.
   def tally_resources(resources)
     totals = Hash.new(0)
