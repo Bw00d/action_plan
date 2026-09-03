@@ -42,6 +42,19 @@ class Resource < ApplicationRecord
 
   after_create :create_demob, unless: :spacer?
 
+  # Demobed resources shouldn't linger as OrgUnitAssignments on the board.
+  # The board hides them via `.active`, but leaving the row lets them leak
+  # into any downstream lookup that doesn't filter — e.g. a 204 built later
+  # against the same org_unit. Only fires when release_date was actually
+  # set on this save (nil → date), so clearing release_date to bring
+  # someone back doesn't do anything weird.
+  after_save :remove_from_board_on_demob, if: :saved_change_to_release_date?
+
+  def remove_from_board_on_demob
+    return if release_date.nil?
+    org_unit_assignment&.destroy
+  end
+
   # Guard against ActiveRecord's stricter date coercion turning
   # "8/20/26" (from the datepicker or a form typo) into year 0026.
   # Any parsed date whose year is below 100 gets bumped by 2000 so it

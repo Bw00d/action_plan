@@ -210,6 +210,16 @@ $(document).on("turbolinks:load", function() {
     }
   });
 
+  // Glide-path Order# link → open the same floating detail panel used by
+  // ICS-211 double-click. The panel partial is rendered at page level so
+  // it floats above whichever tab is currently visible.
+  $(document).on('click', '.glide-order-link', function (e) {
+    e.preventDefault();
+    var id = $(this).data('resource-id');
+    $('.resource-panel').addClass('is-hidden');
+    $('#resource-panel-' + id).removeClass('is-hidden');
+  });
+
   $(document).on('click', '.resource-panel-close', function () {
     $(this).closest('.resource-panel').addClass('is-hidden');
   });

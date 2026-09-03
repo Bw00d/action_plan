@@ -125,6 +125,27 @@ a.delete-resource:hover {
   display: none;
 }
 
+.glide-order-link {
+  color: #172b4d;
+  text-decoration: none;
+  border-bottom: 1px dotted #a1a8b4;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: #0052cc;
+    border-bottom-color: #0052cc;
+    text-decoration: none;
+  }
+}
+
+@media print {
+  .glide-order-link {
+    color: inherit;
+    border-bottom: none;
+  }
+}
+
 .glide-print-actions,
 .demob-print-actions {
   margin: 16px 0;

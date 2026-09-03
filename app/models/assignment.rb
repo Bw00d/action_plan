@@ -37,7 +37,9 @@ class Assignment < ApplicationRecord
               .values_at(*ordered_resource_ids)
               .compact
     else
-      org_unit.resources.order('org_unit_assignments.position')
+      # Match the board: demobed / R&R resources whose OrgUnitAssignment
+      # rows still linger shouldn't leak onto the 204.
+      org_unit.resources.active.order('org_unit_assignments.position')
     end
   end
 

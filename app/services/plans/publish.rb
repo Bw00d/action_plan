@@ -20,9 +20,13 @@ module Plans
     private
 
     def snapshot_current_assignments
+      # Freeze only the resources the board currently shows — demobed /
+      # R&R resources whose OrgUnitAssignments still linger should not be
+      # baked into a published plan's historical record.
       OrgUnitAssignment
-        .joins(:org_unit)
+        .joins(:org_unit, :resource)
         .where(org_units: { incident_id: @plan.incident_id })
+        .where(resources: { release_date: nil, r_and_r: false })
         .includes(:org_unit)
         .find_each do |assignment|
         PlanAssignmentSnapshot.create!(

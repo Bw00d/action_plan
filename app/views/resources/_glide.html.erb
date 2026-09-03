@@ -34,7 +34,11 @@
       <tbody>
         <% @resources.assigned.each do |r|  %>
         <tr>
-          <td class=" table-col"><%= r.full_order_number  %></td>
+          <td class=" table-col">
+            <a href="javascript:;" class="glide-order-link"
+               data-resource-id="<%= r.id %>"
+               title="Edit resource details"><%= r.full_order_number %></a>
+          </td>
           <td class=" table-col"><%=  r.position%></td>
           <td class="table-col name-col"><%=  r.name %></td>
           <% if !r.last_work_day.blank? %>
