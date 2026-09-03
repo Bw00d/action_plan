@@ -7,6 +7,7 @@ class OrgUnit < ApplicationRecord
   has_many :resources, through: :org_unit_assignments
   has_many :assignments, dependent: :nullify
   has_many :plan_assignment_snapshots, dependent: :nullify
+  has_many :ops_215_lines, dependent: :destroy
 
   enum kind: {
     command: 0,
