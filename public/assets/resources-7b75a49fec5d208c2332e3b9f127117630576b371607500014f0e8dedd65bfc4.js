@@ -180,8 +180,42 @@ $(document).on("turbolinks:load", function() {
   // Double-click a resource row → open its floating detail panel with all
   // editable attributes. Close with the X, backdrop click, or Escape.
   $(document).on('dblclick', 'tr.incident-resource', function (e) {
-    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button').length) return;
+    if ($(e.target).closest('.best_in_place, input, textarea, select, a, button, .resource-roster-toggle').length) return;
     var id = $(this).attr('id').replace('resource-', '');
+    $('.resource-panel').addClass('is-hidden');
+    $('#resource-panel-' + id).removeClass('is-hidden');
+  });
+
+  // Roster expansion — click the caret in the Order # cell to toggle
+  // visibility of the roster rows nested below the parent resource row.
+  function toggleRosterExpansion($btn) {
+    var id = $btn.data('resource-id');
+    var expanded = $btn.attr('aria-expanded') === 'true';
+    $btn.attr('aria-expanded', String(!expanded));
+    $('tr.resource-roster-row[data-resource-id="' + id + '"]').toggleClass('is-hidden', expanded);
+  }
+
+  // Namespaced + off/on so turbolinks:load re-firing (e.g. after a remote
+  // form redirect) doesn't stack multiple handlers on document. Two handlers
+  // would flip aria-expanded twice per click and the caret would look dead.
+  $(document).off('click.rosterToggle').on('click.rosterToggle', '.resource-roster-toggle', function (e) {
+    e.stopPropagation();
+    toggleRosterExpansion($(this));
+  });
+
+  $(document).off('keydown.rosterToggle').on('keydown.rosterToggle', '.resource-roster-toggle', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleRosterExpansion($(this));
+    }
+  });
+
+  // Glide-path Order# link → open the same floating detail panel used by
+  // ICS-211 double-click. The panel partial is rendered at page level so
+  // it floats above whichever tab is currently visible.
+  $(document).on('click', '.glide-order-link', function (e) {
+    e.preventDefault();
+    var id = $(this).data('resource-id');
     $('.resource-panel').addClass('is-hidden');
     $('#resource-panel-' + id).removeClass('is-hidden');
   });
