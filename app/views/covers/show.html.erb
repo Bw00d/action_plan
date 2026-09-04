@@ -17,6 +17,17 @@
         <% @blocks.each do |b| %>
           <%= render 'block_content', body: nil, block: b %>
         <% end %>
+
+        <%# Image upload form. Absolutely positioned inside the canvas so
+            openImageUploader() can place it directly under whichever
+            image block it targets. Hidden by default; JS toggles is-open. %>
+        <div class="cover-upload-form" data-target-block-id="">
+          <input type="file" class="cui-file-input" accept="image/*">
+          <button type="button" class="cui-choose-btn btn btn-default btn-sm">Choose File</button>
+          <span class="cui-filename">No file chosen</span>
+          <button type="button" class="cui-upload-btn btn btn-primary btn-sm" disabled>Upload</button>
+          <button type="button" class="cui-cancel-btn btn btn-danger  btn-sm">Cancel</button>
+        </div>
       </div>
 
       <div class="cover-style-panel" data-cover-id="<%= @cover.id %>">
@@ -66,16 +77,6 @@
           <%= image_tag('white-trash.png') %>
         </button>
       </div>
-    </div>
-
-    <%# Image upload form. Hidden by default (via .cover-upload-form
-        without .is-open); JS toggles .is-open to show it. %>
-    <div class="cover-upload-form" data-target-block-id="">
-      <input type="file" class="cui-file-input" accept="image/*">
-      <button type="button" class="cui-choose-btn btn btn-default btn-sm">Choose File</button>
-      <span class="cui-filename">No file chosen</span>
-      <button type="button" class="cui-upload-btn btn btn-primary btn-sm" disabled>Upload</button>
-      <button type="button" class="cui-cancel-btn btn btn-danger  btn-sm">Cancel</button>
     </div>
 
     <div class="print-button">

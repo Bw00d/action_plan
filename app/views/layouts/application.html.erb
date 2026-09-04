@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= content_for?(:title) ? "Action Plan | " + yield( :title) : "Action Plan" %></title>
   <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Insert description" %>">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>

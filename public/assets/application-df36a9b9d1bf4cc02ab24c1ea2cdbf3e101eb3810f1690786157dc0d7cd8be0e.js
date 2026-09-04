@@ -52088,6 +52088,9 @@ $(document).on("turbolinks:load", function () {
         // even when the block is wider than a third). Vertically we
         // keep the block fully inside the canvas.
         start: function () {
+          // Uploader is anchored to the block's pre-drag position; hide
+          // it so it doesn't strand mid-canvas while the block moves.
+          $(".cover-upload-form").removeClass("is-open");
           var canvasOff = $canvas.offset();
           var canvasW = $canvas.width();
           var canvasH = $canvas.height();
@@ -52158,6 +52161,9 @@ $(document).on("turbolinks:load", function () {
         // can make them tall or wide as needed.
         aspectRatio: $block.hasClass("is-image"),
         grid: [GRID_PX, GRID_PX],   // resize in 10px steps for uniformity
+        // Same reasoning as drag start: close the uploader so it doesn't
+        // stay pinned to the pre-resize block rectangle.
+        start: function () { $(".cover-upload-form").removeClass("is-open"); },
         // On stop: recompute center + w/h as % of canvas and persist.
         // Resize handles that aren't the SE corner also shift the block's
         // top-left, so we always send x/y along with width/height.
@@ -52345,10 +52351,21 @@ $(document).on("turbolinks:load", function () {
     }
   );
 
-  // Click outside any block on the canvas or panel deselects.
+  // Click outside any block on the canvas or panel deselects. The upload
+  // form is exempt too — clicking Choose File / Upload / Cancel shouldn't
+  // wipe the selection that opened the uploader.
   $(document).off("click.coverDeselect").on("click.coverDeselect", function (e) {
-    if ($(e.target).closest(".cover-block, .cover-style-panel").length) return;
+    if ($(e.target).closest(".cover-block, .cover-style-panel, .cover-upload-form").length) return;
     setSelected(null);
+  });
+
+  // Single-click on an image block auto-opens the uploader below it, so
+  // "change this image" is one click instead of two (click block, then
+  // click the panel icon). Drag doesn't fire click, so this doesn't
+  // interfere with repositioning.
+  $canvas.off("click.coverImgOpen").on("click.coverImgOpen", ".cover-block.is-image", function (e) {
+    if ($(e.target).closest(".ui-resizable-handle").length) return;
+    openImageUploader($(this).data("block-id"));
   });
 
   // Style-button click. If a block is selected → modify it. If nothing
@@ -52564,6 +52581,18 @@ $(document).on("turbolinks:load", function () {
     $fileInput.val("");
     $filename.text("No file chosen");
     $uploadBtn.prop("disabled", true);
+    positionUploadFormBelow($canvas.find('[data-block-id="' + blockId + '"]'));
+  }
+
+  // Anchor the upload form to the bottom-left of its target block. The
+  // form lives inside #cover-canvas (position: relative), so px offsets
+  // work directly. Runs on open; drag/resize close the form instead of
+  // re-anchoring, so the position always matches the block that opened it.
+  function positionUploadFormBelow($block) {
+    if (!$block || !$block.length) return;
+    var top  = $block.position().top + $block.outerHeight() + 6;
+    var left = $block.position().left;
+    $uploadForm.css({ top: top + "px", left: left + "px" });
   }
 
   function closeImageUploader() {
@@ -53217,10 +53246,14 @@ $(document).on('turbolinks:load', function () {
   var $index = $('.requests-index');
   if (!$index.length) return;
 
-  // Persistent search filter state. When a search is active this is an
-  // object { rowId: true, ... } listing every row that survives the
-  // filter (matches plus their ancestor chain). Null when no search.
-  var searchVisibleIds = null;
+  // Persistent filter state. When any filter (search or status) is active
+  // this is an object { rowId: true, ... } listing every row that survives
+  // — matches plus their ancestor chain. Null when no filter is active.
+  var filterVisibleIds = null;
+
+  // Active status filter set. Empty object = no status filter (show all
+  // statuses). Populated by clicking the status filter pills.
+  var activeStatuses = {};
 
   // Refresh visibility of every tree row from three inputs:
   //   1. ancestor-collapse — hide if any ancestor toggle is collapsed
@@ -53233,7 +53266,7 @@ $(document).on('turbolinks:load', function () {
       collapsedKeys[$(this).data('target')] = true;
     });
 
-    var searchActive = searchVisibleIds !== null;
+    var filterActive = filterVisibleIds !== null;
 
     $index.find('tr[data-ancestors]').each(function () {
       var $row = $(this);
@@ -53246,17 +53279,17 @@ $(document).on('turbolinks:load', function () {
 
       if ($row.hasClass('request-detail')) {
         var userOpen = $row.hasClass('is-detail-open');
-        var searchHidden = false;
-        if (searchActive) {
-          searchHidden = !searchVisibleIds[$row.data('detail-of')];
+        var filterHidden = false;
+        if (filterActive) {
+          filterHidden = !filterVisibleIds[$row.data('detail-of')];
         }
-        $row.toggleClass('is-hidden', !userOpen || ancestorCollapsed || searchHidden);
+        $row.toggleClass('is-hidden', !userOpen || ancestorCollapsed || filterHidden);
       } else {
-        var searchHiddenRow = false;
-        if (searchActive) {
-          searchHiddenRow = !searchVisibleIds[$row.data('parent-key')];
+        var filterHiddenRow = false;
+        if (filterActive) {
+          filterHiddenRow = !filterVisibleIds[$row.data('parent-key')];
         }
-        $row.toggleClass('is-hidden', ancestorCollapsed || searchHiddenRow);
+        $row.toggleClass('is-hidden', ancestorCollapsed || filterHiddenRow);
       }
     });
   }
@@ -53308,25 +53341,30 @@ $(document).on('turbolinks:load', function () {
     }
   });
 
-  // ── Search filter ─────────────────────────────────────────────────────
-  // When a search is active, matching rows and all their ancestors become
-  // visible (ancestor toggles flip to expanded). Clearing the search
-  // returns the tree to its default collapsed state.
+  // ── Search + status filter ────────────────────────────────────────────
+  // A row survives if it matches the search text (if any) AND has one of
+  // the active statuses (if any status pill is selected). Matches plus
+  // their ancestor chain stay visible so tree context is preserved, and
+  // ancestor toggles flip open so the tree expands around each match.
+  // Clearing all filters returns the tree to its default collapsed state.
   var $searchInput   = $('#requests-search-input');
   var $searchClear   = $('#requests-search-clear');
   var $searchSummary = $('#requests-search-summary');
 
   function normalize(s) { return (s || '').toString().toLowerCase(); }
 
-  function applySearch() {
+  function applyFilters() {
     var q = normalize($searchInput.val()).trim();
     var hasQuery = q.length > 0;
+    var hasStatusFilter = false;
+    for (var _k in activeStatuses) { hasStatusFilter = true; break; }
+    var hasAnyFilter = hasQuery || hasStatusFilter;
+
     $searchClear.toggle(hasQuery);
 
-    if (!hasQuery) {
-      // Reset: clear search filter, collapse everything, close details,
-      // then recompute visibility.
-      searchVisibleIds = null;
+    if (!hasAnyFilter) {
+      // Full reset: no filters, collapse everything, close details.
+      filterVisibleIds = null;
       $index.find('.request-toggle').attr('aria-expanded', 'false');
       $index.find('tr.request-detail').removeClass('is-detail-open');
       refreshTreeVisibility();
@@ -53335,9 +53373,6 @@ $(document).on('turbolinks:load', function () {
       return;
     }
 
-    // Walk every row and gather the visible set: matches, plus every
-    // ancestor of a match (so the tree context stays visible). Expand
-    // matching ancestors' toggles so the tree opens up around the match.
     var visibleIds = {};
     var totalMatches = 0;
 
@@ -53347,8 +53382,16 @@ $(document).on('turbolinks:load', function () {
 
       $section.find('tr.request-row').each(function () {
         var $row = $(this);
-        var text = normalize($row.text());
-        if (text.indexOf(q) === -1) return;
+
+        if (hasQuery) {
+          var text = normalize($row.text());
+          if (text.indexOf(q) === -1) return;
+        }
+
+        if (hasStatusFilter) {
+          var rowStatus = String($row.attr('data-status') || '');
+          if (!activeStatuses[rowStatus]) return;
+        }
 
         sectionMatches += 1;
         visibleIds[$row.data('parent-key')] = true;
@@ -53365,21 +53408,34 @@ $(document).on('turbolinks:load', function () {
       totalMatches += sectionMatches;
     });
 
-    // Close any open detail rows so the search view starts clean, then
+    // Close any open detail rows so the filtered view starts clean, then
     // stash the visible set and let refreshTreeVisibility apply it. Toggle
     // clicks that follow (caret, detail) also call refreshTreeVisibility,
-    // so the search filter stays in force through those interactions.
+    // so the filters stay in force through those interactions.
     $index.find('tr.request-detail').removeClass('is-detail-open');
-    searchVisibleIds = visibleIds;
+    filterVisibleIds = visibleIds;
     refreshTreeVisibility();
 
     $searchSummary.text(totalMatches + ' match' + (totalMatches === 1 ? '' : 'es'));
   }
 
-  $searchInput.on('input', applySearch);
+  $searchInput.on('input', applyFilters);
   $searchClear.on('click', function () {
     $searchInput.val('').focus();
-    applySearch();
+    applyFilters();
+  });
+
+  $index.on('click', '.status-filter', function () {
+    var $btn = $(this);
+    var status = String($btn.attr('data-status') || '');
+    var pressed = $btn.attr('aria-pressed') === 'true';
+    $btn.attr('aria-pressed', String(!pressed));
+    if (pressed) {
+      delete activeStatuses[status];
+    } else {
+      activeStatuses[status] = true;
+    }
+    applyFilters();
   });
 });
 $(document).on("turbolinks:load", function() {
@@ -53835,6 +53891,16 @@ $(document).on("turbolinks:load", function() {
       e.preventDefault();
       toggleRosterExpansion($(this));
     }
+  });
+
+  // Glide-path Order# link → open the same floating detail panel used by
+  // ICS-211 double-click. The panel partial is rendered at page level so
+  // it floats above whichever tab is currently visible.
+  $(document).on('click', '.glide-order-link', function (e) {
+    e.preventDefault();
+    var id = $(this).data('resource-id');
+    $('.resource-panel').addClass('is-hidden');
+    $('#resource-panel-' + id).removeClass('is-hidden');
   });
 
   $(document).on('click', '.resource-panel-close', function () {

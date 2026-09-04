@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Action Plan">
+  <!-- Outer rounded square, evoking the ICS Planning P frame -->
+  <rect x="4" y="4" width="56" height="56" rx="10" ry="10"
+        fill="#ffffff" stroke="#0f172a" stroke-width="4"/>
+
+  <!-- Inner center square (the empty hub in the middle of the diagram) -->
+  <rect x="25" y="25" width="14" height="14" rx="2" ry="2"
+        fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+
+  <!-- Clockwise-flow arrows -->
+  <!-- Right-pointing arrow across the top -->
+  <polygon points="32,10 46,10 46,6 56,14 46,22 46,18 32,18" fill="#0f172a"/>
+  <!-- Down-pointing arrow on the right -->
+  <polygon points="46,32 54,32 54,44 58,44 50,54 42,44 46,44" fill="#0f172a"/>
+  <!-- Up-pointing arrow on the left -->
+  <polygon points="10,32 18,32 18,20 22,20 14,10 6,20 10,20" fill="#0f172a"/>
+
+  <!-- "New Ops Period Begins" cue in the bottom-right corner -->
+  <rect x="42" y="46" width="12" height="9" rx="1" ry="1" fill="#0f172a"/>
+</svg>

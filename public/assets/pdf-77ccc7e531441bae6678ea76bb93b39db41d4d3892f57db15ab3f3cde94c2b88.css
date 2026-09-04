@@ -2603,25 +2603,28 @@ div.solid {
   display: none;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: #f4f5f7;
   border: 1px solid #dfe1e6;
   border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
   font-size: 13px;
+  position: absolute;
+  z-index: 30;
+  white-space: nowrap;
 }
 
-/* line 678, app/assets/stylesheets/covers.css.scss */
+/* line 684, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form.is-open {
-  display: flex;
+  display: inline-flex;
 }
 
-/* line 682, app/assets/stylesheets/covers.css.scss */
+/* line 688, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-file-input {
   display: none !important;
 }
 
-/* line 684, app/assets/stylesheets/covers.css.scss */
+/* line 690, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-filename {
   flex: 1 1 auto;
   color: #5e6c84;
@@ -2630,7 +2633,7 @@ div.solid {
   text-overflow: ellipsis;
 }
 
-/* line 693, app/assets/stylesheets/covers.css.scss */
+/* line 699, app/assets/stylesheets/covers.css.scss */
 #cover-canvas {
   position: relative;
   width: 100%;
@@ -2642,7 +2645,7 @@ div.solid {
   overflow: visible;
 }
 
-/* line 712, app/assets/stylesheets/covers.css.scss */
+/* line 718, app/assets/stylesheets/covers.css.scss */
 .cover-block {
   color: #333;
   font-family: cambria;
@@ -2653,13 +2656,13 @@ div.solid {
   cursor: move;
 }
 
-/* line 727, app/assets/stylesheets/covers.css.scss */
+/* line 733, app/assets/stylesheets/covers.css.scss */
 .cover-block:hover {
   border-color: #90a4ae;
   background: rgba(9, 30, 66, 0.02);
 }
 
-/* line 732, app/assets/stylesheets/covers.css.scss */
+/* line 738, app/assets/stylesheets/covers.css.scss */
 .cover-block.ui-draggable-dragging {
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.05);
@@ -2667,47 +2670,47 @@ div.solid {
   z-index: 10;
 }
 
-/* line 741, app/assets/stylesheets/covers.css.scss */
+/* line 747, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-left .cover-block-text {
   justify-content: flex-start;
 }
 
-/* line 742, app/assets/stylesheets/covers.css.scss */
+/* line 748, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-center .cover-block-text {
   justify-content: center;
 }
 
-/* line 743, app/assets/stylesheets/covers.css.scss */
+/* line 749, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-right .cover-block-text {
   justify-content: flex-end;
 }
 
-/* line 750, app/assets/stylesheets/covers.css.scss */
+/* line 756, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-bold .cover-block-text {
   font-weight: 700;
 }
 
-/* line 751, app/assets/stylesheets/covers.css.scss */
+/* line 757, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-semi-bold .cover-block-text {
   font-weight: 600;
 }
 
-/* line 752, app/assets/stylesheets/covers.css.scss */
+/* line 758, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-normal .cover-block-text {
   font-weight: 400;
 }
 
-/* line 753, app/assets/stylesheets/covers.css.scss */
+/* line 759, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-italic .cover-block-text {
   font-style: italic;
 }
 
-/* line 754, app/assets/stylesheets/covers.css.scss */
+/* line 760, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-normal .cover-block-text {
   font-style: normal;
 }
 
-/* line 761, app/assets/stylesheets/covers.css.scss */
+/* line 767, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-handle {
   position: absolute;
   display: block;
@@ -2723,40 +2726,40 @@ div.solid {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* line 781, app/assets/stylesheets/covers.css.scss */
+/* line 787, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-nw {
   left: -6px;
   top: -6px;
   cursor: nw-resize;
 }
 
-/* line 782, app/assets/stylesheets/covers.css.scss */
+/* line 788, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-ne {
   right: -6px;
   top: -6px;
   cursor: ne-resize;
 }
 
-/* line 783, app/assets/stylesheets/covers.css.scss */
+/* line 789, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-sw {
   left: -6px;
   bottom: -6px;
   cursor: sw-resize;
 }
 
-/* line 784, app/assets/stylesheets/covers.css.scss */
+/* line 790, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-se {
   right: -6px;
   bottom: -6px;
   cursor: se-resize;
 }
 
-/* line 787, app/assets/stylesheets/covers.css.scss */
+/* line 793, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected .ui-resizable-handle {
   opacity: 1;
 }
 
-/* line 792, app/assets/stylesheets/covers.css.scss */
+/* line 798, app/assets/stylesheets/covers.css.scss */
 .cover-guide {
   position: absolute;
   top: 0;
@@ -2769,27 +2772,27 @@ div.solid {
   z-index: 4;
 }
 
-/* line 803, app/assets/stylesheets/covers.css.scss */
+/* line 809, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="16.5"] {
   left: 16.5%;
 }
 
-/* line 804, app/assets/stylesheets/covers.css.scss */
+/* line 810, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="50"] {
   left: 50%;
 }
 
-/* line 805, app/assets/stylesheets/covers.css.scss */
+/* line 811, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="83.5"] {
   left: 83.5%;
 }
 
-/* line 806, app/assets/stylesheets/covers.css.scss */
+/* line 812, app/assets/stylesheets/covers.css.scss */
 .cover-guide.is-active {
   opacity: 1;
 }
 
-/* line 808, app/assets/stylesheets/covers.css.scss */
+/* line 814, app/assets/stylesheets/covers.css.scss */
 .cover-block-text {
   width: 100%;
   height: 100%;
@@ -2801,7 +2804,7 @@ div.solid {
   user-select: none;
 }
 
-/* line 818, app/assets/stylesheets/covers.css.scss */
+/* line 824, app/assets/stylesheets/covers.css.scss */
 .cover-block-text[contenteditable="true"] {
   user-select: text;
   outline: 2px solid #1976d2;
@@ -2809,7 +2812,7 @@ div.solid {
   cursor: text;
 }
 
-/* line 825, app/assets/stylesheets/covers.css.scss */
+/* line 831, app/assets/stylesheets/covers.css.scss */
 .cover-block-image {
   width: 100%;
   height: 100%;
@@ -2817,7 +2820,7 @@ div.solid {
   display: block;
 }
 
-/* line 830, app/assets/stylesheets/covers.css.scss */
+/* line 836, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-area {
   display: block;
   width: 100%;
@@ -2826,13 +2829,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 837, app/assets/stylesheets/covers.css.scss */
+/* line 843, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-image:hover .cover-block-image {
   opacity: 0.8;
   transition: opacity 0.12s ease;
 }
 
-/* line 842, app/assets/stylesheets/covers.css.scss */
+/* line 848, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-placeholder {
   width: 100%;
   height: 100%;
@@ -2844,6 +2847,52 @@ div.solid {
   font-size: 12px;
   border: 1px dashed #b0b7c3;
   border-radius: 3px;
+}
+
+/* line 863, app/assets/stylesheets/covers.css.scss */
+.cover-block.is-notes {
+  cursor: move;
+}
+
+/* line 866, app/assets/stylesheets/covers.css.scss */
+.cover-notes {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* line 875, app/assets/stylesheets/covers.css.scss */
+.cover-notes-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 0;
+  border-bottom: 1px solid #000;
+  user-select: none;
+}
+
+/* line 883, app/assets/stylesheets/covers.css.scss */
+.cover-notes-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 889, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line {
+  flex: 1;
+  border-bottom: 1px solid #000;
+  min-height: 0;
+}
+
+/* line 894, app/assets/stylesheets/covers.css.scss */
+.cover-notes-line:last-child {
+  border-bottom: 0;
 }
 
 /* line 2, app/assets/stylesheets/safety_messages.scss */
@@ -2949,18 +2998,33 @@ div.solid {
   width: 13%;
 }
 
-/* line 42, app/assets/stylesheets/commo_plans.scss */
+/* line 47, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-name {
+  width: 13%;
+}
+
+/* line 48, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-tone {
+  width: 6%;
+}
+
+/* line 49, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-mode {
+  width: 6%;
+}
+
+/* line 50, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 46, app/assets/stylesheets/commo_plans.scss */
+/* line 54, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 58, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -2968,7 +3032,7 @@ div.solid {
   border-bottom: 1px solid black;
 }
 
-/* line 56, app/assets/stylesheets/commo_plans.scss */
+/* line 64, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -2978,7 +3042,7 @@ div.solid {
   overflow: hidden;
 }
 
-/* line 64, app/assets/stylesheets/commo_plans.scss */
+/* line 72, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -2986,38 +3050,38 @@ div.solid {
   border-left: 1px solid black;
 }
 
-/* line 70, app/assets/stylesheets/commo_plans.scss */
+/* line 78, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 74, app/assets/stylesheets/commo_plans.scss */
+/* line 82, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 77, app/assets/stylesheets/commo_plans.scss */
+/* line 85, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 80, app/assets/stylesheets/commo_plans.scss */
+/* line 88, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 83, app/assets/stylesheets/commo_plans.scss */
+/* line 91, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 87, app/assets/stylesheets/commo_plans.scss */
+/* line 95, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -3026,17 +3090,17 @@ div.solid {
   verticle-align: middle;
 }
 
-/* line 93, app/assets/stylesheets/commo_plans.scss */
+/* line 101, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 98, app/assets/stylesheets/commo_plans.scss */
+/* line 106, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 102, app/assets/stylesheets/commo_plans.scss */
+/* line 110, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -3045,24 +3109,24 @@ div.solid {
   width: 30px;
 }
 
-/* line 109, app/assets/stylesheets/commo_plans.scss */
+/* line 117, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 111, app/assets/stylesheets/commo_plans.scss */
+/* line 119, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 117, app/assets/stylesheets/commo_plans.scss */
+/* line 125, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 120, app/assets/stylesheets/commo_plans.scss */
+/* line 128, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -3077,17 +3141,17 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 134, app/assets/stylesheets/commo_plans.scss */
+/* line 142, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 137, app/assets/stylesheets/commo_plans.scss */
+/* line 145, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 140, app/assets/stylesheets/commo_plans.scss */
+/* line 148, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;

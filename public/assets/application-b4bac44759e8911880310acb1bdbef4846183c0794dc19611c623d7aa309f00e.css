@@ -21244,25 +21244,28 @@ input.new-commo-item {
   display: none;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: #f4f5f7;
   border: 1px solid #dfe1e6;
   border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
   font-size: 13px;
+  position: absolute;
+  z-index: 30;
+  white-space: nowrap;
 }
 
-/* line 678, app/assets/stylesheets/covers.css.scss */
+/* line 684, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form.is-open {
-  display: flex;
+  display: inline-flex;
 }
 
-/* line 682, app/assets/stylesheets/covers.css.scss */
+/* line 688, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-file-input {
   display: none !important;
 }
 
-/* line 684, app/assets/stylesheets/covers.css.scss */
+/* line 690, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-filename {
   flex: 1 1 auto;
   color: #5e6c84;
@@ -21271,7 +21274,7 @@ input.new-commo-item {
   text-overflow: ellipsis;
 }
 
-/* line 693, app/assets/stylesheets/covers.css.scss */
+/* line 699, app/assets/stylesheets/covers.css.scss */
 #cover-canvas {
   position: relative;
   width: 100%;
@@ -21283,7 +21286,7 @@ input.new-commo-item {
   overflow: visible;
 }
 
-/* line 712, app/assets/stylesheets/covers.css.scss */
+/* line 718, app/assets/stylesheets/covers.css.scss */
 .cover-block {
   color: #333;
   font-family: cambria;
@@ -21294,13 +21297,13 @@ input.new-commo-item {
   cursor: move;
 }
 
-/* line 727, app/assets/stylesheets/covers.css.scss */
+/* line 733, app/assets/stylesheets/covers.css.scss */
 .cover-block:hover {
   border-color: #90a4ae;
   background: rgba(9, 30, 66, 0.02);
 }
 
-/* line 732, app/assets/stylesheets/covers.css.scss */
+/* line 738, app/assets/stylesheets/covers.css.scss */
 .cover-block.ui-draggable-dragging {
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.05);
@@ -21308,47 +21311,47 @@ input.new-commo-item {
   z-index: 10;
 }
 
-/* line 741, app/assets/stylesheets/covers.css.scss */
+/* line 747, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-left .cover-block-text {
   justify-content: flex-start;
 }
 
-/* line 742, app/assets/stylesheets/covers.css.scss */
+/* line 748, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-center .cover-block-text {
   justify-content: center;
 }
 
-/* line 743, app/assets/stylesheets/covers.css.scss */
+/* line 749, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-right .cover-block-text {
   justify-content: flex-end;
 }
 
-/* line 750, app/assets/stylesheets/covers.css.scss */
+/* line 756, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-bold .cover-block-text {
   font-weight: 700;
 }
 
-/* line 751, app/assets/stylesheets/covers.css.scss */
+/* line 757, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-semi-bold .cover-block-text {
   font-weight: 600;
 }
 
-/* line 752, app/assets/stylesheets/covers.css.scss */
+/* line 758, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-normal .cover-block-text {
   font-weight: 400;
 }
 
-/* line 753, app/assets/stylesheets/covers.css.scss */
+/* line 759, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-italic .cover-block-text {
   font-style: italic;
 }
 
-/* line 754, app/assets/stylesheets/covers.css.scss */
+/* line 760, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-normal .cover-block-text {
   font-style: normal;
 }
 
-/* line 761, app/assets/stylesheets/covers.css.scss */
+/* line 767, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-handle {
   position: absolute;
   display: block;
@@ -21364,40 +21367,40 @@ input.new-commo-item {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* line 781, app/assets/stylesheets/covers.css.scss */
+/* line 787, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-nw {
   left: -6px;
   top: -6px;
   cursor: nw-resize;
 }
 
-/* line 782, app/assets/stylesheets/covers.css.scss */
+/* line 788, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-ne {
   right: -6px;
   top: -6px;
   cursor: ne-resize;
 }
 
-/* line 783, app/assets/stylesheets/covers.css.scss */
+/* line 789, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-sw {
   left: -6px;
   bottom: -6px;
   cursor: sw-resize;
 }
 
-/* line 784, app/assets/stylesheets/covers.css.scss */
+/* line 790, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-se {
   right: -6px;
   bottom: -6px;
   cursor: se-resize;
 }
 
-/* line 787, app/assets/stylesheets/covers.css.scss */
+/* line 793, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected .ui-resizable-handle {
   opacity: 1;
 }
 
-/* line 792, app/assets/stylesheets/covers.css.scss */
+/* line 798, app/assets/stylesheets/covers.css.scss */
 .cover-guide {
   position: absolute;
   top: 0;
@@ -21410,27 +21413,27 @@ input.new-commo-item {
   z-index: 4;
 }
 
-/* line 803, app/assets/stylesheets/covers.css.scss */
+/* line 809, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="16.5"] {
   left: 16.5%;
 }
 
-/* line 804, app/assets/stylesheets/covers.css.scss */
+/* line 810, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="50"] {
   left: 50%;
 }
 
-/* line 805, app/assets/stylesheets/covers.css.scss */
+/* line 811, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="83.5"] {
   left: 83.5%;
 }
 
-/* line 806, app/assets/stylesheets/covers.css.scss */
+/* line 812, app/assets/stylesheets/covers.css.scss */
 .cover-guide.is-active {
   opacity: 1;
 }
 
-/* line 808, app/assets/stylesheets/covers.css.scss */
+/* line 814, app/assets/stylesheets/covers.css.scss */
 .cover-block-text {
   width: 100%;
   height: 100%;
@@ -21442,7 +21445,7 @@ input.new-commo-item {
   user-select: none;
 }
 
-/* line 818, app/assets/stylesheets/covers.css.scss */
+/* line 824, app/assets/stylesheets/covers.css.scss */
 .cover-block-text[contenteditable="true"] {
   user-select: text;
   outline: 2px solid #1976d2;
@@ -21450,7 +21453,7 @@ input.new-commo-item {
   cursor: text;
 }
 
-/* line 825, app/assets/stylesheets/covers.css.scss */
+/* line 831, app/assets/stylesheets/covers.css.scss */
 .cover-block-image {
   width: 100%;
   height: 100%;
@@ -21458,7 +21461,7 @@ input.new-commo-item {
   display: block;
 }
 
-/* line 830, app/assets/stylesheets/covers.css.scss */
+/* line 836, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-area {
   display: block;
   width: 100%;
@@ -21467,13 +21470,13 @@ input.new-commo-item {
   cursor: pointer;
 }
 
-/* line 837, app/assets/stylesheets/covers.css.scss */
+/* line 843, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-image:hover .cover-block-image {
   opacity: 0.8;
   transition: opacity 0.12s ease;
 }
 
-/* line 842, app/assets/stylesheets/covers.css.scss */
+/* line 848, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-placeholder {
   width: 100%;
   height: 100%;
@@ -21487,12 +21490,12 @@ input.new-commo-item {
   border-radius: 3px;
 }
 
-/* line 857, app/assets/stylesheets/covers.css.scss */
+/* line 863, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-notes {
   cursor: move;
 }
 
-/* line 860, app/assets/stylesheets/covers.css.scss */
+/* line 866, app/assets/stylesheets/covers.css.scss */
 .cover-notes {
   width: 100%;
   height: 100%;
@@ -21503,7 +21506,7 @@ input.new-commo-item {
   background: #fff;
 }
 
-/* line 869, app/assets/stylesheets/covers.css.scss */
+/* line 875, app/assets/stylesheets/covers.css.scss */
 .cover-notes-header {
   text-align: center;
   font-weight: 600;
@@ -21513,7 +21516,7 @@ input.new-commo-item {
   user-select: none;
 }
 
-/* line 877, app/assets/stylesheets/covers.css.scss */
+/* line 883, app/assets/stylesheets/covers.css.scss */
 .cover-notes-lines {
   flex: 1;
   display: flex;
@@ -21521,14 +21524,14 @@ input.new-commo-item {
   min-height: 0;
 }
 
-/* line 883, app/assets/stylesheets/covers.css.scss */
+/* line 889, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line {
   flex: 1;
   border-bottom: 1px solid #000;
   min-height: 0;
 }
 
-/* line 888, app/assets/stylesheets/covers.css.scss */
+/* line 894, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line:last-child {
   border-bottom: 0;
 }
@@ -25982,25 +25985,28 @@ div.solid {
   display: none;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: #f4f5f7;
   border: 1px solid #dfe1e6;
   border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
   font-size: 13px;
+  position: absolute;
+  z-index: 30;
+  white-space: nowrap;
 }
 
-/* line 678, app/assets/stylesheets/covers.css.scss */
+/* line 684, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form.is-open {
-  display: flex;
+  display: inline-flex;
 }
 
-/* line 682, app/assets/stylesheets/covers.css.scss */
+/* line 688, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-file-input {
   display: none !important;
 }
 
-/* line 684, app/assets/stylesheets/covers.css.scss */
+/* line 690, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-filename {
   flex: 1 1 auto;
   color: #5e6c84;
@@ -26009,7 +26015,7 @@ div.solid {
   text-overflow: ellipsis;
 }
 
-/* line 693, app/assets/stylesheets/covers.css.scss */
+/* line 699, app/assets/stylesheets/covers.css.scss */
 #cover-canvas {
   position: relative;
   width: 100%;
@@ -26021,7 +26027,7 @@ div.solid {
   overflow: visible;
 }
 
-/* line 712, app/assets/stylesheets/covers.css.scss */
+/* line 718, app/assets/stylesheets/covers.css.scss */
 .cover-block {
   color: #333;
   font-family: cambria;
@@ -26032,13 +26038,13 @@ div.solid {
   cursor: move;
 }
 
-/* line 727, app/assets/stylesheets/covers.css.scss */
+/* line 733, app/assets/stylesheets/covers.css.scss */
 .cover-block:hover {
   border-color: #90a4ae;
   background: rgba(9, 30, 66, 0.02);
 }
 
-/* line 732, app/assets/stylesheets/covers.css.scss */
+/* line 738, app/assets/stylesheets/covers.css.scss */
 .cover-block.ui-draggable-dragging {
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.05);
@@ -26046,47 +26052,47 @@ div.solid {
   z-index: 10;
 }
 
-/* line 741, app/assets/stylesheets/covers.css.scss */
+/* line 747, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-left .cover-block-text {
   justify-content: flex-start;
 }
 
-/* line 742, app/assets/stylesheets/covers.css.scss */
+/* line 748, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-center .cover-block-text {
   justify-content: center;
 }
 
-/* line 743, app/assets/stylesheets/covers.css.scss */
+/* line 749, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-right .cover-block-text {
   justify-content: flex-end;
 }
 
-/* line 750, app/assets/stylesheets/covers.css.scss */
+/* line 756, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-bold .cover-block-text {
   font-weight: 700;
 }
 
-/* line 751, app/assets/stylesheets/covers.css.scss */
+/* line 757, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-semi-bold .cover-block-text {
   font-weight: 600;
 }
 
-/* line 752, app/assets/stylesheets/covers.css.scss */
+/* line 758, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-normal .cover-block-text {
   font-weight: 400;
 }
 
-/* line 753, app/assets/stylesheets/covers.css.scss */
+/* line 759, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-italic .cover-block-text {
   font-style: italic;
 }
 
-/* line 754, app/assets/stylesheets/covers.css.scss */
+/* line 760, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-normal .cover-block-text {
   font-style: normal;
 }
 
-/* line 761, app/assets/stylesheets/covers.css.scss */
+/* line 767, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-handle {
   position: absolute;
   display: block;
@@ -26102,40 +26108,40 @@ div.solid {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* line 781, app/assets/stylesheets/covers.css.scss */
+/* line 787, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-nw {
   left: -6px;
   top: -6px;
   cursor: nw-resize;
 }
 
-/* line 782, app/assets/stylesheets/covers.css.scss */
+/* line 788, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-ne {
   right: -6px;
   top: -6px;
   cursor: ne-resize;
 }
 
-/* line 783, app/assets/stylesheets/covers.css.scss */
+/* line 789, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-sw {
   left: -6px;
   bottom: -6px;
   cursor: sw-resize;
 }
 
-/* line 784, app/assets/stylesheets/covers.css.scss */
+/* line 790, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-se {
   right: -6px;
   bottom: -6px;
   cursor: se-resize;
 }
 
-/* line 787, app/assets/stylesheets/covers.css.scss */
+/* line 793, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected .ui-resizable-handle {
   opacity: 1;
 }
 
-/* line 792, app/assets/stylesheets/covers.css.scss */
+/* line 798, app/assets/stylesheets/covers.css.scss */
 .cover-guide {
   position: absolute;
   top: 0;
@@ -26148,27 +26154,27 @@ div.solid {
   z-index: 4;
 }
 
-/* line 803, app/assets/stylesheets/covers.css.scss */
+/* line 809, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="16.5"] {
   left: 16.5%;
 }
 
-/* line 804, app/assets/stylesheets/covers.css.scss */
+/* line 810, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="50"] {
   left: 50%;
 }
 
-/* line 805, app/assets/stylesheets/covers.css.scss */
+/* line 811, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="83.5"] {
   left: 83.5%;
 }
 
-/* line 806, app/assets/stylesheets/covers.css.scss */
+/* line 812, app/assets/stylesheets/covers.css.scss */
 .cover-guide.is-active {
   opacity: 1;
 }
 
-/* line 808, app/assets/stylesheets/covers.css.scss */
+/* line 814, app/assets/stylesheets/covers.css.scss */
 .cover-block-text {
   width: 100%;
   height: 100%;
@@ -26180,7 +26186,7 @@ div.solid {
   user-select: none;
 }
 
-/* line 818, app/assets/stylesheets/covers.css.scss */
+/* line 824, app/assets/stylesheets/covers.css.scss */
 .cover-block-text[contenteditable="true"] {
   user-select: text;
   outline: 2px solid #1976d2;
@@ -26188,7 +26194,7 @@ div.solid {
   cursor: text;
 }
 
-/* line 825, app/assets/stylesheets/covers.css.scss */
+/* line 831, app/assets/stylesheets/covers.css.scss */
 .cover-block-image {
   width: 100%;
   height: 100%;
@@ -26196,7 +26202,7 @@ div.solid {
   display: block;
 }
 
-/* line 830, app/assets/stylesheets/covers.css.scss */
+/* line 836, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-area {
   display: block;
   width: 100%;
@@ -26205,13 +26211,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 837, app/assets/stylesheets/covers.css.scss */
+/* line 843, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-image:hover .cover-block-image {
   opacity: 0.8;
   transition: opacity 0.12s ease;
 }
 
-/* line 842, app/assets/stylesheets/covers.css.scss */
+/* line 848, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-placeholder {
   width: 100%;
   height: 100%;
@@ -26225,12 +26231,12 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 857, app/assets/stylesheets/covers.css.scss */
+/* line 863, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-notes {
   cursor: move;
 }
 
-/* line 860, app/assets/stylesheets/covers.css.scss */
+/* line 866, app/assets/stylesheets/covers.css.scss */
 .cover-notes {
   width: 100%;
   height: 100%;
@@ -26241,7 +26247,7 @@ div.solid {
   background: #fff;
 }
 
-/* line 869, app/assets/stylesheets/covers.css.scss */
+/* line 875, app/assets/stylesheets/covers.css.scss */
 .cover-notes-header {
   text-align: center;
   font-weight: 600;
@@ -26251,7 +26257,7 @@ div.solid {
   user-select: none;
 }
 
-/* line 877, app/assets/stylesheets/covers.css.scss */
+/* line 883, app/assets/stylesheets/covers.css.scss */
 .cover-notes-lines {
   flex: 1;
   display: flex;
@@ -26259,14 +26265,14 @@ div.solid {
   min-height: 0;
 }
 
-/* line 883, app/assets/stylesheets/covers.css.scss */
+/* line 889, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line {
   flex: 1;
   border-bottom: 1px solid #000;
   min-height: 0;
 }
 
-/* line 888, app/assets/stylesheets/covers.css.scss */
+/* line 894, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line:last-child {
   border-bottom: 0;
 }
@@ -27960,11 +27966,90 @@ img#add-freqs-button {
 }
 
 /* line 82, app/assets/stylesheets/requests.scss */
+.requests-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: -8px 0 16px;
+}
+
+/* line 89, app/assets/stylesheets/requests.scss */
+.requests-filters .filters-label {
+  font-size: 12px;
+  color: #6b778c;
+  margin-right: 2px;
+}
+
+/* line 95, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 6px;
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #5e6c84;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+/* line 108, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter:hover {
+  background: #f4f5f7;
+  border-color: #c1c7d0;
+}
+
+/* line 113, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 154, 255, 0.35);
+}
+
+/* line 118, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter[aria-pressed="true"] {
+  background: #e6f0ff;
+  border-color: #4c9aff;
+  color: #172b4d;
+  font-weight: 600;
+}
+
+/* line 125, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill {
+  display: inline-block;
+  min-width: 20px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+  color: #fff;
+}
+
+/* line 136, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill.status-filled {
+  background: #6b778c;
+}
+
+/* line 137, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill.status-checked_in {
+  background: #2e7d32;
+}
+
+/* line 138, app/assets/stylesheets/requests.scss */
+.requests-filters .status-filter .status-pill.status-released {
+  background: #212121;
+}
+
+/* line 143, app/assets/stylesheets/requests.scss */
 .catalog-section.is-empty {
   display: none;
 }
 
-/* line 86, app/assets/stylesheets/requests.scss */
+/* line 147, app/assets/stylesheets/requests.scss */
 .catalog-pill {
   display: inline-block;
   padding: 4px 10px;
@@ -27975,13 +28060,13 @@ img#add-freqs-button {
   color: #172b4d;
 }
 
-/* line 95, app/assets/stylesheets/requests.scss */
+/* line 156, app/assets/stylesheets/requests.scss */
 .catalog-pill strong {
   font-weight: 600;
   margin-right: 4px;
 }
 
-/* line 101, app/assets/stylesheets/requests.scss */
+/* line 162, app/assets/stylesheets/requests.scss */
 .requests-table {
   width: 100%;
   border-collapse: separate;
@@ -27994,7 +28079,7 @@ img#add-freqs-button {
   box-shadow: 0 1px 2px rgba(9, 30, 66, 0.04);
 }
 
-/* line 112, app/assets/stylesheets/requests.scss */
+/* line 173, app/assets/stylesheets/requests.scss */
 .requests-table thead th {
   background: #f7f8fa;
   color: #5e6c84;
@@ -28008,7 +28093,7 @@ img#add-freqs-button {
   white-space: nowrap;
 }
 
-/* line 125, app/assets/stylesheets/requests.scss */
+/* line 186, app/assets/stylesheets/requests.scss */
 .requests-table tbody td {
   padding: 10px 12px;
   border-bottom: 1px solid #eef0f3;
@@ -28016,66 +28101,66 @@ img#add-freqs-button {
   color: #172b4d;
 }
 
-/* line 132, app/assets/stylesheets/requests.scss */
+/* line 193, app/assets/stylesheets/requests.scss */
 .requests-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* line 136, app/assets/stylesheets/requests.scss */
+/* line 197, app/assets/stylesheets/requests.scss */
 .requests-table tbody tr:nth-child(even) td {
   background: #fafbfc;
 }
 
-/* line 140, app/assets/stylesheets/requests.scss */
+/* line 201, app/assets/stylesheets/requests.scss */
 .requests-table tbody tr:hover td {
   background: #eef4ff;
 }
 
-/* line 146, app/assets/stylesheets/requests.scss */
+/* line 207, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(1), .requests-table td:nth-child(1) {
   width: 10%;
   white-space: nowrap;
   font-weight: 600;
 }
 
-/* line 147, app/assets/stylesheets/requests.scss */
+/* line 208, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(2), .requests-table td:nth-child(2) {
   width: 6%;
   white-space: nowrap;
   text-align: center;
 }
 
-/* line 148, app/assets/stylesheets/requests.scss */
+/* line 209, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(3), .requests-table td:nth-child(3) {
   width: 28%;
 }
 
-/* line 149, app/assets/stylesheets/requests.scss */
+/* line 210, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(4), .requests-table td:nth-child(4) {
   width: 26%;
   color: #42526e;
 }
 
-/* line 150, app/assets/stylesheets/requests.scss */
+/* line 211, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(5), .requests-table td:nth-child(5) {
   width: 15%;
   color: #5e6c84;
   white-space: nowrap;
 }
 
-/* line 151, app/assets/stylesheets/requests.scss */
+/* line 212, app/assets/stylesheets/requests.scss */
 .requests-table th:nth-child(6), .requests-table td:nth-child(6) {
   width: 15%;
   color: #5e6c84;
   white-space: nowrap;
 }
 
-/* line 157, app/assets/stylesheets/requests.scss */
+/* line 218, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-cell {
   padding-left: 12px;
 }
 
-/* line 161, app/assets/stylesheets/requests.scss */
+/* line 222, app/assets/stylesheets/requests.scss */
 .requests-table .toggle-slot {
   display: inline-block;
   width: 16px;
@@ -28084,7 +28169,7 @@ img#add-freqs-button {
   color: #a1a8b4;
 }
 
-/* line 169, app/assets/stylesheets/requests.scss */
+/* line 230, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle {
   display: inline;
   cursor: pointer;
@@ -28095,22 +28180,22 @@ img#add-freqs-button {
   user-select: none;
 }
 
-/* line 178, app/assets/stylesheets/requests.scss */
+/* line 239, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle:hover {
   color: #172b4d;
 }
 
-/* line 179, app/assets/stylesheets/requests.scss */
+/* line 240, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle:focus {
   outline: none;
 }
 
-/* line 180, app/assets/stylesheets/requests.scss */
+/* line 241, app/assets/stylesheets/requests.scss */
 .requests-table .request-toggle[aria-expanded="true"] .toggle-caret {
   transform: rotate(90deg);
 }
 
-/* line 183, app/assets/stylesheets/requests.scss */
+/* line 244, app/assets/stylesheets/requests.scss */
 .requests-table .toggle-caret {
   display: inline-block;
   transition: transform 0.12s ease;
@@ -28121,7 +28206,7 @@ img#add-freqs-button {
   vertical-align: baseline;
 }
 
-/* line 194, app/assets/stylesheets/requests.scss */
+/* line 255, app/assets/stylesheets/requests.scss */
 .requests-table .child-count {
   margin-left: 6px;
   color: #6b778c;
@@ -28129,68 +28214,68 @@ img#add-freqs-button {
   font-size: 11px;
 }
 
-/* line 201, app/assets/stylesheets/requests.scss */
+/* line 262, app/assets/stylesheets/requests.scss */
 .requests-table .child-indent {
   display: none;
 }
 
-/* line 207, app/assets/stylesheets/requests.scss */
+/* line 268, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-1 {
   background: #fafbfc;
 }
 
-/* line 208, app/assets/stylesheets/requests.scss */
+/* line 269, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-1 td {
   color: #42526e;
 }
 
-/* line 210, app/assets/stylesheets/requests.scss */
+/* line 271, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-2 {
   background: #f4f6f9;
 }
 
-/* line 211, app/assets/stylesheets/requests.scss */
+/* line 272, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-2 td {
   color: #5e6c84;
 }
 
-/* line 212, app/assets/stylesheets/requests.scss */
+/* line 273, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-2 td:first-child {
   font-weight: 400;
 }
 
-/* line 214, app/assets/stylesheets/requests.scss */
+/* line 275, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-3 {
   background: #eef1f5;
 }
 
-/* line 215, app/assets/stylesheets/requests.scss */
+/* line 276, app/assets/stylesheets/requests.scss */
 .requests-table .request-row.depth-3 td {
   color: #5e6c84;
   font-size: 12px;
 }
 
-/* line 218, app/assets/stylesheets/requests.scss */
+/* line 279, app/assets/stylesheets/requests.scss */
 .requests-table .is-hidden {
   display: none;
 }
 
-/* line 223, app/assets/stylesheets/requests.scss */
+/* line 284, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text {
   cursor: pointer;
 }
 
-/* line 225, app/assets/stylesheets/requests.scss */
+/* line 286, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text:hover {
   text-decoration: underline;
 }
 
-/* line 226, app/assets/stylesheets/requests.scss */
+/* line 287, app/assets/stylesheets/requests.scss */
 .requests-table .req-number-text:focus {
   outline: none;
 }
 
-/* line 230, app/assets/stylesheets/requests.scss */
+/* line 291, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill {
   display: inline-block;
   min-width: 22px;
@@ -28203,46 +28288,46 @@ img#add-freqs-button {
   color: #fff;
 }
 
-/* line 241, app/assets/stylesheets/requests.scss */
+/* line 302, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-filled {
   background: #6b778c;
 }
 
-/* line 242, app/assets/stylesheets/requests.scss */
+/* line 303, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-checked_in {
   background: #2e7d32;
 }
 
-/* line 243, app/assets/stylesheets/requests.scss */
+/* line 304, app/assets/stylesheets/requests.scss */
 .requests-table .status-pill.status-released {
   background: #212121;
 }
 
-/* line 247, app/assets/stylesheets/requests.scss */
+/* line 308, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail {
   background: #f7f8fa;
 }
 
-/* line 250, app/assets/stylesheets/requests.scss */
+/* line 311, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail td {
   padding: 10px 12px 12px;
   border-bottom: 1px solid #eef0f3;
 }
 
-/* line 255, app/assets/stylesheets/requests.scss */
+/* line 316, app/assets/stylesheets/requests.scss */
 .requests-table .request-detail-inner {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* line 262, app/assets/stylesheets/requests.scss */
+/* line 323, app/assets/stylesheets/requests.scss */
 .requests-table .check-in-btn {
   font-size: 12px;
   padding: 6px 14px;
 }
 
-/* line 266, app/assets/stylesheets/requests.scss */
+/* line 327, app/assets/stylesheets/requests.scss */
 .requests-table .check-in-btn.is-disabled {
   background: #dfe1e6;
   border-color: #dfe1e6;
@@ -28251,7 +28336,7 @@ img#add-freqs-button {
   pointer-events: none;
 }
 
-/* line 280, app/assets/stylesheets/requests.scss */
+/* line 341, app/assets/stylesheets/requests.scss */
 .checkin-page {
   max-width: 720px;
   margin: 24px auto;
@@ -28259,27 +28344,27 @@ img#add-freqs-button {
   color: #172b4d;
 }
 
-/* line 286, app/assets/stylesheets/requests.scss */
+/* line 347, app/assets/stylesheets/requests.scss */
 .checkin-page #glide-info {
   display: block;
 }
 
-/* line 287, app/assets/stylesheets/requests.scss */
+/* line 348, app/assets/stylesheets/requests.scss */
 .checkin-page #resource-form {
   display: block;
 }
 
-/* line 289, app/assets/stylesheets/requests.scss */
+/* line 350, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header {
   margin: 8px 0 16px;
 }
 
-/* line 292, app/assets/stylesheets/requests.scss */
+/* line 353, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header h2 {
   margin: 0 0 4px;
 }
 
-/* line 293, app/assets/stylesheets/requests.scss */
+/* line 354, app/assets/stylesheets/requests.scss */
 .checkin-page .checkin-header p {
   margin: 0;
   color: #5e6c84;
@@ -28442,18 +28527,41 @@ a.delete-resource:hover {
 }
 
 /* line 128, app/assets/stylesheets/resources.scss */
+.glide-order-link {
+  color: #172b4d;
+  text-decoration: none;
+  border-bottom: 1px dotted #a1a8b4;
+  cursor: pointer;
+}
+
+/* line 134, app/assets/stylesheets/resources.scss */
+.glide-order-link:hover, .glide-order-link:focus {
+  color: #0052cc;
+  border-bottom-color: #0052cc;
+  text-decoration: none;
+}
+
+@media print {
+  /* line 143, app/assets/stylesheets/resources.scss */
+  .glide-order-link {
+    color: inherit;
+    border-bottom: none;
+  }
+}
+
+/* line 149, app/assets/stylesheets/resources.scss */
 .glide-print-actions,
 .demob-print-actions {
   margin: 16px 0;
   text-align: right;
 }
 
-/* line 134, app/assets/stylesheets/resources.scss */
+/* line 155, app/assets/stylesheets/resources.scss */
 .print-only {
   display: none;
 }
 
-/* line 138, app/assets/stylesheets/resources.scss */
+/* line 159, app/assets/stylesheets/resources.scss */
 .glide-print-header {
   text-align: center;
   margin: 0 0 12px;
@@ -28461,7 +28569,7 @@ a.delete-resource:hover {
   font-weight: 600;
 }
 
-/* line 145, app/assets/stylesheets/resources.scss */
+/* line 166, app/assets/stylesheets/resources.scss */
 .glide-title-cell {
   text-align: center !important;
   vertical-align: middle !important;
@@ -28471,7 +28579,7 @@ a.delete-resource:hover {
 }
 
 @media print {
-  /* line 155, app/assets/stylesheets/resources.scss */
+  /* line 176, app/assets/stylesheets/resources.scss */
   body.printing-demob header,
 body.printing-demob footer,
 body.printing-demob .incident-name,
@@ -28485,23 +28593,23 @@ body.printing-demob #resource-form,
 body.printing-demob .no-print {
     display: none !important;
   }
-  /* line 169, app/assets/stylesheets/resources.scss */
+  /* line 190, app/assets/stylesheets/resources.scss */
   body.printing-demob #demob-info {
     display: block !important;
     border: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
   }
-  /* line 176, app/assets/stylesheets/resources.scss */
+  /* line 197, app/assets/stylesheets/resources.scss */
   body.printing-demob #demob-info .panel-foot {
     display: none !important;
   }
-  /* line 181, app/assets/stylesheets/resources.scss */
+  /* line 202, app/assets/stylesheets/resources.scss */
   body.printing-glide {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  /* line 185, app/assets/stylesheets/resources.scss */
+  /* line 206, app/assets/stylesheets/resources.scss */
   body.printing-glide header,
 body.printing-glide footer,
 body.printing-glide .incident-name,
@@ -28515,15 +28623,15 @@ body.printing-glide #resource-form,
 body.printing-glide .no-print {
     display: none !important;
   }
-  /* line 199, app/assets/stylesheets/resources.scss */
+  /* line 220, app/assets/stylesheets/resources.scss */
   body.printing-glide #glide-info {
     display: block !important;
   }
-  /* line 203, app/assets/stylesheets/resources.scss */
+  /* line 224, app/assets/stylesheets/resources.scss */
   body.printing-glide .print-only {
     display: block !important;
   }
-  /* line 207, app/assets/stylesheets/resources.scss */
+  /* line 228, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-calendar,
 body.printing-glide .glide-row,
 body.printing-glide .yellow,
@@ -28535,49 +28643,49 @@ body.printing-glide .green {
     color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  /* line 221, app/assets/stylesheets/resources.scss */
+  /* line 242, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.yellow {
     box-shadow: inset 0 0 0 999px yellow !important;
   }
-  /* line 224, app/assets/stylesheets/resources.scss */
+  /* line 245, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.orange {
     box-shadow: inset 0 0 0 999px orange !important;
   }
-  /* line 227, app/assets/stylesheets/resources.scss */
+  /* line 248, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.red {
     box-shadow: inset 0 0 0 999px red !important;
   }
-  /* line 230, app/assets/stylesheets/resources.scss */
+  /* line 251, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.black {
     box-shadow: inset 0 0 0 999px black !important;
   }
-  /* line 233, app/assets/stylesheets/resources.scss */
+  /* line 254, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.green {
     box-shadow: inset 0 0 0 999px #4caf50 !important;
   }
-  /* line 238, app/assets/stylesheets/resources.scss */
+  /* line 259, app/assets/stylesheets/resources.scss */
   body.printing-glide table.table,
 body.printing-glide table.table th,
 body.printing-glide table.table td {
     border-color: #555 !important;
   }
-  /* line 243, app/assets/stylesheets/resources.scss */
+  /* line 264, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-calendar {
     border-color: #555 !important;
   }
 }
 
-/* line 250, app/assets/stylesheets/resources.scss */
+/* line 271, app/assets/stylesheets/resources.scss */
 .table-col {
   min-width: 25px !important;
 }
 
-/* line 253, app/assets/stylesheets/resources.scss */
+/* line 274, app/assets/stylesheets/resources.scss */
 .name-col {
   white-space: nowrap;
 }
 
-/* line 259, app/assets/stylesheets/resources.scss */
+/* line 280, app/assets/stylesheets/resources.scss */
 .ics-211-search {
   display: flex;
   align-items: center;
@@ -28585,7 +28693,7 @@ body.printing-glide table.table td {
   margin: 8px 12px 12px;
 }
 
-/* line 265, app/assets/stylesheets/resources.scss */
+/* line 286, app/assets/stylesheets/resources.scss */
 .ics-211-search .form-control {
   flex: 1 1 auto;
   max-width: 420px;
@@ -28593,92 +28701,92 @@ body.printing-glide table.table td {
   font-size: 14px;
 }
 
-/* line 272, app/assets/stylesheets/resources.scss */
+/* line 293, app/assets/stylesheets/resources.scss */
 .ics-211-search .btn-link {
   padding: 4px 8px;
   font-size: 12px;
 }
 
-/* line 277, app/assets/stylesheets/resources.scss */
+/* line 298, app/assets/stylesheets/resources.scss */
 .ics-211-search .muted {
   color: #6b778c;
   font-size: 12px;
 }
 
 /* Demob Info */
-/* line 284, app/assets/stylesheets/resources.scss */
+/* line 305, app/assets/stylesheets/resources.scss */
 #demob-info {
   display: none;
 }
 
-/* line 286, app/assets/stylesheets/resources.scss */
+/* line 307, app/assets/stylesheets/resources.scss */
 #demob-info #demob-dates {
   text-align: center;
 }
 
-/* line 290, app/assets/stylesheets/resources.scss */
+/* line 311, app/assets/stylesheets/resources.scss */
 #demob-dates {
   margin: 5% 0;
 }
 
-/* line 292, app/assets/stylesheets/resources.scss */
+/* line 313, app/assets/stylesheets/resources.scss */
 #demob-dates h1, #demob-dates h2, #demob-dates h3, #demob-dates h4 {
   font-weight: 666;
 }
 
 /* Resource Tally Info*/
-/* line 298, app/assets/stylesheets/resources.scss */
+/* line 319, app/assets/stylesheets/resources.scss */
 #tally-info {
   display: none;
   padding-top: 5%;
 }
 
-/* line 301, app/assets/stylesheets/resources.scss */
+/* line 322, app/assets/stylesheets/resources.scss */
 #tally-info h1, #tally-info h2 {
   text-align: center;
   font-weight: 666;
   margin-bottom: 20px;
 }
 
-/* line 306, app/assets/stylesheets/resources.scss */
+/* line 327, app/assets/stylesheets/resources.scss */
 #tally-info h3, #tally-info h4 {
   font-weight: 666;
 }
 
-/* line 309, app/assets/stylesheets/resources.scss */
+/* line 330, app/assets/stylesheets/resources.scss */
 #tally-info ul {
   padding-left: 5px;
   list-style: none;
 }
 
-/* line 314, app/assets/stylesheets/resources.scss */
+/* line 335, app/assets/stylesheets/resources.scss */
 .dashed {
   border: 1px dashed orange;
 }
 
-/* line 317, app/assets/stylesheets/resources.scss */
+/* line 338, app/assets/stylesheets/resources.scss */
 img#new-resource {
   height: 20px;
   width: 20px;
 }
 
-/* line 321, app/assets/stylesheets/resources.scss */
+/* line 342, app/assets/stylesheets/resources.scss */
 .grayed {
   background-color: #f5f5f5;
 }
 
-/* line 324, app/assets/stylesheets/resources.scss */
+/* line 345, app/assets/stylesheets/resources.scss */
 .resource-information {
   background-color: yellow;
 }
 
-/* line 328, app/assets/stylesheets/resources.scss */
+/* line 349, app/assets/stylesheets/resources.scss */
 .view-resource img {
   width: 20px;
   height: auto;
 }
 
-/* line 336, app/assets/stylesheets/resources.scss */
+/* line 357, app/assets/stylesheets/resources.scss */
 .resource-panel {
   position: fixed;
   inset: 0;
@@ -28691,12 +28799,12 @@ img#new-resource {
   overflow-y: auto;
 }
 
-/* line 347, app/assets/stylesheets/resources.scss */
+/* line 368, app/assets/stylesheets/resources.scss */
 .resource-panel.is-hidden {
   display: none;
 }
 
-/* line 350, app/assets/stylesheets/resources.scss */
+/* line 371, app/assets/stylesheets/resources.scss */
 .resource-panel-inner {
   position: relative;
   background: #fff;
@@ -28707,7 +28815,7 @@ img#new-resource {
   padding: 20px 24px 24px;
 }
 
-/* line 360, app/assets/stylesheets/resources.scss */
+/* line 381, app/assets/stylesheets/resources.scss */
 .resource-panel-close {
   position: absolute;
   top: 8px;
@@ -28721,12 +28829,12 @@ img#new-resource {
   padding: 4px 8px;
 }
 
-/* line 372, app/assets/stylesheets/resources.scss */
+/* line 393, app/assets/stylesheets/resources.scss */
 .resource-panel-close:hover {
   color: #172b4d;
 }
 
-/* line 374, app/assets/stylesheets/resources.scss */
+/* line 395, app/assets/stylesheets/resources.scss */
 button.resource-panel-close {
   -webkit-appearance: none;
   appearance: none;
@@ -28736,7 +28844,7 @@ button.resource-panel-close {
   background: transparent !important;
 }
 
-/* line 382, app/assets/stylesheets/resources.scss */
+/* line 403, app/assets/stylesheets/resources.scss */
 button.resource-panel-close:hover, button.resource-panel-close:focus, button.resource-panel-close:active {
   border: none !important;
   outline: none !important;
@@ -28744,7 +28852,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   background: transparent !important;
 }
 
-/* line 392, app/assets/stylesheets/resources.scss */
+/* line 413, app/assets/stylesheets/resources.scss */
 .resource-panel-title {
   margin: 0 32px 12px 0;
   font-size: 16px;
@@ -28752,21 +28860,21 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   color: #172b4d;
 }
 
-/* line 399, app/assets/stylesheets/resources.scss */
+/* line 420, app/assets/stylesheets/resources.scss */
 .resource-panel-fields {
   display: grid;
   grid-template-columns: repeat(3, minmax(160px, 1fr));
   gap: 10px 16px;
 }
 
-/* line 405, app/assets/stylesheets/resources.scss */
+/* line 426, app/assets/stylesheets/resources.scss */
 .resource-panel-field {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* line 410, app/assets/stylesheets/resources.scss */
+/* line 431, app/assets/stylesheets/resources.scss */
 .resource-panel-field label {
   font-size: 11px;
   font-weight: 600;
@@ -28776,7 +28884,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   margin: 0 0 2px;
 }
 
-/* line 419, app/assets/stylesheets/resources.scss */
+/* line 440, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place {
   display: inline-block;
   min-height: 20px;
@@ -28787,23 +28895,23 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   cursor: text;
 }
 
-/* line 428, app/assets/stylesheets/resources.scss */
+/* line 449, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place:hover {
   background: #e6effd;
 }
 
-/* line 431, app/assets/stylesheets/resources.scss */
+/* line 452, app/assets/stylesheets/resources.scss */
 .resource-panel-field .static-field {
   padding: 2px 6px;
   color: #6b778c;
 }
 
-/* line 437, app/assets/stylesheets/resources.scss */
+/* line 458, app/assets/stylesheets/resources.scss */
 .resource-panel-field-wide {
   grid-column: 1 / -1;
 }
 
-/* line 440, app/assets/stylesheets/resources.scss */
+/* line 461, app/assets/stylesheets/resources.scss */
 input.fwd-datepicker {
   border: none !important;
   width: 36px;
@@ -28815,7 +28923,7 @@ input.fwd-datepicker {
   box-sizing: content-box;
 }
 
-/* line 456, app/assets/stylesheets/resources.scss */
+/* line 477, app/assets/stylesheets/resources.scss */
 .roster-toggle-slot {
   display: inline-block;
   width: 14px;
@@ -28824,7 +28932,7 @@ input.fwd-datepicker {
   color: #a1a8b4;
 }
 
-/* line 464, app/assets/stylesheets/resources.scss */
+/* line 485, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle {
   display: inline;
   cursor: pointer;
@@ -28835,22 +28943,22 @@ input.fwd-datepicker {
   user-select: none;
 }
 
-/* line 473, app/assets/stylesheets/resources.scss */
+/* line 494, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle:hover {
   color: #172b4d;
 }
 
-/* line 474, app/assets/stylesheets/resources.scss */
+/* line 495, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle:focus {
   outline: none;
 }
 
-/* line 475, app/assets/stylesheets/resources.scss */
+/* line 496, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle[aria-expanded="true"] .roster-toggle-caret {
   transform: rotate(90deg);
 }
 
-/* line 478, app/assets/stylesheets/resources.scss */
+/* line 499, app/assets/stylesheets/resources.scss */
 .roster-toggle-caret {
   display: inline-block;
   transition: transform 0.12s ease;
@@ -28858,17 +28966,17 @@ input.fwd-datepicker {
   vertical-align: baseline;
 }
 
-/* line 485, app/assets/stylesheets/resources.scss */
+/* line 506, app/assets/stylesheets/resources.scss */
 .resource-roster-row {
   background: #f7f8fa;
 }
 
-/* line 488, app/assets/stylesheets/resources.scss */
+/* line 509, app/assets/stylesheets/resources.scss */
 .resource-roster-row.is-hidden {
   display: none;
 }
 
-/* line 490, app/assets/stylesheets/resources.scss */
+/* line 511, app/assets/stylesheets/resources.scss */
 .resource-roster-row td {
   color: #5e6c84;
   font-size: 12px;
@@ -28876,13 +28984,13 @@ input.fwd-datepicker {
   border-top: 1px dashed #e6e8ec;
 }
 
-/* line 497, app/assets/stylesheets/resources.scss */
+/* line 518, app/assets/stylesheets/resources.scss */
 .resource-roster-row .roster-order-cell {
   font-family: Menlo, Consolas, monospace;
   white-space: nowrap;
 }
 
-/* line 502, app/assets/stylesheets/resources.scss */
+/* line 523, app/assets/stylesheets/resources.scss */
 .resource-roster-row.depth-2 {
   background: #eef1f5;
 }

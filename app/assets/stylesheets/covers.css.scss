@@ -668,14 +668,20 @@
   display: none;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: #f4f5f7;
   border: 1px solid #dfe1e6;
   border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
   font-size: 13px;
+  // Positioned inline by JS (openImageUploader) so it sits directly
+  // below the target image block. z-index keeps it above other blocks
+  // and above the canvas guides.
+  position: absolute;
+  z-index: 30;
+  white-space: nowrap;
 
-  &.is-open { display: flex; }
+  &.is-open { display: inline-flex; }
 
   // The native file input must stay invisible — its browser-rendered
   // Choose File button would otherwise sit next to our custom one.
