@@ -54,6 +54,20 @@
   tbody tr.dn-remarks-row td { border-top: 0; }
   .dn-remarks { font-weight: 400; }
 
+  // Remarks get simple_format applied on display — one <p> per paragraph.
+  // Switch the BIP wrapper to block so those paragraphs stack cleanly,
+  // and give them margins so double-line-breaks read as paragraph breaks.
+  .dn-remarks .best_in_place {
+    display: block;
+    padding: 4px 6px;
+  }
+  .dn-remarks .best_in_place p {
+    margin: 0 0 8px;
+  }
+  .dn-remarks .best_in_place p:last-child {
+    margin-bottom: 0;
+  }
+
   .best_in_place {
     display: inline-block;
     min-width: 40px;

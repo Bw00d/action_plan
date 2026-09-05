@@ -28,6 +28,11 @@
     margin: 0;
     border: none;
     box-sizing: border-box;
+    // Match the on-screen editor's font stack. Cambria is a Windows/Mac
+    // system font not installed on the Linux dyno running Grover — without
+    // this fallback, headless Chrome picks a wider default sans-serif and
+    // text that fit on-screen overflows the block in print.
+    font-family: Cambria, Georgia, "Times New Roman", serif;
   }
 
   .cover-block-text {
@@ -37,7 +42,9 @@
     align-items: center;
     line-height: 1;
     white-space: nowrap;
-    overflow: hidden;
+    // Match on-screen (which is overflow: visible). Clipping here was
+    // hiding the last character or two of blocks that hugged their text.
+    overflow: visible;
   }
 
   .cover-block-image {
@@ -95,7 +102,10 @@
         </div>
       <% elsif b.image_block? %>
         <% if b.main_image.attached? %>
-          <%= image_tag b.main_image, class: "cover-block-image" %>
+          <%# Absolute rails_blob_url via pdf_image_url — Grover fetches
+              this from headless Chrome, so a relative /rails/active_storage
+              URL is unreliable. Same pattern as the 204 PDF. %>
+          <%= image_tag pdf_image_url(b.main_image), class: "cover-block-image" %>
         <% end %>
       <% else %>
         <div class="cover-block-text" style="font-size: <%= font_px %>px"><%= b.content %></div>

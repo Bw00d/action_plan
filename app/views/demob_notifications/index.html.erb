@@ -82,6 +82,7 @@
             <td colspan="9" class="dn-remarks">
               Remarks:
               <%= best_in_place n, :remarks, url: url, as: :textarea, place_holder: '—',
+                                             display_with: :simple_format,
                                              html_attrs: { style: 'width:100%; min-height:40px;' },
                                              ok_button: 'Save', ok_button_class: 'btn btn-info tiny',
                                              cancel_button: 'Cancel', cancel_button_class: 'btn btn-default sm-margin-left tiny' %>
