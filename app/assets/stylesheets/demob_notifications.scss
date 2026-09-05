@@ -54,6 +54,12 @@
   tbody tr.dn-remarks-row td { border-top: 0; }
   .dn-remarks { font-weight: 400; }
 
+  // Header label above the editable content.
+  .dn-remarks-label {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
   // Remarks get simple_format applied on display — one <p> per paragraph.
   // Switch the BIP wrapper to block so those paragraphs stack cleanly,
   // and give them margins so double-line-breaks read as paragraph breaks.
