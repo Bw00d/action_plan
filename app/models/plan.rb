@@ -13,6 +13,7 @@ class Plan < ApplicationRecord
   has_one :cover, dependent: :destroy
   has_many :attachments, dependent: :destroy
   has_many :assignment_snapshots, class_name: 'PlanAssignmentSnapshot', dependent: :destroy
+  validates :date, presence: true
   validates_uniqueness_of :date, :scope => :incident_id
 
   def published?
@@ -29,10 +30,39 @@ class Plan < ApplicationRecord
   def duplicate_plan
     if self.incident.plans.count >= 2
       self.duplicate_objectives
+      self.duplicate_202_fields
       self.duplicate_teams
       self.duplicate_assignments
       self.duplicate_commo_plan
       self.duplicate_safety_message
+      self.duplicate_cover
+    end
+  end
+
+  # 202 free-text carries over — Objectives + SafetyMessage are handled by
+  # their own duplicate_* methods. update_columns writes directly to bypass
+  # callbacks (we're already inside after_create).
+  def duplicate_202_fields
+    prev = self.incident.plans.last(2).first
+    return unless prev
+    self.update_columns(
+      weather:        prev.weather,
+      general_safety: prev.general_safety
+    )
+  end
+
+  # Cover + all its blocks + the main_image attachment on each block. Block
+  # layout fields (x, y, width, height, font_*) travel via .dup; the
+  # ActiveStorage blob is re-attached (same underlying file, no re-upload).
+  def duplicate_cover
+    prev = self.incident.plans.last(2).first
+    return unless prev && prev.cover
+    new_cover = Cover.create!(plan_id: self.id)
+    prev.cover.blocks.each do |old_block|
+      new_block = old_block.dup
+      new_block.cover_id = new_cover.id
+      new_block.save!
+      new_block.main_image.attach(old_block.main_image.blob) if old_block.main_image.attached?
     end
   end
 
