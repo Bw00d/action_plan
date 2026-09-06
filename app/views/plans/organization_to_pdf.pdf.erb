@@ -10,7 +10,9 @@
 
   left_used   = cmd_rows + agy_rows + pln_rows + log_rows
   right_used  = ops_rows + fin_rows
-  column_target = [left_used, right_used, 41].max
+  # Floor sized to fit Letter after the new full-width header (~88px) +
+  # footer (~60px) — was 41; overshoot pushed the footer onto page 2.
+  column_target = [left_used, right_used, 37].max
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
 

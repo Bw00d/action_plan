@@ -68,6 +68,48 @@
       #organization-assignments .top-row {
         height: 26px !important;
       }
+
+      /* ICS 203 header (title + Incident Name + Op Period + Dates).
+         .content-box's !important height/padding above would otherwise
+         crush the flex-column layout inside .org-header-cell and pin the
+         label bar's border-bottom in the wrong place. Restate the sizes
+         here at the tighter PDF scale so the label border on the left
+         cell lines up with the Op Period / From-To divider on the right. */
+      #organization-assignments .org-header .org-header-cell {
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 44px !important;   /* 2 × 22px (Op Period + From/To) */
+      }
+      #organization-assignments .org-header .org-header-cell.org-header-tall {
+        min-height: 66px !important;   /* 3 × 22px (Op Period + label + value) */
+      }
+      #organization-assignments .org-header .org-header-label {
+        height: 22px !important;
+        padding: 3px 5px !important;
+        font-size: 11px !important;
+      }
+      #organization-assignments .org-header .org-header-value {
+        padding: 3px 5px !important;
+        font-size: 11px !important;
+      }
+      #organization-assignments .org-header .op-period-cell {
+        padding: 3px 5px !important;
+        font-size: 11px !important;
+      }
+
+      /* ICS 203 footer rows compact to match --row-height so total
+         header + columns + footer fits inside one Letter page. */
+      #organization-assignments .org-footer .content-box {
+        height: 22px !important;
+        min-height: 22px !important;
+        padding: 3px 5px !important;
+        font-size: 11px !important;
+      }
+      #organization-assignments .org-footer-meta {
+        font-size: 10px !important;
+        padding: 2px 4px 0 !important;
+      }
+
       #organization-assignments .print-button { display: none !important; }
       
       

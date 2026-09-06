@@ -472,19 +472,20 @@ h1.header {
   padding: 0;
   display: flex;
   flex-direction: column;
+  // 2 × content-box row (30px each) — for the Date/Time From / To cells.
   min-height: 60px;
 }
 .org-header .org-header-cell.org-header-tall {
-  // Matches the right side's stacked height (Op Period 30px + From/To
-  // pair 60px) so the row's bottom border lines up across both columns.
+  // 3 × content-box row: matches Op Period (30) + From/To (60) on the
+  // right so the row's bottom border lines up across both columns.
   min-height: 90px;
 }
 .org-header .org-header-label {
   background-color: #f3f3f3;
   padding: 6px 5px;
   border-bottom: 1px solid black;
-  min-height: 30px;
-  box-sizing: border-box;
+  height: 30px;      // fixed so the border lands at the same y as the
+  box-sizing: border-box;   // Op Period cell's bottom border on the right.
 }
 .org-header .org-header-value {
   padding: 6px 5px;
