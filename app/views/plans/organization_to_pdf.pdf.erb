@@ -8,30 +8,53 @@
   ops_rows = 1 + [20, @plan.operations.count   ].max + 1
   fin_rows = 1 + [3,  @plan.finance.count      ].max + 1
 
-  left_used   = 2 + cmd_rows + agy_rows + pln_rows + log_rows
-  right_used  = 2 + ops_rows + fin_rows
-  column_target = [left_used, right_used, 43].max
+  left_used   = cmd_rows + agy_rows + pln_rows + log_rows
+  right_used  = ops_rows + fin_rows
+  column_target = [left_used, right_used, 41].max
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
+
+  op_from, op_to = @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).map(&:presence)
+  date_str = @plan.date&.strftime('%m/%d/%Y')
 %>
 <div id="organization-assignments">
   <div class="container">
       
     <div class="col-xs-12 col-lg-8 center-block">
 
-      <div class="row org-columns">
-        <div class="left-column col-xs-6"> <!-- Left Column-->
+      <!-- Full-width ICS 203 header -->
+      <div class="row org-header">
+        <div id="title-box" class="col-xs-12 content-box">
+          <h4><strong>ORGANIZATION ASSIGNMENT LIST (ICS 203)</strong></h4>
+        </div>
+      </div>
+      <div class="row org-header">
+        <div class="col-xs-4 content-box org-header-cell org-header-tall">
+          <div class="org-header-label"><span class="small">1. Incident Name:</span></div>
+          <div class="org-header-value"><%= @incident.name %></div>
+        </div>
+        <div class="col-xs-8 org-header-right">
           <div class="row">
-            <div class="col-xs-12 content-box top-row">
-              <h4 ><strong>ORGANIZATION ASSIGNMENT LIST</strong></h4>
+            <div class="col-xs-12 content-box op-period-cell">
+              <span class="small">2. Operational Period:</span>
+              <span class="lg-padding-left"><strong>DAY</strong></span>
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12 content-box ">
-          <span class="small">INCIDENT NAME</span>
-            <span class="lg-padding-left"><%= @incident.name %></span>
-        </div>
+            <div class="col-xs-6 content-box org-header-cell">
+              <div class="org-header-label"><span class="small">Date/Time From:</span></div>
+              <div class="org-header-value"><%= [date_str, op_from].compact.join(' ') %></div>
+            </div>
+            <div class="col-xs-6 content-box org-header-cell">
+              <div class="org-header-label"><span class="small">Date/Time To:</span></div>
+              <div class="org-header-value"><%= [date_str, op_to].compact.join(' ') %></div>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <div class="row org-columns">
+        <div class="left-column col-xs-6"> <!-- Left Column-->
           <div class="row">
             <div class="col-xs-12 content-box header-row"> COMMAND AND GENERAL STAFF </div>
           </div>
@@ -124,18 +147,6 @@
         </div> <!-- END LEFT COLUMN-->
 
         <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
-          <div class="row">
-            <div class="col-xs-12 content-box top-row">
-              <span class="small">DATE </span>
-              <span class="lg-padding-left"><%= @plan.date.try(:strftime,"%-m/%d/%y") %></span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 content-box">
-               <span class="small">OPERATIONAL PERIOD</span>
-               <span class="lg-padding-left">0800 - 2200</span>
-            </div>
-          </div>
           <!-- START Ops -->
           <div class="row">
             <div class="col-xs-12 content-box header-row"> OPERATIONS </div>
@@ -185,11 +196,32 @@
 
         </div> <!-- END RIGHT COLUMN -->
       </div> 
-        <div class="row bottom-row">
-          <div class="content-box col-xs-3">Prepared by:</div>
-          <div class="content-box col-xs-3"></div>
-          <div class="content-box col-xs-3">Approved by:</div>
-          <div class="content-box col-xs-3"></div>
+        <div class="row org-footer">
+          <div class="content-box col-xs-5">
+            <span class="small">9. Prepared By:</span>
+            <span class="lg-padding-left"><%= @plan.prepared_by %></span>
+          </div>
+          <div class="content-box col-xs-3">
+            <span class="small">Position/Title:</span>
+          </div>
+          <div class="content-box col-xs-4 bottom-row">
+            <span class="small">Signature:</span>
+          </div>
+        </div>
+        <div class="row org-footer">
+          <div class="content-box col-xs-2"><strong>ICS 203</strong></div>
+          <div class="content-box col-xs-2">IAP Page</div>
+          <div class="content-box col-xs-5">
+            <span class="small">Date/Time:</span>
+            <span class="lg-padding-left">
+              <%= [@plan.date_prepare&.strftime('%m/%d/%Y'), @plan.time_prepared].compact.join(' ') %>
+            </span>
+          </div>
+          <div class="content-box col-xs-3 bottom-row"></div>
+        </div>
+        <div class="row org-footer-meta">
+          <div class="col-xs-6 text-center"><strong>FINAL</strong></div>
+          <div class="col-xs-6 text-right">Page 1 of 1</div>
         </div>
 
     </div>

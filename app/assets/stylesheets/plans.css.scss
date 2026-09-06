@@ -446,6 +446,69 @@ h1.header {
   margin: 0;
   padding: 8px 5px;
 }
+
+// ICS 203 full-width header (title + Incident Name + Op Period + Dates)
+// and standardized footer (Prepared By / ICS 203 · IAP Page · Date-Time /
+// FINAL · Page X of Y). The right side of the header nests two rows so
+// "Operational Period" spans the top and Date/Time From/To split the
+// second row — matches the official form.
+
+// Title bar sits flush at the top-left with no leading rule (matches the
+// scanned ICS 203 reference — the outer border wraps the whole page, not
+// the title cell).
+#organization-assignments #title-box {
+  border-top: none;
+  border-left: none;
+}
+
+// Section 1 / 2 headers use the same gray band as the body section
+// headers (COMMAND, OPERATIONS, etc.). op-period-cell fills the whole
+// cell; org-header-label banners the top of a cell that also carries a
+// value below.
+.org-header .op-period-cell {
+  background-color: #f3f3f3;
+}
+.org-header .org-header-cell {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 60px;
+}
+.org-header .org-header-cell.org-header-tall {
+  // Matches the right side's stacked height (Op Period 30px + From/To
+  // pair 60px) so the row's bottom border lines up across both columns.
+  min-height: 90px;
+}
+.org-header .org-header-label {
+  background-color: #f3f3f3;
+  padding: 6px 5px;
+  border-bottom: 1px solid black;
+  min-height: 30px;
+  box-sizing: border-box;
+}
+.org-header .org-header-value {
+  padding: 6px 5px;
+  font-weight: 600;
+  flex: 1 1 auto;
+}
+.org-header .org-header-right {
+  padding-left: 0;
+  padding-right: 0;
+  border-right: 1px solid black;
+}
+.org-header .org-header-right > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.org-footer .content-box {
+  min-height: 34px;
+}
+.org-footer-meta {
+  padding: 4px 8px 0;
+  font-size: 0.85em;
+}
+.org-footer-meta strong { letter-spacing: 1px; }
 .right-column {
   border-right: 1px solid black;
 }
