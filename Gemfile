@@ -71,6 +71,9 @@ gem 'font_awesome5_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'american_date'
 gem 'aws-sdk-s3', require: false
+# aws-sdk-s3 1.74.0's legacy_signer.rb requires 'webrick/httputils'.
+# Ruby 3.0+ removed webrick from stdlib, so pin the gem explicitly.
+gem 'webrick'
 # for active storage
 gem "image_processing", ">= 1.2"
 gem 'datejs-rails'
