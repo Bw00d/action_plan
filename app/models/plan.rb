@@ -52,36 +52,42 @@ class Plan < ApplicationRecord
   end
 
   # Cover + all its blocks + the main_image attachment on each block. Block
-  # layout fields (x, y, width, height, font_*) travel via .dup. Images are
-  # downloaded and re-uploaded as fresh blobs (not blob-shared via
-  # .attach(existing_blob)) so each plan owns its own storage — that way
-  # deleting or replacing an image on one plan can't affect another.
+  # layout fields (x, y, width, height, font_*) travel via .dup; images are
+  # blob-shared via .attach(old_blob).
   #
-  # The block is saved BEFORE the image attach and outside the rescue, so
-  # even if the image copy fails the block itself (position, size, kind)
-  # is preserved. Image failures are logged, not raised — a bad blob won't
-  # abort plan creation.
+  # Each block is wrapped in its own begin/rescue so a bad blob (or any
+  # per-block failure) doesn't abort the whole plan creation. Verbose
+  # logging is on so `heroku logs | grep duplicate_cover` shows exactly
+  # what happened for the last plan create.
   def duplicate_cover
     prev = self.incident.plans.last(2).first
-    return unless prev && prev.cover
+    if prev.nil?
+      Rails.logger.info "duplicate_cover: plan #{self.id} — no previous plan, skipping"
+      return
+    end
+    if prev.cover.nil?
+      Rails.logger.info "duplicate_cover: plan #{self.id} — previous plan #{prev.id} has no cover, skipping"
+      return
+    end
 
     new_cover = Cover.create!(plan_id: self.id)
+    block_count = prev.cover.blocks.count
+    Rails.logger.info "duplicate_cover: plan #{self.id} — cover #{new_cover.id} created, copying #{block_count} block(s) from cover #{prev.cover.id}"
+
     prev.cover.blocks.each do |old_block|
-      new_block = old_block.dup
-      new_block.cover_id = new_cover.id
-      new_block.save!
-
-      next unless old_block.main_image.attached?
-
       begin
-        old_blob = old_block.main_image.blob
-        new_block.main_image.attach(
-          io:           StringIO.new(old_blob.download),
-          filename:     old_blob.filename.to_s,
-          content_type: old_blob.content_type
-        )
+        new_block = old_block.dup
+        new_block.cover_id = new_cover.id
+        new_block.save!
+
+        if old_block.main_image.attached?
+          new_block.main_image.attach(old_block.main_image.blob)
+          Rails.logger.info "duplicate_cover: plan #{self.id} — copied block #{old_block.id} -> #{new_block.id} WITH image"
+        else
+          Rails.logger.info "duplicate_cover: plan #{self.id} — copied block #{old_block.id} -> #{new_block.id} (no image)"
+        end
       rescue => e
-        Rails.logger.warn "duplicate_cover: image attach failed for block #{old_block.id} -> #{new_block.id} on plan #{self.id}: #{e.class}: #{e.message}"
+        Rails.logger.warn "duplicate_cover: plan #{self.id} — block #{old_block.id} copy failed: #{e.class}: #{e.message}"
       end
     end
   end
