@@ -367,7 +367,7 @@ a.delete-objective:hover {
 }
 .header-row {
   text-align: center;
-  background-color: #f3f3f3;
+  background-color: #dcdcdc;
   padding-top: 5px;
   border-left: 1px solid black;
 }
@@ -466,7 +466,7 @@ h1.header {
 // cell; org-header-label banners the top of a cell that also carries a
 // value below.
 .org-header .op-period-cell {
-  background-color: #f3f3f3;
+  background-color: #dcdcdc;
 }
 .org-header .org-header-cell {
   padding: 0;
@@ -481,7 +481,7 @@ h1.header {
   min-height: 90px;
 }
 .org-header .org-header-label {
-  background-color: #f3f3f3;
+  background-color: #dcdcdc;
   padding: 6px 5px;
   border-bottom: 1px solid black;
   height: 30px;      // fixed so the border lands at the same y as the

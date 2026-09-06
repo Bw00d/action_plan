@@ -499,7 +499,7 @@ a.delete-objective:hover {
 /* line 368, app/assets/stylesheets/plans.css.scss */
 .header-row {
   text-align: center;
-  background-color: #f3f3f3;
+  background-color: #dcdcdc;
   padding-top: 5px;
   border-left: 1px solid black;
 }
@@ -586,12 +586,81 @@ h1.header {
   padding: 8px 5px;
 }
 
-/* line 449, app/assets/stylesheets/plans.css.scss */
+/* line 459, app/assets/stylesheets/plans.css.scss */
+#organization-assignments #title-box {
+  border-top: none;
+  border-left: none;
+}
+
+/* line 468, app/assets/stylesheets/plans.css.scss */
+.org-header .op-period-cell {
+  background-color: #dcdcdc;
+}
+
+/* line 471, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-cell {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 60px;
+}
+
+/* line 478, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-cell.org-header-tall {
+  min-height: 90px;
+}
+
+/* line 483, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-label {
+  background-color: #dcdcdc;
+  padding: 6px 5px;
+  border-bottom: 1px solid black;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+/* line 490, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-value {
+  padding: 6px 5px;
+  font-weight: 600;
+  flex: 1 1 auto;
+}
+
+/* line 495, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-right {
+  padding-left: 0;
+  padding-right: 0;
+  border-right: 1px solid black;
+}
+
+/* line 500, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-right > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* line 505, app/assets/stylesheets/plans.css.scss */
+.org-footer .content-box {
+  min-height: 34px;
+}
+
+/* line 508, app/assets/stylesheets/plans.css.scss */
+.org-footer-meta {
+  padding: 4px 8px 0;
+  font-size: 0.85em;
+}
+
+/* line 512, app/assets/stylesheets/plans.css.scss */
+.org-footer-meta strong {
+  letter-spacing: 1px;
+}
+
+/* line 513, app/assets/stylesheets/plans.css.scss */
 .right-column {
   border-right: 1px solid black;
 }
 
-/* line 453, app/assets/stylesheets/plans.css.scss */
+/* line 517, app/assets/stylesheets/plans.css.scss */
 #organization-assignments h4 {
   padding-bottom: 0;
   padding-top: 0;
@@ -599,12 +668,12 @@ h1.header {
   margin-top: 0;
 }
 
-/* line 460, app/assets/stylesheets/plans.css.scss */
+/* line 524, app/assets/stylesheets/plans.css.scss */
 .team-form {
   overflow: hidden;
 }
 
-/* line 470, app/assets/stylesheets/plans.css.scss */
+/* line 534, app/assets/stylesheets/plans.css.scss */
 #organization-assignments {
   --row-height: 30px;
   min-height: 100vh;
@@ -612,7 +681,7 @@ h1.header {
   flex-direction: column;
 }
 
-/* line 476, app/assets/stylesheets/plans.css.scss */
+/* line 540, app/assets/stylesheets/plans.css.scss */
 #organization-assignments > .container {
   flex: 1 1 auto;
   display: flex;
@@ -620,7 +689,7 @@ h1.header {
   min-height: 0;
 }
 
-/* line 483, app/assets/stylesheets/plans.css.scss */
+/* line 547, app/assets/stylesheets/plans.css.scss */
 #organization-assignments > .container > .col-xs-12 {
   flex: 1 1 auto;
   display: flex;
@@ -628,7 +697,7 @@ h1.header {
   min-height: 0;
 }
 
-/* line 491, app/assets/stylesheets/plans.css.scss */
+/* line 555, app/assets/stylesheets/plans.css.scss */
 .org-columns {
   flex: 1 1 auto;
   min-height: 0;
@@ -636,7 +705,7 @@ h1.header {
   align-items: stretch;
 }
 
-/* line 507, app/assets/stylesheets/plans.css.scss */
+/* line 571, app/assets/stylesheets/plans.css.scss */
 #organization-assignments .left-column > .row:last-child,
 #organization-assignments .right-column > .row:last-child {
   flex: 1 1 auto;
@@ -644,7 +713,7 @@ h1.header {
   align-items: stretch;
 }
 
-/* line 513, app/assets/stylesheets/plans.css.scss */
+/* line 577, app/assets/stylesheets/plans.css.scss */
 #organization-assignments .left-column > .row:last-child > .content-box,
 #organization-assignments .right-column > .row:last-child > .content-box {
   flex: 1 1 50%;
@@ -652,14 +721,14 @@ h1.header {
   min-height: var(--row-height, 30px);
 }
 
-/* line 520, app/assets/stylesheets/plans.css.scss */
+/* line 584, app/assets/stylesheets/plans.css.scss */
 .org-columns > .left-column,
 .org-columns > .right-column {
   display: flex;
   flex-direction: column;
 }
 
-/* line 543, app/assets/stylesheets/plans.css.scss */
+/* line 607, app/assets/stylesheets/plans.css.scss */
 .add-org-btn {
   display: inline-flex;
   align-items: center;
@@ -675,30 +744,30 @@ h1.header {
   vertical-align: middle;
 }
 
-/* line 560, app/assets/stylesheets/plans.css.scss */
+/* line 624, app/assets/stylesheets/plans.css.scss */
 .add-org-btn::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
 
-/* line 562, app/assets/stylesheets/plans.css.scss */
+/* line 626, app/assets/stylesheets/plans.css.scss */
 .add-org-btn:hover {
   opacity: 0.7;
 }
 
-/* line 563, app/assets/stylesheets/plans.css.scss */
+/* line 627, app/assets/stylesheets/plans.css.scss */
 .add-org-btn:focus {
   outline: none;
 }
 
-/* line 566, app/assets/stylesheets/plans.css.scss */
+/* line 630, app/assets/stylesheets/plans.css.scss */
 img.add-org-icon {
   display: block;
   width: 20px;
   height: 20px;
 }
 
-/* line 573, app/assets/stylesheets/plans.css.scss */
+/* line 637, app/assets/stylesheets/plans.css.scss */
 .add-header-btn i.fa {
   font-size: 18px;
   color: #555;
@@ -706,12 +775,12 @@ img.add-org-icon {
   text-align: center;
 }
 
-/* line 584, app/assets/stylesheets/plans.css.scss */
+/* line 648, app/assets/stylesheets/plans.css.scss */
 .staff-row {
   position: relative;
 }
 
-/* line 593, app/assets/stylesheets/plans.css.scss */
+/* line 657, app/assets/stylesheets/plans.css.scss */
 .insert-hover-zone {
   position: absolute;
   left: 0;
@@ -722,14 +791,14 @@ img.add-org-icon {
   cursor: pointer;
 }
 
-/* line 603, app/assets/stylesheets/plans.css.scss */
+/* line 667, app/assets/stylesheets/plans.css.scss */
 form.insert-below-form {
   display: inline;
   margin: 0;
   padding: 0;
 }
 
-/* line 609, app/assets/stylesheets/plans.css.scss */
+/* line 673, app/assets/stylesheets/plans.css.scss */
 .insert-below {
   display: inline-flex;
   align-items: center;
@@ -757,51 +826,51 @@ form.insert-below-form {
   z-index: 5;
 }
 
-/* line 638, app/assets/stylesheets/plans.css.scss */
+/* line 702, app/assets/stylesheets/plans.css.scss */
 .insert-below:hover {
   color: #000;
   border-color: #000;
 }
 
-/* line 642, app/assets/stylesheets/plans.css.scss */
+/* line 706, app/assets/stylesheets/plans.css.scss */
 .insert-below:focus {
   outline: none;
 }
 
-/* line 648, app/assets/stylesheets/plans.css.scss */
+/* line 712, app/assets/stylesheets/plans.css.scss */
 .insert-hover-zone:hover ~ .content-box .insert-below,
 .insert-below:hover,
 .insert-below:focus {
   opacity: 1;
 }
 
-/* line 651, app/assets/stylesheets/plans.css.scss */
+/* line 715, app/assets/stylesheets/plans.css.scss */
 img.small-icon {
   height: 15px;
   width: 15px;
 }
 
-/* line 655, app/assets/stylesheets/plans.css.scss */
+/* line 719, app/assets/stylesheets/plans.css.scss */
 img.medium-icon {
   height: 25px;
   width: 25px;
 }
 
-/* line 659, app/assets/stylesheets/plans.css.scss */
+/* line 723, app/assets/stylesheets/plans.css.scss */
 #add-freqs-button {
   text-align: center;
   padding-right: 5px;
   padding-left: 5px;
 }
 
-/* line 664, app/assets/stylesheets/plans.css.scss */
+/* line 728, app/assets/stylesheets/plans.css.scss */
 img#add-freqs-button {
   height: 30px;
   width: 30px;
 }
 
 /* Attachments */
-/* line 671, app/assets/stylesheets/plans.css.scss */
+/* line 735, app/assets/stylesheets/plans.css.scss */
 #attachments {
   overflow: hidden;
   border-top: 1px solid black;
@@ -811,25 +880,25 @@ img#add-freqs-button {
   overflow: hidden;
 }
 
-/* line 678, app/assets/stylesheets/plans.css.scss */
+/* line 742, app/assets/stylesheets/plans.css.scss */
 #attachments ul {
   list-style: none;
 }
 
-/* line 681, app/assets/stylesheets/plans.css.scss */
+/* line 745, app/assets/stylesheets/plans.css.scss */
 #attachments li.attachment {
   list-style: none;
   float: left;
   width: 200px;
 }
 
-/* line 688, app/assets/stylesheets/plans.css.scss */
+/* line 752, app/assets/stylesheets/plans.css.scss */
 .checkboxes img {
   height: 17px !important;
   width: 17px !important;
 }
 
-/* line 692, app/assets/stylesheets/plans.css.scss */
+/* line 756, app/assets/stylesheets/plans.css.scss */
 .bip-checkbox {
   cursor: pointer;
   font-size: 17px;
@@ -837,7 +906,7 @@ img#add-freqs-button {
 }
 
 /* New Incident conversation UI form*/
-/* line 700, app/assets/stylesheets/plans.css.scss */
+/* line 764, app/assets/stylesheets/plans.css.scss */
 .ui-group {
   /*.form-incident-type {
     display: none;
@@ -847,37 +916,37 @@ img#add-freqs-button {
   }*/
 }
 
-/* line 707, app/assets/stylesheets/plans.css.scss */
+/* line 771, app/assets/stylesheets/plans.css.scss */
 .ui-group .form-attributes {
   display: none;
 }
 
-/* line 712, app/assets/stylesheets/plans.css.scss */
+/* line 776, app/assets/stylesheets/plans.css.scss */
 .ui-group p {
   color: #979797;
   font-size: 1.1em;
 }
 
-/* line 716, app/assets/stylesheets/plans.css.scss */
+/* line 780, app/assets/stylesheets/plans.css.scss */
 .ui-group label {
   font-size: 1.6em;
   font-weight: 999;
   margin-bottom: 20px;
 }
 
-/* line 721, app/assets/stylesheets/plans.css.scss */
+/* line 785, app/assets/stylesheets/plans.css.scss */
 .ui-group div.next-btn-container {
   margin-top: 10px;
   width: 100%;
   margin-bottom: 10px;
 }
 
-/* line 726, app/assets/stylesheets/plans.css.scss */
+/* line 790, app/assets/stylesheets/plans.css.scss */
 .ui-group div.hideable {
   visibility: hidden;
 }
 
-/* line 729, app/assets/stylesheets/plans.css.scss */
+/* line 793, app/assets/stylesheets/plans.css.scss */
 .ui-group .next-btn {
   max-width: 60px;
 }
@@ -1309,7 +1378,7 @@ ul#action-buttons li {
 .ics-204-wf-page {
   margin-bottom: 20px;
   --rule: 1px solid #000;
-  --shade: #ebebeb;
+  --shade: #dcdcdc;
   background: #fff;
   color: #000;
   padding: 0.35in 0.4in;
@@ -1751,7 +1820,7 @@ td.no-padding {
 @media print {
   /* line 581, app/assets/stylesheets/assignments.css.scss */
   div.header-row {
-    background-color: #f3f3f3 !important;
+    background-color: #dcdcdc !important;
   }
 }
 
