@@ -369,10 +369,15 @@
         <div class="row org-footer">
           <div class="content-box col-xs-5">
             <span class="small">9. Prepared By:</span>
-            <span class="lg-padding-left"><%= @plan.prepared_by %></span>
+            <span class="lg-padding-left">
+              <%= best_in_place @plan, :prepared_by, as: :input, place_holder: '(NAME)' %>
+            </span>
           </div>
           <div class="content-box col-xs-3">
             <span class="small">Position/Title:</span>
+            <span class="lg-padding-left">
+              <%= best_in_place @plan, :prepared_by_position, as: :input, place_holder: '(POSITION)' %>
+            </span>
           </div>
           <div class="content-box col-xs-4 bottom-row">
             <span class="small">Signature:</span>
