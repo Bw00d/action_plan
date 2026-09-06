@@ -370,13 +370,13 @@
           <div class="content-box col-xs-5">
             <span class="small">9. Prepared By:</span>
             <span class="lg-padding-left">
-              <%= best_in_place @plan, :prepared_by, as: :input, place_holder: '(NAME)' %>
+              <%= best_in_place @plan, :prepared_by, as: :input, id: "org-name", place_holder: '  ' %>
             </span>
           </div>
           <div class="content-box col-xs-3">
             <span class="small">Position/Title:</span>
             <span class="lg-padding-left">
-              <%= best_in_place @plan, :prepared_by_position, as: :input, place_holder: '(POSITION)' %>
+              <%= best_in_place @plan, :prepared_by_position, as: :input, id: "org-position", place_holder: '  ' %>
             </span>
           </div>
           <div class="content-box col-xs-4 bottom-row">
