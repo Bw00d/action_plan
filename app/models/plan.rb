@@ -52,17 +52,35 @@ class Plan < ApplicationRecord
   end
 
   # Cover + all its blocks + the main_image attachment on each block. Block
-  # layout fields (x, y, width, height, font_*) travel via .dup; the
-  # ActiveStorage blob is re-attached (same underlying file, no re-upload).
+  # layout fields (x, y, width, height, font_*) travel via .dup. Images are
+  # downloaded and re-uploaded as fresh blobs (not blob-shared via
+  # .attach(existing_blob)) so each plan owns its own storage — that way
+  # deleting or replacing an image on one plan can't affect another. Attach
+  # runs BEFORE save so the attachment auto-persists with the record; the
+  # rescue keeps a per-block image failure from aborting the whole plan.
   def duplicate_cover
     prev = self.incident.plans.last(2).first
     return unless prev && prev.cover
+
     new_cover = Cover.create!(plan_id: self.id)
     prev.cover.blocks.each do |old_block|
-      new_block = old_block.dup
-      new_block.cover_id = new_cover.id
-      new_block.save!
-      new_block.main_image.attach(old_block.main_image.blob) if old_block.main_image.attached?
+      begin
+        new_block = old_block.dup
+        new_block.cover_id = new_cover.id
+
+        if old_block.main_image.attached?
+          old_blob = old_block.main_image.blob
+          new_block.main_image.attach(
+            io:           StringIO.new(old_blob.download),
+            filename:     old_blob.filename.to_s,
+            content_type: old_blob.content_type
+          )
+        end
+
+        new_block.save!
+      rescue => e
+        Rails.logger.warn "duplicate_cover: block #{old_block.id} copy failed for plan #{self.id}: #{e.class}: #{e.message}"
+      end
     end
   end
 

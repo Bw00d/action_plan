@@ -32,12 +32,12 @@
       </div>
       <div class="row org-header">
         <div class="col-xs-4 content-box org-header-cell org-header-tall">
-          <div class="org-header-label"><span class="small">1. Incident Name:</span></div>
+          <div class="org-header-label gray-row"><span class="small">1. Incident Name:</span></div>
           <div class="org-header-value"><%= @incident.name %></div>
         </div>
         <div class="col-xs-8 org-header-right">
           <div class="row">
-            <div class="col-xs-12 content-box op-period-cell">
+            <div class="col-xs-12 content-box op-period-cell gray-row">
               <span class="small">2. Operational Period:</span>
               <span class="lg-padding-left"><strong>DAY</strong></span>
             </div>
@@ -235,6 +235,7 @@
       $('#header').hide();
       $('.footer').hide();
       $('.header-row').css('background-color', "#f3f3f3");
+      $('.gray-row').css('background-color', "#f3f3f3");
       $('body').css("padding-top", 25);
       $('body').css("padding-right", 10);
       $('body').css("padding-left", 10);
