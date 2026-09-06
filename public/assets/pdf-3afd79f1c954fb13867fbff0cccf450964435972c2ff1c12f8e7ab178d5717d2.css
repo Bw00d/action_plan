@@ -586,12 +586,81 @@ h1.header {
   padding: 8px 5px;
 }
 
-/* line 449, app/assets/stylesheets/plans.css.scss */
+/* line 459, app/assets/stylesheets/plans.css.scss */
+#organization-assignments #title-box {
+  border-top: none;
+  border-left: none;
+}
+
+/* line 468, app/assets/stylesheets/plans.css.scss */
+.org-header .op-period-cell {
+  background-color: #f3f3f3;
+}
+
+/* line 471, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-cell {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 60px;
+}
+
+/* line 477, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-cell.org-header-tall {
+  min-height: 90px;
+}
+
+/* line 482, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-label {
+  background-color: #f3f3f3;
+  padding: 6px 5px;
+  border-bottom: 1px solid black;
+  min-height: 30px;
+  box-sizing: border-box;
+}
+
+/* line 489, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-value {
+  padding: 6px 5px;
+  font-weight: 600;
+  flex: 1 1 auto;
+}
+
+/* line 494, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-right {
+  padding-left: 0;
+  padding-right: 0;
+  border-right: 1px solid black;
+}
+
+/* line 499, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-right > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* line 504, app/assets/stylesheets/plans.css.scss */
+.org-footer .content-box {
+  min-height: 34px;
+}
+
+/* line 507, app/assets/stylesheets/plans.css.scss */
+.org-footer-meta {
+  padding: 4px 8px 0;
+  font-size: 0.85em;
+}
+
+/* line 511, app/assets/stylesheets/plans.css.scss */
+.org-footer-meta strong {
+  letter-spacing: 1px;
+}
+
+/* line 512, app/assets/stylesheets/plans.css.scss */
 .right-column {
   border-right: 1px solid black;
 }
 
-/* line 453, app/assets/stylesheets/plans.css.scss */
+/* line 516, app/assets/stylesheets/plans.css.scss */
 #organization-assignments h4 {
   padding-bottom: 0;
   padding-top: 0;
@@ -599,12 +668,12 @@ h1.header {
   margin-top: 0;
 }
 
-/* line 460, app/assets/stylesheets/plans.css.scss */
+/* line 523, app/assets/stylesheets/plans.css.scss */
 .team-form {
   overflow: hidden;
 }
 
-/* line 470, app/assets/stylesheets/plans.css.scss */
+/* line 533, app/assets/stylesheets/plans.css.scss */
 #organization-assignments {
   --row-height: 30px;
   min-height: 100vh;
@@ -612,7 +681,7 @@ h1.header {
   flex-direction: column;
 }
 
-/* line 476, app/assets/stylesheets/plans.css.scss */
+/* line 539, app/assets/stylesheets/plans.css.scss */
 #organization-assignments > .container {
   flex: 1 1 auto;
   display: flex;
@@ -620,7 +689,7 @@ h1.header {
   min-height: 0;
 }
 
-/* line 483, app/assets/stylesheets/plans.css.scss */
+/* line 546, app/assets/stylesheets/plans.css.scss */
 #organization-assignments > .container > .col-xs-12 {
   flex: 1 1 auto;
   display: flex;
@@ -628,7 +697,7 @@ h1.header {
   min-height: 0;
 }
 
-/* line 491, app/assets/stylesheets/plans.css.scss */
+/* line 554, app/assets/stylesheets/plans.css.scss */
 .org-columns {
   flex: 1 1 auto;
   min-height: 0;
@@ -636,7 +705,7 @@ h1.header {
   align-items: stretch;
 }
 
-/* line 507, app/assets/stylesheets/plans.css.scss */
+/* line 570, app/assets/stylesheets/plans.css.scss */
 #organization-assignments .left-column > .row:last-child,
 #organization-assignments .right-column > .row:last-child {
   flex: 1 1 auto;
@@ -644,7 +713,7 @@ h1.header {
   align-items: stretch;
 }
 
-/* line 513, app/assets/stylesheets/plans.css.scss */
+/* line 576, app/assets/stylesheets/plans.css.scss */
 #organization-assignments .left-column > .row:last-child > .content-box,
 #organization-assignments .right-column > .row:last-child > .content-box {
   flex: 1 1 50%;
@@ -652,14 +721,14 @@ h1.header {
   min-height: var(--row-height, 30px);
 }
 
-/* line 520, app/assets/stylesheets/plans.css.scss */
+/* line 583, app/assets/stylesheets/plans.css.scss */
 .org-columns > .left-column,
 .org-columns > .right-column {
   display: flex;
   flex-direction: column;
 }
 
-/* line 543, app/assets/stylesheets/plans.css.scss */
+/* line 606, app/assets/stylesheets/plans.css.scss */
 .add-org-btn {
   display: inline-flex;
   align-items: center;
@@ -675,30 +744,30 @@ h1.header {
   vertical-align: middle;
 }
 
-/* line 560, app/assets/stylesheets/plans.css.scss */
+/* line 623, app/assets/stylesheets/plans.css.scss */
 .add-org-btn::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
 
-/* line 562, app/assets/stylesheets/plans.css.scss */
+/* line 625, app/assets/stylesheets/plans.css.scss */
 .add-org-btn:hover {
   opacity: 0.7;
 }
 
-/* line 563, app/assets/stylesheets/plans.css.scss */
+/* line 626, app/assets/stylesheets/plans.css.scss */
 .add-org-btn:focus {
   outline: none;
 }
 
-/* line 566, app/assets/stylesheets/plans.css.scss */
+/* line 629, app/assets/stylesheets/plans.css.scss */
 img.add-org-icon {
   display: block;
   width: 20px;
   height: 20px;
 }
 
-/* line 573, app/assets/stylesheets/plans.css.scss */
+/* line 636, app/assets/stylesheets/plans.css.scss */
 .add-header-btn i.fa {
   font-size: 18px;
   color: #555;
@@ -706,12 +775,12 @@ img.add-org-icon {
   text-align: center;
 }
 
-/* line 584, app/assets/stylesheets/plans.css.scss */
+/* line 647, app/assets/stylesheets/plans.css.scss */
 .staff-row {
   position: relative;
 }
 
-/* line 593, app/assets/stylesheets/plans.css.scss */
+/* line 656, app/assets/stylesheets/plans.css.scss */
 .insert-hover-zone {
   position: absolute;
   left: 0;
@@ -722,14 +791,14 @@ img.add-org-icon {
   cursor: pointer;
 }
 
-/* line 603, app/assets/stylesheets/plans.css.scss */
+/* line 666, app/assets/stylesheets/plans.css.scss */
 form.insert-below-form {
   display: inline;
   margin: 0;
   padding: 0;
 }
 
-/* line 609, app/assets/stylesheets/plans.css.scss */
+/* line 672, app/assets/stylesheets/plans.css.scss */
 .insert-below {
   display: inline-flex;
   align-items: center;
@@ -757,51 +826,51 @@ form.insert-below-form {
   z-index: 5;
 }
 
-/* line 638, app/assets/stylesheets/plans.css.scss */
+/* line 701, app/assets/stylesheets/plans.css.scss */
 .insert-below:hover {
   color: #000;
   border-color: #000;
 }
 
-/* line 642, app/assets/stylesheets/plans.css.scss */
+/* line 705, app/assets/stylesheets/plans.css.scss */
 .insert-below:focus {
   outline: none;
 }
 
-/* line 648, app/assets/stylesheets/plans.css.scss */
+/* line 711, app/assets/stylesheets/plans.css.scss */
 .insert-hover-zone:hover ~ .content-box .insert-below,
 .insert-below:hover,
 .insert-below:focus {
   opacity: 1;
 }
 
-/* line 651, app/assets/stylesheets/plans.css.scss */
+/* line 714, app/assets/stylesheets/plans.css.scss */
 img.small-icon {
   height: 15px;
   width: 15px;
 }
 
-/* line 655, app/assets/stylesheets/plans.css.scss */
+/* line 718, app/assets/stylesheets/plans.css.scss */
 img.medium-icon {
   height: 25px;
   width: 25px;
 }
 
-/* line 659, app/assets/stylesheets/plans.css.scss */
+/* line 722, app/assets/stylesheets/plans.css.scss */
 #add-freqs-button {
   text-align: center;
   padding-right: 5px;
   padding-left: 5px;
 }
 
-/* line 664, app/assets/stylesheets/plans.css.scss */
+/* line 727, app/assets/stylesheets/plans.css.scss */
 img#add-freqs-button {
   height: 30px;
   width: 30px;
 }
 
 /* Attachments */
-/* line 671, app/assets/stylesheets/plans.css.scss */
+/* line 734, app/assets/stylesheets/plans.css.scss */
 #attachments {
   overflow: hidden;
   border-top: 1px solid black;
@@ -811,25 +880,25 @@ img#add-freqs-button {
   overflow: hidden;
 }
 
-/* line 678, app/assets/stylesheets/plans.css.scss */
+/* line 741, app/assets/stylesheets/plans.css.scss */
 #attachments ul {
   list-style: none;
 }
 
-/* line 681, app/assets/stylesheets/plans.css.scss */
+/* line 744, app/assets/stylesheets/plans.css.scss */
 #attachments li.attachment {
   list-style: none;
   float: left;
   width: 200px;
 }
 
-/* line 688, app/assets/stylesheets/plans.css.scss */
+/* line 751, app/assets/stylesheets/plans.css.scss */
 .checkboxes img {
   height: 17px !important;
   width: 17px !important;
 }
 
-/* line 692, app/assets/stylesheets/plans.css.scss */
+/* line 755, app/assets/stylesheets/plans.css.scss */
 .bip-checkbox {
   cursor: pointer;
   font-size: 17px;
@@ -837,7 +906,7 @@ img#add-freqs-button {
 }
 
 /* New Incident conversation UI form*/
-/* line 700, app/assets/stylesheets/plans.css.scss */
+/* line 763, app/assets/stylesheets/plans.css.scss */
 .ui-group {
   /*.form-incident-type {
     display: none;
@@ -847,37 +916,37 @@ img#add-freqs-button {
   }*/
 }
 
-/* line 707, app/assets/stylesheets/plans.css.scss */
+/* line 770, app/assets/stylesheets/plans.css.scss */
 .ui-group .form-attributes {
   display: none;
 }
 
-/* line 712, app/assets/stylesheets/plans.css.scss */
+/* line 775, app/assets/stylesheets/plans.css.scss */
 .ui-group p {
   color: #979797;
   font-size: 1.1em;
 }
 
-/* line 716, app/assets/stylesheets/plans.css.scss */
+/* line 779, app/assets/stylesheets/plans.css.scss */
 .ui-group label {
   font-size: 1.6em;
   font-weight: 999;
   margin-bottom: 20px;
 }
 
-/* line 721, app/assets/stylesheets/plans.css.scss */
+/* line 784, app/assets/stylesheets/plans.css.scss */
 .ui-group div.next-btn-container {
   margin-top: 10px;
   width: 100%;
   margin-bottom: 10px;
 }
 
-/* line 726, app/assets/stylesheets/plans.css.scss */
+/* line 789, app/assets/stylesheets/plans.css.scss */
 .ui-group div.hideable {
   visibility: hidden;
 }
 
-/* line 729, app/assets/stylesheets/plans.css.scss */
+/* line 792, app/assets/stylesheets/plans.css.scss */
 .ui-group .next-btn {
   max-width: 60px;
 }
@@ -2603,25 +2672,28 @@ div.solid {
   display: none;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: #f4f5f7;
   border: 1px solid #dfe1e6;
   border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
   font-size: 13px;
+  position: absolute;
+  z-index: 30;
+  white-space: nowrap;
 }
 
-/* line 678, app/assets/stylesheets/covers.css.scss */
+/* line 684, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form.is-open {
-  display: flex;
+  display: inline-flex;
 }
 
-/* line 682, app/assets/stylesheets/covers.css.scss */
+/* line 688, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-file-input {
   display: none !important;
 }
 
-/* line 684, app/assets/stylesheets/covers.css.scss */
+/* line 690, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-filename {
   flex: 1 1 auto;
   color: #5e6c84;
@@ -2630,7 +2702,7 @@ div.solid {
   text-overflow: ellipsis;
 }
 
-/* line 693, app/assets/stylesheets/covers.css.scss */
+/* line 699, app/assets/stylesheets/covers.css.scss */
 #cover-canvas {
   position: relative;
   width: 100%;
@@ -2642,7 +2714,7 @@ div.solid {
   overflow: visible;
 }
 
-/* line 712, app/assets/stylesheets/covers.css.scss */
+/* line 718, app/assets/stylesheets/covers.css.scss */
 .cover-block {
   color: #333;
   font-family: cambria;
@@ -2653,13 +2725,13 @@ div.solid {
   cursor: move;
 }
 
-/* line 727, app/assets/stylesheets/covers.css.scss */
+/* line 733, app/assets/stylesheets/covers.css.scss */
 .cover-block:hover {
   border-color: #90a4ae;
   background: rgba(9, 30, 66, 0.02);
 }
 
-/* line 732, app/assets/stylesheets/covers.css.scss */
+/* line 738, app/assets/stylesheets/covers.css.scss */
 .cover-block.ui-draggable-dragging {
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.05);
@@ -2667,47 +2739,47 @@ div.solid {
   z-index: 10;
 }
 
-/* line 741, app/assets/stylesheets/covers.css.scss */
+/* line 747, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-left .cover-block-text {
   justify-content: flex-start;
 }
 
-/* line 742, app/assets/stylesheets/covers.css.scss */
+/* line 748, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-center .cover-block-text {
   justify-content: center;
 }
 
-/* line 743, app/assets/stylesheets/covers.css.scss */
+/* line 749, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-right .cover-block-text {
   justify-content: flex-end;
 }
 
-/* line 750, app/assets/stylesheets/covers.css.scss */
+/* line 756, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-bold .cover-block-text {
   font-weight: 700;
 }
 
-/* line 751, app/assets/stylesheets/covers.css.scss */
+/* line 757, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-semi-bold .cover-block-text {
   font-weight: 600;
 }
 
-/* line 752, app/assets/stylesheets/covers.css.scss */
+/* line 758, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-normal .cover-block-text {
   font-weight: 400;
 }
 
-/* line 753, app/assets/stylesheets/covers.css.scss */
+/* line 759, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-italic .cover-block-text {
   font-style: italic;
 }
 
-/* line 754, app/assets/stylesheets/covers.css.scss */
+/* line 760, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-normal .cover-block-text {
   font-style: normal;
 }
 
-/* line 761, app/assets/stylesheets/covers.css.scss */
+/* line 767, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-handle {
   position: absolute;
   display: block;
@@ -2723,40 +2795,40 @@ div.solid {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* line 781, app/assets/stylesheets/covers.css.scss */
+/* line 787, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-nw {
   left: -6px;
   top: -6px;
   cursor: nw-resize;
 }
 
-/* line 782, app/assets/stylesheets/covers.css.scss */
+/* line 788, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-ne {
   right: -6px;
   top: -6px;
   cursor: ne-resize;
 }
 
-/* line 783, app/assets/stylesheets/covers.css.scss */
+/* line 789, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-sw {
   left: -6px;
   bottom: -6px;
   cursor: sw-resize;
 }
 
-/* line 784, app/assets/stylesheets/covers.css.scss */
+/* line 790, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-se {
   right: -6px;
   bottom: -6px;
   cursor: se-resize;
 }
 
-/* line 787, app/assets/stylesheets/covers.css.scss */
+/* line 793, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected .ui-resizable-handle {
   opacity: 1;
 }
 
-/* line 792, app/assets/stylesheets/covers.css.scss */
+/* line 798, app/assets/stylesheets/covers.css.scss */
 .cover-guide {
   position: absolute;
   top: 0;
@@ -2769,27 +2841,27 @@ div.solid {
   z-index: 4;
 }
 
-/* line 803, app/assets/stylesheets/covers.css.scss */
+/* line 809, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="16.5"] {
   left: 16.5%;
 }
 
-/* line 804, app/assets/stylesheets/covers.css.scss */
+/* line 810, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="50"] {
   left: 50%;
 }
 
-/* line 805, app/assets/stylesheets/covers.css.scss */
+/* line 811, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="83.5"] {
   left: 83.5%;
 }
 
-/* line 806, app/assets/stylesheets/covers.css.scss */
+/* line 812, app/assets/stylesheets/covers.css.scss */
 .cover-guide.is-active {
   opacity: 1;
 }
 
-/* line 808, app/assets/stylesheets/covers.css.scss */
+/* line 814, app/assets/stylesheets/covers.css.scss */
 .cover-block-text {
   width: 100%;
   height: 100%;
@@ -2801,7 +2873,7 @@ div.solid {
   user-select: none;
 }
 
-/* line 818, app/assets/stylesheets/covers.css.scss */
+/* line 824, app/assets/stylesheets/covers.css.scss */
 .cover-block-text[contenteditable="true"] {
   user-select: text;
   outline: 2px solid #1976d2;
@@ -2809,7 +2881,7 @@ div.solid {
   cursor: text;
 }
 
-/* line 825, app/assets/stylesheets/covers.css.scss */
+/* line 831, app/assets/stylesheets/covers.css.scss */
 .cover-block-image {
   width: 100%;
   height: 100%;
@@ -2817,7 +2889,7 @@ div.solid {
   display: block;
 }
 
-/* line 830, app/assets/stylesheets/covers.css.scss */
+/* line 836, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-area {
   display: block;
   width: 100%;
@@ -2826,13 +2898,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 837, app/assets/stylesheets/covers.css.scss */
+/* line 843, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-image:hover .cover-block-image {
   opacity: 0.8;
   transition: opacity 0.12s ease;
 }
 
-/* line 842, app/assets/stylesheets/covers.css.scss */
+/* line 848, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-placeholder {
   width: 100%;
   height: 100%;
@@ -2846,12 +2918,12 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 857, app/assets/stylesheets/covers.css.scss */
+/* line 863, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-notes {
   cursor: move;
 }
 
-/* line 860, app/assets/stylesheets/covers.css.scss */
+/* line 866, app/assets/stylesheets/covers.css.scss */
 .cover-notes {
   width: 100%;
   height: 100%;
@@ -2862,7 +2934,7 @@ div.solid {
   background: #fff;
 }
 
-/* line 869, app/assets/stylesheets/covers.css.scss */
+/* line 875, app/assets/stylesheets/covers.css.scss */
 .cover-notes-header {
   text-align: center;
   font-weight: 600;
@@ -2872,7 +2944,7 @@ div.solid {
   user-select: none;
 }
 
-/* line 877, app/assets/stylesheets/covers.css.scss */
+/* line 883, app/assets/stylesheets/covers.css.scss */
 .cover-notes-lines {
   flex: 1;
   display: flex;
@@ -2880,14 +2952,14 @@ div.solid {
   min-height: 0;
 }
 
-/* line 883, app/assets/stylesheets/covers.css.scss */
+/* line 889, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line {
   flex: 1;
   border-bottom: 1px solid #000;
   min-height: 0;
 }
 
-/* line 888, app/assets/stylesheets/covers.css.scss */
+/* line 894, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line:last-child {
   border-bottom: 0;
 }
@@ -2995,18 +3067,33 @@ div.solid {
   width: 13%;
 }
 
-/* line 42, app/assets/stylesheets/commo_plans.scss */
+/* line 47, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-name {
+  width: 13%;
+}
+
+/* line 48, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-tone {
+  width: 6%;
+}
+
+/* line 49, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-mode {
+  width: 6%;
+}
+
+/* line 50, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 46, app/assets/stylesheets/commo_plans.scss */
+/* line 54, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 58, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -3014,7 +3101,7 @@ div.solid {
   border-bottom: 1px solid black;
 }
 
-/* line 56, app/assets/stylesheets/commo_plans.scss */
+/* line 64, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -3024,7 +3111,7 @@ div.solid {
   overflow: hidden;
 }
 
-/* line 64, app/assets/stylesheets/commo_plans.scss */
+/* line 72, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -3032,38 +3119,38 @@ div.solid {
   border-left: 1px solid black;
 }
 
-/* line 70, app/assets/stylesheets/commo_plans.scss */
+/* line 78, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 74, app/assets/stylesheets/commo_plans.scss */
+/* line 82, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 77, app/assets/stylesheets/commo_plans.scss */
+/* line 85, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 80, app/assets/stylesheets/commo_plans.scss */
+/* line 88, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 83, app/assets/stylesheets/commo_plans.scss */
+/* line 91, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 87, app/assets/stylesheets/commo_plans.scss */
+/* line 95, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -3072,17 +3159,17 @@ div.solid {
   verticle-align: middle;
 }
 
-/* line 93, app/assets/stylesheets/commo_plans.scss */
+/* line 101, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 98, app/assets/stylesheets/commo_plans.scss */
+/* line 106, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 102, app/assets/stylesheets/commo_plans.scss */
+/* line 110, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -3091,24 +3178,24 @@ div.solid {
   width: 30px;
 }
 
-/* line 109, app/assets/stylesheets/commo_plans.scss */
+/* line 117, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 111, app/assets/stylesheets/commo_plans.scss */
+/* line 119, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 117, app/assets/stylesheets/commo_plans.scss */
+/* line 125, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 120, app/assets/stylesheets/commo_plans.scss */
+/* line 128, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -3123,17 +3210,17 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 134, app/assets/stylesheets/commo_plans.scss */
+/* line 142, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 137, app/assets/stylesheets/commo_plans.scss */
+/* line 145, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 140, app/assets/stylesheets/commo_plans.scss */
+/* line 148, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
