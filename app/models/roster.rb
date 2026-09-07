@@ -20,6 +20,26 @@ class Roster < ApplicationRecord
     promoted_resource_id.present?
   end
 
+  # Mark this roster entry as released and drop them from the parent's
+  # personnel count. .active scope filters released rows out; the parent's
+  # personnel_by_agency uses rosters.active.unpromoted so the tally
+  # updates automatically. Idempotent — a repeat call leaves the original
+  # released_at in place.
+  def release!(at: Time.current)
+    return if released?
+    update!(released_at: at)
+  end
+
+  # Prefill values for a subordinate demob notification form.
+  def demob_prefill
+    {
+      request_number:       "#{resource.cat}#{order_number}",
+      unit_id:              agency.presence || resource.agency,
+      name:                 name.presence   || position,
+      actual_release_date:  Time.zone.today
+    }
+  end
+
   # Carve this roster entry into its own single-person OVERHEAD Resource so
   # it can be dragged around on the board like a standalone T-card.
   # The parent's tally skips promoted rosters so the personnel counts don't

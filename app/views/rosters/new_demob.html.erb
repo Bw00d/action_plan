@@ -1,0 +1,92 @@
+<%= content_for :title, "Demob #{@roster.name}" %>
+
+<div class="container roster-demob-page">
+  <div class="col-xs-12 col-lg-8 center-block">
+    <div class="incident-name no-print">
+      <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+    </div>
+
+    <div class="roster-demob-header">
+      <h2>Demob subordinate</h2>
+      <p class="muted">
+        Creating a demob notification for
+        <strong><%= @roster.resource.cat %><%= @roster.order_number %></strong>
+        &mdash; <%= @roster.name %>
+        (from <strong><%= @roster.resource.full_order_number %></strong>).
+        Saving will drop them from the parent's personnel count.
+      </p>
+    </div>
+
+    <% if flash[:alert] %>
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
+    <% end %>
+
+    <%= form_with model: @notification, url: demob_roster_path(@roster), method: :post, local: true, class: 'roster-demob-form' do |f| %>
+      <div class="form-row-group">
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :request_number, 'Request #' %>
+          <%= f.text_field :request_number, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :unit_id, 'Unit ID / Agency' %>
+          <%= f.text_field :unit_id, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-row-group">
+        <div class="form-group">
+          <%= f.label :actual_release_date, 'Release Date' %>
+          <%= f.date_field :actual_release_date, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :actual_release_time, 'Release Time' %>
+          <%= f.text_field :actual_release_time, class: 'form-control', placeholder: 'HHMM' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :return_travel_method, 'Return Travel Method' %>
+          <%= f.text_field :return_travel_method, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-row-group">
+        <div class="form-group">
+          <%= f.label :demob_city_state, 'Demob City / State' %>
+          <%= f.text_field :demob_city_state, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :ron, 'RON?' %>
+          <%= f.check_box :ron %>
+        </div>
+        <div class="form-group">
+          <%= f.label :ron_location, 'RON Location' %>
+          <%= f.text_field :ron_location, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-row-group">
+        <div class="form-group">
+          <%= f.label :est_arrival_date, 'Estimated Arrival Date' %>
+          <%= f.date_field :est_arrival_date, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :est_arrival_time, 'Estimated Arrival Time' %>
+          <%= f.text_field :est_arrival_time, class: 'form-control', placeholder: 'HHMM' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :remarks %>
+        <%= f.text_area :remarks, class: 'form-control', rows: 4 %>
+      </div>
+
+      <div class="roster-demob-actions">
+        <%= f.submit "Create demob notification", class: 'btn btn-danger' %>
+        <%= link_to "Cancel", incident_resources_path(@incident), class: 'btn btn-link' %>
+      </div>
+    <% end %>
+  </div>
+</div>

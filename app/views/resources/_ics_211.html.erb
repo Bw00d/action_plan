@@ -88,7 +88,10 @@
               inferred from the number of dots in the entry's order_number,
               so E-209.3.1 sits one level deeper than E-209.3 which itself
               sits one level deeper than E-209. %>
-          <% r.rosters.each do |ros| %>
+          <%# Only show active rosters — released subordinates drop out of
+              the expansion (their demob notification lives on the demob
+              notifications tab). %>
+          <% r.rosters.active.each do |ros| %>
             <% depth = ros.order_number.to_s.count('.') %>
             <tr class="resource-roster-row is-hidden depth-<%= depth %>" data-resource-id="<%= r.id %>">
               <td class="roster-order-cell" style="padding-left: <%= 20 + depth * 20 %>px">
@@ -99,13 +102,17 @@
               <td colspan="9" class="roster-filler-cell">
                 <% if ros.promoted? %>
                   <span class="text-muted small">&rarr; Promoted to <%= ros.promoted_resource.full_order_number %></span>
-                <% elsif !ros.released? %>
+                <% else %>
                   <%= button_to "Promote to T-card",
                                 promote_roster_path(ros),
                                 method: :post,
                                 class: "btn btn-xs btn-default",
                                 form: { style: "display:inline" },
                                 data: { confirm: "Carve #{ros.name} out as a standalone T-card?" } %>
+                  <%= link_to "Demob",
+                              new_demob_roster_path(ros),
+                              class: "btn btn-xs btn-dark sm-margin-left",
+                              title: "Demob #{ros.name} early" %>
                 <% end %>
               </td>
             </tr>

@@ -2,6 +2,10 @@ class DemobNotification < ApplicationRecord
   belongs_to :incident
   belongs_to :resource
   belongs_to :demob, optional: true
+  # Present when this notification is for a single subordinate roster
+  # entry rather than the whole parent resource. resource_id still points
+  # at the parent for context / grouping on the notifications page.
+  belongs_to :roster, optional: true
 
   scope :pending,      -> { where(transmitted: false) }
   scope :transmitted,  -> { where(transmitted: true) }

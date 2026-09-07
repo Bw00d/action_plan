@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   resources :incidents
   resources :resources
   resources :rosters, only: [] do
-    member { post :promote }
+    member do
+      post :promote
+      get  :new_demob
+      post :demob
+    end
   end
   resources :assignments
   resources :objectives, only: [:create, :update, :destroy]
