@@ -1,126 +1,165 @@
-
+<%
+  op_from, op_to = @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).map(&:presence)
+  date_str = @plan.date&.strftime('%m/%d/%Y')
+%>
 <div id="incident-objectives">
+  <div id="print-container">
 
-    <div id="print-container">
-      <%# Top row %>
-      <div class="col-xs-12 title-row bl top-row fixed-height-row">
-        <div class="col-xs-4">
-          <h5><strong>INCIDENT OBJECTIVES</strong></h5>
-        </div>
-        <div class="col-xs-3 bl form-box">
-          <span class="small">1. INCIDENT NAME<br>
-            <span class="sm-padding-left"><%= @incident.name %></span>
-          </span>
-        </div>
-        <div class="col-xs-2 bl form-box">
-          <span class="small">2. DATE<br>
-            <%= @plan.date.try(:strftime,"%-m/%d/%y") %>
-          </span>
-        </div>
-        <div class="col-xs-3 bl form-box">
-          <span class="small">3. OPERATIONAL PERIOD<br>
-            <%=  @plan.ops_period %>
-          </span>
-        </div>
+    <!-- Full-width ICS 202 header (mirrors the on-screen layout). -->
+    <div class="row org-header">
+      <div id="title-box" class="col-xs-12 content-box">
+        <h5><strong>INCIDENT OBJECTIVES (ICS 202)</strong></h5>
       </div>
-
-      <%# Control Objectives row %>
-      <div class="resizable-row" id="objectives-row">
-        <div id="control-objectives-pdf" class="col-xs-12 row-content">
-              <span class="small">4. GENERAL CONTROL OBJECTIVES FOR INCIDENT</span>
-              <ul>
-                <% @plan.objectives.each do |o| %>
-                <li><%= o.description %></li>
-                <% end %>
-              </ul>
-            </div>
+    </div>
+    <div class="row org-header">
+      <div class="col-xs-4 content-box org-header-cell org-header-tall">
+        <div class="org-header-label"><span class="small">1. Incident Name:</span></div>
+        <div class="org-header-value"><%= @incident.name %></div>
+      </div>
+      <div class="col-xs-8 org-header-right">
+        <div class="row">
+          <div class="col-xs-12 content-box op-period-cell">
+            <span class="small">2. Operational Period:</span>
+            <span class="lg-padding-left"><strong>DAY</strong></span>
           </div>
-          <div class="resize-handle" data-target="objectives-row"></div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 content-box org-header-cell">
+            <div class="org-header-label"><span class="small">Date/Time From:</span></div>
+            <div class="org-header-value"><%= [date_str, op_from].compact.join(' ') %></div>
+          </div>
+          <div class="col-xs-6 content-box org-header-cell">
+            <div class="org-header-label"><span class="small">Date/Time To:</span></div>
+            <div class="org-header-value"><%= [date_str, op_to].compact.join(' ') %></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <%# Operations emphasis row %>
-      <div class="resizable-row" id="emphasis-row">
+    <!-- 3. Objective(s): resizable via URL params (see script). -->
+    <div class="resizable-row" id="objectives-row">
+      <div id="control-objectives-pdf" class="col-xs-12 row-content">
+        <span class="small"><strong>3. Objective(s):</strong></span>
+        <ol>
+          <% @plan.objectives.each do |o| %>
+            <li><%= o.description %></li>
+          <% end %>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 4. Operational Period Command Emphasis -->
+    <div class="resizable-row" id="emphasis-row">
       <div id="operational-emphasis-pdf" class="col-xs-12 row-content">
-        <% if @incident.wildfire? %>
-          <span class="small">5. OPERATIONAL PERIOD EMPHASIS</span><br>
-        <% else %>
-          <span class="small">5. GENERAL SITUATION AWARENESS</span><br>
-        <% end %>
-           <%=  simple_format(@plan.weather)  %>
+        <span class="small"><strong>4. Operational Period Command Emphasis:</strong></span><br>
+        <%= simple_format(@plan.weather) %>
       </div>
-      </div>
-      <div class="resize-handle" data-target="emphasis-row"></div>
+    </div>
 
-      <%#  General Safety row %>
-      <div class="resizable-row" id="safety-row">
+    <!-- General Situational Awareness (subsection under section 4) -->
+    <div class="resizable-row" id="safety-row">
       <div id="general-safety-message-pdf" class="col-xs-12 row-content">
-        <span class="small">6. GENERAL SAFETY MESSAGE</span><br>
-          <%=  simple_format(@plan.general_safety)  %>
+        <span class="small"><strong>General Situational Awareness:</strong></span><br>
+        <%= simple_format(@plan.general_safety) %>
       </div>
+    </div>
+
+    <!-- 5. Site Safety Plan Required? -->
+    <div class="col-xs-12 site-safety-row fixed-height-row">
+      <span class="small"><strong>5. Site Safety Plan Required?</strong></span>
+      <span class="ssp-toggle">Yes <%= @plan.site_safety_plan_required == "Yes" ? "☑" : "☐" %></span>
+      <span class="ssp-toggle">No <%=  @plan.site_safety_plan_required == "No"  ? "☑" : "☐" %></span>
+      <span class="ssp-location">
+        <span class="small">Approved Site Safety Plan(s) Located at:</span>
+        <%= @plan.site_safety_plan_location %>
+      </span>
+    </div>
+
+    <!-- 6. Incident Action Plan (attachments) -->
+    <div id="attachments" class="col-xs-12 fixed-height-row">
+      <div class="attachments-header">
+        <span class="small"><strong>6. Incident Action Plan</strong></span>
+        <span class="small">(the items checked below are included in this Incident Action Plan):</span>
       </div>
-
-
-      <%# Attachments row %>
-      <div id="attachments" class="col-xs-12 fixed-height-row">
-        <span class="small">7. ATTACHMENTS</span><br>
-          <ul class="small col-xs-3">
-
-            <% @first_attachments.each do |a| %>
-              <li> 
-                <%= a.attached ? "☑" : "☐" %>
-                <%= a.description %>
-              </li>
-            <% end %>
-          </ul>
-          <ul class="small col-xs-3">
-            <% @second_attachments.each do |a| %>
-              <li>
-                <%= a.attached ? "☑" : "☐" %>
-                <%= a.description %>
-              </li>
-            <% end %>
-          </ul>
-          <ul class="small col-xs-3">
-            <% @third_attachments.each do |a| %>
-              <li>
-                <%= a.attached ? "☑" : "☐" %>
-                <%= a.description %>
-              </li>
-            <% end %>
-          </ul>
-          <ul class="small col-xs-3">
-            <% @fourth_attachments.each do |a| %>
-              <li>
-                <%= a.attached ? "☑" : "☐" %>
-                <%= a.description %>
-              </li>
-            <% end %>
-          </ul>
-      </div>
-      <%# Prepared by row %>
-      <div class="prepared-by-row col-xs-12 fixed-height-row">
+      <div class="row">
         <div class="col-xs-6">
-          <span class="small small-box">8. PREPARED BY</span><br>
-          <span class="lg-padding-left"><%=  @plan.prepared_by %></span>
+          <ul class="attachments-list small">
+            <% @left_attachments.each do |a| %>
+              <li>
+                <%= a.attached ? "☑" : "☐" %>
+                <span class="attachment-label"><%= a.description %></span>
+              </li>
+            <% end %>
+          </ul>
         </div>
-        <div class="col-xs-6 bl">
-          <span class="small small-box">9. APPROVED BY</span><br>
-          <span class="lg-padding-left"><%=  @plan.approved_by %></span>
+        <div class="col-xs-6">
+          <div class="small other-attachments-label"><strong>Other Attachments:</strong></div>
+          <ul class="attachments-list small">
+            <% @right_attachments.each do |a| %>
+              <li>
+                <% if a %>
+                  <%= a.attached ? "☑" : "☐" %>
+                  <%= a.description %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
+    </div>
+
+    <!-- 7. Prepared by / 8. Approved by / ICS meta rows. -->
+    <div class="row org-footer">
+      <div class="content-box col-xs-6">
+        <span class="small">7. Prepared by:</span>
+        <span class="lg-padding-left"><%= @plan.prepared_by %></span>
+      </div>
+      <div class="content-box col-xs-3">
+        <span class="small">Position/Title:</span>
+        <span class="lg-padding-left"><%= @plan.prepared_by_position %></span>
+      </div>
+      <div class="content-box col-xs-3 bottom-row">
+        <span class="small">Signature:</span>
+      </div>
+    </div>
+    <div class="row org-footer">
+      <div class="content-box col-xs-6">
+        <span class="small">8. Approved by Incident Commander:</span>
+        <span class="lg-padding-left"><%= @plan.approved_by %></span>
+      </div>
+      <div class="content-box col-xs-3">
+        <span class="small">Signature:</span>
+      </div>
+      <div class="content-box col-xs-3 bottom-row">
+        <span class="small">Date/Time:</span>
+        <span class="lg-padding-left">
+          <%= [@plan.date_prepare&.strftime('%m/%d/%Y'), @plan.time_prepared].compact.join(' ') %>
+        </span>
+      </div>
+    </div>
+    <div class="row org-footer">
+      <div class="content-box col-xs-2"><strong>ICS 202</strong></div>
+      <div class="content-box col-xs-2">IAP Page</div>
+      <div class="content-box col-xs-8 bottom-row"></div>
+    </div>
+    <div class="row org-footer-meta">
+      <div class="col-xs-6 text-center"><strong>FINAL</strong></div>
+      <div class="col-xs-6 text-right">Page 1 of 1</div>
+    </div>
   </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Apply heights from URL parameters
+  // Apply row heights from URL params (?objectives-row=250&emphasis-row=180…)
+  // so a resize the user made on-screen carries into the PDF.
   const urlParams = new URLSearchParams(window.location.search);
-  
   ['objectives-row', 'emphasis-row', 'safety-row'].forEach(rowId => {
     const height = urlParams.get(rowId);
     if (height) {
       const row = document.getElementById(rowId);
       if (row) {
-        // Constrain height for PDF to fit on single page
+        // Cap to keep the whole 202 on one Letter page.
         const constrainedHeight = Math.min(Math.max(50, parseInt(height)), 200);
         row.style.height = constrainedHeight + 'px';
       }
@@ -128,4 +167,3 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-

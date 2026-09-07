@@ -293,6 +293,12 @@ a.delete-objective:hover {
 }
 #incident-objectives {
   overflow: hidden;
+  // Title h4 gets clipped by the container's overflow:hidden unless we
+  // zero out the default browser margin. Matches #organization-assignments.
+  h4, h5 {
+    padding: 0;
+    margin: 0;
+  }
   #ops-period {
     border-top: 1px solid black;
     border-left: 1px solid black;
@@ -347,7 +353,75 @@ a.delete-objective:hover {
     border-bottom: 1px solid black;
     hieght: 60px;
   }
- 
+
+  // ICS 202 section 5: Site Safety Plan Required? — inline row with two
+  // Yes/No checkbox tokens and an "Approved Site Safety Plan(s) Located at"
+  // best_in_place text field. Bordered so it visually integrates with the
+  // adjacent bordered sections.
+  .site-safety-row {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    padding: 8px 10px;
+
+    .ssp-toggle {
+      display: inline-block;
+      margin-left: 14px;
+      font-weight: 600;
+    }
+    .ssp-location {
+      display: inline-block;
+      margin-left: 24px;
+    }
+    .ssp-location .best_in_place {
+      display: inline-block;
+      min-width: 200px;
+      padding: 1px 4px;
+      &:hover { background: #eef4ff; cursor: text; }
+    }
+  }
+
+  // ICS 202 section 6: two-column attachments list. Left = 11 predefined
+  // ICS form checkboxes (description locked). Right = 4 user-editable
+  // "Other Attachments" slots. Fixed compact height so section 6 doesn't
+  // hog vertical space that sections 3 and 4 want.
+  #attachments {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 8px 10px;
+
+    .attachments-header {
+      margin-bottom: 4px;
+    }
+    .attachments-header .small + .small {
+      margin-left: 8px;
+      font-weight: 400;
+    }
+    .other-attachments-label {
+      margin-bottom: 4px;
+    }
+    .attachments-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+
+      li {
+        padding: 2px 0;
+        line-height: 1.4;
+      }
+    }
+    .attachment-label {
+      margin-left: 6px;
+    }
+    .best_in_place {
+      display: inline-block;
+      min-width: 60px;
+      padding: 1px 4px;
+      &:hover { background: #eef4ff; cursor: text; }
+    }
+  }
 }
 .tall-rows {
   min-height: 300px;
@@ -457,9 +531,10 @@ h1.header {
 // second row — matches the official form.
 
 // Title bar sits flush at the top-left with no leading rule (matches the
-// scanned ICS 203 reference — the outer border wraps the whole page, not
-// the title cell).
-#organization-assignments #title-box {
+// scanned ICS 203/202 references — the outer border wraps the whole page,
+// not the title cell). Shared by both forms.
+#organization-assignments #title-box,
+#incident-objectives #title-box {
   border-top: none;
   border-left: none;
 }

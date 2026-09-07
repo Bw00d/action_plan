@@ -107,44 +107,34 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
     @objective = Objective.new
-    @attachments = @plan.attachments.order(id: :asc)
-    @first_attachments = @attachments[0..2]
-    @second_attachments = @attachments[3..5]
-    @third_attachments = @attachments[6..8]
-    @fourth_attachments = @attachments[9..11]
+    load_ics_202_attachments
   end
 
   def objectives_to_pdf
     @plan = Plan.find(params[:id])
     @incident = Incident.find(@plan.incident_id)
-    @attachments = @plan.attachments.order(:id)
-    @first_attachments = @attachments[0..2]
-    @second_attachments = @attachments[3..5]
-    @third_attachments = @attachments[6..8]
-    @fourth_attachments = @attachments[9..11]
-    
+    load_ics_202_attachments
+
     respond_to do |format|
       format.pdf do
         # Set up for absolute URLs in PDF
         Rails.application.routes.default_url_options[:host] = request.host_with_port
         Rails.application.routes.default_url_options[:protocol] = request.protocol
-        
+
         html = render_to_string(
           template: 'plans/objectives_to_pdf.pdf.erb',
           layout: 'layouts/pdf.html.erb',
-          locals: { 
-            plan: @plan, 
+          locals: {
+            plan: @plan,
             incident: @incident,
             attachments: @attachments,
-            first_attachments: @first_attachments,
-            second_attachments: @second_attachments,
-            third_attachments: @third_attachments,
-            fourth_attachments: @fourth_attachments
+            left_attachments:  @left_attachments,
+            right_attachments: @right_attachments
           }
         )
-        
+
         pdf = Grover.new(html, display_url: request.base_url).to_pdf
-        
+
         send_data pdf, filename: "objectives_plan_#{@plan.id}.pdf", type: 'application/pdf', disposition: 'inline'
       end
     end
@@ -198,6 +188,21 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
     end
 
+    # ICS 202 section 6 splits into a fixed 11-item left column (predefined
+    # form checkboxes) and a 4-item right column ("Other Attachments" that
+    # the user names themselves). Older plans predate this split and have
+    # only 12 rows total; treat the first 11 as left and the remainder as
+    # right so both new and legacy plans render sensibly.
+    def load_ics_202_attachments
+      @attachments = @plan.attachments.order(id: :asc)
+      @left_attachments  = @attachments[0, 11] || []
+      @right_attachments = (@attachments[11, 4] || []).tap do |slots|
+        # Pad the right column to 4 rows so the layout doesn't collapse
+        # on legacy plans that don't have all four slots persisted.
+        (4 - slots.size).times { slots << nil }
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
       params.require(:plan).permit(:date, :user_id, :situation, :incident_id, :weather,
@@ -205,6 +210,7 @@ class PlansController < ApplicationController
                                    :org_list, :assignment_list,
                                    :comm_plan, :med_plan, :incident_map, :comm_plan,
                                    :travel_plan, :date_prepare, :time_prepared, :ops_period,
-                                   :approved_by)
+                                   :approved_by,
+                                   :site_safety_plan_required, :site_safety_plan_location)
     end
 end

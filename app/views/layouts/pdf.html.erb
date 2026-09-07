@@ -13,10 +13,14 @@
       html, body { margin: 0 !important; padding: 0 !important; }
       .page-wrapper { min-height: 100vh; }
 
-      /* Force the org chart to fill the printable width — Bootstrap's
-         .col-lg-8 would otherwise clamp it to 66% and center it. */
+      /* Force the ICS form pages to fill the printable width — Bootstrap's
+         .col-lg-8 would otherwise clamp them to 66% and center them.
+         Applies to both #organization-assignments (203) and
+         #incident-objectives (202). */
       #organization-assignments > .container,
-      #organization-assignments > .container > .col-xs-12.col-lg-8.center-block {
+      #organization-assignments > .container > .col-xs-12.col-lg-8.center-block,
+      #incident-objectives > .container,
+      #incident-objectives > .container > .col-xs-12.col-lg-8.center-block {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
@@ -27,90 +31,128 @@
          col padding. With outer col padding zeroed out above, those negative
          margins push cell borders past the @page margin and clip content.
          Also zero the col padding inside the chart so nothing overshoots. */
-      #organization-assignments .row {
+      #organization-assignments .row,
+      #incident-objectives .row {
         margin-left: 0 !important;
         margin-right: 0 !important;
       }
       #organization-assignments .col-xs-6,
-      #organization-assignments .col-xs-12 {
+      #organization-assignments .col-xs-12,
+      #incident-objectives .col-xs-6,
+      #incident-objectives .col-xs-12 {
         padding-left: 0 !important;
         padding-right: 0 !important;
       }
 
-      /* Row size for the 203 PDF: tighter than the HTML view. Used both
-         directly and as --row-height for the column-spacer stripe pattern
-         so the spacer renders as continuing empty rows. */
-      #organization-assignments {
+      /* Row size for both ICS form PDFs: tighter than the HTML view. */
+      #organization-assignments,
+      #incident-objectives {
         --row-height: 22px;
       }
-      #organization-assignments .content-box {
+      #organization-assignments .content-box,
+      #incident-objectives .content-box {
         height: var(--row-height) !important;
         padding: 3px 5px !important;
         font-size: 11px !important;
       }
       /* Column pad rows are real DOM rows (see the ERB); nothing extra
          needed to make them render — they inherit .content-box borders. */
-      html, body, .page-wrapper, #organization-assignments {
+      html, body, .page-wrapper,
+      #organization-assignments,
+      #incident-objectives {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      #organization-assignments .header-row {
+      #organization-assignments .header-row,
+      #incident-objectives .header-row {
         padding-top: 2px !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      #organization-assignments #title-box h4 {
+      #organization-assignments #title-box h4,
+      #incident-objectives #title-box h4,
+      #incident-objectives #title-box h5 {
         font-size: 10px !important;
         line-height: 1 !important;
         white-space: nowrap !important;
         margin: 0 !important;
       }
-      #organization-assignments .top-row {
+      #organization-assignments .top-row,
+      #incident-objectives .top-row {
         height: 26px !important;
       }
 
-      /* ICS 203 header (title + Incident Name + Op Period + Dates).
+      /* Full-width ICS header (title + Incident Name + Op Period + Dates).
          .content-box's !important height/padding above would otherwise
          crush the flex-column layout inside .org-header-cell and pin the
          label bar's border-bottom in the wrong place. Restate the sizes
          here at the tighter PDF scale so the label border on the left
-         cell lines up with the Op Period / From-To divider on the right. */
-      #organization-assignments .org-header .org-header-cell {
+         cell lines up with the Op Period / From-To divider on the right.
+         Shared between 202 and 203. */
+      #organization-assignments .org-header .org-header-cell,
+      #incident-objectives .org-header .org-header-cell {
         padding: 0 !important;
         height: auto !important;
-        min-height: 44px !important;   /* 2 × 22px (Op Period + From/To) */
+        min-height: 44px !important;   /* 2 × 22px */
       }
-      #organization-assignments .org-header .org-header-cell.org-header-tall {
-        min-height: 66px !important;   /* 3 × 22px (Op Period + label + value) */
+      #organization-assignments .org-header .org-header-cell.org-header-tall,
+      #incident-objectives .org-header .org-header-cell.org-header-tall {
+        min-height: 66px !important;   /* 3 × 22px */
       }
-      #organization-assignments .org-header .org-header-label {
+      #organization-assignments .org-header .org-header-label,
+      #incident-objectives .org-header .org-header-label {
         height: 22px !important;
         padding: 3px 5px !important;
         font-size: 11px !important;
       }
-      #organization-assignments .org-header .org-header-value {
+      #organization-assignments .org-header .org-header-value,
+      #incident-objectives .org-header .org-header-value {
         padding: 3px 5px !important;
         font-size: 11px !important;
       }
-      #organization-assignments .org-header .op-period-cell {
+      #organization-assignments .org-header .op-period-cell,
+      #incident-objectives .org-header .op-period-cell {
         padding: 3px 5px !important;
         font-size: 11px !important;
       }
 
-      /* ICS 203 footer rows compact to match --row-height so total
-         header + columns + footer fits inside one Letter page. */
-      #organization-assignments .org-footer .content-box {
+      /* Footer rows compact to match --row-height so total header + body
+         + footer fits inside one Letter page. Shared between 202 and 203. */
+      #organization-assignments .org-footer .content-box,
+      #incident-objectives .org-footer .content-box {
         height: 22px !important;
         min-height: 22px !important;
         padding: 3px 5px !important;
         font-size: 11px !important;
       }
-      #organization-assignments .org-footer-meta {
+      #organization-assignments .org-footer-meta,
+      #incident-objectives .org-footer-meta {
         font-size: 10px !important;
         padding: 2px 4px 0 !important;
       }
 
-      #organization-assignments .print-button { display: none !important; }
+      /* ICS 202-specific: cap the objectives / emphasis / awareness text
+         areas and the attachments block so the whole page fits on Letter.
+         Uses fixed heights rather than min-heights so unusually long
+         content is clipped rather than pushing the footer to page 2. */
+      #incident-objectives .resizable-row {
+        max-height: 200px !important;
+      }
+      #incident-objectives #attachments {
+        padding: 4px 8px !important;
+        font-size: 10px !important;
+      }
+      #incident-objectives #attachments .attachments-list li {
+        padding: 0 !important;
+        line-height: 1.35 !important;
+      }
+      #incident-objectives .site-safety-row {
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+      }
+
+      #organization-assignments .print-button,
+      #incident-objectives .print-button { display: none !important; }
       
       
       /* Hide elements that shouldn't appear in PDFs */

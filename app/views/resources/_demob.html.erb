@@ -5,11 +5,17 @@
     <div id="demob-dates">
       <h1>DEMOB LIST</h1>
       <%
-        tomorrow = Date.today + 1.day
+        # Use Time.zone.today (not Date.today) so the app's configured
+        # timezone drives the "today" boundary — Date.today reads the
+        # server's system TZ, which on Heroku is UTC and can be a day
+        # ahead of the user's local day in the evening. Filter includes
+        # today's demobs so someone scheduled to release today still
+        # shows on the list until release_date is actually set.
+        today = Time.zone.today
         demob_groups = @resources.assigned
                                  .select { |r| r.last_work_day.is_a?(Date) }
-                                 .group_by { |r| r.last_work_day + 1.day }
-                                 .select  { |demob_date, _| demob_date >= tomorrow }
+                                 .group_by { |r| r.last_work_day + 1 }
+                                 .select  { |demob_date, _| demob_date >= today }
                                  .sort_by(&:first)
       %>
       <% if demob_groups.empty? %>
