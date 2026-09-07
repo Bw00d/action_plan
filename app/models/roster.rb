@@ -2,8 +2,17 @@ class Roster < ApplicationRecord
   belongs_to :resource
   belongs_to :request, optional: true
   belongs_to :promoted_resource, class_name: 'Resource', optional: true
+  # Roster demobs live in the same demobs table as resource demobs, keyed
+  # by roster_id. dependent: :destroy keeps the ICS-221 sheet tied to the
+  # roster's lifetime; note the parent resource's demob is untouched.
+  has_one :demob, dependent: :destroy
 
   before_validation :default_agency_from_resource, on: :create
+  # Create an ICS-221 demob sheet up front, same as Resource does. Users
+  # can print the sheet before they know the release date; the demob's
+  # after_update callback wires up the release + notification once the
+  # actual release date is finally entered.
+  after_create :ensure_demob
 
   scope :active,     -> { where(released_at: nil) }
   scope :released,   -> { where.not(released_at: nil) }
@@ -14,6 +23,26 @@ class Roster < ApplicationRecord
 
   def released?
     released_at.present?
+  end
+
+  # Display-ready order number for the ICS-211 roster row. Rosters
+  # imported from IROC requests store the full dotted number ("3.1") in
+  # order_number; iSuite-imported rosters store just the trailing child
+  # ("1") because the CSV row is "C-3.1" split into parent "3" and child
+  # "1". Compose the parent piece in when it's missing so both paths
+  # render "C-3.1", "C-3.10", etc.
+  def full_order_number
+    prefix = resource.cat
+    return "#{prefix}#{order_number}" if order_number.to_s.include?('.')
+    "#{prefix}#{resource.order_number}.#{order_number}"
+  end
+
+  # Natural-numeric sort key. order_number is a string, so the DB's
+  # lexicographic sort puts "10" before "2". This scan/split preserves
+  # insertion-friendly ordering for both "3.1"-style and bare-number
+  # rosters.
+  def natural_sort_key
+    order_number.to_s.scan(/\d+/).map(&:to_i)
   end
 
   def promoted?
@@ -33,11 +62,18 @@ class Roster < ApplicationRecord
   # Prefill values for a subordinate demob notification form.
   def demob_prefill
     {
-      request_number:       "#{resource.cat}#{order_number}",
+      request_number:       full_order_number,
       unit_id:              agency.presence || resource.agency,
       name:                 name.presence   || position,
       actual_release_date:  Time.zone.today
     }
+  end
+
+  # Legacy rosters (created before the has_one :demob wiring) won't have
+  # a demob record — build one on demand. Idempotent — returns the
+  # existing record if already there.
+  def demob_or_create
+    demob || create_demob!(resource_id: resource_id)
   end
 
   # Carve this roster entry into its own single-person OVERHEAD Resource so
@@ -82,5 +118,11 @@ class Roster < ApplicationRecord
   # parent resource's agency so the tally can group without a nil bucket.
   def default_agency_from_resource
     self.agency = resource&.agency if agency.blank?
+  end
+
+  # after_create callback — create the ICS-221 demob sheet automatically
+  # for every new roster row (mirrors Resource#create_demob).
+  def ensure_demob
+    create_demob!(resource_id: resource_id)
   end
 end

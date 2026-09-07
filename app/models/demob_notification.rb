@@ -22,13 +22,20 @@ class DemobNotification < ApplicationRecord
     return existing if existing
 
     resource = demob.resource
+    roster   = demob.roster
+
+    # When the demob is for a subordinate roster entry, populate the
+    # notification with the roster's identity (request number, name,
+    # agency) instead of the parent resource's. resource_id still points
+    # at the parent so notifications group under the T-card.
     create!(
       incident:              resource.incident,
       resource:              resource,
+      roster:                roster,
       demob:                 demob,
-      request_number:        resource.full_order_number,
-      unit_id:               resource.agency,
-      name:                  resource.name,
+      request_number:        roster&.full_order_number || resource.full_order_number,
+      unit_id:               roster&.agency            || resource.agency,
+      name:                  roster&.name              || resource.name,
       actual_release_date:   demob.actual_release_date,
       actual_release_time:   demob.actual_release_time,
       return_travel_method:  demob.travel_method,

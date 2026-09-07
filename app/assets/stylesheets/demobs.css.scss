@@ -1,3 +1,20 @@
+// Roster-demob button toggle: demobs.js adds/removes this class on
+// the PRINT / SUBMIT buttons directly. !important so any inline style
+// or unrelated selector can't override.
+.rd-hidden { display: none !important; }
+
+// Roster demob button row. Buttons render inline-block (not floated)
+// so the container's height auto-fits the buttons — no float collapse.
+.roster-demob-buttons {
+  margin-top: 16px;
+  display: block;
+
+  .roster-demob-btn {
+    display: inline-block;
+    margin-right: 8px;
+  }
+}
+
 #demob-sheet {
   #form-container {
     margin: 0px;
@@ -117,7 +134,11 @@
     min-height: 60px;
   }
 }
-#demob-form-button {
+// Resource-demob submit button starts hidden; demobs.js .show()s it
+// on the first input change. Scoped :not(.roster-demob-btn) so the
+// same-id button in the roster demob (which toggles via .rd-hidden)
+// isn't caught by this ID selector's higher specificity.
+#demob-form-button:not(.roster-demob-btn) {
   display: none;
 }
 

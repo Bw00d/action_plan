@@ -1,5 +1,9 @@
 class Demob < ApplicationRecord
   belongs_to :resource
+  # Present when this demob sheet is for a single subordinate roster
+  # entry rather than the parent resource itself. Both cases live in the
+  # same table; resource_id points at the parent either way.
+  belongs_to :roster, optional: true
   has_one :demob_notification, dependent: :destroy
   after_create :set_units
   has_many :units, dependent: :destroy
@@ -12,8 +16,15 @@ class Demob < ApplicationRecord
   end
 
   private
+  # When the release date is set, mark the roster released (for a
+  # subordinate demob) or the resource released (for a normal demob).
+  # The parent's personnel count drops automatically for subordinate
+  # demobs because Resource#personnel_by_agency uses rosters.active.
   def release_resource
-    if self.actual_release_date?
+    return unless self.actual_release_date?
+    if self.roster
+      self.roster.release!(at: self.actual_release_date)
+    else
       self.resource.update_attributes(release_date: self.actual_release_date)
     end
   end

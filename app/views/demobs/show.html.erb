@@ -1,4 +1,12 @@
 <%= content_for :title, "Demob"  %>
+<%
+  # For a subordinate demob (demob.roster present) the checkout sheet
+  # shows the roster's identity — "C-3.12 · Jane Smith" — not the whole
+  # parent T-card. Fall back to the parent resource for normal demobs.
+  is_roster_demob = @demob.roster.present?
+  display_name    = @demob.roster&.name              || @resource.name
+  display_ordno   = @demob.roster&.full_order_number || "#{@resource.cat}#{@resource.order_number}"
+%>
 
 <div id="demob-sheet">
   <div class="container center-vh-containe">
@@ -9,6 +17,13 @@
 
      <div class="row center-vh-container">
        <h4>DEMOBILIZATION CHECK-OUT (ICS 221)</h4>
+       <% if is_roster_demob %>
+         <p class="text-center small text-muted">
+           Subordinate demob for <strong><%= display_ordno %></strong>
+           (from <strong><%= @resource.cat %><%= @resource.order_number %></strong>
+           — <%= @resource.name %>).
+         </p>
+       <% end %>
      </div>
       <%= form_for @demob, :html => {id: "demob-form"} do |f| %>
       <div id="form-container" class="row">
@@ -27,8 +42,8 @@
           <div class="col-xs-4"><span class="small">5. ORDER REQUEST NUMBER</span> </div>
        
           <div class="col-xs-4 br"><span class="small sm-margin-right">DATE</span><%= f.text_field :edd, size: "5", class: 'datepicker', display_as: :formatted_date  %> <span class="small sm-margin-left sm-margin-right"> TIME</span><%= f.text_field :edt, size: "3"  %></div>
-          <div class="col-xs-4 center-text br"><span class="small"></span><%= @resource.name  %></div>
-          <div class="col-xs-4 center-text"><span class="small"></span><%= @resource.cat  %><%= @resource.order_number  %></div>
+          <div class="col-xs-4 center-text br"><span class="small"></span><%= display_name %></div>
+          <div class="col-xs-4 center-text"><span class="small"></span><%= display_ordno %></div>
         </div>
          
         <div class="row">
@@ -217,15 +232,42 @@
           </div>
         </div>
       </div>
-      <div class="print-button no-print">
-        <%= button_tag "PRINT",
-                       type: "button",
-                       class: "btn btn-success float-left tiny",
-                       id: "print-demob-button",
-                       onclick: "printDemobCheckout()" %>
-      </div>
+      <%# For a subordinate demob, the same button acts as PRINT until the
+          Actual Release Date is filled, then flips to SUBMIT (which fires
+          the demob's after_update callbacks: release the roster + create
+          the demob notification). Both buttons live in the DOM so the
+          JS toggle in demobs.js has something to show/hide; server-set
+          inline display picks the correct initial one.
 
-      <div class="no-print"><%= f.submit "Submit", class: "btn btn-success float-left tiny", id: "demob-form-button" %></div>
+          Regular resource demobs keep both buttons visible together
+          (unchanged behavior). %>
+      <% if is_roster_demob %>
+        <%# Roster demob: two buttons in a single row wrapper. Both are
+            .roster-demob-btn so demobs.js can toggle them individually
+            via .rd-hidden. No float classes — inline-block lets each
+            render inline without collapsing the wrapper. %>
+        <div class="no-print roster-demob-buttons">
+          <%= button_tag "PRINT",
+                         type:    "button",
+                         class:   "btn btn-success roster-demob-btn",
+                         id:      "print-demob-button",
+                         onclick: "printDemobCheckout()",
+                         title:   "Print the checkout sheet. Enter an Actual Release Date to enable Submit." %>
+          <%= f.submit "SUBMIT",
+                       class: "btn btn-danger roster-demob-btn",
+                       id:    "demob-form-button",
+                       title: "Finalize demob for #{display_ordno} — release roster and create notification" %>
+        </div>
+      <% else %>
+        <div class="print-button no-print">
+          <%= button_tag "PRINT",
+                         type: "button",
+                         class: "btn btn-success float-left tiny",
+                         id: "print-demob-button",
+                         onclick: "printDemobCheckout()" %>
+        </div>
+        <div class="no-print"><%= f.submit "Submit", class: "btn btn-success float-left tiny", id: "demob-form-button" %></div>
+      <% end %>
         <% end %>
     </div>
   </div>

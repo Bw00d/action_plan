@@ -90,12 +90,13 @@
               sits one level deeper than E-209. %>
           <%# Only show active rosters — released subordinates drop out of
               the expansion (their demob notification lives on the demob
-              notifications tab). %>
-          <% r.rosters.active.each do |ros| %>
-            <% depth = ros.order_number.to_s.count('.') %>
+              notifications tab). Sort naturally so "10" comes after "9",
+              not after "1" (default DB order is lexicographic string). %>
+          <% r.rosters.active.sort_by(&:natural_sort_key).each do |ros| %>
+            <% depth = ros.full_order_number.count('.') %>
             <tr class="resource-roster-row is-hidden depth-<%= depth %>" data-resource-id="<%= r.id %>">
               <td class="roster-order-cell" style="padding-left: <%= 20 + depth * 20 %>px">
-                <%= r.cat %><%= ros.order_number %>
+                <%= ros.full_order_number %>
               </td>
               <td class="roster-position-cell"><%= ros.position %></td>
               <td class="roster-name-cell"><%= ros.name %></td>
@@ -109,10 +110,10 @@
                                 class: "btn btn-xs btn-default",
                                 form: { style: "display:inline" },
                                 data: { confirm: "Carve #{ros.name} out as a standalone T-card?" } %>
-                  <%= link_to "Demob",
-                              new_demob_roster_path(ros),
+                  <%= link_to "DMB",
+                              demob_checkout_roster_path(ros),
                               class: "btn btn-xs btn-dark sm-margin-left",
-                              title: "Demob #{ros.name} early" %>
+                              title: "Open ICS-221 checkout for #{ros.name}" %>
                 <% end %>
               </td>
             </tr>
@@ -165,6 +166,50 @@
             <td >
             </td></tr>
           <% end %>
+        <% end %>
+
+        <%# Released subordinate rosters — appear beneath released
+            resources so an early-demobbed crew member (e.g. C-3.12)
+            shows up on the ICS-211 alongside the full T-cards that
+            have been released. Sort by parent order_number then the
+            roster's own natural order so C-3.1 lands before C-3.12
+            and C-3.* comes before C-10.*. Rosters don't have their
+            own leader / FWD / assignment_length, so those cells are
+            blank; the personnel count is always 1. %>
+        <%
+          released_rosters = @incident.resources
+                                      .flat_map(&:rosters)
+                                      .select(&:released?)
+                                      .sort_by { |ros|
+                                        [ros.resource.category.to_s,
+                                         *ros.resource.order_number.to_s.scan(/\d+/).map(&:to_i),
+                                         *ros.natural_sort_key]
+                                      }
+        %>
+        <% released_rosters.each do |ros| %>
+          <tr class="incident-resource released-roster">
+            <td class="sm-padding-left sm-bip-input"><%= ros.full_order_number %></td>
+            <td class="md-bip-input"><%= ros.position %></td>
+            <td class="lg-bip-input"><%= ros.name %></td>
+            <td class="lg-bip-input"></td>
+            <td class="sm-bip-input">1</td>
+            <td class="md-bip-input"><%= ros.agency %></td>
+            <td class="lg-bip-input"></td>
+            <td class="lg-bip-input"></td>
+            <td></td>
+            <td class="lg-bip-input">
+              <% if ros.demob %>
+                <%= link_to ros.released_at.to_date.strftime('%m/%d'),
+                            incident_resource_demob_path(@incident, ros.resource, ros.demob),
+                            class: 'btn tiny btn-info',
+                            title: "Open ICS-221 for #{ros.name}" %>
+              <% else %>
+                <%= ros.released_at.to_date.strftime('%m/%d') %>
+              <% end %>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
         <% end %>
 
 

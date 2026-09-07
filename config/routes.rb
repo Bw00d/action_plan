@@ -18,8 +18,7 @@ Rails.application.routes.draw do
   resources :rosters, only: [] do
     member do
       post :promote
-      get  :new_demob
-      post :demob
+      get  :demob_checkout   # lazy-creates the roster's demob, then redirects to it
     end
   end
   resources :assignments
