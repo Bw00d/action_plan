@@ -176,15 +176,18 @@
             and C-3.* comes before C-10.*. Rosters don't have their
             own leader / FWD / assignment_length, so those cells are
             blank; the personnel count is always 1. %>
+        <%# Uses @resources (already eager-loaded with .includes(:rosters)
+            in ResourcesController#index) rather than @incident.resources
+            to avoid a fresh N+1 query per parent. %>
         <%
-          released_rosters = @incident.resources
-                                      .flat_map(&:rosters)
-                                      .select(&:released?)
-                                      .sort_by { |ros|
-                                        [ros.resource.category.to_s,
-                                         *ros.resource.order_number.to_s.scan(/\d+/).map(&:to_i),
-                                         *ros.natural_sort_key]
-                                      }
+          released_rosters = @resources
+                               .flat_map(&:rosters)
+                               .select(&:released?)
+                               .sort_by { |ros|
+                                 [ros.resource.category.to_s,
+                                  *ros.resource.order_number.to_s.scan(/\d+/).map(&:to_i),
+                                  *ros.natural_sort_key]
+                               }
         %>
         <% released_rosters.each do |ros| %>
           <tr class="incident-resource released-roster">
