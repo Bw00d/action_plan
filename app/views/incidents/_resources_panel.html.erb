@@ -23,7 +23,7 @@
 
   upcoming_demobs = assigned.select do |r|
     lwd = r.last_work_day
-    lwd.is_a?(Date) && lwd >= Date.today && lwd <= Date.today + 5.days
+    lwd.is_a?(Date) && lwd >= Time.zone.today && lwd <= Time.zone.today + 5.days
   end.sort_by(&:last_work_day)
 %>
 

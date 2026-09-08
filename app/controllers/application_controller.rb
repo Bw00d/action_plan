@@ -20,6 +20,12 @@ class ApplicationController < ActionController::Base
   # require authentication.
   before_action :authenticate_user!, unless: :devise_controller?
 
+  # Wrap every request in the current user's timezone so Time.zone.today
+  # and Time.zone.now reflect their local day/time. Falls back to the
+  # global config.time_zone when no user is signed in or the user hasn't
+  # picked/detected one yet.
+  around_action :with_user_timezone
+
   # Display user-friendly errors for the following exceptions
   rescue_from Pundit::NotAuthorizedError,
               with: :show_user_not_authorized_error
@@ -48,5 +54,18 @@ class ApplicationController < ActionController::Base
   def show_delete_restriction_error(exception)
     redirect_to request.referer || root_path,
                 flash: { error: exception.message }
+  end
+
+  # Set Time.zone for the duration of the request. Time.use_zone reverts
+  # cleanly at the end via a block, so background jobs or later requests
+  # aren't polluted. Safe to call with a bad value — invalid strings just
+  # fall through to the yield without an assignment.
+  def with_user_timezone
+    tz = current_user&.time_zone
+    if tz.present? && ActiveSupport::TimeZone[tz]
+      Time.use_zone(tz) { yield }
+    else
+      yield
+    end
   end
 end

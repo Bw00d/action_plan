@@ -52088,6 +52088,9 @@ $(document).on("turbolinks:load", function () {
         // even when the block is wider than a third). Vertically we
         // keep the block fully inside the canvas.
         start: function () {
+          // Uploader is anchored to the block's pre-drag position; hide
+          // it so it doesn't strand mid-canvas while the block moves.
+          $(".cover-upload-form").removeClass("is-open");
           var canvasOff = $canvas.offset();
           var canvasW = $canvas.width();
           var canvasH = $canvas.height();
@@ -52158,6 +52161,9 @@ $(document).on("turbolinks:load", function () {
         // can make them tall or wide as needed.
         aspectRatio: $block.hasClass("is-image"),
         grid: [GRID_PX, GRID_PX],   // resize in 10px steps for uniformity
+        // Same reasoning as drag start: close the uploader so it doesn't
+        // stay pinned to the pre-resize block rectangle.
+        start: function () { $(".cover-upload-form").removeClass("is-open"); },
         // On stop: recompute center + w/h as % of canvas and persist.
         // Resize handles that aren't the SE corner also shift the block's
         // top-left, so we always send x/y along with width/height.
@@ -52345,10 +52351,21 @@ $(document).on("turbolinks:load", function () {
     }
   );
 
-  // Click outside any block on the canvas or panel deselects.
+  // Click outside any block on the canvas or panel deselects. The upload
+  // form is exempt too — clicking Choose File / Upload / Cancel shouldn't
+  // wipe the selection that opened the uploader.
   $(document).off("click.coverDeselect").on("click.coverDeselect", function (e) {
-    if ($(e.target).closest(".cover-block, .cover-style-panel").length) return;
+    if ($(e.target).closest(".cover-block, .cover-style-panel, .cover-upload-form").length) return;
     setSelected(null);
+  });
+
+  // Single-click on an image block auto-opens the uploader below it, so
+  // "change this image" is one click instead of two (click block, then
+  // click the panel icon). Drag doesn't fire click, so this doesn't
+  // interfere with repositioning.
+  $canvas.off("click.coverImgOpen").on("click.coverImgOpen", ".cover-block.is-image", function (e) {
+    if ($(e.target).closest(".ui-resizable-handle").length) return;
+    openImageUploader($(this).data("block-id"));
   });
 
   // Style-button click. If a block is selected → modify it. If nothing
@@ -52564,6 +52581,18 @@ $(document).on("turbolinks:load", function () {
     $fileInput.val("");
     $filename.text("No file chosen");
     $uploadBtn.prop("disabled", true);
+    positionUploadFormBelow($canvas.find('[data-block-id="' + blockId + '"]'));
+  }
+
+  // Anchor the upload form to the bottom-left of its target block. The
+  // form lives inside #cover-canvas (position: relative), so px offsets
+  // work directly. Runs on open; drag/resize close the form instead of
+  // re-anchoring, so the position always matches the block that opened it.
+  function positionUploadFormBelow($block) {
+    if (!$block || !$block.length) return;
+    var top  = $block.position().top + $block.outerHeight() + 6;
+    var left = $block.position().left;
+    $uploadForm.css({ top: top + "px", left: left + "px" });
   }
 
   function closeImageUploader() {
@@ -52798,13 +52827,59 @@ $.rails.showConfirmationDialog = function (link) {
         $.rails.confirmed(link);
     });
 };
-$(document).on("turbolinks:load", function() {
-  $("#demob-form :input").change(function() {
+$(document).on("turbolinks:load", function () {
+  var $printBtn  = $('#print-demob-button');
+  var $submitBtn = $('#demob-form-button');
+  var $rosterButtons = $('.roster-demob-buttons');
+  var isRosterDemob = $rosterButtons.length && $printBtn.length && $submitBtn.length;
+
+  if (isRosterDemob) {
+    // Roster (subordinate) demob: PRINT shows until the actual release
+    // date field has a value, then SUBMIT takes over. Toggle a class
+    // on the buttons themselves (not wrapper divs) so there's no
+    // float-collapse or layout-context weirdness.
+    var $releaseField = $('#demob_actual_release_date');
+    if (!$releaseField.length) $releaseField = $('input[name="demob[actual_release_date]"]');
+
+    function toggleRosterButtons() {
+      var val = $releaseField.length ? ($releaseField.val() || '') : '';
+      var hasDate = val.toString().trim().length > 0;
+      $printBtn.css('display',  '').toggleClass('rd-hidden',  hasDate);
+      $submitBtn.css('display', '').toggleClass('rd-hidden', !hasDate);
+    }
+
+    // Safety net: field missing → show both buttons.
+    if (!$releaseField.length) {
+      $printBtn.removeClass('rd-hidden');
+      $submitBtn.removeClass('rd-hidden');
+      return;
+    }
+
+    $releaseField.on('change input keyup blur changeDate paste', toggleRosterButtons);
+    $(document).on('change input keyup blur changeDate paste',
+                   'input[name="demob[actual_release_date]"]',
+                   toggleRosterButtons);
+
+    // Continuous poll (200ms) catches silent value changes from the
+    // datepicker popup that don't bubble a normal event.
+    var lastVal = $releaseField.val() || '';
+    setInterval(function () {
+      var now = ($('input[name="demob[actual_release_date]"]').val() || '');
+      if (now !== lastVal) { lastVal = now; toggleRosterButtons(); }
+    }, 200);
+
+    toggleRosterButtons();
+    return;
+  }
+
+  // Regular resource demob: any input change hides PRINT and reveals
+  // the always-in-DOM SUBMIT button. Unchanged legacy behavior.
+  $("#demob-form :input").change(function () {
     $('#print-demob-button').hide();
     $('#demob-form-button').show();
   });
-});// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.;
+});
+
 // This file contains JS code which is used across the entire Rails application.
 
 $(document).on("turbolinks:load", function() {
@@ -53899,6 +53974,47 @@ $(document).on("turbolinks:load", function() {
         $(this).find('.team-form').hide();
       }
     );
+});
+// Detects the browser's IANA timezone (e.g. "America/Anchorage") on
+// page load and posts it to the server if the current user hasn't set
+// one yet. The server endpoint is idempotent and only writes when the
+// user.time_zone column is blank, so a manual selection via the profile
+// edit page is preserved.
+//
+// A meta tag `<meta name="user-tz-needed" content="1">` gates the call
+// so the request only fires when there's actually a user record to
+// update AND that user has no timezone set. See layouts/application.
+$(document).on("turbolinks:load", function () {
+  var meta = document.querySelector('meta[name="user-tz-needed"]');
+  if (!meta || meta.content !== "1") return;
+
+  var tz;
+  try {
+    tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch (e) { return; }
+  if (!tz) return;
+
+  var token = document.querySelector('meta[name="csrf-token"]');
+  fetch("/users/detect_timezone", {
+    method: "PATCH",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-CSRF-Token": token ? token.content : ""
+    },
+    body: JSON.stringify({ time_zone: tz })
+  }).then(function (r) {
+    // On success the next page load will pick up the new zone via the
+    // ApplicationController around_action. Nothing to do here.
+    if (!r.ok && window.console) console.warn("timezone detect failed:", r.status);
+  }).catch(function (err) {
+    if (window.console) console.warn("timezone detect error:", err);
+  });
+
+  // Prevent repeat calls if the user navigates within the same tab
+  // (turbolinks:load fires per navigation).
+  meta.content = "0";
 });
 /*
  Zen Utils is a small library consisting of utility functions (reusable code)

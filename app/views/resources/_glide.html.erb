@@ -18,7 +18,7 @@
         </tr>
         <tr>
           <% 14.times do |t| %>
-            <th class="glide-header glide-calendar" scope="col"><%= (Date.today + t.days).strftime('%a') %></th>
+            <th class="glide-header glide-calendar" scope="col"><%= (Time.zone.today + t.days).strftime('%a') %></th>
           <% end %>
         </tr>
         <tr>
@@ -27,7 +27,7 @@
           <th scope="col" class="table-col name-col">Name</th>
           <th scope="col" class="table-col">LWD</th>
           <% 14.times do |t| %>
-            <th class="glide-header glide-calendar" scope="col"><%= (Date.today + t.days).strftime('%m/%d') %></th>
+            <th class="glide-header glide-calendar" scope="col"><%= (Time.zone.today + t.days).strftime('%m/%d') %></th>
           <% end %>
         </tr>
       </thead>
@@ -48,7 +48,7 @@
           <% end %>
 
           <% 14.times do |d| %>
-            <td class="glide-calendar glide-row" data-day="<%= Date.today + d.days %>" data-lwd="<%= r.last_work_day %>"></td>
+            <td class="glide-calendar glide-row" data-day="<%= Time.zone.today + d.days %>" data-lwd="<%= r.last_work_day %>"></td>
           <% end %>
         </tr>
         <% end %>

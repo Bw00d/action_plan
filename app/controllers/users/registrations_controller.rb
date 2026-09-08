@@ -30,7 +30,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def custom_parameters
     # Do NOT include attributes that the user is not supposed to change, such
-    # as his own role.
-    %i[first_name last_name]
+    # as his own role. time_zone is safe — it only affects the user's own
+    # display of dates/times, not other users.
+    %i[first_name last_name time_zone]
   end
 end

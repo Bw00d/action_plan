@@ -6,6 +6,12 @@
   <title><%= content_for?(:title) ? "Action Plan | " + yield( :title) : "Action Plan" %></title>
   <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Insert description" %>">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <%# Signals user_timezone.js to POST the browser's detected timezone
+      to /users/detect_timezone. Only emitted when a user is signed in
+      and hasn't picked/detected a zone yet. %>
+  <% if user_signed_in? && current_user.time_zone.blank? %>
+    <meta name="user-tz-needed" content="1">
+  <% end %>
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>

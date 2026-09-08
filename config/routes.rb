@@ -31,6 +31,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  # Silent endpoint so JS can push the browser-detected timezone to the
+  # current user's record without a page reload.
+  patch 'users/detect_timezone' => 'users/preferences#detect_timezone',
+                                   as: :detect_user_timezone
+
   namespace :admin do
     resources :users
   end

@@ -20,7 +20,7 @@
 
   <h2 class="dn-print-title print-only">
     <%= @incident.name %> &mdash; Demob Notifications
-    <span class="dn-print-date"><%= Date.today.strftime('%B %-d, %Y') %></span>
+    <span class="dn-print-date"><%= Time.zone.today.strftime('%B %-d, %Y') %></span>
   </h2>
 
   <% if @pending.empty? %>

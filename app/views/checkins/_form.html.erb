@@ -11,7 +11,7 @@
     </div>
   <% end %>
   <%= f.hidden_field :incident_id, value: @incident.id %>
-  <%= f.hidden_field :checkin_date, id: :incident_checkin_date, value: Date.today %>
+  <%= f.hidden_field :checkin_date, id: :incident_checkin_date, value: Time.zone.today %>
   <div class="col-sm-12 col-md-8 form-group center-block">
     <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control', required: true %>
   </div>
