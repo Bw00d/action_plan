@@ -176,7 +176,17 @@
           <div class="col-xs-12">
             <div class="col-xs-6"> <span id="transportation-header">9. TRANSPORTATION INFORMATION</span>
             </div>
-            <div class="col-xs-6"> <span class="md-margin-right">Room Overnight </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
+            <div class="col-xs-6"> <span class="md-margin-right">Room Overnight </span>
+              <%# Radio buttons bound to demob[ron] (boolean). Was
+                  check_box_tag with unbound names " No" / " Yes" — those
+                  never persisted to the Demob record, so the notification
+                  always showed "N" regardless of what the user picked. %>
+              <span class="sm-margin-right">
+                <%= f.radio_button :ron, false %> No
+              </span>
+              <span>
+                <%= f.radio_button :ron, true %> Yes
+              </span>
             </div>
 
             <div class="col-xs-6"> Estimated Time of Departure <%= f.text_field :edt, :place_holder => "(ESTIMATED DEPARTURE TIME)"  %>
@@ -196,7 +206,15 @@
             <div class="col-xs-6"> Contact While Travelling <%= f.text_field :contact_enroute %>
             </div>
 
-            <div class="col-xs-6"> <span class="md-margin-right">Manifest </span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <span class="md-margin-right"><%= check_box_tag " Yes"  %> Yes</span> Number <%= f.text_field :manifest_number, size: '15'  %>
+            <div class="col-xs-6"> <span class="md-margin-right">Manifest </span>
+              <%# Bind to demob[manifest] (boolean). Was unbound check_box_tag. %>
+              <span class="sm-margin-right">
+                <%= f.radio_button :manifest, false %> No
+              </span>
+              <span class="md-margin-right">
+                <%= f.radio_button :manifest, true %> Yes
+              </span>
+              Number <%= f.text_field :manifest_number, size: '15'  %>
             </div>
             <div class="col-xs-6"> Area/Agency/Region Notified <%= f.text_field :agency_notified %>
             </div>
@@ -205,7 +223,15 @@
 
         <div class="row bb sm-padding-bottom">
           <div id="reassignment-info" class="col-xs-12">
-            <div><span id="reassignment-header" class="sm-margin-right">10. REASSIGNMENT INFORMATION</span> <span class="sm-margin-right"><%= check_box_tag " No"  %>  No</span> <%= check_box_tag " Yes"  %> Yes
+            <div>
+              <span id="reassignment-header" class="sm-margin-right">10. REASSIGNMENT INFORMATION</span>
+              <%# Bind to demob[reassigned] (boolean). Was unbound check_box_tag. %>
+              <span class="sm-margin-right">
+                <%= f.radio_button :reassigned, false %> No
+              </span>
+              <span>
+                <%= f.radio_button :reassigned, true %> Yes
+              </span>
             </div>
             <div class="col-xs-6"><span class="md-margin-right">Incident Name</span><%= f.text_field :new_incident, class: "strong" %>
             </div>
