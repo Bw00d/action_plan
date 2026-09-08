@@ -40,14 +40,16 @@ class Incident < ApplicationRecord
     return true if self.incident_type == "Wildfire"
   end
 
+  # Sum of active personnel across every assigned resource. Uses
+  # personnel_by_agency (which counts live rosters.active.unpromoted)
+  # rather than the static number_personnel column, so demobbing a
+  # single subordinate drops the total by one — matches what the tally
+  # sections above show. Resources with no rosters fall back to
+  # number_personnel via personnel_by_agency's default branch.
   def total_resources
-    total = 0
-    self.resources.assigned.each do |r|
-      unless r.number_personnel.nil?
-        total += r.number_personnel
-      end
+    self.resources.assigned.sum do |r|
+      r.personnel_by_agency.values.sum
     end
-    total
   end
 
   # def owner
