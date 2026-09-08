@@ -315,23 +315,120 @@ a.delete-resource:hover {
   }
 }
 
-/* Resource Tally Info*/
+/* Resource Tally Info — pivot layout mirroring the ICS 209 tally.
+   Rows = agencies (with resources/personnel sub-rows); columns =
+   crew/aircraft/equipment kinds + Overhead + Total. */
 #tally-info {
   display: none;
-  padding-top: 5%;
-  h1, h2 {
-    text-align: center;
-    font-weight: 666;
-    margin-bottom: 20px;
+  padding-top: 24px;
+
+  .tally-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
-  h3, h4 {
-    font-weight: 666;
+  .tally-header {
+    margin-bottom: 12px;
+    h2 { margin: 0 0 4px; font-weight: 700; letter-spacing: 0.5px; }
+    .muted { color: #6b778c; font-size: 13px; margin: 0; }
   }
-  ul {
-    padding-left: 5px;
-    list-style: none;
+
+  // Horizontal scroll for wide tallies — many resource kinds don't fit
+  // on a laptop screen, so wrap in an overflow container.
+  .tally-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #c1c7d0;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(9, 30, 66, 0.05);
+  }
+
+  .tally-table {
+    border-collapse: collapse;
+    font-size: 12px;
+    color: #172b4d;
+    width: 100%;
+
+    th, td {
+      border: 1px solid #c1c7d0;
+      padding: 4px 6px;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    // Header row — light blue, tall (rotated labels).
+    thead th {
+      background: #eaf1f8;
+      font-weight: 600;
+      color: #172b4d;
+      vertical-align: bottom;
+    }
+    .tally-agency-col {
+      width: 140px;
+      text-align: left;
+      padding-left: 10px;
+    }
+    .tally-count-col { width: 60px; }
+
+    .tally-col-header {
+      min-width: 30px;
+      max-width: 44px;
+      height: 130px;
+      padding: 4px 0;
+    }
+    // Rotate the column label so it reads bottom-to-top like the ICS form.
+    .tally-col-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      white-space: nowrap;
+      margin: 0 auto;
+      font-size: 11px;
+      line-height: 1.1;
+    }
+    .tally-col-header.is-overhead .tally-col-label,
+    .tally-col-header.is-total    .tally-col-label {
+      font-weight: 700;
+    }
+
+    // Agency data rows — alternating light-cream banding matches the
+    // ICS form; each agency spans two rows (resources + personnel).
+    .tally-agency-row td {
+      background: #fff;
+    }
+    .tally-agency-row.is-even td {
+      background: #fbf8f0; // very light cream
+    }
+    .tally-agency-cell {
+      text-align: left;
+      padding-left: 10px;
+      font-weight: 700;
+    }
+    .tally-count-label {
+      font-style: italic;
+      color: #6b778c;
+      text-align: right;
+      padding-right: 8px;
+      font-size: 11px;
+    }
+    .tally-cell {
+      min-width: 30px;
+      &.is-overhead,
+      &.is-total {
+        background: #f4f5f7 !important;
+        font-weight: 600;
+      }
+    }
+
+    // Bottom Total row — heavier weight, gray fill.
+    .tally-total-row td {
+      background: #f4f5f7;
+      font-weight: 700;
+    }
+    .tally-total-label {
+      color: #172b4d;
+    }
   }
 }
+
 .dashed {
   border: 1px dashed orange;
 }

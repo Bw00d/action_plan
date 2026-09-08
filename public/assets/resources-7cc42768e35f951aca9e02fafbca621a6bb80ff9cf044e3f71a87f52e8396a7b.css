@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* line 1, app/assets/stylesheets/resources.scss */
 .resources-panel-head {
   background-color: #F5F5F5;
@@ -155,18 +156,41 @@ a.delete-resource:hover {
 }
 
 /* line 128, app/assets/stylesheets/resources.scss */
+.glide-order-link {
+  color: #172b4d;
+  text-decoration: none;
+  border-bottom: 1px dotted #a1a8b4;
+  cursor: pointer;
+}
+
+/* line 134, app/assets/stylesheets/resources.scss */
+.glide-order-link:hover, .glide-order-link:focus {
+  color: #0052cc;
+  border-bottom-color: #0052cc;
+  text-decoration: none;
+}
+
+@media print {
+  /* line 143, app/assets/stylesheets/resources.scss */
+  .glide-order-link {
+    color: inherit;
+    border-bottom: none;
+  }
+}
+
+/* line 149, app/assets/stylesheets/resources.scss */
 .glide-print-actions,
 .demob-print-actions {
   margin: 16px 0;
   text-align: right;
 }
 
-/* line 134, app/assets/stylesheets/resources.scss */
+/* line 155, app/assets/stylesheets/resources.scss */
 .print-only {
   display: none;
 }
 
-/* line 138, app/assets/stylesheets/resources.scss */
+/* line 159, app/assets/stylesheets/resources.scss */
 .glide-print-header {
   text-align: center;
   margin: 0 0 12px;
@@ -174,7 +198,7 @@ a.delete-resource:hover {
   font-weight: 600;
 }
 
-/* line 145, app/assets/stylesheets/resources.scss */
+/* line 166, app/assets/stylesheets/resources.scss */
 .glide-title-cell {
   text-align: center !important;
   vertical-align: middle !important;
@@ -184,7 +208,7 @@ a.delete-resource:hover {
 }
 
 @media print {
-  /* line 155, app/assets/stylesheets/resources.scss */
+  /* line 176, app/assets/stylesheets/resources.scss */
   body.printing-demob header,
 body.printing-demob footer,
 body.printing-demob .incident-name,
@@ -198,23 +222,23 @@ body.printing-demob #resource-form,
 body.printing-demob .no-print {
     display: none !important;
   }
-  /* line 169, app/assets/stylesheets/resources.scss */
+  /* line 190, app/assets/stylesheets/resources.scss */
   body.printing-demob #demob-info {
     display: block !important;
     border: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
   }
-  /* line 176, app/assets/stylesheets/resources.scss */
+  /* line 197, app/assets/stylesheets/resources.scss */
   body.printing-demob #demob-info .panel-foot {
     display: none !important;
   }
-  /* line 181, app/assets/stylesheets/resources.scss */
+  /* line 202, app/assets/stylesheets/resources.scss */
   body.printing-glide {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  /* line 185, app/assets/stylesheets/resources.scss */
+  /* line 206, app/assets/stylesheets/resources.scss */
   body.printing-glide header,
 body.printing-glide footer,
 body.printing-glide .incident-name,
@@ -228,15 +252,15 @@ body.printing-glide #resource-form,
 body.printing-glide .no-print {
     display: none !important;
   }
-  /* line 199, app/assets/stylesheets/resources.scss */
+  /* line 220, app/assets/stylesheets/resources.scss */
   body.printing-glide #glide-info {
     display: block !important;
   }
-  /* line 203, app/assets/stylesheets/resources.scss */
+  /* line 224, app/assets/stylesheets/resources.scss */
   body.printing-glide .print-only {
     display: block !important;
   }
-  /* line 207, app/assets/stylesheets/resources.scss */
+  /* line 228, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-calendar,
 body.printing-glide .glide-row,
 body.printing-glide .yellow,
@@ -248,49 +272,49 @@ body.printing-glide .green {
     color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  /* line 221, app/assets/stylesheets/resources.scss */
+  /* line 242, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.yellow {
     box-shadow: inset 0 0 0 999px yellow !important;
   }
-  /* line 224, app/assets/stylesheets/resources.scss */
+  /* line 245, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.orange {
     box-shadow: inset 0 0 0 999px orange !important;
   }
-  /* line 227, app/assets/stylesheets/resources.scss */
+  /* line 248, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.red {
     box-shadow: inset 0 0 0 999px red !important;
   }
-  /* line 230, app/assets/stylesheets/resources.scss */
+  /* line 251, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.black {
     box-shadow: inset 0 0 0 999px black !important;
   }
-  /* line 233, app/assets/stylesheets/resources.scss */
+  /* line 254, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.green {
     box-shadow: inset 0 0 0 999px #4caf50 !important;
   }
-  /* line 238, app/assets/stylesheets/resources.scss */
+  /* line 259, app/assets/stylesheets/resources.scss */
   body.printing-glide table.table,
 body.printing-glide table.table th,
 body.printing-glide table.table td {
     border-color: #555 !important;
   }
-  /* line 243, app/assets/stylesheets/resources.scss */
+  /* line 264, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-calendar {
     border-color: #555 !important;
   }
 }
 
-/* line 250, app/assets/stylesheets/resources.scss */
+/* line 271, app/assets/stylesheets/resources.scss */
 .table-col {
   min-width: 25px !important;
 }
 
-/* line 253, app/assets/stylesheets/resources.scss */
+/* line 274, app/assets/stylesheets/resources.scss */
 .name-col {
   white-space: nowrap;
 }
 
-/* line 259, app/assets/stylesheets/resources.scss */
+/* line 280, app/assets/stylesheets/resources.scss */
 .ics-211-search {
   display: flex;
   align-items: center;
@@ -298,7 +322,7 @@ body.printing-glide table.table td {
   margin: 8px 12px 12px;
 }
 
-/* line 265, app/assets/stylesheets/resources.scss */
+/* line 286, app/assets/stylesheets/resources.scss */
 .ics-211-search .form-control {
   flex: 1 1 auto;
   max-width: 420px;
@@ -306,92 +330,218 @@ body.printing-glide table.table td {
   font-size: 14px;
 }
 
-/* line 272, app/assets/stylesheets/resources.scss */
+/* line 293, app/assets/stylesheets/resources.scss */
 .ics-211-search .btn-link {
   padding: 4px 8px;
   font-size: 12px;
 }
 
-/* line 277, app/assets/stylesheets/resources.scss */
+/* line 298, app/assets/stylesheets/resources.scss */
 .ics-211-search .muted {
   color: #6b778c;
   font-size: 12px;
 }
 
 /* Demob Info */
-/* line 284, app/assets/stylesheets/resources.scss */
+/* line 305, app/assets/stylesheets/resources.scss */
 #demob-info {
   display: none;
 }
 
-/* line 286, app/assets/stylesheets/resources.scss */
+/* line 307, app/assets/stylesheets/resources.scss */
 #demob-info #demob-dates {
   text-align: center;
 }
 
-/* line 290, app/assets/stylesheets/resources.scss */
+/* line 311, app/assets/stylesheets/resources.scss */
 #demob-dates {
   margin: 5% 0;
 }
 
-/* line 292, app/assets/stylesheets/resources.scss */
+/* line 313, app/assets/stylesheets/resources.scss */
 #demob-dates h1, #demob-dates h2, #demob-dates h3, #demob-dates h4 {
   font-weight: 666;
 }
 
-/* Resource Tally Info*/
-/* line 298, app/assets/stylesheets/resources.scss */
+/* Resource Tally Info — pivot layout mirroring the ICS 209 tally.
+   Rows = agencies (with resources/personnel sub-rows); columns =
+   crew/aircraft/equipment kinds + Overhead + Total. */
+/* line 321, app/assets/stylesheets/resources.scss */
 #tally-info {
   display: none;
-  padding-top: 5%;
+  padding-top: 24px;
 }
 
-/* line 301, app/assets/stylesheets/resources.scss */
-#tally-info h1, #tally-info h2 {
+/* line 325, app/assets/stylesheets/resources.scss */
+#tally-info .tally-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* line 330, app/assets/stylesheets/resources.scss */
+#tally-info .tally-header {
+  margin-bottom: 12px;
+}
+
+/* line 332, app/assets/stylesheets/resources.scss */
+#tally-info .tally-header h2 {
+  margin: 0 0 4px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* line 333, app/assets/stylesheets/resources.scss */
+#tally-info .tally-header .muted {
+  color: #6b778c;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* line 338, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #c1c7d0;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.05);
+}
+
+/* line 345, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table {
+  border-collapse: collapse;
+  font-size: 12px;
+  color: #172b4d;
+  width: 100%;
+}
+
+/* line 351, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table th, #tally-info .tally-table td {
+  border: 1px solid #c1c7d0;
+  padding: 4px 6px;
+  vertical-align: middle;
   text-align: center;
-  font-weight: 666;
-  margin-bottom: 20px;
 }
 
-/* line 306, app/assets/stylesheets/resources.scss */
-#tally-info h3, #tally-info h4 {
-  font-weight: 666;
+/* line 359, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table thead th {
+  background: #eaf1f8;
+  font-weight: 600;
+  color: #172b4d;
+  vertical-align: bottom;
 }
 
-/* line 309, app/assets/stylesheets/resources.scss */
-#tally-info ul {
-  padding-left: 5px;
-  list-style: none;
+/* line 365, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-agency-col {
+  width: 140px;
+  text-align: left;
+  padding-left: 10px;
 }
 
-/* line 314, app/assets/stylesheets/resources.scss */
+/* line 370, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-count-col {
+  width: 60px;
+}
+
+/* line 372, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-col-header {
+  min-width: 30px;
+  max-width: 44px;
+  height: 130px;
+  padding: 4px 0;
+}
+
+/* line 379, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-col-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  margin: 0 auto;
+  font-size: 11px;
+  line-height: 1.1;
+}
+
+/* line 387, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-col-header.is-overhead .tally-col-label,
+#tally-info .tally-table .tally-col-header.is-total .tally-col-label {
+  font-weight: 700;
+}
+
+/* line 394, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-agency-row td {
+  background: #fff;
+}
+
+/* line 397, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-agency-row.is-even td {
+  background: #fbf8f0;
+}
+
+/* line 400, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-agency-cell {
+  text-align: left;
+  padding-left: 10px;
+  font-weight: 700;
+}
+
+/* line 405, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-count-label {
+  font-style: italic;
+  color: #6b778c;
+  text-align: right;
+  padding-right: 8px;
+  font-size: 11px;
+}
+
+/* line 412, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-cell {
+  min-width: 30px;
+}
+
+/* line 414, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-cell.is-overhead, #tally-info .tally-table .tally-cell.is-total {
+  background: #f4f5f7 !important;
+  font-weight: 600;
+}
+
+/* line 422, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-total-row td {
+  background: #f4f5f7;
+  font-weight: 700;
+}
+
+/* line 426, app/assets/stylesheets/resources.scss */
+#tally-info .tally-table .tally-total-label {
+  color: #172b4d;
+}
+
+/* line 432, app/assets/stylesheets/resources.scss */
 .dashed {
   border: 1px dashed orange;
 }
 
-/* line 317, app/assets/stylesheets/resources.scss */
+/* line 435, app/assets/stylesheets/resources.scss */
 img#new-resource {
   height: 20px;
   width: 20px;
 }
 
-/* line 321, app/assets/stylesheets/resources.scss */
+/* line 439, app/assets/stylesheets/resources.scss */
 .grayed {
   background-color: #f5f5f5;
 }
 
-/* line 324, app/assets/stylesheets/resources.scss */
+/* line 442, app/assets/stylesheets/resources.scss */
 .resource-information {
   background-color: yellow;
 }
 
-/* line 328, app/assets/stylesheets/resources.scss */
+/* line 446, app/assets/stylesheets/resources.scss */
 .view-resource img {
   width: 20px;
   height: auto;
 }
 
-/* line 336, app/assets/stylesheets/resources.scss */
+/* line 454, app/assets/stylesheets/resources.scss */
 .resource-panel {
   position: fixed;
   inset: 0;
@@ -404,12 +554,12 @@ img#new-resource {
   overflow-y: auto;
 }
 
-/* line 347, app/assets/stylesheets/resources.scss */
+/* line 465, app/assets/stylesheets/resources.scss */
 .resource-panel.is-hidden {
   display: none;
 }
 
-/* line 350, app/assets/stylesheets/resources.scss */
+/* line 468, app/assets/stylesheets/resources.scss */
 .resource-panel-inner {
   position: relative;
   background: #fff;
@@ -420,7 +570,7 @@ img#new-resource {
   padding: 20px 24px 24px;
 }
 
-/* line 360, app/assets/stylesheets/resources.scss */
+/* line 478, app/assets/stylesheets/resources.scss */
 .resource-panel-close {
   position: absolute;
   top: 8px;
@@ -434,12 +584,12 @@ img#new-resource {
   padding: 4px 8px;
 }
 
-/* line 372, app/assets/stylesheets/resources.scss */
+/* line 490, app/assets/stylesheets/resources.scss */
 .resource-panel-close:hover {
   color: #172b4d;
 }
 
-/* line 374, app/assets/stylesheets/resources.scss */
+/* line 492, app/assets/stylesheets/resources.scss */
 button.resource-panel-close {
   -webkit-appearance: none;
   appearance: none;
@@ -449,7 +599,7 @@ button.resource-panel-close {
   background: transparent !important;
 }
 
-/* line 382, app/assets/stylesheets/resources.scss */
+/* line 500, app/assets/stylesheets/resources.scss */
 button.resource-panel-close:hover, button.resource-panel-close:focus, button.resource-panel-close:active {
   border: none !important;
   outline: none !important;
@@ -457,7 +607,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   background: transparent !important;
 }
 
-/* line 392, app/assets/stylesheets/resources.scss */
+/* line 510, app/assets/stylesheets/resources.scss */
 .resource-panel-title {
   margin: 0 32px 12px 0;
   font-size: 16px;
@@ -465,21 +615,21 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   color: #172b4d;
 }
 
-/* line 399, app/assets/stylesheets/resources.scss */
+/* line 517, app/assets/stylesheets/resources.scss */
 .resource-panel-fields {
   display: grid;
   grid-template-columns: repeat(3, minmax(160px, 1fr));
   gap: 10px 16px;
 }
 
-/* line 405, app/assets/stylesheets/resources.scss */
+/* line 523, app/assets/stylesheets/resources.scss */
 .resource-panel-field {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* line 410, app/assets/stylesheets/resources.scss */
+/* line 528, app/assets/stylesheets/resources.scss */
 .resource-panel-field label {
   font-size: 11px;
   font-weight: 600;
@@ -489,7 +639,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   margin: 0 0 2px;
 }
 
-/* line 419, app/assets/stylesheets/resources.scss */
+/* line 537, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place {
   display: inline-block;
   min-height: 20px;
@@ -500,23 +650,23 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   cursor: text;
 }
 
-/* line 428, app/assets/stylesheets/resources.scss */
+/* line 546, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place:hover {
   background: #e6effd;
 }
 
-/* line 431, app/assets/stylesheets/resources.scss */
+/* line 549, app/assets/stylesheets/resources.scss */
 .resource-panel-field .static-field {
   padding: 2px 6px;
   color: #6b778c;
 }
 
-/* line 437, app/assets/stylesheets/resources.scss */
+/* line 555, app/assets/stylesheets/resources.scss */
 .resource-panel-field-wide {
   grid-column: 1 / -1;
 }
 
-/* line 440, app/assets/stylesheets/resources.scss */
+/* line 558, app/assets/stylesheets/resources.scss */
 input.fwd-datepicker {
   border: none !important;
   width: 36px;
@@ -526,4 +676,76 @@ input.fwd-datepicker {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+}
+
+/* line 574, app/assets/stylesheets/resources.scss */
+.roster-toggle-slot {
+  display: inline-block;
+  width: 14px;
+  text-align: left;
+  vertical-align: baseline;
+  color: #a1a8b4;
+}
+
+/* line 582, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle {
+  display: inline;
+  cursor: pointer;
+  color: #a1a8b4;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+}
+
+/* line 591, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle:hover {
+  color: #172b4d;
+}
+
+/* line 592, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle:focus {
+  outline: none;
+}
+
+/* line 593, app/assets/stylesheets/resources.scss */
+.resource-roster-toggle[aria-expanded="true"] .roster-toggle-caret {
+  transform: rotate(90deg);
+}
+
+/* line 596, app/assets/stylesheets/resources.scss */
+.roster-toggle-caret {
+  display: inline-block;
+  transition: transform 0.12s ease;
+  transform-origin: center;
+  vertical-align: baseline;
+}
+
+/* line 603, app/assets/stylesheets/resources.scss */
+.resource-roster-row {
+  background: #f7f8fa;
+}
+
+/* line 606, app/assets/stylesheets/resources.scss */
+.resource-roster-row.is-hidden {
+  display: none;
+}
+
+/* line 608, app/assets/stylesheets/resources.scss */
+.resource-roster-row td {
+  color: #5e6c84;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-top: 1px dashed #e6e8ec;
+}
+
+/* line 615, app/assets/stylesheets/resources.scss */
+.resource-roster-row .roster-order-cell {
+  font-family: Menlo, Consolas, monospace;
+  white-space: nowrap;
+}
+
+/* line 620, app/assets/stylesheets/resources.scss */
+.resource-roster-row.depth-2 {
+  background: #eef1f5;
 }

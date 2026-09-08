@@ -1,76 +1,86 @@
-
 <div id="tally-info" class="panel panel-default">
-  <% if !@resources.empty? %>
-  <div class="container">
-    
-    <div class="row">
-      
-      <div class="col-10">
-          
-        <h1>RESOURCE TALLY</h1>
+  <% if @resources.empty? %>
+    <div class="sm-padding-top md-padding-left">
+      <h4>There are no resources assigned to this incident.</h4>
+    </div>
+  <% else %>
+    <% pivot = resource_tally_pivot(@incident) %>
 
-        <div class="col-sm-3">
-          <h4>Crews</h4>
-          <ul>
-            
-            <% tally_assigned_resources(@incident.resources.crew.assigned).each do |r| %>
-                <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %>- <%= r[3] %></li>
-             
-            <% end %>
-
-          </ul>
-            </div>
-
-            <div class="col-sm-3">
-              <h4>Equipment</h4>
-              <ul>
-                
-                <% tally_assigned_resources(@incident.resources.equipment.assigned).each do |r| %>
-                    <li><%= r[0] %> - <%= r[1] %> - <%= r[2] %>- <%= r[3] %></li>
-                 
-                <% end %>
-              </ul>
-            </div>
-
-            <div class="col-sm-3">
-              <h4>Aircraft</h4>
-              <ul>
-                
-                <% @resources.aircraft.assigned.each do |r| %>
-                  <% unless r.released? %>
-                    <li><%= r.agency %> - <%= r.position %> - <%= r.number_personnel %></li>
-                  <% end %>
-                <% end %>
-              </ul>
-            </div>
-
-            <div class="col-sm-3">
-              <h4>Overhead</h4>
-              <ul>
-                <% tally_resources(@overhead.assigned).each do |a, c| %>
-
-                  <li><%= a %> - <%= c %></li>
-                <% end %>
-              </ul>
-            </div>
-
-          </div>
+    <div class="tally-container">
+      <div class="tally-header">
+        <h2>RESOURCE TALLY</h2>
+        <p class="muted">Live counts — updates automatically as resources check in, demob, or move between agencies.</p>
       </div>
 
-      <div> 
-        <h6><strong>Total:</strong>  <%= @incident.total_resources %></h6>
-      </div>
-
+      <% if pivot[:agencies].empty? %>
+        <p class="muted"><em>No assigned resources with a recognizable agency.</em></p>
       <% else %>
-        <div class="sm-padding-top md-padding-left">
-          <h4>There are no resources assigned to this incident.</h4>
+        <div class="tally-table-wrap">
+          <table class="tally-table">
+            <thead>
+              <tr>
+                <th class="tally-agency-col">48. Agency or Organization</th>
+                <th class="tally-count-col"></th>
+                <% pivot[:columns].each do |col| %>
+                  <th class="tally-col-header <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+                    <div class="tally-col-label"><%= col[:label] %></div>
+                  </th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% pivot[:agencies].each_with_index do |agency, idx| %>
+                <% cells = pivot[:rows][agency] %>
+                <tr class="tally-agency-row <%= 'is-even' if idx.even? %>">
+                  <td class="tally-agency-cell" rowspan="2"><%= agency %></td>
+                  <td class="tally-count-label">resources</td>
+                  <% pivot[:columns].each do |col| %>
+                    <% cell = cells[col[:key]] %>
+                    <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+                      <% unless col[:overhead] || col[:total] %>
+                        <%= cell[:resources].positive? ? cell[:resources] : '' %>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>
+                <tr class="tally-agency-row <%= 'is-even' if idx.even? %>">
+                  <td class="tally-count-label">personnel</td>
+                  <% pivot[:columns].each do |col| %>
+                    <% cell = cells[col[:key]] %>
+                    <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+                      <%= cell[:personnel].positive? ? cell[:personnel] : '' %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+
+              <%# 52. Total row — matches the ICS form footer. %>
+              <tr class="tally-total-row">
+                <td class="tally-agency-cell tally-total-label" rowspan="2">52. Total</td>
+                <td class="tally-count-label">resources</td>
+                <% pivot[:columns].each do |col| %>
+                  <% t = pivot[:totals][col[:key]] %>
+                  <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+                    <% unless col[:overhead] || col[:total] %>
+                      <%= t[:resources].positive? ? t[:resources] : '' %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+              <tr class="tally-total-row">
+                <td class="tally-count-label">personnel</td>
+                <% pivot[:columns].each do |col| %>
+                  <% t = pivot[:totals][col[:key]] %>
+                  <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+                    <%= t[:personnel].positive? ? t[:personnel] : '' %>
+                  </td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
         </div>
       <% end %>
-      </div>
-        <div class="panel-foot"></div>
-      </div>
-  </div>
+    </div>
+  <% end %>
+  <div class="panel-foot"></div>
 </div>
-
-  
-  
