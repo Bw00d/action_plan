@@ -372,7 +372,7 @@ a.delete-resource:hover {
     .tally-col-header {
       min-width: 30px;
       max-width: 44px;
-      height: 130px;
+      min-height: 50px;
       padding: 4px 0;
     }
     // Rotate the column label so it reads bottom-to-top like the ICS form.

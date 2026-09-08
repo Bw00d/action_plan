@@ -85,7 +85,7 @@ module ResourcesHelper
         }
       end
     end
-    columns << { key: 'OVERHEAD', label: '# of Overhead Personnel', overhead: true }
+    columns << { key: 'OVERHEAD', label: '# of Overhead', overhead: true }
     columns << { key: 'TOTAL',    label: 'Total Personnel',         total:    true }
 
     # Discover agencies and initialize empty cells.
