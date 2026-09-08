@@ -299,19 +299,52 @@ a.delete-objective:hover {
     padding: 0;
     margin: 0;
   }
-  #ops-period {
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-  }
-  #control-objectives {
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    border-top: 1px solid black;
-    overflow: hidden;
-    ul {
-      line-height: 2em;
-    }
-  }
+
+  //
+  // ─── LEGACY 202 STYLES (COMMENTED FOR ISOLATION) ──────────────────────
+  // The rebuild of the 202 uses ICS-style bordered rows via .org-header,
+  // .site-safety-row, #attachments, .org-footer, etc. The rules below were
+  // for the previous freeform layout and now stack extra borders and a
+  // min-height:300px on top of the new sections. Left commented so we can
+  // restore individual rules if any of them turn out to still be needed.
+  //
+  // #ops-period {
+  //   border-top: 1px solid black;
+  //   border-left: 1px solid black;
+  // }
+  // #control-objectives {
+  //   border-right: 1px solid black;
+  //   border-left: 1px solid black;
+  //   border-top: 1px solid black;
+  //   overflow: hidden;
+  //   ul {
+  //     line-height: 2em;
+  //   }
+  // }
+  // #operational-emphasis {
+  //   border-left: 1px solid black;
+  //   min-height: 300px;
+  //   overflow: hidden;
+  // }
+  // #general-safety-message {
+  //   border-top: 1px solid black;
+  //   height: 100%;
+  //   overflow: hidden;
+  //   padding-bottom: 10px;
+  //   border-right: 1px solid black;
+  //   border-left: 1px solid black;
+  // }
+  // .prepared-by-row {
+  //   border-top: 1px solid black;
+  //   border-right: 1px solid black;
+  //   border-left: 1px solid black;
+  //   border-bottom: 1px solid black;
+  //   hieght: 60px;   // note: existing typo in original
+  // }
+
+  // PDF-only rules for the -pdf variants — kept, they only apply to the
+  // PDF template (which still uses these ids) and don't affect the
+  // on-screen view.
   #control-objectives-pdf {
     border-right: 1px solid black;
     border-left: 1px solid black;
@@ -321,22 +354,9 @@ a.delete-objective:hover {
       line-height: 2em;
     }
   }
-  #operational-emphasis {
-    border-left: 1px solid black;
-    min-height: 300px;
-    overflow: hidden;
-  }
   #operational-emphasis-pdf {
     border-left: 1px solid black;
     overflow: hidden;
-  }
-  #general-safety-message {
-    border-top: 1px solid black;
-    height: 100%;
-    overflow: hidden;
-    padding-bottom: 10px;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
   }
   #general-safety-message-pdf {
     border-top: 1px solid black;
@@ -345,13 +365,28 @@ a.delete-objective:hover {
     border-right: 1px solid black;
     border-left: 1px solid black;
   }
-  
-  .prepared-by-row {
-    border-top: 1px solid black;
-    border-right: 1px solid black;
+
+  // ICS 202 sections 3, 4, and General Situational Awareness — each is a
+  // resizable text section. Left/right borders on every one so the form
+  // reads as one continuous bordered box like the ICS reference; top
+  // border only on the first (Objectives) to avoid double lines where
+  // sections meet. The best_in_place textarea expands to fill the
+  // resizable-row so the visible box tracks the parent's user-set height.
+  .ics-202-section {
     border-left: 1px solid black;
-    border-bottom: 1px solid black;
-    hieght: 60px;
+    border-right: 1px solid black;
+    padding: 6px 10px;
+    height: 100%;
+    overflow: hidden;
+
+    .best_in_place {
+      display: block;
+      width: 100%;
+      min-height: 60px;
+    }
+  }
+  #objectives-row .ics-202-section {
+    border-top: 1px solid black;
   }
 
   // ICS 202 section 5: Site Safety Plan Required? — inline row with two
@@ -383,14 +418,14 @@ a.delete-objective:hover {
 
   // ICS 202 section 6: two-column attachments list. Left = 11 predefined
   // ICS form checkboxes (description locked). Right = 4 user-editable
-  // "Other Attachments" slots. Fixed compact height so section 6 doesn't
-  // hog vertical space that sections 3 and 4 want.
+  // "Other Attachments" slots. Tight vertical rhythm so all 15 rows fit
+  // without pushing the footer off-page.
   #attachments {
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
-    padding: 8px 10px;
+    padding: 6px 10px 8px;
 
     .attachments-header {
       margin-bottom: 4px;
@@ -407,19 +442,35 @@ a.delete-objective:hover {
       padding-left: 0;
       margin: 0;
 
+      // Tight — one row per line, minimal top/bottom padding so all 15
+      // items fit without stretching section 6's height.
       li {
-        padding: 2px 0;
-        line-height: 1.4;
+        padding: 0;
+        margin: 0;
+        line-height: 1.5;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .attachment-label {
       margin-left: 6px;
     }
+    // Right-column editable slot for "Other Attachments". inline-block +
+    // vertical-align middle keeps the checkbox and text on one baseline.
     .best_in_place {
       display: inline-block;
-      min-width: 60px;
+      min-width: 140px;
       padding: 1px 4px;
+      vertical-align: middle;
       &:hover { background: #eef4ff; cursor: text; }
+    }
+    // Bootstrap's default .row inside #attachments has negative side
+    // margins that push its columns past the parent border. Zero them so
+    // the two columns stay inside section 6's box.
+    > .row {
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }

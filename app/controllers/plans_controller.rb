@@ -211,6 +211,7 @@ class PlansController < ApplicationController
                                    :comm_plan, :med_plan, :incident_map, :comm_plan,
                                    :travel_plan, :date_prepare, :time_prepared, :ops_period,
                                    :approved_by,
-                                   :site_safety_plan_required, :site_safety_plan_location)
+                                   :site_safety_plan_required, :site_safety_plan_location,
+                                   :objectives_text)
     end
 end

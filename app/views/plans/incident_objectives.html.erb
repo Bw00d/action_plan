@@ -57,34 +57,23 @@
         </div>
       </div>
 
-      <!-- 3. Objective(s): resizable so long lists don't crowd the page. -->
+      <!-- 3. Objective(s): free-form text (best_in_place textarea). The
+           old Objective records + add form is retired — text is simpler
+           to type, edit, and print. -->
       <div class="row resizable-row" id="objectives-row">
-        <div id="control-objectives" class="col-xs-12">
-          <span class="small"><strong>3. Objective(s):</strong></span>
-          <ol id="objectives">
-            <% @plan.objectives.each do |o| %>
-              <li><%= o.description %></li>
-            <% end %>
-          </ol>
-
-          <%= link_to "javascript:;" do %>
-            <%= image_tag 'plus.png', class: "small-icon", id: 'new-objective' %>
-          <% end %>
-          <div id="objective-form" class="form-group">
-            <%= form_for @objective, remote: true do |f| %>
-              <%= f.hidden_field :plan_id, value: @plan.id %>
-              <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
-              <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
-              <%= link_to "CANCEL", 'javascript:;', id: 'cancel-objective-form', class: 'btn btn-default tiny' %>
-            <% end %>
-          </div>
+        <div id="control-objectives" class="col-xs-12 ics-202-section">
+          <span class="small"><strong>3. Objective(s):</strong></span><br>
+          <%= best_in_place @plan, :objectives_text, as: :textarea,
+                            place_holder: "(ADD OBJECTIVES)",
+                            display_with: :simple_format,
+                            id: 'objectives-text-form' %>
         </div>
       </div>
       <div class="resize-handle" data-target="objectives-row"></div>
 
       <!-- 4. Operational Period Command Emphasis (weather field). Resizable. -->
       <div class="row resizable-row" id="emphasis-row">
-        <div id="operational-emphasis" class="col-xs-12 form-row">
+        <div id="operational-emphasis" class="col-xs-12 ics-202-section">
           <span class="small"><strong>4. Operational Period Command Emphasis:</strong></span><br>
           <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "(ADD CONTENT)", :display_with => :simple_format, id: 'weather-form' %>
         </div>
@@ -94,7 +83,7 @@
       <!-- General Situational Awareness (was section 6 Safety Message —
            now a subsection under section 4 per the standard ICS 202). -->
       <div class="row resizable-row" id="safety-row">
-        <div id="general-safety-message" class="col-xs-12 form-row">
+        <div id="general-safety-message" class="col-xs-12 ics-202-section">
           <span class="small"><strong>General Situational Awareness:</strong></span><br>
           <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "(ADD CONTENT)", :display_with => :simple_format, id: 'safety-form' %>
         </div>

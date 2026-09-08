@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_07_000002) do
+ActiveRecord::Schema.define(version: 2026_09_08_000001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -396,6 +396,7 @@ ActiveRecord::Schema.define(version: 2026_09_07_000002) do
     t.string "ic_date_time"
     t.string "iap_page"
     t.string "prepared_by_position"
+    t.text "objectives_text"
     t.index ["published_at"], name: "index_plans_on_published_at"
   end
 
