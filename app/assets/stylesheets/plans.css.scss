@@ -399,10 +399,30 @@ a.delete-objective:hover {
     border-left: 1px solid black;
     padding: 8px 10px;
 
-    .ssp-toggle {
+    // Yes/No checkbox pair. Each label wraps text + checkbox so
+    // clicking either the word or the box toggles it. Native browser
+    // checkbox styling — plain and consistent across OSes.
+    .ssp-toggle-group {
       display: inline-block;
       margin-left: 14px;
-      font-weight: 600;
+      vertical-align: middle;
+
+      .ssp-check {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 20px;
+        cursor: pointer;
+        user-select: none;
+        font-weight: 600;
+
+        .ssp-check-label { margin-right: 6px; }
+        .ssp-check-input {
+          margin: 0;
+          cursor: pointer;
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
     .ssp-location {
       display: inline-block;

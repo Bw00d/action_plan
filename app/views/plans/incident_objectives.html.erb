@@ -96,15 +96,27 @@
       <div class="row">
         <div class="col-xs-12 form-row site-safety-row">
           <span class="small"><strong>5. Site Safety Plan Required?</strong></span>
-          <span class="ssp-toggle">
-            <%= best_in_place @plan, :site_safety_plan_required,
-                              as: :select,
-                              collection: [["", "—"], ["Yes", "Yes"], ["No", "No"]],
-                              display_with: ->(v) {
-                                yes_box = v == "Yes" ? "☑" : "☐"
-                                no_box  = v == "No"  ? "☑" : "☐"
-                                "Yes #{yes_box}    No #{no_box}".html_safe
-                              } %>
+          <%# Two mutually-exclusive checkboxes bound to a string column
+              ("Yes" / "No" / nil). JS below enforces exclusion and
+              PATCHes the plan via AJAX. Clicking a checked box a second
+              time clears it (sets nil). %>
+          <span class="ssp-toggle-group"
+                data-field="site_safety_plan_required"
+                data-url="<%= incident_plan_path(@incident, @plan) %>">
+            <label class="ssp-check">
+              <span class="ssp-check-label">Yes</span>
+              <input type="checkbox"
+                     class="ssp-check-input"
+                     data-value="Yes"
+                     <%= 'checked' if @plan.site_safety_plan_required == 'Yes' %>>
+            </label>
+            <label class="ssp-check">
+              <span class="ssp-check-label">No</span>
+              <input type="checkbox"
+                     class="ssp-check-input"
+                     data-value="No"
+                     <%= 'checked' if @plan.site_safety_plan_required == 'No' %>>
+            </label>
           </span>
           <span class="ssp-location">
             <span class="small">Approved Site Safety Plan(s) Located at:</span>
@@ -270,6 +282,37 @@ document.addEventListener('DOMContentLoaded', function() {
       url += '?' + params.toString();
     }
     window.open(url, '_blank');
+  });
+
+  // Site Safety Plan Required? — two mutually-exclusive checkboxes that
+  // PATCH the plan via AJAX. Clicking a checked box a second time
+  // clears the field (sets nil).
+  document.querySelectorAll('.ssp-toggle-group').forEach(function (group) {
+    var field = group.dataset.field;
+    var url   = group.dataset.url;
+    var boxes = group.querySelectorAll('.ssp-check-input');
+    boxes.forEach(function (box) {
+      box.addEventListener('change', function () {
+        var picked = '';
+        if (box.checked) {
+          picked = box.dataset.value;
+          boxes.forEach(function (b) { if (b !== box) b.checked = false; });
+        }
+        var token = document.querySelector('meta[name="csrf-token"]');
+        var body  = { plan: {} };
+        body.plan[field] = picked;
+        fetch(url, {
+          method: 'PATCH',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-Token': token ? token.content : ''
+          },
+          body: JSON.stringify(body)
+        });
+      });
+    });
   });
 });
 </script>

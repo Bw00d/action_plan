@@ -37,10 +37,24 @@
 
 <script>
 (function () {
-  var mapEl = document.getElementById('incident-map');
-  if (!mapEl || typeof L === 'undefined') return;
+  // Runs on every Turbolinks navigation (turbolinks:load) AND on the
+  // initial page load (DOMContentLoaded). If Leaflet hasn't finished
+  // loading from the CDN yet, we retry every 100ms until it's ready —
+  // fixes the "need to refresh the browser" symptom where L was
+  // undefined at inline-script execution time under Turbolinks.
+  function initIncidentMap() {
+    var mapEl = document.getElementById('incident-map');
+    if (!mapEl) return;
+    // Already bound a Leaflet map to this element? Skip (guards against
+    // double-init when both events fire on the same visit).
+    if (mapEl._leaflet_id) return;
+    // External script still loading — retry shortly.
+    if (typeof L === 'undefined') {
+      setTimeout(initIncidentMap, 100);
+      return;
+    }
 
-  var status = document.getElementById('perimeter-status');
+    var status = document.getElementById('perimeter-status');
   var info   = document.getElementById('perimeter-info');
   var url    = mapEl.dataset.perimeterUrl;
 
@@ -160,5 +174,15 @@
         status.textContent = 'Map unavailable';
       }
     });
+  }  // initIncidentMap
+
+  // Bind to both events. turbolinks:load covers in-app navigation;
+  // DOMContentLoaded covers direct/refresh loads. initIncidentMap is
+  // idempotent thanks to the _leaflet_id guard.
+  document.addEventListener('turbolinks:load',    initIncidentMap);
+  document.addEventListener('DOMContentLoaded',   initIncidentMap);
+  // Also try immediately, in case DOMContentLoaded already fired before
+  // this inline script parsed.
+  initIncidentMap();
 })();
 </script>
