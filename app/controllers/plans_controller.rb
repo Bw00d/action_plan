@@ -45,6 +45,12 @@ class PlansController < ApplicationController
     @incident = Incident.find(params[:incident_id])
     respond_to do |format|
       if @plan.save
+        @incident.log_event(
+          kind:    'plan_created',
+          message: "Created plan for #{@plan.date&.strftime('%B %-d, %Y') || 'unknown date'}",
+          user:    current_user,
+          details: { plan_id: @plan.id, date: @plan.date&.iso8601 }
+        )
         format.html { redirect_to incident_plan_path(@incident, @plan) }
         format.json { redirect_to incident_plan_path(@incident, @plan) }
       else
@@ -72,7 +78,18 @@ class PlansController < ApplicationController
   # DELETE /plans/1.json
   def destroy
     @incident = Incident.find(@plan.incident_id)
+    # Capture the plan date + id BEFORE destroy — after .destroy, @plan
+    # still has its attributes in memory but they'll no longer resolve
+    # for anyone else querying the DB.
+    plan_date_str = @plan.date&.strftime('%B %-d, %Y') || 'unknown date'
+    plan_id       = @plan.id
     @plan.destroy
+    @incident.log_event(
+      kind:    'plan_deleted',
+      message: "Deleted plan for #{plan_date_str}",
+      user:    current_user,
+      details: { plan_id: plan_id, date: @plan.date&.iso8601 }
+    )
     respond_to do |format|
       format.html { redirect_to incident_plans_path(@incident) }
       format.json { head :no_content }

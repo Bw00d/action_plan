@@ -756,3 +756,54 @@ h4.incident-feed {
   width: 11px;
   }
 }
+
+// Incident activity / audit log rendered below the Collaborators list
+// on /incidents/:id/users. Compact one-line-per-event layout with a
+// muted timestamp, bold actor, and normal-weight message.
+.incident-activity {
+  margin-top: 24px;
+
+  h4 { margin-bottom: 8px; }
+
+  .incident-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 420px;
+    overflow-y: auto;
+    border: 1px solid #e6e8ec;
+    border-radius: 4px;
+    background: #fafbfc;
+  }
+
+  .incident-activity-item {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 12px;
+    border-bottom: 1px solid #eef0f3;
+    font-size: 13px;
+
+    &:last-child { border-bottom: 0; }
+  }
+
+  .incident-activity-when {
+    color: #6b778c;
+    font-size: 12px;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    min-width: 150px;
+  }
+
+  .incident-activity-who {
+    font-weight: 600;
+    color: #172b4d;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .incident-activity-msg {
+    color: #42526e;
+    flex: 1 1 auto;
+  }
+}

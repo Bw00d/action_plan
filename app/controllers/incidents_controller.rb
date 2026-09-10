@@ -339,6 +339,12 @@ class IncidentsController < ApplicationController
       else
         @incident.users << existing
         InvitationMailer.added_to_incident(existing, @incident, current_user).deliver_later
+        @incident.log_event(
+          kind:    'collaborator_added',
+          message: "Added #{existing.email} as a collaborator",
+          user:    current_user,
+          details: { user_id: existing.id, email: existing.email }
+        )
         notice = "Added #{existing.email} and sent them a notification."
       end
       redirect_to incident_users_path(@incident), notice: notice
@@ -362,6 +368,12 @@ class IncidentsController < ApplicationController
       if new_user.save
         @incident.users << new_user
         InvitationMailer.invite_new_user(new_user, @incident, current_user, raw_token).deliver_later
+        @incident.log_event(
+          kind:    'collaborator_invited',
+          message: "Invited #{new_user.email} as a new collaborator",
+          user:    current_user,
+          details: { user_id: new_user.id, email: new_user.email }
+        )
         redirect_to incident_users_path(@incident), notice: "Invitation sent to #{email}."
       else
         redirect_to incident_users_path(@incident), alert: "Couldn't invite #{email}: #{new_user.errors.full_messages.to_sentence}"
@@ -371,8 +383,14 @@ class IncidentsController < ApplicationController
 
   def remove_user
     @incident = Incident.find(params[:incident_id])
-    @user = User.find(params[:user]) 
+    @user = User.find(params[:user])
     @incident.users.delete(@user)
+    @incident.log_event(
+      kind:    'collaborator_removed',
+      message: "Removed #{@user.email} as a collaborator",
+      user:    current_user,
+      details: { user_id: @user.id, email: @user.email }
+    )
     respond_to do |format|
       format.html { redirect_back(fallback_location: "#{@incident.id}/users") }
     end

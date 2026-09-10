@@ -12,8 +12,22 @@ class Incident < ApplicationRecord
   has_many :demob_notifications, dependent: :destroy
   has_many :financial_codes, dependent: :destroy
   has_many :ops_215_lines, dependent: :destroy
+  has_many :events, -> { order(created_at: :desc) },
+                    class_name: 'IncidentEvent', dependent: :destroy
 
   after_create :seed_default_schedule
+
+  # Record a single audit-log entry for this incident. Rescue rather than
+  # raise so a logging failure never blocks the real action (e.g. plan
+  # creation succeeds even if event write hits a DB hiccup). Kind is
+  # a short machine-readable identifier; message is the rendered string
+  # users see on the collaborators page.
+  def log_event(kind:, message:, user: nil, details: {})
+    events.create!(kind: kind, message: message, user: user, details: details)
+  rescue => e
+    Rails.logger.warn "Incident##{id} log_event(#{kind}) failed: #{e.class}: #{e.message}"
+    nil
+  end
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id', optional: true
   has_and_belongs_to_many :users  # shared users who can edit

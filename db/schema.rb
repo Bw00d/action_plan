@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_08_000001) do
+ActiveRecord::Schema.define(version: 2026_09_10_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,19 @@ ActiveRecord::Schema.define(version: 2026_09_08_000001) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "incident_events", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "user_id"
+    t.string "kind", null: false
+    t.string "message", null: false
+    t.jsonb "details", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.index ["incident_id", "created_at"], name: "index_incident_events_on_incident_id_and_created_at"
+    t.index ["incident_id"], name: "index_incident_events_on_incident_id"
+    t.index ["kind"], name: "index_incident_events_on_kind"
+    t.index ["user_id"], name: "index_incident_events_on_user_id"
   end
 
   create_table "incidents", force: :cascade do |t|
@@ -577,6 +590,8 @@ ActiveRecord::Schema.define(version: 2026_09_08_000001) do
   add_foreign_key "demob_notifications", "rosters"
   add_foreign_key "demobs", "rosters"
   add_foreign_key "financial_codes", "incidents"
+  add_foreign_key "incident_events", "incidents"
+  add_foreign_key "incident_events", "users", on_delete: :nullify
   add_foreign_key "ops_215_lines", "incidents"
   add_foreign_key "ops_215_lines", "org_units"
   add_foreign_key "org_unit_assignments", "org_units"
