@@ -49,8 +49,9 @@
                 added/removed. Populated by Incident#log_event calls
                 from the relevant controllers. Newest first, capped at
                 50 so the page doesn't grow unbounded. %>
-            <div class="row incident-activity">
+            <div class="incident-activity">
               <h4><strong>Activity</strong></h4>
+                
               <% events = @incident.events.limit(50) %>
               <% if events.empty? %>
                 <p class="muted"><em>No activity recorded yet.</em></p>

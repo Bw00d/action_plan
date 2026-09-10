@@ -52827,13 +52827,59 @@ $.rails.showConfirmationDialog = function (link) {
         $.rails.confirmed(link);
     });
 };
-$(document).on("turbolinks:load", function() {
-  $("#demob-form :input").change(function() {
+$(document).on("turbolinks:load", function () {
+  var $printBtn  = $('#print-demob-button');
+  var $submitBtn = $('#demob-form-button');
+  var $rosterButtons = $('.roster-demob-buttons');
+  var isRosterDemob = $rosterButtons.length && $printBtn.length && $submitBtn.length;
+
+  if (isRosterDemob) {
+    // Roster (subordinate) demob: PRINT shows until the actual release
+    // date field has a value, then SUBMIT takes over. Toggle a class
+    // on the buttons themselves (not wrapper divs) so there's no
+    // float-collapse or layout-context weirdness.
+    var $releaseField = $('#demob_actual_release_date');
+    if (!$releaseField.length) $releaseField = $('input[name="demob[actual_release_date]"]');
+
+    function toggleRosterButtons() {
+      var val = $releaseField.length ? ($releaseField.val() || '') : '';
+      var hasDate = val.toString().trim().length > 0;
+      $printBtn.css('display',  '').toggleClass('rd-hidden',  hasDate);
+      $submitBtn.css('display', '').toggleClass('rd-hidden', !hasDate);
+    }
+
+    // Safety net: field missing → show both buttons.
+    if (!$releaseField.length) {
+      $printBtn.removeClass('rd-hidden');
+      $submitBtn.removeClass('rd-hidden');
+      return;
+    }
+
+    $releaseField.on('change input keyup blur changeDate paste', toggleRosterButtons);
+    $(document).on('change input keyup blur changeDate paste',
+                   'input[name="demob[actual_release_date]"]',
+                   toggleRosterButtons);
+
+    // Continuous poll (200ms) catches silent value changes from the
+    // datepicker popup that don't bubble a normal event.
+    var lastVal = $releaseField.val() || '';
+    setInterval(function () {
+      var now = ($('input[name="demob[actual_release_date]"]').val() || '');
+      if (now !== lastVal) { lastVal = now; toggleRosterButtons(); }
+    }, 200);
+
+    toggleRosterButtons();
+    return;
+  }
+
+  // Regular resource demob: any input change hides PRINT and reveals
+  // the always-in-DOM SUBMIT button. Unchanged legacy behavior.
+  $("#demob-form :input").change(function () {
     $('#print-demob-button').hide();
     $('#demob-form-button').show();
   });
-});// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.;
+});
+
 // This file contains JS code which is used across the entire Rails application.
 
 $(document).on("turbolinks:load", function() {
@@ -52897,6 +52943,24 @@ $(document).on("turbolinks:load", function() {
 
   $("#show-incident-form").click(function () {
     $("#edit-incident-form").toggle();
+  });
+
+  // best_in_place fields tagged [data-reload-on-save] reload the page
+  // after a successful save. Currently used for the incident start_date
+  // — setting it triggers the IRWIN / perimeter fetch, and a reload
+  // is what surfaces that data without a manual refresh.
+  $(document).off('best_in_place:success.reloadOnSave')
+             .on('best_in_place:success.reloadOnSave',
+                 '[data-reload-on-save]',
+                 function () {
+    // Small delay so the user sees the save landed before the reload.
+    setTimeout(function () {
+      if (window.Turbolinks && Turbolinks.visit) {
+        Turbolinks.visit(window.location.href);
+      } else {
+        window.location.reload();
+      }
+    }, 250);
   });
 
   // Incident Objectives
@@ -53928,6 +53992,47 @@ $(document).on("turbolinks:load", function() {
         $(this).find('.team-form').hide();
       }
     );
+});
+// Detects the browser's IANA timezone (e.g. "America/Anchorage") on
+// page load and posts it to the server if the current user hasn't set
+// one yet. The server endpoint is idempotent and only writes when the
+// user.time_zone column is blank, so a manual selection via the profile
+// edit page is preserved.
+//
+// A meta tag `<meta name="user-tz-needed" content="1">` gates the call
+// so the request only fires when there's actually a user record to
+// update AND that user has no timezone set. See layouts/application.
+$(document).on("turbolinks:load", function () {
+  var meta = document.querySelector('meta[name="user-tz-needed"]');
+  if (!meta || meta.content !== "1") return;
+
+  var tz;
+  try {
+    tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch (e) { return; }
+  if (!tz) return;
+
+  var token = document.querySelector('meta[name="csrf-token"]');
+  fetch("/users/detect_timezone", {
+    method: "PATCH",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-CSRF-Token": token ? token.content : ""
+    },
+    body: JSON.stringify({ time_zone: tz })
+  }).then(function (r) {
+    // On success the next page load will pick up the new zone via the
+    // ApplicationController around_action. Nothing to do here.
+    if (!r.ok && window.console) console.warn("timezone detect failed:", r.status);
+  }).catch(function (err) {
+    if (window.console) console.warn("timezone detect error:", err);
+  });
+
+  // Prevent repeat calls if the user navigates within the same tab
+  // (turbolinks:load fires per navigation).
+  meta.content = "0";
 });
 /*
  Zen Utils is a small library consisting of utility functions (reusable code)

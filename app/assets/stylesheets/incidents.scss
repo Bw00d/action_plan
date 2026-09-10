@@ -761,7 +761,7 @@ h4.incident-feed {
 // on /incidents/:id/users. Compact one-line-per-event layout with a
 // muted timestamp, bold actor, and normal-weight message.
 .incident-activity {
-  margin-top: 24px;
+  margin: 24px 10px;
 
   h4 { margin-bottom: 8px; }
 
