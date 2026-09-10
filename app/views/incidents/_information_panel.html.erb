@@ -88,7 +88,12 @@
             <div class="info-timeline-dot"></div>
             <div class="info-timeline-label"><%= s[:label] %></div>
             <div class="info-timeline-date">
-              <%= best_in_place @incident, s[:field], place_holder: "—" %>
+              <%# Setting start_date is what triggers the IRWIN /
+                  perimeter fetch on next page load. Reload so the user
+                  sees the fetched data without needing to hit refresh
+                  themselves. Other dates don't need a reload. %>
+              <%= best_in_place @incident, s[:field], place_holder: "—",
+                                html_attrs: (s[:field] == :start_date ? { 'data-reload-on-save' => 'true' } : {}) %>
             </div>
           </div>
           <% if i < stages.size - 1 %>

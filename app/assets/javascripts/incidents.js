@@ -13,6 +13,24 @@ $(document).on("turbolinks:load", function() {
     $("#edit-incident-form").toggle();
   });
 
+  // best_in_place fields tagged [data-reload-on-save] reload the page
+  // after a successful save. Currently used for the incident start_date
+  // — setting it triggers the IRWIN / perimeter fetch, and a reload
+  // is what surfaces that data without a manual refresh.
+  $(document).off('best_in_place:success.reloadOnSave')
+             .on('best_in_place:success.reloadOnSave',
+                 '[data-reload-on-save]',
+                 function () {
+    // Small delay so the user sees the save landed before the reload.
+    setTimeout(function () {
+      if (window.Turbolinks && Turbolinks.visit) {
+        Turbolinks.visit(window.location.href);
+      } else {
+        window.location.reload();
+      }
+    }, 250);
+  });
+
   // Incident Objectives
 
   $("#new-objective").click(function () {
