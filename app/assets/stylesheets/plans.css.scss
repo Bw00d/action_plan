@@ -1030,7 +1030,7 @@ img#add-freqs-button {
     // full ICS 202 header reads as one continuous banded region.
     .sheet-header-op {
       flex: none;
-      height: 30px;
+      height: 24px;
       padding: 4px 8px;
       border-bottom: 1px solid #000;
       background: #dcdcdc;
@@ -1050,6 +1050,7 @@ img#add-freqs-button {
     .sheet-header-dates {
       flex: 1;
       display: flex;
+      background: white !important;
     }
     .sheet-header-date {
       flex: 1;
@@ -1059,7 +1060,7 @@ img#add-freqs-button {
     }
     // Gray-banded field label at the top of each header cell.
     .sheet-header-label {
-      background: #dcdcdc;
+      // background: #dcdcdc;
       padding: 4px 8px;
       font-size: 11px;
       border-bottom: 1px solid #000;
