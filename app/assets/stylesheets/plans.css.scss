@@ -1030,7 +1030,14 @@ img#add-freqs-button {
       align-items: center;
 
       .sheet-header-op-label { font-size: 11px; margin-right: 8px; }
-      .sheet-header-op-value { font-weight: 700; letter-spacing: 0.5px; }
+      .sheet-header-op-value {
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        padding: 1px 6px;
+        border-radius: 3px;
+        cursor: pointer;
+        &:hover { background: rgba(76, 154, 255, 0.15); }
+      }
     }
     .sheet-header-dates {
       flex: 1;
@@ -1055,17 +1062,24 @@ img#add-freqs-button {
       flex: 1;
 
       // flatpickr text input for the Date/Time From / To cells —
-      // borderless so it inherits the sheet's clean form-cell look;
-      // small blue focus ring on click.
+      // completely borderless (browser + focus outlines both stripped)
+      // so it reads as plain form-cell text. Subtle hover / focus
+      // background gives just enough affordance without visible box.
       .sheet-dt-picker {
         width: 100%;
-        border: 0;
+        border: none;
+        outline: none;
         background: transparent;
         padding: 0;
         font: inherit;
         font-weight: 600;
         color: inherit;
-        &:focus  { outline: 2px solid #4c9aff; outline-offset: 1px; }
+        box-shadow: none;
+        -webkit-appearance: none;
+        appearance: none;
+
+        &:hover  { background: rgba(76, 154, 255, 0.06); cursor: pointer; }
+        &:focus  { background: rgba(76, 154, 255, 0.12); cursor: text; }
         &::placeholder { color: #a5adba; font-weight: 400; }
       }
     }

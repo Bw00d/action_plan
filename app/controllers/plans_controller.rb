@@ -225,7 +225,7 @@ class PlansController < ApplicationController
                                    :org_list, :assignment_list,
                                    :comm_plan, :med_plan, :incident_map, :comm_plan,
                                    :travel_plan, :date_prepare, :time_prepared, :ops_period,
-                                   :ops_period_from, :ops_period_to,
+                                   :ops_period_from, :ops_period_to, :shift,
                                    :approved_by,
                                    :site_safety_plan_required, :site_safety_plan_location,
                                    :objectives_text)

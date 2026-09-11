@@ -40,7 +40,12 @@
     <div class="sheet-header-right">
       <div class="sheet-header-op">
         <span class="sheet-header-op-label">2. Operational Period:</span>
-        <strong class="sheet-header-op-value">DAY</strong>
+        <%# Click the value to switch between DAY / NIGHT. Defaults to
+            DAY at the DB layer (migration backfills existing rows). %>
+        <%= best_in_place @plan, :shift,
+                          as: :select,
+                          collection: [["DAY", "DAY"], ["NIGHT", "NIGHT"]],
+                          class: "sheet-header-op-value" %>
       </div>
       <div class="sheet-header-dates">
         <%# Date/Time From / To — flatpickr with auto-save PATCH,
