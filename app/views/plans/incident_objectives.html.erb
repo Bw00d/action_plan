@@ -203,11 +203,25 @@
 <script>
   document.addEventListener('turbolinks:load', function () {
     // ── Print link ─────────────────────────────────────────
+    // Passes the current section flex-grow ratios (from localStorage)
+    // as URL params so the PDF renders the same layout the user set
+    // on-screen. Controller parses them into @section_ratios; PDF
+    // template applies via inline style="flex-grow:...".
     var link = document.getElementById('print-link');
     if (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
-        window.open('../<%= @plan.id %>/202-pdf.pdf', '_blank');
+        var url = '../<%= @plan.id %>/202-pdf.pdf';
+        try {
+          var raw = localStorage.getItem('ics202-ratios-<%= @plan.id %>');
+          var r   = raw && JSON.parse(raw);
+          if (r && r.objectives && r.emphasis && r.awareness) {
+            url += '?objectives=' + encodeURIComponent(r.objectives) +
+                   '&emphasis='   + encodeURIComponent(r.emphasis) +
+                   '&awareness='  + encodeURIComponent(r.awareness);
+          }
+        } catch (_) {}
+        window.open(url, '_blank');
       });
     }
 

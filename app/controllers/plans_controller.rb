@@ -132,6 +132,16 @@ class PlansController < ApplicationController
     @incident = Incident.find(@plan.incident_id)
     load_ics_202_attachments
 
+    # Section ratios come from the on-screen resize state (saved in
+    # localStorage per plan; passed by the print link as query params).
+    # Nil → equal thirds. Applied via inline flex-grow on each text
+    # section in the PDF template.
+    @section_ratios = {
+      objectives: params[:objectives].to_f.positive? ? params[:objectives].to_f : 1.0,
+      emphasis:   params[:emphasis].to_f.positive?   ? params[:emphasis].to_f   : 1.0,
+      awareness:  params[:awareness].to_f.positive?  ? params[:awareness].to_f  : 1.0
+    }
+
     respond_to do |format|
       format.pdf do
         # Set up for absolute URLs in PDF
@@ -142,15 +152,25 @@ class PlansController < ApplicationController
           template: 'plans/objectives_to_pdf.pdf.erb',
           layout: 'layouts/pdf.html.erb',
           locals: {
-            plan: @plan,
-            incident: @incident,
-            attachments: @attachments,
-            left_attachments:  @left_attachments,
-            right_attachments: @right_attachments
+            plan:            @plan,
+            incident:        @incident,
+            attachments:     @attachments,
+            section_ratios:  @section_ratios
           }
         )
 
-        pdf = Grover.new(html, display_url: request.base_url).to_pdf
+        # Letter with 0.5in margins on all sides — the sheet CSS is
+        # sized to fit exactly inside that printable area (7.5×10 in).
+        # prefer_css_page_size:true lets any @page rule in the sheet
+        # take precedence if we ever want per-section printing.
+        pdf = Grover.new(html,
+          display_url:          request.base_url,
+          format:               'Letter',
+          margin:               { top: '0.5in', right: '0.5in', bottom: '0.5in', left: '0.5in' },
+          print_background:     true,
+          prefer_css_page_size: true,
+          display_header_footer: false
+        ).to_pdf
 
         send_data pdf, filename: "objectives_plan_#{@plan.id}.pdf", type: 'application/pdf', disposition: 'inline'
       end
@@ -205,17 +225,11 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
     end
 
-    # ICS 202 section 6 is now a flat 18-slot grid (3 cols × 6 rows) —
-    # the new sheet template iterates @attachments directly. The old
-    # @left / @right split is kept temporarily for the PDF template,
-    # which Phase 5 will rewrite to use the new sheet layout too.
+    # ICS 202 section 6 is a flat 18-slot grid (3 cols × 6 rows).
+    # On-screen and PDF templates both iterate @attachments directly —
+    # the old @left / @right split has been retired.
     def load_ics_202_attachments
       @attachments = @plan.attachments.order(id: :asc).to_a
-      # Legacy — old PDF template still expects these.
-      @left_attachments  = @attachments[0, 11] || []
-      @right_attachments = (@attachments[11, 7] || []).tap do |slots|
-        (7 - slots.size).times { slots << nil }
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

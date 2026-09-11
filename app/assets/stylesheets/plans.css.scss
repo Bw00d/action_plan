@@ -1319,10 +1319,44 @@ img#add-freqs-button {
 
 @media print {
   .ics-form-sheet {
-    margin: 0 auto;
+    margin: 0;
     box-shadow: none;
     border-color: #000;
+    // Force gray backgrounds (Op Period band, header labels, dividers)
+    // to render — Chrome strips backgrounds in print without this hint.
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   .ics-202-page-actions { display: none; }
 }
+
+// ICS 202 PDF layout. Grover renders this template with Letter page +
+// 0.5in margins on all sides (see PlansController#objectives_to_pdf).
+// The sheet sits inside that printable area exactly — no page-level
+// container needed. Force color rendering on backgrounds/badges so the
+// gray header bands and checkbox glyphs survive.
+.ics-202-print {
+  margin: 0;
+  box-shadow: none;
+  page-break-inside: avoid;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+
+  // Skip the on-screen hover affordances — they add background tints
+  // that wouldn't reprint. Nothing is clickable in the PDF anyway.
+  .best_in_place:hover,
+  .sheet-dt-picker:hover,
+  .sheet-header-op-value:hover,
+  .attachment-description:hover,
+  .attachment-checkbox:hover { background: transparent !important; }
+
+  // Overflow badge is a screen-only affordance — hide in the PDF.
+  .sheet-overflow-badge { display: none !important; }
+}
+
+@page {
+  size: Letter;
+  margin: 0.5in;
+}
+
 
