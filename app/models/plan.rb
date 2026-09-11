@@ -139,7 +139,7 @@ class Plan < ApplicationRecord
   # right column starts blank so the user can name them anything.
   ICS_202_ATTACHMENTS = [
     "ICS 202", "ICS 203", "ICS 204", "ICS 205", "ICS 205A", "ICS 206",
-    "ICS 207", "ICS 208", "ICS 220", "Map/Chart", "Weather Forecast/Tides/Currents"
+    "ICS 207", "ICS 208", "ICS 220", "Map/Chart", "Forecasts"
   ].freeze
 
   def add_attachments

@@ -1,318 +1,168 @@
 <%= content_for :title, "202" %>
 <%
-  # Split "0800 - 2200" into from/to for the Date/Time cells in the header.
-  # Falls back to the whole string in "from" if there's no separator.
+  # Split "0800 - 2200" into from/to for the Date/Time header cells.
   op_from, op_to = @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).map(&:presence)
   date_str = @plan.date&.strftime('%m/%d/%Y')
 %>
-<div id="incident-objectives">
-  <div class="container">
-    <div class="col-xs-12 col-lg-8 center-block">
 
-      <div class="row">
-        <div class="plan-panel-head">
-          <ul class="tabrow">
-            <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
-            <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
-            <li class="selected"><%= link_to "202", "../#{@plan.id}/202" %></li>
-            <li><%= link_to "203", "../#{@plan.id}/203" %></li>
-            <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
-            <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
-            <li><%= link_to "206", '#' %></li>
-            <li><%= link_to "220", '#' %></li>
-            <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
-          </ul>
-        </div>
-        <div class="masking-tape"></div>
+<%# Tabs — app chrome, live outside the fixed form sheet. %>
+<div class="container">
+  <div class="col-xs-12 col-lg-8 center-block">
+    <div class="row">
+      <div class="plan-panel-head">
+        <ul class="tabrow">
+          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+          <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
+          <li class="selected"><%= link_to "202", "../#{@plan.id}/202" %></li>
+          <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+          <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+          <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
+          <li><%= link_to "206", '#' %></li>
+          <li><%= link_to "220", '#' %></li>
+          <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
+        </ul>
       </div>
-
-      <!-- Full-width ICS 202 header (matches the 203 header structure). -->
-      <div class="row org-header">
-        <div id="title-box" class="col-xs-12 content-box">
-          <h4><strong>INCIDENT OBJECTIVES (ICS 202)</strong></h4>
-        </div>
-      </div>
-      <div class="row org-header">
-        <div class="col-xs-4 content-box org-header-cell org-header-tall">
-          <div class="org-header-label gray-row"><span class="small">1. Incident Name:</span></div>
-          <div class="org-header-value"><%= @incident.name %></div>
-        </div>
-        <div class="col-xs-8 org-header-right">
-          <div class="row">
-            <div class="col-xs-12 content-box gray-row">
-              <span class="small">2. Operational Period:</span>
-              <span class="lg-padding-left"><strong>DAY</strong></span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6 content-box org-header-cell">
-              <div class=""><span class="small">Date/Time From:</span></div>
-              <div class="org-header-value"><%= [date_str, op_from].compact.join(' ') %></div>
-            </div>
-            <div class="col-xs-6 content-box org-header-cell">
-              <div class=""><span class="small">Date/Time To:</span></div>
-              <div class="org-header-value"><%= [date_str, op_to].compact.join(' ') %></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. Objective(s): free-form text (best_in_place textarea). The
-           old Objective records + add form is retired — text is simpler
-           to type, edit, and print. -->
-      <div class="row resizable-row" id="objectives-row">
-        <div id="control-objectives" class="col-xs-12 ics-202-section">
-          <span class="small"><strong>3. Objective(s):</strong></span><br>
-          <%= best_in_place @plan, :objectives_text, as: :textarea,
-                            place_holder: "(ADD OBJECTIVES)",
-                            display_with: :simple_format,
-                            id: 'objectives-text-form' %>
-        </div>
-      </div>
-      <div class="resize-handle" data-target="objectives-row"></div>
-
-      <!-- 4. Operational Period Command Emphasis (weather field). Resizable. -->
-      <div class="row resizable-row" id="emphasis-row">
-        <div id="operational-emphasis" class="col-xs-12 ics-202-section">
-          <span class="small"><strong>4. Operational Period Command Emphasis:</strong></span><br>
-          <%= best_in_place @plan, :weather, :as => :textarea, :place_holder => "(ADD CONTENT)", :display_with => :simple_format, id: 'weather-form' %>
-        </div>
-      </div>
-      <div class="resize-handle" data-target="emphasis-row"></div>
-
-      <!-- General Situational Awareness (was section 6 Safety Message —
-           now a subsection under section 4 per the standard ICS 202). -->
-      <div class="row resizable-row" id="safety-row">
-        <div id="general-safety-message" class="col-xs-12 ics-202-section">
-          <span class="small"><strong>General Situational Awareness:</strong></span><br>
-          <%= best_in_place @plan, :general_safety, :as => :textarea, :place_holder => "(ADD CONTENT)", :display_with => :simple_format, id: 'safety-form' %>
-        </div>
-      </div>
-      <div class="resize-handle" data-target="safety-row"></div>
-
-      <!-- 5. Site Safety Plan Required? Stored as a string ("Yes" / "No" /
-           nil) to match the existing column type. Click the toggle text
-           to switch. -->
-      <div class="row">
-        <div class="col-xs-12 form-row site-safety-row">
-          <span class="small"><strong>5. Site Safety Plan Required?</strong></span>
-          <%# Two mutually-exclusive checkboxes bound to a string column
-              ("Yes" / "No" / nil). JS below enforces exclusion and
-              PATCHes the plan via AJAX. Clicking a checked box a second
-              time clears it (sets nil). %>
-          <span class="ssp-toggle-group"
-                data-field="site_safety_plan_required"
-                data-url="<%= incident_plan_path(@incident, @plan) %>">
-            <label class="ssp-check">
-              <span class="ssp-check-label">Yes</span>
-              <input type="checkbox"
-                     class="ssp-check-input"
-                     data-value="Yes"
-                     <%= 'checked' if @plan.site_safety_plan_required == 'Yes' %>>
-            </label>
-            <label class="ssp-check">
-              <span class="ssp-check-label">No</span>
-              <input type="checkbox"
-                     class="ssp-check-input"
-                     data-value="No"
-                     <%= 'checked' if @plan.site_safety_plan_required == 'No' %>>
-            </label>
-          </span>
-          <span class="ssp-location">
-            <span class="small">Approved Site Safety Plan(s) Located at:</span>
-            <%= best_in_place @plan, :site_safety_plan_location, as: :input, place_holder: "(Location)" %>
-          </span>
-        </div>
-      </div>
-
-      <!-- 6. Incident Action Plan (attachments). Compact fixed height. -->
-      <div class="row">
-        <div id="attachments" class="col-xs-12">
-          <div class="attachments-header">
-            <span class="small"><strong>6. Incident Action Plan</strong></span>
-            <span class="small">(the items checked below are included in this Incident Action Plan):</span>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">
-              <ul class="attachments-list small">
-                <% @left_attachments.each do |a| %>
-                  <li>
-                    <%= best_in_place a, :attached, as: :checkbox,
-                                      collection: { false => raw("&#x2610;"), true => raw("&#x2611;") },
-                                      class: "bip-checkbox" %>
-                    <span class="attachment-label"><%= a.description %></span>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-            <div class="col-xs-6">
-              <div class="small other-attachments-label"><strong>Other Attachments:</strong></div>
-              <ul class="attachments-list small">
-                <% @right_attachments.each do |a| %>
-                  <li>
-                    <% if a %>
-                      <%= best_in_place a, :attached, as: :checkbox,
-                                        collection: { false => raw("&#x2610;"), true => raw("&#x2611;") },
-                                        class: "bip-checkbox" %>
-                      <%= best_in_place a, :description, as: :input, place_holder: "(Name attachment)" %>
-                    <% else %>
-                      <span class="text-muted">&#x2610; <em>(slot unavailable — legacy plan)</em></span>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 7. Prepared by / 8. Approved by / ICS meta rows. -->
-      <div class="row org-footer">
-        <div class="content-box col-xs-6">
-          <span class="small">7. Prepared by:</span>
-          <span class="lg-padding-left">
-            <%= best_in_place @plan, :prepared_by, as: :input, place_holder: '(NAME)' %>
-          </span>
-        </div>
-        <div class="content-box col-xs-3">
-          <span class="small">Position/Title:</span>
-          <span class="lg-padding-left">
-            <%= best_in_place @plan, :prepared_by_position, as: :input, place_holder: '(POSITION)' %>
-          </span>
-        </div>
-        <div class="content-box col-xs-3 bottom-row">
-          <span class="small">Signature:</span>
-        </div>
-      </div>
-      <div class="row org-footer">
-        <div class="content-box col-xs-6">
-          <span class="small">8. Approved by Incident Commander:</span>
-          <span class="lg-padding-left">
-            <%= best_in_place @plan, :approved_by, as: :input, place_holder: '(NAME)' %>
-          </span>
-        </div>
-        <div class="content-box col-xs-3">
-          <span class="small">Signature:</span>
-        </div>
-        <div class="content-box col-xs-3 bottom-row">
-          <span class="small">Date/Time:</span>
-          <span class="lg-padding-left">
-            <%= [@plan.date_prepare&.strftime('%m/%d/%Y'), @plan.time_prepared].compact.join(' ') %>
-          </span>
-        </div>
-      </div>
-      <div class="row org-footer">
-        <div class="content-box col-xs-2"><strong>ICS 202</strong></div>
-        <div class="content-box col-xs-2">IAP Page</div>
-        <div class="content-box col-xs-8 bottom-row"></div>
-      </div>
-      <div class="row org-footer-meta">
-        <div class="col-xs-6 text-center"><strong>FINAL</strong></div>
-        <div class="col-xs-6 text-right">Page 1 of 1</div>
-      </div>
-
-      <div class="print-button"><a href="#" id="print-link" class="btn btn-success tiny" target="_blank">PRINT</a></div>
+      <div class="masking-tape"></div>
     </div>
   </div>
 </div>
 
+<%# ─── ICS 202 sheet ─── Fixed 7.5"×10" flex column. No Bootstrap
+    grid inside — sections are flex children with fixed heights (or
+    flex:1 for the three expandable text sections). Sheet's own border
+    handles the outer edge; inner sections have only border-bottom. %>
+<div class="ics-form-sheet ics-202-sheet">
+
+  <div class="sheet-section sheet-title">
+    INCIDENT OBJECTIVES (ICS 202)
+  </div>
+
+  <div class="sheet-section sheet-header">
+    <div class="sheet-header-left">
+      <div class="sheet-header-label">1. Incident Name:</div>
+      <div class="sheet-header-value"><%= @incident.name %></div>
+    </div>
+    <div class="sheet-header-right">
+      <div class="sheet-header-op">
+        <span>2. Operational Period:</span>
+        <strong style="margin-left: 8px;">DAY</strong>
+      </div>
+      <div class="sheet-header-dates">
+        <div class="sheet-header-date">
+          <div class="sheet-header-label">Date/Time From:</div>
+          <div class="sheet-header-value"><%= [date_str, op_from].compact.join(' ') %></div>
+        </div>
+        <div class="sheet-header-date">
+          <div class="sheet-header-label">Date/Time To:</div>
+          <div class="sheet-header-value"><%= [date_str, op_to].compact.join(' ') %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-section sheet-text sheet-objectives">
+    <div class="sheet-text-label">3. Objective(s):</div>
+    <div class="sheet-text-body">
+      <%= best_in_place @plan, :objectives_text, as: :textarea,
+                        place_holder: "(ADD OBJECTIVES)",
+                        display_with: :simple_format %>
+    </div>
+  </div>
+
+  <div class="sheet-section sheet-text sheet-emphasis">
+    <div class="sheet-text-label">4. Operational Period Command Emphasis:</div>
+    <div class="sheet-text-body">
+      <%= best_in_place @plan, :weather, as: :textarea,
+                        place_holder: "(ADD CONTENT)",
+                        display_with: :simple_format %>
+    </div>
+  </div>
+
+  <div class="sheet-section sheet-text sheet-awareness">
+    <div class="sheet-text-label">General Situational Awareness:</div>
+    <div class="sheet-text-body">
+      <%= best_in_place @plan, :general_safety, as: :textarea,
+                        place_holder: "(ADD CONTENT)",
+                        display_with: :simple_format %>
+    </div>
+  </div>
+
+  <div class="sheet-section sheet-section-5">
+    <span class="sheet-text-label" style="margin: 0;">5. Site Safety Plan Required?</span>
+    <%# Placeholder — real checkbox wiring comes in Phase 2. %>
+    <span>Yes ☐&nbsp;&nbsp;&nbsp;No ☐</span>
+    <span>Approved Site Safety Plan(s) Located at:
+      <%= best_in_place @plan, :site_safety_plan_location, as: :input, place_holder: "(Location)" %>
+    </span>
+  </div>
+
+  <div class="sheet-section sheet-section-6">
+    <div class="sheet-text-label">6. Incident Action Plan
+      <span style="font-weight: 400;">(the items checked below are included in this Incident Action Plan):</span>
+    </div>
+    <%# Placeholder — 3×6 grid built in Phase 3. %>
+    <div style="color:#6b778c; font-style: italic;">
+      Attachments grid — coming in Phase 3.
+    </div>
+  </div>
+
+  <div class="sheet-section sheet-section-7">
+    <div class="sheet-cell wide">
+      <span class="sheet-cell-label">7. Prepared by:</span>
+      <span class="sheet-cell-value">
+        <%= best_in_place @plan, :prepared_by, as: :input, place_holder: '(NAME)' %>
+      </span>
+    </div>
+    <div class="sheet-cell narrow">
+      <span class="sheet-cell-label">Position/Title:</span>
+      <span class="sheet-cell-value">
+        <%= best_in_place @plan, :prepared_by_position, as: :input, place_holder: '(POSITION)' %>
+      </span>
+    </div>
+    <div class="sheet-cell narrow">
+      <span class="sheet-cell-label">Signature:</span>
+    </div>
+  </div>
+
+  <div class="sheet-section sheet-section-8">
+    <div class="sheet-cell wide">
+      <span class="sheet-cell-label">8. Approved by Incident Commander:</span>
+      <span class="sheet-cell-value">
+        <%= best_in_place @plan, :approved_by, as: :input, place_holder: '(NAME)' %>
+      </span>
+    </div>
+    <div class="sheet-cell narrow">
+      <span class="sheet-cell-label">Signature:</span>
+    </div>
+    <div class="sheet-cell narrow">
+      <span class="sheet-cell-label">Date/Time:</span>
+      <span class="sheet-cell-value">
+        <%= [@plan.date_prepare&.strftime('%m/%d/%Y'), @plan.time_prepared].compact.join(' ') %>
+      </span>
+    </div>
+  </div>
+
+  <div class="sheet-section sheet-meta">
+    <div class="sheet-cell form-id">ICS 202</div>
+    <div class="sheet-cell iap-page">IAP Page</div>
+    <div class="sheet-cell status">FINAL</div>
+    <div class="sheet-cell page-num">Page 1 of 1</div>
+  </div>
+</div>
+
+<div class="ics-202-page-actions">
+  <a href="#" id="print-link" class="btn btn-success tiny" target="_blank">PRINT</a>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  let isResizing = false;
-  let currentHandle = null;
-  let startY = 0;
-  let startHeight = 0;
-
-  function loadSavedHeights() {
-    const savedHeights = localStorage.getItem('plan-row-heights-<%= @plan.id %>');
-    if (savedHeights) {
-      const heights = JSON.parse(savedHeights);
-      Object.keys(heights).forEach(rowId => {
-        const row = document.getElementById(rowId);
-        if (row) row.style.height = heights[rowId] + 'px';
-      });
-    }
-  }
-
-  function saveHeights() {
-    const heights = {};
-    document.querySelectorAll('.resizable-row').forEach(row => {
-      heights[row.id] = row.offsetHeight;
-    });
-    localStorage.setItem('plan-row-heights-<%= @plan.id %>', JSON.stringify(heights));
-  }
-
-  document.querySelectorAll('.resize-handle').forEach(handle => {
-    handle.addEventListener('mousedown', function(e) {
-      isResizing = true;
-      currentHandle = this;
-      const targetId = this.getAttribute('data-target');
-      const targetRow = document.getElementById(targetId);
-      startY = e.clientY;
-      startHeight = targetRow.offsetHeight;
+  // Simple print link — Phase 5 will align the PDF template to render
+  // the same sheet, so no need to pass row-height params anymore.
+  document.addEventListener('turbolinks:load', function () {
+    var link = document.getElementById('print-link');
+    if (!link) return;
+    link.addEventListener('click', function (e) {
       e.preventDefault();
+      window.open('../<%= @plan.id %>/202-pdf.pdf', '_blank');
     });
   });
-
-  document.addEventListener('mousemove', function(e) {
-    if (!isResizing || !currentHandle) return;
-    const targetId = currentHandle.getAttribute('data-target');
-    const targetRow = document.getElementById(targetId);
-    const deltaY = e.clientY - startY;
-    const newHeight = Math.max(50, startHeight + deltaY);
-    targetRow.style.height = newHeight + 'px';
-  });
-
-  document.addEventListener('mouseup', function() {
-    if (isResizing) saveHeights();
-    isResizing = false;
-    currentHandle = null;
-  });
-
-  loadSavedHeights();
-
-  document.getElementById('print-link').addEventListener('click', function(e) {
-    e.preventDefault();
-    const savedHeights = localStorage.getItem('plan-row-heights-<%= @plan.id %>');
-    let url = '../<%= @plan.id %>/202-pdf.pdf';
-    if (savedHeights) {
-      const heights = JSON.parse(savedHeights);
-      const params = new URLSearchParams();
-      Object.keys(heights).forEach(rowId => params.append(rowId, heights[rowId]));
-      url += '?' + params.toString();
-    }
-    window.open(url, '_blank');
-  });
-
-  // Site Safety Plan Required? — two mutually-exclusive checkboxes that
-  // PATCH the plan via AJAX. Clicking a checked box a second time
-  // clears the field (sets nil).
-  document.querySelectorAll('.ssp-toggle-group').forEach(function (group) {
-    var field = group.dataset.field;
-    var url   = group.dataset.url;
-    var boxes = group.querySelectorAll('.ssp-check-input');
-    boxes.forEach(function (box) {
-      box.addEventListener('change', function () {
-        var picked = '';
-        if (box.checked) {
-          picked = box.dataset.value;
-          boxes.forEach(function (b) { if (b !== box) b.checked = false; });
-        }
-        var token = document.querySelector('meta[name="csrf-token"]');
-        var body  = { plan: {} };
-        body.plan[field] = picked;
-        fetch(url, {
-          method: 'PATCH',
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-Token': token ? token.content : ''
-          },
-          body: JSON.stringify(body)
-        });
-      });
-    });
-  });
-});
 </script>
