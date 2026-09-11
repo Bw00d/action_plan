@@ -226,10 +226,33 @@
     }
 
     // ── Date/Time From / To pickers ────────────────────────
-    // Same pattern as the 204's .op-dt-picker: flatpickr enables the
-    // calendar+time popup, onChange auto-PATCHes plan[field] via
-    // jQuery AJAX. Setter on Plan (parse_ops_datetime) parses the
-    // "MM/DD/YYYY HH:MM" string back to a Time.zone datetime.
+    // flatpickr calendar+time + a native blur backup on the input.
+    // savePicker fires on flatpickr onChange/onClose (calendar
+    // interactions), saveEl fires on the input's blur event (any
+    // manual typing that flatpickr didn't parse). The setter on Plan
+    // (parse_ops_datetime) parses the "MM/DD/YYYY HH:MM" string back
+    // to a Time.zone datetime — bad input clears the field.
+    var saveDatetimeField = function ($el, value) {
+      var url  = $el.data("url");
+      var name = $el.data("field");
+      if (!url || !name) return;
+      var data = {};
+      data[name] = value;
+      if (window.console) console.log("saving", name, "=", JSON.stringify(value), "→", url);
+      $.ajax({
+        url:      url,
+        type:     "PATCH",
+        data:     data,
+        dataType: "json",
+        success: function () {
+          if (window.console) console.log("saved", name);
+        },
+        error: function (xhr) {
+          if (window.console) console.warn("save failed:", name, xhr.status, xhr.responseText);
+        }
+      });
+    };
+
     if (typeof flatpickr !== "undefined") {
       flatpickr(".sheet-dt-picker", {
         enableTime: true,
@@ -237,13 +260,23 @@
         dateFormat: "m/d/Y H:i",
         allowInput: true,
         onChange: function (selectedDates, dateStr, instance) {
-          var $el  = $(instance.input);
-          var data = {};
-          data[$el.data("field")] = dateStr;
-          $.ajax({ url: $el.data("url"), type: "PATCH", data: data, dataType: "json" });
+          saveDatetimeField($(instance.input), dateStr);
+        },
+        onClose:  function (selectedDates, dateStr, instance) {
+          saveDatetimeField($(instance.input), dateStr);
         }
       });
     }
+
+    // Native change + focusout backup — catches typed values that
+    // flatpickr never parsed / no picker interaction ever occurred.
+    // Note: `blur` doesn't bubble, so document-level delegation
+    // wouldn't fire — we use `focusout` (bubbling equivalent) plus
+    // `change` (bubbles on all form inputs). Idempotent server-side.
+    $(document).off("change.sheetDt focusout.sheetDt")
+               .on("change.sheetDt focusout.sheetDt", ".sheet-dt-picker", function () {
+      saveDatetimeField($(this), this.value || "");
+    });
 
     // ── Site Safety Plan Required? — mutually-exclusive checkboxes ─
     // Clicking either box PATCHes plan[site_safety_plan_required] with

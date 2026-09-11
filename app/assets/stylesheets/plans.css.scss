@@ -1004,6 +1004,7 @@ img#add-freqs-button {
   // ── 1. Incident Name + 2. Operational Period + Date/Time From/To ──
   > .sheet-header {
     flex: none;
+    height: 78px;   // 30px op-period + 48px date-cell (label + value)
     display: flex;
     padding: 0;
 
@@ -1060,26 +1061,35 @@ img#add-freqs-button {
       padding: 6px 8px;
       font-weight: 600;
       flex: 1;
+      // Defensive: nothing inside this cell should draw its own border.
+      // Kills any Bootstrap / global input rule that would otherwise
+      // paint a black rectangle around the flatpickr text field.
+      border: 0 none !important;
 
       // flatpickr text input for the Date/Time From / To cells —
       // completely borderless (browser + focus outlines both stripped)
       // so it reads as plain form-cell text. Subtle hover / focus
       // background gives just enough affordance without visible box.
+      // !important to beat any Bootstrap / global input styling that
+      // might otherwise draw a black rectangle around the value.
+      input.sheet-dt-picker,
       .sheet-dt-picker {
         width: 100%;
-        border: none;
-        outline: none;
-        background: transparent;
-        padding: 0;
+        border: 0 none !important;
+        outline: 0 none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
         font: inherit;
         font-weight: 600;
         color: inherit;
-        box-shadow: none;
+        box-shadow: none !important;
         -webkit-appearance: none;
         appearance: none;
+        border-radius: 0;
 
-        &:hover  { background: rgba(76, 154, 255, 0.06); cursor: pointer; }
-        &:focus  { background: rgba(76, 154, 255, 0.12); cursor: text; }
+        &:hover  { background: rgba(76, 154, 255, 0.06) !important; cursor: pointer; }
+        &:focus  { background: rgba(76, 154, 255, 0.12) !important; cursor: text; }
         &::placeholder { color: #a5adba; font-weight: 400; }
       }
     }
@@ -1352,6 +1362,15 @@ img#add-freqs-button {
 
   // Overflow badge is a screen-only affordance — hide in the PDF.
   .sheet-overflow-badge { display: none !important; }
+
+  // Kill any residual borders on the value cells (defensive — Chrome
+  // sometimes renders inputs' default box even when CSS says none).
+  .sheet-header-value,
+  .sheet-header-value * {
+    border: 0 none !important;
+    box-shadow: none !important;
+    outline: 0 none !important;
+  }
 }
 
 @page {
