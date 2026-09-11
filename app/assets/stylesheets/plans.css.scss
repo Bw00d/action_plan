@@ -1053,6 +1053,21 @@ img#add-freqs-button {
       padding: 6px 8px;
       font-weight: 600;
       flex: 1;
+
+      // flatpickr text input for the Date/Time From / To cells —
+      // borderless so it inherits the sheet's clean form-cell look;
+      // small blue focus ring on click.
+      .sheet-dt-picker {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        font: inherit;
+        font-weight: 600;
+        color: inherit;
+        &:focus  { outline: 2px solid #4c9aff; outline-offset: 1px; }
+        &::placeholder { color: #a5adba; font-weight: 400; }
+      }
     }
   }
 

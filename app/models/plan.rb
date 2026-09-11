@@ -174,4 +174,34 @@ class Plan < ApplicationRecord
     Team.where(plan_id: self.id, staff: "Logistics").order(:list_position, :created_at)
   end
 
+  # ── 202 header: Date/Time From/To setters ────────────────────
+  # Accept "MM/DD/YYYY HHMM" (military time, no colon) — matches the
+  # 204 pattern — plus anything Time.zone.parse can handle. Blank or
+  # unparseable input clears the field rather than raising, so a user
+  # typing over the input doesn't lose their save.
+  def ops_period_from=(value)
+    super(parse_ops_datetime(value))
+  end
+
+  def ops_period_to=(value)
+    super(parse_ops_datetime(value))
+  end
+
+  private
+
+  def parse_ops_datetime(value)
+    return value unless value.is_a?(String)
+    return nil if value.blank?
+
+    s = value.strip
+    if s =~ %r{\A(\d{1,2})/(\d{1,2})/(\d{4})\s+(\d{2}):?(\d{2})\z}
+      Time.zone.local(Regexp.last_match(3).to_i, Regexp.last_match(1).to_i,
+                      Regexp.last_match(2).to_i, Regexp.last_match(4).to_i,
+                      Regexp.last_match(5).to_i)
+    else
+      Time.zone.parse(s)
+    end
+  rescue ArgumentError
+    nil
+  end
 end

@@ -1,9 +1,4 @@
 <%= content_for :title, "202" %>
-<%
-  # Split "0800 - 2200" into from/to for the Date/Time header cells.
-  op_from, op_to = @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).map(&:presence)
-  date_str = @plan.date&.strftime('%m/%d/%Y')
-%>
 
 <%# Tabs — app chrome, live outside the fixed form sheet. %>
 <div class="container">
@@ -48,14 +43,22 @@
         <strong class="sheet-header-op-value">DAY</strong>
       </div>
       <div class="sheet-header-dates">
-        <div class="sheet-header-date">
-          <div class="sheet-header-label">Date/Time From:</div>
-          <div class="sheet-header-value"><%= [date_str, op_from].compact.join(' ') %></div>
-        </div>
-        <div class="sheet-header-date">
-          <div class="sheet-header-label">Date/Time To:</div>
-          <div class="sheet-header-value"><%= [date_str, op_to].compact.join(' ') %></div>
-        </div>
+        <%# Date/Time From / To — flatpickr with auto-save PATCH,
+            same pattern as the 204 ops period. Fields are datetime
+            columns on Plan; setters parse "MM/DD/YYYY HHMM". %>
+        <% [:ops_period_from, :ops_period_to].each_with_index do |field, i| %>
+          <div class="sheet-header-date">
+            <div class="sheet-header-label"><%= i.zero? ? "Date/Time From:" : "Date/Time To:" %></div>
+            <div class="sheet-header-value">
+              <input type="text"
+                     class="sheet-dt-picker"
+                     data-url="<%= incident_plan_path(@incident, @plan) %>"
+                     data-field="plan[<%= field %>]"
+                     value="<%= @plan.public_send(field)&.strftime('%m/%d/%Y %H:%M') %>"
+                     placeholder="MM/DD/YYYY HH:MM">
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -200,6 +203,26 @@
       link.addEventListener('click', function (e) {
         e.preventDefault();
         window.open('../<%= @plan.id %>/202-pdf.pdf', '_blank');
+      });
+    }
+
+    // ── Date/Time From / To pickers ────────────────────────
+    // Same pattern as the 204's .op-dt-picker: flatpickr enables the
+    // calendar+time popup, onChange auto-PATCHes plan[field] via
+    // jQuery AJAX. Setter on Plan (parse_ops_datetime) parses the
+    // "MM/DD/YYYY HH:MM" string back to a Time.zone datetime.
+    if (typeof flatpickr !== "undefined") {
+      flatpickr(".sheet-dt-picker", {
+        enableTime: true,
+        time_24hr:  true,
+        dateFormat: "m/d/Y H:i",
+        allowInput: true,
+        onChange: function (selectedDates, dateStr, instance) {
+          var $el  = $(instance.input);
+          var data = {};
+          data[$el.data("field")] = dateStr;
+          $.ajax({ url: $el.data("url"), type: "PATCH", data: data, dataType: "json" });
+        }
       });
     }
 
