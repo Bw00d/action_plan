@@ -15,7 +15,7 @@
      class="cover-block <%= 'is-image' if block.image_block? %> <%= 'is-notes' if is_notes %> <%= block.font_size %> weight-<%= block.font_weight %> style-<%= block.text_style %> align-<%= block.text_align %>"
      data-block-id="<%= block.id %>"
      data-font-size="<%= block.font_size %>"
-     style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= block.width %>%; height: <%= block.height %>%; <%= "font-size: #{font_px}px;" unless block.image_block? || is_notes %>">
+     style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= block.width %>%; height: <%= block.height %>%; <%= "font-size: #{font_px}px;" unless block.image_block? || is_notes %> <%= "font-family: #{block.font_family};" if block.font_family.present? && !block.image_block? && !is_notes %>">
   <% if is_notes %>
     <div class="cover-notes">
       <div class="cover-notes-header">NOTES</div>

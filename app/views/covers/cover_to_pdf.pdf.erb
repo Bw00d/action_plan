@@ -92,7 +92,7 @@
     <% font_px = 24 if font_px <= 0 %>
     <% is_notes = b.kind == "notes" %>
     <div class="cover-block <%= 'is-notes' if is_notes %> <%= b.font_size %> weight-<%= b.font_weight %> style-<%= b.text_style %> align-<%= b.text_align %>"
-         style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= b.width %>%; height: <%= b.height %>%;">
+         style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= b.width %>%; height: <%= b.height %>%; <%= "font-family: #{b.font_family};" if b.font_family.present? && !b.image_block? && !is_notes %>">
       <% if is_notes %>
         <div class="cover-notes">
           <div class="cover-notes-header">NOTES</div>

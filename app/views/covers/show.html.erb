@@ -55,6 +55,29 @@
 
         <div class="csp-sep"></div>
 
+        <%# Font family picker. Click "F" to open a menu of typefaces —
+            selecting one applies to the currently-selected block and
+            saves. Each menu option previews itself in its own font. %>
+        <div class="csp-font-picker-wrap">
+          <button type="button" class="csp-btn csp-font-picker" title="Font family">F</button>
+          <div class="csp-font-menu" style="display:none;">
+            <button type="button" class="csp-font-option" data-value="Cambria, Georgia, 'Times New Roman', serif"
+                    style="font-family: Cambria, Georgia, serif;">Cambria</button>
+            <button type="button" class="csp-font-option" data-value="Georgia, 'Times New Roman', serif"
+                    style="font-family: Georgia, serif;">Georgia</button>
+            <button type="button" class="csp-font-option" data-value="'Times New Roman', Times, serif"
+                    style="font-family: 'Times New Roman', serif;">Times New Roman</button>
+            <button type="button" class="csp-font-option" data-value="Arial, Helvetica, sans-serif"
+                    style="font-family: Arial, sans-serif;">Arial</button>
+            <button type="button" class="csp-font-option" data-value="Helvetica, Arial, sans-serif"
+                    style="font-family: Helvetica, sans-serif;">Helvetica</button>
+            <button type="button" class="csp-font-option" data-value="'Courier New', Courier, monospace"
+                    style="font-family: 'Courier New', monospace;">Courier New</button>
+          </div>
+        </div>
+
+        <div class="csp-sep"></div>
+
         <%# Alignment — icons for left / center / right. %>
         <button type="button" class="csp-btn csp-align-btn" data-attr="text_align" data-value="left"   title="Align left"  >L</button>
         <button type="button" class="csp-btn csp-align-btn" data-attr="text_align" data-value="center" title="Align center">C</button>

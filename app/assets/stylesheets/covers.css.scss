@@ -609,6 +609,46 @@
   .csp-h3 { font-size: 15px; font-weight: 500; }
   .csp-h4 { font-size: 13px; font-weight: 400; }
 
+  // ── Font family picker ──────────────────────────────────────────
+  // "F" button opens a small dropdown menu of typefaces. The menu is
+  // absolutely positioned to the LEFT of the panel so it doesn't get
+  // clipped by the canvas edge (panel already straddles the right side
+  // of the canvas). Each option renders its label in its own font so
+  // users see what they'll get.
+  .csp-font-picker-wrap {
+    position: relative;
+  }
+  .csp-font-picker {
+    font-style: italic;   // distinguish "F" from the other letter buttons
+  }
+  .csp-font-menu {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    margin-right: 6px;
+    min-width: 160px;
+    background: #3d3d3d;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    padding: 4px;
+    z-index: 30;
+  }
+  .csp-font-option {
+    display: block;
+    width: 100%;
+    padding: 6px 10px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 3px;
+
+    &:hover  { background: rgba(255, 255, 255, 0.12); }
+    &:focus  { outline: none; }
+  }
+
   // Pixel size input — matches the panel's dark strip aesthetic.
   .csp-px-input {
     width: 100%;
