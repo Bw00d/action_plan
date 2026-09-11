@@ -11,11 +11,11 @@
 
   <div class="sheet-section sheet-header">
     <div class="sheet-header-left">
-      <div class="sheet-header-label">1. Incident Name:</div>
+      <div class="sheet-header-label gray-row">1. Incident Name:</div>
       <div class="sheet-header-value"><%= @incident.name %></div>
     </div>
     <div class="sheet-header-right">
-      <div class="sheet-header-op">
+      <div class="sheet-header-op gray-row">
         <span class="sheet-header-op-label">2. Operational Period:</span>
         <strong class="sheet-header-op-value"><%= @plan.shift.presence || 'DAY' %></strong>
       </div>
