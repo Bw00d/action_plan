@@ -31,7 +31,7 @@
     grid inside — sections are flex children with fixed heights (or
     flex:1 for the three expandable text sections). Sheet's own border
     handles the outer edge; inner sections have only border-bottom. %>
-<div class="ics-form-sheet ics-202-sheet">
+<div class="ics-form-sheet ics-202-sheet" data-plan-id="<%= @plan.id %>">
 
   <div class="sheet-section sheet-title">
     INCIDENT OBJECTIVES (ICS 202)
@@ -44,8 +44,8 @@
     </div>
     <div class="sheet-header-right">
       <div class="sheet-header-op">
-        <span>2. Operational Period:</span>
-        <strong style="margin-left: 8px;">DAY</strong>
+        <span class="sheet-header-op-label">2. Operational Period:</span>
+        <strong class="sheet-header-op-value">DAY</strong>
       </div>
       <div class="sheet-header-dates">
         <div class="sheet-header-date">
@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <div class="sheet-section sheet-text sheet-objectives">
+  <div class="sheet-section sheet-text sheet-objectives" data-section-key="objectives">
     <div class="sheet-text-label">3. Objective(s):</div>
     <div class="sheet-text-body">
       <%= best_in_place @plan, :objectives_text, as: :textarea,
@@ -69,7 +69,12 @@
     </div>
   </div>
 
-  <div class="sheet-section sheet-text sheet-emphasis">
+  <%# Draggable divider — adjusts space between Objectives and Emphasis
+      only. Awareness is unaffected. See JS at bottom of this file. %>
+  <div class="sheet-divider" data-above="objectives" data-below="emphasis"
+       title="Drag to resize"></div>
+
+  <div class="sheet-section sheet-text sheet-emphasis" data-section-key="emphasis">
     <div class="sheet-text-label">4. Operational Period Command Emphasis:</div>
     <div class="sheet-text-body">
       <%= best_in_place @plan, :weather, as: :textarea,
@@ -78,7 +83,10 @@
     </div>
   </div>
 
-  <div class="sheet-section sheet-text sheet-awareness">
+  <div class="sheet-divider" data-above="emphasis" data-below="awareness"
+       title="Drag to resize"></div>
+
+  <div class="sheet-section sheet-text sheet-awareness" data-section-key="awareness">
     <div class="sheet-text-label">General Situational Awareness:</div>
     <div class="sheet-text-body">
       <%= best_in_place @plan, :general_safety, as: :textarea,
@@ -88,21 +96,51 @@
   </div>
 
   <div class="sheet-section sheet-section-5">
-    <span class="sheet-text-label" style="margin: 0;">5. Site Safety Plan Required?</span>
-    <%# Placeholder — real checkbox wiring comes in Phase 2. %>
-    <span>Yes ☐&nbsp;&nbsp;&nbsp;No ☐</span>
-    <span>Approved Site Safety Plan(s) Located at:
+    <span class="sheet-text-label sheet-inline-label">5. Site Safety Plan Required?</span>
+
+    <%# Two mutually-exclusive checkboxes bound to a string field
+        ("Yes" / "No" / nil). JS at the bottom PATCHes via AJAX and
+        clears when a checked box is clicked a second time. %>
+    <span class="ssp-toggle-group"
+          data-field="site_safety_plan_required"
+          data-url="<%= incident_plan_path(@incident, @plan) %>">
+      <label class="ssp-check">
+        <span class="ssp-check-label">Yes</span>
+        <input type="checkbox" class="ssp-check-input" data-value="Yes"
+               <%= 'checked' if @plan.site_safety_plan_required == 'Yes' %>>
+      </label>
+      <label class="ssp-check">
+        <span class="ssp-check-label">No</span>
+        <input type="checkbox" class="ssp-check-input" data-value="No"
+               <%= 'checked' if @plan.site_safety_plan_required == 'No' %>>
+      </label>
+    </span>
+
+    <span class="ssp-location">
+      <span>Approved Site Safety Plan(s) Located at:</span>
       <%= best_in_place @plan, :site_safety_plan_location, as: :input, place_holder: "(Location)" %>
     </span>
   </div>
 
   <div class="sheet-section sheet-section-6">
     <div class="sheet-text-label">6. Incident Action Plan
-      <span style="font-weight: 400;">(the items checked below are included in this Incident Action Plan):</span>
+      <span class="sheet-normal">(the items checked below are included in this Incident Action Plan):</span>
     </div>
-    <%# Placeholder — 3×6 grid built in Phase 3. %>
-    <div style="color:#6b778c; font-style: italic;">
-      Attachments grid — coming in Phase 3.
+    <%# 3-column grid, column-first flow so slots 1–6 stack in the left
+        column, 7–12 in the middle, 13–18 on the right. Every slot is
+        editable — pre-seeded names (ICS 202, 203, ...) are just
+        defaults the user can rename. %>
+    <div class="attachments-grid">
+      <% @attachments.each do |a| %>
+        <div class="attachment-cell">
+          <%= best_in_place a, :attached, as: :checkbox,
+                            collection: { false => raw("&#x2610;"), true => raw("&#x2611;") },
+                            class: "attachment-checkbox" %>
+          <%= best_in_place a, :description, as: :input,
+                            place_holder: "____________________",
+                            class: "attachment-description" %>
+        </div>
+      <% end %>
     </div>
   </div>
 
@@ -155,14 +193,147 @@
 </div>
 
 <script>
-  // Simple print link — Phase 5 will align the PDF template to render
-  // the same sheet, so no need to pass row-height params anymore.
   document.addEventListener('turbolinks:load', function () {
+    // ── Print link ─────────────────────────────────────────
     var link = document.getElementById('print-link');
-    if (!link) return;
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      window.open('../<%= @plan.id %>/202-pdf.pdf', '_blank');
+    if (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.open('../<%= @plan.id %>/202-pdf.pdf', '_blank');
+      });
+    }
+
+    // ── Site Safety Plan Required? — mutually-exclusive checkboxes ─
+    // Clicking either box PATCHes plan[site_safety_plan_required] with
+    // "Yes" / "No" / "" (empty = clear). Sibling auto-unchecks so only
+    // one can be selected at a time.
+    document.querySelectorAll('.sheet-section-5 .ssp-toggle-group').forEach(function (group) {
+      var field = group.dataset.field;
+      var url   = group.dataset.url;
+      var boxes = group.querySelectorAll('.ssp-check-input');
+      boxes.forEach(function (box) {
+        box.addEventListener('change', function () {
+          var picked = '';
+          if (box.checked) {
+            picked = box.dataset.value;
+            boxes.forEach(function (b) { if (b !== box) b.checked = false; });
+          }
+          var token = document.querySelector('meta[name="csrf-token"]');
+          var body  = { plan: {} };
+          body.plan[field] = picked;
+          fetch(url, {
+            method: 'PATCH',
+            credentials: 'same-origin',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': token ? token.content : ''
+            },
+            body: JSON.stringify(body)
+          });
+        });
+      });
     });
+
+    // ── Draggable dividers between the three text sections ─────────
+    // Each divider redistributes space between its two adjacent
+    // sections only. Ratios (flex-grow values) are saved to
+    // localStorage per plan id so the layout persists across visits.
+    // Min-height 60px per section stops a user from dragging one to
+    // zero and losing access.
+    (function () {
+      var sheet = document.querySelector('.ics-202-sheet');
+      if (!sheet) return;
+      var planId = sheet.dataset.planId;
+      var sections = {
+        objectives: sheet.querySelector('[data-section-key="objectives"]'),
+        emphasis:   sheet.querySelector('[data-section-key="emphasis"]'),
+        awareness:  sheet.querySelector('[data-section-key="awareness"]')
+      };
+      if (!sections.objectives || !sections.emphasis || !sections.awareness) return;
+
+      var storageKey = 'ics202-ratios-' + planId;
+      var saved = null;
+      try { saved = JSON.parse(localStorage.getItem(storageKey) || 'null'); } catch (e) {}
+      var ratios = saved && saved.objectives && saved.emphasis && saved.awareness
+                   ? saved
+                   : { objectives: 1, emphasis: 1, awareness: 1 };
+
+      function applyRatios() {
+        sections.objectives.style.flexGrow = ratios.objectives;
+        sections.emphasis.style.flexGrow   = ratios.emphasis;
+        sections.awareness.style.flexGrow  = ratios.awareness;
+      }
+      applyRatios();
+
+      var MIN_PX = 60;
+
+      sheet.querySelectorAll('.sheet-divider').forEach(function (div) {
+        var aboveKey = div.dataset.above;
+        var belowKey = div.dataset.below;
+        var aboveEl  = sections[aboveKey];
+        var belowEl  = sections[belowKey];
+        if (!aboveEl || !belowEl) return;
+
+        div.addEventListener('mousedown', function (e) {
+          e.preventDefault();
+          div.classList.add('dragging');
+          var startY       = e.clientY;
+          var aboveStartH  = aboveEl.offsetHeight;
+          var belowStartH  = belowEl.offsetHeight;
+          var totalPx      = aboveStartH + belowStartH;
+          var totalRatio   = ratios[aboveKey] + ratios[belowKey];
+
+          function onMove(ev) {
+            var deltaY  = ev.clientY - startY;
+            var newAbove = Math.max(MIN_PX, Math.min(totalPx - MIN_PX, aboveStartH + deltaY));
+            var proportion = newAbove / totalPx;
+            ratios[aboveKey] = totalRatio * proportion;
+            ratios[belowKey] = totalRatio * (1 - proportion);
+            applyRatios();
+          }
+          function onUp() {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup',   onUp);
+            div.classList.remove('dragging');
+            try { localStorage.setItem(storageKey, JSON.stringify(ratios)); } catch (e) {}
+          }
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup',   onUp);
+        });
+      });
+
+      // ── Overflow badges ────────────────────────────────────────
+      // Watch each text-body — if content is taller than visible
+      // area, show a warning badge on the section label.
+      function checkOverflow() {
+        Object.keys(sections).forEach(function (key) {
+          var section = sections[key];
+          var body    = section.querySelector('.sheet-text-body');
+          var label   = section.querySelector('.sheet-text-label');
+          if (!body || !label) return;
+          var overflowing = body.scrollHeight > body.clientHeight + 1;
+          var badge = label.querySelector('.sheet-overflow-badge');
+          if (overflowing && !badge) {
+            badge = document.createElement('span');
+            badge.className = 'sheet-overflow-badge';
+            badge.textContent = '⚠ May not fit when printed';
+            badge.title = 'This section has more text than fits — drag the divider to give it more room, or trim the text.';
+            label.appendChild(badge);
+          } else if (!overflowing && badge) {
+            badge.remove();
+          }
+        });
+      }
+      if (window.ResizeObserver) {
+        var ro = new ResizeObserver(checkOverflow);
+        Object.values(sections).forEach(function (s) {
+          ro.observe(s);
+          var body = s.querySelector('.sheet-text-body');
+          if (body) ro.observe(body);
+        });
+      }
+      checkOverflow();
+    })();
   });
 </script>

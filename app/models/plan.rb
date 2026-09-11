@@ -133,17 +133,19 @@ class Plan < ApplicationRecord
     end
   end
 
-  # ICS 202 section 6 layout: 11 predefined form checkboxes on the left,
-  # 4 user-editable "Other Attachments" slots on the right. Descriptions
-  # for the left column are locked to the standard ICS form names; the
-  # right column starts blank so the user can name them anything.
+  # ICS 202 section 6: 18-slot grid (3 columns × 6 rows). First 11
+  # slots seeded with standard ICS form names; the remaining 7 start
+  # blank so the user can label them however they like. All 18 are
+  # editable — the pre-seeded names are just defaults.
   ICS_202_ATTACHMENTS = [
     "ICS 202", "ICS 203", "ICS 204", "ICS 205", "ICS 205A", "ICS 206",
     "ICS 207", "ICS 208", "ICS 220", "Map/Chart", "Forecasts"
   ].freeze
+  ICS_202_ATTACHMENT_SLOTS = 18
 
   def add_attachments
-    (ICS_202_ATTACHMENTS + ["", "", "", ""]).each do |a|
+    blanks = Array.new(ICS_202_ATTACHMENT_SLOTS - ICS_202_ATTACHMENTS.length, "")
+    (ICS_202_ATTACHMENTS + blanks).each do |a|
       Attachment.create!(description: a, plan_id: self.id)
     end
   end

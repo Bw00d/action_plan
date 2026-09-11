@@ -205,18 +205,16 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
     end
 
-    # ICS 202 section 6 splits into a fixed 11-item left column (predefined
-    # form checkboxes) and a 4-item right column ("Other Attachments" that
-    # the user names themselves). Older plans predate this split and have
-    # only 12 rows total; treat the first 11 as left and the remainder as
-    # right so both new and legacy plans render sensibly.
+    # ICS 202 section 6 is now a flat 18-slot grid (3 cols × 6 rows) —
+    # the new sheet template iterates @attachments directly. The old
+    # @left / @right split is kept temporarily for the PDF template,
+    # which Phase 5 will rewrite to use the new sheet layout too.
     def load_ics_202_attachments
-      @attachments = @plan.attachments.order(id: :asc)
+      @attachments = @plan.attachments.order(id: :asc).to_a
+      # Legacy — old PDF template still expects these.
       @left_attachments  = @attachments[0, 11] || []
-      @right_attachments = (@attachments[11, 4] || []).tap do |slots|
-        # Pad the right column to 4 rows so the layout doesn't collapse
-        # on legacy plans that don't have all four slots persisted.
-        (4 - slots.size).times { slots << nil }
+      @right_attachments = (@attachments[11, 7] || []).tap do |slots|
+        (7 - slots.size).times { slots << nil }
       end
     end
 
