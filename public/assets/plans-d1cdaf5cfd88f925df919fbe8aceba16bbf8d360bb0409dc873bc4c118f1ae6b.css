@@ -1,0 +1,1608 @@
+/* show */
+/* line 4, app/assets/stylesheets/plans.css.scss */
+.plan-panel-head {
+  background-color: #F5F5F5;
+  border: 1px solid #DDD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: 40px;
+}
+
+/* line 10, app/assets/stylesheets/plans.css.scss */
+.plan-panel-head .tabrow {
+  text-align: left;
+  list-style: none;
+  margin: 0;
+  margin-top: 7px;
+  margin-left: 10px;
+  padding: 0;
+  line-height: 24px;
+  position: relative;
+}
+
+/* line 21, app/assets/stylesheets/plans.css.scss */
+.masking-tape {
+  height: 5px;
+  width: 50px;
+  color: blue;
+  background-color: white;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+/* line 34, app/assets/stylesheets/plans.css.scss */
+.date-row {
+  margin-bottom: 2px;
+  padding-bottom: 0;
+  position: relative;
+}
+
+/* line 39, app/assets/stylesheets/plans.css.scss */
+.date-tab {
+  list-style: none;
+  position: relative;
+  /*margin-bottom: -7px;*/
+  margin-left: -10px;
+  display: inline-block;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* line 47, app/assets/stylesheets/plans.css.scss */
+.date-tab .top {
+  width: 60px;
+  background-color: white;
+  border: 1px solid #DDD;
+  height: 30px;
+  border-radius: 30px;
+  display: inline-block;
+  border-bottom: none;
+  z-index: 1 !important;
+  position: relative;
+}
+
+/* line 60, app/assets/stylesheets/plans.css.scss */
+.date-tab .bottom {
+  width: 60px;
+  background-color: white;
+  border: 1px solid #DDD;
+  height: 20px;
+  position: absolute;
+  margin-top: -18px;
+  z-index: 2 !important;
+  border-bottom: 1px solid white;
+  border-top: none;
+  text-align: center;
+}
+
+/* line 72, app/assets/stylesheets/plans.css.scss */
+.date-tab .active {
+  height: 21px;
+}
+
+/* line 76, app/assets/stylesheets/plans.css.scss */
+.new-plan {
+  font-size: 2.5em;
+  color: #B4B4B4;
+}
+
+/* line 80, app/assets/stylesheets/plans.css.scss */
+.expanded {
+  border-bottom: none !important;
+}
+
+/* line 84, app/assets/stylesheets/plans.css.scss */
+.plan-row {
+  z-index: 2;
+  overflow: hidden;
+  border-bottom: 1px solid #DDD;
+  padding: 10px;
+  font-weight: 700;
+  background-color: white;
+}
+
+/* line 91, app/assets/stylesheets/plans.css.scss */
+.plan-row a {
+  color: #3D3D3D !important;
+}
+
+/* line 95, app/assets/stylesheets/plans.css.scss */
+.list-content {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 99, app/assets/stylesheets/plans.css.scss */
+.situation {
+  /*border-top: 1px solid #DDD;*/
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 104, app/assets/stylesheets/plans.css.scss */
+.situation-content {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 20px;
+  display: none;
+}
+
+/* line 108, app/assets/stylesheets/plans.css.scss */
+.situation-content textarea {
+  width: 100%;
+}
+
+/* line 111, app/assets/stylesheets/plans.css.scss */
+.situation-content input {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* line 116, app/assets/stylesheets/plans.css.scss */
+span.plans-button {
+  margin-top: -7px;
+}
+
+/* Incident Objectives */
+/* line 120, app/assets/stylesheets/plans.css.scss */
+#objectives-list {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 124, app/assets/stylesheets/plans.css.scss */
+.objectives-list {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 5px;
+  display: none;
+}
+
+/* line 128, app/assets/stylesheets/plans.css.scss */
+.objectives-list .new-objective {
+  color: #a19afc;
+  size: 1.2em;
+}
+
+/* line 132, app/assets/stylesheets/plans.css.scss */
+.objectives-list ol {
+  padding-left: 20px;
+}
+
+/* line 136, app/assets/stylesheets/plans.css.scss */
+#objective-form {
+  display: none;
+  position: relative;
+}
+
+/* line 139, app/assets/stylesheets/plans.css.scss */
+#objective-form textarea {
+  width: 100%;
+}
+
+/* line 142, app/assets/stylesheets/plans.css.scss */
+#objective-form input {
+  /*width: 100px;*/
+}
+
+/* line 147, app/assets/stylesheets/plans.css.scss */
+#objectives input {
+  width: 100%;
+}
+
+/* line 151, app/assets/stylesheets/plans.css.scss */
+.delete-objective {
+  width: 15px;
+  height: 15px;
+  font-size: 10px;
+  text-align: center;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  font-weight: 666;
+  position: absolute;
+  left: 10px;
+}
+
+/* line 164, app/assets/stylesheets/plans.css.scss */
+a.delete-objective:hover {
+  color: white;
+}
+
+/* Activities */
+/* line 169, app/assets/stylesheets/plans.css.scss */
+#activity-list {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 173, app/assets/stylesheets/plans.css.scss */
+.activities-list {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 5px;
+  display: none;
+}
+
+/* line 177, app/assets/stylesheets/plans.css.scss */
+.activities-list ul {
+  padding-left: 20px;
+}
+
+/* line 181, app/assets/stylesheets/plans.css.scss */
+#activity-form {
+  display: none;
+  position: relative;
+}
+
+/* line 184, app/assets/stylesheets/plans.css.scss */
+#activity-form textarea {
+  width: 100%;
+}
+
+/* line 187, app/assets/stylesheets/plans.css.scss */
+#activity-form input {
+  /*width: 100%;*/
+}
+
+/* line 191, app/assets/stylesheets/plans.css.scss */
+.forms-list {
+  display: none;
+  padding: 10px 5px;
+}
+
+/* line 194, app/assets/stylesheets/plans.css.scss */
+.forms-list ul {
+  padding-left: 20px;
+}
+
+/* line 198, app/assets/stylesheets/plans.css.scss */
+#iap-content {
+  border-bottom: 1px solid #DDD !important;
+}
+
+/* line 200, app/assets/stylesheets/plans.css.scss */
+#iap-content a {
+  color: #3d3d3d;
+}
+
+/* line 203, app/assets/stylesheets/plans.css.scss */
+#iap-content a:hover {
+  color: #3d3d3d;
+}
+
+/* line 206, app/assets/stylesheets/plans.css.scss */
+#iap-content a:visited {
+  color: #3d3d3d;
+}
+
+/* line 210, app/assets/stylesheets/plans.css.scss */
+.title-row {
+  border-right: 1px solid black;
+}
+
+/* line 212, app/assets/stylesheets/plans.css.scss */
+.title-row div {
+  height: 40px;
+}
+
+/* Resources*/
+/* line 218, app/assets/stylesheets/plans.css.scss */
+#resource-list {
+  border-left: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 223, app/assets/stylesheets/plans.css.scss */
+.resources-list {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 5px;
+  display: none;
+}
+
+/* line 227, app/assets/stylesheets/plans.css.scss */
+.resources-list .new-resource {
+  color: #a19afc;
+  size: 1.2em;
+}
+
+/* line 231, app/assets/stylesheets/plans.css.scss */
+.resources-list ul {
+  padding-left: 20px;
+}
+
+/* line 235, app/assets/stylesheets/plans.css.scss */
+#resource-form {
+  display: none;
+  position: relative;
+}
+
+/* line 238, app/assets/stylesheets/plans.css.scss */
+#resource-form textarea {
+  width: 100%;
+}
+
+/* line 241, app/assets/stylesheets/plans.css.scss */
+#resource-form input {
+  width: 100%;
+}
+
+/* IAP */
+/* line 248, app/assets/stylesheets/plans.css.scss */
+#iap-row {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+/* line 253, app/assets/stylesheets/plans.css.scss */
+.form-row {
+  position: relative;
+  border-top: 1px solid black;
+  height: 30px;
+  border-right: 1px solid black;
+}
+
+/* line 259, app/assets/stylesheets/plans.css.scss */
+.top-row {
+  border-top: 1px solid black;
+}
+
+/* line 263, app/assets/stylesheets/plans.css.scss */
+.bottom-row {
+  border-right: 1px solid black;
+}
+
+/* line 266, app/assets/stylesheets/plans.css.scss */
+.small {
+  font-size: .70em;
+}
+
+/* line 269, app/assets/stylesheets/plans.css.scss */
+.small-box {
+  padding-right: 0;
+  padding-left: 5px;
+  min-height: 30px;
+}
+
+/* line 274, app/assets/stylesheets/plans.css.scss */
+.bl {
+  border-left: 1px solid black;
+}
+
+/* line 277, app/assets/stylesheets/plans.css.scss */
+.bt {
+  border-top: 1px solid black;
+  margin-top: -1px;
+}
+
+/* ICS 202 Incident Objectives*/
+/* line 284, app/assets/stylesheets/plans.css.scss */
+#title-box {
+  text-align: center;
+}
+
+/* line 287, app/assets/stylesheets/plans.css.scss */
+#print-container {
+  margin: 10px 20px;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* line 294, app/assets/stylesheets/plans.css.scss */
+#incident-objectives {
+  overflow: hidden;
+}
+
+/* line 298, app/assets/stylesheets/plans.css.scss */
+#incident-objectives h4, #incident-objectives h5 {
+  padding: 0;
+  margin: 0;
+}
+
+/* line 348, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives-pdf {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  overflow: hidden;
+}
+
+/* line 353, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #control-objectives-pdf ul {
+  line-height: 2em;
+}
+
+/* line 357, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #operational-emphasis-pdf {
+  border-left: 1px solid black;
+  overflow: hidden;
+}
+
+/* line 361, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #general-safety-message-pdf {
+  border-top: 1px solid black;
+  overflow: hidden;
+  padding-bottom: 10px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 375, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .ics-202-section {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding: 6px 10px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* line 382, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .ics-202-section .best_in_place {
+  display: block;
+  width: 100%;
+  min-height: 60px;
+}
+
+/* line 388, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #objectives-row .ics-202-section {
+  border-top: 1px solid black;
+}
+
+/* line 396, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  padding: 8px 10px;
+}
+
+/* line 405, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row .ssp-toggle-group {
+  display: inline-block;
+  margin-left: 14px;
+  vertical-align: middle;
+}
+
+/* line 410, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row .ssp-toggle-group .ssp-check {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+/* line 418, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row .ssp-toggle-group .ssp-check .ssp-check-label {
+  margin-right: 6px;
+}
+
+/* line 419, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row .ssp-toggle-group .ssp-check .ssp-check-input {
+  margin: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+/* line 427, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row .ssp-location {
+  display: inline-block;
+  margin-left: 24px;
+}
+
+/* line 431, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row .ssp-location .best_in_place {
+  display: inline-block;
+  min-width: 200px;
+  padding: 1px 4px;
+}
+
+/* line 435, app/assets/stylesheets/plans.css.scss */
+#incident-objectives .site-safety-row .ssp-location .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 443, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 6px 10px 8px;
+}
+
+/* line 450, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .attachments-header {
+  margin-bottom: 4px;
+}
+
+/* line 453, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .attachments-header .small + .small {
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+/* line 457, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .other-attachments-label {
+  margin-bottom: 4px;
+}
+
+/* line 460, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .attachments-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* line 467, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .attachments-list li {
+  padding: 0;
+  margin: 0;
+  line-height: 1.0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 476, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .attachment-label {
+  margin-left: 6px;
+}
+
+/* line 481, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .best_in_place {
+  display: inline-block;
+  padding: 1px 4px;
+  vertical-align: middle;
+}
+
+/* line 486, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 491, app/assets/stylesheets/plans.css.scss */
+#incident-objectives #attachments > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* line 497, app/assets/stylesheets/plans.css.scss */
+.tall-rows {
+  min-height: 300px;
+}
+
+/* line 500, app/assets/stylesheets/plans.css.scss */
+.medium-rows {
+  min-height: 200px;
+}
+
+/* line 503, app/assets/stylesheets/plans.css.scss */
+.short-rows {
+  min-height: 100px;
+}
+
+/* line 506, app/assets/stylesheets/plans.css.scss */
+.padded-box {
+  padding-left: 20px;
+}
+
+/* line 509, app/assets/stylesheets/plans.css.scss */
+.new-button {
+  font-size: 2em;
+  color: #333;
+}
+
+/* line 513, app/assets/stylesheets/plans.css.scss */
+.header-row {
+  text-align: center;
+  background-color: #dcdcdc;
+  padding-top: 5px;
+  border-left: 1px solid black;
+}
+
+/* line 519, app/assets/stylesheets/plans.css.scss */
+.gray-row {
+  background-color: #dcdcdc !important;
+}
+
+/* line 523, app/assets/stylesheets/plans.css.scss */
+#weather-form textarea {
+  width: 100%;
+  height: 80%;
+}
+
+/* line 529, app/assets/stylesheets/plans.css.scss */
+#safety-form textarea {
+  width: 100%;
+  height: 75%;
+}
+
+/* line 535, app/assets/stylesheets/plans.css.scss */
+.bip-input input {
+  margin-right: 5px;
+}
+
+/* line 539, app/assets/stylesheets/plans.css.scss */
+h1.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* line 544, app/assets/stylesheets/plans.css.scss */
+.print-button {
+  margin-top: 25px;
+}
+
+/* line 548, app/assets/stylesheets/plans.css.scss */
+.resize-handle {
+  height: 1px;
+  background: transparent;
+  border-bottom: 1px solid #000;
+  margin-left: -15px;
+  margin-right: -15px;
+  cursor: ns-resize;
+  position: relative;
+  z-index: 10;
+}
+
+/* line 562, app/assets/stylesheets/plans.css.scss */
+.resize-handle:hover {
+  background: #bbb;
+}
+
+/* line 566, app/assets/stylesheets/plans.css.scss */
+.resize-handle:active {
+  background: #999;
+}
+
+/* line 570, app/assets/stylesheets/plans.css.scss */
+.resizable-row {
+  position: relative;
+  min-height: 100px;
+  overflow: hidden;
+  max-height: 400px;
+}
+
+/* ICS 202 Incident Organization */
+/* line 579, app/assets/stylesheets/plans.css.scss */
+.split-right {
+  position: relative;
+  border-bottom: 1px solid black;
+  min-height: 40px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 586, app/assets/stylesheets/plans.css.scss */
+.split-left {
+  position: relative;
+  border-bottom: 1px solid black;
+  min-height: 35px;
+  border-left: 1px solid black;
+}
+
+/* line 593, app/assets/stylesheets/plans.css.scss */
+.content-box {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  height: 30px;
+  margin: 0;
+  padding: 8px 5px;
+}
+
+/* line 610, app/assets/stylesheets/plans.css.scss */
+#organization-assignments #title-box,
+#incident-objectives #title-box {
+  border-top: none;
+  border-left: none;
+}
+
+/* line 620, app/assets/stylesheets/plans.css.scss */
+.org-header .op-period-cell {
+  background-color: #dcdcdc;
+}
+
+/* line 623, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-cell {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 60px;
+}
+
+/* line 630, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-cell.org-header-tall {
+  min-height: 90px;
+}
+
+/* line 635, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-label {
+  padding: 6px 5px;
+  border-bottom: 1px solid black;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+/* line 642, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-value {
+  padding: 6px 5px;
+  font-weight: 600;
+  flex: 1 1 auto;
+}
+
+/* line 647, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-right {
+  padding-left: 0;
+  padding-right: 0;
+  border-right: 1px solid black;
+}
+
+/* line 652, app/assets/stylesheets/plans.css.scss */
+.org-header .org-header-right > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* line 657, app/assets/stylesheets/plans.css.scss */
+.org-footer .content-box {
+  min-height: 34px;
+}
+
+/* line 660, app/assets/stylesheets/plans.css.scss */
+.org-footer-meta {
+  padding: 4px 8px 0;
+  font-size: 0.85em;
+}
+
+/* line 664, app/assets/stylesheets/plans.css.scss */
+.org-footer-meta strong {
+  letter-spacing: 1px;
+}
+
+/* line 665, app/assets/stylesheets/plans.css.scss */
+.right-column {
+  border-right: 1px solid black;
+}
+
+/* line 669, app/assets/stylesheets/plans.css.scss */
+#organization-assignments h4 {
+  padding-bottom: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+/* line 676, app/assets/stylesheets/plans.css.scss */
+.team-form {
+  overflow: hidden;
+}
+
+/* line 686, app/assets/stylesheets/plans.css.scss */
+#organization-assignments {
+  --row-height: 30px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 692, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 699, app/assets/stylesheets/plans.css.scss */
+#organization-assignments > .container > .col-xs-12 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* line 707, app/assets/stylesheets/plans.css.scss */
+.org-columns {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 723, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child,
+#organization-assignments .right-column > .row:last-child {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+}
+
+/* line 729, app/assets/stylesheets/plans.css.scss */
+#organization-assignments .left-column > .row:last-child > .content-box,
+#organization-assignments .right-column > .row:last-child > .content-box {
+  flex: 1 1 50%;
+  height: auto !important;
+  min-height: var(--row-height, 30px);
+}
+
+/* line 736, app/assets/stylesheets/plans.css.scss */
+.org-columns > .left-column,
+.org-columns > .right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 759, app/assets/stylesheets/plans.css.scss */
+.add-org-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* line 776, app/assets/stylesheets/plans.css.scss */
+.add-org-btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* line 778, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:hover {
+  opacity: 0.7;
+}
+
+/* line 779, app/assets/stylesheets/plans.css.scss */
+.add-org-btn:focus {
+  outline: none;
+}
+
+/* line 782, app/assets/stylesheets/plans.css.scss */
+img.add-org-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* line 789, app/assets/stylesheets/plans.css.scss */
+.add-header-btn i.fa {
+  font-size: 18px;
+  color: #555;
+  width: 20px;
+  text-align: center;
+}
+
+/* line 800, app/assets/stylesheets/plans.css.scss */
+.staff-row {
+  position: relative;
+}
+
+/* line 809, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  z-index: 6;
+  cursor: pointer;
+}
+
+/* line 819, app/assets/stylesheets/plans.css.scss */
+form.insert-below-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 825, app/assets/stylesheets/plans.css.scss */
+.insert-below {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: absolute;
+  right: 85px;
+  bottom: -11px;
+  top: auto;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 50%;
+  color: #000;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  z-index: 5;
+}
+
+/* line 854, app/assets/stylesheets/plans.css.scss */
+.insert-below:hover {
+  color: #000;
+  border-color: #000;
+}
+
+/* line 858, app/assets/stylesheets/plans.css.scss */
+.insert-below:focus {
+  outline: none;
+}
+
+/* line 864, app/assets/stylesheets/plans.css.scss */
+.insert-hover-zone:hover ~ .content-box .insert-below,
+.insert-below:hover,
+.insert-below:focus {
+  opacity: 1;
+}
+
+/* line 867, app/assets/stylesheets/plans.css.scss */
+img.small-icon {
+  height: 15px;
+  width: 15px;
+}
+
+/* line 871, app/assets/stylesheets/plans.css.scss */
+img.medium-icon {
+  height: 25px;
+  width: 25px;
+}
+
+/* line 875, app/assets/stylesheets/plans.css.scss */
+#add-freqs-button {
+  text-align: center;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+/* line 880, app/assets/stylesheets/plans.css.scss */
+img#add-freqs-button {
+  height: 30px;
+  width: 30px;
+}
+
+/* Attachments */
+/* line 887, app/assets/stylesheets/plans.css.scss */
+#attachments {
+  overflow: hidden;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  height: 250px;
+  overflow: hidden;
+}
+
+/* line 894, app/assets/stylesheets/plans.css.scss */
+#attachments ul {
+  list-style: none;
+}
+
+/* line 897, app/assets/stylesheets/plans.css.scss */
+#attachments li.attachment {
+  list-style: none;
+  float: left;
+  width: 200px;
+}
+
+/* line 904, app/assets/stylesheets/plans.css.scss */
+.checkboxes img {
+  height: 17px !important;
+  width: 17px !important;
+}
+
+/* line 908, app/assets/stylesheets/plans.css.scss */
+.bip-checkbox {
+  cursor: pointer;
+  font-size: 17px;
+  margin-right: 5px;
+}
+
+/* New Incident conversation UI form*/
+/* line 916, app/assets/stylesheets/plans.css.scss */
+.ui-group {
+  /*.form-incident-type {
+    display: none;
+  }
+  .form-incident-complexity {
+    display: none;
+  }*/
+}
+
+/* line 923, app/assets/stylesheets/plans.css.scss */
+.ui-group .form-attributes {
+  display: none;
+}
+
+/* line 928, app/assets/stylesheets/plans.css.scss */
+.ui-group p {
+  color: #979797;
+  font-size: 1.1em;
+}
+
+/* line 932, app/assets/stylesheets/plans.css.scss */
+.ui-group label {
+  font-size: 1.6em;
+  font-weight: 999;
+  margin-bottom: 20px;
+}
+
+/* line 937, app/assets/stylesheets/plans.css.scss */
+.ui-group div.next-btn-container {
+  margin-top: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* line 942, app/assets/stylesheets/plans.css.scss */
+.ui-group div.hideable {
+  visibility: hidden;
+}
+
+/* line 945, app/assets/stylesheets/plans.css.scss */
+.ui-group .next-btn {
+  max-width: 60px;
+}
+
+/* line 966, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet {
+  width: 7.5in;
+  height: 10in;
+  margin: 24px auto;
+  background: #fff;
+  border: 1px solid #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #172b4d;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+  box-sizing: border-box;
+}
+
+/* line 986, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet * {
+  box-sizing: border-box;
+}
+
+/* line 991, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section {
+  border-bottom: 1px solid #000;
+  padding: 4px 8px;
+}
+
+/* line 994, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section:last-child {
+  border-bottom: none;
+}
+
+/* line 998, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-title {
+  flex: none;
+  height: 34px;
+  padding: 8px 10px 0;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+/* line 1009, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header {
+  flex: none;
+  height: 78px;
+  display: flex;
+  padding: 0;
+}
+
+/* line 1015, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-left {
+  flex: 0 0 33.33%;
+  border-right: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 1021, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 1028, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-op {
+  flex: none;
+  height: 30px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #000;
+  background: #dcdcdc;
+  display: flex;
+  align-items: center;
+}
+
+/* line 1037, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-op .sheet-header-op-label {
+  font-size: 11px;
+  margin-right: 8px;
+}
+
+/* line 1038, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-op .sheet-header-op-value {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* line 1044, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-op .sheet-header-op-value:hover {
+  background: rgba(76, 154, 255, 0.15);
+}
+
+/* line 1047, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-dates {
+  flex: 1;
+  display: flex;
+}
+
+/* line 1051, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-date {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 1055, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-date:not(:last-child) {
+  border-right: 1px solid #000;
+}
+
+/* line 1058, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-label {
+  background: #dcdcdc;
+  padding: 4px 8px;
+  font-size: 11px;
+  border-bottom: 1px solid #000;
+}
+
+/* line 1064, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-value {
+  padding: 6px 8px;
+  font-weight: 600;
+  flex: 1;
+  border: 0 none !important;
+}
+
+/* line 1079, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-value input.sheet-dt-picker,
+.ics-form-sheet > .sheet-header .sheet-header-value .sheet-dt-picker {
+  width: 100%;
+  border: 0 none !important;
+  outline: 0 none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+/* line 1095, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-value input.sheet-dt-picker:hover,
+.ics-form-sheet > .sheet-header .sheet-header-value .sheet-dt-picker:hover {
+  background: rgba(76, 154, 255, 0.06) !important;
+  cursor: pointer;
+}
+
+/* line 1096, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-value input.sheet-dt-picker:focus,
+.ics-form-sheet > .sheet-header .sheet-header-value .sheet-dt-picker:focus {
+  background: rgba(76, 154, 255, 0.12) !important;
+  cursor: text;
+}
+
+/* line 1097, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-header .sheet-header-value input.sheet-dt-picker::placeholder,
+.ics-form-sheet > .sheet-header .sheet-header-value .sheet-dt-picker::placeholder {
+  color: #a5adba;
+  font-weight: 400;
+}
+
+/* line 1106, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-text {
+  flex: 1 1 0;
+  min-height: 60px;
+  overflow: hidden;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 1114, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-text .sheet-text-label {
+  font-weight: 700;
+  font-size: 11px;
+  margin-bottom: 4px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* line 1123, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-text .sheet-text-body {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* line 1128, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-text .sheet-text-body .best_in_place {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+/* line 1134, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-text .sheet-text-body .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 1142, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-objectives,
+.ics-form-sheet > .sheet-emphasis {
+  border-bottom: none;
+}
+
+/* line 1150, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-divider {
+  flex: none;
+  height: 7px;
+  border-bottom: 1px solid #000;
+  background: transparent;
+  cursor: ns-resize;
+  transition: background 0.15s ease;
+  user-select: none;
+}
+
+/* line 1159, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-divider:hover, .ics-form-sheet > .sheet-divider.dragging {
+  background: rgba(0, 82, 204, 0.18);
+}
+
+/* line 1168, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet .sheet-overflow-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  background: #fff3cd;
+  border: 1px solid #ffe08a;
+  border-radius: 3px;
+  color: #7a5b00;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: help;
+}
+
+/* line 1182, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 {
+  flex: none;
+  height: 34px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 12px;
+}
+
+/* line 1191, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .sheet-inline-label {
+  margin: 0;
+  flex: none;
+}
+
+/* line 1198, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .ssp-toggle-group {
+  display: inline-flex;
+  gap: 16px;
+  align-items: center;
+  flex: none;
+}
+
+/* line 1204, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .ssp-check {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+/* line 1211, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .ssp-check .ssp-check-label {
+  margin-right: 6px;
+}
+
+/* line 1212, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .ssp-check .ssp-check-input {
+  margin: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+/* line 1219, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .ssp-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+/* line 1225, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .ssp-location .best_in_place {
+  display: inline-block;
+  min-width: 160px;
+  padding: 1px 4px;
+}
+
+/* line 1229, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-5 .ssp-location .best_in_place:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 1238, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 {
+  flex: none;
+  height: 150px;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 1245, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .sheet-text-label {
+  margin-bottom: 6px;
+  flex: none;
+}
+
+/* line 1246, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .sheet-normal {
+  font-weight: 400;
+}
+
+/* line 1248, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .attachments-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-auto-flow: column;
+  column-gap: 16px;
+  row-gap: 0;
+}
+
+/* line 1257, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .attachment-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+/* line 1265, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .attachment-checkbox {
+  flex: none;
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
+/* line 1269, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .attachment-checkbox:hover {
+  background: #eef4ff;
+}
+
+/* line 1271, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .attachment-description {
+  flex: 1;
+  min-width: 0;
+  padding: 1px 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* line 1279, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-6 .attachment-description:hover {
+  background: #eef4ff;
+  cursor: text;
+}
+
+/* line 1284, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-7,
+.ics-form-sheet > .sheet-section-8 {
+  flex: none;
+  height: 40px;
+  display: flex;
+  padding: 0;
+}
+
+/* line 1291, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-7 > .sheet-cell,
+.ics-form-sheet > .sheet-section-8 > .sheet-cell {
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* line 1296, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-7 > .sheet-cell:not(:last-child),
+.ics-form-sheet > .sheet-section-8 > .sheet-cell:not(:last-child) {
+  border-right: 1px solid #000;
+}
+
+/* line 1297, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-7 > .sheet-cell .sheet-cell-label,
+.ics-form-sheet > .sheet-section-8 > .sheet-cell .sheet-cell-label {
+  font-size: 10px;
+  color: #333;
+}
+
+/* line 1298, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-7 > .sheet-cell .sheet-cell-value,
+.ics-form-sheet > .sheet-section-8 > .sheet-cell .sheet-cell-value {
+  font-weight: 600;
+}
+
+/* line 1300, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-7 > .sheet-cell.wide,
+.ics-form-sheet > .sheet-section-8 > .sheet-cell.wide {
+  flex: 3;
+}
+
+/* line 1301, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-section-7 > .sheet-cell.narrow,
+.ics-form-sheet > .sheet-section-8 > .sheet-cell.narrow {
+  flex: 2;
+}
+
+/* line 1305, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-meta {
+  flex: none;
+  height: 30px;
+  display: flex;
+  padding: 0;
+  font-size: 11px;
+}
+
+/* line 1312, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-meta > .sheet-cell {
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* line 1316, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-meta > .sheet-cell:not(:last-child) {
+  border-right: 1px solid #000;
+}
+
+/* line 1318, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-meta .sheet-cell.form-id {
+  flex: 1;
+  font-weight: 700;
+}
+
+/* line 1319, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-meta .sheet-cell.iap-page {
+  flex: 1;
+}
+
+/* line 1320, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-meta .sheet-cell.status {
+  flex: 2;
+  justify-content: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* line 1321, app/assets/stylesheets/plans.css.scss */
+.ics-form-sheet > .sheet-meta .sheet-cell.page-num {
+  flex: 2;
+  justify-content: flex-end;
+  border-right: none;
+}
+
+/* line 1328, app/assets/stylesheets/plans.css.scss */
+.ics-202-page-actions {
+  max-width: 7.5in;
+  margin: 12px auto 24px;
+  text-align: right;
+}
+
+@media print {
+  /* line 1335, app/assets/stylesheets/plans.css.scss */
+  .ics-form-sheet {
+    margin: 0;
+    box-shadow: none;
+    border-color: #000;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* line 1344, app/assets/stylesheets/plans.css.scss */
+  .ics-202-page-actions {
+    display: none;
+  }
+}
+
+/* line 1352, app/assets/stylesheets/plans.css.scss */
+.ics-202-print {
+  margin: 0;
+  box-shadow: none;
+  page-break-inside: avoid;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* line 1361, app/assets/stylesheets/plans.css.scss */
+.ics-202-print .best_in_place:hover,
+.ics-202-print .sheet-dt-picker:hover,
+.ics-202-print .sheet-header-op-value:hover,
+.ics-202-print .attachment-description:hover,
+.ics-202-print .attachment-checkbox:hover {
+  background: transparent !important;
+}
+
+/* line 1368, app/assets/stylesheets/plans.css.scss */
+.ics-202-print .sheet-overflow-badge {
+  display: none !important;
+}
+
+/* line 1372, app/assets/stylesheets/plans.css.scss */
+.ics-202-print .sheet-header-value,
+.ics-202-print .sheet-header-value * {
+  border: 0 none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+}
+
+@page {
+  size: Letter;
+  margin: 0.5in;
+}

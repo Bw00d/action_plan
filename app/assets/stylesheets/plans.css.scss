@@ -962,7 +962,10 @@ img#add-freqs-button {
 // them. No Bootstrap grid inside the sheet (no .row / .col-* / negative
 // margins) — layout is pure flex.
 // ============================================================
-
+.ics-202-sheet {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
 .ics-form-sheet {
   width: 7.5in;
   height: 10in;
@@ -974,7 +977,11 @@ img#add-freqs-button {
   flex-direction: column;
   overflow: hidden;
   color: #172b4d;
-  font-family: Cambria, Georgia, "Times New Roman", serif;
+  // Match the 204's font — the app-wide system sans-serif stack. Kept
+  // explicit here (rather than inheriting) so Grover's headless
+  // Chrome renders the PDF with the same fallbacks in the same order.
+  font-family: -apple-system, system-ui, BlinkMacSystemFont,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
   line-height: 1.35;
   box-sizing: border-box;
