@@ -238,19 +238,7 @@
       if (!url || !name) return;
       var data = {};
       data[name] = value;
-      if (window.console) console.log("saving", name, "=", JSON.stringify(value), "→", url);
-      $.ajax({
-        url:      url,
-        type:     "PATCH",
-        data:     data,
-        dataType: "json",
-        success: function () {
-          if (window.console) console.log("saved", name);
-        },
-        error: function (xhr) {
-          if (window.console) console.warn("save failed:", name, xhr.status, xhr.responseText);
-        }
-      });
+      $.ajax({ url: url, type: "PATCH", data: data, dataType: "json" });
     };
 
     if (typeof flatpickr !== "undefined") {

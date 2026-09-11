@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_11_000002) do
+ActiveRecord::Schema.define(version: 2026_09_11_000003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -398,16 +398,8 @@ ActiveRecord::Schema.define(version: 2026_09_11_000002) do
     t.string "time_prepared"
     t.string "ops_period"
     t.datetime "published_at"
-    t.date "date_from"
-    t.date "date_to"
-    t.string "time_from"
-    t.string "time_to"
-    t.text "objectives_content"
     t.string "site_safety_plan_required"
     t.text "site_safety_plan_location"
-    t.string "prepared_by_title"
-    t.string "ic_date_time"
-    t.string "iap_page"
     t.string "prepared_by_position"
     t.text "objectives_text"
     t.datetime "ops_period_from"
