@@ -52357,6 +52357,35 @@ $(document).on("turbolinks:load", function () {
   $(document).off("click.coverDeselect").on("click.coverDeselect", function (e) {
     if ($(e.target).closest(".cover-block, .cover-style-panel, .cover-upload-form").length) return;
     setSelected(null);
+    // Any click outside the panel also closes the font menu.
+    $(".csp-font-menu").hide();
+  });
+
+  // ── Font family picker ─────────────────────────────────────────────
+  // "F" button opens the menu of font options. Clicking an option
+  // applies the CSS font-family string to the selected block's inline
+  // style, saves to DB via saveBlockRect, and closes the menu. When no
+  // block is selected the picker is a no-op (opens the menu, but
+  // choosing does nothing — matches how other panel buttons behave).
+  $panel.off("click.coverFontPicker").on("click.coverFontPicker", ".csp-font-picker", function (e) {
+    e.stopPropagation();
+    var $menu = $panel.find(".csp-font-menu");
+    $menu.toggle();
+  });
+
+  $panel.off("click.coverFontOption").on("click.coverFontOption", ".csp-font-option", function (e) {
+    e.stopPropagation();
+    var value = $(this).data("value") || "";
+    $panel.find(".csp-font-menu").hide();
+
+    var $selected = $canvas.find(".cover-block.is-selected");
+    if (!$selected.length) return;
+    // Text / notes blocks only — image blocks don't have text to style.
+    if ($selected.hasClass("is-image")) return;
+
+    $selected.css("font-family", value);
+    saveBlockRect($selected.data("block-id"), { font_family: value });
+    refreshPanelFromBlock($selected);
   });
 
   // Single-click on an image block auto-opens the uploader below it, so
@@ -52382,6 +52411,11 @@ $(document).on("turbolinks:load", function () {
       var $selected = $canvas.find(".cover-block.is-selected");
 
       if ($selected.length) {
+        // Italic is a genuine toggle — clicking the button when it's
+        // already active flips text_style back to "normal".
+        if (attr === "text_style" && $(this).hasClass("is-active")) {
+          value = "normal";
+        }
         if (attr === "font_size") {
           applyFontSize($selected, value);
         } else {
@@ -53201,6 +53235,8 @@ $(document).on("turbolinks:load", function () {
     var $input = $(this);
     var $table = $input.closest(".ops-215-table");
     var url    = $table.data("update-url");
+    // Send raw string so the server can distinguish "" (unset → delete)
+    // from "0" (explicit zero → keep, drives a negative Need).
     $.ajax({
       url: url,
       method: "PATCH",
@@ -53208,21 +53244,31 @@ $(document).on("turbolinks:load", function () {
         org_unit_id: $table.data("org-unit-id"),
         day:         $input.data("day"),
         position:    $input.data("position"),
-        req:         parseInt($input.val(), 10) || 0
+        req:         $input.val()
       }
     }).done(function () {
       // Recompute Need in-place so the user sees it update without a reload.
       var $row   = $input.closest("tr");
       var $cells = $row.find(".ops-215-req");
       $cells.each(function (idx) {
-        var $r = $(this).find(".ops-215-req-input");
-        var $h = $(this).prev(".ops-215-have");
-        var $n = $(this).next(".ops-215-need");
-        var need = Math.max(0, (parseInt($r.val(), 10) || 0) - (parseInt($h.text(), 10) || 0));
-        $n.text(need === 0 ? "" : need);
+        var $r   = $(this).find(".ops-215-req-input");
+        var $h   = $(this).prev(".ops-215-have");
+        var $n   = $(this).next(".ops-215-need");
+        var raw  = $r.val();
+        if (raw === "" || raw == null) {
+          $n.text("");
+        } else {
+          var need = (parseInt(raw, 10) || 0) - (parseInt($h.text(), 10) || 0);
+          $n.text(need === 0 ? "" : need);
+        }
       });
-    }).fail(function () {
-      alert("Could not save Req value. Refresh the page.");
+    }).fail(function (xhr) {
+      var body = xhr.responseText || "";
+      console.error("update_line failed", xhr.status, body);
+      alert(
+        "Could not save Req value (" + xhr.status + ").\n\n" +
+        (body.length > 400 ? body.slice(0, 400) + "…" : body)
+      );
     });
   });
 });

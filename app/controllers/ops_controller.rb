@@ -27,15 +27,21 @@ class OpsController < ApplicationController
       day:         Date.parse(params[:day]),
       position:    params[:position]
     )
-    line.req = params[:req].to_i
-    if line.req.zero? && line.persisted?
-      line.destroy!
+    # Blank input = "unset" → delete any persisted row. A numeric value
+    # (including 0) is a real entry and gets saved. 0 is meaningful because
+    # it drives a negative Need (surplus) when Have > 0.
+    if params[:req].blank?
+      line.destroy! if line.persisted?
     else
+      line.req = params[:req].to_i
       line.save!
     end
     head :ok
   rescue ArgumentError, ActiveRecord::RecordInvalid => e
     render json: { error: e.message }, status: :unprocessable_entity
+  rescue => e
+    Rails.logger.error("update_line failed: #{e.class}: #{e.message}\n#{e.backtrace.first(8).join("\n")}")
+    render json: { error: "#{e.class}: #{e.message}" }, status: :internal_server_error
   end
 
   private
@@ -86,8 +92,8 @@ class OpsController < ApplicationController
     positions.map do |position|
       day_data = @days.map do |day|
         have = resources.count { |r| r.position == position && resource_present_on?(r, day) }
-        req  = stored_lines.find { |l| l.day == day && l.position == position }&.req.to_i
-        need = [req - have, 0].max
+        req  = stored_lines.find { |l| l.day == day && l.position == position }&.req
+        need = req.nil? ? nil : req - have
         { day: day, have: have, req: req, need: need }
       end
       { position: position, days: day_data }

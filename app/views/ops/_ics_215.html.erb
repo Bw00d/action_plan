@@ -30,12 +30,12 @@
             <td class="ops-215-req">
               <input type="number"
                      min="0"
-                     value="<%= cell[:req].zero? ? '' : cell[:req] %>"
+                     value="<%= cell[:req] %>"
                      class="ops-215-req-input"
                      data-day="<%= cell[:day].strftime('%Y-%m-%d') %>"
                      data-position="<%= row[:position] %>">
             </td>
-            <td class="ops-215-need"><%= cell[:need].zero? ? '' : cell[:need] %></td>
+            <td class="ops-215-need"><%= cell[:need].nil? || cell[:need].zero? ? '' : cell[:need] %></td>
           <% end %>
         </tr>
       <% end %>
