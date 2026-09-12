@@ -20,28 +20,59 @@
 <div class="ops-container">
   <% if @org_units.empty? %>
     <p class="text-muted lg-padding-top">
-      No divisions or groups yet — add them on the <%= link_to 'T Cards board', incident_board_path(@incident) %>.
+      No branches, divisions, or groups yet — add them on the <%= link_to 'T Cards board', incident_board_path(@incident) %>.
     </p>
   <% else %>
     <div class="ops-toolbar">
-      <label for="ops-org-unit-picker">Division / Group:</label>
+      <label for="ops-org-unit-picker">Branch / Division / Group:</label>
       <select id="ops-org-unit-picker"
               data-base-url="<%= incident_ops_path(@incident, tab: @tab) %>">
-        <% @org_units.each do |unit| %>
-          <option value="<%= unit.id %>" <%= 'selected' if unit.id == @selected_org_unit&.id %>>
-            <%= "#{unit.kind.titleize}: #{unit.name}" %>
-          </option>
+        <% @org_units.group_by(&:kind).each do |kind, units| %>
+          <optgroup label="<%= kind.titleize %>">
+            <% units.each do |unit| %>
+              <option value="<%= unit.id %>" <%= 'selected' if unit.id == @selected_org_unit&.id %>>
+                <%= unit.name %>
+              </option>
+            <% end %>
+          </optgroup>
         <% end %>
       </select>
       <span class="ops-day-range text-muted">
         Days: <%= @days.map { |d| d.strftime('%a %-m/%-d') }.join(' · ') %>
       </span>
+      <div class="ops-toolbar-actions no-print">
+        <%= link_to 'Download PDF',
+                    to_pdf_incident_ops_path(@incident, tab: @tab, org_unit_id: @selected_org_unit.id, format: :pdf),
+                    class: 'btn btn-primary btn-xs', target: :_blank %>
+        <button type="button" class="btn btn-default btn-xs ops-print-btn">Print</button>
+      </div>
     </div>
 
-    <% if @tab == 'ics_215' %>
-      <%= render 'ics_215' %>
+    <% if @sections.empty? %>
+      <p class="text-muted lg-padding-top">
+        <%= @selected_org_unit.name %> has no divisions or groups under it yet.
+      </p>
     <% else %>
-      <%= render 'projections' %>
+      <% @sections.each do |section| %>
+        <% if @selected_org_unit.kind_branch? %>
+          <h3 class="ops-section-heading">
+            <%= section[:unit].kind.titleize %>: <%= section[:unit].name %>
+          </h3>
+        <% end %>
+        <% if @tab == 'ics_215' %>
+          <%= render 'ics_215',
+                     unit: section[:unit],
+                     rows: section[:rows],
+                     days: @days,
+                     position_suggestions: @position_suggestions %>
+        <% else %>
+          <%= render 'projections',
+                     unit: section[:unit],
+                     rows: section[:rows],
+                     day_personnel: section[:day_personnel],
+                     days: @days %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
 </div>

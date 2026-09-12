@@ -11,6 +11,16 @@
   label { font-weight: 600; margin: 0; }
   select { min-width: 220px; padding: 4px 6px; }
   .ops-day-range { margin-left: auto; font-size: 12px; }
+  .ops-toolbar-actions { display: flex; gap: 6px; margin-left: 12px; }
+}
+
+.ops-section-heading {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+  &:first-of-type { margin-top: 0; }
 }
 
 table.ops-215-table,
@@ -50,6 +60,29 @@ table.ops-215-table {
   .ops-215-req  { background: #fff8ee; }
   .ops-215-need { background: #fff; font-weight: 600; }
 
+  tfoot .ops-215-add-row {
+    background: #fafafa;
+    td { border-top: 2px solid #ccc; padding: 6px; }
+    .ops-215-add-input {
+      width: 55%;
+      padding: 3px 6px;
+      font: inherit;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-right: 6px;
+    }
+    .ops-215-add-btn {
+      padding: 3px 10px;
+      font-size: 12px;
+      border: 1px solid #999;
+      background: #fff;
+      border-radius: 3px;
+      cursor: pointer;
+      &:hover { background: #eee; }
+    }
+    .ops-215-add-hint { text-align: left; font-size: 11px; }
+  }
+
   .ops-215-req-input {
     width: 100%;
     border: 0;
@@ -71,4 +104,40 @@ table.ops-215-table {
 
 table.ops-projections-table {
   .ops-total-row td { background: #f0f5ff; }
+}
+
+// Print stylesheet — used by the in-browser "Print" button so window.print()
+// gives a clean sheet (tables + section headings only). The dedicated
+// Download PDF endpoint renders via Grover and applies these same rules
+// under print emulation, so keep it additive (hide toolbars only) rather
+// than a visibility-toggle scheme that would need .ops-container present.
+@media print {
+  @page { size: Letter landscape; margin: 0.4in; }
+
+  .no-print,
+  .ops-toolbar-actions,
+  .ops-toolbar,
+  .resources-panel-head,
+  .masking-tape,
+  .incident-name,
+  #header,
+  nav,
+  footer,
+  .ops-215-add-row { display: none !important; }
+
+  .ops-section-heading { break-after: avoid; page-break-after: avoid; }
+
+  table.ops-215-table,
+  table.ops-projections-table {
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .ops-215-req-input {
+    border: 0 !important;
+    background: transparent !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }

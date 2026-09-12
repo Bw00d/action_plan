@@ -82,6 +82,7 @@ Rails.application.routes.draw do
 
     resource :ops, only: [:show], controller: 'ops' do
       patch :update_line
+      get   :to_pdf
     end
 
     resources :org_units, only: [:create, :destroy]

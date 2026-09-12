@@ -1,15 +1,17 @@
+<%# Locals: unit (OrgUnit), rows, days, position_suggestions %>
 <table class="ops-215-table"
        data-update-url="<%= update_line_incident_ops_path(@incident) %>"
-       data-org-unit-id="<%= @selected_org_unit.id %>">
+       data-org-unit-id="<%= unit.id %>"
+       data-days="<%= days.map { |d| d.strftime('%Y-%m-%d') }.join(',') %>">
   <thead>
     <tr>
       <th rowspan="2" class="ops-215-kind">Kind / Type</th>
-      <% @days.each do |day| %>
+      <% days.each do |day| %>
         <th colspan="3" class="ops-215-day"><%= day.strftime('%a %-m/%-d') %></th>
       <% end %>
     </tr>
     <tr>
-      <% @days.count.times do %>
+      <% days.count.times do %>
         <th>Have</th>
         <th>Req</th>
         <th>Need</th>
@@ -17,12 +19,12 @@
     </tr>
   </thead>
   <tbody>
-    <% if @rows.empty? %>
-      <tr><td colspan="<%= 1 + @days.count * 3 %>" class="empty">
-        No resources currently assigned to <%= @selected_org_unit.name %>.
+    <% if rows.empty? %>
+      <tr class="ops-215-empty-row"><td colspan="<%= 1 + days.count * 3 %>" class="empty">
+        No resources currently assigned to <%= unit.name %>. Add a Kind/Type below to request one.
       </td></tr>
     <% else %>
-      <% @rows.each do |row| %>
+      <% rows.each do |row| %>
         <tr>
           <td class="ops-215-kind"><%= row[:position] %></td>
           <% row[:days].each do |cell| %>
@@ -41,4 +43,28 @@
       <% end %>
     <% end %>
   </tbody>
+  <tfoot>
+    <%# Add a new Kind/Type row. The input datalist is populated with
+        every position used by resources on this incident so common
+        codes (CR2I, HEEQ, etc.) autocomplete. Any custom value works
+        too. Pressing Enter or clicking Add appends a row; entering a
+        Req then saves the line via the normal PATCH. %>
+    <tr class="ops-215-add-row">
+      <td class="ops-215-kind">
+        <input type="text"
+               class="ops-215-add-input"
+               list="ops-215-positions-<%= unit.id %>"
+               placeholder="Add Kind/Type…">
+        <datalist id="ops-215-positions-<%= unit.id %>">
+          <% (position_suggestions || []).each do |p| %>
+            <option value="<%= p %>"></option>
+          <% end %>
+        </datalist>
+        <button type="button" class="ops-215-add-btn">Add</button>
+      </td>
+      <td colspan="<%= days.count * 3 %>" class="ops-215-add-hint">
+        <span class="text-muted">Type a code (e.g. CR2I) and press Enter — an empty row will appear, ready for Req values.</span>
+      </td>
+    </tr>
+  </tfoot>
 </table>
