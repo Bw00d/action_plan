@@ -1,0 +1,231 @@
+/* line 1, app/assets/stylesheets/ops.scss */
+.ops-container {
+  padding: 12px 4px 32px;
+}
+
+/* line 5, app/assets/stylesheets/ops.scss */
+.ops-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px 16px;
+}
+
+/* line 11, app/assets/stylesheets/ops.scss */
+.ops-toolbar label {
+  font-weight: 600;
+  margin: 0;
+}
+
+/* line 12, app/assets/stylesheets/ops.scss */
+.ops-toolbar select {
+  min-width: 220px;
+  padding: 4px 6px;
+}
+
+/* line 13, app/assets/stylesheets/ops.scss */
+.ops-toolbar .ops-day-range {
+  margin-left: auto;
+  font-size: 12px;
+}
+
+/* line 14, app/assets/stylesheets/ops.scss */
+.ops-toolbar .ops-toolbar-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+/* line 17, app/assets/stylesheets/ops.scss */
+.ops-section-heading {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* line 23, app/assets/stylesheets/ops.scss */
+.ops-section-heading:first-of-type {
+  margin-top: 0;
+}
+
+/* line 26, app/assets/stylesheets/ops.scss */
+table.ops-215-table,
+table.ops-projections-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* line 32, app/assets/stylesheets/ops.scss */
+table.ops-215-table th, table.ops-215-table td,
+table.ops-projections-table th,
+table.ops-projections-table td {
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 38, app/assets/stylesheets/ops.scss */
+table.ops-215-table thead th,
+table.ops-projections-table thead th {
+  background: #f2f2f2;
+  font-weight: 600;
+}
+
+/* line 42, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-kind,
+table.ops-projections-table .ops-215-kind {
+  text-align: left;
+  background: #fafafa;
+  font-weight: 500;
+  width: 22%;
+}
+
+/* line 48, app/assets/stylesheets/ops.scss */
+table.ops-215-table .empty,
+table.ops-projections-table .empty {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 16px;
+}
+
+/* line 54, app/assets/stylesheets/ops.scss */
+table.ops-215-table .centered,
+table.ops-projections-table .centered {
+  text-align: center;
+}
+
+/* line 58, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-day {
+  background: #eaeaea;
+}
+
+/* line 59, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-have {
+  background: #f8fbff;
+}
+
+/* line 60, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req {
+  background: #fff8ee;
+}
+
+/* line 61, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-need {
+  background: #fff;
+  font-weight: 600;
+}
+
+/* line 63, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row {
+  background: #fafafa;
+}
+
+/* line 65, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row td {
+  border-top: 2px solid #ccc;
+  padding: 6px;
+}
+
+/* line 66, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-input {
+  width: 55%;
+  padding: 3px 6px;
+  font: inherit;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+
+/* line 74, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-btn {
+  padding: 3px 10px;
+  font-size: 12px;
+  border: 1px solid #999;
+  background: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* line 81, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-btn:hover {
+  background: #eee;
+}
+
+/* line 83, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-hint {
+  text-align: left;
+  font-size: 11px;
+}
+
+/* line 86, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  padding: 2px 0;
+  font: inherit;
+  outline: 0;
+  /* Chrome number input spinners are noisy in narrow cells. */
+  -moz-appearance: textfield;
+}
+
+/* line 94, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input:focus {
+  background: #fffbe6;
+}
+
+/* line 97, app/assets/stylesheets/ops.scss */
+table.ops-215-table .ops-215-req-input::-webkit-outer-spin-button, table.ops-215-table .ops-215-req-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 106, app/assets/stylesheets/ops.scss */
+table.ops-projections-table .ops-total-row td {
+  background: #f0f5ff;
+}
+
+@media print {
+  @page {
+    size: Letter landscape;
+    margin: 0.4in;
+  }
+  /* line 117, app/assets/stylesheets/ops.scss */
+  .no-print,
+.ops-toolbar-actions,
+.ops-toolbar,
+.resources-panel-head,
+.masking-tape,
+.incident-name,
+#header,
+nav,
+footer,
+.ops-215-add-row {
+    display: none !important;
+  }
+  /* line 128, app/assets/stylesheets/ops.scss */
+  .ops-section-heading {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  /* line 130, app/assets/stylesheets/ops.scss */
+  table.ops-215-table,
+table.ops-projections-table {
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* line 137, app/assets/stylesheets/ops.scss */
+  .ops-215-req-input {
+    border: 0 !important;
+    background: transparent !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}

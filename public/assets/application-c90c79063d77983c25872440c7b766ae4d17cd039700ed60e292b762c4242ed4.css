@@ -20498,6 +20498,13 @@ input.new-commo-item {
 }
 
 /* line 66, app/assets/stylesheets/covers.css.scss */
+.font-icon-f {
+  font-family: 'Apple Chancery', 'Baguet Script', 'Monotype Corsiva', 'URW Chancery L', cursive !important;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* line 72, app/assets/stylesheets/covers.css.scss */
 .new-block-type {
   display: none;
   position: fixed;
@@ -20514,122 +20521,122 @@ input.new-commo-item {
   z-index: 3;
 }
 
-/* line 80, app/assets/stylesheets/covers.css.scss */
+/* line 86, app/assets/stylesheets/covers.css.scss */
 .new-block-type span {
   display: inline-block;
   padding: 10px;
 }
 
-/* line 84, app/assets/stylesheets/covers.css.scss */
+/* line 90, app/assets/stylesheets/covers.css.scss */
 .new-block-type span {
   cursor: pointer;
 }
 
-/* line 87, app/assets/stylesheets/covers.css.scss */
+/* line 93, app/assets/stylesheets/covers.css.scss */
 .new-block-type span:hover {
   opacity: 0.8;
 }
 
-/* line 92, app/assets/stylesheets/covers.css.scss */
+/* line 98, app/assets/stylesheets/covers.css.scss */
 .new-block-type .cancel-block {
   cursor: pointer;
 }
 
-/* line 95, app/assets/stylesheets/covers.css.scss */
+/* line 101, app/assets/stylesheets/covers.css.scss */
 .new-block-type .cancel-block:hover {
   opacity: 0.8;
 }
 
-/* line 99, app/assets/stylesheets/covers.css.scss */
+/* line 105, app/assets/stylesheets/covers.css.scss */
 .new-block-type h1 {
   font-size: 2em !important;
   color: white;
 }
 
-/* line 103, app/assets/stylesheets/covers.css.scss */
+/* line 109, app/assets/stylesheets/covers.css.scss */
 .new-block-type h2 {
   font-size: 1.75em !important;
   color: white;
 }
 
-/* line 107, app/assets/stylesheets/covers.css.scss */
+/* line 113, app/assets/stylesheets/covers.css.scss */
 .new-block-type h3 {
   font-size: 1.25em !important;
   color: white;
 }
 
-/* line 111, app/assets/stylesheets/covers.css.scss */
+/* line 117, app/assets/stylesheets/covers.css.scss */
 .new-block-type h4 {
   font-size: 1em !important;
   color: white;
 }
 
-/* line 115, app/assets/stylesheets/covers.css.scss */
+/* line 121, app/assets/stylesheets/covers.css.scss */
 .new-block-type label {
   font-size: 1.5em;
 }
 
-/* line 118, app/assets/stylesheets/covers.css.scss */
+/* line 124, app/assets/stylesheets/covers.css.scss */
 .new-block-type select {
   color: black;
 }
 
-/* line 121, app/assets/stylesheets/covers.css.scss */
+/* line 127, app/assets/stylesheets/covers.css.scss */
 .new-block-type #font-size {
   width: 40px;
 }
 
-/* line 125, app/assets/stylesheets/covers.css.scss */
+/* line 131, app/assets/stylesheets/covers.css.scss */
 .new-block-type li {
   list-style: none;
 }
 
-/* line 128, app/assets/stylesheets/covers.css.scss */
+/* line 134, app/assets/stylesheets/covers.css.scss */
 .new-block-type i {
   font-size: 2em;
 }
 
-/* line 132, app/assets/stylesheets/covers.css.scss */
+/* line 138, app/assets/stylesheets/covers.css.scss */
 .new-block-type .add-image-block img {
   width: 25px;
   height: 25px;
   margin-bottom: 15px;
 }
 
-/* line 140, app/assets/stylesheets/covers.css.scss */
+/* line 146, app/assets/stylesheets/covers.css.scss */
 .new-block-type .split-block img {
   width: 50px;
   height: 25px;
   margin-bottom: 15px;
 }
 
-/* line 147, app/assets/stylesheets/covers.css.scss */
+/* line 153, app/assets/stylesheets/covers.css.scss */
 .cancel-block {
   right: 12px;
   top: -5px;
   position: absolute;
 }
 
-/* line 152, app/assets/stylesheets/covers.css.scss */
+/* line 158, app/assets/stylesheets/covers.css.scss */
 #cover {
   padding-top: 0px;
   min-height: 936px;
   text-align: center;
 }
 
-/* line 156, app/assets/stylesheets/covers.css.scss */
+/* line 162, app/assets/stylesheets/covers.css.scss */
 #cover h1 {
   font-weight: 700;
   font-size: 3em;
 }
 
-/* line 160, app/assets/stylesheets/covers.css.scss */
+/* line 166, app/assets/stylesheets/covers.css.scss */
 #cover h2 {
   font-weight: 700;
   font-size: 2em;
 }
 
-/* line 164, app/assets/stylesheets/covers.css.scss */
+/* line 170, app/assets/stylesheets/covers.css.scss */
 #cover #picture {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -20637,40 +20644,40 @@ input.new-commo-item {
   height: auto;
 }
 
-/* line 170, app/assets/stylesheets/covers.css.scss */
+/* line 176, app/assets/stylesheets/covers.css.scss */
 #cover .cost-code {
   margin-top: 30px;
 }
 
-/* line 172, app/assets/stylesheets/covers.css.scss */
+/* line 178, app/assets/stylesheets/covers.css.scss */
 #cover .cost-code h3 {
   font-weight: 700;
 }
 
-/* line 177, app/assets/stylesheets/covers.css.scss */
+/* line 183, app/assets/stylesheets/covers.css.scss */
 .bordered {
   border: 2px solid #DDD;
 }
 
-/* line 183, app/assets/stylesheets/covers.css.scss */
+/* line 189, app/assets/stylesheets/covers.css.scss */
 .sm-spacer {
   height: 25px;
   overflow: hidden;
 }
 
-/* line 187, app/assets/stylesheets/covers.css.scss */
+/* line 193, app/assets/stylesheets/covers.css.scss */
 .md-spacer {
   height: 50px;
   overflow: hidden;
 }
 
-/* line 191, app/assets/stylesheets/covers.css.scss */
+/* line 197, app/assets/stylesheets/covers.css.scss */
 .lg-spacer {
   height: 75px;
   overflow: hidden;
 }
 
-/* line 196, app/assets/stylesheets/covers.css.scss */
+/* line 202, app/assets/stylesheets/covers.css.scss */
 .add-block-button {
   z-index: 3;
   overflow: hidden;
@@ -20698,18 +20705,18 @@ input.new-commo-item {
   font-weight: 300;
 }
 
-/* line 219, app/assets/stylesheets/covers.css.scss */
+/* line 225, app/assets/stylesheets/covers.css.scss */
 .add-block-button i {
   margin-top: 10px;
   margin-left: 6px;
 }
 
-/* line 226, app/assets/stylesheets/covers.css.scss */
+/* line 232, app/assets/stylesheets/covers.css.scss */
 .add-block-button a {
   color: #3d3d3d !important;
 }
 
-/* line 230, app/assets/stylesheets/covers.css.scss */
+/* line 236, app/assets/stylesheets/covers.css.scss */
 .new-block-form {
   float: left;
   text-align: center;
@@ -20719,13 +20726,13 @@ input.new-commo-item {
   height: 25px;
 }
 
-/* line 239, app/assets/stylesheets/covers.css.scss */
+/* line 245, app/assets/stylesheets/covers.css.scss */
 #new_block {
   height: 15px;
   /*display: none;*/
 }
 
-/* line 243, app/assets/stylesheets/covers.css.scss */
+/* line 249, app/assets/stylesheets/covers.css.scss */
 .new-block-button {
   width: 26px;
   height: 26px;
@@ -20742,17 +20749,17 @@ input.new-commo-item {
   margin-bottom: 5px;
 }
 
-/* line 259, app/assets/stylesheets/covers.css.scss */
+/* line 265, app/assets/stylesheets/covers.css.scss */
 .block-form {
   display: none;
 }
 
-/* line 262, app/assets/stylesheets/covers.css.scss */
+/* line 268, app/assets/stylesheets/covers.css.scss */
 .edit_block {
   display: none;
 }
 
-/* line 265, app/assets/stylesheets/covers.css.scss */
+/* line 271, app/assets/stylesheets/covers.css.scss */
 .save-block-button {
   font-size: 10px;
   position: absolute;
@@ -20760,65 +20767,65 @@ input.new-commo-item {
 }
 
 /*content styles*/
-/* line 273, app/assets/stylesheets/covers.css.scss */
+/* line 279, app/assets/stylesheets/covers.css.scss */
 .style-controls {
   z-index: 3;
 }
 
-/* line 277, app/assets/stylesheets/covers.css.scss */
+/* line 283, app/assets/stylesheets/covers.css.scss */
 .h1 {
   /*font-size: 40px;*/
   font-size: 5vh;
 }
 
-/* line 281, app/assets/stylesheets/covers.css.scss */
+/* line 287, app/assets/stylesheets/covers.css.scss */
 .h2 {
   font-size: 30px;
 }
 
-/* line 284, app/assets/stylesheets/covers.css.scss */
+/* line 290, app/assets/stylesheets/covers.css.scss */
 .h3 {
   font-size: 25px;
 }
 
-/* line 287, app/assets/stylesheets/covers.css.scss */
+/* line 293, app/assets/stylesheets/covers.css.scss */
 .h4 {
   font-size: 20px;
 }
 
-/* line 290, app/assets/stylesheets/covers.css.scss */
+/* line 296, app/assets/stylesheets/covers.css.scss */
 .bold {
   font-weight: 900;
 }
 
-/* line 293, app/assets/stylesheets/covers.css.scss */
+/* line 299, app/assets/stylesheets/covers.css.scss */
 .semi-bold {
   font-weight: 600;
 }
 
-/* line 296, app/assets/stylesheets/covers.css.scss */
+/* line 302, app/assets/stylesheets/covers.css.scss */
 .normal {
   font-weight: 300;
 }
 
-/* line 299, app/assets/stylesheets/covers.css.scss */
+/* line 305, app/assets/stylesheets/covers.css.scss */
 .italic {
   font-style: italic;
 }
 
-/* line 302, app/assets/stylesheets/covers.css.scss */
+/* line 308, app/assets/stylesheets/covers.css.scss */
 .image-block {
   padding: 0 50px;
 }
 
-/* line 306, app/assets/stylesheets/covers.css.scss */
+/* line 312, app/assets/stylesheets/covers.css.scss */
 .cover-image {
   width: 100%;
   height: auto;
   z-index: 1;
 }
 
-/* line 311, app/assets/stylesheets/covers.css.scss */
+/* line 317, app/assets/stylesheets/covers.css.scss */
 .image-field {
   margin: 0 auto;
   text-align: center;
@@ -20830,7 +20837,7 @@ input.new-commo-item {
   z-index: 1;
 }
 
-/* line 321, app/assets/stylesheets/covers.css.scss */
+/* line 327, app/assets/stylesheets/covers.css.scss */
 .image-form {
   font-size: 1em;
   overflow: hidden;
@@ -20845,13 +20852,13 @@ input.new-commo-item {
   bottom: 0;
 }
 
-/* line 333, app/assets/stylesheets/covers.css.scss */
+/* line 339, app/assets/stylesheets/covers.css.scss */
 .image-form input {
   font-size: 15px;
   font-weight: 500;
 }
 
-/* line 338, app/assets/stylesheets/covers.css.scss */
+/* line 344, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload {
   margin-left: 10px;
   background-color: #dc3545;
@@ -20863,18 +20870,18 @@ input.new-commo-item {
   font-size: 15px;
 }
 
-/* line 348, app/assets/stylesheets/covers.css.scss */
+/* line 354, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload:hover {
   background-color: #c82333;
 }
 
 /* resizable image */
-/* line 358, app/assets/stylesheets/covers.css.scss */
+/* line 364, app/assets/stylesheets/covers.css.scss */
 .resizable {
   margin-top: 15px;
 }
 
-/* line 362, app/assets/stylesheets/covers.css.scss */
+/* line 368, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers {
   /* width: 65%; - removed to allow inline styles to take precedence */
   height: auto;
@@ -20887,23 +20894,23 @@ input.new-commo-item {
 }
 
 /* Show gray background only when no image is uploaded */
-/* line 374, app/assets/stylesheets/covers.css.scss */
+/* line 380, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers.no-image {
   background-color: #f0f0f0;
   min-height: 200px;
 }
 
-/* line 378, app/assets/stylesheets/covers.css.scss */
+/* line 384, app/assets/stylesheets/covers.css.scss */
 .resizable .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 381, app/assets/stylesheets/covers.css.scss */
+/* line 387, app/assets/stylesheets/covers.css.scss */
 .resizers .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 385, app/assets/stylesheets/covers.css.scss */
+/* line 391, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer {
   width: 10px;
   height: 10px;
@@ -20915,28 +20922,28 @@ input.new-commo-item {
   display: none;
 }
 
-/* line 394, app/assets/stylesheets/covers.css.scss */
+/* line 400, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-left {
   left: -5px;
   top: -5px;
   cursor: nwse-resize;
 }
 
-/* line 399, app/assets/stylesheets/covers.css.scss */
+/* line 405, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-right {
   right: -5px;
   top: -5px;
   cursor: nesw-resize;
 }
 
-/* line 404, app/assets/stylesheets/covers.css.scss */
+/* line 410, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-left {
   left: -5px;
   bottom: -5px;
   cursor: nesw-resize;
 }
 
-/* line 409, app/assets/stylesheets/covers.css.scss */
+/* line 415, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-right {
   right: -5px;
   bottom: -5px;
@@ -20944,7 +20951,7 @@ input.new-commo-item {
 }
 
 /* resize block */
-/* line 416, app/assets/stylesheets/covers.css.scss */
+/* line 422, app/assets/stylesheets/covers.css.scss */
 .resize-padding {
   /*background-color: orange;*/
   height: 8px;
@@ -20954,7 +20961,7 @@ input.new-commo-item {
   bottom: 0;
 }
 
-/* line 424, app/assets/stylesheets/covers.css.scss */
+/* line 430, app/assets/stylesheets/covers.css.scss */
 .bottom-padding {
   /*background-color: yellow;*/
   height: 25px;
@@ -20962,19 +20969,19 @@ input.new-commo-item {
   position: relative;
 }
 
-/* line 430, app/assets/stylesheets/covers.css.scss */
+/* line 436, app/assets/stylesheets/covers.css.scss */
 .selected-resizer {
   /*background-color: blue !important;*/
 }
 
-/* line 433, app/assets/stylesheets/covers.css.scss */
+/* line 439, app/assets/stylesheets/covers.css.scss */
 #temp-image {
   width: 490px;
   height: auto;
   display: none;
 }
 
-/* line 439, app/assets/stylesheets/covers.css.scss */
+/* line 445, app/assets/stylesheets/covers.css.scss */
 #small-temp-image {
   width: 50px;
   height: auto;
@@ -20982,7 +20989,7 @@ input.new-commo-item {
 }
 
 /* Split block styles */
-/* line 446, app/assets/stylesheets/covers.css.scss */
+/* line 452, app/assets/stylesheets/covers.css.scss */
 .split-block-container {
   display: flex;
   gap: 10px;
@@ -20991,31 +20998,31 @@ input.new-commo-item {
   /* Prevent horizontal scroll from dragged images */
 }
 
-/* line 453, app/assets/stylesheets/covers.css.scss */
+/* line 459, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper {
   flex: 1;
   width: 50%;
 }
 
-/* line 458, app/assets/stylesheets/covers.css.scss */
+/* line 464, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .block {
   width: 100%;
 }
 
-/* line 462, app/assets/stylesheets/covers.css.scss */
+/* line 468, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   /*width: 90% !important;*/
   /*min-width: 50px;*/
 }
 
-/* line 467, app/assets/stylesheets/covers.css.scss */
+/* line 473, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .cover-image {
   /*max-width: 100%;*/
   /*height: auto;*/
 }
 
 /* Drag handle for split blocks */
-/* line 473, app/assets/stylesheets/covers.css.scss */
+/* line 479, app/assets/stylesheets/covers.css.scss */
 .drag-handle {
   position: absolute;
   top: 50%;
@@ -21036,41 +21043,41 @@ input.new-commo-item {
   user-select: none;
 }
 
-/* line 493, app/assets/stylesheets/covers.css.scss */
+/* line 499, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers:hover .drag-handle {
   opacity: 0.7;
 }
 
-/* line 497, app/assets/stylesheets/covers.css.scss */
+/* line 503, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers.dragging {
   cursor: ew-resize;
   opacity: 0.8;
 }
 
-/* line 502, app/assets/stylesheets/covers.css.scss */
+/* line 508, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   transition: transform 0.3s ease;
 }
 
-/* line 520, app/assets/stylesheets/covers.css.scss */
+/* line 526, app/assets/stylesheets/covers.css.scss */
 .cover-workspace {
   position: relative;
   margin: 0 -15px;
   padding: 0;
 }
 
-/* line 531, app/assets/stylesheets/covers.css.scss */
+/* line 537, app/assets/stylesheets/covers.css.scss */
 .cover-workspace > #cover-canvas {
   margin-top: -5px !important;
 }
 
-/* line 535, app/assets/stylesheets/covers.css.scss */
+/* line 541, app/assets/stylesheets/covers.css.scss */
 .cover-workspace #cover-canvas {
   width: 100%;
   margin-bottom: 0;
 }
 
-/* line 547, app/assets/stylesheets/covers.css.scss */
+/* line 553, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel {
   position: absolute;
   top: 20%;
@@ -21087,20 +21094,20 @@ input.new-commo-item {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* line 563, app/assets/stylesheets/covers.css.scss */
+/* line 569, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-sep {
   height: 1px;
   background: rgba(255, 255, 255, 0.15);
   margin: 6px 4px;
 }
 
-/* line 569, app/assets/stylesheets/covers.css.scss */
+/* line 575, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-inline-form {
   display: block;
   margin: 0;
 }
 
-/* line 571, app/assets/stylesheets/covers.css.scss */
+/* line 577, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn {
   display: flex;
   align-items: center;
@@ -21122,73 +21129,73 @@ input.new-commo-item {
   transition: background-color 0.1s ease;
 }
 
-/* line 591, app/assets/stylesheets/covers.css.scss */
+/* line 597, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* line 592, app/assets/stylesheets/covers.css.scss */
+/* line 598, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn:focus {
   outline: none;
 }
 
-/* line 593, app/assets/stylesheets/covers.css.scss */
+/* line 599, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn.is-active {
   background: #1976d2;
 }
 
-/* line 598, app/assets/stylesheets/covers.css.scss */
+/* line 604, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn.is-disabled {
   opacity: 0.28;
   cursor: not-allowed;
 }
 
-/* line 601, app/assets/stylesheets/covers.css.scss */
+/* line 607, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn.is-disabled:hover {
   background: transparent;
 }
 
-/* line 603, app/assets/stylesheets/covers.css.scss */
+/* line 609, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn em, .cover-style-panel .csp-btn strong {
   font-style: inherit;
   font-weight: inherit;
 }
 
-/* line 607, app/assets/stylesheets/covers.css.scss */
+/* line 613, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h1 {
   font-size: 22px;
   font-weight: 700;
 }
 
-/* line 608, app/assets/stylesheets/covers.css.scss */
+/* line 614, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h2 {
   font-size: 18px;
   font-weight: 700;
 }
 
-/* line 609, app/assets/stylesheets/covers.css.scss */
+/* line 615, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h3 {
   font-size: 15px;
   font-weight: 500;
 }
 
-/* line 610, app/assets/stylesheets/covers.css.scss */
+/* line 616, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h4 {
   font-size: 13px;
   font-weight: 400;
 }
 
-/* line 618, app/assets/stylesheets/covers.css.scss */
+/* line 624, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-picker-wrap {
   position: relative;
 }
 
-/* line 621, app/assets/stylesheets/covers.css.scss */
+/* line 627, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-picker {
   font-style: italic;
 }
 
-/* line 624, app/assets/stylesheets/covers.css.scss */
+/* line 630, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-menu {
   position: absolute;
   top: 0;
@@ -21202,7 +21209,7 @@ input.new-commo-item {
   z-index: 30;
 }
 
-/* line 636, app/assets/stylesheets/covers.css.scss */
+/* line 642, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-option {
   display: block;
   width: 100%;
@@ -21216,17 +21223,17 @@ input.new-commo-item {
   border-radius: 3px;
 }
 
-/* line 648, app/assets/stylesheets/covers.css.scss */
+/* line 654, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-option:hover {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* line 649, app/assets/stylesheets/covers.css.scss */
+/* line 655, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-option:focus {
   outline: none;
 }
 
-/* line 653, app/assets/stylesheets/covers.css.scss */
+/* line 659, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input {
   width: 100%;
   height: 26px;
@@ -21242,52 +21249,52 @@ input.new-commo-item {
   -moz-appearance: textfield;
 }
 
-/* line 666, app/assets/stylesheets/covers.css.scss */
+/* line 672, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input::-webkit-inner-spin-button, .cover-style-panel .csp-px-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* line 671, app/assets/stylesheets/covers.css.scss */
+/* line 677, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input:focus {
   outline: none;
   border-color: #1976d2;
 }
 
-/* line 672, app/assets/stylesheets/covers.css.scss */
+/* line 678, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input.is-disabled {
   opacity: 0.28;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* line 679, app/assets/stylesheets/covers.css.scss */
+/* line 685, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-italic em {
   font-style: italic;
 }
 
-/* line 681, app/assets/stylesheets/covers.css.scss */
+/* line 687, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-align-btn {
   font-family: monospace;
   font-size: 12px;
   letter-spacing: 1px;
 }
 
-/* line 687, app/assets/stylesheets/covers.css.scss */
+/* line 693, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-icon img {
   width: 22px;
   height: 22px;
   filter: brightness(0) invert(1);
 }
 
-/* line 697, app/assets/stylesheets/covers.css.scss */
+/* line 703, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected {
   border-style: solid;
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.04);
 }
 
-/* line 707, app/assets/stylesheets/covers.css.scss */
+/* line 713, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form {
   display: none;
   align-items: center;
@@ -21303,17 +21310,17 @@ input.new-commo-item {
   white-space: nowrap;
 }
 
-/* line 724, app/assets/stylesheets/covers.css.scss */
+/* line 730, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form.is-open {
   display: inline-flex;
 }
 
-/* line 728, app/assets/stylesheets/covers.css.scss */
+/* line 734, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-file-input {
   display: none !important;
 }
 
-/* line 730, app/assets/stylesheets/covers.css.scss */
+/* line 736, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-filename {
   flex: 1 1 auto;
   color: #5e6c84;
@@ -21322,7 +21329,7 @@ input.new-commo-item {
   text-overflow: ellipsis;
 }
 
-/* line 739, app/assets/stylesheets/covers.css.scss */
+/* line 745, app/assets/stylesheets/covers.css.scss */
 #cover-canvas {
   position: relative;
   width: 100%;
@@ -21334,7 +21341,7 @@ input.new-commo-item {
   overflow: visible;
 }
 
-/* line 758, app/assets/stylesheets/covers.css.scss */
+/* line 764, app/assets/stylesheets/covers.css.scss */
 .cover-block {
   color: #333;
   font-family: cambria;
@@ -21345,13 +21352,13 @@ input.new-commo-item {
   cursor: move;
 }
 
-/* line 773, app/assets/stylesheets/covers.css.scss */
+/* line 779, app/assets/stylesheets/covers.css.scss */
 .cover-block:hover {
   border-color: #90a4ae;
   background: rgba(9, 30, 66, 0.02);
 }
 
-/* line 778, app/assets/stylesheets/covers.css.scss */
+/* line 784, app/assets/stylesheets/covers.css.scss */
 .cover-block.ui-draggable-dragging {
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.05);
@@ -21359,47 +21366,47 @@ input.new-commo-item {
   z-index: 10;
 }
 
-/* line 787, app/assets/stylesheets/covers.css.scss */
+/* line 793, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-left .cover-block-text {
   justify-content: flex-start;
 }
 
-/* line 788, app/assets/stylesheets/covers.css.scss */
+/* line 794, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-center .cover-block-text {
   justify-content: center;
 }
 
-/* line 789, app/assets/stylesheets/covers.css.scss */
+/* line 795, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-right .cover-block-text {
   justify-content: flex-end;
 }
 
-/* line 796, app/assets/stylesheets/covers.css.scss */
+/* line 802, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-bold .cover-block-text {
   font-weight: 700;
 }
 
-/* line 797, app/assets/stylesheets/covers.css.scss */
+/* line 803, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-semi-bold .cover-block-text {
   font-weight: 600;
 }
 
-/* line 798, app/assets/stylesheets/covers.css.scss */
+/* line 804, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-normal .cover-block-text {
   font-weight: 400;
 }
 
-/* line 799, app/assets/stylesheets/covers.css.scss */
+/* line 805, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-italic .cover-block-text {
   font-style: italic;
 }
 
-/* line 800, app/assets/stylesheets/covers.css.scss */
+/* line 806, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-normal .cover-block-text {
   font-style: normal;
 }
 
-/* line 807, app/assets/stylesheets/covers.css.scss */
+/* line 813, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-handle {
   position: absolute;
   display: block;
@@ -21415,40 +21422,40 @@ input.new-commo-item {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* line 827, app/assets/stylesheets/covers.css.scss */
+/* line 833, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-nw {
   left: -6px;
   top: -6px;
   cursor: nw-resize;
 }
 
-/* line 828, app/assets/stylesheets/covers.css.scss */
+/* line 834, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-ne {
   right: -6px;
   top: -6px;
   cursor: ne-resize;
 }
 
-/* line 829, app/assets/stylesheets/covers.css.scss */
+/* line 835, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-sw {
   left: -6px;
   bottom: -6px;
   cursor: sw-resize;
 }
 
-/* line 830, app/assets/stylesheets/covers.css.scss */
+/* line 836, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-se {
   right: -6px;
   bottom: -6px;
   cursor: se-resize;
 }
 
-/* line 833, app/assets/stylesheets/covers.css.scss */
+/* line 839, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected .ui-resizable-handle {
   opacity: 1;
 }
 
-/* line 838, app/assets/stylesheets/covers.css.scss */
+/* line 844, app/assets/stylesheets/covers.css.scss */
 .cover-guide {
   position: absolute;
   top: 0;
@@ -21461,27 +21468,27 @@ input.new-commo-item {
   z-index: 4;
 }
 
-/* line 849, app/assets/stylesheets/covers.css.scss */
+/* line 855, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="16.5"] {
   left: 16.5%;
 }
 
-/* line 850, app/assets/stylesheets/covers.css.scss */
+/* line 856, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="50"] {
   left: 50%;
 }
 
-/* line 851, app/assets/stylesheets/covers.css.scss */
+/* line 857, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="83.5"] {
   left: 83.5%;
 }
 
-/* line 852, app/assets/stylesheets/covers.css.scss */
+/* line 858, app/assets/stylesheets/covers.css.scss */
 .cover-guide.is-active {
   opacity: 1;
 }
 
-/* line 854, app/assets/stylesheets/covers.css.scss */
+/* line 860, app/assets/stylesheets/covers.css.scss */
 .cover-block-text {
   width: 100%;
   height: 100%;
@@ -21493,7 +21500,7 @@ input.new-commo-item {
   user-select: none;
 }
 
-/* line 864, app/assets/stylesheets/covers.css.scss */
+/* line 870, app/assets/stylesheets/covers.css.scss */
 .cover-block-text[contenteditable="true"] {
   user-select: text;
   outline: 2px solid #1976d2;
@@ -21501,7 +21508,7 @@ input.new-commo-item {
   cursor: text;
 }
 
-/* line 871, app/assets/stylesheets/covers.css.scss */
+/* line 877, app/assets/stylesheets/covers.css.scss */
 .cover-block-image {
   width: 100%;
   height: 100%;
@@ -21509,7 +21516,7 @@ input.new-commo-item {
   display: block;
 }
 
-/* line 876, app/assets/stylesheets/covers.css.scss */
+/* line 882, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-area {
   display: block;
   width: 100%;
@@ -21518,13 +21525,13 @@ input.new-commo-item {
   cursor: pointer;
 }
 
-/* line 883, app/assets/stylesheets/covers.css.scss */
+/* line 889, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-image:hover .cover-block-image {
   opacity: 0.8;
   transition: opacity 0.12s ease;
 }
 
-/* line 888, app/assets/stylesheets/covers.css.scss */
+/* line 894, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-placeholder {
   width: 100%;
   height: 100%;
@@ -21538,12 +21545,12 @@ input.new-commo-item {
   border-radius: 3px;
 }
 
-/* line 903, app/assets/stylesheets/covers.css.scss */
+/* line 909, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-notes {
   cursor: move;
 }
 
-/* line 906, app/assets/stylesheets/covers.css.scss */
+/* line 912, app/assets/stylesheets/covers.css.scss */
 .cover-notes {
   width: 100%;
   height: 100%;
@@ -21554,7 +21561,7 @@ input.new-commo-item {
   background: #fff;
 }
 
-/* line 915, app/assets/stylesheets/covers.css.scss */
+/* line 921, app/assets/stylesheets/covers.css.scss */
 .cover-notes-header {
   text-align: center;
   font-weight: 600;
@@ -21564,7 +21571,7 @@ input.new-commo-item {
   user-select: none;
 }
 
-/* line 923, app/assets/stylesheets/covers.css.scss */
+/* line 929, app/assets/stylesheets/covers.css.scss */
 .cover-notes-lines {
   flex: 1;
   display: flex;
@@ -21572,14 +21579,14 @@ input.new-commo-item {
   min-height: 0;
 }
 
-/* line 929, app/assets/stylesheets/covers.css.scss */
+/* line 935, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line {
   flex: 1;
   border-bottom: 1px solid #000;
   min-height: 0;
 }
 
-/* line 934, app/assets/stylesheets/covers.css.scss */
+/* line 940, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line:last-child {
   border-bottom: 0;
 }
@@ -23429,7 +23436,28 @@ select {
   font-size: 12px;
 }
 
-/* line 16, app/assets/stylesheets/ops.scss */
+/* line 14, app/assets/stylesheets/ops.scss */
+.ops-toolbar .ops-toolbar-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+/* line 17, app/assets/stylesheets/ops.scss */
+.ops-section-heading {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* line 23, app/assets/stylesheets/ops.scss */
+.ops-section-heading:first-of-type {
+  margin-top: 0;
+}
+
+/* line 26, app/assets/stylesheets/ops.scss */
 table.ops-215-table,
 table.ops-projections-table {
   width: 100%;
@@ -23437,7 +23465,7 @@ table.ops-projections-table {
   font-size: 12px;
 }
 
-/* line 22, app/assets/stylesheets/ops.scss */
+/* line 32, app/assets/stylesheets/ops.scss */
 table.ops-215-table th, table.ops-215-table td,
 table.ops-projections-table th,
 table.ops-projections-table td {
@@ -23447,14 +23475,14 @@ table.ops-projections-table td {
   vertical-align: middle;
 }
 
-/* line 28, app/assets/stylesheets/ops.scss */
+/* line 38, app/assets/stylesheets/ops.scss */
 table.ops-215-table thead th,
 table.ops-projections-table thead th {
   background: #f2f2f2;
   font-weight: 600;
 }
 
-/* line 32, app/assets/stylesheets/ops.scss */
+/* line 42, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-kind,
 table.ops-projections-table .ops-215-kind {
   text-align: left;
@@ -23463,7 +23491,7 @@ table.ops-projections-table .ops-215-kind {
   width: 22%;
 }
 
-/* line 38, app/assets/stylesheets/ops.scss */
+/* line 48, app/assets/stylesheets/ops.scss */
 table.ops-215-table .empty,
 table.ops-projections-table .empty {
   text-align: center;
@@ -23472,34 +23500,76 @@ table.ops-projections-table .empty {
   padding: 16px;
 }
 
-/* line 44, app/assets/stylesheets/ops.scss */
+/* line 54, app/assets/stylesheets/ops.scss */
 table.ops-215-table .centered,
 table.ops-projections-table .centered {
   text-align: center;
 }
 
-/* line 48, app/assets/stylesheets/ops.scss */
+/* line 58, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-day {
   background: #eaeaea;
 }
 
-/* line 49, app/assets/stylesheets/ops.scss */
+/* line 59, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-have {
   background: #f8fbff;
 }
 
-/* line 50, app/assets/stylesheets/ops.scss */
+/* line 60, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-req {
   background: #fff8ee;
 }
 
-/* line 51, app/assets/stylesheets/ops.scss */
+/* line 61, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-need {
   background: #fff;
   font-weight: 600;
 }
 
-/* line 53, app/assets/stylesheets/ops.scss */
+/* line 63, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row {
+  background: #fafafa;
+}
+
+/* line 65, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row td {
+  border-top: 2px solid #ccc;
+  padding: 6px;
+}
+
+/* line 66, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-input {
+  width: 55%;
+  padding: 3px 6px;
+  font: inherit;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+
+/* line 74, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-btn {
+  padding: 3px 10px;
+  font-size: 12px;
+  border: 1px solid #999;
+  background: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* line 81, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-btn:hover {
+  background: #eee;
+}
+
+/* line 83, app/assets/stylesheets/ops.scss */
+table.ops-215-table tfoot .ops-215-add-row .ops-215-add-hint {
+  text-align: left;
+  font-size: 11px;
+}
+
+/* line 86, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-req-input {
   width: 100%;
   border: 0;
@@ -23512,20 +23582,59 @@ table.ops-215-table .ops-215-req-input {
   -moz-appearance: textfield;
 }
 
-/* line 61, app/assets/stylesheets/ops.scss */
+/* line 94, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-req-input:focus {
   background: #fffbe6;
 }
 
-/* line 64, app/assets/stylesheets/ops.scss */
+/* line 97, app/assets/stylesheets/ops.scss */
 table.ops-215-table .ops-215-req-input::-webkit-outer-spin-button, table.ops-215-table .ops-215-req-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* line 73, app/assets/stylesheets/ops.scss */
+/* line 106, app/assets/stylesheets/ops.scss */
 table.ops-projections-table .ops-total-row td {
   background: #f0f5ff;
+}
+
+@media print {
+  @page {
+    size: Letter landscape;
+    margin: 0.4in;
+  }
+  /* line 117, app/assets/stylesheets/ops.scss */
+  .no-print,
+.ops-toolbar-actions,
+.ops-toolbar,
+.resources-panel-head,
+.masking-tape,
+.incident-name,
+#header,
+nav,
+footer,
+.ops-215-add-row {
+    display: none !important;
+  }
+  /* line 128, app/assets/stylesheets/ops.scss */
+  .ops-section-heading {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  /* line 130, app/assets/stylesheets/ops.scss */
+  table.ops-215-table,
+table.ops-projections-table {
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* line 137, app/assets/stylesheets/ops.scss */
+  .ops-215-req-input {
+    border: 0 !important;
+    background: transparent !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }
 /* show */
 /* line 4, app/assets/stylesheets/plans.css.scss */
@@ -26116,6 +26225,13 @@ div.solid {
 }
 
 /* line 66, app/assets/stylesheets/covers.css.scss */
+.font-icon-f {
+  font-family: 'Apple Chancery', 'Baguet Script', 'Monotype Corsiva', 'URW Chancery L', cursive !important;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* line 72, app/assets/stylesheets/covers.css.scss */
 .new-block-type {
   display: none;
   position: fixed;
@@ -26132,122 +26248,122 @@ div.solid {
   z-index: 3;
 }
 
-/* line 80, app/assets/stylesheets/covers.css.scss */
+/* line 86, app/assets/stylesheets/covers.css.scss */
 .new-block-type span {
   display: inline-block;
   padding: 10px;
 }
 
-/* line 84, app/assets/stylesheets/covers.css.scss */
+/* line 90, app/assets/stylesheets/covers.css.scss */
 .new-block-type span {
   cursor: pointer;
 }
 
-/* line 87, app/assets/stylesheets/covers.css.scss */
+/* line 93, app/assets/stylesheets/covers.css.scss */
 .new-block-type span:hover {
   opacity: 0.8;
 }
 
-/* line 92, app/assets/stylesheets/covers.css.scss */
+/* line 98, app/assets/stylesheets/covers.css.scss */
 .new-block-type .cancel-block {
   cursor: pointer;
 }
 
-/* line 95, app/assets/stylesheets/covers.css.scss */
+/* line 101, app/assets/stylesheets/covers.css.scss */
 .new-block-type .cancel-block:hover {
   opacity: 0.8;
 }
 
-/* line 99, app/assets/stylesheets/covers.css.scss */
+/* line 105, app/assets/stylesheets/covers.css.scss */
 .new-block-type h1 {
   font-size: 2em !important;
   color: white;
 }
 
-/* line 103, app/assets/stylesheets/covers.css.scss */
+/* line 109, app/assets/stylesheets/covers.css.scss */
 .new-block-type h2 {
   font-size: 1.75em !important;
   color: white;
 }
 
-/* line 107, app/assets/stylesheets/covers.css.scss */
+/* line 113, app/assets/stylesheets/covers.css.scss */
 .new-block-type h3 {
   font-size: 1.25em !important;
   color: white;
 }
 
-/* line 111, app/assets/stylesheets/covers.css.scss */
+/* line 117, app/assets/stylesheets/covers.css.scss */
 .new-block-type h4 {
   font-size: 1em !important;
   color: white;
 }
 
-/* line 115, app/assets/stylesheets/covers.css.scss */
+/* line 121, app/assets/stylesheets/covers.css.scss */
 .new-block-type label {
   font-size: 1.5em;
 }
 
-/* line 118, app/assets/stylesheets/covers.css.scss */
+/* line 124, app/assets/stylesheets/covers.css.scss */
 .new-block-type select {
   color: black;
 }
 
-/* line 121, app/assets/stylesheets/covers.css.scss */
+/* line 127, app/assets/stylesheets/covers.css.scss */
 .new-block-type #font-size {
   width: 40px;
 }
 
-/* line 125, app/assets/stylesheets/covers.css.scss */
+/* line 131, app/assets/stylesheets/covers.css.scss */
 .new-block-type li {
   list-style: none;
 }
 
-/* line 128, app/assets/stylesheets/covers.css.scss */
+/* line 134, app/assets/stylesheets/covers.css.scss */
 .new-block-type i {
   font-size: 2em;
 }
 
-/* line 132, app/assets/stylesheets/covers.css.scss */
+/* line 138, app/assets/stylesheets/covers.css.scss */
 .new-block-type .add-image-block img {
   width: 25px;
   height: 25px;
   margin-bottom: 15px;
 }
 
-/* line 140, app/assets/stylesheets/covers.css.scss */
+/* line 146, app/assets/stylesheets/covers.css.scss */
 .new-block-type .split-block img {
   width: 50px;
   height: 25px;
   margin-bottom: 15px;
 }
 
-/* line 147, app/assets/stylesheets/covers.css.scss */
+/* line 153, app/assets/stylesheets/covers.css.scss */
 .cancel-block {
   right: 12px;
   top: -5px;
   position: absolute;
 }
 
-/* line 152, app/assets/stylesheets/covers.css.scss */
+/* line 158, app/assets/stylesheets/covers.css.scss */
 #cover {
   padding-top: 0px;
   min-height: 936px;
   text-align: center;
 }
 
-/* line 156, app/assets/stylesheets/covers.css.scss */
+/* line 162, app/assets/stylesheets/covers.css.scss */
 #cover h1 {
   font-weight: 700;
   font-size: 3em;
 }
 
-/* line 160, app/assets/stylesheets/covers.css.scss */
+/* line 166, app/assets/stylesheets/covers.css.scss */
 #cover h2 {
   font-weight: 700;
   font-size: 2em;
 }
 
-/* line 164, app/assets/stylesheets/covers.css.scss */
+/* line 170, app/assets/stylesheets/covers.css.scss */
 #cover #picture {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -26255,40 +26371,40 @@ div.solid {
   height: auto;
 }
 
-/* line 170, app/assets/stylesheets/covers.css.scss */
+/* line 176, app/assets/stylesheets/covers.css.scss */
 #cover .cost-code {
   margin-top: 30px;
 }
 
-/* line 172, app/assets/stylesheets/covers.css.scss */
+/* line 178, app/assets/stylesheets/covers.css.scss */
 #cover .cost-code h3 {
   font-weight: 700;
 }
 
-/* line 177, app/assets/stylesheets/covers.css.scss */
+/* line 183, app/assets/stylesheets/covers.css.scss */
 .bordered {
   border: 2px solid #DDD;
 }
 
-/* line 183, app/assets/stylesheets/covers.css.scss */
+/* line 189, app/assets/stylesheets/covers.css.scss */
 .sm-spacer {
   height: 25px;
   overflow: hidden;
 }
 
-/* line 187, app/assets/stylesheets/covers.css.scss */
+/* line 193, app/assets/stylesheets/covers.css.scss */
 .md-spacer {
   height: 50px;
   overflow: hidden;
 }
 
-/* line 191, app/assets/stylesheets/covers.css.scss */
+/* line 197, app/assets/stylesheets/covers.css.scss */
 .lg-spacer {
   height: 75px;
   overflow: hidden;
 }
 
-/* line 196, app/assets/stylesheets/covers.css.scss */
+/* line 202, app/assets/stylesheets/covers.css.scss */
 .add-block-button {
   z-index: 3;
   overflow: hidden;
@@ -26316,18 +26432,18 @@ div.solid {
   font-weight: 300;
 }
 
-/* line 219, app/assets/stylesheets/covers.css.scss */
+/* line 225, app/assets/stylesheets/covers.css.scss */
 .add-block-button i {
   margin-top: 10px;
   margin-left: 6px;
 }
 
-/* line 226, app/assets/stylesheets/covers.css.scss */
+/* line 232, app/assets/stylesheets/covers.css.scss */
 .add-block-button a {
   color: #3d3d3d !important;
 }
 
-/* line 230, app/assets/stylesheets/covers.css.scss */
+/* line 236, app/assets/stylesheets/covers.css.scss */
 .new-block-form {
   float: left;
   text-align: center;
@@ -26337,13 +26453,13 @@ div.solid {
   height: 25px;
 }
 
-/* line 239, app/assets/stylesheets/covers.css.scss */
+/* line 245, app/assets/stylesheets/covers.css.scss */
 #new_block {
   height: 15px;
   /*display: none;*/
 }
 
-/* line 243, app/assets/stylesheets/covers.css.scss */
+/* line 249, app/assets/stylesheets/covers.css.scss */
 .new-block-button {
   width: 26px;
   height: 26px;
@@ -26360,17 +26476,17 @@ div.solid {
   margin-bottom: 5px;
 }
 
-/* line 259, app/assets/stylesheets/covers.css.scss */
+/* line 265, app/assets/stylesheets/covers.css.scss */
 .block-form {
   display: none;
 }
 
-/* line 262, app/assets/stylesheets/covers.css.scss */
+/* line 268, app/assets/stylesheets/covers.css.scss */
 .edit_block {
   display: none;
 }
 
-/* line 265, app/assets/stylesheets/covers.css.scss */
+/* line 271, app/assets/stylesheets/covers.css.scss */
 .save-block-button {
   font-size: 10px;
   position: absolute;
@@ -26378,65 +26494,65 @@ div.solid {
 }
 
 /*content styles*/
-/* line 273, app/assets/stylesheets/covers.css.scss */
+/* line 279, app/assets/stylesheets/covers.css.scss */
 .style-controls {
   z-index: 3;
 }
 
-/* line 277, app/assets/stylesheets/covers.css.scss */
+/* line 283, app/assets/stylesheets/covers.css.scss */
 .h1 {
   /*font-size: 40px;*/
   font-size: 5vh;
 }
 
-/* line 281, app/assets/stylesheets/covers.css.scss */
+/* line 287, app/assets/stylesheets/covers.css.scss */
 .h2 {
   font-size: 30px;
 }
 
-/* line 284, app/assets/stylesheets/covers.css.scss */
+/* line 290, app/assets/stylesheets/covers.css.scss */
 .h3 {
   font-size: 25px;
 }
 
-/* line 287, app/assets/stylesheets/covers.css.scss */
+/* line 293, app/assets/stylesheets/covers.css.scss */
 .h4 {
   font-size: 20px;
 }
 
-/* line 290, app/assets/stylesheets/covers.css.scss */
+/* line 296, app/assets/stylesheets/covers.css.scss */
 .bold {
   font-weight: 900;
 }
 
-/* line 293, app/assets/stylesheets/covers.css.scss */
+/* line 299, app/assets/stylesheets/covers.css.scss */
 .semi-bold {
   font-weight: 600;
 }
 
-/* line 296, app/assets/stylesheets/covers.css.scss */
+/* line 302, app/assets/stylesheets/covers.css.scss */
 .normal {
   font-weight: 300;
 }
 
-/* line 299, app/assets/stylesheets/covers.css.scss */
+/* line 305, app/assets/stylesheets/covers.css.scss */
 .italic {
   font-style: italic;
 }
 
-/* line 302, app/assets/stylesheets/covers.css.scss */
+/* line 308, app/assets/stylesheets/covers.css.scss */
 .image-block {
   padding: 0 50px;
 }
 
-/* line 306, app/assets/stylesheets/covers.css.scss */
+/* line 312, app/assets/stylesheets/covers.css.scss */
 .cover-image {
   width: 100%;
   height: auto;
   z-index: 1;
 }
 
-/* line 311, app/assets/stylesheets/covers.css.scss */
+/* line 317, app/assets/stylesheets/covers.css.scss */
 .image-field {
   margin: 0 auto;
   text-align: center;
@@ -26448,7 +26564,7 @@ div.solid {
   z-index: 1;
 }
 
-/* line 321, app/assets/stylesheets/covers.css.scss */
+/* line 327, app/assets/stylesheets/covers.css.scss */
 .image-form {
   font-size: 1em;
   overflow: hidden;
@@ -26463,13 +26579,13 @@ div.solid {
   bottom: 0;
 }
 
-/* line 333, app/assets/stylesheets/covers.css.scss */
+/* line 339, app/assets/stylesheets/covers.css.scss */
 .image-form input {
   font-size: 15px;
   font-weight: 500;
 }
 
-/* line 338, app/assets/stylesheets/covers.css.scss */
+/* line 344, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload {
   margin-left: 10px;
   background-color: #dc3545;
@@ -26481,18 +26597,18 @@ div.solid {
   font-size: 15px;
 }
 
-/* line 348, app/assets/stylesheets/covers.css.scss */
+/* line 354, app/assets/stylesheets/covers.css.scss */
 .image-form .cancel-image-upload:hover {
   background-color: #c82333;
 }
 
 /* resizable image */
-/* line 358, app/assets/stylesheets/covers.css.scss */
+/* line 364, app/assets/stylesheets/covers.css.scss */
 .resizable {
   margin-top: 15px;
 }
 
-/* line 362, app/assets/stylesheets/covers.css.scss */
+/* line 368, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers {
   /* width: 65%; - removed to allow inline styles to take precedence */
   height: auto;
@@ -26505,23 +26621,23 @@ div.solid {
 }
 
 /* Show gray background only when no image is uploaded */
-/* line 374, app/assets/stylesheets/covers.css.scss */
+/* line 380, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers.no-image {
   background-color: #f0f0f0;
   min-height: 200px;
 }
 
-/* line 378, app/assets/stylesheets/covers.css.scss */
+/* line 384, app/assets/stylesheets/covers.css.scss */
 .resizable .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 381, app/assets/stylesheets/covers.css.scss */
+/* line 387, app/assets/stylesheets/covers.css.scss */
 .resizers .bordered {
   border: 3px solid #4286f4;
 }
 
-/* line 385, app/assets/stylesheets/covers.css.scss */
+/* line 391, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer {
   width: 10px;
   height: 10px;
@@ -26533,28 +26649,28 @@ div.solid {
   display: none;
 }
 
-/* line 394, app/assets/stylesheets/covers.css.scss */
+/* line 400, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-left {
   left: -5px;
   top: -5px;
   cursor: nwse-resize;
 }
 
-/* line 399, app/assets/stylesheets/covers.css.scss */
+/* line 405, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.top-right {
   right: -5px;
   top: -5px;
   cursor: nesw-resize;
 }
 
-/* line 404, app/assets/stylesheets/covers.css.scss */
+/* line 410, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-left {
   left: -5px;
   bottom: -5px;
   cursor: nesw-resize;
 }
 
-/* line 409, app/assets/stylesheets/covers.css.scss */
+/* line 415, app/assets/stylesheets/covers.css.scss */
 .resizable .resizers .resizer.bottom-right {
   right: -5px;
   bottom: -5px;
@@ -26562,7 +26678,7 @@ div.solid {
 }
 
 /* resize block */
-/* line 416, app/assets/stylesheets/covers.css.scss */
+/* line 422, app/assets/stylesheets/covers.css.scss */
 .resize-padding {
   /*background-color: orange;*/
   height: 8px;
@@ -26572,7 +26688,7 @@ div.solid {
   bottom: 0;
 }
 
-/* line 424, app/assets/stylesheets/covers.css.scss */
+/* line 430, app/assets/stylesheets/covers.css.scss */
 .bottom-padding {
   /*background-color: yellow;*/
   height: 25px;
@@ -26580,19 +26696,19 @@ div.solid {
   position: relative;
 }
 
-/* line 430, app/assets/stylesheets/covers.css.scss */
+/* line 436, app/assets/stylesheets/covers.css.scss */
 .selected-resizer {
   /*background-color: blue !important;*/
 }
 
-/* line 433, app/assets/stylesheets/covers.css.scss */
+/* line 439, app/assets/stylesheets/covers.css.scss */
 #temp-image {
   width: 490px;
   height: auto;
   display: none;
 }
 
-/* line 439, app/assets/stylesheets/covers.css.scss */
+/* line 445, app/assets/stylesheets/covers.css.scss */
 #small-temp-image {
   width: 50px;
   height: auto;
@@ -26600,7 +26716,7 @@ div.solid {
 }
 
 /* Split block styles */
-/* line 446, app/assets/stylesheets/covers.css.scss */
+/* line 452, app/assets/stylesheets/covers.css.scss */
 .split-block-container {
   display: flex;
   gap: 10px;
@@ -26609,31 +26725,31 @@ div.solid {
   /* Prevent horizontal scroll from dragged images */
 }
 
-/* line 453, app/assets/stylesheets/covers.css.scss */
+/* line 459, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper {
   flex: 1;
   width: 50%;
 }
 
-/* line 458, app/assets/stylesheets/covers.css.scss */
+/* line 464, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .block {
   width: 100%;
 }
 
-/* line 462, app/assets/stylesheets/covers.css.scss */
+/* line 468, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   /*width: 90% !important;*/
   /*min-width: 50px;*/
 }
 
-/* line 467, app/assets/stylesheets/covers.css.scss */
+/* line 473, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .cover-image {
   /*max-width: 100%;*/
   /*height: auto;*/
 }
 
 /* Drag handle for split blocks */
-/* line 473, app/assets/stylesheets/covers.css.scss */
+/* line 479, app/assets/stylesheets/covers.css.scss */
 .drag-handle {
   position: absolute;
   top: 50%;
@@ -26654,41 +26770,41 @@ div.solid {
   user-select: none;
 }
 
-/* line 493, app/assets/stylesheets/covers.css.scss */
+/* line 499, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers:hover .drag-handle {
   opacity: 0.7;
 }
 
-/* line 497, app/assets/stylesheets/covers.css.scss */
+/* line 503, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers.dragging {
   cursor: ew-resize;
   opacity: 0.8;
 }
 
-/* line 502, app/assets/stylesheets/covers.css.scss */
+/* line 508, app/assets/stylesheets/covers.css.scss */
 .split-block-wrapper .resizers {
   transition: transform 0.3s ease;
 }
 
-/* line 520, app/assets/stylesheets/covers.css.scss */
+/* line 526, app/assets/stylesheets/covers.css.scss */
 .cover-workspace {
   position: relative;
   margin: 0 -15px;
   padding: 0;
 }
 
-/* line 531, app/assets/stylesheets/covers.css.scss */
+/* line 537, app/assets/stylesheets/covers.css.scss */
 .cover-workspace > #cover-canvas {
   margin-top: -5px !important;
 }
 
-/* line 535, app/assets/stylesheets/covers.css.scss */
+/* line 541, app/assets/stylesheets/covers.css.scss */
 .cover-workspace #cover-canvas {
   width: 100%;
   margin-bottom: 0;
 }
 
-/* line 547, app/assets/stylesheets/covers.css.scss */
+/* line 553, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel {
   position: absolute;
   top: 20%;
@@ -26705,20 +26821,20 @@ div.solid {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* line 563, app/assets/stylesheets/covers.css.scss */
+/* line 569, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-sep {
   height: 1px;
   background: rgba(255, 255, 255, 0.15);
   margin: 6px 4px;
 }
 
-/* line 569, app/assets/stylesheets/covers.css.scss */
+/* line 575, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-inline-form {
   display: block;
   margin: 0;
 }
 
-/* line 571, app/assets/stylesheets/covers.css.scss */
+/* line 577, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn {
   display: flex;
   align-items: center;
@@ -26740,73 +26856,73 @@ div.solid {
   transition: background-color 0.1s ease;
 }
 
-/* line 591, app/assets/stylesheets/covers.css.scss */
+/* line 597, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* line 592, app/assets/stylesheets/covers.css.scss */
+/* line 598, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn:focus {
   outline: none;
 }
 
-/* line 593, app/assets/stylesheets/covers.css.scss */
+/* line 599, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn.is-active {
   background: #1976d2;
 }
 
-/* line 598, app/assets/stylesheets/covers.css.scss */
+/* line 604, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn.is-disabled {
   opacity: 0.28;
   cursor: not-allowed;
 }
 
-/* line 601, app/assets/stylesheets/covers.css.scss */
+/* line 607, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn.is-disabled:hover {
   background: transparent;
 }
 
-/* line 603, app/assets/stylesheets/covers.css.scss */
+/* line 609, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-btn em, .cover-style-panel .csp-btn strong {
   font-style: inherit;
   font-weight: inherit;
 }
 
-/* line 607, app/assets/stylesheets/covers.css.scss */
+/* line 613, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h1 {
   font-size: 22px;
   font-weight: 700;
 }
 
-/* line 608, app/assets/stylesheets/covers.css.scss */
+/* line 614, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h2 {
   font-size: 18px;
   font-weight: 700;
 }
 
-/* line 609, app/assets/stylesheets/covers.css.scss */
+/* line 615, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h3 {
   font-size: 15px;
   font-weight: 500;
 }
 
-/* line 610, app/assets/stylesheets/covers.css.scss */
+/* line 616, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-h4 {
   font-size: 13px;
   font-weight: 400;
 }
 
-/* line 618, app/assets/stylesheets/covers.css.scss */
+/* line 624, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-picker-wrap {
   position: relative;
 }
 
-/* line 621, app/assets/stylesheets/covers.css.scss */
+/* line 627, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-picker {
   font-style: italic;
 }
 
-/* line 624, app/assets/stylesheets/covers.css.scss */
+/* line 630, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-menu {
   position: absolute;
   top: 0;
@@ -26820,7 +26936,7 @@ div.solid {
   z-index: 30;
 }
 
-/* line 636, app/assets/stylesheets/covers.css.scss */
+/* line 642, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-option {
   display: block;
   width: 100%;
@@ -26834,17 +26950,17 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 648, app/assets/stylesheets/covers.css.scss */
+/* line 654, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-option:hover {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* line 649, app/assets/stylesheets/covers.css.scss */
+/* line 655, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-font-option:focus {
   outline: none;
 }
 
-/* line 653, app/assets/stylesheets/covers.css.scss */
+/* line 659, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input {
   width: 100%;
   height: 26px;
@@ -26860,52 +26976,52 @@ div.solid {
   -moz-appearance: textfield;
 }
 
-/* line 666, app/assets/stylesheets/covers.css.scss */
+/* line 672, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input::-webkit-inner-spin-button, .cover-style-panel .csp-px-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* line 671, app/assets/stylesheets/covers.css.scss */
+/* line 677, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input:focus {
   outline: none;
   border-color: #1976d2;
 }
 
-/* line 672, app/assets/stylesheets/covers.css.scss */
+/* line 678, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-px-input.is-disabled {
   opacity: 0.28;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* line 679, app/assets/stylesheets/covers.css.scss */
+/* line 685, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-italic em {
   font-style: italic;
 }
 
-/* line 681, app/assets/stylesheets/covers.css.scss */
+/* line 687, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-align-btn {
   font-family: monospace;
   font-size: 12px;
   letter-spacing: 1px;
 }
 
-/* line 687, app/assets/stylesheets/covers.css.scss */
+/* line 693, app/assets/stylesheets/covers.css.scss */
 .cover-style-panel .csp-icon img {
   width: 22px;
   height: 22px;
   filter: brightness(0) invert(1);
 }
 
-/* line 697, app/assets/stylesheets/covers.css.scss */
+/* line 703, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected {
   border-style: solid;
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.04);
 }
 
-/* line 707, app/assets/stylesheets/covers.css.scss */
+/* line 713, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form {
   display: none;
   align-items: center;
@@ -26921,17 +27037,17 @@ div.solid {
   white-space: nowrap;
 }
 
-/* line 724, app/assets/stylesheets/covers.css.scss */
+/* line 730, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form.is-open {
   display: inline-flex;
 }
 
-/* line 728, app/assets/stylesheets/covers.css.scss */
+/* line 734, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-file-input {
   display: none !important;
 }
 
-/* line 730, app/assets/stylesheets/covers.css.scss */
+/* line 736, app/assets/stylesheets/covers.css.scss */
 .cover-upload-form .cui-filename {
   flex: 1 1 auto;
   color: #5e6c84;
@@ -26940,7 +27056,7 @@ div.solid {
   text-overflow: ellipsis;
 }
 
-/* line 739, app/assets/stylesheets/covers.css.scss */
+/* line 745, app/assets/stylesheets/covers.css.scss */
 #cover-canvas {
   position: relative;
   width: 100%;
@@ -26952,7 +27068,7 @@ div.solid {
   overflow: visible;
 }
 
-/* line 758, app/assets/stylesheets/covers.css.scss */
+/* line 764, app/assets/stylesheets/covers.css.scss */
 .cover-block {
   color: #333;
   font-family: cambria;
@@ -26963,13 +27079,13 @@ div.solid {
   cursor: move;
 }
 
-/* line 773, app/assets/stylesheets/covers.css.scss */
+/* line 779, app/assets/stylesheets/covers.css.scss */
 .cover-block:hover {
   border-color: #90a4ae;
   background: rgba(9, 30, 66, 0.02);
 }
 
-/* line 778, app/assets/stylesheets/covers.css.scss */
+/* line 784, app/assets/stylesheets/covers.css.scss */
 .cover-block.ui-draggable-dragging {
   border-color: #1976d2;
   background: rgba(25, 118, 210, 0.05);
@@ -26977,47 +27093,47 @@ div.solid {
   z-index: 10;
 }
 
-/* line 787, app/assets/stylesheets/covers.css.scss */
+/* line 793, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-left .cover-block-text {
   justify-content: flex-start;
 }
 
-/* line 788, app/assets/stylesheets/covers.css.scss */
+/* line 794, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-center .cover-block-text {
   justify-content: center;
 }
 
-/* line 789, app/assets/stylesheets/covers.css.scss */
+/* line 795, app/assets/stylesheets/covers.css.scss */
 .cover-block.align-right .cover-block-text {
   justify-content: flex-end;
 }
 
-/* line 796, app/assets/stylesheets/covers.css.scss */
+/* line 802, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-bold .cover-block-text {
   font-weight: 700;
 }
 
-/* line 797, app/assets/stylesheets/covers.css.scss */
+/* line 803, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-semi-bold .cover-block-text {
   font-weight: 600;
 }
 
-/* line 798, app/assets/stylesheets/covers.css.scss */
+/* line 804, app/assets/stylesheets/covers.css.scss */
 .cover-block.weight-normal .cover-block-text {
   font-weight: 400;
 }
 
-/* line 799, app/assets/stylesheets/covers.css.scss */
+/* line 805, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-italic .cover-block-text {
   font-style: italic;
 }
 
-/* line 800, app/assets/stylesheets/covers.css.scss */
+/* line 806, app/assets/stylesheets/covers.css.scss */
 .cover-block.style-normal .cover-block-text {
   font-style: normal;
 }
 
-/* line 807, app/assets/stylesheets/covers.css.scss */
+/* line 813, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-handle {
   position: absolute;
   display: block;
@@ -27033,40 +27149,40 @@ div.solid {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* line 827, app/assets/stylesheets/covers.css.scss */
+/* line 833, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-nw {
   left: -6px;
   top: -6px;
   cursor: nw-resize;
 }
 
-/* line 828, app/assets/stylesheets/covers.css.scss */
+/* line 834, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-ne {
   right: -6px;
   top: -6px;
   cursor: ne-resize;
 }
 
-/* line 829, app/assets/stylesheets/covers.css.scss */
+/* line 835, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-sw {
   left: -6px;
   bottom: -6px;
   cursor: sw-resize;
 }
 
-/* line 830, app/assets/stylesheets/covers.css.scss */
+/* line 836, app/assets/stylesheets/covers.css.scss */
 .cover-block .ui-resizable-se {
   right: -6px;
   bottom: -6px;
   cursor: se-resize;
 }
 
-/* line 833, app/assets/stylesheets/covers.css.scss */
+/* line 839, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-selected .ui-resizable-handle {
   opacity: 1;
 }
 
-/* line 838, app/assets/stylesheets/covers.css.scss */
+/* line 844, app/assets/stylesheets/covers.css.scss */
 .cover-guide {
   position: absolute;
   top: 0;
@@ -27079,27 +27195,27 @@ div.solid {
   z-index: 4;
 }
 
-/* line 849, app/assets/stylesheets/covers.css.scss */
+/* line 855, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="16.5"] {
   left: 16.5%;
 }
 
-/* line 850, app/assets/stylesheets/covers.css.scss */
+/* line 856, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="50"] {
   left: 50%;
 }
 
-/* line 851, app/assets/stylesheets/covers.css.scss */
+/* line 857, app/assets/stylesheets/covers.css.scss */
 .cover-guide[data-guide-x="83.5"] {
   left: 83.5%;
 }
 
-/* line 852, app/assets/stylesheets/covers.css.scss */
+/* line 858, app/assets/stylesheets/covers.css.scss */
 .cover-guide.is-active {
   opacity: 1;
 }
 
-/* line 854, app/assets/stylesheets/covers.css.scss */
+/* line 860, app/assets/stylesheets/covers.css.scss */
 .cover-block-text {
   width: 100%;
   height: 100%;
@@ -27111,7 +27227,7 @@ div.solid {
   user-select: none;
 }
 
-/* line 864, app/assets/stylesheets/covers.css.scss */
+/* line 870, app/assets/stylesheets/covers.css.scss */
 .cover-block-text[contenteditable="true"] {
   user-select: text;
   outline: 2px solid #1976d2;
@@ -27119,7 +27235,7 @@ div.solid {
   cursor: text;
 }
 
-/* line 871, app/assets/stylesheets/covers.css.scss */
+/* line 877, app/assets/stylesheets/covers.css.scss */
 .cover-block-image {
   width: 100%;
   height: 100%;
@@ -27127,7 +27243,7 @@ div.solid {
   display: block;
 }
 
-/* line 876, app/assets/stylesheets/covers.css.scss */
+/* line 882, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-area {
   display: block;
   width: 100%;
@@ -27136,13 +27252,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 883, app/assets/stylesheets/covers.css.scss */
+/* line 889, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-image:hover .cover-block-image {
   opacity: 0.8;
   transition: opacity 0.12s ease;
 }
 
-/* line 888, app/assets/stylesheets/covers.css.scss */
+/* line 894, app/assets/stylesheets/covers.css.scss */
 .cover-block-image-placeholder {
   width: 100%;
   height: 100%;
@@ -27156,12 +27272,12 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 903, app/assets/stylesheets/covers.css.scss */
+/* line 909, app/assets/stylesheets/covers.css.scss */
 .cover-block.is-notes {
   cursor: move;
 }
 
-/* line 906, app/assets/stylesheets/covers.css.scss */
+/* line 912, app/assets/stylesheets/covers.css.scss */
 .cover-notes {
   width: 100%;
   height: 100%;
@@ -27172,7 +27288,7 @@ div.solid {
   background: #fff;
 }
 
-/* line 915, app/assets/stylesheets/covers.css.scss */
+/* line 921, app/assets/stylesheets/covers.css.scss */
 .cover-notes-header {
   text-align: center;
   font-weight: 600;
@@ -27182,7 +27298,7 @@ div.solid {
   user-select: none;
 }
 
-/* line 923, app/assets/stylesheets/covers.css.scss */
+/* line 929, app/assets/stylesheets/covers.css.scss */
 .cover-notes-lines {
   flex: 1;
   display: flex;
@@ -27190,14 +27306,14 @@ div.solid {
   min-height: 0;
 }
 
-/* line 929, app/assets/stylesheets/covers.css.scss */
+/* line 935, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line {
   flex: 1;
   border-bottom: 1px solid #000;
   min-height: 0;
 }
 
-/* line 934, app/assets/stylesheets/covers.css.scss */
+/* line 940, app/assets/stylesheets/covers.css.scss */
 .cover-notes-line:last-child {
   border-bottom: 0;
 }
