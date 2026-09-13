@@ -34,12 +34,12 @@
 
   <div class="sheet-section sheet-header">
     <div class="sheet-header-left">
-      <div class="sheet-header-label gray-row">1. Incident Name:</div>
+      <div class="sheet-header-label gray-row strong">1. Incident Name:</div>
       <div class="sheet-header-value"><%= @incident.name %></div>
     </div>
     <div class="sheet-header-right">
       <div class="sheet-header-op">
-        <span class="sheet-header-op-label">2. Operational Period:</span>
+        <span class="sheet-header-op-label strong">2. Operational Period:</span>
         <%# Click the value to switch between DAY / NIGHT. Defaults to
             DAY at the DB layer (migration backfills existing rows). %>
         <%= best_in_place @plan, :shift,
@@ -104,7 +104,7 @@
   </div>
 
   <div class="sheet-section sheet-section-5">
-    <span class="sheet-text-label sheet-inline-label">5. Site Safety Plan Required?</span>
+    <span class="sheet-text-label sheet-inline-label strong">5. Site Safety Plan Required?</span>
 
     <%# Two mutually-exclusive checkboxes bound to a string field
         ("Yes" / "No" / nil). JS at the bottom PATCHes via AJAX and
@@ -125,13 +125,13 @@
     </span>
 
     <span class="ssp-location">
-      <span>Approved Site Safety Plan(s) Located at:</span>
+      <span>Approved Site Safety Plan(s) Located:</span>
       <%= best_in_place @plan, :site_safety_plan_location, as: :input, place_holder: "(Location)" %>
     </span>
   </div>
 
   <div class="sheet-section sheet-section-6">
-    <div class="sheet-text-label">6. Incident Action Plan
+    <div class="sheet-text-label strong">6. Incident Action Plan
       <span class="sheet-normal">(the items checked below are included in this Incident Action Plan):</span>
     </div>
     <%# 3-column grid, column-first flow so slots 1–6 stack in the left
@@ -154,14 +154,14 @@
 
   <div class="sheet-section sheet-section-7">
     <div class="sheet-cell wide">
-      <span class="sheet-cell-label">7. Prepared by:</span>
-      <span class="sheet-cell-value">
+      <span class="sheet-cell-label strong">7. Prepared by:</span>
+      <span class="text-center">
         <%= best_in_place @plan, :prepared_by, as: :input, place_holder: '(NAME)' %>
       </span>
     </div>
     <div class="sheet-cell narrow">
       <span class="sheet-cell-label">Position/Title:</span>
-      <span class="sheet-cell-value">
+      <span class="text-center">
         <%= best_in_place @plan, :prepared_by_position, as: :input, place_holder: '(POSITION)' %>
       </span>
     </div>
@@ -172,8 +172,8 @@
 
   <div class="sheet-section sheet-section-8">
     <div class="sheet-cell wide">
-      <span class="sheet-cell-label">8. Approved by Incident Commander:</span>
-      <span class="sheet-cell-value">
+      <span class="sheet-cell-label strong">8. Approved by Incident Commander:</span>
+      <span class="text-center">
         <%= best_in_place @plan, :approved_by, as: :input, place_holder: '(NAME)' %>
       </span>
     </div>

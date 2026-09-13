@@ -11,12 +11,12 @@
 
   <div class="sheet-section sheet-header">
     <div class="sheet-header-left">
-      <div class="sheet-header-label gray-row">1. Incident Name:</div>
+      <div class="sheet-header-label gray-row strong">1. Incident Name:</div>
       <div class="sheet-header-value"><%= @incident.name %></div>
     </div>
     <div class="sheet-header-right">
       <div class="sheet-header-op gray-row">
-        <span class="sheet-header-op-label">2. Operational Period:</span>
+        <span class="sheet-header-op-label strong">2. Operational Period:</span>
         <strong class="sheet-header-op-value"><%= @plan.shift.presence || 'DAY' %></strong>
       </div>
       <div class="sheet-header-dates">
@@ -55,7 +55,7 @@
   </div>
 
   <div class="sheet-section sheet-section-5">
-    <span class="sheet-text-label sheet-inline-label">5. Site Safety Plan Required?</span>
+    <span class="sheet-text-label sheet-inline-label sheet-normal strong">5. Site Safety Plan Required?</span>
     <span class="ssp-toggle-group">
       <label class="ssp-check">
         <span class="ssp-check-label">Yes</span>
@@ -73,7 +73,7 @@
   </div>
 
   <div class="sheet-section sheet-section-6">
-    <div class="sheet-text-label">6. Incident Action Plan
+    <div class="sheet-text-label strong">6. Incident Action Plan
       <span class="sheet-normal">(the items checked below are included in this Incident Action Plan):</span>
     </div>
     <div class="attachments-grid">
@@ -88,12 +88,12 @@
 
   <div class="sheet-section sheet-section-7">
     <div class="sheet-cell wide">
-      <span class="sheet-cell-label">7. Prepared by:</span>
-      <span class="sheet-cell-value"><%= @plan.prepared_by %></span>
+      <span class="sheet-cell-label strong">7. Prepared by:</span>
+      <span class="text-center"><%= @plan.prepared_by %></span>
     </div>
     <div class="sheet-cell narrow">
       <span class="sheet-cell-label">Position/Title:</span>
-      <span class="sheet-cell-value"><%= @plan.prepared_by_position %></span>
+      <span class="text-center"><%= @plan.prepared_by_position %></span>
     </div>
     <div class="sheet-cell narrow">
       <span class="sheet-cell-label">Signature:</span>
@@ -102,8 +102,8 @@
 
   <div class="sheet-section sheet-section-8">
     <div class="sheet-cell wide">
-      <span class="sheet-cell-label">8. Approved by Incident Commander:</span>
-      <span class="sheet-cell-value"><%= @plan.approved_by %></span>
+      <span class="sheet-cell-label strong">8. Approved by Incident Commander:</span>
+      <span class="text-center"><%= @plan.approved_by %></span>
     </div>
     <div class="sheet-cell narrow">
       <span class="sheet-cell-label">Signature:</span>
