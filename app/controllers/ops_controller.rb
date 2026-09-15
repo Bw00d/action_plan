@@ -135,12 +135,12 @@ class OpsController < ApplicationController
         .order(:kind, :name)
   end
 
-  # Day 1 = ops_period_from of the latest plan's first assignment, else today.
-  # Days 2 and 3 are the two days after that.
+  # Day 1 = today; days 2 and 3 are the next two days. The 215 is a
+  # forward-looking planning worksheet, so anchoring on the calendar (per
+  # the user's timezone) matches how ops fills it out at the start of a
+  # shift regardless of when the most recent plan was created.
   def compute_day_range
-    plan  = @incident.plans.order(:created_at).last
-    from  = plan&.assignments&.detect { |a| a.ops_period_from.present? }&.ops_period_from
-    start = (from || Time.current).to_date
+    start = Time.current.to_date
     [start, start + 1, start + 2]
   end
 
