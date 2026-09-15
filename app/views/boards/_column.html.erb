@@ -19,6 +19,18 @@
                       title: 'Delete this unit' %>
       <% end %>
     </div>
+
+    <% if local_assigns[:unit] %>
+      <% latest_204 = latest_assignment_for(unit) %>
+      <% if latest_204 %>
+        <div class="board-column-204">
+          <%= link_to "→ 204 · #{assignment_link_label(latest_204)}",
+                      incident_plan_assignment_path(@incident, latest_204.plan, latest_204),
+                      class: 'board-column-204-link',
+                      title: "Open the ICS-204 for #{title} (latest plan)" %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 
   <ul class="board-cards">

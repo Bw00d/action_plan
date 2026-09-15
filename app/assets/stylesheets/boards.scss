@@ -86,6 +86,21 @@
   }
 }
 
+.board-column-204 {
+  margin-top: 4px;
+  .board-column-204-link {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #0052cc;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: #eaf1fb;
+    text-decoration: none;
+    &:hover { background: #d3e2f7; text-decoration: none; }
+  }
+}
+
 .board-column-delete-form {
   display: inline-block;
   margin: 0;
