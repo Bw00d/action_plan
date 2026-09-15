@@ -8,6 +8,12 @@
 
     <div class="tally-container">
       <div class="tally-header">
+        <div class="tally-header-actions no-print">
+          <%= link_to 'Download PDF',
+                      tally_to_pdf_incident_resources_path(@incident, format: :pdf),
+                      class: 'btn btn-primary btn-xs', target: :_blank %>
+          <button type="button" class="btn btn-default btn-xs tally-print-btn">Print</button>
+        </div>
         <h2>RESOURCE TALLY</h2>
         <p class="muted">Live counts — updates automatically as resources check in or demob.</p>
       </div>
@@ -19,7 +25,7 @@
           <table class="tally-table">
             <thead>
               <tr>
-                <th class="tally-agency-col">48. Agency or Organization</th>
+                <th class="tally-agency-col">Agency or Organization</th>
                 <th class="tally-count-col"></th>
                 <% pivot[:columns].each do |col| %>
                   <th class="tally-col-header <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
@@ -54,9 +60,9 @@
                 </tr>
               <% end %>
 
-              <%# 52. Total row — matches the ICS form footer. %>
+              <%# Total row — matches the ICS form footer. %>
               <tr class="tally-total-row">
-                <td class="tally-agency-cell tally-total-label" rowspan="2">52. Total</td>
+                <td class="tally-agency-cell tally-total-label" rowspan="2">Total</td>
                 <td class="tally-count-label">resources</td>
                 <% pivot[:columns].each do |col| %>
                   <% t = pivot[:totals][col[:key]] %>

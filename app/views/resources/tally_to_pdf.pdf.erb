@@ -1,0 +1,120 @@
+<style>
+  @page { size: Letter landscape; margin: 0.4in; }
+  html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; color: #000; }
+  h1 { font-size: 16pt; margin: 0 0 4pt; }
+  .meta { font-size: 10pt; margin-bottom: 10pt; color: #333; }
+  .meta span { margin-right: 14pt; }
+
+  table.tally {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  table.tally th, table.tally td {
+    border: 0.75pt solid #666;
+    padding: 3pt 5pt;
+    text-align: center;
+    vertical-align: middle;
+  }
+  table.tally thead th {
+    background: #ececec;
+    font-weight: 600;
+  }
+  table.tally .agency-col { text-align: left; width: 18%; }
+  table.tally .agency-cell {
+    text-align: left;
+    font-weight: 600;
+    background: #f7f7f7;
+  }
+  table.tally .count-label {
+    text-align: right;
+    font-style: italic;
+    color: #555;
+    font-size: 8pt;
+    background: #fafafa;
+  }
+  table.tally .is-overhead { background: #fff6e6; }
+  table.tally .is-total    { background: #e6f0ff; font-weight: 600; }
+  table.tally .total-row td {
+    background: #f0f0f0;
+    font-weight: 700;
+  }
+  table.tally .total-row .is-overhead { background: #ffecc9; }
+  table.tally .total-row .is-total    { background: #cfe0ff; }
+  .col-header { writing-mode: horizontal-tb; }
+</style>
+
+<h1><%= @incident.display_incident_name %> — Resource Tally</h1>
+<div class="meta">
+  <span><strong>Printed:</strong> <%= Time.current.strftime('%Y-%m-%d %H:%M') %></span>
+</div>
+
+<% pivot = resource_tally_pivot(@incident) %>
+
+<% if pivot[:agencies].empty? %>
+  <p><em>No assigned resources with a recognizable agency.</em></p>
+<% else %>
+  <table class="tally">
+    <thead>
+      <tr>
+        <th class="agency-col">Agency or Organization</th>
+        <th></th>
+        <% pivot[:columns].each do |col| %>
+          <th class="col-header <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+            <%= col[:label] %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% pivot[:agencies].each do |agency| %>
+        <% cells = pivot[:rows][agency] %>
+        <tr>
+          <td class="agency-cell" rowspan="2"><%= agency %></td>
+          <td class="count-label">resources</td>
+          <% pivot[:columns].each do |col| %>
+            <% cell = cells[col[:key]] %>
+            <td class="<%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+              <% unless col[:overhead] || col[:total] %>
+                <%= cell[:resources].positive? ? cell[:resources] : '' %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+          <td class="count-label">personnel</td>
+          <% pivot[:columns].each do |col| %>
+            <% cell = cells[col[:key]] %>
+            <td class="<%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+              <%= cell[:personnel].positive? ? cell[:personnel] : '' %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+
+      <tr class="total-row">
+        <td class="agency-cell" rowspan="2">Total</td>
+        <td class="count-label">resources</td>
+        <% pivot[:columns].each do |col| %>
+          <% t = pivot[:totals][col[:key]] %>
+          <td class="<%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+            <% unless col[:overhead] || col[:total] %>
+              <%= t[:resources].positive? ? t[:resources] : '' %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      <tr class="total-row">
+        <td class="count-label">personnel</td>
+        <% pivot[:columns].each do |col| %>
+          <% t = pivot[:totals][col[:key]] %>
+          <td class="<%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+            <%= t[:personnel].positive? ? t[:personnel] : '' %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

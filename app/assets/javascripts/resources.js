@@ -160,6 +160,18 @@ $(document).on("turbolinks:load", function() {
     $('#tally-info').show();
   })
 
+  // Print button on the Resource Tally panel. Tag <body> with a class
+  // so the print stylesheet can hide the other tab panels and print
+  // just the tally table.
+  $(document).off('click.tallyPrint').on('click.tallyPrint', '.tally-print-btn', function () {
+    $('body').addClass('printing-tally');
+    var restore = function () { $('body').removeClass('printing-tally'); };
+    window.addEventListener('afterprint', restore, { once: true });
+    window.print();
+    // Fallback in case afterprint doesn't fire (some browsers).
+    setTimeout(restore, 2000);
+  });
+
 // Reload page after creating resource
   // $('#submit-resource-button').click(function() {
   //   window.location.reload();

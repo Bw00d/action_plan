@@ -329,8 +329,17 @@ a.delete-resource:hover {
   }
   .tally-header {
     margin-bottom: 12px;
+    position: relative;
     h2 { margin: 0 0 4px; font-weight: 700; letter-spacing: 0.5px; }
     .muted { color: #6b778c; font-size: 13px; margin: 0; }
+
+    .tally-header-actions {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      gap: 6px;
+    }
   }
 
   // Horizontal scroll for wide tallies — many resource kinds don't fit
@@ -618,4 +627,37 @@ input.fwd-datepicker {
   }
 
   &.depth-2 { background: #eef1f5; }
+}
+
+// Resource Tally print — activated by adding .printing-tally on <body>
+// via the Print button. Hides everything except the tally panel so
+// window.print() emits just the pivot.
+@media print {
+  body.printing-tally {
+    .no-print,
+    .tally-header-actions,
+    .resources-panel-head,
+    .masking-tape,
+    .incident-name,
+    #ics-211-info,
+    #glide-info,
+    #demob-info,
+    #resource-panels,
+    .panel-foot,
+    #header,
+    nav,
+    footer { display: none !important; }
+
+    #tally-info { display: block !important; padding-top: 0; }
+
+    .tally-table {
+      font-size: 10px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      page-break-inside: avoid;
+    }
+    .tally-table-wrap { overflow: visible !important; box-shadow: none; }
+
+    @page { size: Letter landscape; margin: 0.4in; }
+  }
 }

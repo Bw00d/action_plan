@@ -20,6 +20,33 @@ class ResourcesController < ApplicationController
   def show
   end
 
+  # GET /incidents/:incident_id/resources/tally_to_pdf.pdf
+  # Renders the Resource Tally pivot as a landscape PDF via Grover.
+  def tally_to_pdf
+    @incident = Incident.find(params[:incident_id])
+
+    Rails.application.routes.default_url_options[:host]     = request.host_with_port
+    Rails.application.routes.default_url_options[:protocol] = request.protocol
+
+    html = render_to_string(
+      template: 'resources/tally_to_pdf.pdf.erb',
+      layout:   'layouts/pdf.html.erb'
+    )
+
+    pdf = Grover.new(html,
+      display_url:          request.base_url,
+      format:               'Letter',
+      landscape:            true,
+      margin:               { top: '0.4in', right: '0.4in', bottom: '0.4in', left: '0.4in' },
+      print_background:     true,
+      prefer_css_page_size: true,
+      display_header_footer: false
+    ).to_pdf
+
+    send_data pdf, filename: "resource_tally_#{@incident.id}.pdf",
+                   type: 'application/pdf', disposition: 'inline'
+  end
+
   # GET /resources/new
   def new
     @resource = Resource.new

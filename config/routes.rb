@@ -52,7 +52,10 @@ Rails.application.routes.draw do
     end
     resources :posts
     resources :resources do
-      collection { post :import_isuite }
+      collection do
+        post :import_isuite
+        get  :tally_to_pdf
+      end
       resources :demobs
     end
     resources :requests, only: [:index] do
