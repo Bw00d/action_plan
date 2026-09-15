@@ -53,6 +53,7 @@
 
 
       <!-- Full-width ICS 203 header -->
+
       <div class="row org-header">
         <div id="title-box" class="col-xs-12 content-box">
           <h4><strong>ORGANIZATION ASSIGNMENT LIST (ICS 203)</strong></h4>
@@ -60,13 +61,13 @@
       </div>
       <div class="row org-header">
         <div class="col-xs-4 content-box org-header-cell org-header-tall">
-          <div class="org-header-label gray-row"><span class="small">1. Incident Name:</span></div>
+          <div class="org-header-label gray-row strong"><span class="small">1. Incident Name:</span></div>
           <div class="org-header-value"><%= @incident.name %></div>
         </div>
         <div class="col-xs-8 org-header-right">
           <div class="row">
             <div class="col-xs-12 content-box op-period-cell">
-              <span class="small">2. Operational Period:</span>
+              <span class="small strong">2. Operational Period:</span>
               <span class="lg-padding-left"><strong>DAY</strong></span>
             </div>
           </div>
@@ -86,7 +87,7 @@
       <div class="row org-columns">
         <div class="left-column col-xs-6"> <!-- Left Column-->
           <div class="row">
-            <div class="col-xs-12 content-box header-row"> COMMAND AND GENERAL STAFF </div>
+            <div class="col-xs-12 content-box header-row strong text-left"> 3. Command</div>
           </div>
 
           <!-- BEGIN Command Staff -->
@@ -368,7 +369,7 @@
       </div> 
         <div class="row org-footer">
           <div class="content-box col-xs-5">
-            <span class="small">9. Prepared By:</span>
+            <span class="small strong">9. Prepared By:</span>
             <span class="lg-padding-left">
               <%= best_in_place @plan, :prepared_by, as: :input, id: "org-name", place_holder: '  ' %>
             </span>

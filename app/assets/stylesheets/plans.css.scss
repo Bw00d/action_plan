@@ -300,51 +300,7 @@ a.delete-objective:hover {
     margin: 0;
   }
 
-  //
-  // ─── LEGACY 202 STYLES (COMMENTED FOR ISOLATION) ──────────────────────
-  // The rebuild of the 202 uses ICS-style bordered rows via .org-header,
-  // .site-safety-row, #attachments, .org-footer, etc. The rules below were
-  // for the previous freeform layout and now stack extra borders and a
-  // min-height:300px on top of the new sections. Left commented so we can
-  // restore individual rules if any of them turn out to still be needed.
-  //
-  // #ops-period {
-  //   border-top: 1px solid black;
-  //   border-left: 1px solid black;
-  // }
-  // #control-objectives {
-  //   border-right: 1px solid black;
-  //   border-left: 1px solid black;
-  //   border-top: 1px solid black;
-  //   overflow: hidden;
-  //   ul {
-  //     line-height: 2em;
-  //   }
-  // }
-  // #operational-emphasis {
-  //   border-left: 1px solid black;
-  //   min-height: 300px;
-  //   overflow: hidden;
-  // }
-  // #general-safety-message {
-  //   border-top: 1px solid black;
-  //   height: 100%;
-  //   overflow: hidden;
-  //   padding-bottom: 10px;
-  //   border-right: 1px solid black;
-  //   border-left: 1px solid black;
-  // }
-  // .prepared-by-row {
-  //   border-top: 1px solid black;
-  //   border-right: 1px solid black;
-  //   border-left: 1px solid black;
-  //   border-bottom: 1px solid black;
-  //   hieght: 60px;   // note: existing typo in original
-  // }
-
-  // PDF-only rules for the -pdf variants — kept, they only apply to the
-  // PDF template (which still uses these ids) and don't affect the
-  // on-screen view.
+  
   #control-objectives-pdf {
     border-right: 1px solid black;
     border-left: 1px solid black;
@@ -511,10 +467,11 @@ a.delete-objective:hover {
   color: #333;
 }
 .header-row {
-  text-align: center;
+  text-align: left;
   background-color: #dcdcdc;
   padding-top: 5px;
   border-left: 1px solid black;
+  font-size: 14px;
 }
 .gray-row {
   background-color: #dcdcdc !important;
@@ -611,6 +568,9 @@ h1.header {
 #incident-objectives #title-box {
   border-top: none;
   border-left: none;
+  .strong {
+    font-weight: 700;
+  }
 }
 
 // Section 1 / 2 headers use the same gray band as the body section
