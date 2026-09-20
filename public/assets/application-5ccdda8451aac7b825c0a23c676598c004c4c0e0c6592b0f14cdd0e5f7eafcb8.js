@@ -52964,6 +52964,38 @@ function hasScrolled() {
 }
 
 });
+// Feed interactions on the Incident Users page. Keeps behaviors delegated
+// on document so they survive Turbolinks visits and future ActionCable
+// re-renders drop-in cleanly (just replace the feed list — handlers stay).
+$(document).on('turbolinks:load', function () {
+  $(document).off('.feed');
+
+  // Reply — reveal the inline composer under a top-level post.
+  $(document).on('click.feed', '.feed-reply-btn', function () {
+    var id = $(this).data('post-id');
+    var $composer = $(this).closest('.feed-post').find('> .feed-reply-composer');
+    $composer.show().find('textarea').focus();
+  });
+
+  $(document).on('click.feed', '.feed-cancel-reply', function () {
+    $(this).closest('.feed-reply-composer').hide();
+  });
+
+  // Edit — swap the body for the edit form.
+  $(document).on('click.feed', '.feed-edit-btn', function () {
+    var id = $(this).data('post-id');
+    var $post = $(this).closest('.feed-post');
+    $post.find('> .feed-post-body').hide();
+    $post.find('> .feed-edit-form').show().find('textarea').focus();
+  });
+
+  $(document).on('click.feed', '.feed-cancel-edit', function () {
+    var $form = $(this).closest('.feed-edit-form');
+    var $post = $form.closest('.feed-post');
+    $form.hide();
+    $post.find('> .feed-post-body').show();
+  });
+});
 $(document).on("turbolinks:load", function() {
 
   $('.datepicker').datepicker({
@@ -53277,6 +53309,31 @@ $(document).on('turbolinks:load', function () {
   });
   $(document).off('keydown.issueReport').on('keydown.issueReport', function (e) {
     if (e.key === 'Escape' && $modal.is(':visible')) close();
+  });
+});
+// Select-all master checkboxes on the iSuite import preview.
+// Each master has data-target=".css-selector-for-row-checkboxes" and
+// toggles every matching checkbox inside its section.
+$(document).on('turbolinks:load', function () {
+  $(document).off('change.iiSelectAll').on('change.iiSelectAll', '.ii-select-all', function () {
+    var selector = $(this).data('target');
+    if (!selector) return;
+    var checked = this.checked;
+    // Skip disabled boxes (like the "always create" new-row ones).
+    $(this).closest('.ii-section').find(selector).each(function () {
+      if (this.disabled) return;
+      this.checked = checked;
+    });
+  });
+
+  // Reverse: unchecking any row checkbox unticks the master; checking
+  // all row checkboxes ticks it. Keeps the header in sync with state.
+  $(document).off('change.iiRowSync').on('change.iiRowSync', '.ii-resource-check, .ii-roster-check', function () {
+    var $section = $(this).closest('.ii-section');
+    var selectorClass = $(this).hasClass('ii-resource-check') ? '.ii-resource-check' : '.ii-roster-check';
+    var $rows = $section.find(selectorClass).not(':disabled');
+    var allChecked = $rows.length > 0 && $rows.filter(':not(:checked)').length === 0;
+    $section.find('.ii-select-all').prop('checked', allChecked);
   });
 });
 $(document).on("turbolinks:load", function () {
@@ -54083,24 +54140,35 @@ $(document).on("turbolinks:load", function() {
     $('#demob-info').hide();
     $('#glide-info').hide();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#glide-tab').click(function (){
     $('#ics-211-info').hide();
     $('#demob-info').hide();
     $('#glide-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#demob-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#tally-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').hide();
     $('#tally-info').show();
+    $('#non-209-info').hide();
+  })
+  $('a#non-209-tab').click(function (){
+    $('#ics-211-info').hide();
+    $('#glide-info').hide();
+    $('#demob-info').hide();
+    $('#tally-info').hide();
+    $('#non-209-info').show();
   })
 
   // Print button on the Resource Tally panel. Tag <body> with a class
