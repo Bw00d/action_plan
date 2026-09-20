@@ -12,7 +12,7 @@
                        end %>
       <span class="info-status-pill <%= status_class %>"><%= @incident.status %></span>
     <% end %>
-    <%= link_to 'Edit', edit_incident_path(@incident), class: "info-edit-link" %>
+    <%#= link_to 'Edit', edit_incident_path(@incident), class: "info-edit-link" %>
   </div>
 
   <% if @incident.wildfire? %>
