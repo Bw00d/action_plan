@@ -19,6 +19,71 @@ class Incident < ApplicationRecord
   after_create :seed_default_schedule
   after_create :seed_non_209_bucket
 
+  # Normalize free-form cost input. Users routinely type formatted numbers
+  # like "3,000,000" or "$3,000,000" — ActiveRecord's decimal cast stops
+  # at the first non-digit and would silently store 3. Strip commas,
+  # dollar signs, and stray whitespace before delegating to super.
+  def cost=(value)
+    if value.is_a?(String)
+      cleaned = value.gsub(/[\s,\$]/, '')
+      super(cleaned.presence)
+    else
+      super
+    end
+  end
+
+  # Timeline dates on the info panel accept any format an operator is
+  # likely to type. Ruby's default Date.parse mishandles US-style short
+  # dates ("8/7/26" → 0026-08-07 AD!), so parse explicitly through a set
+  # of MM/DD forms first, then fall back to ISO / Date.parse.
+  %i[start_date containment_date control_date out_date].each do |field|
+    define_method("#{field}=") do |value|
+      super(parse_flexible_date(value))
+    end
+  end
+
+  private
+
+  def parse_flexible_date(value)
+    return value if value.blank? || value.is_a?(Date) || value.is_a?(Time)
+
+    s = value.to_s.strip
+    return nil if s.empty?
+
+    # Try explicit regex patterns in order. strptime's %Y is greedy and
+    # would parse "8/7/26" as year 26 AD, so we can't rely on it.
+    parsed =
+      case s
+      when %r{\A(\d{1,2})/(\d{1,2})/(\d{4})\z}     then build_date($3, $1, $2)  # M/D/YYYY
+      when %r{\A(\d{1,2})-(\d{1,2})-(\d{4})\z}     then build_date($3, $1, $2)  # M-D-YYYY
+      when %r{\A(\d{1,2})/(\d{1,2})/(\d{2})\z}     then build_date(expand_two_digit_year($3), $1, $2)
+      when %r{\A(\d{1,2})-(\d{1,2})-(\d{2})\z}     then build_date(expand_two_digit_year($3), $1, $2)
+      when %r{\A(\d{4})-(\d{1,2})-(\d{1,2})\z}     then build_date($1, $2, $3)  # ISO
+      end
+
+    return parsed if parsed
+
+    # Last resort — let Date.parse have a go for anything unusual. Falls
+    # back to the raw value so ActiveRecord surfaces its own error rather
+    # than silently blanking the field.
+    Date.parse(s) rescue value
+  end
+
+  # POSIX pivot: 00–68 → 2000–2068, 69–99 → 1969–1999. Matches strptime's
+  # %y behavior and everyone's mental model of "what year is 26?".
+  def expand_two_digit_year(yy)
+    n = yy.to_i
+    n + (n < 70 ? 2000 : 1900)
+  end
+
+  def build_date(y, m, d)
+    Date.new(y.to_i, m.to_i, d.to_i)
+  rescue ArgumentError
+    nil
+  end
+
+  public
+
   # IDs of resources parked in a Non-209 org_unit — these are excluded from
   # the Resource Tally, Glide Path, and ICS-211 (they don't belong on the
   # 209 rollup, hence the name). Returns [] fast when no such column exists.
