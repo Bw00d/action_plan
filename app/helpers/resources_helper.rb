@@ -1,4 +1,17 @@
 module ResourcesHelper
+  # Pretty-print a diff cell value on the iSuite import preview. Dates
+  # render as MM/DD/YYYY, booleans as Yes/No, and blanks as "—" so the
+  # operator can tell an empty field from a missing one.
+  def format_diff_value(value)
+    case value
+    when nil, ''       then content_tag(:span, '—', class: 'ii-blank')
+    when true          then 'Yes'
+    when false         then 'No'
+    when Date, Time    then value.strftime('%m/%d/%Y')
+    else                    value.to_s
+    end
+  end
+
   # Sort resources by category, then by order_number treated as a natural
   # number so E-2 comes before E-10 and subordinate numbers like E-24.1..3
   # sort by each dotted segment. String column ordering in SQL sorts

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_20_100000) do
+ActiveRecord::Schema.define(version: 2026_09_20_200000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,6 +319,18 @@ ActiveRecord::Schema.define(version: 2026_09_20_100000) do
     t.index ["incident_id"], name: "index_issue_reports_on_incident_id"
     t.index ["kind"], name: "index_issue_reports_on_kind"
     t.index ["user_id"], name: "index_issue_reports_on_user_id"
+  end
+
+  create_table "isuite_import_stagings", force: :cascade do |t|
+    t.string "token", null: false
+    t.bigint "incident_id", null: false
+    t.bigint "user_id"
+    t.text "csv_data", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["expires_at"], name: "index_isuite_import_stagings_on_expires_at"
+    t.index ["token"], name: "index_isuite_import_stagings_on_token", unique: true
   end
 
   create_table "objectives", force: :cascade do |t|

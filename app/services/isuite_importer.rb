@@ -1,26 +1,17 @@
-# Parses an e-iSuite "Resources" CSV export and upserts Resource + Roster
-# rows into the given incident. Idempotent — re-running the import doesn't
-# create duplicates.
+# Parses an e-iSuite "Resources" CSV export and either upserts Resource +
+# Roster rows into the given incident directly, or produces a diff Plan so
+# the operator can preview and pick which existing rows to update.
 #
 # CSV shape (as of 2026):
 #   Request #, Resource Name, Item Code, Status, Agency, Item Name,
 #   Unit ID, Check-In Date, First Work Day, Length of Assignment,
 #   # Personnel
 #
-# The last three columns are optional — older exports don't include them.
-# When present and non-zero we honor the CSV value; otherwise we fall back
-# (personnel = count of active child rosters, length = 14, fwd = nil).
+# Request # encodes hierarchy: "A-1" is a parent Resource; "A-1.3" is a
+# roster entry under it. Categories come from the leading letter (A/C/E/O).
+# "S" rows are services — skipped.
 #
-# Request # encodes the hierarchy: "A-1" is a parent resource; "A-1.3" is
-# a roster entry under it. Categories come from the leading letter
-# (A=AIRCRAFT, C=CREW, E=EQUIPMENT, O=OVERHEAD). S rows are services (land
-# rentals, etc.) — not a Resource category we support today, so we skip
-# them and return a count in the summary.
-#
-# Status codes:
-#   C  = Checked in    → import as active
-#   R  = On R&R        → import with r_and_r: true
-#   D  = Demobed       → skip (already left the incident)
+# Status: C = active, R = R&R, D = demobed (skipped).
 require "csv"
 
 class IsuiteImporter
@@ -31,60 +22,239 @@ class IsuiteImporter
     "O" => "OVERHEAD"
   }.freeze
 
+  # Fields on Resource that we compare + update from the CSV. Kept small
+  # on purpose — CSV columns that are optional (personnel, length) are
+  # only diffed when the CSV actually provided a value.
+  RESOURCE_DIFF_FIELDS = %i[
+    name position agency number_personnel assignment_length
+    checkin_date fwd r_and_r
+  ].freeze
+
+  ROSTER_DIFF_FIELDS = %i[name position agency released].freeze
+
   Result = Struct.new(
-    :resources_created, :resources_skipped,
-    :rosters_created,   :rosters_skipped,
+    :resources_created, :resources_skipped, :resources_updated,
+    :rosters_created,   :rosters_skipped,   :rosters_updated,
     :demobed_skipped,   :service_skipped,
     :errors,
     keyword_init: true
   )
 
-  # `io` — anything CSV.new can read (File, StringIO, ActionDispatch::Http::UploadedFile#tempfile)
+  # Preview plan built from the CSV. Everything is plain data (no AR
+  # objects) so it round-trips through Rails.cache cleanly.
+  #   new_resources: [row hash, ...]
+  #   new_rosters:   [row hash, ...]
+  #   resource_changes: [{ resource_id:, request:, name:, diffs: {field=>[old,new]} }, ...]
+  #   roster_changes:   [{ roster_id:,   request:, name:, diffs: {...} }, ...]
+  #   unchanged_count:  Integer
+  #   demobed_skipped:, service_skipped:, errors:
+  Plan = Struct.new(
+    :new_resources, :new_rosters,
+    :resource_changes, :roster_changes,
+    :unchanged_count, :demobed_skipped, :service_skipped, :errors,
+    keyword_init: true
+  )
+
+  # `io` — anything CSV.new can read.
   def initialize(io)
     @io = io
   end
 
-  def import_into(incident)
+  # Preview: parses CSV and returns a Plan comparing to the incident's
+  # current state.
+  def plan_for(incident)
     rows = parse_rows
+    build_plan(incident, rows)
+  end
+
+  # One-shot import (used when there's nothing to preview or the caller
+  # explicitly wants create-only behavior). Equivalent to the original
+  # behavior: skip existing, don't touch anything already in the DB.
+  def import_into(incident)
+    plan = plan_for(incident)
+    apply_plan(incident, plan,
+               resource_ids: plan.resource_changes.map { |c| c[:resource_id] }.to_set,
+               roster_ids:   plan.roster_changes.map { |c| c[:roster_id] }.to_set,
+               skip_updates: true)
+  end
+
+  # Apply a previously-computed plan against the incident.
+  # selected_resource_ids / selected_roster_ids: arrays of AR ids the user
+  # ticked in the preview. New resources / rosters are always created; only
+  # updates are gated.
+  def self.apply(incident, rows, selected_resource_ids:, selected_roster_ids:)
+    importer = new(nil)
+    plan     = importer.send(:build_plan, incident, rows)
+    importer.send(:apply_plan, incident, plan,
+                  resource_ids: selected_resource_ids.map(&:to_i).to_set,
+                  roster_ids:   selected_roster_ids.map(&:to_i).to_set,
+                  skip_updates: false)
+  end
+
+  # Exposed so the controller can cache parsed rows for the preview →
+  # apply round-trip.
+  def parsed_rows
+    parse_rows
+  end
+
+  private
+
+  def build_plan(incident, rows)
     parents, children = rows.partition { |r| r[:child_num].nil? }
-
-    result = Result.new(
-      resources_created: 0, resources_skipped: 0,
-      rosters_created:   0, rosters_skipped:   0,
-      demobed_skipped:   0, service_skipped:   0,
-      errors: []
-    )
-
-    # Build a lookup of already-existing Resources keyed by "category-order"
-    # so both new-parent creation and child-parent resolution can hit it.
-    existing_key = ->(category, order) { "#{category}-#{order}" }
-    resource_by_key = incident.resources.each_with_object({}) do |r, h|
-      h[existing_key.call(r.category, r.order_number.to_s)] = r
+    resource_by_key   = incident.resources.each_with_object({}) do |r, h|
+      h["#{r.category}-#{r.order_number}"] = r
     end
 
-    # -- Parents (Resources) --
+    plan = Plan.new(
+      new_resources: [], new_rosters: [],
+      resource_changes: [], roster_changes: [],
+      unchanged_count: 0, demobed_skipped: 0, service_skipped: 0, errors: []
+    )
+
     parents.each do |row|
-      if row[:status] == "D"
-        result.demobed_skipped += 1
-        next
+      if row[:status] == "D" then plan.demobed_skipped += 1; next; end
+      if row[:category].nil? then plan.service_skipped += 1; next; end
+
+      existing = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
+      if existing.nil?
+        plan.new_resources << row
+      else
+        diffs = resource_diffs(existing, row, children)
+        if diffs.empty?
+          plan.unchanged_count += 1
+        else
+          plan.resource_changes << {
+            resource_id: existing.id,
+            request:     row[:request],
+            name:        existing.name,
+            position:    existing.position,
+            diffs:       diffs
+          }
+        end
       end
-      if row[:category].nil?
-        result.service_skipped += 1
+    end
+
+    children.each do |row|
+      if row[:status] == "D" then plan.demobed_skipped += 1; next; end
+      if row[:category].nil? then plan.service_skipped += 1; next; end
+
+      parent = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
+      unless parent
+        # Parent will be created this run — treat as new roster to add.
+        plan.new_rosters << row
         next
       end
 
-      key = existing_key.call(row[:category], row[:parent_num])
+      existing_roster = parent.rosters.find_by(order_number: row[:child_num])
+      if existing_roster.nil?
+        plan.new_rosters << row
+      else
+        diffs = roster_diffs(existing_roster, row)
+        if diffs.empty?
+          plan.unchanged_count += 1
+        else
+          plan.roster_changes << {
+            roster_id:   existing_roster.id,
+            request:     row[:request],
+            name:        existing_roster.name,
+            position:    existing_roster.position,
+            diffs:       diffs
+          }
+        end
+      end
+    end
+
+    plan
+  end
+
+  # Returns a hash of { field_symbol => [old_value, new_value] } for every
+  # field that would change on this Resource if the CSV row were applied.
+  def resource_diffs(resource, row, all_children)
+    incoming = incoming_resource_attrs(row, all_children)
+    incoming.each_with_object({}) do |(field, new_val), diffs|
+      old_val = resource.public_send(field)
+      # Normalize dates so a Date == a Date, and skip when CSV blanks a
+      # field we already have populated (don't wipe DB values with nil).
+      next if new_val.nil?
+      next if values_equal?(old_val, new_val)
+      diffs[field] = [old_val, new_val]
+    end
+  end
+
+  def roster_diffs(roster, row)
+    incoming = {
+      name:     row[:name].presence,
+      position: row[:item_code].presence,
+      agency:   row[:agency].presence,
+      released: row[:status] == "R"
+    }
+    incoming.each_with_object({}) do |(field, new_val), diffs|
+      # `released` is a boolean derived from status; only diff when the
+      # released_at column actually flips (nil ↔ set).
+      if field == :released
+        currently = roster.released_at.present?
+        diffs[:released] = [currently, new_val] if currently != new_val
+        next
+      end
+      next if new_val.nil?
+      old_val = roster.public_send(field)
+      next if values_equal?(old_val, new_val)
+      diffs[field] = [old_val, new_val]
+    end
+  end
+
+  def incoming_resource_attrs(row, all_children)
+    child_count = all_children.count do |c|
+      c[:parent_num] == row[:parent_num] && c[:prefix] == row[:prefix] && c[:status] != "D"
+    end
+    personnel = row[:personnel].to_i.positive? ? row[:personnel].to_i : nil
+    length    = row[:assignment_length].to_i.positive? ? row[:assignment_length].to_i : nil
+
+    {
+      name:              row[:name].presence,
+      position:          row[:item_code].presence,
+      agency:            row[:agency].presence,
+      number_personnel:  personnel,
+      assignment_length: length,
+      checkin_date:      row[:checkin_date],
+      fwd:               row[:fwd],
+      r_and_r:           row[:status] == "R"
+    }
+  end
+
+  def values_equal?(a, b)
+    return true if a == b
+    if a.is_a?(Date) && b.is_a?(Date)
+      a == b
+    elsif a.is_a?(String) && b.is_a?(String)
+      a.strip == b.strip
+    else
+      a.to_s == b.to_s
+    end
+  end
+
+  def apply_plan(incident, plan, resource_ids:, roster_ids:, skip_updates:)
+    result = Result.new(
+      resources_created: 0, resources_skipped: 0, resources_updated: 0,
+      rosters_created:   0, rosters_skipped:   0, rosters_updated:   0,
+      demobed_skipped:   plan.demobed_skipped,
+      service_skipped:   plan.service_skipped,
+      errors:            plan.errors.dup
+    )
+
+    # -- Create new parent resources --
+    resource_by_key = incident.resources.each_with_object({}) do |r, h|
+      h["#{r.category}-#{r.order_number}"] = r
+    end
+
+    plan.new_resources.each do |row|
+      key = "#{row[:category]}-#{row[:parent_num]}"
       if resource_by_key.key?(key)
         result.resources_skipped += 1
         next
       end
-
-      # Prefer the CSV values when the newer export columns are populated;
-      # otherwise fall back (personnel = count of active child rosters,
-      # length = 14). Active-child count deliberately excludes demobed
-      # kids so it matches on-incident headcount.
-      child_count = children.count do |c|
-        c[:parent_num] == row[:parent_num] && c[:prefix] == row[:prefix] && c[:status] != "D"
+      child_count = plan.new_rosters.count do |c|
+        c[:parent_num] == row[:parent_num] && c[:prefix] == row[:prefix]
       end
       personnel = row[:personnel].to_i.positive? ? row[:personnel].to_i : [child_count, 1].max
       length    = row[:assignment_length].to_i.positive? ? row[:assignment_length].to_i : 14
@@ -94,8 +264,6 @@ class IsuiteImporter
         order_number:      row[:parent_num],
         name:              row[:name],
         position:          row[:item_code],
-        # Presence-required — some field-hire rows in iSuite have no
-        # agency; fall back to a dash so validation passes.
         agency:            row[:agency].presence || "—",
         number_personnel:  personnel,
         assignment_length: length,
@@ -111,28 +279,32 @@ class IsuiteImporter
       end
     end
 
-    # -- Children (Rosters) --
-    children.each do |row|
-      if row[:status] == "D"
-        result.demobed_skipped += 1
-        next
+    # -- Apply selected updates to existing resources --
+    unless skip_updates
+      plan.resource_changes.each do |change|
+        next unless resource_ids.include?(change[:resource_id])
+        resource = incident.resources.find_by(id: change[:resource_id])
+        next unless resource
+        attrs = change[:diffs].transform_values(&:last)
+        if resource.update(attrs)
+          result.resources_updated += 1
+        else
+          result.errors << "#{change[:request]}: #{resource.errors.full_messages.join('; ')}"
+        end
       end
-      if row[:category].nil?
-        result.service_skipped += 1
-        next
-      end
+    end
 
-      parent = resource_by_key[existing_key.call(row[:category], row[:parent_num])]
+    # -- Create new roster entries --
+    plan.new_rosters.each do |row|
+      parent = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
       unless parent
         result.errors << "#{row[:request]}: parent #{row[:prefix]}-#{row[:parent_num]} not found"
         next
       end
-
       if parent.rosters.exists?(order_number: row[:child_num])
         result.rosters_skipped += 1
         next
       end
-
       roster = parent.rosters.build(
         name:         row[:name],
         position:     row[:item_code],
@@ -147,18 +319,34 @@ class IsuiteImporter
       end
     end
 
+    # -- Apply selected updates to existing rosters --
+    unless skip_updates
+      plan.roster_changes.each do |change|
+        next unless roster_ids.include?(change[:roster_id])
+        roster = Roster.find_by(id: change[:roster_id])
+        next unless roster
+        attrs = change[:diffs].each_with_object({}) do |(field, (_old, new_val)), h|
+          if field == :released
+            h[:released_at] = new_val ? (roster.released_at || Time.current) : nil
+          else
+            h[field] = new_val
+          end
+        end
+        if roster.update(attrs)
+          result.rosters_updated += 1
+        else
+          result.errors << "#{change[:request]}: #{roster.errors.full_messages.join('; ')}"
+        end
+      end
+    end
+
     result
   end
 
-  private
-
   def parse_rows
-    # iSuite exports lead with a UTF-8 BOM. CSV.new's `encoding:` option is
-    # unreliable in Ruby 3.1 when the IO already has its own encoding set —
-    # slurp the string, strip the BOM manually, then parse.
     raw = @io.respond_to?(:read) ? @io.read : @io.to_s
     raw = raw.force_encoding("UTF-8")
-    raw = raw.sub(/\A\xEF\xBB\xBF/, "") # strip BOM if present
+    raw = raw.sub(/\A\xEF\xBB\xBF/, "")
     CSV.parse(raw, headers: true).each_with_object([]) do |csv_row, out|
       request = csv_row["Request #"].to_s.strip
       next if request.empty?
@@ -169,15 +357,15 @@ class IsuiteImporter
       parent_num, child_num = rest.split(".", 2)
 
       out << {
-        request:      request,
-        prefix:       prefix,
-        parent_num:   parent_num,
-        child_num:    child_num, # nil = parent row
-        category:     CATEGORY_FROM_PREFIX[prefix], # nil for S / unknown → treated as service
-        name:         csv_row["Resource Name"].to_s.strip,
-        item_code:    csv_row["Item Code"].to_s.strip,
-        status:       csv_row["Status"].to_s.strip,
-        agency:       csv_row["Agency"].to_s.strip,
+        request:           request,
+        prefix:            prefix,
+        parent_num:        parent_num,
+        child_num:         child_num,
+        category:          CATEGORY_FROM_PREFIX[prefix],
+        name:              csv_row["Resource Name"].to_s.strip,
+        item_code:         csv_row["Item Code"].to_s.strip,
+        status:            csv_row["Status"].to_s.strip,
+        agency:            csv_row["Agency"].to_s.strip,
         item_name:         csv_row["Item Name"].to_s.strip,
         unit_id:           csv_row["Unit ID"].to_s.strip,
         checkin_date:      parse_date(csv_row["Check-In Date"]),

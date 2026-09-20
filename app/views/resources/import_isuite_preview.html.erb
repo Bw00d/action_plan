@@ -1,0 +1,186 @@
+<% content_for :title, "iSuite Import Preview" %>
+<div class="incident-name">
+  <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+</div>
+
+<div class="container isuite-preview">
+  <h2>iSuite Import Preview</h2>
+  <p class="muted">
+    Review the CSV against the incident's current state. New rows are checked by default;
+    existing rows with changes are unchecked — tick the ones you want to update.
+  </p>
+
+  <%= form_with url: apply_isuite_import_incident_resources_path(@incident), method: :post, local: true, html: { id: 'isuite-apply-form' } do |f| %>
+    <%= hidden_field_tag :import_token, @import_token %>
+
+    <%# ── Summary bar ─────────────────────────────────────────── %>
+    <div class="ii-summary">
+      <span><strong><%= @plan.new_resources.size %></strong> new resource<%= 's' unless @plan.new_resources.size == 1 %></span>
+      <span><strong><%= @plan.new_rosters.size %></strong> new roster entr<%= @plan.new_rosters.size == 1 ? 'y' : 'ies' %></span>
+      <span><strong><%= @plan.resource_changes.size %></strong> resource change<%= 's' unless @plan.resource_changes.size == 1 %></span>
+      <span><strong><%= @plan.roster_changes.size %></strong> roster change<%= 's' unless @plan.roster_changes.size == 1 %></span>
+      <span class="muted"><%= @plan.unchanged_count %> unchanged</span>
+      <% if @plan.demobed_skipped.positive? %><span class="muted"><%= @plan.demobed_skipped %> demobed skipped</span><% end %>
+      <% if @plan.service_skipped.positive? %><span class="muted"><%= @plan.service_skipped %> service rows skipped</span><% end %>
+    </div>
+
+    <%# ── New resources ───────────────────────────────────────── %>
+    <% if @plan.new_resources.any? %>
+      <section class="ii-section">
+        <h3>New Resources to Add
+          <span class="muted">(will be created — uncheck to skip)</span>
+        </h3>
+        <table class="table ii-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="ii-select-all" data-target=".ii-new-resource" checked></th>
+              <th>Request #</th><th>Name</th><th>Position</th><th>Agency</th>
+              <th>Personnel</th><th>Length</th><th>FWD</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @plan.new_resources.each_with_index do |row, i| %>
+              <tr>
+                <td>
+                  <%# New resources are always applied — but we still show a
+                      checkbox so the operator can opt-out via a hidden flag.
+                      Right now the applier always creates new resources; a
+                      future enhancement would gate this too. %>
+                  <input type="checkbox" class="ii-new-resource" checked disabled title="New resources are always created">
+                </td>
+                <td><%= row[:request] %></td>
+                <td><%= row[:name] %></td>
+                <td><%= row[:item_code] %></td>
+                <td><%= row[:agency] %></td>
+                <td><%= row[:personnel] %></td>
+                <td><%= row[:assignment_length] %></td>
+                <td><%= row[:fwd]&.strftime('%m/%d/%Y') %></td>
+                <td><%= row[:status] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+
+    <%# ── Resource changes ───────────────────────────────────── %>
+    <% if @plan.resource_changes.any? %>
+      <section class="ii-section">
+        <h3>Resources with Changes
+          <span class="muted">(tick to apply the CSV values)</span>
+        </h3>
+        <table class="table ii-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="ii-select-all" data-target=".ii-resource-check"></th>
+              <th>Request #</th><th>Name</th><th>Position</th>
+              <th>Changes (old → new)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @plan.resource_changes.each do |change| %>
+              <tr>
+                <td>
+                  <%= check_box_tag 'resource_ids[]', change[:resource_id], false,
+                                     class: 'ii-resource-check', id: "res_#{change[:resource_id]}" %>
+                </td>
+                <td><%= change[:request] %></td>
+                <td><%= change[:name] %></td>
+                <td><%= change[:position] %></td>
+                <td>
+                  <ul class="ii-diff-list">
+                    <% change[:diffs].each do |field, (old_val, new_val)| %>
+                      <li>
+                        <strong><%= field.to_s.humanize %>:</strong>
+                        <span class="ii-old"><%= format_diff_value(old_val) %></span>
+                        →
+                        <span class="ii-new"><%= format_diff_value(new_val) %></span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+
+    <%# ── New rosters ────────────────────────────────────────── %>
+    <% if @plan.new_rosters.any? %>
+      <section class="ii-section">
+        <h3>New Roster Entries to Add
+          <span class="muted">(will be created — uncheck to skip)</span>
+        </h3>
+        <table class="table ii-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="ii-select-all" data-target=".ii-new-roster" checked disabled></th>
+              <th>Request #</th><th>Name</th><th>Position</th><th>Agency</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @plan.new_rosters.each do |row| %>
+              <tr>
+                <td><input type="checkbox" class="ii-new-roster" checked disabled title="New rosters are always created"></td>
+                <td><%= row[:request] %></td>
+                <td><%= row[:name] %></td>
+                <td><%= row[:item_code] %></td>
+                <td><%= row[:agency] %></td>
+                <td><%= row[:status] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+
+    <%# ── Roster changes ─────────────────────────────────────── %>
+    <% if @plan.roster_changes.any? %>
+      <section class="ii-section">
+        <h3>Roster Entries with Changes
+          <span class="muted">(tick to apply the CSV values)</span>
+        </h3>
+        <table class="table ii-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="ii-select-all" data-target=".ii-roster-check"></th>
+              <th>Request #</th><th>Name</th><th>Position</th>
+              <th>Changes (old → new)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @plan.roster_changes.each do |change| %>
+              <tr>
+                <td>
+                  <%= check_box_tag 'roster_ids[]', change[:roster_id], false,
+                                     class: 'ii-roster-check', id: "ros_#{change[:roster_id]}" %>
+                </td>
+                <td><%= change[:request] %></td>
+                <td><%= change[:name] %></td>
+                <td><%= change[:position] %></td>
+                <td>
+                  <ul class="ii-diff-list">
+                    <% change[:diffs].each do |field, (old_val, new_val)| %>
+                      <li>
+                        <strong><%= field.to_s.humanize %>:</strong>
+                        <span class="ii-old"><%= format_diff_value(old_val) %></span>
+                        →
+                        <span class="ii-new"><%= format_diff_value(new_val) %></span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+
+    <div class="ii-actions">
+      <%= link_to 'Cancel', incident_resources_path(@incident), class: 'btn btn-default' %>
+      <%= f.submit 'Apply Selected', class: 'btn btn-success' %>
+    </div>
+  <% end %>
+</div>

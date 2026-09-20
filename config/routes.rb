@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     resources :resources do
       collection do
         post :import_isuite
+        post :apply_isuite_import
         get  :tally_to_pdf
       end
       resources :demobs

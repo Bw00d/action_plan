@@ -1,6 +1,4 @@
 <%= content_for :title, "Resources"  %>
-<% if notice %><p id="notice" class="alert alert-success"><%= notice %></p><% end %>
-<% if alert  %><p id="alert"  class="alert alert-danger"><%= alert %></p><% end %>
 <div class="incident-name">
   <h1><%= link_to @incident.display_incident_name, @incident %></h1>
 </div>
