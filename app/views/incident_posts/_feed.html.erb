@@ -7,7 +7,10 @@
   items = []
   posts.each  { |p| items << { kind: :post,  at: p.created_at, obj: p } }
   events.each { |e| items << { kind: :event, at: e.created_at, obj: e } }
-  items.sort_by! { |i| i[:at] }.reverse!
+  # Chronological order (oldest first) so newest posts appear just above
+  # the composer at the bottom — matches Twitter/Slack conventions where
+  # the input field lives at the bottom of the feed.
+  items.sort_by! { |i| i[:at] }
 %>
 
 <% if items.empty? %>

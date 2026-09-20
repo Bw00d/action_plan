@@ -10,7 +10,7 @@ class IncidentPostsController < ApplicationController
     post = @incident.posts.new(post_params)
     post.user = current_user
     if post.save
-      redirect_back fallback_location: incident_users_path(@incident), notice: 'Posted.'
+      redirect_to incident_users_path(@incident, anchor: 'feed-composer-anchor'), notice: 'Posted.'
     else
       redirect_back fallback_location: incident_users_path(@incident),
                     alert: post.errors.full_messages.to_sentence

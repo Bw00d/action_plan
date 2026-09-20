@@ -51,15 +51,17 @@
             <div class="incident-feed">
               <h4><strong>Feed</strong></h4>
 
-              <%= render 'incident_posts/composer',
-                         incident: @incident,
-                         new_post: @new_post,
-                         parent: nil %>
-
               <%= render 'incident_posts/feed',
                          incident: @incident,
                          posts: @top_posts,
                          events: @events %>
+
+              <div id="feed-composer-anchor">
+                <%= render 'incident_posts/composer',
+                           incident: @incident,
+                           new_post: @new_post,
+                           parent: nil %>
+              </div>
             </div>
           </div>
       </div>
