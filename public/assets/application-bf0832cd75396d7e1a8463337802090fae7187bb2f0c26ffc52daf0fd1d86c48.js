@@ -53220,6 +53220,90 @@ $(document).on('turbolinks:load', function () {
     });
   });
 });
+// Floating bug icon → modal with the issue report form.
+// Loads the form via XHR (issue_reports#new with request.xhr? layout: false)
+// so the modal opens instantly without leaving the current page. On submit
+// the form posts normally (local: true) and Rails redirects back with a
+// flash — simplest path, no client-side error plumbing needed.
+$(document).on('turbolinks:load', function () {
+  var $btn    = $('#issue-report-btn');
+  var $modal  = $('#issue-report-modal');
+  if (!$btn.length || !$modal.length) return;
+
+  var $body     = $modal.find('.ir-body');
+  var loadedFor = null;   // cache the form HTML across opens on the same page
+
+  function open() {
+    var incidentId = $btn.data('incident-id') || '';
+    var pageUrl    = window.location.href;
+
+    if (loadedFor !== window.location.pathname) {
+      $body.html('<div class="ir-loading">Loading…</div>');
+      $.ajax({
+        url: '/issue_reports/new',
+        method: 'GET',
+        dataType: 'html'
+      })
+        .done(function (html) {
+          $body.html(html);
+          loadedFor = window.location.pathname;
+          $body.find('.ir-incident-id').val(incidentId);
+          $body.find('.ir-page-url').val(pageUrl);
+          $body.find('input[name="issue_report[title]"]').focus();
+        })
+        .fail(function (xhr) {
+          $body.html('<div class="alert alert-danger">Could not load the form (' + xhr.status + ').</div>');
+        });
+    } else {
+      $body.find('.ir-incident-id').val(incidentId);
+      $body.find('.ir-page-url').val(pageUrl);
+      $body.find('input[name="issue_report[title]"]').focus();
+    }
+
+    $modal.show().attr('aria-hidden', 'false');
+    $('body').addClass('ir-modal-open');
+  }
+
+  function close() {
+    $modal.hide().attr('aria-hidden', 'true');
+    $('body').removeClass('ir-modal-open');
+  }
+
+  $btn.off('click.issueReport').on('click.issueReport', open);
+
+  // Close on backdrop, × button, cancel button, or Escape.
+  $modal.off('click.issueReport').on('click.issueReport', function (e) {
+    if ($(e.target).closest('.ir-close, .ir-backdrop, .ir-cancel').length) close();
+  });
+  $(document).off('keydown.issueReport').on('keydown.issueReport', function (e) {
+    if (e.key === 'Escape' && $modal.is(':visible')) close();
+  });
+});
+// Select-all master checkboxes on the iSuite import preview.
+// Each master has data-target=".css-selector-for-row-checkboxes" and
+// toggles every matching checkbox inside its section.
+$(document).on('turbolinks:load', function () {
+  $(document).off('change.iiSelectAll').on('change.iiSelectAll', '.ii-select-all', function () {
+    var selector = $(this).data('target');
+    if (!selector) return;
+    var checked = this.checked;
+    // Skip disabled boxes (like the "always create" new-row ones).
+    $(this).closest('.ii-section').find(selector).each(function () {
+      if (this.disabled) return;
+      this.checked = checked;
+    });
+  });
+
+  // Reverse: unchecking any row checkbox unticks the master; checking
+  // all row checkboxes ticks it. Keeps the header in sync with state.
+  $(document).off('change.iiRowSync').on('change.iiRowSync', '.ii-resource-check, .ii-roster-check', function () {
+    var $section = $(this).closest('.ii-section');
+    var selectorClass = $(this).hasClass('ii-resource-check') ? '.ii-resource-check' : '.ii-roster-check';
+    var $rows = $section.find(selectorClass).not(':disabled');
+    var allChecked = $rows.length > 0 && $rows.filter(':not(:checked)').length === 0;
+    $section.find('.ii-select-all').prop('checked', allChecked);
+  });
+});
 $(document).on("turbolinks:load", function () {
   // All handlers are bound with a `.ops` namespace and off()'d first so
   // repeat Turbolinks visits don't stack duplicate listeners. Without
@@ -54024,24 +54108,35 @@ $(document).on("turbolinks:load", function() {
     $('#demob-info').hide();
     $('#glide-info').hide();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#glide-tab').click(function (){
     $('#ics-211-info').hide();
     $('#demob-info').hide();
     $('#glide-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#demob-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#tally-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').hide();
     $('#tally-info').show();
+    $('#non-209-info').hide();
+  })
+  $('a#non-209-tab').click(function (){
+    $('#ics-211-info').hide();
+    $('#glide-info').hide();
+    $('#demob-info').hide();
+    $('#tally-info').hide();
+    $('#non-209-info').show();
   })
 
   // Print button on the Resource Tally panel. Tag <body> with a class

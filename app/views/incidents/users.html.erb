@@ -44,30 +44,22 @@
             </ul>
             </div>
 
-            <%# Activity log — automatic audit trail for major actions
-                on this incident: plans created/deleted, collaborators
-                added/removed. Populated by Incident#log_event calls
-                from the relevant controllers. Newest first, capped at
-                50 so the page doesn't grow unbounded. %>
-            <div class="incident-activity">
-              <h4><strong>Activity</strong></h4>
-                
-              <% events = @incident.events.limit(50) %>
-              <% if events.empty? %>
-                <p class="muted"><em>No activity recorded yet.</em></p>
-              <% else %>
-                <ul class="incident-activity-list">
-                  <% events.each do |e| %>
-                    <li class="incident-activity-item">
-                      <span class="incident-activity-when">
-                        <%= e.created_at.in_time_zone(Time.zone).strftime('%b %-d, %Y %-I:%M %p') %>
-                      </span>
-                      <span class="incident-activity-who"><%= e.actor_name %></span>
-                      <span class="incident-activity-msg"><%= e.message %></span>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
+            <%# Feed — user microposts + system activity events merged
+                chronologically. Users compose with the box at the top;
+                each post supports Reply / Edit (own) / Delete (own) /
+                Like. System events (log_event) render as read-only rows. %>
+            <div class="incident-feed">
+              <h4><strong>Feed</strong></h4>
+
+              <%= render 'incident_posts/composer',
+                         incident: @incident,
+                         new_post: @new_post,
+                         parent: nil %>
+
+              <%= render 'incident_posts/feed',
+                         incident: @incident,
+                         posts: @top_posts,
+                         events: @events %>
             </div>
           </div>
       </div>

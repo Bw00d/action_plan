@@ -1,0 +1,155 @@
+.incident-feed {
+  margin-top: 24px;
+
+  h4 { margin-bottom: 12px; }
+}
+
+.feed-composer {
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fbfbfd;
+  margin-bottom: 18px;
+
+  textarea {
+    border: 0;
+    background: transparent;
+    resize: vertical;
+    box-shadow: none;
+    padding: 6px 0;
+    &:focus { box-shadow: none; outline: none; }
+  }
+
+  .feed-composer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  &.feed-composer-reply {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    background: #f4f5f7;
+  }
+}
+
+.feed-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feed-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eef0f2;
+
+  &:last-child { border-bottom: 0; }
+}
+
+.feed-post {
+  padding-left: 14px;
+  padding-right: 14px;
+
+  .feed-post-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13px;
+    margin-bottom: 3px;
+
+    .feed-author { font-weight: 600; color: #172b4d; }
+    .feed-when { color: #6b778c; font-size: 11px; }
+    .feed-edited { color: #8993a4; font-size: 11px; font-style: italic; }
+  }
+
+  .feed-post-body {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #172b4d;
+    p:last-child { margin-bottom: 0; }
+  }
+
+  .feed-post-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .feed-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    background: transparent !important;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+    color: #5e6c84;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    &:hover, &:focus, &:active {
+      background: #f4f5f7 !important;
+      color: #172b4d;
+      border: 0 !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    .fa { font-size: 12px; }
+  }
+
+  .feed-like-btn.is-liked {
+    color: #e0245e;
+    .fa { color: #e0245e; }
+  }
+
+  // Kill Rails' default button_to <form> block-level rendering so the
+  // heart / trash buttons sit inline with the plain <button>s.
+  .feed-action-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.feed-replies {
+  list-style: none;
+  padding-left: 24px;
+  margin: 8px 0 0;
+  border-left: 2px solid #eef0f2;
+}
+
+.feed-reply {
+  padding: 8px 0 8px 12px;
+  border-bottom: 0;
+  .feed-post-body { font-size: 13px; }
+}
+
+.feed-event {
+  background: #fafbfc;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-bottom: 0;
+  margin-bottom: 4px;
+  font-size: 12px;
+
+  .feed-event-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6b778c;
+    .feed-event-icon { color: #8993a4; }
+    .feed-author { color: #172b4d; font-weight: 600; }
+    .feed-when { color: #8993a4; margin-left: auto; }
+  }
+  .feed-event-body { margin-top: 3px; color: #5e6c84; }
+}
+
+.feed-edit-form {
+  margin: 6px 0;
+  textarea { margin-bottom: 4px; }
+}

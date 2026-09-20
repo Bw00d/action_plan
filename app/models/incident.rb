@@ -14,6 +14,7 @@ class Incident < ApplicationRecord
   has_many :ops_215_lines, dependent: :destroy
   has_many :events, -> { order(created_at: :desc) },
                     class_name: 'IncidentEvent', dependent: :destroy
+  has_many :posts, class_name: 'IncidentPost', dependent: :destroy
 
   after_create :seed_default_schedule
   after_create :seed_non_209_bucket

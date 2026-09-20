@@ -1,0 +1,85 @@
+<%# Locals: incident, post (top-level or reply). Depth of 1 max — replies
+    stack inside their parent but don't nest further. %>
+<li class="feed-item feed-post <%= 'feed-reply' if post.parent_id %>"
+    id="post-<%= post.id %>">
+  <div class="feed-post-head">
+    <span class="feed-author"><%= post.author_name %></span>
+    <span class="feed-when" title="<%= post.created_at.in_time_zone(Time.zone).strftime('%Y-%m-%d %H:%M %Z') %>">
+      <%= post.created_at.in_time_zone(Time.zone).strftime('%b %-d, %-I:%M %p') %>
+    </span>
+    <% if post.updated_at > post.created_at + 1.second %>
+      <span class="feed-edited">· edited</span>
+    <% end %>
+  </div>
+
+  <div class="feed-post-body" data-post-id="<%= post.id %>">
+    <%= simple_format(post.body) %>
+  </div>
+
+  <%# Inline edit form — hidden until the user clicks Edit. %>
+  <% if current_user && post.user_id == current_user.id %>
+    <%= form_with model: [incident, post],
+                  url: incident_incident_post_path(incident, post),
+                  method: :patch,
+                  local: true,
+                  html: { class: 'feed-edit-form', style: 'display:none;',
+                          data: { post_id: post.id } } do |f| %>
+      <%= f.text_area :body, class: 'form-control', rows: 3 %>
+      <div class="feed-composer-actions">
+        <button type="button" class="btn btn-link btn-xs feed-cancel-edit">Cancel</button>
+        <%= f.submit 'Save', class: 'btn btn-primary btn-xs' %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="feed-post-actions">
+    <%# Like — POST toggles the like row. %>
+    <%= button_to toggle_like_incident_incident_post_path(incident, post),
+                  method: :post,
+                  class: "feed-action feed-like-btn #{'is-liked' if post.liked_by?(current_user)}",
+                  form: { class: 'feed-action-form' } do %>
+      <i class="fa fa-heart<%= '-o' unless post.liked_by?(current_user) %>"></i>
+      <span class="feed-like-count"><%= post.likes.size %></span>
+    <% end %>
+
+    <%# Reply — only shown on top-level posts (no nested threads). %>
+    <% if post.parent_id.nil? %>
+      <button type="button" class="feed-action feed-reply-btn" data-post-id="<%= post.id %>">
+        <i class="fa fa-reply"></i> Reply
+      </button>
+    <% end %>
+
+    <% if current_user && post.user_id == current_user.id %>
+      <button type="button" class="feed-action feed-edit-btn" data-post-id="<%= post.id %>">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+      <%= button_to incident_incident_post_path(incident, post),
+                    method: :delete,
+                    data: { confirm: 'Delete this post?' },
+                    class: 'feed-action feed-delete-btn',
+                    form: { class: 'feed-action-form' } do %>
+        <i class="fa fa-trash"></i> Delete
+      <% end %>
+    <% end %>
+  </div>
+
+  <%# Reply composer (hidden until Reply clicked) — only for top-level. %>
+  <% if post.parent_id.nil? && current_user %>
+    <div class="feed-reply-composer" style="display:none;" data-parent-id="<%= post.id %>">
+      <%= render 'incident_posts/composer',
+                 incident: incident,
+                 new_post: IncidentPost.new,
+                 parent: post %>
+    </div>
+  <% end %>
+
+  <%# Existing replies — inline under the parent, indented. %>
+  <% if post.parent_id.nil? && post.replies.any? %>
+    <ul class="feed-replies">
+      <% post.replies.each do |reply| %>
+        <%= render 'incident_posts/incident_post',
+                   incident: incident, post: reply %>
+      <% end %>
+    </ul>
+  <% end %>
+</li>

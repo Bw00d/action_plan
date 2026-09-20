@@ -1,0 +1,12 @@
+<%# Read-only system row in the feed (plan created, collaborator invited,
+    etc). No like / reply / edit — immutable audit trail. %>
+<li class="feed-item feed-event">
+  <div class="feed-event-head">
+    <i class="fa fa-cog feed-event-icon"></i>
+    <span class="feed-author"><%= event.actor_name %></span>
+    <span class="feed-when" title="<%= event.created_at.in_time_zone(Time.zone).strftime('%Y-%m-%d %H:%M %Z') %>">
+      <%= event.created_at.in_time_zone(Time.zone).strftime('%b %-d, %-I:%M %p') %>
+    </span>
+  </div>
+  <div class="feed-event-body"><%= event.message %></div>
+</li>

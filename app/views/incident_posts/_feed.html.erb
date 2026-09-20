@@ -1,0 +1,27 @@
+<%# Locals: incident, posts (top-level IncidentPosts newest-first),
+    events (IncidentEvents newest-first).
+    Merge them by created_at so the feed is one chronological list.
+    Each item is tagged with a kind so the loop can render the right
+    partial. %>
+<%
+  items = []
+  posts.each  { |p| items << { kind: :post,  at: p.created_at, obj: p } }
+  events.each { |e| items << { kind: :event, at: e.created_at, obj: e } }
+  items.sort_by! { |i| i[:at] }.reverse!
+%>
+
+<% if items.empty? %>
+  <p class="muted"><em>No posts yet — say something.</em></p>
+<% else %>
+  <ul class="feed-list">
+    <% items.each do |item| %>
+      <% if item[:kind] == :post %>
+        <%= render 'incident_posts/incident_post',
+                   incident: incident, post: item[:obj] %>
+      <% else %>
+        <%= render 'incident_posts/incident_event',
+                   event: item[:obj] %>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>

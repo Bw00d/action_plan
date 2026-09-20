@@ -20213,6 +20213,7 @@ input#checkin_order_number {
 /* line 1, app/assets/stylesheets/commo_plans.scss */
 #commo-plan {
   font-size: .70em;
+  font-weight: 500;
 }
 
 /* line 2, app/assets/stylesheets/commo_plans.scss */
@@ -20242,63 +20243,63 @@ input#checkin_order_number {
   border-right: 1px solid black;
 }
 
-/* line 20, app/assets/stylesheets/commo_plans.scss */
+/* line 21, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .plan-panel-head {
   font-size: 1em !important;
 }
 
-/* line 23, app/assets/stylesheets/commo_plans.scss */
+/* line 24, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .top-row {
   text-align: center;
 }
 
-/* line 26, app/assets/stylesheets/commo_plans.scss */
+/* line 27, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c1 {
   width: 5%;
 }
 
-/* line 30, app/assets/stylesheets/commo_plans.scss */
+/* line 31, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c2 {
   width: 8%;
 }
 
-/* line 34, app/assets/stylesheets/commo_plans.scss */
+/* line 35, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c3 {
   width: 15%;
 }
 
-/* line 38, app/assets/stylesheets/commo_plans.scss */
+/* line 39, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c4 {
   width: 13%;
 }
 
-/* line 47, app/assets/stylesheets/commo_plans.scss */
+/* line 48, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-name {
   width: 13%;
 }
 
-/* line 48, app/assets/stylesheets/commo_plans.scss */
+/* line 49, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-tone {
   width: 6%;
 }
 
-/* line 49, app/assets/stylesheets/commo_plans.scss */
+/* line 50, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-mode {
   width: 6%;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 51, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 54, app/assets/stylesheets/commo_plans.scss */
+/* line 55, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 58, app/assets/stylesheets/commo_plans.scss */
+/* line 59, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -20306,7 +20307,7 @@ input#checkin_order_number {
   border-bottom: 1px solid black;
 }
 
-/* line 64, app/assets/stylesheets/commo_plans.scss */
+/* line 65, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -20316,7 +20317,7 @@ input#checkin_order_number {
   overflow: hidden;
 }
 
-/* line 72, app/assets/stylesheets/commo_plans.scss */
+/* line 73, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -20324,38 +20325,38 @@ input#checkin_order_number {
   border-left: 1px solid black;
 }
 
-/* line 78, app/assets/stylesheets/commo_plans.scss */
+/* line 79, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 82, app/assets/stylesheets/commo_plans.scss */
+/* line 83, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 85, app/assets/stylesheets/commo_plans.scss */
+/* line 86, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 88, app/assets/stylesheets/commo_plans.scss */
+/* line 89, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 91, app/assets/stylesheets/commo_plans.scss */
+/* line 92, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 95, app/assets/stylesheets/commo_plans.scss */
+/* line 96, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -20364,17 +20365,17 @@ input#checkin_order_number {
   verticle-align: middle;
 }
 
-/* line 101, app/assets/stylesheets/commo_plans.scss */
+/* line 102, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 106, app/assets/stylesheets/commo_plans.scss */
+/* line 107, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 110, app/assets/stylesheets/commo_plans.scss */
+/* line 111, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -20383,24 +20384,24 @@ input#checkin_order_number {
   width: 30px;
 }
 
-/* line 117, app/assets/stylesheets/commo_plans.scss */
+/* line 118, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 119, app/assets/stylesheets/commo_plans.scss */
+/* line 120, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 125, app/assets/stylesheets/commo_plans.scss */
+/* line 126, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 128, app/assets/stylesheets/commo_plans.scss */
+/* line 129, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -20415,17 +20416,17 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 142, app/assets/stylesheets/commo_plans.scss */
+/* line 143, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 145, app/assets/stylesheets/commo_plans.scss */
+/* line 146, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 148, app/assets/stylesheets/commo_plans.scss */
+/* line 149, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
@@ -23437,6 +23438,299 @@ select {
 .incident-activity .incident-activity-msg {
   color: #42526e;
   flex: 1 1 auto;
+}
+/* line 4, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 900;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: #3d3d3d;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* line 23, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:hover {
+  background: #d9534f;
+  transform: translateY(-2px);
+}
+
+/* line 24, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:active {
+  transform: translateY(0);
+}
+
+/* line 25, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:focus {
+  outline: 2px solid #4286f4;
+  outline-offset: 2px;
+}
+
+/* line 27, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn .fa {
+  line-height: 1;
+}
+
+/* line 30, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+}
+
+/* line 35, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* line 41, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-dialog {
+  position: relative;
+  width: 92vw;
+  max-width: 600px;
+  margin: 8vh auto 0;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+/* line 55, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-dialog *,
+.issue-report-modal .ir-dialog *::before,
+.issue-report-modal .ir-dialog *::after {
+  box-sizing: border-box;
+}
+
+/* line 59, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* line 66, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* line 67, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header .ir-close {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: #888;
+  padding: 0 4px;
+}
+
+/* line 75, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header .ir-close:hover {
+  color: #333;
+}
+
+/* line 79, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body {
+  padding: 20px 24px 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* line 88, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body .form-control,
+.issue-report-modal .ir-body input[type="text"],
+.issue-report-modal .ir-body input[type="email"],
+.issue-report-modal .ir-body textarea,
+.issue-report-modal .ir-body select {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+/* line 97, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body textarea {
+  resize: vertical;
+}
+
+/* line 100, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-loading {
+  text-align: center;
+  color: #888;
+  padding: 24px 0;
+}
+
+/* line 106, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-row {
+  display: flex;
+  gap: 16px;
+}
+
+/* line 111, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* line 118, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-option input {
+  margin: 0;
+}
+
+/* line 121, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* line 129, app/assets/stylesheets/issue_report.scss */
+body.ir-modal-open {
+  overflow: hidden;
+}
+
+@media print {
+  /* line 133, app/assets/stylesheets/issue_report.scss */
+  .issue-report-btn,
+.issue-report-modal {
+    display: none !important;
+  }
+}
+/* line 1, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+/* line 5, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview h2 {
+  margin-top: 0;
+}
+
+/* line 6, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .muted {
+  color: #6b778c;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* line 8, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 10px 14px;
+  background: #f6f8fa;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  margin: 10px 0 20px;
+  font-size: 13px;
+}
+
+/* line 18, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-summary strong {
+  color: #172b4d;
+}
+
+/* line 21, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-section {
+  margin-bottom: 28px;
+}
+
+/* line 23, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-section h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+/* line 26, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table {
+  font-size: 12px;
+}
+
+/* line 28, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table th {
+  background: #eaf1f8;
+}
+
+/* line 29, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table th, .isuite-preview .ii-table td {
+  vertical-align: top;
+  padding: 6px 8px;
+}
+
+/* line 30, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table th:first-child, .isuite-preview .ii-table td:first-child {
+  width: 32px;
+  text-align: center;
+}
+
+/* line 33, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* line 37, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list li {
+  padding: 1px 0;
+}
+
+/* line 39, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list li strong {
+  color: #172b4d;
+  font-weight: 600;
+}
+
+/* line 41, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list .ii-old {
+  color: #c0392b;
+  text-decoration: line-through;
+}
+
+/* line 42, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list .ii-new {
+  color: #1a7f37;
+  font-weight: 600;
+}
+
+/* line 43, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list .ii-blank {
+  color: #999;
+  font-style: italic;
+}
+
+/* line 46, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
 }
 /* line 1, app/assets/stylesheets/ops.scss */
 .ops-container {
@@ -27407,6 +27701,7 @@ div.solid {
 /* line 1, app/assets/stylesheets/commo_plans.scss */
 #commo-plan {
   font-size: .70em;
+  font-weight: 500;
 }
 
 /* line 2, app/assets/stylesheets/commo_plans.scss */
@@ -27436,63 +27731,63 @@ div.solid {
   border-right: 1px solid black;
 }
 
-/* line 20, app/assets/stylesheets/commo_plans.scss */
+/* line 21, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .plan-panel-head {
   font-size: 1em !important;
 }
 
-/* line 23, app/assets/stylesheets/commo_plans.scss */
+/* line 24, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .top-row {
   text-align: center;
 }
 
-/* line 26, app/assets/stylesheets/commo_plans.scss */
+/* line 27, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c1 {
   width: 5%;
 }
 
-/* line 30, app/assets/stylesheets/commo_plans.scss */
+/* line 31, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c2 {
   width: 8%;
 }
 
-/* line 34, app/assets/stylesheets/commo_plans.scss */
+/* line 35, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c3 {
   width: 15%;
 }
 
-/* line 38, app/assets/stylesheets/commo_plans.scss */
+/* line 39, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c4 {
   width: 13%;
 }
 
-/* line 47, app/assets/stylesheets/commo_plans.scss */
+/* line 48, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-name {
   width: 13%;
 }
 
-/* line 48, app/assets/stylesheets/commo_plans.scss */
+/* line 49, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-tone {
   width: 6%;
 }
 
-/* line 49, app/assets/stylesheets/commo_plans.scss */
+/* line 50, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-mode {
   width: 6%;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 51, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 54, app/assets/stylesheets/commo_plans.scss */
+/* line 55, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 58, app/assets/stylesheets/commo_plans.scss */
+/* line 59, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -27500,7 +27795,7 @@ div.solid {
   border-bottom: 1px solid black;
 }
 
-/* line 64, app/assets/stylesheets/commo_plans.scss */
+/* line 65, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -27510,7 +27805,7 @@ div.solid {
   overflow: hidden;
 }
 
-/* line 72, app/assets/stylesheets/commo_plans.scss */
+/* line 73, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -27518,38 +27813,38 @@ div.solid {
   border-left: 1px solid black;
 }
 
-/* line 78, app/assets/stylesheets/commo_plans.scss */
+/* line 79, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 82, app/assets/stylesheets/commo_plans.scss */
+/* line 83, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 85, app/assets/stylesheets/commo_plans.scss */
+/* line 86, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 88, app/assets/stylesheets/commo_plans.scss */
+/* line 89, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 91, app/assets/stylesheets/commo_plans.scss */
+/* line 92, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 95, app/assets/stylesheets/commo_plans.scss */
+/* line 96, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -27558,17 +27853,17 @@ div.solid {
   verticle-align: middle;
 }
 
-/* line 101, app/assets/stylesheets/commo_plans.scss */
+/* line 102, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 106, app/assets/stylesheets/commo_plans.scss */
+/* line 107, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 110, app/assets/stylesheets/commo_plans.scss */
+/* line 111, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -27577,24 +27872,24 @@ div.solid {
   width: 30px;
 }
 
-/* line 117, app/assets/stylesheets/commo_plans.scss */
+/* line 118, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 119, app/assets/stylesheets/commo_plans.scss */
+/* line 120, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 125, app/assets/stylesheets/commo_plans.scss */
+/* line 126, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 128, app/assets/stylesheets/commo_plans.scss */
+/* line 129, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -27609,17 +27904,17 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 142, app/assets/stylesheets/commo_plans.scss */
+/* line 143, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 145, app/assets/stylesheets/commo_plans.scss */
+/* line 146, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 148, app/assets/stylesheets/commo_plans.scss */
+/* line 149, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
@@ -30418,27 +30713,28 @@ body.printing-demob #notice,
 body.printing-demob #ics-211-info,
 body.printing-demob #glide-info,
 body.printing-demob #tally-info,
+body.printing-demob #non-209-info,
 body.printing-demob #resource-form,
 body.printing-demob .no-print {
     display: none !important;
   }
-  /* line 190, app/assets/stylesheets/resources.scss */
+  /* line 191, app/assets/stylesheets/resources.scss */
   body.printing-demob #demob-info {
     display: block !important;
     border: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
   }
-  /* line 197, app/assets/stylesheets/resources.scss */
+  /* line 198, app/assets/stylesheets/resources.scss */
   body.printing-demob #demob-info .panel-foot {
     display: none !important;
   }
-  /* line 202, app/assets/stylesheets/resources.scss */
+  /* line 203, app/assets/stylesheets/resources.scss */
   body.printing-glide {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  /* line 206, app/assets/stylesheets/resources.scss */
+  /* line 207, app/assets/stylesheets/resources.scss */
   body.printing-glide header,
 body.printing-glide footer,
 body.printing-glide .incident-name,
@@ -30448,19 +30744,20 @@ body.printing-glide #notice,
 body.printing-glide #ics-211-info,
 body.printing-glide #demob-info,
 body.printing-glide #tally-info,
+body.printing-glide #non-209-info,
 body.printing-glide #resource-form,
 body.printing-glide .no-print {
     display: none !important;
   }
-  /* line 220, app/assets/stylesheets/resources.scss */
+  /* line 222, app/assets/stylesheets/resources.scss */
   body.printing-glide #glide-info {
     display: block !important;
   }
-  /* line 224, app/assets/stylesheets/resources.scss */
+  /* line 226, app/assets/stylesheets/resources.scss */
   body.printing-glide .print-only {
     display: block !important;
   }
-  /* line 228, app/assets/stylesheets/resources.scss */
+  /* line 230, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-calendar,
 body.printing-glide .glide-row,
 body.printing-glide .yellow,
@@ -30472,49 +30769,49 @@ body.printing-glide .green {
     color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  /* line 242, app/assets/stylesheets/resources.scss */
+  /* line 244, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.yellow {
     box-shadow: inset 0 0 0 999px yellow !important;
   }
-  /* line 245, app/assets/stylesheets/resources.scss */
+  /* line 247, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.orange {
     box-shadow: inset 0 0 0 999px orange !important;
   }
-  /* line 248, app/assets/stylesheets/resources.scss */
+  /* line 250, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.red {
     box-shadow: inset 0 0 0 999px red !important;
   }
-  /* line 251, app/assets/stylesheets/resources.scss */
+  /* line 253, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.black {
     box-shadow: inset 0 0 0 999px black !important;
   }
-  /* line 254, app/assets/stylesheets/resources.scss */
+  /* line 256, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-row.green {
     box-shadow: inset 0 0 0 999px #4caf50 !important;
   }
-  /* line 259, app/assets/stylesheets/resources.scss */
+  /* line 261, app/assets/stylesheets/resources.scss */
   body.printing-glide table.table,
 body.printing-glide table.table th,
 body.printing-glide table.table td {
     border-color: #555 !important;
   }
-  /* line 264, app/assets/stylesheets/resources.scss */
+  /* line 266, app/assets/stylesheets/resources.scss */
   body.printing-glide .glide-calendar {
     border-color: #555 !important;
   }
 }
 
-/* line 271, app/assets/stylesheets/resources.scss */
+/* line 273, app/assets/stylesheets/resources.scss */
 .table-col {
   min-width: 25px !important;
 }
 
-/* line 274, app/assets/stylesheets/resources.scss */
+/* line 276, app/assets/stylesheets/resources.scss */
 .name-col {
   white-space: nowrap;
 }
 
-/* line 280, app/assets/stylesheets/resources.scss */
+/* line 282, app/assets/stylesheets/resources.scss */
 .ics-211-search {
   display: flex;
   align-items: center;
@@ -30522,7 +30819,7 @@ body.printing-glide table.table td {
   margin: 8px 12px 12px;
 }
 
-/* line 286, app/assets/stylesheets/resources.scss */
+/* line 288, app/assets/stylesheets/resources.scss */
 .ics-211-search .form-control {
   flex: 1 1 auto;
   max-width: 420px;
@@ -30530,76 +30827,89 @@ body.printing-glide table.table td {
   font-size: 14px;
 }
 
-/* line 293, app/assets/stylesheets/resources.scss */
+/* line 295, app/assets/stylesheets/resources.scss */
 .ics-211-search .btn-link {
   padding: 4px 8px;
   font-size: 12px;
 }
 
-/* line 298, app/assets/stylesheets/resources.scss */
+/* line 300, app/assets/stylesheets/resources.scss */
 .ics-211-search .muted {
   color: #6b778c;
   font-size: 12px;
 }
 
 /* Demob Info */
-/* line 305, app/assets/stylesheets/resources.scss */
+/* line 307, app/assets/stylesheets/resources.scss */
 #demob-info {
   display: none;
 }
 
-/* line 307, app/assets/stylesheets/resources.scss */
+/* line 309, app/assets/stylesheets/resources.scss */
 #demob-info #demob-dates {
   text-align: center;
 }
 
-/* line 311, app/assets/stylesheets/resources.scss */
+/* line 313, app/assets/stylesheets/resources.scss */
 #demob-dates {
   margin: 5% 0;
 }
 
-/* line 313, app/assets/stylesheets/resources.scss */
+/* line 315, app/assets/stylesheets/resources.scss */
 #demob-dates h1, #demob-dates h2, #demob-dates h3, #demob-dates h4 {
   font-weight: 666;
+}
+
+/* Non-209 tab panel — hidden by default like the other tab panels. */
+/* line 321, app/assets/stylesheets/resources.scss */
+#non-209-info {
+  display: none;
+}
+
+/* line 325, app/assets/stylesheets/resources.scss */
+#non-209-info .non-209-header p.muted {
+  color: #6b778c;
+  font-size: 12px;
+  margin-bottom: 12px;
 }
 
 /* Resource Tally Info — pivot layout mirroring the ICS 209 tally.
    Rows = agencies (with resources/personnel sub-rows); columns =
    crew/aircraft/equipment kinds + Overhead + Total. */
-/* line 321, app/assets/stylesheets/resources.scss */
+/* line 332, app/assets/stylesheets/resources.scss */
 #tally-info {
   display: none;
   padding-top: 24px;
 }
 
-/* line 325, app/assets/stylesheets/resources.scss */
+/* line 336, app/assets/stylesheets/resources.scss */
 #tally-info .tally-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* line 330, app/assets/stylesheets/resources.scss */
+/* line 341, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header {
   margin-bottom: 12px;
   position: relative;
 }
 
-/* line 333, app/assets/stylesheets/resources.scss */
+/* line 344, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header h2 {
   margin: 0 0 4px;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-/* line 334, app/assets/stylesheets/resources.scss */
+/* line 345, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header .muted {
   color: #6b778c;
   font-size: 13px;
   margin: 0;
 }
 
-/* line 336, app/assets/stylesheets/resources.scss */
+/* line 347, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header .tally-header-actions {
   position: absolute;
   top: 0;
@@ -30608,7 +30918,7 @@ body.printing-glide table.table td {
   gap: 6px;
 }
 
-/* line 347, app/assets/stylesheets/resources.scss */
+/* line 358, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table-wrap {
   overflow-x: auto;
   border: 1px solid #c1c7d0;
@@ -30616,7 +30926,7 @@ body.printing-glide table.table td {
   box-shadow: 0 1px 2px rgba(9, 30, 66, 0.05);
 }
 
-/* line 354, app/assets/stylesheets/resources.scss */
+/* line 365, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table {
   border-collapse: collapse;
   font-size: 12px;
@@ -30624,7 +30934,7 @@ body.printing-glide table.table td {
   width: 100%;
 }
 
-/* line 360, app/assets/stylesheets/resources.scss */
+/* line 371, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table th, #tally-info .tally-table td {
   border: 1px solid #c1c7d0;
   padding: 4px 6px;
@@ -30632,7 +30942,7 @@ body.printing-glide table.table td {
   text-align: center;
 }
 
-/* line 368, app/assets/stylesheets/resources.scss */
+/* line 379, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table thead th {
   background: #eaf1f8;
   font-weight: 600;
@@ -30640,19 +30950,19 @@ body.printing-glide table.table td {
   vertical-align: bottom;
 }
 
-/* line 374, app/assets/stylesheets/resources.scss */
+/* line 385, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-col {
   width: 140px;
   text-align: left;
   padding-left: 10px;
 }
 
-/* line 379, app/assets/stylesheets/resources.scss */
+/* line 390, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-count-col {
   width: 60px;
 }
 
-/* line 381, app/assets/stylesheets/resources.scss */
+/* line 392, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-col-header {
   min-width: 30px;
   max-width: 44px;
@@ -30660,7 +30970,7 @@ body.printing-glide table.table td {
   padding: 4px 0;
 }
 
-/* line 388, app/assets/stylesheets/resources.scss */
+/* line 399, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-col-label {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -30670,30 +30980,30 @@ body.printing-glide table.table td {
   line-height: 1.1;
 }
 
-/* line 396, app/assets/stylesheets/resources.scss */
+/* line 407, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-col-header.is-overhead .tally-col-label,
 #tally-info .tally-table .tally-col-header.is-total .tally-col-label {
   font-weight: 700;
 }
 
-/* line 403, app/assets/stylesheets/resources.scss */
+/* line 414, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-row td {
   background: #fff;
 }
 
-/* line 406, app/assets/stylesheets/resources.scss */
+/* line 417, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-row.is-even td {
   background: #fbf8f0;
 }
 
-/* line 409, app/assets/stylesheets/resources.scss */
+/* line 420, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-cell {
   text-align: left;
   padding-left: 10px;
   font-weight: 700;
 }
 
-/* line 414, app/assets/stylesheets/resources.scss */
+/* line 425, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-count-label {
   font-style: italic;
   color: #6b778c;
@@ -30702,56 +31012,56 @@ body.printing-glide table.table td {
   font-size: 11px;
 }
 
-/* line 421, app/assets/stylesheets/resources.scss */
+/* line 432, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-cell {
   min-width: 30px;
 }
 
-/* line 423, app/assets/stylesheets/resources.scss */
+/* line 434, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-cell.is-overhead, #tally-info .tally-table .tally-cell.is-total {
   background: #f4f5f7 !important;
   font-weight: 600;
 }
 
-/* line 431, app/assets/stylesheets/resources.scss */
+/* line 442, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-total-row td {
   background: #f4f5f7;
   font-weight: 700;
 }
 
-/* line 435, app/assets/stylesheets/resources.scss */
+/* line 446, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-total-label {
   color: #172b4d;
 }
 
-/* line 441, app/assets/stylesheets/resources.scss */
+/* line 452, app/assets/stylesheets/resources.scss */
 .dashed {
   border: 1px dashed orange;
 }
 
-/* line 444, app/assets/stylesheets/resources.scss */
+/* line 455, app/assets/stylesheets/resources.scss */
 img#new-resource {
   height: 20px;
   width: 20px;
 }
 
-/* line 448, app/assets/stylesheets/resources.scss */
+/* line 459, app/assets/stylesheets/resources.scss */
 .grayed {
   background-color: #f5f5f5;
 }
 
-/* line 451, app/assets/stylesheets/resources.scss */
+/* line 462, app/assets/stylesheets/resources.scss */
 .resource-information {
   background-color: yellow;
 }
 
-/* line 455, app/assets/stylesheets/resources.scss */
+/* line 466, app/assets/stylesheets/resources.scss */
 .view-resource img {
   width: 20px;
   height: auto;
 }
 
-/* line 463, app/assets/stylesheets/resources.scss */
+/* line 474, app/assets/stylesheets/resources.scss */
 .resource-panel {
   position: fixed;
   inset: 0;
@@ -30764,12 +31074,12 @@ img#new-resource {
   overflow-y: auto;
 }
 
-/* line 474, app/assets/stylesheets/resources.scss */
+/* line 485, app/assets/stylesheets/resources.scss */
 .resource-panel.is-hidden {
   display: none;
 }
 
-/* line 477, app/assets/stylesheets/resources.scss */
+/* line 488, app/assets/stylesheets/resources.scss */
 .resource-panel-inner {
   position: relative;
   background: #fff;
@@ -30780,7 +31090,7 @@ img#new-resource {
   padding: 20px 24px 24px;
 }
 
-/* line 487, app/assets/stylesheets/resources.scss */
+/* line 498, app/assets/stylesheets/resources.scss */
 .resource-panel-close {
   position: absolute;
   top: 8px;
@@ -30794,12 +31104,12 @@ img#new-resource {
   padding: 4px 8px;
 }
 
-/* line 499, app/assets/stylesheets/resources.scss */
+/* line 510, app/assets/stylesheets/resources.scss */
 .resource-panel-close:hover {
   color: #172b4d;
 }
 
-/* line 501, app/assets/stylesheets/resources.scss */
+/* line 512, app/assets/stylesheets/resources.scss */
 button.resource-panel-close {
   -webkit-appearance: none;
   appearance: none;
@@ -30809,7 +31119,7 @@ button.resource-panel-close {
   background: transparent !important;
 }
 
-/* line 509, app/assets/stylesheets/resources.scss */
+/* line 520, app/assets/stylesheets/resources.scss */
 button.resource-panel-close:hover, button.resource-panel-close:focus, button.resource-panel-close:active {
   border: none !important;
   outline: none !important;
@@ -30817,7 +31127,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   background: transparent !important;
 }
 
-/* line 519, app/assets/stylesheets/resources.scss */
+/* line 530, app/assets/stylesheets/resources.scss */
 .resource-panel-title {
   margin: 0 32px 12px 0;
   font-size: 16px;
@@ -30825,21 +31135,21 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   color: #172b4d;
 }
 
-/* line 526, app/assets/stylesheets/resources.scss */
+/* line 537, app/assets/stylesheets/resources.scss */
 .resource-panel-fields {
   display: grid;
   grid-template-columns: repeat(3, minmax(160px, 1fr));
   gap: 10px 16px;
 }
 
-/* line 532, app/assets/stylesheets/resources.scss */
+/* line 543, app/assets/stylesheets/resources.scss */
 .resource-panel-field {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* line 537, app/assets/stylesheets/resources.scss */
+/* line 548, app/assets/stylesheets/resources.scss */
 .resource-panel-field label {
   font-size: 11px;
   font-weight: 600;
@@ -30849,7 +31159,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   margin: 0 0 2px;
 }
 
-/* line 546, app/assets/stylesheets/resources.scss */
+/* line 557, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place {
   display: inline-block;
   min-height: 20px;
@@ -30860,23 +31170,23 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   cursor: text;
 }
 
-/* line 555, app/assets/stylesheets/resources.scss */
+/* line 566, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place:hover {
   background: #e6effd;
 }
 
-/* line 558, app/assets/stylesheets/resources.scss */
+/* line 569, app/assets/stylesheets/resources.scss */
 .resource-panel-field .static-field {
   padding: 2px 6px;
   color: #6b778c;
 }
 
-/* line 564, app/assets/stylesheets/resources.scss */
+/* line 575, app/assets/stylesheets/resources.scss */
 .resource-panel-field-wide {
   grid-column: 1 / -1;
 }
 
-/* line 567, app/assets/stylesheets/resources.scss */
+/* line 578, app/assets/stylesheets/resources.scss */
 input.fwd-datepicker {
   border: none !important;
   width: 36px;
@@ -30888,7 +31198,7 @@ input.fwd-datepicker {
   box-sizing: content-box;
 }
 
-/* line 583, app/assets/stylesheets/resources.scss */
+/* line 594, app/assets/stylesheets/resources.scss */
 .roster-toggle-slot {
   display: inline-block;
   width: 14px;
@@ -30897,7 +31207,7 @@ input.fwd-datepicker {
   color: #a1a8b4;
 }
 
-/* line 591, app/assets/stylesheets/resources.scss */
+/* line 602, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle {
   display: inline;
   cursor: pointer;
@@ -30908,22 +31218,22 @@ input.fwd-datepicker {
   user-select: none;
 }
 
-/* line 600, app/assets/stylesheets/resources.scss */
+/* line 611, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle:hover {
   color: #172b4d;
 }
 
-/* line 601, app/assets/stylesheets/resources.scss */
+/* line 612, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle:focus {
   outline: none;
 }
 
-/* line 602, app/assets/stylesheets/resources.scss */
+/* line 613, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle[aria-expanded="true"] .roster-toggle-caret {
   transform: rotate(90deg);
 }
 
-/* line 605, app/assets/stylesheets/resources.scss */
+/* line 616, app/assets/stylesheets/resources.scss */
 .roster-toggle-caret {
   display: inline-block;
   transition: transform 0.12s ease;
@@ -30931,17 +31241,17 @@ input.fwd-datepicker {
   vertical-align: baseline;
 }
 
-/* line 612, app/assets/stylesheets/resources.scss */
+/* line 623, app/assets/stylesheets/resources.scss */
 .resource-roster-row {
   background: #f7f8fa;
 }
 
-/* line 615, app/assets/stylesheets/resources.scss */
+/* line 626, app/assets/stylesheets/resources.scss */
 .resource-roster-row.is-hidden {
   display: none;
 }
 
-/* line 617, app/assets/stylesheets/resources.scss */
+/* line 628, app/assets/stylesheets/resources.scss */
 .resource-roster-row td {
   color: #5e6c84;
   font-size: 12px;
@@ -30949,19 +31259,19 @@ input.fwd-datepicker {
   border-top: 1px dashed #e6e8ec;
 }
 
-/* line 624, app/assets/stylesheets/resources.scss */
+/* line 635, app/assets/stylesheets/resources.scss */
 .resource-roster-row .roster-order-cell {
   font-family: Menlo, Consolas, monospace;
   white-space: nowrap;
 }
 
-/* line 629, app/assets/stylesheets/resources.scss */
+/* line 640, app/assets/stylesheets/resources.scss */
 .resource-roster-row.depth-2 {
   background: #eef1f5;
 }
 
 @media print {
-  /* line 637, app/assets/stylesheets/resources.scss */
+  /* line 648, app/assets/stylesheets/resources.scss */
   body.printing-tally .no-print,
 body.printing-tally .tally-header-actions,
 body.printing-tally .resources-panel-head,
@@ -30970,6 +31280,7 @@ body.printing-tally .incident-name,
 body.printing-tally #ics-211-info,
 body.printing-tally #glide-info,
 body.printing-tally #demob-info,
+body.printing-tally #non-209-info,
 body.printing-tally #resource-panels,
 body.printing-tally .panel-foot,
 body.printing-tally #header,
@@ -30977,25 +31288,25 @@ body.printing-tally nav,
 body.printing-tally footer {
     display: none !important;
   }
-  /* line 651, app/assets/stylesheets/resources.scss */
+  /* line 663, app/assets/stylesheets/resources.scss */
   body.printing-tally #tally-info {
     display: block !important;
     padding-top: 0;
   }
-  /* line 653, app/assets/stylesheets/resources.scss */
+  /* line 665, app/assets/stylesheets/resources.scss */
   body.printing-tally .tally-table {
     font-size: 10px;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     page-break-inside: avoid;
   }
-  /* line 659, app/assets/stylesheets/resources.scss */
+  /* line 671, app/assets/stylesheets/resources.scss */
   body.printing-tally .tally-table-wrap {
     overflow: visible !important;
     box-shadow: none;
   }
   @page {
-    /* line 636, app/assets/stylesheets/resources.scss */
+    /* line 647, app/assets/stylesheets/resources.scss */
     body.printing-tally {
       size: Letter landscape;
       margin: 0.4in;

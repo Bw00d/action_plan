@@ -52,6 +52,9 @@ Rails.application.routes.draw do
       end
     end
     resources :posts
+    resources :incident_posts, only: [:create, :update, :destroy] do
+      member { post :toggle_like }
+    end
     resources :resources do
       collection do
         post :import_isuite

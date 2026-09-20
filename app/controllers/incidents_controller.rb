@@ -10,6 +10,14 @@ class IncidentsController < ApplicationController
   def users
     @incident = Incident.find(params[:id])
     @users = @incident.users
+    # Top-level posts (parent_id is nil), newest first. Eager-load replies,
+    # likes, and users to avoid N+1 in the feed. Cap at 100 top-level posts.
+    @top_posts = @incident.posts.where(parent_id: nil)
+                                .includes(:user, :likes, replies: [:user, :likes])
+                                .order(created_at: :desc)
+                                .limit(100)
+    @events    = @incident.events.limit(50)
+    @new_post  = IncidentPost.new
   end
 
   # GET /incidents/:id/perimeter.json

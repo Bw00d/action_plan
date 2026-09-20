@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_20_200000) do
+ActiveRecord::Schema.define(version: 2026_09_21_000001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,6 +258,27 @@ ActiveRecord::Schema.define(version: 2026_09_20_200000) do
     t.index ["incident_id"], name: "index_incident_events_on_incident_id"
     t.index ["kind"], name: "index_incident_events_on_kind"
     t.index ["user_id"], name: "index_incident_events_on_user_id"
+  end
+
+  create_table "incident_post_likes", force: :cascade do |t|
+    t.bigint "incident_post_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_post_id", "user_id"], name: "idx_incident_post_likes_unique", unique: true
+    t.index ["user_id"], name: "index_incident_post_likes_on_user_id"
+  end
+
+  create_table "incident_posts", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "parent_id"
+    t.text "body", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id", "created_at"], name: "index_incident_posts_on_incident_id_and_created_at"
+    t.index ["parent_id"], name: "index_incident_posts_on_parent_id"
+    t.index ["user_id"], name: "index_incident_posts_on_user_id"
   end
 
   create_table "incidents", force: :cascade do |t|

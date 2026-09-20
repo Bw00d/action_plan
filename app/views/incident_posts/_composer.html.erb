@@ -1,0 +1,19 @@
+<%# Locals: incident, new_post, parent (an IncidentPost or nil) %>
+<%= form_with model: [incident, new_post],
+              url: incident_incident_posts_path(incident),
+              method: :post,
+              local: true,
+              html: { class: "feed-composer #{'feed-composer-reply' if parent}" } do |f| %>
+  <%= f.hidden_field :parent_id, value: parent&.id %>
+  <%= f.text_area :body,
+                  class: 'form-control',
+                  rows: parent ? 2 : 3,
+                  placeholder: parent ? "Reply to #{parent.author_name}…" : "What's happening on this incident?",
+                  required: true %>
+  <div class="feed-composer-actions">
+    <% if parent %>
+      <button type="button" class="btn btn-link btn-xs feed-cancel-reply">Cancel</button>
+    <% end %>
+    <%= f.submit(parent ? 'Reply' : 'Post', class: 'btn btn-primary btn-sm') %>
+  </div>
+<% end %>
