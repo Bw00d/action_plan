@@ -9,10 +9,16 @@ class ResourcesController < ApplicationController
     @incident = Incident.find(params[:incident_id])
     @resource = Resource.new
     @resources = @incident.resources.includes(:rosters).order(:category, :order_number)
-    @overhead = @resources.overhead
+    # Same list minus any resource parked in a Non-209 org_unit. Used by
+    # the ICS-211, Glide Path, and Resource Tally tabs (see the partials);
+    # the resource panels / edit forms still use @resources so users can
+    # still manage Non-209 resources from the side panel.
+    non_209_ids = @incident.non_209_resource_ids
+    @tally_resources = non_209_ids.any? ? @resources.where.not(id: non_209_ids) : @resources
+    @overhead  = @resources.overhead
     @equipment = @resources.equipment
-    @crews = @resources.crew
-    @aircraft = @resources.aircraft
+    @crews     = @resources.crew
+    @aircraft  = @resources.aircraft
   end
 
   # GET /resources/1

@@ -14,7 +14,8 @@ class OrgUnit < ApplicationRecord
     section: 1,
     branch: 2,
     division: 3,
-    group: 4
+    group: 4,
+    non_209: 5
   }, _prefix: :kind
 
   acts_as_list scope: :parent_id, top_of_list: 1, add_new_at: :bottom
@@ -30,7 +31,11 @@ class OrgUnit < ApplicationRecord
     'section'  => [nil],
     'branch'   => ['section', 'command'],
     'division' => ['section', 'branch'],
-    'group'    => ['section', 'branch']
+    'group'    => ['section', 'branch'],
+    # Flat bucket at the root of the board — no children allowed. Resources
+    # assigned here are excluded from the Resource Tally, Glide Path, and
+    # ICS-211 by the Incident#tally_resources scope.
+    'non_209'  => [nil]
   }.freeze
 
   def self.allowed_child_kinds_for(parent_kind)

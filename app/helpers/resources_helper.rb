@@ -62,7 +62,7 @@ module ResourcesHelper
   # "Overhead Personnel" column (aggregates all OVERHEAD) and a
   # "Total Personnel" column (row-wise sum, no resource count).
   def resource_tally_pivot(incident)
-    resources = incident.resources.assigned.includes(:rosters)
+    resources = incident.tally_resources.includes(:rosters)
 
     # Discover positions per category. Skip blank positions — those
     # don't have anywhere sensible to bucket.

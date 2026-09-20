@@ -16,6 +16,27 @@ class Incident < ApplicationRecord
                     class_name: 'IncidentEvent', dependent: :destroy
 
   after_create :seed_default_schedule
+  after_create :seed_non_209_bucket
+
+  # IDs of resources parked in a Non-209 org_unit — these are excluded from
+  # the Resource Tally, Glide Path, and ICS-211 (they don't belong on the
+  # 209 rollup, hence the name). Returns [] fast when no such column exists.
+  def non_209_resource_ids
+    non_209_units = org_units.where(kind: OrgUnit.kinds[:non_209])
+    return [] if non_209_units.empty?
+
+    OrgUnitAssignment.where(org_unit_id: non_209_units.select(:id))
+                     .pluck(:resource_id)
+  end
+
+  # Resources.assigned minus the Non-209 bucket. Use anywhere the tally /
+  # 211 / glide-path show resources.
+  def tally_resources
+    ids = non_209_resource_ids
+    scope = resources.assigned
+    scope = scope.where.not(id: ids) if ids.any?
+    scope
+  end
 
   # Record a single audit-log entry for this incident. Rescue rather than
   # raise so a logging failure never blocks the real action (e.g. plan
@@ -74,5 +95,10 @@ class Incident < ApplicationRecord
 
   def seed_default_schedule
     Schedule.seed_defaults!(self)
+  end
+
+  def seed_non_209_bucket
+    return if org_units.where(kind: OrgUnit.kinds[:non_209]).exists?
+    org_units.create!(kind: :non_209, name: 'Non-209', parent_id: nil)
   end
 end
