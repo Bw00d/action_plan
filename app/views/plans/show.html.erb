@@ -47,76 +47,10 @@
             
 <!-- end plans tabs -->
 
-<!-- SITUATIONS -->
-
-        <div id="situation-content" class="plan-row situation md-padding-left"><%= link_to 'SITUATION', 'javascript:;', class: "plan-link" %> </div>
-        <div class="situation-content list-content md-padding-left">
-          <%= best_in_place @plan, :situation, :as => :textarea, :place_holder => "Click me to add content!",:display_with => :simple_format, :ok_button => 'Save', :cancel_button => 'Cancel'  %>
-        </div>
-
-<!-- OBJECTIVES -->
-
-        <div id="objectives-list" class="plan-row md-padding-left "><%= link_to 'OBJECTIVES', 'javascript:;', class: "plan-link" %></div>
-          <div class="objectives-list list-content md-padding-left">
-            <ol id="objectives">
-              <% @objectives.each do |o|  %>
-              <li> <%= best_in_place o, :description, as: :input %></li>
-              <% end %>
-            </ol>
-
-            <div id="objective-form" class="form-group">
-              <%= form_for @objective, remote: true do |f| %>
-                <%= f.hidden_field :plan_id, value: @plan.id %>
-                <%= f.text_area :description, placeholder: "Add an objective", class: 'form-control' %></br>
-                <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-objective-button" %>
-                <%= link_to "CANCEL", 'javascript:;', id: 'cancel-objective-form', class: 'btn btn-default tiny' %>
-              <% end %>
-            </div>
-              <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-objective' %>
-              <%= link_to "javascript:;" do %>
-                <%= image_tag 'plus.png', class: "small-icon", id: 'new-objective' %>
-              <% end %>
-            
-          </div>
-
-<!-- ACTIVITIES -->
-
-        <div id="activity-list" class="plan-row activity md-padding-left"><%= link_to 'CURRENT AND PLANNED ACTIONS', 'javascript:;', class: "plan-link" %></div>
-        <div class="activities-list list-content md-padding-left">
-          <ul id="activities">
-            <% @plan.activities.each do |a|  %>
-              <li> <%= best_in_place a, :description, :as => :input %></li>
-            <% end %>
-          </ul>
-
-            <div id="activity-form" class="form-group">
-              <%= form_for @activity, remote: true do |f| %>
-                <%= f.hidden_field :plan_id, value: @plan.id %>
-                <%= f.text_field :description, placeholder: "Add activity", class: 'form-control' %></br>
-                <%= f.submit "Submit", class: 'btn btn-tiny btn-primary', id: "submit-activity-button" %>
-                <%= link_to "CANCEL", 'javascript:;', id: 'cancel-activity-form', class: 'btn btn-default tiny' %>
-              <% end %>
-            </div>
-              <%#= link_to (fa_icon('plus-circle')), "javascript:;", id: 'new-activity' %>
-              <%= link_to "javascript:;" do %>
-                <%= image_tag 'plus.png', class: "small-icon", id: 'new-activity' %>
-              <% end %>
-        </div>
-<!-- RESOURCES -->
-        <div id="resource-list" class="plan-row md-padding-left"><%= link_to 'RESOURCES', 'javascript:;', class: "plan-link" %></div>
-          <div class="resources-list list-content md-padding-left">
-            <ul id="resources">
-                <% @resources.assigned.each do |r|  %>
-                <li><%= r.cat %><%= best_in_place r, :order_number, :as => :input%>  <%= best_in_place r,  :name, :as => :input %>  <%= best_in_place r, 
-                :position, :as => :input %></li>
-                <% end %>
-              </ul>
-
-            <%= render 'new_resource_form'  %>
-          </div>
 
 
-          <div id="iap-row" class="plan-row md-padding-left"><%= link_to 'IAP', 'javascript:;', class: "plan-link" %></div>
+
+          <div id="iap-row" class="plan-row md-padding-left"><%= link_to 'Incident Action Plan', 'javascript:;', class: "plan-link" %></div>
           <div id="iap-content" class="forms-list list-content md-padding-left">
             <ul>
               <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>

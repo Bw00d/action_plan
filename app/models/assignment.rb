@@ -2,6 +2,12 @@ class Assignment < ApplicationRecord
   belongs_to :plan
   belongs_to :org_unit, optional: true
 
+  # Match the form hint: if the user leaves Designator blank, seed it
+  # from the org unit's designator so the 204 has a stable label and the
+  # assignments index link isn't an empty <li>. Runs on every save so an
+  # explicit clear still refalls back to the org unit's value.
+  before_validation :default_designator_from_org_unit
+
   OPS_ROLE_OPTIONS = [
     'Operations Chief',
     'Planning Operations',
@@ -76,7 +82,23 @@ class Assignment < ApplicationRecord
     end
   end
 
+  # What to show anywhere the designator appears (index links, PDF
+  # headers, etc). Callback above already backfills on save, but this
+  # protects legacy rows and the rare case where both the assignment
+  # and org_unit designator are blank (fall back to the unit name so
+  # the index link is never empty).
+  def display_designator
+    designator.presence ||
+      org_unit&.designator.presence ||
+      org_unit&.name
+  end
+
   private
+
+  def default_designator_from_org_unit
+    return if designator.present?
+    self.designator = org_unit&.designator.presence || org_unit&.name
+  end
 
   # Accepts "MM/DD/YYYY HHMM" (military time, no colon) as well as anything
   # Time.zone.parse can handle. Returns nil for blank/invalid input.

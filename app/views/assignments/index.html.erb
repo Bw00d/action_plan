@@ -27,7 +27,7 @@
         <ul class="assignments-lists md-padding-left">
           <% @assignments.each do |assignment| %>
             <%= link_to incident_plan_assignment_path(@incident, @plan, assignment) do %>
-            <li><%= assignment.designator %>   </li>
+            <li><%= assignment.display_designator %>   </li>
           <% end %>
         <% end %>
         </ul>

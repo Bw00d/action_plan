@@ -26,7 +26,7 @@
       </td>
       <td class="id-cell" style="width:29%" rowspan="4">
         <div class="id-label">Division/Group:</div>
-        <div class="id-value"><%= best_in_place @assignment, :designator, as: :input, place_holder: "(DESIGNATOR)" %></div>
+        <div class="id-value"><%= best_in_place @assignment, :designator, as: :input, place_holder: (@assignment.display_designator.presence || "(DESIGNATOR)") %></div>
       </td>
     </tr>
     <tr>
