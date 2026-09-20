@@ -91,6 +91,10 @@ controller and action allows the implementation of page-specific CSS and JS %>
     </div><!-- container-fluid -->
   </main>
 
+  <% if user_signed_in? && incident_page? %>
+    <%= render 'shared/issue_report_button' %>
+  <% end %>
+
   <%# footer styled for Bootstrap 3 %>
   <footer>
     <div class="container-fluid footer text-center">

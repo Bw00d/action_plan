@@ -1,0 +1,12 @@
+Type: <%= @report.kind_label %>
+Title: <%= @report.title %>
+Submitted by: <%= @user ? "#{@user.full_name} <#{@user.email}>" : 'Anonymous' %>
+<% if @report.incident_id.present? %>Incident ID: <%= @report.incident_id %>
+<% end -%>
+<% if @page.present? %>Page: <%= @page %>
+<% end -%>
+
+<%= @report.description %>
+
+--
+Report ##<%= @report.id %> · <%= @report.created_at.strftime('%Y-%m-%d %H:%M %Z') %>

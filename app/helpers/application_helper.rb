@@ -53,6 +53,24 @@ module ApplicationHelper
     end
   end
 
+  # True for any page whose controller lives under the incident tree — used
+  # by the layout to conditionally render the floating bug/feedback button.
+  # Broad match keeps this working as new incident-scoped controllers get
+  # added (ops, plans, resources, requests, checkins, etc.) without editing
+  # the list here.
+  INCIDENT_PAGE_CONTROLLERS = %w[
+    incidents boards ops plans assignments resources requests checkins
+    org_units commo_plans covers demobs demob_notifications
+    safety_messages schedules blocks activities objectives posts
+    financial_codes teams commo_items dump_imports request_checkins
+    isuite_imports
+  ].freeze
+
+  def incident_page?
+    return true if @incident.present?
+    INCIDENT_PAGE_CONTROLLERS.include?(controller_name)
+  end
+
   def image_link_to(image_path, url, image_tag_options = { }, link_to_options = { })
   link_to url, link_to_options do
     image_tag image_path, image_tag_options

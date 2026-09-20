@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :assignments
   resources :objectives, only: [:create, :update, :destroy]
   resources :plans
+  resources :issue_reports, only: [:new, :create]
   root to: 'home#index'
 
   devise_for :users, controllers: {

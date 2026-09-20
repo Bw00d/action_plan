@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_11_000003) do
+ActiveRecord::Schema.define(version: 2026_09_20_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,6 +304,21 @@ ActiveRecord::Schema.define(version: 2026_09_11_000003) do
     t.bigint "user_id", null: false
     t.index ["incident_id", "user_id"], name: "index_incidents_users_on_incident_id_and_user_id"
     t.index ["user_id", "incident_id"], name: "index_incidents_users_on_user_id_and_incident_id"
+  end
+
+  create_table "issue_reports", force: :cascade do |t|
+    t.string "kind", default: "bug", null: false
+    t.string "title", null: false
+    t.text "description", null: false
+    t.string "page_url"
+    t.bigint "user_id"
+    t.bigint "incident_id"
+    t.string "status", default: "open"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id"], name: "index_issue_reports_on_incident_id"
+    t.index ["kind"], name: "index_issue_reports_on_kind"
+    t.index ["user_id"], name: "index_issue_reports_on_user_id"
   end
 
   create_table "objectives", force: :cascade do |t|

@@ -1,0 +1,15 @@
+<p><strong>Type:</strong> <%= @report.kind_label %></p>
+<p><strong>Title:</strong> <%= @report.title %></p>
+<p><strong>Submitted by:</strong>
+  <%= @user ? "#{@user.full_name} <#{@user.email}>" : 'Anonymous' %>
+</p>
+<% if @report.incident_id.present? %>
+  <p><strong>Incident ID:</strong> <%= @report.incident_id %></p>
+<% end %>
+<% if @page.present? %>
+  <p><strong>Page:</strong> <%= @page %></p>
+<% end %>
+<hr>
+<pre style="font-family: inherit; white-space: pre-wrap;"><%= @report.description %></pre>
+<hr>
+<p style="font-size:11px; color:#888;">Report #<%= @report.id %> · <%= @report.created_at.strftime('%Y-%m-%d %H:%M %Z') %></p>

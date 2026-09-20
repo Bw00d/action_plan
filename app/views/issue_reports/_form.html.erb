@@ -1,0 +1,42 @@
+<%= form_with model: @issue_report, url: issue_reports_path, local: true, html: { class: 'issue-report-form' } do |f| %>
+  <% if @issue_report.errors.any? %>
+    <div class="alert alert-danger">
+      <ul style="margin: 0; padding-left: 18px;">
+        <% @issue_report.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# Capture the incident context and current URL so we know where the
+      report came from. JS fills these in when the modal opens. %>
+  <%= hidden_field_tag 'issue_report[incident_id]', nil, class: 'ir-incident-id' %>
+  <%= hidden_field_tag 'issue_report[page_url]',    nil, class: 'ir-page-url'    %>
+
+  <div class="form-group">
+    <label>Type</label>
+    <div class="ir-kind-row">
+      <% IssueReport::KINDS.each do |k| %>
+        <label class="ir-kind-option">
+          <%= f.radio_button :kind, k, checked: (@issue_report.kind == k) %>
+          <%= k == 'bug' ? 'Bug' : (k == 'question' ? 'Question' : 'Feature Request') %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control', maxlength: 200, required: true, placeholder: 'Short summary' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: 'form-control', rows: 6, cols: 20, required: true,
+                     placeholder: 'What happened, what did you expect, and any steps to reproduce.' %>
+  </div>
+
+  <div class="ir-actions">
+    <button type="button" class="btn btn-default ir-cancel">Cancel</button>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+  </div>
+<% end %>

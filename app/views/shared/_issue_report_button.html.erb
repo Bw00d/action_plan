@@ -1,0 +1,24 @@
+<%# Floating bug icon (bottom-right) that opens a modal with the issue
+    report form. Rendered on incident pages only — the layout gates this
+    partial on `incident_page?`. Passes the current incident id and page
+    URL into the form via hidden fields when the modal opens. %>
+<button type="button"
+        id="issue-report-btn"
+        class="issue-report-btn"
+        title="Report a bug, ask a question, or request a feature"
+        data-incident-id="<%= @incident&.id %>">
+  <i class="fa fa-bug" aria-hidden="true"></i>
+</button>
+
+<div id="issue-report-modal" class="issue-report-modal" style="display:none;" aria-hidden="true">
+  <div class="ir-backdrop"></div>
+  <div class="ir-dialog" role="dialog" aria-labelledby="ir-title">
+    <div class="ir-header">
+      <h3 id="ir-title">Report a Bug / Question / Feature</h3>
+      <button type="button" class="ir-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="ir-body">
+      <div class="ir-loading">Loading…</div>
+    </div>
+  </div>
+</div>

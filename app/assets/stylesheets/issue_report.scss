@@ -1,0 +1,135 @@
+// Floating bug icon — fixed bottom-right on any page that renders
+// shared/_issue_report_button. z-index above main content but below
+// the modal backdrop.
+.issue-report-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 900;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: #3d3d3d;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+
+  &:hover  { background: #d9534f; transform: translateY(-2px); }
+  &:active { transform: translateY(0); }
+  &:focus  { outline: 2px solid #4286f4; outline-offset: 2px; }
+
+  .fa { line-height: 1; }
+}
+
+.issue-report-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+
+  .ir-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .ir-dialog {
+    position: relative;
+    width: 92vw;
+    max-width: 600px;
+    margin: 8vh auto 0;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+  }
+
+  // Bootstrap resets box-sizing on some children, and Rails' text_area
+  // renders with a default cols="40" that some browsers use for width
+  // hints. Force everything inside the dialog to fit its container.
+  .ir-dialog *,
+  .ir-dialog *::before,
+  .ir-dialog *::after { box-sizing: border-box; }
+
+  .ir-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    border-bottom: 1px solid #e5e5e5;
+
+    h3 { margin: 0; font-size: 16px; font-weight: 600; }
+    .ir-close {
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      color: #888;
+      padding: 0 4px;
+      &:hover { color: #333; }
+    }
+  }
+
+  .ir-body {
+    padding: 20px 24px 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    // Cap every form control to the container so the cols/width hints on
+    // <textarea> and long <input> defaults can't push the body wider than
+    // the dialog and force horizontal scroll.
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+    }
+    textarea { resize: vertical; }
+  }
+
+  .ir-loading {
+    text-align: center;
+    color: #888;
+    padding: 24px 0;
+  }
+
+  .ir-kind-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .ir-kind-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 400;
+    cursor: pointer;
+    margin: 0;
+    input { margin: 0; }
+  }
+
+  .ir-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+  }
+}
+
+body.ir-modal-open { overflow: hidden; }
+
+// Hide the icon on any print — never wanted in a PDF.
+@media print {
+  .issue-report-btn,
+  .issue-report-modal { display: none !important; }
+}
