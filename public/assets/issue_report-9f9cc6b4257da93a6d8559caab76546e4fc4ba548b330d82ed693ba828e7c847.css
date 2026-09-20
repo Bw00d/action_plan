@@ -1,0 +1,180 @@
+/* line 4, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 900;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: #3d3d3d;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* line 23, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:hover {
+  background: #d9534f;
+  transform: translateY(-2px);
+}
+
+/* line 24, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:active {
+  transform: translateY(0);
+}
+
+/* line 25, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:focus {
+  outline: 2px solid #4286f4;
+  outline-offset: 2px;
+}
+
+/* line 27, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn .fa {
+  line-height: 1;
+}
+
+/* line 30, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+}
+
+/* line 35, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* line 41, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-dialog {
+  position: relative;
+  width: 92vw;
+  max-width: 600px;
+  margin: 8vh auto 0;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+/* line 55, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-dialog *,
+.issue-report-modal .ir-dialog *::before,
+.issue-report-modal .ir-dialog *::after {
+  box-sizing: border-box;
+}
+
+/* line 59, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* line 66, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* line 67, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header .ir-close {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: #888;
+  padding: 0 4px;
+}
+
+/* line 75, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header .ir-close:hover {
+  color: #333;
+}
+
+/* line 79, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body {
+  padding: 20px 24px 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* line 88, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body .form-control,
+.issue-report-modal .ir-body input[type="text"],
+.issue-report-modal .ir-body input[type="email"],
+.issue-report-modal .ir-body textarea,
+.issue-report-modal .ir-body select {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+/* line 97, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body textarea {
+  resize: vertical;
+}
+
+/* line 100, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-loading {
+  text-align: center;
+  color: #888;
+  padding: 24px 0;
+}
+
+/* line 106, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-row {
+  display: flex;
+  gap: 16px;
+}
+
+/* line 111, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* line 118, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-option input {
+  margin: 0;
+}
+
+/* line 121, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* line 129, app/assets/stylesheets/issue_report.scss */
+body.ir-modal-open {
+  overflow: hidden;
+}
+
+@media print {
+  /* line 133, app/assets/stylesheets/issue_report.scss */
+  .issue-report-btn,
+.issue-report-modal {
+    display: none !important;
+  }
+}

@@ -53220,9 +53220,75 @@ $(document).on('turbolinks:load', function () {
     });
   });
 });
+// Floating bug icon → modal with the issue report form.
+// Loads the form via XHR (issue_reports#new with request.xhr? layout: false)
+// so the modal opens instantly without leaving the current page. On submit
+// the form posts normally (local: true) and Rails redirects back with a
+// flash — simplest path, no client-side error plumbing needed.
+$(document).on('turbolinks:load', function () {
+  var $btn    = $('#issue-report-btn');
+  var $modal  = $('#issue-report-modal');
+  if (!$btn.length || !$modal.length) return;
+
+  var $body     = $modal.find('.ir-body');
+  var loadedFor = null;   // cache the form HTML across opens on the same page
+
+  function open() {
+    var incidentId = $btn.data('incident-id') || '';
+    var pageUrl    = window.location.href;
+
+    if (loadedFor !== window.location.pathname) {
+      $body.html('<div class="ir-loading">Loading…</div>');
+      $.ajax({
+        url: '/issue_reports/new',
+        method: 'GET',
+        dataType: 'html'
+      })
+        .done(function (html) {
+          $body.html(html);
+          loadedFor = window.location.pathname;
+          $body.find('.ir-incident-id').val(incidentId);
+          $body.find('.ir-page-url').val(pageUrl);
+          $body.find('input[name="issue_report[title]"]').focus();
+        })
+        .fail(function (xhr) {
+          $body.html('<div class="alert alert-danger">Could not load the form (' + xhr.status + ').</div>');
+        });
+    } else {
+      $body.find('.ir-incident-id').val(incidentId);
+      $body.find('.ir-page-url').val(pageUrl);
+      $body.find('input[name="issue_report[title]"]').focus();
+    }
+
+    $modal.show().attr('aria-hidden', 'false');
+    $('body').addClass('ir-modal-open');
+  }
+
+  function close() {
+    $modal.hide().attr('aria-hidden', 'true');
+    $('body').removeClass('ir-modal-open');
+  }
+
+  $btn.off('click.issueReport').on('click.issueReport', open);
+
+  // Close on backdrop, × button, cancel button, or Escape.
+  $modal.off('click.issueReport').on('click.issueReport', function (e) {
+    if ($(e.target).closest('.ir-close, .ir-backdrop, .ir-cancel').length) close();
+  });
+  $(document).off('keydown.issueReport').on('keydown.issueReport', function (e) {
+    if (e.key === 'Escape' && $modal.is(':visible')) close();
+  });
+});
 $(document).on("turbolinks:load", function () {
+  // All handlers are bound with a `.ops` namespace and off()'d first so
+  // repeat Turbolinks visits don't stack duplicate listeners. Without
+  // this, each keystroke fires PATCH once per prior visit, and the
+  // first insert wins the unique index while the rest fail with a
+  // 500 (RecordNotUnique).
+  $(document).off(".ops");
+
   // Div/group picker: navigate to the same URL with the picked org_unit_id.
-  $(document).on("change", "#ops-org-unit-picker", function () {
+  $(document).on("change.ops", "#ops-org-unit-picker", function () {
     var $picker = $(this);
     var base    = $picker.data("base-url");
     var id      = $picker.val();
@@ -53230,8 +53296,92 @@ $(document).on("turbolinks:load", function () {
     window.location = base + sep + "org_unit_id=" + id;
   });
 
+  // Add a new Kind/Type row to a 215 table. Row is client-side only until
+  // a Req value is entered — that triggers the existing PATCH handler
+  // which persists the ops_215_line and the row survives a refresh.
+  function addKindTypeRow($table, position) {
+    position = (position || "").trim();
+    if (!position) return;
+
+    var $tbody = $table.find("tbody");
+    // Duplicate protection — if the position already has a row, focus its
+    // first Req input instead of adding a duplicate.
+    var existing = $tbody.find("tr").filter(function () {
+      return $(this).find("td.ops-215-kind").first().text().trim().toLowerCase() === position.toLowerCase();
+    });
+    if (existing.length) {
+      existing.find(".ops-215-req-input").first().focus();
+      return;
+    }
+
+    // Drop the "no resources assigned" placeholder if present.
+    $tbody.find("tr.ops-215-empty-row").remove();
+
+    // Build cells from the header day columns so day count matches.
+    var $dayHeaders = $table.find("thead tr").first().find("th.ops-215-day");
+    var cells = "";
+    $dayHeaders.each(function () {
+      // Header text like "Mon 9/8" — recover the ISO day from the
+      // corresponding input in an existing row if present, otherwise
+      // fall back to a data-day derived from the header text via the
+      // table's known day range. Simpler: pull from an existing row.
+    });
+
+    // Get the ISO days from an existing row's inputs. If the table was
+    // empty, fall back to reading them from the .ops-215-add-row's own
+    // hidden day markers — we'll seed those from the first existing input
+    // in any table on the page, but that's fragile. Instead, ship the
+    // days as a data attribute on the table for reliability.
+    var days = ($table.data("days") || "").toString().split(",");
+    if (!days.length || !days[0]) {
+      // Fallback: read from any existing row's Req inputs.
+      var seen = {};
+      $tbody.find(".ops-215-req-input").each(function () {
+        var d = $(this).data("day");
+        if (d && !seen[d]) { seen[d] = true; days.push(d); }
+      });
+    }
+
+    var row = '<tr>';
+    row += '<td class="ops-215-kind">' + $("<div>").text(position).html() + '</td>';
+    days.forEach(function (day) {
+      row += '<td class="ops-215-have">0</td>';
+      row += '<td class="ops-215-req">' +
+             '<input type="number" min="0" value="" class="ops-215-req-input" ' +
+             'data-day="' + day + '" data-position="' + $("<div>").text(position).html() + '">' +
+             '</td>';
+      row += '<td class="ops-215-need"></td>';
+    });
+    row += '</tr>';
+
+    $tbody.append(row);
+    // Focus the first Req cell so the user can start typing immediately.
+    $tbody.find("tr").last().find(".ops-215-req-input").first().focus();
+  }
+
+  $(document).on("click.ops", ".ops-print-btn", function () {
+    window.print();
+  });
+
+  $(document).on("click.ops", ".ops-215-add-btn", function () {
+    var $btn   = $(this);
+    var $table = $btn.closest(".ops-215-table");
+    var $input = $btn.closest("td").find(".ops-215-add-input");
+    addKindTypeRow($table, $input.val());
+    $input.val("");
+  });
+
+  $(document).on("keydown.ops", ".ops-215-add-input", function (e) {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    var $input = $(this);
+    var $table = $input.closest(".ops-215-table");
+    addKindTypeRow($table, $input.val());
+    $input.val("");
+  });
+
   // Auto-save Req cell on blur or Enter.
-  $(document).on("change", ".ops-215-req-input", function () {
+  $(document).on("change.ops", ".ops-215-req-input", function () {
     var $input = $(this);
     var $table = $input.closest(".ops-215-table");
     var url    = $table.data("update-url");
@@ -53952,6 +54102,18 @@ $(document).on("turbolinks:load", function() {
     $('#demob-info').hide();
     $('#tally-info').show();
   })
+
+  // Print button on the Resource Tally panel. Tag <body> with a class
+  // so the print stylesheet can hide the other tab panels and print
+  // just the tally table.
+  $(document).off('click.tallyPrint').on('click.tallyPrint', '.tally-print-btn', function () {
+    $('body').addClass('printing-tally');
+    var restore = function () { $('body').removeClass('printing-tally'); };
+    window.addEventListener('afterprint', restore, { once: true });
+    window.print();
+    // Fallback in case afterprint doesn't fire (some browsers).
+    setTimeout(restore, 2000);
+  });
 
 // Reload page after creating resource
   // $('#submit-resource-button').click(function() {
