@@ -1,76 +1,83 @@
-<%= content_for :title, @incident.name %>
-<div id="incident-container" class="container">
-  <div class="row">
-    <div class="col-lg-10 col-xs-12 center-block">
+<%= content_for :title, "#{@incident.name} — Collaborators & Feed" %>
 
-     <div class="panel panel-default devise-bs center-block">
-      <div class="panel-heading">
-        <h4>
-          <strong><%= link_to @incident.display_incident_name, @incident %></strong>
-        </h4>
-      </div>
-     
-        <div class="incident-content-block">
-          <div class="row">
-            <div id="invite-container" class="col-lg-10 center-block">
-                
-              <%= form_tag invite_incidents_path, method: :post do %>
-              <div class=" col-xs-12">
-                <%= text_field_tag :invite, params[:invite], placeholder: "Enter an email...", class: "form-control" %>
-                <%= hidden_field_tag :incident_id, @incident.id %>
-                <%= submit_tag "Invite", id: "invite-button", class: "btn btn-tiny btn-success float-right" %>
-              </div>
-              <div class=" col-xs-1">
-              <% end %>
-            </div>
+<div class="incident-users-page">
+  <header class="iup-page-head">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+    <%= link_to '← Back to incidents', incidents_path, class: 'iup-back' %>
+  </header>
+
+  <%# ── Collaborators card ─────────────────────────────────── %>
+  <section class="iup-card">
+    <div class="iup-card-head">
+      <h2>
+        Collaborators
+        <span class="iup-count-badge"><%= @users.count %></span>
+      </h2>
+      <p class="iup-card-sub">People who can view and edit this incident.</p>
+    </div>
+
+    <div class="iup-card-body">
+      <%= form_tag invite_incidents_path, method: :post, class: 'iup-invite-form' do %>
+        <%= hidden_field_tag :incident_id, @incident.id %>
+        <%= text_field_tag :invite, params[:invite],
+                           placeholder: 'Invite by email…',
+                           class: 'form-control iup-invite-input',
+                           autocomplete: 'off' %>
+        <%= submit_tag 'Invite', class: 'btn btn-primary btn-sm iup-invite-btn' %>
+      <% end %>
+
+      <ul class="iup-collab-list">
+        <%# Owner always first, no remove control. %>
+        <li class="iup-collab-row is-owner">
+          <span class="iup-avatar"><%= user_initials(@incident.owner) %></span>
+          <div class="iup-collab-meta">
+            <div class="iup-collab-name"><%= @incident.owner.full_name %></div>
+            <div class="iup-collab-email"><%= @incident.owner.email %></div>
           </div>
-        </div>
-        <div class="row">
-            <h4><strong>Collaborators</strong></h4>
-            <ul>
-              <li><%= @incident.owner.full_name  %> (Owner)</li>
-              <% @users.each do |u| %>
+          <span class="iup-role-badge iup-role-owner">Owner</span>
+        </li>
 
-                <% unless u == @incident.owner %>
-                    <%= form_tag incidents_remove_user_path, method: :post do %>
-                <li><%= u.full_name %> – <%= u.email %>
-                        <%= link_to (image_tag 'times-circle-solid.svg'), "#", onclick: "$(this).closest('form').submit()", class: 'remove-user' %>
-                        <%= hidden_field_tag :incident_id, @incident.id %>
-                        <%= hidden_field_tag :user, u.id %>
-                </li>
-                    <% end %>
-                <% end %>
-              <% end %>
-            </ul>
+        <% @users.each do |u| %>
+          <% next if u == @incident.owner %>
+          <li class="iup-collab-row">
+            <span class="iup-avatar"><%= user_initials(u) %></span>
+            <div class="iup-collab-meta">
+              <div class="iup-collab-name"><%= u.full_name %></div>
+              <div class="iup-collab-email"><%= u.email %></div>
             </div>
+            <%= form_tag incidents_remove_user_path, method: :post, class: 'iup-remove-form',
+                         data: { confirm: "Remove #{u.full_name} from this incident?" } do %>
+              <%= hidden_field_tag :incident_id, @incident.id %>
+              <%= hidden_field_tag :user, u.id %>
+              <button type="submit" class="iup-remove-btn" title="Remove collaborator">
+                <i class="fa fa-times"></i>
+              </button>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </section>
 
-            <%# Feed — user microposts + system activity events merged
-                chronologically. Users compose with the box at the top;
-                each post supports Reply / Edit (own) / Delete (own) /
-                Like. System events (log_event) render as read-only rows. %>
-            <div class="incident-feed">
-              <h4><strong>Feed</strong></h4>
+  <%# ── Feed card ─────────────────────────────────────────── %>
+  <section class="iup-card">
+    <div class="iup-card-head">
+      <h2>Feed</h2>
+      <p class="iup-card-sub">Post updates and coordinate with collaborators. System events (plan changes, invites) also appear here.</p>
+    </div>
 
-              <%= render 'incident_posts/feed',
-                         incident: @incident,
-                         posts: @top_posts,
-                         events: @events %>
+    <div class="iup-card-body">
+      <%= render 'incident_posts/feed',
+                 incident: @incident,
+                 posts: @top_posts,
+                 events: @events %>
 
-              <div id="feed-composer-anchor">
-                <%= render 'incident_posts/composer',
-                           incident: @incident,
-                           new_post: @new_post,
-                           parent: nil %>
-              </div>
-            </div>
-          </div>
+      <div id="feed-composer-anchor">
+        <%= render 'incident_posts/composer',
+                   incident: @incident,
+                   new_post: @new_post,
+                   parent: nil %>
       </div>
- 
-      
-
-        <%= link_to 'Back', incidents_path %>
-    </div> <!-- responsive wrapper -->
-  </div>  <!-- row -->
-</div>   <!-- incident container -->
-
-
+    </div>
+  </section>
+</div>

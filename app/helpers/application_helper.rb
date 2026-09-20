@@ -53,6 +53,19 @@ module ApplicationHelper
     end
   end
 
+  # 1-2 char initials for the avatar chip on the Users / Feed page.
+  # Falls back to the first two chars of email if the user has no name.
+  def user_initials(user)
+    return '?' unless user
+    first = user.first_name.to_s.strip
+    last  = user.last_name.to_s.strip
+    if first.present? || last.present?
+      (first[0].to_s + last[0].to_s).upcase.presence || '?'
+    else
+      user.email.to_s[0, 2].upcase.presence || '?'
+    end
+  end
+
   # True for any page whose controller lives under the incident tree — used
   # by the layout to conditionally render the floating bug/feedback button.
   # Broad match keeps this working as new incident-scoped controllers get

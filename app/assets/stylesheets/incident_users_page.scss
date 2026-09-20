@@ -1,0 +1,203 @@
+// Incident → Users (Collaborators + Feed) page. Two stacked cards on a
+// muted page background, matching the polish of the other admin views.
+.incident-users-page {
+  max-width: 780px;
+  margin: 24px auto 60px;
+  padding: 0 16px;
+}
+
+.iup-page-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 16px;
+
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #172b4d;
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  }
+
+  .iup-back {
+    font-size: 13px;
+    color: #5e6c84;
+    text-decoration: none;
+    &:hover { color: #172b4d; text-decoration: underline; }
+  }
+}
+
+.iup-card {
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.06);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.iup-card-head {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #eef0f2;
+  background: #fafbfc;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #172b4d;
+  }
+
+  .iup-card-sub {
+    margin: 4px 0 0;
+    color: #6b778c;
+    font-size: 12px;
+  }
+}
+
+.iup-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 11px;
+  background: #dfe1e6;
+  color: #172b4d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.iup-card-body {
+  padding: 16px 20px 20px;
+}
+
+// ── Collaborators ────────────────────────────────────────────
+.iup-invite-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  .iup-invite-input { flex: 1; }
+  .iup-invite-btn   { align-self: stretch; }
+}
+
+.iup-collab-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.iup-collab-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid #f0f1f4;
+
+  &:last-child { border-bottom: 0; }
+}
+
+.iup-avatar {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #dfe4ec;
+  color: #172b4d;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.iup-collab-row.is-owner .iup-avatar {
+  background: #e6f0ff;
+  color: #0052cc;
+}
+
+.iup-collab-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.iup-collab-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #172b4d;
+  line-height: 1.2;
+}
+
+.iup-collab-email {
+  font-size: 12px;
+  color: #6b778c;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iup-role-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.iup-role-owner {
+  background: #e6f0ff;
+  color: #0052cc;
+}
+
+.iup-remove-form { margin: 0; }
+
+.iup-remove-btn {
+  border: 0;
+  background: transparent;
+  color: #a5adba;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+
+  &:hover {
+    background: #ffebe6;
+    color: #de350b;
+  }
+}
+
+// ── Feed section overrides ──────────────────────────────────
+// Inside the polished card the feed's outer margin doesn't need extra
+// top padding — the card-body already provides breathing room.
+.iup-card .incident-feed { margin-top: 0; }
+
+// Cap the scrollable feed area so a long history doesn't push the
+// composer off-screen. Composer sits outside this container so it
+// stays pinned at the bottom of the card.
+.iup-card .feed-list {
+  max-height: 60vh;
+  min-height: 120px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #eef0f2;
+  border-radius: 6px;
+  background: #fdfdfe;
+
+  // Slimmer scrollbar so it looks native inside the card.
+  &::-webkit-scrollbar        { width: 8px; }
+  &::-webkit-scrollbar-track  { background: transparent; }
+  &::-webkit-scrollbar-thumb  { background: #cfd4dc; border-radius: 4px; }
+  &::-webkit-scrollbar-thumb:hover { background: #b3bac5; }
+}

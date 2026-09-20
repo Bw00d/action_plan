@@ -4,6 +4,11 @@
 $(document).on('turbolinks:load', function () {
   $(document).off('.feed');
 
+  // Scroll the (capped-height) feed list to its bottom so the newest
+  // posts are visible on land — matches the composer sitting below it.
+  var $feed = $('.iup-card .feed-list');
+  if ($feed.length) { $feed.scrollTop($feed[0].scrollHeight); }
+
   // Reply — reveal the inline composer under a top-level post.
   $(document).on('click.feed', '.feed-reply-btn', function () {
     var id = $(this).data('post-id');
