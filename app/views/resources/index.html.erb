@@ -18,7 +18,10 @@
           <li class="resource-tab">
               <%= link_to 'Resource Tally', "javascript:;", class: "resource-tab-link", id: "tally-tab" %>
           </li>
-          
+          <li class="resource-tab">
+              <%= link_to 'Non-209', "javascript:;", class: "resource-tab-link", id: "non-209-tab" %>
+          </li>
+
         <%= link_to "javascript:;" do %>
           <%= image_tag 'user-plus.svg', class: "float-right", id: 'new-resource' %>
         <% end %>
@@ -48,4 +51,5 @@
     <%= render 'glide' %>
     <%= render 'demob' %>
     <%= render 'tally' %>
+    <%= render 'non_209' %>
     <%= render 'resource_panels' %>

@@ -140,24 +140,35 @@ $(document).on("turbolinks:load", function() {
     $('#demob-info').hide();
     $('#glide-info').hide();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#glide-tab').click(function (){
     $('#ics-211-info').hide();
     $('#demob-info').hide();
     $('#glide-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#demob-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#tally-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').hide();
     $('#tally-info').show();
+    $('#non-209-info').hide();
+  })
+  $('a#non-209-tab').click(function (){
+    $('#ics-211-info').hide();
+    $('#glide-info').hide();
+    $('#demob-info').hide();
+    $('#tally-info').hide();
+    $('#non-209-info').show();
   })
 
   // Print button on the Resource Tally panel. Tag <body> with a class

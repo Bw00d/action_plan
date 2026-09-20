@@ -15,6 +15,8 @@ class ResourcesController < ApplicationController
     # still manage Non-209 resources from the side panel.
     non_209_ids = @incident.non_209_resource_ids
     @tally_resources = non_209_ids.any? ? @resources.where.not(id: non_209_ids) : @resources
+    # Just the Non-209 slice — used by the Non-209 tab.
+    @non_209_resources = non_209_ids.any? ? @resources.where(id: non_209_ids) : Resource.none
     @overhead  = @resources.overhead
     @equipment = @resources.equipment
     @crews     = @resources.crew

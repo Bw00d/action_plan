@@ -1,0 +1,77 @@
+<%# Non-209 tab — resources parked on the Non-209 T-cards column. Same
+    table shape as the ICS-211 "assigned" rows so operators recognize
+    the format. New Resource form, R&R, and Released sections aren't
+    included here; those flows live on the ICS-211 tab. %>
+<div id="non-209-info" class="panel panel-default">
+  <div class="non-209-header md-padding-top md-padding-left">
+    <h4><strong>Non-209 Resources</strong></h4>
+    <p class="muted">
+      Resources dragged into the Non-209 column on the T-cards board.
+      These are excluded from the Resource Tally, ICS-211, and Glide Path.
+    </p>
+  </div>
+
+  <% if @non_209_resources.empty? %>
+    <div class="sm-padding-top md-padding-left">
+      <h4>No Non-209 resources yet — drag resources into the Non-209 column on the T-cards board.</h4>
+    </div>
+  <% else %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Order #</th>
+          <th scope="col">Position</th>
+          <th scope="col">Name</th>
+          <th scope="col">Leader</th>
+          <th scope="col"># Pers</th>
+          <th scope="col">Agency</th>
+          <th scope="col">FWD</th>
+          <th scope="col">Length</th>
+          <th scope="col">LWD</th>
+          <th scope="col">Release</th>
+          <th scope="col">Delete</th>
+          <th scope="col">R&R</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% natural_order_sort(@non_209_resources.assigned).each do |r| %>
+          <tr id="non-209-resource-<%= r.id %>" class="incident-resource">
+            <td class="sm-padding-left sm-bip-input">
+              <%= r.cat %><%= best_in_place r, :order_number, :as => :input %>
+            </td>
+            <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
+            <td class="lg-bip-input"><%= best_in_place r, :leader, :as => :input, place_holder: "---------" %></td>
+            <td class="sm-bip-input">
+              <%= best_in_place r, :number_personnel, :as => :input %>
+            </td>
+            <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input, place_holder: "------" %></td>
+            <td class="datepicker-td">
+              <%= form_for r, remote: true do |f| %>
+                <%= f.text_field :fwd, class: 'datepicker fwd-datepicker', remote: true %>
+              <% end %>
+            </td>
+            <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input, place_holder: "----" %></td>
+            <% if !r.last_work_day.blank? %>
+              <td><%= r.last_work_day.strftime("%m/%d") %></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark" %></td>
+            <td>
+              <%= link_to r, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
+              <% end %>
+            </td>
+            <td class="no-padding">
+              <%= form_for r do |f| %>
+                <%= f.check_box :r_and_r, class: 'rnr-form-button', data: { confirm: 'Are you sure?' } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <div class="panel-foot"></div>
+</div>

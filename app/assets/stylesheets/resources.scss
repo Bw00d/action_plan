@@ -182,6 +182,7 @@ a.delete-resource:hover {
     #ics-211-info,
     #glide-info,
     #tally-info,
+    #non-209-info,
     #resource-form,
     .no-print {
       display: none !important;
@@ -212,6 +213,7 @@ a.delete-resource:hover {
     #ics-211-info,
     #demob-info,
     #tally-info,
+    #non-209-info,
     #resource-form,
     .no-print {
       display: none !important;
@@ -312,6 +314,15 @@ a.delete-resource:hover {
   margin: 5% 0;
   h1, h2, h3, h4 {
     font-weight: 666;
+  }
+}
+
+/* Non-209 tab panel — hidden by default like the other tab panels. */
+#non-209-info {
+  display: none;
+
+  .non-209-header {
+    p.muted { color: #6b778c; font-size: 12px; margin-bottom: 12px; }
   }
 }
 
@@ -642,6 +653,7 @@ input.fwd-datepicker {
     #ics-211-info,
     #glide-info,
     #demob-info,
+    #non-209-info,
     #resource-panels,
     .panel-foot,
     #header,
