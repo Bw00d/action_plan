@@ -152,6 +152,50 @@ a.delete-resource:hover {
   text-align: right;
 }
 
+// Demob date-picker controls. `.no-select` opts elements out of text
+// selection so a whole-page drag-copy skips them — checkboxes and the
+// "Select all" widget won't appear in the pasted text. `.no-print`
+// (defined elsewhere) also hides them at print time as a belt-and-
+// suspenders measure.
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.demob-select-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 16px;
+  font-size: 13px;
+  .muted { color: #6b778c; font-size: 12px; }
+}
+
+.demob-check-label,
+.demob-check-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.demob-check-wrap {
+  margin-right: 8px;
+  input[type=checkbox] { margin: 0; }
+}
+
+.demob-date-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.demob-group-excluded { display: none !important; }
+
 .print-only {
   display: none;
 }

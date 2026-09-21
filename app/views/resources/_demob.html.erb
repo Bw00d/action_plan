@@ -23,11 +23,30 @@
           <em>No assigned resources have a computable demob date. Set FWD and Assignment Length on the ICS-211 tab.</em>
         </p>
       <% else %>
-        <% demob_groups.each do |demob_date, resources| %>
-          <h3><%= demob_date.strftime('%A, %B %-d, %Y') %></h3>
-          <% resources.each do |r| %>
-            <div><%= r.full_order_number %> <%= r.position %> <%= r.name %></div>
-          <% end %>
+        <%# Select-all convenience — no-print so it doesn't leak into a
+            copy-paste. The checkboxes on each date follow the same rule. %>
+        <div class="demob-select-controls no-print no-select">
+          <label class="demob-check-label">
+            <input type="checkbox" id="demob-select-all" checked>
+            <span>Select all dates</span>
+          </label>
+          <span class="muted">Uncheck a date to leave it out of the print.</span>
+        </div>
+
+        <% demob_groups.each_with_index do |(demob_date, resources), i| %>
+          <div class="demob-date-group" data-group-index="<%= i %>">
+            <h3 class="demob-date-heading">
+              <label class="demob-check-wrap no-print no-select" contenteditable="false">
+                <input type="checkbox" class="demob-print-check" checked
+                       data-group-index="<%= i %>"
+                       aria-label="Include <%= demob_date.strftime('%A, %B %-d') %> in print">
+              </label>
+              <span class="demob-date-text"><%= demob_date.strftime('%A, %B %-d, %Y') %></span>
+            </h3>
+            <% resources.each do |r| %>
+              <div><%= r.full_order_number %> <%= r.position %> <%= r.name %></div>
+            <% end %>
+          </div>
         <% end %>
       <% end %>
     </div>
@@ -50,7 +69,37 @@
 </div>
 
 <script>
+  // Select-all toggle mirrors each date's checkbox.
+  document.addEventListener('turbolinks:load', function () {
+    var all = document.getElementById('demob-select-all');
+    if (!all) return;
+    all.onchange = function () {
+      document.querySelectorAll('.demob-print-check').forEach(function (cb) {
+        cb.checked = all.checked;
+      });
+    };
+    // Keep master in sync when individual boxes change.
+    document.querySelectorAll('.demob-print-check').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        var boxes = document.querySelectorAll('.demob-print-check');
+        var allChecked = Array.from(boxes).every(function (b) { return b.checked; });
+        all.checked = allChecked;
+      });
+    });
+  });
+
   function printDemob() {
+    // Hide any date group whose checkbox is unchecked. Class is toggled
+    // just before print and cleared after so the on-screen list is
+    // untouched.
+    var excluded = [];
+    document.querySelectorAll('.demob-print-check').forEach(function (cb) {
+      if (!cb.checked) {
+        var group = cb.closest('.demob-date-group');
+        if (group) { group.classList.add('demob-group-excluded'); excluded.push(group); }
+      }
+    });
+
     document.body.classList.add('printing-demob');
     var style = document.createElement('style');
     style.id = 'print-orientation';
@@ -61,6 +110,7 @@
       document.body.classList.remove('printing-demob');
       var s = document.getElementById('print-orientation');
       if (s) s.remove();
+      excluded.forEach(function (g) { g.classList.remove('demob-group-excluded'); });
       window.removeEventListener('afterprint', cleanup);
     };
     window.addEventListener('afterprint', cleanup);
