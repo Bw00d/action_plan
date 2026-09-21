@@ -187,6 +187,13 @@ class Plan < ApplicationRecord
     super(parse_ops_datetime(value))
   end
 
+  # 203 footer "Date/Time:" prepared-at. Same parser as the ops-period
+  # fields so users can type MM/DD/YYYY HH:MM (or HHMM) on the 203 and
+  # have it stored as a proper datetime.
+  def prepared_at=(value)
+    super(parse_ops_datetime(value))
+  end
+
   private
 
   def parse_ops_datetime(value)

@@ -13,7 +13,7 @@
   # Same overflow logic as the HTML editor — Logistics stays anchored
   # at the bottom of the left column; only the excess rows spill to the
   # top of the right column so the 203 stays on a single page.
-  page_budget   = 37
+  page_budget   = 36
   fixed_left    = cmd_rows + agy_rows + pln_rows
   right_natural = ops_rows + fin_rows
   log_count     = @plan.logistics.count
@@ -220,7 +220,8 @@
           <div class="content-box col-xs-5">
             <span class="small">Date/Time:</span>
             <span class="lg-padding-left">
-              <%= [@plan.date_prepare&.strftime('%m/%d/%Y'), @plan.time_prepared].compact.join(' ') %>
+              <%= @plan.prepared_at&.strftime('%m/%d/%Y %H:%M') ||
+                  [@plan.date_prepare&.strftime('%m/%d/%Y'), @plan.time_prepared].compact.join(' ') %>
             </span>
           </div>
           <div class="content-box col-xs-3 bottom-row"></div>

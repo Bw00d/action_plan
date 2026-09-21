@@ -601,6 +601,11 @@ h1.header {
   }
 }
 
+#org-position {
+  input{
+  width: 50px !important;
+  }
+}
 // ICS 203 full-width header (title + Incident Name + Op Period + Dates)
 // and standardized footer (Prepared By / ICS 203 · IAP Page · Date-Time /
 // FINAL · Page X of Y). The right side of the header nests two rows so
@@ -696,6 +701,40 @@ h1.header {
 
 .org-footer .content-box {
   min-height: 34px;
+}
+
+// 203 Date/Time picker at the bottom — visually a plain inline input
+// so it looks like the other footer text; still a real datetime field.
+// Very specific selector + input element + !important to beat Bootstrap
+// form styling AND flatpickr's own `.flatpickr-input` class which is
+// added dynamically after JS init.
+input.org-prepared-at-picker,
+input.org-prepared-at-picker.flatpickr-input,
+input.org-prepared-at-picker.form-control,
+.org-prepared-at-picker {
+  display: inline;                     // inline like the "Date/Time:" text
+  width: 60%;
+  height: auto !important;             // don't inherit an input height
+  line-height: inherit !important;
+  vertical-align: baseline;
+  border: 0 none !important;
+  outline: 0 none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font: inherit;
+  color: inherit;
+  border-radius: 0 !important;
+  -webkit-appearance: none !important;
+  -moz-appearance:    none !important;
+  appearance:         none !important;
+  &:focus, &:active, &:hover {
+    border: 0 none !important;
+    outline: 0 none !important;
+    box-shadow: none !important;
+    background: #fffbe6 !important;
+  }
 }
 .org-footer-meta {
   padding: 4px 8px 0;

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_21_100000) do
+ActiveRecord::Schema.define(version: 2026_09_21_200000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -463,6 +463,7 @@ ActiveRecord::Schema.define(version: 2026_09_21_100000) do
     t.datetime "ops_period_from"
     t.datetime "ops_period_to"
     t.string "shift", default: "DAY"
+    t.datetime "prepared_at"
     t.index ["published_at"], name: "index_plans_on_published_at"
   end
 

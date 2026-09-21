@@ -27,11 +27,13 @@
   # Left budget for Logistics = page - (Cmd + Agy + Plan). If the full
   # section fits, no overflow. Otherwise: header + K entries stay left,
   # remaining (n - K) entries + blank-add row move to right.
-  # Row budget per column. 37 physical rows @ 22px = 814px, which fits
+  # Row budget per column. 36 physical rows @ 22px = 792px, which fits
   # under the ~824px available after header (~90px) and footer (~65px)
-  # in a Letter page with 0.4in margins. Wrap-heavy plans may still
-  # overflow — we revisit with actual measurement if that becomes common.
-  page_budget    = 37
+  # in a Letter page with 0.4in margins. Leaves 1 row of headroom for
+  # the footer's Date/Time picker input (slightly taller than plain
+  # text) and minor wrap variance. Wrap-heavy plans may still overflow
+  # — we revisit with actual measurement if that becomes common.
+  page_budget    = 36
   fixed_left     = cmd_rows + agy_rows + pln_rows
   right_natural  = ops_rows + fin_rows
   log_count      = @plan.logistics.count
@@ -419,13 +421,16 @@
         <div class="row org-footer">
           <div class="content-box col-xs-2"><strong>ICS 203</strong></div>
           <div class="content-box col-xs-3">IAP Page</div>
-          <div class="content-box col-xs-3">
+          <div class="content-box col-xs-5">
             <span class="small">Date/Time:</span>
-            <span class="lg-padding-left">
-              <%= [@plan.date_prepare&.strftime('%m/%d/%Y'), @plan.time_prepared].compact.join(' ') %>
-            </span>
+            <input type="text"
+                   class="org-prepared-at-picker lg-padding-left"
+                   data-url="<%= incident_plan_path(@incident, @plan) %>"
+                   data-field="plan[prepared_at]"
+                   value="<%= @plan.prepared_at&.strftime('%m/%d/%Y %H:%M') %>"
+                   placeholder="MM/DD/YYYY HH:MM">
           </div>
-          <div class="content-box col-xs-4 bottom-row"></div>
+          <div class="content-box col-xs-2 bottom-row"></div>
         </div>
         <div class="row org-footer-meta">
           <%# <div class="col-xs-6 text-center"><strong>FINAL</strong></div> %>
@@ -436,3 +441,44 @@
     </div>
   </div>
 </div>
+
+<script>
+  // "Date/Time:" prepared-at picker at the bottom of the 203. Uses the
+  // same flatpickr + auto-save pattern as the 202 ops-period fields.
+  document.addEventListener("turbolinks:load", function () {
+    var input = document.querySelector(".org-prepared-at-picker");
+    if (!input) return;
+
+    var savePreparedAt = function (dateStr) {
+      var data = { authenticity_token: $('meta[name="csrf-token"]').attr("content") };
+      data[input.dataset.field] = dateStr;
+      console.log("prepared_at PATCH →", input.dataset.url, data);
+      $.ajax({
+        url:      input.dataset.url,
+        type:     "PATCH",
+        data:     data,
+        dataType: "json",
+        headers:  { "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content") }
+      })
+        .done(function (resp) { console.log("prepared_at saved OK:", resp); })
+        .fail(function (xhr) { console.error("prepared_at save failed:", xhr.status, xhr.responseText); });
+    };
+
+    if (typeof flatpickr !== "undefined") {
+      flatpickr(input, {
+        enableTime: true,
+        time_24hr:  true,
+        dateFormat: "m/d/Y H:i",
+        allowInput: true,
+        onChange: function (_dates, dateStr) { savePreparedAt(dateStr); },
+        onClose:  function (_dates, dateStr) { savePreparedAt(dateStr); }
+      });
+    }
+
+    // Native change + focusout backup for typed values.
+    $(document).off("change.orgPrep focusout.orgPrep")
+               .on("change.orgPrep focusout.orgPrep", ".org-prepared-at-picker", function () {
+      savePreparedAt(this.value || "");
+    });
+  });
+</script>
