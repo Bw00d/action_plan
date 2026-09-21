@@ -5,21 +5,58 @@
   # 1 header + max(min, count) data + 1 blank-add row. Column target is the
   # taller of the two columns' natural row count, floored at 41 (the row
   # capacity of a Letter page at 22px so PDFs fill cleanly).
-  cmd_rows = 1 + [6,  @plan.command_staff.count].max + 1
-  agy_rows = 1 + [6,  @plan.agency_reps.count  ].max + 1
-  pln_rows = 1 + [8,  @plan.plans.count        ].max + 1
-  log_rows = 1 + [6,  @plan.logistics.count    ].max + 1
-  ops_rows = 1 + [20, @plan.operations.count   ].max + 1
-  fin_rows = 1 + [3,  @plan.finance.count      ].max + 1
+  # No more per-section row minimums — each section shrinks to its
+  # actual content (1 header + N entries + 1 blank-add row). The
+  # column-target pad rows at the bottom of each column still fill any
+  # remaining space so both columns end at the same y. Removing the
+  # minimums also drops the "3 empty rows in Command" complaint.
+  cmd_rows = 1 + @plan.command_staff.count + 1
+  agy_rows = 1 + @plan.agency_reps.count   + 1
+  pln_rows = 1 + @plan.plans.count         + 1
+  log_rows = 1 + @plan.logistics.count     + 1
+  ops_rows = 1 + @plan.operations.count    + 1
+  fin_rows = 1 + @plan.finance.count       + 1
 
   # No more per-column top rows — title / incident name / dates now live in
   # a shared full-width header above .org-columns (matches ICS 203 form).
-  left_used   = cmd_rows + agy_rows + pln_rows + log_rows
-  right_used  = ops_rows + fin_rows
-  # Floor sized to fit Letter after the header (74px, was 66) + footer
-  # (~90px). Dropped from 37 → 36 rows when the header grew by 8px so
-  # the FINAL / Page X of Y strip still fits on page 1.
-  column_target = [left_used, right_used, 36].max
+  # Overflow decision — Logistics stays anchored at the bottom of the
+  # left column but any of its rows that don't fit spill to the TOP of
+  # the right column (no repeated header). Preserves the standard ICS
+  # 203 layout in the common case; only individual excess rows move.
+  #
+  # Left budget for Logistics = page - (Cmd + Agy + Plan). If the full
+  # section fits, no overflow. Otherwise: header + K entries stay left,
+  # remaining (n - K) entries + blank-add row move to right.
+  # Row budget per column. Set below the physical row capacity (~38 at
+  # 22px/row) to leave headroom for wrapped-text rows that render taller
+  # than a single row unit. Wrap-heavy plans may still overflow — we
+  # revisit with actual measurement if that becomes common.
+  page_budget    = 32
+  fixed_left     = cmd_rows + agy_rows + pln_rows
+  right_natural  = ops_rows + fin_rows
+  log_count      = @plan.logistics.count
+
+  if fixed_left + log_rows <= page_budget || fixed_left >= page_budget
+    # Normal — Logistics fits, or left is so full that even Log header
+    # won't help. Fall back to non-overflow layout.
+    @overflow_logistics = false
+    left_used  = fixed_left + log_rows
+    right_used = right_natural
+    @left_log_entries  = log_count
+    @right_log_entries = 0
+  else
+    # Overflow — split entries between left and right. Left holds the
+    # Log header + as many entries as fit. Right gets the rest plus the
+    # blank-add row so users can still add new entries via the form.
+    @overflow_logistics = true
+    left_log_capacity  = page_budget - fixed_left - 1     # -1 for section header
+    @left_log_entries  = [[left_log_capacity, log_count].min, 0].max
+    @right_log_entries = log_count - @left_log_entries
+    left_used  = fixed_left + 1 + @left_log_entries
+    right_used = @right_log_entries + 1 + right_natural   # +1 for the blank-add row
+  end
+
+  column_target   = [left_used, right_used, page_budget].max
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
 
@@ -128,12 +165,6 @@
             </div>
               <div class="content-box col-xs-6"></div>
             </div>
-          <% (6 - @plan.command_staff.count).times do %>
-            <div class="row">
-              <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>              
-            </div>
-          <% end %>
           <!-- END Command Staff -->
           <!-- BEGIN Agency Admins -->
           <div class="row">
@@ -169,12 +200,6 @@
             </div>      
               <div class="content-box col-xs-6"></div>      
             </div>
-          <% (6 - @plan.agency_reps.count).times do %>
-            <div class="row">
-              <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>             
-            </div>
-          <% end %>
           <!-- END Agency Admins -->
           <!-- START Plans -->
           <div class="row">
@@ -210,51 +235,21 @@
             </div>
               <div class="content-box col-xs-6"></div>
             </div>
-            <% (8 - @plan.plans.count).times do %>
-            <div class="row">
-              <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>              
-            </div>
-          <% end %>
           <!-- END Plans -->
-          <!-- START Logistics (left column) -->
-          <div class="row">
-            <div class="content-box col-xs-12 header-row">6. Logistics Section</div>
-          </div>
-            <% @plan.logistics.each do |s| %>
+          <%# Logistics — anchored at bottom of left column. Normally the
+              whole section renders here; if it would overflow the page,
+              only the header + as many entries as fit render here and
+              the rest spill to the top of the right column. %>
+          <% if @overflow_logistics %>
+            <div class="row">
+              <div class="content-box col-xs-12 header-row">6. Logistics Section</div>
+            </div>
+            <% @plan.logistics.first(@left_log_entries).each do |s| %>
               <%= render 'org_row', team: s %>
             <% end %>
-              <div class="row blank-row">
-                <div class="content-box col-xs-6">
-                  <span class="team-form">
-                    <%= form_for @team do |f| %>
-                      <%= f.hidden_field :staff, value: "Logistics" %>
-                      <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%# See partial for place_holder rendering; row starts nil. %>
-                    <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
-                      <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
-                    <% end %>
-                  <% end %>
-                </span>
-                <span class="team-form">
-                  <%= form_for @team do |f| %>
-                    <%= f.hidden_field :staff, value: "Logistics" %>
-                    <%= f.hidden_field :plan_id, value: @plan.id %>
-                    <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
-                      <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
-                    <% end %>
-                  <% end %>
-                </span>
-              </div>
-                <div class="content-box col-xs-6"></div>
-              </div>
-              <% (6 - @plan.logistics.count).times do %>
-              <div class="row">
-                <div class="content-box col-xs-6"></div>
-                <div class="content-box col-xs-6"></div>
-              </div>
-            <% end %>
-          <!-- END Logistics (left column) -->
+          <% else %>
+            <%= render 'logistics_section' %>
+          <% end %>
 
           <%# Real DOM rows to pad the column down to the target height so
               its bottom lands at the same y as the right column's bottom.
@@ -270,6 +265,36 @@
         </div> <!-- END LEFT COLUMN-->
 
         <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
+          <%# Logistics overflow — continuation rows (no repeated header)
+              plus the blank-add row so users can still add new entries. %>
+          <% if @overflow_logistics %>
+            <% @plan.logistics.drop(@left_log_entries).each do |s| %>
+              <%= render 'org_row', team: s %>
+            <% end %>
+            <div class="row blank-row">
+              <div class="content-box col-xs-6">
+                <span class="team-form">
+                  <%= form_for @team do |f| %>
+                    <%= f.hidden_field :staff, value: "Logistics" %>
+                    <%= f.hidden_field :plan_id, value: @plan.id %>
+                    <%= f.button type: :submit, class: "add-org-btn", title: "Add position" do %>
+                      <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                    <% end %>
+                  <% end %>
+                </span>
+                <span class="team-form">
+                  <%= form_for @team do |f| %>
+                    <%= f.hidden_field :staff, value: "Logistics" %>
+                    <%= f.hidden_field :plan_id, value: @plan.id %>
+                    <%= f.button type: :submit, class: "add-org-btn", title: "Add blank position" do %>
+                      <%= image_tag 'user-plus.svg', class: 'add-org-icon' %>
+                    <% end %>
+                  <% end %>
+                </span>
+              </div>
+              <div class="content-box col-xs-6"></div>
+            </div>
+          <% end %>
           <!-- START Ops -->
           <div class="row">
             <div class="col-xs-12 content-box header-row">7. Operations Section</div>
@@ -315,12 +340,6 @@
               </span>
               </div>
             </div>
-            <% (20 - @plan.operations.count).times do %>
-            <div class="row">
-              <div class="content-box col-xs-6"></div>      
-              <div class="content-box col-xs-6"></div>       
-            </div>
-          <% end %>
           <!-- END Ops -->
           <!-- BEGIN Finance (right column) -->
           <div class="row">
@@ -356,12 +375,6 @@
             </div>
               <div class="content-box col-xs-6"></div>
             </div>
-            <% (3 - @plan.finance.count).times do %>
-            <div class="row">
-              <div class="content-box col-xs-6"></div>
-              <div class="content-box col-xs-6"></div>
-            </div>
-          <% end %>
           <!-- END Finance (right column) -->
 
           <%# Real DOM rows to pad the column down to the target height. %>

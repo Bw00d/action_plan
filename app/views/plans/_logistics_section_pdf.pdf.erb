@@ -1,0 +1,13 @@
+<%# PDF version of the Logistics section. Same shape as the HTML partial
+    but uses the plain-text org_row_pdf partial and the PDF header caps
+    (uppercase "LOGISTICS SECTION"). %>
+<div class="row">
+  <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>
+</div>
+<% @plan.logistics.each do |s| %>
+  <%= render 'org_row_pdf', team: s %>
+<% end %>
+<div class="row blank-row">
+  <div class="content-box col-xs-6"></div>
+  <div class="content-box col-xs-6"></div>
+</div>
