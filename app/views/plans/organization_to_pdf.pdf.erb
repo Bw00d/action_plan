@@ -13,24 +13,29 @@
   # Same overflow logic as the HTML editor — Logistics stays anchored
   # at the bottom of the left column; only the excess rows spill to the
   # top of the right column so the 203 stays on a single page.
-  page_budget   = 32
+  page_budget   = 37
   fixed_left    = cmd_rows + agy_rows + pln_rows
   right_natural = ops_rows + fin_rows
   log_count     = @plan.logistics.count
 
-  if fixed_left + log_rows <= page_budget || fixed_left >= page_budget
+  if fixed_left + log_rows <= page_budget
     @overflow_logistics = false
-    left_used  = fixed_left + log_rows
-    right_used = right_natural
+    @logistics_header_on_right = false
     @left_log_entries  = log_count
     @right_log_entries = 0
+    left_used  = fixed_left + log_rows
+    right_used = right_natural
   else
     @overflow_logistics = true
     left_log_capacity  = page_budget - fixed_left - 1
     @left_log_entries  = [[left_log_capacity, log_count].min, 0].max
     @right_log_entries = log_count - @left_log_entries
-    left_used  = fixed_left + 1 + @left_log_entries
-    right_used = @right_log_entries + 1 + right_natural
+    @logistics_header_on_right = (@left_log_entries == 0)
+
+    left_header_row  = @left_log_entries > 0 ? 1 : 0
+    right_header_row = @logistics_header_on_right ? 1 : 0
+    left_used  = fixed_left + left_header_row + @left_log_entries
+    right_used = right_header_row + @right_log_entries + 1 + right_natural
   end
 
   column_target   = [left_used, right_used, page_budget].max
@@ -121,15 +126,15 @@
               <div class="content-box col-xs-6"></div>      
             </div>
           <!-- END Plans -->
-          <% if @overflow_logistics %>
+          <% if !@overflow_logistics %>
+            <%= render 'logistics_section_pdf' %>
+          <% elsif @left_log_entries > 0 %>
             <div class="row">
-              <div class="content-box col-xs-12 header-row">6. Logistics Section</div>
+              <div class="content-box col-xs-12 header-row">6. LOGISTICS SECTION</div>
             </div>
             <% @plan.logistics.first(@left_log_entries).each do |s| %>
               <%= render 'org_row_pdf', team: s %>
             <% end %>
-          <% else %>
-            <%= render 'logistics_section_pdf' %>
           <% end %>
 
           <% @left_pad_rows.times do %>
@@ -142,10 +147,15 @@
         </div> <!-- END LEFT COLUMN-->
 
         <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
-          <%# Logistics overflow — continuation rows without a repeated
-              header, plus a trailing blank row to visually cap the
-              section before OPERATIONS begins. %>
+          <%# Logistics overflow — continuation rows plus a trailing
+              blank row. When no entries fit on the left, the section
+              header renders here too. %>
           <% if @overflow_logistics %>
+            <% if @logistics_header_on_right %>
+              <div class="row">
+                <div class="content-box col-xs-12 header-row">6. LOGISTICS SECTION</div>
+              </div>
+            <% end %>
             <% @plan.logistics.drop(@left_log_entries).each do |s| %>
               <%= render 'org_row_pdf', team: s %>
             <% end %>

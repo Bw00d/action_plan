@@ -27,33 +27,39 @@
   # Left budget for Logistics = page - (Cmd + Agy + Plan). If the full
   # section fits, no overflow. Otherwise: header + K entries stay left,
   # remaining (n - K) entries + blank-add row move to right.
-  # Row budget per column. Set below the physical row capacity (~38 at
-  # 22px/row) to leave headroom for wrapped-text rows that render taller
-  # than a single row unit. Wrap-heavy plans may still overflow — we
-  # revisit with actual measurement if that becomes common.
-  page_budget    = 32
+  # Row budget per column. 37 physical rows @ 22px = 814px, which fits
+  # under the ~824px available after header (~90px) and footer (~65px)
+  # in a Letter page with 0.4in margins. Wrap-heavy plans may still
+  # overflow — we revisit with actual measurement if that becomes common.
+  page_budget    = 37
   fixed_left     = cmd_rows + agy_rows + pln_rows
   right_natural  = ops_rows + fin_rows
   log_count      = @plan.logistics.count
 
-  if fixed_left + log_rows <= page_budget || fixed_left >= page_budget
-    # Normal — Logistics fits, or left is so full that even Log header
-    # won't help. Fall back to non-overflow layout.
+  if fixed_left + log_rows <= page_budget
+    # Normal — full Logistics fits on the left.
     @overflow_logistics = false
-    left_used  = fixed_left + log_rows
-    right_used = right_natural
+    @logistics_header_on_right = false
     @left_log_entries  = log_count
     @right_log_entries = 0
+    left_used  = fixed_left + log_rows
+    right_used = right_natural
   else
-    # Overflow — split entries between left and right. Left holds the
-    # Log header + as many entries as fit. Right gets the rest plus the
-    # blank-add row so users can still add new entries via the form.
+    # Overflow — split. Left holds the section header + as many entries
+    # as fit; the rest spill to the top of the right column (no repeated
+    # header, plus a blank-add row so users can still add entries).
+    # When no entries at all fit on the left (fixed_left already
+    # saturates the page), the Logistics header moves to the right too.
     @overflow_logistics = true
-    left_log_capacity  = page_budget - fixed_left - 1     # -1 for section header
+    left_log_capacity  = page_budget - fixed_left - 1  # -1 for section header
     @left_log_entries  = [[left_log_capacity, log_count].min, 0].max
     @right_log_entries = log_count - @left_log_entries
-    left_used  = fixed_left + 1 + @left_log_entries
-    right_used = @right_log_entries + 1 + right_natural   # +1 for the blank-add row
+    @logistics_header_on_right = (@left_log_entries == 0)
+
+    left_header_row  = @left_log_entries > 0 ? 1 : 0
+    right_header_row = @logistics_header_on_right ? 1 : 0
+    left_used  = fixed_left + left_header_row + @left_log_entries
+    right_used = right_header_row + @right_log_entries + 1 + right_natural  # +1 blank-add
   end
 
   column_target   = [left_used, right_used, page_budget].max
@@ -236,19 +242,19 @@
               <div class="content-box col-xs-6"></div>
             </div>
           <!-- END Plans -->
-          <%# Logistics — anchored at bottom of left column. Normally the
-              whole section renders here; if it would overflow the page,
-              only the header + as many entries as fit render here and
-              the rest spill to the top of the right column. %>
-          <% if @overflow_logistics %>
+          <%# Logistics — normally sits here in full. On overflow, either
+              header + K entries render here (K > 0) or nothing renders
+              here and the whole section moves to the top of the right
+              column (K == 0 → header goes right too). %>
+          <% if !@overflow_logistics %>
+            <%= render 'logistics_section' %>
+          <% elsif @left_log_entries > 0 %>
             <div class="row">
               <div class="content-box col-xs-12 header-row">6. Logistics Section</div>
             </div>
             <% @plan.logistics.first(@left_log_entries).each do |s| %>
               <%= render 'org_row', team: s %>
             <% end %>
-          <% else %>
-            <%= render 'logistics_section' %>
           <% end %>
 
           <%# Real DOM rows to pad the column down to the target height so
@@ -265,9 +271,15 @@
         </div> <!-- END LEFT COLUMN-->
 
         <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
-          <%# Logistics overflow — continuation rows (no repeated header)
-              plus the blank-add row so users can still add new entries. %>
+          <%# Logistics overflow — continuation rows plus the blank-add
+              row. When nothing fit on the left, also render the section
+              header here so the section reads as a coherent block. %>
           <% if @overflow_logistics %>
+            <% if @logistics_header_on_right %>
+              <div class="row">
+                <div class="content-box col-xs-12 header-row">6. Logistics Section</div>
+              </div>
+            <% end %>
             <% @plan.logistics.drop(@left_log_entries).each do |s| %>
               <%= render 'org_row', team: s %>
             <% end %>
