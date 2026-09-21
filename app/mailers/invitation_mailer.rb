@@ -6,7 +6,9 @@ class InvitationMailer < ApplicationMailer
     @incident   = incident
     @inviter    = inviter
     @accept_url = accept_invitation_url(invitation_token: raw_token)
-    mail to: user.email, subject: "You've been invited to \"#{incident.name}\" on Action Plan"
+    mail to:       user.email,
+         reply_to: inviter&.email,
+         subject:  "You've been invited to \"#{incident.name}\" on Action Plan"
   end
 
   # Sent to an existing user who was just added to an incident.
@@ -15,6 +17,8 @@ class InvitationMailer < ApplicationMailer
     @incident     = incident
     @inviter      = inviter
     @incident_url = incident_url(incident)
-    mail to: user.email, subject: "You've been added to \"#{incident.name}\" on Action Plan"
+    mail to:       user.email,
+         reply_to: inviter&.email,
+         subject:  "You've been added to \"#{incident.name}\" on Action Plan"
   end
 end
