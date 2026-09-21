@@ -1,0 +1,264 @@
+/* line 1, app/assets/stylesheets/incident_posts.scss */
+.incident-feed {
+  margin-top: 24px;
+}
+
+/* line 4, app/assets/stylesheets/incident_posts.scss */
+.incident-feed h4 {
+  margin-bottom: 12px;
+}
+
+/* line 9, app/assets/stylesheets/incident_posts.scss */
+.nav-feed-link {
+  position: relative;
+}
+
+/* line 12, app/assets/stylesheets/incident_posts.scss */
+.nav-feed-link .feed-badge {
+  display: inline-block;
+  position: absolute;
+  top: 6px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: #dc3545;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+}
+
+/* line 33, app/assets/stylesheets/incident_posts.scss */
+.feed-composer {
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fbfbfd;
+  margin-bottom: 18px;
+}
+
+/* line 40, app/assets/stylesheets/incident_posts.scss */
+.feed-composer textarea {
+  border: 0;
+  background: transparent;
+  resize: vertical;
+  box-shadow: none;
+  padding: 6px 0;
+}
+
+/* line 46, app/assets/stylesheets/incident_posts.scss */
+.feed-composer textarea:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* line 49, app/assets/stylesheets/incident_posts.scss */
+.feed-composer .feed-composer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* line 56, app/assets/stylesheets/incident_posts.scss */
+.feed-composer.feed-composer-reply {
+  margin-top: 8px;
+  margin-bottom: 4px;
+  background: #f4f5f7;
+}
+
+/* line 63, app/assets/stylesheets/incident_posts.scss */
+.feed-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 69, app/assets/stylesheets/incident_posts.scss */
+.feed-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eef0f2;
+}
+
+/* line 73, app/assets/stylesheets/incident_posts.scss */
+.feed-item:last-child {
+  border-bottom: 0;
+}
+
+/* line 76, app/assets/stylesheets/incident_posts.scss */
+.feed-post {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+/* line 80, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-post-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+/* line 87, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-post-head .feed-author {
+  font-weight: 600;
+  color: #172b4d;
+}
+
+/* line 88, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-post-head .feed-when {
+  color: #6b778c;
+  font-size: 11px;
+}
+
+/* line 89, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-post-head .feed-edited {
+  color: #8993a4;
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* line 92, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-post-body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #172b4d;
+}
+
+/* line 96, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-post-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 99, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-post-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+/* line 106, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  color: #5e6c84;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* line 121, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-action:hover, .feed-post .feed-action:focus, .feed-post .feed-action:active {
+  background: #f4f5f7 !important;
+  color: #172b4d;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* line 128, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-action .fa {
+  font-size: 12px;
+}
+
+/* line 131, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-like-btn.is-liked {
+  color: #e0245e;
+}
+
+/* line 133, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-like-btn.is-liked .fa {
+  color: #e0245e;
+}
+
+/* line 138, app/assets/stylesheets/incident_posts.scss */
+.feed-post .feed-action-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 145, app/assets/stylesheets/incident_posts.scss */
+.feed-replies {
+  list-style: none;
+  padding-left: 24px;
+  margin: 8px 0 0;
+  border-left: 2px solid #eef0f2;
+}
+
+/* line 152, app/assets/stylesheets/incident_posts.scss */
+.feed-reply {
+  padding: 8px 0 8px 12px;
+  border-bottom: 0;
+}
+
+/* line 155, app/assets/stylesheets/incident_posts.scss */
+.feed-reply .feed-post-body {
+  font-size: 13px;
+}
+
+/* line 158, app/assets/stylesheets/incident_posts.scss */
+.feed-event {
+  background: #fafbfc;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-bottom: 0;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+/* line 166, app/assets/stylesheets/incident_posts.scss */
+.feed-event .feed-event-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b778c;
+}
+
+/* line 171, app/assets/stylesheets/incident_posts.scss */
+.feed-event .feed-event-head .feed-event-icon {
+  color: #8993a4;
+}
+
+/* line 172, app/assets/stylesheets/incident_posts.scss */
+.feed-event .feed-event-head .feed-author {
+  color: #172b4d;
+  font-weight: 600;
+}
+
+/* line 173, app/assets/stylesheets/incident_posts.scss */
+.feed-event .feed-event-head .feed-when {
+  color: #8993a4;
+  margin-left: auto;
+}
+
+/* line 175, app/assets/stylesheets/incident_posts.scss */
+.feed-event .feed-event-body {
+  margin-top: 3px;
+  color: #5e6c84;
+}
+
+/* line 178, app/assets/stylesheets/incident_posts.scss */
+.feed-edit-form {
+  margin: 6px 0;
+}
+
+/* line 180, app/assets/stylesheets/incident_posts.scss */
+.feed-edit-form textarea {
+  margin-bottom: 4px;
+}
