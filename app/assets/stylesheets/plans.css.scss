@@ -471,7 +471,8 @@ a.delete-objective:hover {
   background-color: #dcdcdc;
   padding-top: 5px;
   border-left: 1px solid black;
-  font-size: 14px;
+  font-size: 10px;
+  font-weight: 700;
 }
 .gray-row {
   background-color: #dcdcdc !important;
@@ -550,9 +551,54 @@ h1.header {
 .content-box {
   border-bottom: 1px solid black;
   border-left: 1px solid black;
-  height: 30px;
+  // Allow rows to grow when the name cell wraps to a second line
+  // (multiple people combined on one row via `; `). min-height matches
+  // the previous fixed height so single-line rows stay compact.
+  min-height: 30px;
+  height: auto;
   margin: 0;
-  padding: 8px 5px;
+  // Tight vertical padding — text fills the min-height cell without
+  // pushing past it, so a filled row is the same height as an empty
+  // one. When text actually wraps to a second line the row grows.
+  padding: 4px 5px;
+  line-height: 1.2;
+  // Wrap long text in inline-edited cells rather than clipping. The 203
+  // cells use best_in_place which renders a <span> — allow it to break.
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+// 203-specific: make each row a flex container so a wrapped name cell
+// stretches its paired position cell to the same height (borders stay
+// aligned across the two columns). Scoped to the 203 container so it
+// doesn't affect Bootstrap .row usage elsewhere.
+#organization-assignments {
+  .staff-row,
+  .blank-row,
+  .left-column > .row,
+  .right-column > .row {
+    display: flex;
+    align-items: stretch;
+    > .content-box { float: none; }
+  }
+
+  .org-wrap-tip {
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    font-size: 11px;
+    color: #5e6c84;
+    background: #f4f5f7;
+    border-left: 3px solid #b3bac5;
+    border-radius: 2px;
+    code {
+      background: #fff;
+      color: #172b4d;
+      padding: 0 3px;
+      border-radius: 2px;
+      font-size: 11px;
+    }
+  }
 }
 
 // ICS 203 full-width header (title + Incident Name + Op Period + Dates)
@@ -577,31 +623,65 @@ h1.header {
 // headers (COMMAND, OPERATIONS, etc.). op-period-cell fills the whole
 // cell; org-header-label banners the top of a cell that also carries a
 // value below.
+// Outer header row: flex so the left "Incident Name" cell (col-xs-4)
+// and the right op-period + date stack (col-xs-8) always share the
+// tallest sibling's height. Without this, the right stack was pushing
+// past its 66px target and the left column ended short.
+#organization-assignments .row.org-header {
+  display: flex;
+  align-items: stretch;
+  > [class^="col-"] { float: none; }
+  > .org-header-right {
+    display: flex;
+    flex-direction: column;
+    // Fixed 30px for the Op Period strip (fits "DAY" at full size) plus
+    // whatever's left for the Date row. Both inner rows are display:flex
+    // so their inner cells stretch to fill the row height — without this
+    // the op-period cell was only its content height (~24px) leaving a
+    // visible gap between it and the date row below.
+    > .row:first-child {
+      flex: 0 0 30px;
+      display: flex;
+      > .op-period-cell { flex: 1 1 auto; }
+    }
+    > .row:last-child {
+      flex: 1 1 auto;
+      display: flex;
+      > .org-header-cell { flex: 1 1 50%; }
+    }
+  }
+}
+
 .org-header .op-period-cell {
   background-color: #dcdcdc;
+  min-height: 22px;         // Match the header row-height so the whole
+  padding: 3px 5px;         // right side reads at 22 + 22 + 22 = 66px.
 }
 .org-header .org-header-cell {
   padding: 0;
   display: flex;
   flex-direction: column;
-  // 2 × content-box row (30px each) — for the Date/Time From / To cells.
-  min-height: 60px;
+  // 2 × header row (22px label + 22px value) — for the Date/Time cells.
+  min-height: 44px;
 }
 .org-header .org-header-cell.org-header-tall {
-  // 3 × content-box row: matches Op Period (30) + From/To (60) on the
-  // right so the row's bottom border lines up across both columns.
-  min-height: 90px;
+  // Matches the right side: Op Period (30px fixed) + Date cell (44px).
+  // Flex on .row.org-header stretches whichever side is taller, but
+  // setting this to the target keeps the natural (unstretched) height
+  // consistent when there's no content pressure.
+  min-height: 74px;
 }
 .org-header .org-header-label {
-  // background-color: #dcdcdc;
-  padding: 6px 5px;
+  padding: 3px 5px;
   border-bottom: 1px solid black;
-  height: 30px;      // fixed so the border lands at the same y as the
-  box-sizing: border-box;   // Op Period cell's bottom border on the right.
+  height: 22px;             // fixed so the border lands at the same y as
+  box-sizing: border-box;   // the Op Period cell's bottom border.
+  line-height: 1.2;
 }
 .org-header .org-header-value {
-  padding: 6px 5px;
+  padding: 3px 5px;
   font-weight: 600;
+  line-height: 1.2;
   flex: 1 1 auto;
 }
 .org-header .org-header-right {

@@ -16,9 +16,10 @@
   # a shared full-width header above .org-columns (matches ICS 203 form).
   left_used   = cmd_rows + agy_rows + pln_rows + log_rows
   right_used  = ops_rows + fin_rows
-  # Floor sized to fit Letter after the new full-width header (~88px) +
-  # footer (~60px) — was 41; overshoot pushed the footer onto page 2.
-  column_target = [left_used, right_used, 37].max
+  # Floor sized to fit Letter after the header (74px, was 66) + footer
+  # (~90px). Dropped from 37 → 36 rows when the header grew by 8px so
+  # the FINAL / Page X of Y strip still fits on page 1.
+  column_target = [left_used, right_used, 36].max
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
 
@@ -61,7 +62,7 @@
       </div>
       <div class="row org-header">
         <div class="col-xs-4 content-box org-header-cell org-header-tall">
-          <div class="org-header-label gray-row strong"><span class="small">1. Incident Name:</span></div>
+          <div class="org-header-label gray-row content-box strong"><span class="small">1. Incident Name:</span></div>
           <div class="org-header-value"><%= @incident.name %></div>
         </div>
         <div class="col-xs-8 org-header-right">
@@ -86,8 +87,14 @@
 
       <div class="row org-columns">
         <div class="left-column col-xs-6"> <!-- Left Column-->
+         <%#  <div class="row no-print">
+            <div class="col-xs-12 org-wrap-tip">
+              Tip: combine multiple people on one row with <code>;</code> —
+              e.g. <em>John Smith; Betty Lee; Mark Johnson</em>. Saves rows on long sections.
+            </div>
+          </div> %>
           <div class="row">
-            <div class="col-xs-12 content-box header-row strong text-left"> 3. Command</div>
+            <div class="col-xs-12 content-box header-row strong text-left">3. Command</div>
           </div>
 
           <!-- BEGIN Command Staff -->
@@ -130,7 +137,7 @@
           <!-- END Command Staff -->
           <!-- BEGIN Agency Admins -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">AGENCY REPRESENTATIVES</div>     <!-- Agency Reps-->        
+            <div class="content-box col-xs-12 header-row">4. Agency Representatives</div>     <!-- Agency Reps-->        
           </div>
           <% @plan.agency_reps.each do |s| %>
             <%= render 'org_row', team: s %>
@@ -171,7 +178,7 @@
           <!-- END Agency Admins -->
           <!-- START Plans -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">PLANNING SECTION</div>     <!-- Planning Section-->        
+            <div class="content-box col-xs-12 header-row">5. Planning Section</div>     <!-- Planning Section-->        
           </div>
           <% @plan.plans.each do |s| %>
             <%= render 'org_row', team: s %>
@@ -212,7 +219,7 @@
           <!-- END Plans -->
           <!-- START Logistics (left column) -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>
+            <div class="content-box col-xs-12 header-row">6. Logistics Section</div>
           </div>
             <% @plan.logistics.each do |s| %>
               <%= render 'org_row', team: s %>
@@ -265,7 +272,7 @@
         <div class="right-column col-xs-6"> <!-- START RIGHT COLUMN-->
           <!-- START Ops -->
           <div class="row">
-            <div class="col-xs-12 content-box header-row"> OPERATIONS </div>
+            <div class="col-xs-12 content-box header-row">7. Operations Section</div>
           </div>
           <% @plan.operations.each do |s| %>
             <%= render 'org_row', team: s %>
@@ -317,7 +324,7 @@
           <!-- END Ops -->
           <!-- BEGIN Finance (right column) -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>
+            <div class="content-box col-xs-12 header-row">8. Finance Section</div>
           </div>
           <% @plan.finance.each do |s| %>
             <%= render 'org_row', team: s %>

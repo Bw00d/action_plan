@@ -40,14 +40,35 @@
         padding-right: 0 !important;
       }
 
-      /* 203-only row-height for content-box cells. */
+      /* 203-only row-height for content-box cells. min-height keeps blank
+         rows compact; when a name cell wraps to a second line the row
+         grows to fit rather than clipping. */
       #organization-assignments {
         --row-height: 22px;
       }
       #organization-assignments .content-box {
-        height: var(--row-height) !important;
+        min-height: var(--row-height) !important;
+        height: auto !important;
         padding: 3px 5px !important;
         font-size: 11px !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+      }
+      /* Pair each row's two cells so the position cell grows with a
+         wrapped name cell — flex + align-items:stretch on the row itself. */
+      #organization-assignments .staff-row,
+      #organization-assignments .blank-row,
+      #organization-assignments .left-column > .row,
+      #organization-assignments .right-column > .row {
+        display: flex !important;
+        align-items: stretch !important;
+      }
+      #organization-assignments .staff-row > .content-box,
+      #organization-assignments .blank-row > .content-box,
+      #organization-assignments .left-column > .row > .content-box,
+      #organization-assignments .right-column > .row > .content-box {
+        float: none !important;
       }
       /* Column pad rows are real DOM rows (see the ERB); nothing extra
          needed to make them render — they inherit .content-box borders. */
@@ -81,12 +102,21 @@
         min-height: 44px !important;
       }
       #organization-assignments .org-header .org-header-cell.org-header-tall {
-        min-height: 66px !important;
+        min-height: 74px !important;
       }
       #organization-assignments .org-header .org-header-label {
         height: 22px !important;
         padding: 3px 5px !important;
         font-size: 11px !important;
+      }
+      /* Left "1. Incident Name:" label grows to 30px so its bottom border
+         lines up with the "2. Operational Period:" cell's bottom border on
+         the right — both sides of the header share a horizontal line at
+         30px from the top. Matches the on-screen behavior triggered by
+         adding .content-box to the label div. */
+      #organization-assignments .org-header .org-header-cell.org-header-tall > .org-header-label {
+        height: 30px !important;
+        min-height: 30px !important;
       }
       #organization-assignments .org-header .org-header-value {
         padding: 3px 5px !important;
@@ -95,6 +125,36 @@
       #organization-assignments .org-header .op-period-cell {
         padding: 3px 5px !important;
         font-size: 11px !important;
+      }
+
+      /* Mirror the on-screen fix: outer header row is a flex container so
+         left (Incident Name, tall) and right (Op Period + Dates) always
+         match the tallest sibling. Without this the right stack pushed
+         past its target height and the left column ended short. */
+      #organization-assignments .row.org-header {
+        display: flex !important;
+        align-items: stretch !important;
+      }
+      #organization-assignments .row.org-header > [class^="col-"] {
+        float: none !important;
+      }
+      #organization-assignments .row.org-header > .org-header-right {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      #organization-assignments .row.org-header > .org-header-right > .row:first-child {
+        flex: 0 0 30px !important;
+        display: flex !important;
+      }
+      #organization-assignments .row.org-header > .org-header-right > .row:first-child > .op-period-cell {
+        flex: 1 1 auto !important;
+      }
+      #organization-assignments .row.org-header > .org-header-right > .row:last-child  {
+        flex: 1 1 auto !important;
+        display: flex !important;
+      }
+      #organization-assignments .row.org-header > .org-header-right > .row:last-child > .org-header-cell {
+        flex: 1 1 50% !important;
       }
 
       /* 203 footer rows compact to match --row-height. */

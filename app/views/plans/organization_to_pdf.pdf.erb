@@ -10,9 +10,10 @@
 
   left_used   = cmd_rows + agy_rows + pln_rows + log_rows
   right_used  = ops_rows + fin_rows
-  # Floor sized to fit Letter after the new full-width header (~88px) +
-  # footer (~60px) — was 41; overshoot pushed the footer onto page 2.
-  column_target = [left_used, right_used, 37].max
+  # Floor sized to fit Letter after the header (74px, was 66) + footer
+  # (~90px). Dropped from 37 → 36 rows when the header grew by 8px so
+  # the FINAL / Page X of Y strip still fits on page 1.
+  column_target = [left_used, right_used, 36].max
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
 
@@ -32,7 +33,7 @@
       </div>
       <div class="row org-header">
         <div class="col-xs-4 content-box org-header-cell org-header-tall">
-          <div class="org-header-label gray-row"><span class="small">1. Incident Name:</span></div>
+          <div class="org-header-label gray-row content-box"><span class="small">1. Incident Name:</span></div>
           <div class="org-header-value"><%= @incident.name %></div>
         </div>
         <div class="col-xs-8 org-header-right">
