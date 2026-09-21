@@ -430,11 +430,11 @@
                    value="<%= @plan.prepared_at&.strftime('%m/%d/%Y %H:%M') %>"
                    placeholder="MM/DD/YYYY HH:MM">
           </div>
-          <div class="content-box col-xs-2 bottom-row"></div>
+          <div class="content-box col-xs-2 bottom-row text-center">Page 1 of 1</div>
         </div>
         <div class="row org-footer-meta">
           <%# <div class="col-xs-6 text-center"><strong>FINAL</strong></div> %>
-          <div class="col-xs-6 text-right">Page 1 of 1</div>
+          <%# <div class="col-xs-6 text-right">Page 1 of 1</div> %>
         </div>
 
     <div class="print-button"><%= link_to "PRINT", "../#{@plan.id}/203-pdf.pdf", class: "btn btn-success tiny", target: :_blank %></div>
