@@ -53,13 +53,13 @@
       </div>
       <div class="row org-header">
         <div class="col-xs-4 content-box org-header-cell org-header-tall">
-          <div class="org-header-label gray-row content-box"><span class="small">1. Incident Name:</span></div>
+          <div class="org-header-label header row gray-row strong content-box">1. Incident Name:</div>
           <div class="org-header-value"><%= @incident.name %></div>
         </div>
         <div class="col-xs-8 org-header-right">
           <div class="row">
-            <div class="col-xs-12 content-box op-period-cell gray-row">
-              <span class="small">2. Operational Period:</span>
+            <div class="col-xs-12 content-box op-period-cell header-row gray-row">
+              2. Operational Period:
               <span class="lg-padding-left"><strong>DAY</strong></span>
             </div>
           </div>
@@ -79,7 +79,7 @@
       <div class="row org-columns">
         <div class="left-column col-xs-6"> <!-- Left Column-->
           <div class="row">
-            <div class="col-xs-12 content-box header-row"> COMMAND AND GENERAL STAFF </div>
+            <div class="col-xs-12 content-box header-row">3. Command and General Staff </div>
           </div>
 
           <!-- BEGIN Command Staff -->
@@ -95,7 +95,7 @@
           <!-- END Command Staff -->
           <!-- BEGIN Agency Admins -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">AGENCY REPRESENTATIVES</div>     <!-- Agency Reps-->        
+            <div class="content-box col-xs-12 header-row">4. Agency Representatives</div>     <!-- Agency Reps-->        
           </div>
           <% @plan.agency_reps.each do |s| %>
             <%= render 'org_row_pdf', team: s %>
@@ -109,7 +109,7 @@
           <!-- END Agency Admins -->
           <!-- START Plans -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">PLANNING SECTION</div>     <!-- Planning Section-->        
+            <div class="content-box col-xs-12 header-row">5. Planning Section</div>     <!-- Planning Section-->        
           </div>
           <% @plan.plans.each do |s| %>
             <%= render 'org_row_pdf', team: s %>
@@ -123,7 +123,7 @@
           <!-- END Plans -->
           <% if @overflow_logistics %>
             <div class="row">
-              <div class="content-box col-xs-12 header-row">LOGISTICS SECTION</div>
+              <div class="content-box col-xs-12 header-row">6. Logistics Section</div>
             </div>
             <% @plan.logistics.first(@left_log_entries).each do |s| %>
               <%= render 'org_row_pdf', team: s %>
@@ -156,7 +156,7 @@
           <% end %>
           <!-- START Ops -->
           <div class="row">
-            <div class="col-xs-12 content-box header-row"> OPERATIONS </div>
+            <div class="col-xs-12 content-box header-row">7. Operations Section </div>
           </div>
           <% @plan.operations.each do |s| %>
             <%= render 'org_row_pdf', team: s %>
@@ -170,7 +170,7 @@
           <!-- END Ops -->
           <!-- BEGIN Finance (right column) -->
           <div class="row">
-            <div class="content-box col-xs-12 header-row">FINANCE SECTION</div>
+            <div class="content-box col-xs-12 header-row">8. Finance Section</div>
           </div>
           <% @plan.finance.each do |s| %>
             <%= render 'org_row_pdf', team: s %>
