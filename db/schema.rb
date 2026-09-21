@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_21_000001) do
+ActiveRecord::Schema.define(version: 2026_09_21_100000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,6 +258,16 @@ ActiveRecord::Schema.define(version: 2026_09_21_000001) do
     t.index ["incident_id"], name: "index_incident_events_on_incident_id"
     t.index ["kind"], name: "index_incident_events_on_kind"
     t.index ["user_id"], name: "index_incident_events_on_user_id"
+  end
+
+  create_table "incident_feed_visits", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "incident_id", null: false
+    t.datetime "last_seen_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id"], name: "index_incident_feed_visits_on_incident_id"
+    t.index ["user_id", "incident_id"], name: "index_incident_feed_visits_on_user_id_and_incident_id", unique: true
   end
 
   create_table "incident_post_likes", force: :cascade do |t|

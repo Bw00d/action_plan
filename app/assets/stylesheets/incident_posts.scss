@@ -4,6 +4,32 @@
   h4 { margin-bottom: 12px; }
 }
 
+// Navbar "Feed" link + unread-post badge. Sits alongside the other
+// navbar items when the user is on an incident-scoped page.
+.nav-feed-link {
+  position: relative;
+
+  .feed-badge {
+    display: inline-block;
+    position: absolute;
+    top: 6px;
+    right: -2px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: #dc3545;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    // Prevent the badge from being underlined when the link is hovered.
+    text-decoration: none;
+  }
+}
+
 .feed-composer {
   border: 1px solid #dfe1e6;
   border-radius: 6px;

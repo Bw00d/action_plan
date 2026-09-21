@@ -18,6 +18,8 @@ class IncidentsController < ApplicationController
                                 .limit(100)
     @events    = @incident.events.limit(50)
     @new_post  = IncidentPost.new
+    # Reset the navbar "new posts" badge for this user + incident.
+    IncidentFeedVisit.mark_seen!(user: current_user, incident: @incident)
   end
 
   # GET /incidents/:id/perimeter.json

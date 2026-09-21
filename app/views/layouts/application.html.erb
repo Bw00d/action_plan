@@ -42,6 +42,21 @@ controller and action allows the implementation of page-specific CSS and JS %>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <%= yield(:navigation_menu) %>
+            <%# Feed link + "new posts" badge — only when signed in AND
+                on a page tied to a specific incident. Badge shows the
+                count of posts by other users since this user last
+                opened the feed. Own posts don't count. %>
+            <% if user_signed_in? && @incident.present? %>
+              <li>
+                <%= link_to incident_users_path(@incident), class: 'nav-feed-link' do %>
+                  Feed
+                  <% unseen = IncidentFeedVisit.unseen_post_count(user: current_user, incident: @incident) %>
+                  <% if unseen.positive? %>
+                    <span class="feed-badge"><%= unseen > 99 ? '99+' : unseen %></span>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
             <%# Devise %>
             <% if user_signed_in? %>
                 <li class="dropdown">
