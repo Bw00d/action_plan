@@ -12,7 +12,21 @@
   <div class="container center-vh-containe">
     <div class="col-xs-12 col-lg-8 center-block ">
       <div class="no-print">
-        <div><%= link_to "BACK to RESOURCES", incident_resources_path(@incident), class: "btn btn-success tiny" %></div>
+        <%= link_to "BACK to RESOURCES", incident_resources_path(@incident), class: "btn btn-success tiny" %>
+        <%# Undo Demob — reverses the release for a resource that's
+            been demobbed. Only shown when a release exists somewhere
+            (release date on the demob OR on the resource/roster).
+            Idempotent: clears both sides + destroys the notification. %>
+        <% currently_released = @demob.actual_release_date.present? ||
+                                (@demob.roster ? @demob.roster.released_at.present?
+                                               : @resource.release_date.present?) %>
+        <% if currently_released %>
+          <%= button_to "UNDO DEMOB", undo_demob_path(@demob),
+                        method: :post,
+                        class: "btn btn-warning tiny",
+                        form:  { style: "display:inline" },
+                        data:  { confirm: "Un-demob #{display_ordno}? Their release date is cleared and they return to active. You'll need to drag them back to their column on the T-cards board." } %>
+        <% end %>
       </div>
 
      <div class="row center-vh-container">

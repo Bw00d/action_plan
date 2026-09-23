@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :checkins
   resources :attachments
   resources :units
-  resources :demobs
+  resources :demobs do
+    member { post :undo }
+  end
   resources :posts
   resources :blocks
   resources :covers

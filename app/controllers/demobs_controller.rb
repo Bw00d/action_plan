@@ -57,6 +57,25 @@ class DemobsController < ApplicationController
     end
   end
 
+  # POST /demobs/:id/undo — reverse a demob. Clears the demob's
+  # actual_release_date AND the resource's release_date (or roster's
+  # released_at) directly, so a "stuck" record where those two fell
+  # out of sync is fixed on click. Also destroys any DemobNotification.
+  def undo
+    @demob = Demob.find(params[:id])
+    Demob.transaction do
+      @demob.update_columns(actual_release_date: nil, actual_release_time: nil)
+      if @demob.roster
+        @demob.roster.update_columns(released_at: nil) if @demob.roster.released_at.present?
+      else
+        @demob.resource.update_columns(release_date: nil) if @demob.resource.release_date.present?
+      end
+      @demob.demob_notification&.destroy
+    end
+    redirect_to incident_resources_path(@demob.resource.incident),
+                notice: "Un-demobbed #{@demob.resource.cat}#{@demob.resource.order_number}. Drag them back to their column on the T-cards board."
+  end
+
   # DELETE /demobs/1 or /demobs/1.json
   def destroy
     @demob.destroy
