@@ -717,3 +717,15 @@ input.fwd-datepicker {
     @page { size: Letter landscape; margin: 0.4in; }
   }
 }
+
+// ICS-211 / Non-209 LWD cell — red background when the resource is past
+// their computed Last Work Day. Signals to the operator that this
+// resource is overdue for demob. -webkit-print-color-adjust keeps the
+// color visible in print, matching the other shaded print cells.
+.lwd-overdue {
+  background-color: #f8d7da !important;
+  color: #721c24;
+  font-weight: 700;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}

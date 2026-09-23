@@ -64,10 +64,13 @@
 
            <!--  <td class="lg-bip-input"><%#= best_in_place r, :fwd, display_as: :formatted_fwd %></td> -->
             <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input, place_holder: "----" %></td>
-            <% if !r.last_work_day.blank? %>
-              <td><%=  r.last_work_day.strftime("%m/%d") %></td>
+            <%# LWD cell — red background when the resource is past LWD
+                so they visually stand out as overdue for demob. %>
+            <% if r.last_work_day.is_a?(Date) %>
+              <% overdue = r.last_work_day < Time.zone.today %>
+              <td class="<%= 'lwd-overdue' if overdue %>"><%= r.last_work_day.strftime("%m/%d") %></td>
             <% else %>
-            <td></td>
+              <td></td>
             <% end %>
             <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark"  %></td>
            
@@ -245,9 +248,11 @@
             <td class="md-bip-input"><%= best_in_place r, :agency, :as => :input, place_holder: "------" %></td>
             <td class="lg-bip-input"><%= best_in_place r, :fwd, display_as: :formatted_fwd, place_holder: "------" %></td>
             <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input, place_holder: "----" %></td>
-            <% if !r.last_work_day.blank? %>
-              <td><%=  r.last_work_day.strftime("%m/%d") %></td>
+            <% if r.last_work_day.is_a?(Date) %>
+              <% overdue = r.last_work_day < Time.zone.today %>
+              <td class="<%= 'lwd-overdue' if overdue %>"><%= r.last_work_day.strftime("%m/%d") %></td>
             <% else %>
+              <td></td>
             <% end %>
             <td><%= link_to "DMB", incident_resource_demob_path(@incident, r, r.demob), class: "demob-button btn tiny btn-dark"  %></td>
             <td>

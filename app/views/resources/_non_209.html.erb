@@ -52,8 +52,9 @@
               <% end %>
             </td>
             <td class="lg-bip-input"><%= best_in_place r, :assignment_length, :as => :input, place_holder: "----" %></td>
-            <% if !r.last_work_day.blank? %>
-              <td><%= r.last_work_day.strftime("%m/%d") %></td>
+            <% if r.last_work_day.is_a?(Date) %>
+              <% overdue = r.last_work_day < Time.zone.today %>
+              <td class="<%= 'lwd-overdue' if overdue %>"><%= r.last_work_day.strftime("%m/%d") %></td>
             <% else %>
               <td></td>
             <% end %>
