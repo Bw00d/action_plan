@@ -46,7 +46,7 @@ controller and action allows the implementation of page-specific CSS and JS %>
                 on a page tied to a specific incident. Badge shows the
                 count of posts by other users since this user last
                 opened the feed. Own posts don't count. %>
-            <% if user_signed_in? && @incident.present? %>
+            <% if user_signed_in? && @incident&.persisted? %>
               <li>
                 <%= link_to incident_users_path(@incident), class: 'nav-feed-link' do %>
                   Feed
