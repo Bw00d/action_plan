@@ -28,6 +28,7 @@
   <div id="order-number-input" class="form-group">
     <span class="order-number-prefix"></span>
     <%= f.text_field :order_number, placeholder: "ORDER NUMBER", class: 'form-control', required: true %>
+    <small class="text-muted">Use dot notation (e.g. <code>131.2</code>) to add as a subordinate on an existing resource.</small>
   </div>
 
   <div class="form-group">

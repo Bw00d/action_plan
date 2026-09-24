@@ -66,7 +66,31 @@ class ResourcesController < ApplicationController
 
   # POST /resources
   # POST /resources.json
+  #
+  # Subordinate detection: if the entered order_number looks like a
+  # subordinate (contains a dot — e.g. "131.2") AND a parent Resource
+  # with the base number exists in the same incident+category, we create
+  # a Roster on the parent instead of a fresh Resource. Matches the
+  # inverse of Roster#promote! and mirrors how iSuite records subordinates
+  # (parent "131" + child "2" → display "E-131.2").
   def create
+    if (roster = maybe_build_subordinate_roster)
+      respond_to do |format|
+        if roster.save
+          format.html { redirect_back fallback_location: incident_resources_path(roster.resource.incident),
+                                      notice: "Added subordinate #{roster.full_order_number}." }
+          format.js   { render :create_roster }
+          format.json { render json: { ok: true, roster_id: roster.id } }
+        else
+          format.html { redirect_back fallback_location: incident_resources_path(roster.resource.incident),
+                                      alert: roster.errors.full_messages.to_sentence }
+          format.js   { render :create_error, status: :unprocessable_entity }
+          format.json { render json: roster.errors, status: :unprocessable_entity }
+        end
+      end
+      return
+    end
+
     @resource = Resource.new(resource_params)
 
     respond_to do |format|
@@ -80,6 +104,30 @@ class ResourcesController < ApplicationController
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # If the submitted resource_params describe a subordinate (dotted order
+  # number + existing parent), return an unsaved Roster ready for .save.
+  # Returns nil to fall through to normal Resource creation.
+  def maybe_build_subordinate_roster
+    p = resource_params
+    order_num = p[:order_number].to_s.strip
+    return nil unless order_num.include?('.') && p[:incident_id].present? && p[:category].present?
+
+    base, child = order_num.split('.', 2)
+    return nil if base.blank? || child.blank?
+
+    parent = Resource.where(incident_id: p[:incident_id],
+                            category:    p[:category],
+                            order_number: base).first
+    return nil unless parent
+
+    parent.rosters.build(
+      name:         p[:name],
+      position:     p[:position].presence || parent.position,
+      agency:       p[:agency].presence   || parent.agency,
+      order_number: child
+    )
   end
 
   # PATCH/PUT /resources/1
