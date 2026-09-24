@@ -140,30 +140,75 @@ $(document).on("turbolinks:load", function() {
     $('#demob-info').hide();
     $('#glide-info').hide();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#glide-tab').click(function (){
     $('#ics-211-info').hide();
     $('#demob-info').hide();
     $('#glide-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#demob-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#tally-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').hide();
     $('#tally-info').show();
+    $('#non-209-info').hide();
   })
+  $('a#non-209-tab').click(function (){
+    $('#ics-211-info').hide();
+    $('#glide-info').hide();
+    $('#demob-info').hide();
+    $('#tally-info').hide();
+    $('#non-209-info').show();
+  })
+
+  // Print button on the Resource Tally panel. Tag <body> with a class
+  // so the print stylesheet can hide the other tab panels and print
+  // just the tally table.
+  $(document).off('click.tallyPrint').on('click.tallyPrint', '.tally-print-btn', function () {
+    $('body').addClass('printing-tally');
+    var restore = function () { $('body').removeClass('printing-tally'); };
+    window.addEventListener('afterprint', restore, { once: true });
+    window.print();
+    // Fallback in case afterprint doesn't fire (some browsers).
+    setTimeout(restore, 2000);
+  });
 
 // Reload page after creating resource
   // $('#submit-resource-button').click(function() {
   //   window.location.reload();
   // })
+
+  // New-resource form: if the order_number uses dot notation (subordinate)
+  // and a parent with the base number exists, confirm the intent before
+  // submitting. Server auto-detects and creates a Roster on the parent.
+  $(document).off('submit.subConfirm').on('submit.subConfirm', '#new_resource', function (e) {
+    var $form = $(this);
+    var $orderNum = $form.find('input[name="resource[order_number]"]');
+    var val = ($orderNum.val() || '').trim();
+    if (!val.includes('.')) return;
+    // Only prompt once per submission — attach a flag so the callback
+    // doesn't fire again when the form re-submits after confirm.
+    if ($form.data('subordinate-confirmed')) return;
+    var base = val.split('.')[0];
+    var msg  = 'Order number ' + val + ' looks like a subordinate of #' +
+               base + '. Add as a subordinate to that resource?\n\n' +
+               'Cancel and change the number if this should be a standalone resource.';
+    if (!confirm(msg)) {
+      e.preventDefault();
+      return;
+    }
+    $form.data('subordinate-confirmed', true);
+  });
 
   // submitting forms
 

@@ -52964,6 +52964,43 @@ function hasScrolled() {
 }
 
 });
+// Feed interactions on the Incident Users page. Keeps behaviors delegated
+// on document so they survive Turbolinks visits and future ActionCable
+// re-renders drop-in cleanly (just replace the feed list — handlers stay).
+$(document).on('turbolinks:load', function () {
+  $(document).off('.feed');
+
+  // Scroll the (capped-height) feed list to its bottom so the newest
+  // posts are visible on land — matches the composer sitting below it.
+  var $feed = $('.iup-card .feed-list');
+  if ($feed.length) { $feed.scrollTop($feed[0].scrollHeight); }
+
+  // Reply — reveal the inline composer under a top-level post.
+  $(document).on('click.feed', '.feed-reply-btn', function () {
+    var id = $(this).data('post-id');
+    var $composer = $(this).closest('.feed-post').find('> .feed-reply-composer');
+    $composer.show().find('textarea').focus();
+  });
+
+  $(document).on('click.feed', '.feed-cancel-reply', function () {
+    $(this).closest('.feed-reply-composer').hide();
+  });
+
+  // Edit — swap the body for the edit form.
+  $(document).on('click.feed', '.feed-edit-btn', function () {
+    var id = $(this).data('post-id');
+    var $post = $(this).closest('.feed-post');
+    $post.find('> .feed-post-body').hide();
+    $post.find('> .feed-edit-form').show().find('textarea').focus();
+  });
+
+  $(document).on('click.feed', '.feed-cancel-edit', function () {
+    var $form = $(this).closest('.feed-edit-form');
+    var $post = $form.closest('.feed-post');
+    $form.hide();
+    $post.find('> .feed-post-body').show();
+  });
+});
 $(document).on("turbolinks:load", function() {
 
   $('.datepicker').datepicker({
@@ -54155,6 +54192,28 @@ $(document).on("turbolinks:load", function() {
   // $('#submit-resource-button').click(function() {
   //   window.location.reload();
   // })
+
+  // New-resource form: if the order_number uses dot notation (subordinate)
+  // and a parent with the base number exists, confirm the intent before
+  // submitting. Server auto-detects and creates a Roster on the parent.
+  $(document).off('submit.subConfirm').on('submit.subConfirm', '#new_resource', function (e) {
+    var $form = $(this);
+    var $orderNum = $form.find('input[name="resource[order_number]"]');
+    var val = ($orderNum.val() || '').trim();
+    if (!val.includes('.')) return;
+    // Only prompt once per submission — attach a flag so the callback
+    // doesn't fire again when the form re-submits after confirm.
+    if ($form.data('subordinate-confirmed')) return;
+    var base = val.split('.')[0];
+    var msg  = 'Order number ' + val + ' looks like a subordinate of #' +
+               base + '. Add as a subordinate to that resource?\n\n' +
+               'Cancel and change the number if this should be a standalone resource.';
+    if (!confirm(msg)) {
+      e.preventDefault();
+      return;
+    }
+    $form.data('subordinate-confirmed', true);
+  });
 
   // submitting forms
 
