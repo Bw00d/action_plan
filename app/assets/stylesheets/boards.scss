@@ -218,11 +218,13 @@
   align-items: center;
   font-size: 14px;
   line-height: 1;
+  color: #fff;                 // FontAwesome icons pick up this color
 
   .resource-icon-svg {
     width: 18px;
     height: 14px;
-    fill: currentColor;
+    fill: currentColor;        // inline-SVG fill follows the parent color
+    * { fill: currentColor; }  // catches nested <g>/<path> in the dozer SVG
   }
 }
 

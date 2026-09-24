@@ -19,19 +19,39 @@ module ResourceVisualsHelper
     #ad1457 #4527a0 #283593 #00695c #ef6c00 #4e342e #37474f
   ].freeze
 
-  # icon: FA4 class string, or :svg_dozer for the inline bulldozer SVG.
+  # Position-code overrides — always win over the category default so
+  # specific codes like DOZ1, AMB2, UMOD render the right icon regardless
+  # of how iSuite categorizes them. Keys matched case-insensitively.
+  POSITION_ICON_OVERRIDES = [
+    # [matcher, image filename in app/assets/images/]
+    [->(code) { code.start_with?('AMB') },                      'ambo.svg'],
+    [->(code) { code.start_with?('DOZ') || code.start_with?('DZR') || code.include?('DOZER') }, 'dozer.svg'],
+    [->(code) { code.start_with?('EXC') || code.include?('EXCAVATOR') }, 'excavator.svg'],
+    [->(code) { code.start_with?('HE2') || code.start_with?('HE3') }, 'helicopter.svg'],
+    [->(code) { code.start_with?('HE1') }, 'heavy.svg'],
+    [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
+  ].freeze
+
+  # Descriptor is { type:, name: }. Types:
+  #   :fa    → FontAwesome 4 class name
+  #   :image → filename under app/assets/images/
+  #   :svg   → inline SVG (legacy dozer_svg only)
   def resource_icon_descriptor(resource)
+    code = resource.position.to_s.upcase.strip
+    POSITION_ICON_OVERRIDES.each do |matcher, image|
+      return { type: :image, name: image } if matcher.call(code)
+    end
+
     case resource.category
     when 'CREW'
       { type: :fa, name: 'fa-users' }
     when 'OVERHEAD'
       { type: :fa, name: 'fa-user' }
     when 'AIRCRAFT'
-      position = resource.position.to_s.downcase
-      icon = position.include?('plane') || position.include?('tanker') ? 'fa-plane' : 'fa-helicopter'
+      icon = code.include?('PLANE') || code.include?('TANKER') ? 'fa-plane' : 'fa-helicopter'
       { type: :fa, name: icon }
     when 'EQUIPMENT'
-      equipment_icon(resource.position.to_s.downcase)
+      equipment_icon(code)
     else
       { type: :fa, name: 'fa-question-circle' }
     end
@@ -42,9 +62,30 @@ module ResourceVisualsHelper
     case descriptor[:type]
     when :fa
       content_tag(:i, '', class: "fa #{descriptor[:name]}")
+    when :image
+      inline_svg_asset(descriptor[:name])
     when :svg
       dozer_svg
     end
+  end
+
+  # Reads an SVG from app/assets/images/, strips any hard-coded fills so
+  # CSS `fill: currentColor` controls the color, and injects it inline.
+  # Cached at the class level so we don't hit disk on every render.
+  def inline_svg_asset(filename)
+    @@_svg_cache ||= {}
+    @@_svg_cache[filename] ||= begin
+      path = Rails.root.join('app', 'assets', 'images', filename)
+      if File.exist?(path)
+        svg = File.read(path)
+        svg = svg.gsub(/\sfill="[^"]*"/, '')          # strip fills → currentColor takes over
+        svg = svg.sub('<svg', '<svg class="resource-icon-svg" aria-hidden="true"')
+        svg
+      else
+        ''
+      end
+    end
+    @@_svg_cache[filename].html_safe
   end
 
   def resource_strip_color(resource)
@@ -75,10 +116,12 @@ module ResourceVisualsHelper
 
   private
 
-  def equipment_icon(position)
-    return { type: :svg, name: :dozer } if position.include?('dozer')
-    return { type: :fa, name: 'fa-tint' } if position.include?('tender') || position.include?('water')
-    return { type: :fa, name: 'fa-truck' } if position.include?('engine')
+  # Fallback equipment lookup — position codes DOZ*/AMB* are handled by
+  # POSITION_ICON_OVERRIDES above; this is just the "generic equipment"
+  # bucket that stays FontAwesome.
+  def equipment_icon(code)
+    return { type: :fa, name: 'fa-tint'  } if code.include?('TENDER') || code.include?('WATER')
+    return { type: :fa, name: 'fa-truck' } if code.include?('ENGINE')
     { type: :fa, name: 'fa-truck' }
   end
 
