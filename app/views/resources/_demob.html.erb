@@ -1,6 +1,6 @@
 <div id="demob-info" class="panel panel-default">
 <!-- Default panel contents -->
-  <% if !@resources.empty? %>
+  <% if !@tally_resources.empty? %>
     <!-- Table -->
     <div id="demob-dates">
       <h1>DEMOB LIST</h1>
@@ -12,7 +12,7 @@
         # today's demobs so someone scheduled to release today still
         # shows on the list until release_date is actually set.
         today = Time.zone.today
-        demob_groups = @resources.assigned
+        demob_groups = @tally_resources.assigned
                                  .select { |r| r.last_work_day.is_a?(Date) }
                                  .group_by { |r| r.last_work_day + 1 }
                                  .select  { |demob_date, _| demob_date >= today }
@@ -58,7 +58,7 @@
   <% end %>
 
 
-  <% if !@resources.empty? %>
+  <% if !@tally_resources.empty? %>
     <div class="demob-print-actions no-print">
       <button type="button" id="print-demob" class="btn btn-primary" onclick="printDemob()">
         <%= fa_icon 'print' %> Print Demob List
