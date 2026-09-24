@@ -29,6 +29,10 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('EXC') || code.include?('EXCAVATOR') }, 'excavator.svg'],
     [->(code) { code.start_with?('HE2') || code.start_with?('HE3') }, 'helicopter.svg'],
     [->(code) { code.start_with?('HE1') }, 'heavy.svg'],
+    [->(code) { code.start_with?('FEL') }, 'buncher.svg'],
+    [->(code) { code.start_with?('SKD') }, 'skidder.svg'],
+    [->(code) { code.start_with?('SKG') }, 'skidgen.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('WTS') }, 'tender.svg'],
     [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
   ].freeze
 
@@ -69,23 +73,72 @@ module ResourceVisualsHelper
     end
   end
 
-  # Reads an SVG from app/assets/images/, strips any hard-coded fills so
+  # Reads an SVG from app/assets/images/, strips any hard-coded colors so
   # CSS `fill: currentColor` controls the color, and injects it inline.
-  # Cached at the class level so we don't hit disk on every render.
+  # Handles both hand-written SVGs (with inline `fill="…"`) and Illustrator
+  # exports (which put fill/stroke in a <style> block referencing CSS
+  # classes on the elements). Cached at the class level.
   def inline_svg_asset(filename)
     @@_svg_cache ||= {}
     @@_svg_cache[filename] ||= begin
       path = Rails.root.join('app', 'assets', 'images', filename)
       if File.exist?(path)
         svg = File.read(path)
-        svg = svg.gsub(/\sfill="[^"]*"/, '')          # strip fills → currentColor takes over
-        svg = svg.sub('<svg', '<svg class="resource-icon-svg" aria-hidden="true"')
+        # 1. Before stripping the <style> block, harvest `fill: none` /
+        #    `stroke: none` class rules and inline them as attrs on the
+        #    matching elements. Otherwise intentionally-hollow shapes
+        #    (windows, outlines) become solid when currentColor
+        #    inheritance kicks in on step 5.
+        svg = inline_none_rules(svg)
+        # 2. Drop Illustrator's <style> block — its class-based color
+        #    rules would keep fill/stroke pinned to specific hex values.
+        svg = svg.gsub(/<style[^>]*>.*?<\/style>/m, '')
+        # 3. Remove now-empty <defs> wrappers so the file stays clean.
+        svg = svg.gsub(/<defs[^>]*>\s*<\/defs>/m, '')
+        # 4. Strip fill/stroke attrs but keep `fill="none"` /
+        #    `stroke="none"` so hollow shapes stay hollow.
+        svg = svg.gsub(/\sfill="(?!none)[^"]*"/,   '')
+        svg = svg.gsub(/\sstroke="(?!none)[^"]*"/, '')
+        # 5. Force the root <svg> to inherit currentColor for both fill
+        #    and stroke — children inherit unless they explicitly set it.
+        svg = svg.sub(/<svg/,
+                      '<svg class="resource-icon-svg" aria-hidden="true" ' \
+                      'fill="currentColor" stroke="currentColor"')
         svg
       else
         ''
       end
     end
     @@_svg_cache[filename].html_safe
+  end
+
+  # Extract `.cls-N { fill: none }` / `.cls-N { stroke: none }` rules
+  # from the <style> block and inline them as attributes on elements
+  # that use those classes. Runs before the style block is stripped.
+  def inline_none_rules(svg)
+    style_match = svg.match(/<style[^>]*>(.*?)<\/style>/m)
+    return svg unless style_match
+
+    class_styles = Hash.new { |h, k| h[k] = {} }
+    style_match[1].scan(/([^{}]+)\{([^{}]+)\}/m) do |selectors, declarations|
+      classes = selectors.scan(/\.([\w-]+)/).flatten
+      declarations.scan(/(fill|stroke)\s*:\s*none/i) do |prop|
+        prop_name = prop.first.downcase
+        classes.each { |c| class_styles[c][prop_name] = 'none' }
+      end
+    end
+    return svg if class_styles.empty?
+
+    svg.gsub(/<(\w+)((?:(?!\/?>).)*?)\bclass="([^"]+)"((?:(?!\/?>).)*?)(\/?)>/m) do
+      tag, before, class_str, after, self_close = $1, $2, $3, $4, $5
+      extras = ''
+      class_str.split(/\s+/).each do |cls|
+        (class_styles[cls] || {}).each do |prop, val|
+          extras += " #{prop}=\"#{val}\"" unless (before + after).include?(%(#{prop}=))
+        end
+      end
+      "<#{tag}#{before} class=\"#{class_str}\"#{after}#{extras}#{self_close}>"
+    end
   end
 
   def resource_strip_color(resource)
