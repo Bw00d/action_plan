@@ -32,6 +32,8 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('FEL') }, 'buncher.svg'],
     [->(code) { code.start_with?('SKD') }, 'skidder.svg'],
     [->(code) { code.start_with?('SKG') }, 'skidgen.svg'],
+    [->(code) { code.start_with?('BHOE') }, 'backhoe.svg'],
+    [->(code) { code.start_with?('VROL') }, 'roller.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('WTS') }, 'tender.svg'],
     [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
   ].freeze
