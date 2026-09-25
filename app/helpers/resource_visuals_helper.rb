@@ -44,6 +44,8 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('WTT') || code.start_with?('GRD') }, 'grader.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('DUMP') }, 'dump-truck.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('BUCC') }, 'bus.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('FORK') }, 'forklift.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('PUP') }, 'pickup.svg'],
     [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
   ].freeze
 
