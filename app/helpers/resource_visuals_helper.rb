@@ -34,7 +34,13 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('SKG') }, 'skidgen.svg'],
     [->(code) { code.start_with?('BHOE') }, 'backhoe.svg'],
     [->(code) { code.start_with?('VROL') }, 'roller.svg'],
+    [->(code) { code.start_with?('CHP') }, 'chipper.svg'],
+    [->(code) { code.start_with?('ENG1') || code.start_with?('ENG2') || code.start_with?('EST2') || code.start_with?('EST1') }, 'eng1.svg'],
+    [->(code) { code.start_with?('ENG3') || code.start_with?('EST3')}, 'eng3.svg'],
+    [->(code) { code.start_with?('ENG6') || code.start_with?('ENG4') || code.start_with?('ENG5') || code.start_with?('ENG7')|| code.start_with?('EST6') }, 'eng6.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('WTS') }, 'tender.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('FUT') || code.start_with?('POT')}, 'fuel-tender.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('LOW') }, 'lowboy.svg'],
     [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
   ].freeze
 
