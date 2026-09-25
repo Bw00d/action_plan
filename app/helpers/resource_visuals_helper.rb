@@ -39,10 +39,11 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('ENG3') || code.start_with?('EST3')}, 'eng3.svg'],
     [->(code) { code.start_with?('ENG6') || code.start_with?('ENG4') || code.start_with?('ENG5') || code.start_with?('ENG7')|| code.start_with?('EST6') }, 'eng6.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('WTS') }, 'tender.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('FUT') || code.start_with?('POT')}, 'fuel-tender.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('FUT') || code.start_with?('POT') || code.start_with?('GWT')}, 'fuel-tender.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('LOW') }, 'lowboy.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('GRD') }, 'grader.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('DUMP') }, 'dump-truck.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('BUCC') }, 'bus.svg'],
     [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
   ].freeze
 
