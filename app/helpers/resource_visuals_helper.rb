@@ -25,7 +25,7 @@ module ResourceVisualsHelper
   POSITION_ICON_OVERRIDES = [
     # [matcher, image filename in app/assets/images/]
     [->(code) { code.start_with?('AMB') },                      'ambo.svg'],
-    [->(code) { code.start_with?('DOZ') || code.start_with?('DZR') || code.include?('DOZER') }, 'dozer.svg'],
+    [->(code) { code.start_with?('DOZ') || code.start_with?('DZR') || code.include?('DOZER') || code.start_with?('DZS')}, 'dozer.svg'],
     [->(code) { code.start_with?('EXC') || code.include?('EXCAVATOR') }, 'excavator.svg'],
     [->(code) { code.start_with?('HE2') || code.start_with?('HE3') }, 'helicopter.svg'],
     [->(code) { code.start_with?('HE1') }, 'heavy.svg'],
@@ -39,14 +39,18 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('ENG3') || code.start_with?('EST3')}, 'eng3.svg'],
     [->(code) { code.start_with?('ENG6') || code.start_with?('ENG4') || code.start_with?('ENG5') || code.start_with?('ENG7')|| code.start_with?('EST6') }, 'eng6.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('WTS') }, 'tender.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('FUT') || code.start_with?('POT') || code.start_with?('GWT')}, 'fuel-tender.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('LOW') }, 'lowboy.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('GRD') }, 'grader.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('DUMP') }, 'dump-truck.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('BUCC') }, 'bus.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('FORK') }, 'forklift.svg'],
-    [->(code) { code.start_with?('WTT') || code.start_with?('PUP') }, 'pickup.svg'],
-    [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
+    [->(code) { code.start_with?('FUT') || code.start_with?('POT') || code.start_with?('GWT')}, 'fuel-tender.svg'],
+    [->(code) { code.start_with?('LOW') }, 'lowboy.svg'],
+    [->(code) { code.start_with?('GRD') }, 'grader.svg'],
+    [->(code) { code.start_with?('DUMP') }, 'dump-truck.svg'],
+    [->(code) { code.start_with?('BUCC') || code.start_with?('BUS') }, 'bus.svg'],
+    [->(code) { code.start_with?('FORK') }, 'forklift.svg'],
+    [->(code) { code.start_with?('PUP') }, 'pickup.svg'],
+    [->(code) { code.start_with?('STK') }, 'stakeside.svg'],
+    [->(code) { code.start_with?('MBM') }, 'boom-masticator.svg'],
+    [->(code) { code.start_with?('SMM') }, 'skid-steer.svg'],
+    [->(code) { code.start_with?('TBOT') }, 'boat.svg'],
+    [->(code) { code == 'UMOD' || code.start_with?('UAR') || code.include?('DRONE') },  'drone.svg']
   ].freeze
 
   # Descriptor is { type:, name: }. Types:
@@ -68,7 +72,10 @@ module ResourceVisualsHelper
       icon = code.include?('PLANE') || code.include?('TANKER') ? 'fa-plane' : 'fa-helicopter'
       { type: :fa, name: icon }
     when 'EQUIPMENT'
-      equipment_icon(code)
+      # No FontAwesome fallback for equipment — if there's no specific
+      # SVG override (dozer / excavator / tender / etc.), render nothing.
+      # Generic engine trucks / miscellaneous kit stay iconless.
+      nil
     else
       { type: :fa, name: 'fa-question-circle' }
     end
@@ -76,6 +83,7 @@ module ResourceVisualsHelper
 
   def resource_icon_html(resource)
     descriptor = resource_icon_descriptor(resource)
+    return ''.html_safe unless descriptor
     case descriptor[:type]
     when :fa
       content_tag(:i, '', class: "fa #{descriptor[:name]}")
