@@ -42,6 +42,7 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('WTT') || code.start_with?('FUT') || code.start_with?('POT')}, 'fuel-tender.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('LOW') }, 'lowboy.svg'],
     [->(code) { code.start_with?('WTT') || code.start_with?('GRD') }, 'grader.svg'],
+    [->(code) { code.start_with?('WTT') || code.start_with?('DUMP') }, 'dump-truck.svg'],
     [->(code) { code == 'UMOD' || code.include?('DRONE') },     'drone.svg']
   ].freeze
 
