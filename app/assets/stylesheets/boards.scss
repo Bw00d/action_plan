@@ -221,10 +221,10 @@
   color: #fff;                 // FontAwesome icons pick up this color
 
   .resource-icon-svg {
-    width: 18px;
     height: 14px;
+    width: auto;               // let each icon keep its natural aspect ratio
     fill: currentColor;        // inline-SVG fill follows the parent color
-    * { fill: currentColor; }  // catches nested <g>/<path> in the dozer SVG
+    * { fill: currentColor; }  // catches nested <g>/<path> in class-based SVGs
   }
 }
 

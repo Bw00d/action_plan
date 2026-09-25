@@ -19837,29 +19837,35 @@ div.solid {
   align-items: center;
   font-size: 14px;
   line-height: 1;
+  color: #fff;
 }
 
-/* line 222, app/assets/stylesheets/boards.scss */
+/* line 223, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg {
-  width: 18px;
   height: 14px;
+  width: auto;
   fill: currentColor;
 }
 
-/* line 229, app/assets/stylesheets/boards.scss */
+/* line 227, app/assets/stylesheets/boards.scss */
+.board-card-icon .resource-icon-svg * {
+  fill: currentColor;
+}
+
+/* line 231, app/assets/stylesheets/boards.scss */
 .board-card-agency {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* line 235, app/assets/stylesheets/boards.scss */
+/* line 237, app/assets/stylesheets/boards.scss */
 .board-card-body {
   padding: 8px 10px 22px;
   position: relative;
 }
 
-/* line 240, app/assets/stylesheets/boards.scss */
+/* line 242, app/assets/stylesheets/boards.scss */
 .board-card-lwd {
   position: absolute;
   right: 8px;
@@ -19873,57 +19879,57 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 252, app/assets/stylesheets/boards.scss */
+/* line 254, app/assets/stylesheets/boards.scss */
 .board-card-lwd .fa {
   margin-right: 2px;
   font-size: 10px;
 }
 
-/* line 258, app/assets/stylesheets/boards.scss */
+/* line 260, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-normal {
   color: #000;
   padding: 0;
   background: transparent;
 }
 
-/* line 265, app/assets/stylesheets/boards.scss */
+/* line 267, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-soon {
   background: #e65100;
   color: #fff;
 }
 
-/* line 271, app/assets/stylesheets/boards.scss */
+/* line 273, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-today {
   background: #c62828;
   color: #fff;
 }
 
-/* line 277, app/assets/stylesheets/boards.scss */
+/* line 279, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-past {
   background: #000;
   color: #fff;
 }
 
-/* line 283, app/assets/stylesheets/boards.scss */
+/* line 285, app/assets/stylesheets/boards.scss */
 .board-card-order {
   font-size: 11px;
   color: #6b778c;
   font-weight: 600;
 }
 
-/* line 289, app/assets/stylesheets/boards.scss */
+/* line 291, app/assets/stylesheets/boards.scss */
 .board-card-name {
   font-weight: 600;
   color: #172b4d;
 }
 
-/* line 294, app/assets/stylesheets/boards.scss */
+/* line 296, app/assets/stylesheets/boards.scss */
 .board-card-position {
   font-size: 12px;
   color: #5e6c84;
 }
 
-/* line 299, app/assets/stylesheets/boards.scss */
+/* line 301, app/assets/stylesheets/boards.scss */
 .board-card-details {
   background: #fafbfc;
   border-top: 1px solid #ebecf0;
@@ -19932,7 +19938,7 @@ div.solid {
   cursor: default;
 }
 
-/* line 307, app/assets/stylesheets/boards.scss */
+/* line 309, app/assets/stylesheets/boards.scss */
 .board-card-details-header {
   display: flex;
   align-items: center;
@@ -19940,7 +19946,7 @@ div.solid {
   margin-bottom: 6px;
 }
 
-/* line 314, app/assets/stylesheets/boards.scss */
+/* line 316, app/assets/stylesheets/boards.scss */
 .board-card-details-title {
   font-weight: 600;
   color: #172b4d;
@@ -19949,7 +19955,7 @@ div.solid {
   font-size: 11px;
 }
 
-/* line 322, app/assets/stylesheets/boards.scss */
+/* line 324, app/assets/stylesheets/boards.scss */
 .board-card-details-close {
   background: none;
   border: none;
@@ -19960,12 +19966,12 @@ div.solid {
   padding: 0 4px;
 }
 
-/* line 331, app/assets/stylesheets/boards.scss */
+/* line 333, app/assets/stylesheets/boards.scss */
 .board-card-details-close:hover {
   color: #172b4d;
 }
 
-/* line 336, app/assets/stylesheets/boards.scss */
+/* line 338, app/assets/stylesheets/boards.scss */
 .board-card-fields {
   display: grid;
   grid-template-columns: 80px 1fr;
@@ -19974,7 +19980,7 @@ div.solid {
   margin: 0;
 }
 
-/* line 343, app/assets/stylesheets/boards.scss */
+/* line 345, app/assets/stylesheets/boards.scss */
 .board-card-fields dt {
   color: #6b778c;
   font-weight: 500;
@@ -19984,19 +19990,19 @@ div.solid {
   align-self: center;
 }
 
-/* line 352, app/assets/stylesheets/boards.scss */
+/* line 354, app/assets/stylesheets/boards.scss */
 .board-card-fields dd {
   margin: 0;
   color: #172b4d;
   word-break: break-word;
 }
 
-/* line 358, app/assets/stylesheets/boards.scss */
+/* line 360, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.full-width {
   grid-column: 1 / -1;
 }
 
-/* line 362, app/assets/stylesheets/boards.scss */
+/* line 364, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place {
   display: inline-block;
   min-width: 60px;
@@ -20004,14 +20010,14 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 368, app/assets/stylesheets/boards.scss */
+/* line 370, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place:hover {
   background: #fff;
   box-shadow: inset 0 0 0 1px #dfe1e6;
   cursor: text;
 }
 
-/* line 376, app/assets/stylesheets/boards.scss */
+/* line 378, app/assets/stylesheets/boards.scss */
 .board-card-placeholder {
   background: #dfe1e6;
   border: 2px dashed #c1c7d0;
@@ -20020,12 +20026,12 @@ div.solid {
   height: 56px;
 }
 
-/* line 384, app/assets/stylesheets/boards.scss */
+/* line 386, app/assets/stylesheets/boards.scss */
 .board-add-child {
   margin-top: 8px;
 }
 
-/* line 388, app/assets/stylesheets/boards.scss */
+/* line 390, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle {
   background: none;
   border: 1px dashed #c1c7d0;
@@ -20037,13 +20043,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 398, app/assets/stylesheets/boards.scss */
+/* line 400, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle:hover {
   background: #ebecf0;
   color: #172b4d;
 }
 
-/* line 404, app/assets/stylesheets/boards.scss */
+/* line 406, app/assets/stylesheets/boards.scss */
 .board-add-child-form {
   background: #fff;
   border-radius: 4px;
@@ -20052,23 +20058,23 @@ div.solid {
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
 }
 
-/* line 411, app/assets/stylesheets/boards.scss */
+/* line 413, app/assets/stylesheets/boards.scss */
 .board-add-child-form .form-group {
   margin-bottom: 6px;
 }
 
-/* line 415, app/assets/stylesheets/boards.scss */
+/* line 417, app/assets/stylesheets/boards.scss */
 .board-add-child-form .input-sm {
   font-size: 12px;
 }
 
-/* line 420, app/assets/stylesheets/boards.scss */
+/* line 422, app/assets/stylesheets/boards.scss */
 .board-add-child-actions {
   display: flex;
   gap: 6px;
 }
 
-/* line 425, app/assets/stylesheets/boards.scss */
+/* line 427, app/assets/stylesheets/boards.scss */
 .board-footer {
   margin-top: 18px;
   padding-top: 12px;
@@ -20078,42 +20084,42 @@ div.solid {
   gap: 12px;
 }
 
-/* line 434, app/assets/stylesheets/boards.scss */
+/* line 436, app/assets/stylesheets/boards.scss */
 .board-footer-hint {
   color: #6c757d;
   font-size: 12px;
 }
 
-/* line 439, app/assets/stylesheets/boards.scss */
+/* line 441, app/assets/stylesheets/boards.scss */
 .board-card--spacer {
   background: repeating-linear-gradient(45deg, #f4f5f7, #f4f5f7 6px, #ebedf0 6px, #ebedf0 12px);
   border: 1px dashed #b0b7c1;
   box-shadow: none;
 }
 
-/* line 450, app/assets/stylesheets/boards.scss */
+/* line 452, app/assets/stylesheets/boards.scss */
 .board-card--spacer:hover {
   background: #eef0f3;
 }
 
-/* line 451, app/assets/stylesheets/boards.scss */
+/* line 453, app/assets/stylesheets/boards.scss */
 .board-card--spacer:hover .board-card-delete-spacer {
   opacity: 1;
 }
 
-/* line 454, app/assets/stylesheets/boards.scss */
+/* line 456, app/assets/stylesheets/boards.scss */
 .board-card-strip--spacer {
   background: transparent;
   color: #4a5361;
 }
 
-/* line 459, app/assets/stylesheets/boards.scss */
+/* line 461, app/assets/stylesheets/boards.scss */
 .board-card-spacer-label {
   font-size: 10px;
   letter-spacing: 0.6px;
 }
 
-/* line 464, app/assets/stylesheets/boards.scss */
+/* line 466, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer {
   background: rgba(255, 255, 255, 0.9);
   color: #b32020;
@@ -20128,13 +20134,13 @@ div.solid {
   transition: opacity 0.12s ease-in;
 }
 
-/* line 477, app/assets/stylesheets/boards.scss */
+/* line 479, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer:hover {
   background: #fff;
   color: #7a1414;
 }
 
-/* line 478, app/assets/stylesheets/boards.scss */
+/* line 480, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer:focus {
   outline: 0;
   box-shadow: 0 0 0 2px rgba(179, 32, 32, 0.25);
@@ -32158,6 +32164,15 @@ body.printing-tally footer {
       margin: 0.4in;
     }
   }
+}
+
+/* line 725, app/assets/stylesheets/resources.scss */
+.lwd-overdue {
+  background-color: #f8d7da !important;
+  color: #721c24;
+  font-weight: 700;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 /* line 2, app/assets/stylesheets/safety_messages.scss */
 .hazards-form textarea {
