@@ -5,7 +5,11 @@
     <% end %>
     <div class="board-column-title-row">
       <div class="board-column-title"><%= title %></div>
-      <% personnel_count = resources.sum { |r| r.number_personnel.to_i } %>
+      <%# Use effective_personnel (via personnel_by_agency) so promoted
+          rosters and demobbed subordinates drop out of the column
+          count. Otherwise number_personnel double-counts a promoted
+          member on both the original crew and the new standalone card. %>
+      <% personnel_count = resources.sum { |r| r.effective_personnel.to_i } %>
       <span class="board-column-personnel <%= 'is-empty' if personnel_count.zero? %>" title="Personnel assigned">
         <i class="fa fa-users" aria-hidden="true"></i> <span class="board-column-personnel-count"><%= personnel_count %></span>
       </span>

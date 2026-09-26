@@ -124,6 +124,14 @@ class Resource < ApplicationRecord
     end
   end
 
+  # Sum of personnel_by_agency values — the number actually present on
+  # the incident right now. Prefer this over `number_personnel` anywhere
+  # you're showing a live count so promotions/subordinate demobs are
+  # reflected correctly.
+  def effective_personnel
+    personnel_by_agency.values.sum
+  end
+
   def rnr?
     return true if self.r_and_r
   end
