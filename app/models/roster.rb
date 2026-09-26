@@ -76,10 +76,13 @@ class Roster < ApplicationRecord
     demob || create_demob!(resource_id: resource_id)
   end
 
-  # Carve this roster entry into its own single-person OVERHEAD Resource so
-  # it can be dragged around on the board like a standalone T-card.
-  # The parent's tally skips promoted rosters so the personnel counts don't
-  # double up. Demob of the parent does NOT cascade to promoted subs.
+  # Carve this roster entry into its own single-person Resource so it can
+  # be dragged around on the board like a standalone T-card. The promoted
+  # resource inherits the PARENT'S category (so a crew member stays a
+  # "C-" record, not "O-") and its order number matches the roster's
+  # full_order_number (e.g. C-3.2 stays C-3.2). The parent's tally skips
+  # promoted rosters via .active.unpromoted so personnel don't double up.
+  # Demobbing the parent does NOT cascade to promoted subs.
   def promote!
     raise "already promoted" if promoted?
 
@@ -91,7 +94,7 @@ class Roster < ApplicationRecord
       order_number:      derive_promoted_order_number,
       number_personnel:  1,
       assignment_length: resource.assignment_length,
-      category:          'OVERHEAD',
+      category:          resource.category,
       checkin_date:      resource.checkin_date,
       fwd:               resource.fwd
     )
@@ -101,15 +104,30 @@ class Roster < ApplicationRecord
 
   private
 
-  # Order numbers are unique per (incident, category). Prefer the roster's
-  # own order_number, then fall back to "parent.order-position_num".
+  # Full dotted order number so the promoted T-card reads e.g. "C-3.2"
+  # instead of just "C-2". iSuite-imported rosters store only the child
+  # part ("2") — compose the parent piece in. IROC-imported rosters
+  # already carry the full "3.2", so use as-is. Falls back to appending
+  # position_num when order_number is blank. Uniqueness is scoped to
+  # (incident, category); if the exact number is already taken, append
+  # "-N" so the save still succeeds.
   def derive_promoted_order_number
-    candidate = order_number.presence || "#{resource.order_number}-#{position_num}"
-    incident  = resource.incident
-    return candidate unless incident.resources.where(category: 'OVERHEAD', order_number: candidate).exists?
+    on = order_number.to_s
+    candidate =
+      if on.blank?
+        "#{resource.order_number}-#{position_num}"
+      elsif on.include?('.')
+        on
+      else
+        "#{resource.order_number}.#{on}"
+      end
+
+    incident = resource.incident
+    cat      = resource.category
+    return candidate unless incident.resources.where(category: cat, order_number: candidate).exists?
 
     suffix = 2
-    suffix += 1 while incident.resources.where(category: 'OVERHEAD', order_number: "#{candidate}-#{suffix}").exists?
+    suffix += 1 while incident.resources.where(category: cat, order_number: "#{candidate}-#{suffix}").exists?
     "#{candidate}-#{suffix}"
   end
 
