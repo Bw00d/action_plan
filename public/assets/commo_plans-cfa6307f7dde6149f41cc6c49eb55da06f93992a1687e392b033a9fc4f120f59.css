@@ -1,0 +1,386 @@
+/* line 1, app/assets/stylesheets/commo_plans.scss */
+#commo-plan {
+  font-size: .70em;
+  font-weight: 500;
+}
+
+/* line 2, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* line 9, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table thead {
+  height: 20px;
+  border: 1px solid black;
+}
+
+/* line 13, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table th {
+  text-align: center;
+  border-right: 1px solid black;
+}
+
+/* line 17, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table tr {
+  height: 30px;
+}
+
+/* line 20, app/assets/stylesheets/commo_plans.scss */
+#commo-plan table td {
+  border-right: 1px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 31, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .plan-panel-head {
+  font-size: 1em !important;
+}
+
+/* line 34, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .top-row {
+  text-align: center;
+}
+
+/* line 37, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c1 {
+  width: 5%;
+}
+
+/* line 41, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c2 {
+  width: 8%;
+}
+
+/* line 45, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c3 {
+  width: 15%;
+}
+
+/* line 49, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c4 {
+  width: 13%;
+}
+
+/* line 58, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-name {
+  width: 13%;
+}
+
+/* line 59, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-tone {
+  width: 6%;
+}
+
+/* line 60, app/assets/stylesheets/commo_plans.scss */
+#commo-plan .c-mode {
+  width: 6%;
+}
+
+/* line 61, app/assets/stylesheets/commo_plans.scss */
+#commo-plan h4 {
+  margin-top: 5px;
+}
+
+/* line 65, app/assets/stylesheets/commo_plans.scss */
+.r-b {
+  border-right: 1px solid black;
+  min-height: 30px;
+}
+
+/* line 69, app/assets/stylesheets/commo_plans.scss */
+.tall-row {
+  height: 30px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+/* line 75, app/assets/stylesheets/commo_plans.scss */
+.tbl-hd {
+  padding: 0px;
+  text-align: center;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* line 83, app/assets/stylesheets/commo_plans.scss */
+.head-spacer {
+  background-color: #f3f3f3;
+  min-height: 13px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+/* line 89, app/assets/stylesheets/commo_plans.scss */
+.wrapper {
+  /* this is to make sure border comes all the way to edge. */
+  margin-right: -1px;
+  /*  otherwise it is 1px shy */
+}
+
+/* line 93, app/assets/stylesheets/commo_plans.scss */
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: pink;
+}
+
+/* line 96, app/assets/stylesheets/commo_plans.scss */
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: pink;
+}
+
+/* line 99, app/assets/stylesheets/commo_plans.scss */
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: pink;
+}
+
+/* line 102, app/assets/stylesheets/commo_plans.scss */
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: pink;
+}
+
+/* line 106, app/assets/stylesheets/commo_plans.scss */
+.radio-channel {
+  min-height: 30px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  text-align: center;
+  verticle-align: middle;
+}
+
+/* line 112, app/assets/stylesheets/commo_plans.scss */
+.radio-channel :hover .new-channel {
+  display: block;
+}
+
+/* line 117, app/assets/stylesheets/commo_plans.scss */
+.radio-channel input {
+  width: 100%;
+}
+
+/* line 124, app/assets/stylesheets/commo_plans.scss */
+.new-channel {
+  postion: absolute;
+  background-color: yellow;
+  margin-left: -35px;
+  height: 30px;
+  width: 30px;
+}
+
+/* line 131, app/assets/stylesheets/commo_plans.scss */
+.special-instructions {
+  padding: 0px 10px;
+  height: 50px;
+  max-height: 50px;
+}
+
+/* line 133, app/assets/stylesheets/commo_plans.scss */
+.special-instructions textarea {
+  width: 100%;
+}
+
+/* line 139, app/assets/stylesheets/commo_plans.scss */
+.commo-item-form {
+  display: none;
+}
+
+/* line 142, app/assets/stylesheets/commo_plans.scss */
+input.new-commo-item {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d2d2d2;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 7px;
+  padding-bottom: 6px;
+  padding-left: 4px;
+  color: #242424;
+}
+
+/* line 156, app/assets/stylesheets/commo_plans.scss */
+.br {
+  border-right: 1px solid black;
+}
+
+/* line 159, app/assets/stylesheets/commo_plans.scss */
+.bb {
+  border-bottom: 1px solid black;
+}
+
+/* line 162, app/assets/stylesheets/commo_plans.scss */
+.commo-items {
+  margin-right: 20px;
+  font-weight: 500;
+}
+
+/* line 168, app/assets/stylesheets/commo_plans.scss */
+.page-break-row td {
+  background: #eef1f5;
+  color: #6b778c;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  padding: 4px 10px !important;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: normal !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* line 183, app/assets/stylesheets/commo_plans.scss */
+.add-page-row {
+  margin: 10px 0 20px;
+}
+
+/* line 185, app/assets/stylesheets/commo_plans.scss */
+.add-page-row form {
+  display: inline;
+  margin: 0;
+}
+
+/* line 186, app/assets/stylesheets/commo_plans.scss */
+.add-page-row .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 193, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 20px;
+}
+
+/* line 199, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions .inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 200, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 205, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint {
+  margin: 8px 0 12px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #5e6c84;
+  background: #f4f5f7;
+  border-left: 3px solid #b3bac5;
+  border-radius: 2px;
+}
+
+/* line 213, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint strong {
+  color: #172b4d;
+}
+
+/* line 214, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint em {
+  color: #6b778c;
+  font-style: normal;
+}
+
+/* line 218, app/assets/stylesheets/commo_plans.scss */
+.cp-chip {
+  position: absolute;
+  z-index: 1000;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(9, 30, 66, 0.2);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+/* line 232, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-copy {
+  background: #0052cc;
+  color: #fff;
+  border-color: #0043a4;
+}
+
+/* line 236, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-copy:hover {
+  background: #0043a4;
+}
+
+/* line 239, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-paste {
+  background: #fff;
+  color: #172b4d;
+  border-color: #0052cc;
+}
+
+/* line 243, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-paste:hover {
+  background: #eaf1fb;
+}
+
+/* line 249, app/assets/stylesheets/commo_plans.scss */
+.cp-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  padding: 8px 12px;
+  background: #172b4d;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* line 268, app/assets/stylesheets/commo_plans.scss */
+.cp-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* line 274, app/assets/stylesheets/commo_plans.scss */
+.cp-toast .cp-toast-cancel {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* line 284, app/assets/stylesheets/commo_plans.scss */
+.cp-toast .cp-toast-cancel:hover {
+  background: rgba(255, 255, 255, 0.22);
+}

@@ -244,13 +244,14 @@ input.new-commo-item {
   }
 }
 
-// Tiny transient toast at the bottom-right of the page.
+// Tiny toast at the bottom-right of the page. Used both for transient
+// flashes and for the "row copied" sticky state with a Cancel button.
 .cp-toast {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 1100;
-  padding: 8px 14px;
+  padding: 8px 12px;
   background: #172b4d;
   color: #fff;
   font-size: 12px;
@@ -260,8 +261,26 @@ input.new-commo-item {
   pointer-events: none;
   transform: translateY(6px);
   transition: opacity 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
   &.is-visible {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;   // sticky variant needs to receive clicks
+  }
+
+  .cp-toast-cancel {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    &:hover { background: rgba(255, 255, 255, 0.22); }
   }
 }
