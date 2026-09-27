@@ -79,7 +79,9 @@ Rails.application.routes.draw do
         delete :unpublish
       end
       resources :assignments
-      resources :commo_plans
+      resources :commo_plans do
+        member { post :add_page }
+      end
       resources :safety_messages
       resources :covers
     end

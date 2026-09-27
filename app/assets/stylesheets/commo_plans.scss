@@ -1,6 +1,11 @@
 #commo-plan {
   table {
     width: 100%;
+    // table-layout: fixed lets overflow:hidden actually clip inside td.
+    // Without it, browsers auto-expand columns to fit content, so a long
+    // Remarks value would grow the row instead of getting clipped —
+    // breaking the 16-rows-per-page pagination assumption.
+    table-layout: fixed;
     thead {
       height: 20px;
       border: 1px solid black;
@@ -14,6 +19,11 @@
     }
     td {
       border-right: 1px solid black;
+      // Single-line, clip anything longer. See .radio-channel below for
+      // the reasoning (page-height budget assumes fixed row heights).
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   font-size: .70em;
@@ -107,6 +117,9 @@
   input {
     width: 100%;
   }
+
+  // (nowrap + clip is handled by the general #commo-plan table td rule
+  // above; kept here as a reminder that row height depends on it.)
 }
 .new-channel {
   postion: absolute;
@@ -149,4 +162,40 @@ input.new-commo-item {
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
+}
+
+// Visual page marker between pages (16-channel groups) on the editor.
+.page-break-row td {
+  background: #eef1f5;
+  color: #6b778c;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  padding: 4px 10px !important;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: normal !important;      // override the nowrap on td
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+// "ADD ADDITIONAL PAGE" button row beneath the channel table.
+.add-page-row {
+  margin: 10px 0 20px;
+  form { display: inline; margin: 0; }
+  .muted { color: #6b778c; font-size: 12px; }
+}
+
+// Bottom-of-page action bar for the 205 editor. Flex row so the PRINT
+// link, the ADD ADDITIONAL PAGE button, and the "N channels" hint all
+// sit inline — Rails' button_to renders a full <form> which would
+// otherwise wrap onto its own line.
+.commo-plan-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 20px;
+
+  .inline-form { display: inline; margin: 0; padding: 0; }
+  .muted       { color: #6b778c; font-size: 12px; }
 }

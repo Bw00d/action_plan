@@ -59,45 +59,28 @@
             <th class="c3"><span class="">Remarks</span></th>
           </thead>
 
-          <% @commo_plan.commo_items.each do |i| %>
-            <tr class="radio-channel">
-                <td class="c1"><span class=""><%= best_in_place i,  :zone, :as => :input %></span></td>
-                <td class="c1"><span class=""><%= best_in_place i,  :ch_num, :as => :input %></span></td>
-                <td class="c-name"><span class=""><%= best_in_place i,  :channel_name, :as => :input %></span></td>
-                <td class="c3"><span class=""><%= best_in_place i,  :function, :as => :input %></span></td>
-                <td class="c2"><span class=""><%= best_in_place i,  :rx_freq, :as => :input %></span></td>
-                <td class="c-tone"><span class=""><%= best_in_place i,  :rx_tone, :as => :input %></span></td>
-                <td class="c2"><span class=""><%= best_in_place i,  :tx_freq, :as => :input %></span></td>
-                <td class="c-tone"><span class=""><%= best_in_place i,  :tx_tone, :as => :input %></span></td>
-                <td class="c4"><span class=""><%= best_in_place i,  :assignment, :as => :input %></span></td>
-                <td class="c-mode"><span class=""><%= best_in_place i,  :mode, :as => :input %></span></td>
-                <td class="c3"><span class=""><%= best_in_place i,  :remarks, :as => :input %></span></td>
-              </tr>
-          <% end %>
-            <% (16 - @commo_plan.commo_items.count).times do %>
-              <tr class="radio-channel blank-row">
-
-                <td class="c1"><span class=""></span>
-                  <span class="commo-item-form">
-                    <%= form_for @commo_item do |f| %>
-                      <%= f.hidden_field :commo_plan_id, value: @commo_plan.id %>
-                      <%= f.submit '+', class: "new-commo-item" %>
-                    <% end %>
-                  </span>
-
-                </td>
-                <td class="c1"><span class=""></span></td>
-                <td class="c-name"><span class=""></span></td>
-                <td class="c3"><span class=""></span></td>
-                <td class="c2"><span class=""></span></td>
-                <td class="c-tone"><span class=""></span></td>
-                <td class="c2"><span class=""></span></td>
-                <td class="c-tone"><span class=""></span></td>
-                <td class="c4"><span class=""></span></td>
-                <td class="c-mode"><span class=""></span></td>
-                <td class="c3"><span class=""></span></td>
-              </tr>
+          <%# All channels are pre-seeded (16 per page). Users just click
+              a cell to edit inline — no need to "add" a channel row. %>
+          <% @commo_plan.commo_items.each_with_index do |i, idx| %>
+            <% if idx.positive? && (idx % CommoPlan::CHANNELS_PER_PAGE).zero? %>
+              <%# Visual page break between logical pages so the editor
+                  hints at how the PDF will split. Purely decorative. %>
+              <tr class="page-break-row"><td colspan="11">Page <%= (idx / CommoPlan::CHANNELS_PER_PAGE) + 1 %></td></tr>
             <% end %>
+            <tr class="radio-channel">
+              <td class="c1"><%= best_in_place i, :zone, :as => :input %></td>
+              <td class="c1"><%= best_in_place i, :ch_num, :as => :input %></td>
+              <td class="c-name"><%= best_in_place i, :channel_name, :as => :input %></td>
+              <td class="c3"><%= best_in_place i, :function, :as => :input %></td>
+              <td class="c2"><%= best_in_place i, :rx_freq, :as => :input %></td>
+              <td class="c-tone"><%= best_in_place i, :rx_tone, :as => :input %></td>
+              <td class="c2"><%= best_in_place i, :tx_freq, :as => :input %></td>
+              <td class="c-tone"><%= best_in_place i, :tx_tone, :as => :input %></td>
+              <td class="c4"><%= best_in_place i, :assignment, :as => :input %></td>
+              <td class="c-mode"><%= best_in_place i, :mode, :as => :input %></td>
+              <td class="c3"><%= best_in_place i, :remarks, :as => :input %></td>
+            </tr>
+          <% end %>
         </table>
 
 
@@ -130,6 +113,17 @@
         </div>
       </div> 
     </div>
-     <div class="print-button"><%= link_to "PRINT", "../../#{@plan.id}/commo_plans/#{@commo_plan.id}/commo_plan_to_pdf.pdf", class: "btn btn-success float-left tiny", target: :_blank %></div>
+     <div class="commo-plan-actions">
+       <%= link_to "PRINT", "../../#{@plan.id}/commo_plans/#{@commo_plan.id}/commo_plan_to_pdf.pdf",
+                   class: "btn btn-success tiny", target: :_blank %>
+       <%= button_to "ADD ADDITIONAL PAGE",
+                     add_page_incident_plan_commo_plan_path(@incident, @plan, @commo_plan),
+                     method: :post,
+                     class:  "btn btn-primary tiny",
+                     form:   { class: "inline-form" } %>
+       <span class="muted">
+         Currently <%= @commo_plan.commo_items.count %> channels · <%= @commo_plan.page_count %> page<%= 's' unless @commo_plan.page_count == 1 %>
+       </span>
+     </div>
   </div>
 </div>

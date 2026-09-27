@@ -25,6 +25,22 @@ class CommoPlansController < ApplicationController
     @plan = Plan.find(@commo_plan.plan_id)
     @incident = Incident.find(@plan.incident_id)
     @commo_item = CommoItem.new
+    # Legacy plans created before the auto-seed change may have 0 or a
+    # partial page of channels. Top up to a full 16 rows so the form
+    # always looks complete.
+    @commo_plan.ensure_full_pages!
+  end
+
+  # POST /incidents/:incident_id/plans/:plan_id/commo_plans/:id/add_page
+  # Appends 16 blank channel rows to the plan — one more physical page
+  # on the PDF. Redirects back to the show view.
+  def add_page
+    @commo_plan = CommoPlan.find(params[:id])
+    @plan       = Plan.find(@commo_plan.plan_id)
+    @incident   = Incident.find(@plan.incident_id)
+    @commo_plan.add_page!
+    redirect_to incident_plan_commo_plan_path(@incident, @plan, @commo_plan),
+                notice: "Added page #{@commo_plan.page_count}."
   end
 
   def commo_plan_to_pdf

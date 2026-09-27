@@ -2,123 +2,148 @@
   /* ICS 205 prints landscape. Overrides the portrait @page rules from
      layouts/pdf.html.erb (later declarations win in CSS cascade). */
   @page { size: letter landscape; margin: 0.4in !important; }
+
+  /* Multi-page pagination: 16 channels per page (matches a standard
+     programmable radio). Each .cp-page forces its own physical page.
+     The last page skips the break so we don't emit a trailing blank. */
+  .cp-page {
+    page-break-after: always;
+    break-after: page;
+  }
+  .cp-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
 </style>
+
+<%
+  # Chunk the channel list into pages of 16. Always render at least one
+  # page even when there are no items (so blank plans still print with
+  # the header/footer + 16 empty rows).
+  channels_per_page = 16
+  channel_pages = @commo_plan.commo_items.each_slice(channels_per_page).to_a
+  channel_pages = [[]] if channel_pages.empty?
+  total_pages   = channel_pages.length
+%>
 
 <div class="container">
   <div class="col-xs-12 col-lg-10 center-block">
+    <div id="commo-plan">
+      <% channel_pages.each_with_index do |page_items, page_idx| %>
+        <div class="cp-page">
+          <%# ── Header ─────────────────────────────────────────────
+              Repeated on every page so someone reading page 2 knows
+              which incident / op period they're looking at. %>
+          <div class="row">
+            <div class="tall-row top-row">
+              <h4 class="center"><strong>INCIDENT RADIO COMMUNICATIONS PLAN(ICS 205)</strong></h4>
+            </div>
+            <div class="tall-row">
+              <div class="col-xs-3 r-b">
+                <span><strong>1. Incident Name</strong></span><br>
+                <span class="lg-padding-left"><%= @incident.name %></span>
+              </div>
+              <div class="col-xs-5 r-b">
+                <span><strong>2. Date</strong></span><br>
+                <span class="lg-padding-left"></span>
+                <%= @commo_plan.date_prepared %>
+              </div>
+              <div class="col-xs-4">
+                <span><strong>3. Operational Period:</strong></span><br>
+                <span class="sm-padding-left"><%= @commo_plan.ops_period %></span>
+              </div>
+            </div>
+            <div class="head-spacer"></div>
 
-  <div id="commo-plan">
+            <table>
+              <thead>
+                <th class="c1">Zone</th>
+                <th class="c1">Ch #</th>
+                <th class="c-name">Channel Name</th>
+                <th class="c3">Function</th>
+                <th class="c2">RX Freq</th>
+                <th class="c-tone">Tone</th>
+                <th class="c2">TX Freq</th>
+                <th class="c-tone">Tone</th>
+                <th class="c4">Assignment</th>
+                <th class="c-mode">Mode</th>
+                <th class="c3">Remarks</th>
+              </thead>
 
-
-      <div class="row">
-        <div class="tall-row top-row"> 
-          <h4 class="center"><strong>INCIDENT RADIO COMMUNICATIONS PLAN(ICS 205)</strong></h4>
-        </div>
-        <div class="tall-row">
-          <div class="col-xs-3 r-b">
-            <span class=""><strong>1. Incident Name</strong></span><br>
-            <span class="lg-padding-left"><%= @incident.name %></span>
+              <% page_items.each do |i| %>
+                <tr class="radio-channel">
+                  <td class="c1"><%= i.zone %></td>
+                  <td class="c1"><%= i.ch_num %></td>
+                  <td class="c-name"><%= i.channel_name %></td>
+                  <td class="c3"><%= i.function %></td>
+                  <td class="c2"><%= i.rx_freq %></td>
+                  <td class="c-tone"><%= i.rx_tone %></td>
+                  <td class="c2"><%= i.tx_freq %></td>
+                  <td class="c-tone"><%= i.tx_tone %></td>
+                  <td class="c4"><%= i.assignment %></td>
+                  <td class="c-mode"><%= i.mode %></td>
+                  <td class="c3"><%= i.remarks %></td>
+                </tr>
+              <% end %>
+              <%# Pad short pages to exactly channels_per_page rows so the
+                  table's bottom border always lands in the same place. %>
+              <% (channels_per_page - page_items.size).times do %>
+                <tr class="radio-channel blank-row">
+                  <td class="c1"></td>
+                  <td class="c1"></td>
+                  <td class="c-name"></td>
+                  <td class="c3"></td>
+                  <td class="c2"></td>
+                  <td class="c-tone"></td>
+                  <td class="c2"></td>
+                  <td class="c-tone"></td>
+                  <td class="c4"></td>
+                  <td class="c-mode"></td>
+                  <td class="c3"></td>
+                </tr>
+              <% end %>
+            </table>
           </div>
-          <div class="col-xs-5 r-b"><span class=""><strong>2. Date</strong></span><br>
-            <span class="lg-padding-left"></span>
-            <%= best_in_place @commo_plan,  :date_prepared, :as => :input, :place_holder => "(ENTER DATE PREPARED)", class: "sm-padding-left" %>
+
+          <%# ── Footer ─────────────────────────────────────────────
+              Every page is a standalone 205 — Special Instructions +
+              Prepared By + ICS 205 strip render on every page, not
+              just the last, so any single page can be handed out on
+              its own. Page X of Y is always present. %>
+          <div class="row">
+            <div class="br bl xs-padding-top">
+              <span class="sm-padding-left"><strong>Special Instructions</strong></span>
+              <div class="special-instructions"><%= simple_format(@commo_plan.special_instructions.to_s) %></div>
+            </div>
           </div>
-          <div class="col-xs-4 "><span class=""><strong>3. Operational Period:</strong></span><br>
-            <%= best_in_place @commo_plan,  :ops_period, :as => :input, :place_holder => "(ENTER OPS PERIOD)", class: "sm-padding-left" %>
+          <div class="row">
+            <div class="form-row xs-padding-top bl">
+              <span class="sm-padding-left"><strong>Prepared by:</strong></span>
+              <span class="lg-padding-left">Name:</span>
+              <span class="sm-padding-left"><%= @commo_plan.prepared_by %></span>
+              <span class="huge-padding-left">Signature:</span>
+            </div>
           </div>
-        </div>
-        <div class="head-spacer">
-          
-        </div>
-
-        <table>
-          <thead class="">
-            <th class="c1"><span class="">Zone</span></th>
-            <th class="c1"><span class="">Ch #</span></th>
-            <th class="c-name"><span class="">Channel Name</span></th>
-            <th class="c3"><span class="">Function</span></th>
-            <th class="c2"><span class="">RX Freq</span></th>
-            <th class="c-tone"><span class="">Tone</span></th>
-            <th class="c2"><span class="">TX Freq</span></th>
-            <th class="c-tone"><span class="">Tone</span></th>
-            <th class="c4"><span class="">Assignment</span></th>
-            <th class="c-mode"><span class="">Mode</span></th>
-            <th class="c3"><span class="">Remarks</span></th>
-          </thead>
-
-          <% @commo_plan.commo_items.each do |i| %>
-            <tr class="radio-channel">
-                <td class="c1"><span class=""><%= best_in_place i,  :zone, :as => :input %></span></td>
-                <td class="c1"><span class=""><%= best_in_place i,  :ch_num, :as => :input %></span></td>
-                <td class="c-name"><span class=""><%= best_in_place i,  :channel_name, :as => :input %></span></td>
-                <td class="c3"><span class=""><%= best_in_place i,  :function, :as => :input %></span></td>
-                <td class="c2"><span class=""><%= best_in_place i,  :rx_freq, :as => :input %></span></td>
-                <td class="c-tone"><span class=""><%= best_in_place i,  :rx_tone, :as => :input %></span></td>
-                <td class="c2"><span class=""><%= best_in_place i,  :tx_freq, :as => :input %></span></td>
-                <td class="c-tone"><span class=""><%= best_in_place i,  :tx_tone, :as => :input %></span></td>
-                <td class="c4"><span class=""><%= best_in_place i,  :assignment, :as => :input %></span></td>
-                <td class="c-mode"><span class=""><%= best_in_place i,  :mode, :as => :input %></span></td>
-                <td class="c3"><span class=""><%= best_in_place i,  :remarks, :as => :input %></span></td>
-              </tr>
-          <% end %>
-            <% (12 - @commo_plan.commo_items.count).times do %>
-              <tr class="radio-channel blank-row">
-
-                <td class="c1"><span class=""></span>
-                  <span class="commo-item-form">
-                    <%= form_for @commo_item do |f| %>
-                      <%= f.hidden_field :commo_plan_id, value: @commo_plan.id %>
-                      <%= f.submit '+', class: "new-commo-item" %>
-                    <% end %>
-                  </span>
-
-                </td>
-                <td class="c1"><span class=""></span></td>
-                <td class="c-name"><span class=""></span></td>
-                <td class="c3"><span class=""></span></td>
-                <td class="c2"><span class=""></span></td>
-                <td class="c-tone"><span class=""></span></td>
-                <td class="c2"><span class=""></span></td>
-                <td class="c-tone"><span class=""></span></td>
-                <td class="c4"><span class=""></span></td>
-                <td class="c-mode"><span class=""></span></td>
-                <td class="c3"><span class=""></span></td>
-              </tr>
-            <% end %>
-        </table>
-
-
-      </div>
-      <div class="row">
-        <div class="br bl  xs-padding-top">
-          <span class=" sm-padding-left"><strong>Special Instructions</strong></span>
-          <div class="special-instructions">
-            <%= best_in_place @commo_plan,  :special_instructions, :as => :textarea %>
+          <div class="row">
+            <div class="form-row bl bb">
+              <div class="col-xs-3 r-b xs-padding-top">
+                <span class="sm-padding-left"><strong>ICS 205</strong></span>
+              </div>
+              <div class="col-xs-6 xs-padding-top">
+                <span class="sm-padding-left"><strong>Date/Time:</strong></span>
+                <span class="sm-padding-left"><%= @commo_plan.date_signed %></span>
+              </div>
+              <div class="col-xs-3 xs-padding-top text-right">
+                <span class="sm-padding-right">Page <%= page_idx + 1 %> of <%= total_pages %></span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="form-row xs-padding-top bl">
-          <span class=" sm-padding-left"><strong>Prepared by:</strong></span>
-          <span class=" lg-padding-left">Name:</span> 
-          <%= best_in_place @commo_plan,  :prepared_by, :as => :input, :place_holder => "(ENTER NAME)", class: "sm-padding-left" %>
-          <span class=" huge-padding-left">Signature:</span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-row bl bb">
-          <div class="col-xs-3 r-b xs-padding-top">
-            <span class=" sm-padding-left"><strong>ICS 205</strong></span>
-          </div>
-          <div class="col-xs-9 xs-padding-top">
-            <span class=" sm-padding-left"><strong>Date/Time:</strong></span>
-            <%= best_in_place @commo_plan,  :date_signed, :as => :input, :place_holder => "(ENTER DATE)", class: "sm-padding-left" %>
-          </div>
-        </div>
-      </div> 
+      <% end %>
     </div>
   </div>
 </div>
+
 <script type="text/javascript">
   $(document).on("turbolinks:load", function() {
     $('#header').hide();
