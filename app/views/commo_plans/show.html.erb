@@ -67,22 +67,25 @@
                   hints at how the PDF will split. Purely decorative. %>
               <tr class="page-break-row"><td colspan="11">Page <%= (idx / CommoPlan::CHANNELS_PER_PAGE) + 1 %></td></tr>
             <% end %>
-            <tr class="radio-channel">
-              <td class="c1"><%= best_in_place i, :zone, :as => :input %></td>
-              <td class="c1"><%= best_in_place i, :ch_num, :as => :input %></td>
-              <td class="c-name"><%= best_in_place i, :channel_name, :as => :input %></td>
-              <td class="c3"><%= best_in_place i, :function, :as => :input %></td>
-              <td class="c2"><%= best_in_place i, :rx_freq, :as => :input %></td>
-              <td class="c-tone"><%= best_in_place i, :rx_tone, :as => :input %></td>
-              <td class="c2"><%= best_in_place i, :tx_freq, :as => :input %></td>
-              <td class="c-tone"><%= best_in_place i, :tx_tone, :as => :input %></td>
-              <td class="c4"><%= best_in_place i, :assignment, :as => :input %></td>
-              <td class="c-mode"><%= best_in_place i, :mode, :as => :input %></td>
-              <td class="c3"><%= best_in_place i, :remarks, :as => :input %></td>
+            <tr class="radio-channel" data-item-id="<%= i.id %>">
+              <td class="c1" data-field="zone"><%= best_in_place i, :zone, :as => :input %></td>
+              <td class="c1" data-field="ch_num"><%= best_in_place i, :ch_num, :as => :input %></td>
+              <td class="c-name" data-field="channel_name"><%= best_in_place i, :channel_name, :as => :input %></td>
+              <td class="c3" data-field="function"><%= best_in_place i, :function, :as => :input %></td>
+              <td class="c2" data-field="rx_freq"><%= best_in_place i, :rx_freq, :as => :input %></td>
+              <td class="c-tone" data-field="rx_tone"><%= best_in_place i, :rx_tone, :as => :input %></td>
+              <td class="c2" data-field="tx_freq"><%= best_in_place i, :tx_freq, :as => :input %></td>
+              <td class="c-tone" data-field="tx_tone"><%= best_in_place i, :tx_tone, :as => :input %></td>
+              <td class="c4" data-field="assignment"><%= best_in_place i, :assignment, :as => :input %></td>
+              <td class="c-mode" data-field="mode"><%= best_in_place i, :mode, :as => :input %></td>
+              <td class="c3" data-field="remarks"><%= best_in_place i, :remarks, :as => :input %></td>
             </tr>
           <% end %>
         </table>
 
+        <div class="cp-copy-hint no-print">
+          Tip: to copy a row to another row, drag-select across two or more cells in the source row — a <strong>COPY ROW</strong> chip will appear. Then hover the target row and click <strong>PASTE</strong>. <em>Zone and Ch # are not copied.</em>
+        </div>
 
       </div>
       <div class="row">

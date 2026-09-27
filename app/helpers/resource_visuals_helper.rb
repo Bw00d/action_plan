@@ -50,6 +50,7 @@ module ResourceVisualsHelper
     [->(code) { code.start_with?('MBM') }, 'boom-masticator.svg'],
     [->(code) { code.start_with?('SMM') }, 'skid-steer.svg'],
     [->(code) { code.start_with?('TBOT') }, 'boat.svg'],
+    [->(code) { code.start_with?('PACK') }, 'packer.svg'],
     [->(code) { code.start_with?('ARF') }, 'air-rescue.svg'],
     [->(code) { code.start_with?('UTV') || code.start_with?('ATV') || code.start_with?('VUTV') || code.start_with?('VATV') || code.start_with?('OHV') }, 'utv.svg'],
     [->(code) { code == 'UMOD' || code.start_with?('UAR') || code.include?('DRONE') },  'drone.svg']

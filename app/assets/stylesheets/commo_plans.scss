@@ -199,3 +199,69 @@ input.new-commo-item {
   .inline-form { display: inline; margin: 0; padding: 0; }
   .muted       { color: #6b778c; font-size: 12px; }
 }
+
+// One-line hint below the channel table explaining the row copy/paste
+// gesture. Doesn't render in print (no-print already covers that).
+.cp-copy-hint {
+  margin: 8px 0 12px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #5e6c84;
+  background: #f4f5f7;
+  border-left: 3px solid #b3bac5;
+  border-radius: 2px;
+  strong { color: #172b4d; }
+  em     { color: #6b778c; font-style: normal; }
+}
+
+// Floating "COPY ROW" / "PASTE" chips. Absolutely positioned via JS.
+.cp-chip {
+  position: absolute;
+  z-index: 1000;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(9, 30, 66, 0.20);
+  white-space: nowrap;
+  line-height: 1.4;
+
+  &.cp-chip-copy {
+    background: #0052cc;
+    color: #fff;
+    border-color: #0043a4;
+    &:hover { background: #0043a4; }
+  }
+
+  &.cp-chip-paste {
+    background: #fff;
+    color: #172b4d;
+    border-color: #0052cc;
+    &:hover { background: #eaf1fb; }
+  }
+}
+
+// Tiny transient toast at the bottom-right of the page.
+.cp-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  padding: 8px 14px;
+  background: #172b4d;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
