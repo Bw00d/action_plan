@@ -4,9 +4,10 @@
   <ul>
     <% if !@plan.commo_plan.nil? %>
       <% @plan.commo_plan.commo_items.each do |item| %>
+        <% next if item.function.blank? && item.channel_name.blank? %>
         <li class="commo-items"><%= f.check_box :commo_item_ids, {multiple: true}, item.id, nil %>
-        
-              <%= f.label :commo_item_ids, item.channel_name %></li>
+
+              <%= f.label :commo_item_ids, item.channel_name.presence || item.function %></li>
       <% end %>
     <% end %>
   </ul>
