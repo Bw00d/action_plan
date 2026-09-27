@@ -64,6 +64,29 @@
       </div>
     </div>
 
+    <!-- Location -->
+    <div class="form-incident-state form-attributes">
+      <p class="convo" >
+        Which state?
+      </p>
+      <%= form.label :state, "Incident State" %>
+        <%# US_STATES is { code => name }. form.select interprets a raw
+            hash as { label => value }, which would flip us so the DB
+            stores the long name and IRWIN's "US-<code>" lookup breaks.
+            Map to explicit [label, value] pairs so the code is stored
+            AND the human-readable name is what the user sees. Matches
+            what best_in_place does with the same hash. %>
+        <%= form.select :state,
+                        IncidentsHelper::US_STATES.map { |code, name| [name, code] },
+                        { include_blank: '— Select state —' },
+                        class: 'form-control attribute ',
+                        id: :incident_state %>
+      <div class="next-btn-container hideable ">
+         <div class="next-btn btn btn-dark tiny"> NEXT</div>
+      </div>
+    </div>
+
+
     <!-- Start Date -->
     <div class="form-start-date form-attributes">
       <p class="convo" >

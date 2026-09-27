@@ -43,6 +43,16 @@
         <%= form.text_field :location, id: :incident_location, class: 'form-control' %>
       </div>
 
+      <div class="form-group">
+        <%= form.label :state %>
+        <small class="text-muted">(required for IRWIN to look up incident data)</small>
+        <%= form.select :state,
+                        IncidentsHelper::US_STATES.map { |code, name| [name, code] },
+                        { include_blank: '— Select state —' },
+                        class: 'form-control',
+                        id: :incident_state %>
+      </div>
+
       <div class="row">
         <div class="col-lg-4 form-group">
           <%= form.label :latitude %>

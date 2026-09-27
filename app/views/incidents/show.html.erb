@@ -17,6 +17,7 @@
       
 
         <%= link_to 'Back', incidents_path %>
+        <%= link_to 'DELETE', @incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'red-text float-right tiny' %>
     </div> <!-- responsive wrapper -->
   </div>  <!-- row -->
 </div>   <!-- incident container -->

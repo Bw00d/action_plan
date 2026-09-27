@@ -79,6 +79,13 @@ $(document).on("turbolinks:load", function() {
       $(this).next('div.next-btn-container').css('visibility', 'visible');
     }
   });
+  // <select> fields (state, type, complexity) fire `change` on pick,
+  // not `keyup`. Parallel handler so their NEXT button appears too.
+  $('.attribute').on('change', function() {
+    if ($(this).val() !== '' && $(this).val() != null) {
+      $(this).next('div.next-btn-container').css('visibility', 'visible');
+    }
+  });
   $('.start-date-picker').on('click', function() {
     $(this).next('div.next-btn-container').css('visibility', 'visible');
   });
