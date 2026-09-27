@@ -1,0 +1,67 @@
+<% content_for :title, @feature.title %>
+
+<div class="container fr-page">
+  <p><%= link_to '← All feature requests', feature_requests_path, class: 'fr-back' %></p>
+
+  <article class="fr-detail">
+    <div class="fr-detail-head">
+      <%= button_to upvote_feature_request_path(@feature),
+                    method: :post,
+                    class:  "fr-upvote fr-upvote-lg #{'is-upvoted' if @feature.upvoted_by?(current_user)}",
+                    form:   { class: "fr-inline-form" },
+                    title:  (@feature.upvoted_by?(current_user) ? "You upvoted this — click to remove" : "Upvote") do %>
+        <span class="fr-upvote-arrow">▲</span>
+        <span class="fr-upvote-count"><%= @feature.upvotes.size %></span>
+      <% end %>
+
+      <div class="fr-detail-title-block">
+        <h1><%= @feature.title %></h1>
+        <div class="fr-item-meta">
+          <span><%= @feature.author_name %></span>
+          <span>·</span>
+          <span><%= @feature.created_at.strftime('%b %-d, %Y') %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-detail-body"><%= simple_format(@feature.description) %></div>
+  </article>
+
+  <section class="fr-comments">
+    <h3>Comments (<%= @comments.size %>)</h3>
+
+    <% if @comments.empty? %>
+      <p class="text-muted"><em>No comments yet — be the first.</em></p>
+    <% else %>
+      <ul class="fr-comment-list">
+        <% @comments.each do |c| %>
+          <li class="fr-comment" id="comment-<%= c.id %>">
+            <div class="fr-comment-head">
+              <span class="fr-comment-author"><%= c.author_name %></span>
+              <span class="fr-comment-when"><%= c.created_at.strftime('%b %-d, %Y %-I:%M %p') %></span>
+            </div>
+            <div class="fr-comment-body"><%= simple_format(c.body) %></div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <%= form_with model: @new_comment,
+                    url: add_comment_feature_request_path(@feature),
+                    method: :post,
+                    local: true,
+                    scope: :issue_report_comment,
+                    html: { class: 'fr-comment-form' } do |f| %>
+        <%= f.text_area :body,
+                        class: 'form-control',
+                        rows: 3,
+                        placeholder: 'Add a comment…',
+                        required: true %>
+        <%= f.submit 'Post Comment', class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    <% else %>
+      <p class="text-muted"><em>Sign in to comment or upvote.</em></p>
+    <% end %>
+  </section>
+</div>

@@ -27,6 +27,12 @@ Rails.application.routes.draw do
   resources :objectives, only: [:create, :update, :destroy]
   resources :plans
   resources :issue_reports, only: [:new, :create]
+  resources :feature_requests, only: [:index, :show] do
+    member do
+      post :upvote
+      post :add_comment
+    end
+  end
   root to: 'home#index'
 
   devise_for :users, controllers: {

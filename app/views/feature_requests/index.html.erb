@@ -1,0 +1,40 @@
+<% content_for :title, "Feature Requests" %>
+
+<div class="container fr-page">
+  <header class="fr-page-head">
+    <h1>Feature Requests</h1>
+    <p class="text-muted">Ideas users have suggested. Upvote what you'd like to see, or click through to comment.</p>
+  </header>
+
+  <% if @features.empty? %>
+    <p class="text-muted"><em>No feature requests yet. Submit one via the bug icon (bottom right).</em></p>
+  <% else %>
+    <ul class="fr-list">
+      <% @features.each do |feature| %>
+        <li class="fr-item">
+          <%= button_to upvote_feature_request_path(feature),
+                        method: :post,
+                        class:  "fr-upvote #{'is-upvoted' if feature.upvoted_by?(current_user)}",
+                        form:   { class: "fr-inline-form" },
+                        title:  (feature.upvoted_by?(current_user) ? "You upvoted this — click to remove" : "Upvote") do %>
+            <span class="fr-upvote-arrow">▲</span>
+            <span class="fr-upvote-count"><%= feature.upvotes.size %></span>
+          <% end %>
+
+          <div class="fr-item-body">
+            <%= link_to feature_request_path(feature), class: "fr-item-title" do %>
+              <%= feature.title %>
+            <% end %>
+            <div class="fr-item-meta">
+              <span><%= feature.author_name %></span>
+              <span>·</span>
+              <span><%= feature.created_at.strftime('%b %-d, %Y') %></span>
+              <span>·</span>
+              <span><%= @comment_counts[feature.id].to_i %> comment<%= 's' unless @comment_counts[feature.id].to_i == 1 %></span>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_26_000000) do
+ActiveRecord::Schema.define(version: 2026_09_27_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -337,6 +337,25 @@ ActiveRecord::Schema.define(version: 2026_09_26_000000) do
     t.bigint "user_id", null: false
     t.index ["incident_id", "user_id"], name: "index_incidents_users_on_incident_id_and_user_id"
     t.index ["user_id", "incident_id"], name: "index_incidents_users_on_user_id_and_incident_id"
+  end
+
+  create_table "issue_report_comments", force: :cascade do |t|
+    t.bigint "issue_report_id", null: false
+    t.bigint "user_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["issue_report_id"], name: "index_issue_report_comments_on_issue_report_id"
+    t.index ["user_id"], name: "index_issue_report_comments_on_user_id"
+  end
+
+  create_table "issue_report_upvotes", force: :cascade do |t|
+    t.bigint "issue_report_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["issue_report_id", "user_id"], name: "idx_issue_report_upvotes_unique", unique: true
+    t.index ["user_id"], name: "index_issue_report_upvotes_on_user_id"
   end
 
   create_table "issue_reports", force: :cascade do |t|
