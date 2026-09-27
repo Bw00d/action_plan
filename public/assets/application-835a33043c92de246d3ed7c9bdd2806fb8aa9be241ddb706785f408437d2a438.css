@@ -19121,10 +19121,11 @@ ul#action-buttons li {
   /* Constrain best_in_place inputs in Drop Off / Pick Up cells so they
      stay inside the narrow columns instead of using the browser's
      default text-input width. */
-  /* Section 8 lightning bolt affordance in the banner header.
-     Hidden until the banner row is hovered. The ID in the selector
-     out-specifies the legacy #add-freqs-button { margin-top: 75px }
-     rule from the pre-WF layout. */
+  /* Section 8 "SELECT CHANNELS" pill button in the banner header.
+     Always visible (was hover-only w/ a lightning bolt icon) so users
+     don't have to discover it. The ID in the selector out-specifies
+     the legacy #add-freqs-button { margin-top: 75px } rule from the
+     pre-WF layout. */
   /* Section 8 freq picker (checkbox list of ICS 205 items). */
   /* best_in_place inputs sit inside cells; keep them borderless / flush. */
 }
@@ -19424,35 +19425,33 @@ ul#action-buttons li {
   padding-top: 3pt;
 }
 
-/* line 494, app/assets/stylesheets/assignments.css.scss */
+/* line 495, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #add-freqs-button.banner-add-freqs {
   display: inline-block;
-  margin: 0 0 0 8px;
-  padding: 0;
+  margin: 0 0 0 10px;
+  padding: 2px 10px;
   left: auto;
   vertical-align: middle;
-  line-height: 1;
+  line-height: 1.6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #172b4d;
+  background: #fff;
+  border: 1px solid #b3bac5;
+  border-radius: 3px;
   cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease-in;
+  text-decoration: none;
 }
 
-/* line 506, app/assets/stylesheets/assignments.css.scss */
-.ics-204-wf-page #add-freqs-button.banner-add-freqs .banner-icon {
-  width: 14px;
-  height: 14px;
-  vertical-align: middle;
-  opacity: 0.85;
+/* line 511, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs:hover {
+  background: #eaf1fb;
+  border-color: #0052cc;
+  color: #0052cc;
 }
 
-/* line 512, app/assets/stylesheets/assignments.css.scss */
-.ics-204-wf-page .commo-banner tr:hover #add-freqs-button.banner-add-freqs {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* line 518, app/assets/stylesheets/assignments.css.scss */
+/* line 519, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #freq-form {
   display: none;
   padding: 8pt 10pt;
@@ -19461,32 +19460,32 @@ ul#action-buttons li {
   margin: 4pt 0;
 }
 
-/* line 524, app/assets/stylesheets/assignments.css.scss */
+/* line 525, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #freq-form ul {
   list-style: none;
   padding: 0;
   margin: 0 0 6pt;
 }
 
-/* line 528, app/assets/stylesheets/assignments.css.scss */
+/* line 529, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #freq-form ul li {
   display: inline-block;
   margin-right: 12pt;
   font-size: 9pt;
 }
 
-/* line 536, app/assets/stylesheets/assignments.css.scss */
+/* line 537, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row td {
   height: 30pt;
 }
 
-/* line 537, app/assets/stylesheets/assignments.css.scss */
+/* line 538, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row .sig-label {
   font-size: 8pt;
   color: #000;
 }
 
-/* line 541, app/assets/stylesheets/assignments.css.scss */
+/* line 542, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row .sig-input {
   width: 100%;
   min-width: 0;
@@ -19500,12 +19499,12 @@ ul#action-buttons li {
   text-align: left;
 }
 
-/* line 553, app/assets/stylesheets/assignments.css.scss */
+/* line 554, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row .sig-input:focus {
   background: #fffbe6;
 }
 
-/* line 555, app/assets/stylesheets/assignments.css.scss */
+/* line 556, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer {
   display: flex;
   align-items: flex-end;
@@ -19514,23 +19513,23 @@ ul#action-buttons li {
   font-weight: bold;
 }
 
-/* line 562, app/assets/stylesheets/assignments.css.scss */
+/* line 563, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer .left {
   width: 25%;
 }
 
-/* line 563, app/assets/stylesheets/assignments.css.scss */
+/* line 564, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer .mid {
   width: 50%;
   text-align: center;
 }
 
-/* line 564, app/assets/stylesheets/assignments.css.scss */
+/* line 565, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer .right {
   width: 25%;
 }
 
-/* line 567, app/assets/stylesheets/assignments.css.scss */
+/* line 568, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .best_in_place, .ics-204-wf-page input.best_in_place, .ics-204-wf-page textarea.best_in_place {
   font-family: inherit;
   font-size: inherit;
@@ -19538,12 +19537,12 @@ ul#action-buttons li {
   display: inline;
 }
 
-/* line 573, app/assets/stylesheets/assignments.css.scss */
+/* line 574, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page textarea.best_in_place {
   width: 100%;
 }
 
-/* line 575, app/assets/stylesheets/assignments.css.scss */
+/* line 576, app/assets/stylesheets/assignments.css.scss */
 td.no-padding {
   padding-right: none !important;
   padding-left: 15px !important;
@@ -19551,13 +19550,13 @@ td.no-padding {
 }
 
 @media print {
-  /* line 581, app/assets/stylesheets/assignments.css.scss */
+  /* line 582, app/assets/stylesheets/assignments.css.scss */
   div.header-row {
     background-color: #dcdcdc !important;
   }
 }
 
-/* line 585, app/assets/stylesheets/assignments.css.scss */
+/* line 586, app/assets/stylesheets/assignments.css.scss */
 div.solid {
   z-index: 7 !important;
   position: relative;
@@ -19842,8 +19841,8 @@ div.solid {
 
 /* line 223, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg {
-  width: 18px;
   height: 14px;
+  width: auto;
   fill: currentColor;
 }
 
@@ -20225,87 +20224,91 @@ input#checkin_order_number {
 /* line 2, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table {
   width: 100%;
+  table-layout: fixed;
 }
 
-/* line 4, app/assets/stylesheets/commo_plans.scss */
+/* line 9, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table thead {
   height: 20px;
   border: 1px solid black;
 }
 
-/* line 8, app/assets/stylesheets/commo_plans.scss */
+/* line 13, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table th {
   text-align: center;
   border-right: 1px solid black;
 }
 
-/* line 12, app/assets/stylesheets/commo_plans.scss */
+/* line 17, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table tr {
   height: 30px;
 }
 
-/* line 15, app/assets/stylesheets/commo_plans.scss */
+/* line 20, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table td {
   border-right: 1px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* line 21, app/assets/stylesheets/commo_plans.scss */
+/* line 31, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .plan-panel-head {
   font-size: 1em !important;
 }
 
-/* line 24, app/assets/stylesheets/commo_plans.scss */
+/* line 34, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .top-row {
   text-align: center;
 }
 
-/* line 27, app/assets/stylesheets/commo_plans.scss */
+/* line 37, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c1 {
   width: 5%;
 }
 
-/* line 31, app/assets/stylesheets/commo_plans.scss */
+/* line 41, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c2 {
   width: 8%;
 }
 
-/* line 35, app/assets/stylesheets/commo_plans.scss */
+/* line 45, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c3 {
   width: 15%;
 }
 
-/* line 39, app/assets/stylesheets/commo_plans.scss */
+/* line 49, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c4 {
   width: 13%;
 }
 
-/* line 48, app/assets/stylesheets/commo_plans.scss */
+/* line 58, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-name {
   width: 13%;
 }
 
-/* line 49, app/assets/stylesheets/commo_plans.scss */
+/* line 59, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-tone {
   width: 6%;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 60, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-mode {
   width: 6%;
 }
 
-/* line 51, app/assets/stylesheets/commo_plans.scss */
+/* line 61, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 55, app/assets/stylesheets/commo_plans.scss */
+/* line 65, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 59, app/assets/stylesheets/commo_plans.scss */
+/* line 69, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -20313,7 +20316,7 @@ input#checkin_order_number {
   border-bottom: 1px solid black;
 }
 
-/* line 65, app/assets/stylesheets/commo_plans.scss */
+/* line 75, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -20323,7 +20326,7 @@ input#checkin_order_number {
   overflow: hidden;
 }
 
-/* line 73, app/assets/stylesheets/commo_plans.scss */
+/* line 83, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -20331,38 +20334,38 @@ input#checkin_order_number {
   border-left: 1px solid black;
 }
 
-/* line 79, app/assets/stylesheets/commo_plans.scss */
+/* line 89, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 83, app/assets/stylesheets/commo_plans.scss */
+/* line 93, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 86, app/assets/stylesheets/commo_plans.scss */
+/* line 96, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 89, app/assets/stylesheets/commo_plans.scss */
+/* line 99, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 92, app/assets/stylesheets/commo_plans.scss */
+/* line 102, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 96, app/assets/stylesheets/commo_plans.scss */
+/* line 106, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -20371,17 +20374,17 @@ input#checkin_order_number {
   verticle-align: middle;
 }
 
-/* line 102, app/assets/stylesheets/commo_plans.scss */
+/* line 112, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 107, app/assets/stylesheets/commo_plans.scss */
+/* line 117, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 111, app/assets/stylesheets/commo_plans.scss */
+/* line 124, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -20390,24 +20393,24 @@ input#checkin_order_number {
   width: 30px;
 }
 
-/* line 118, app/assets/stylesheets/commo_plans.scss */
+/* line 131, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 120, app/assets/stylesheets/commo_plans.scss */
+/* line 133, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 126, app/assets/stylesheets/commo_plans.scss */
+/* line 139, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 129, app/assets/stylesheets/commo_plans.scss */
+/* line 142, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -20422,20 +20425,181 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 143, app/assets/stylesheets/commo_plans.scss */
+/* line 156, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 146, app/assets/stylesheets/commo_plans.scss */
+/* line 159, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 149, app/assets/stylesheets/commo_plans.scss */
+/* line 162, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
+}
+
+/* line 168, app/assets/stylesheets/commo_plans.scss */
+.page-break-row td {
+  background: #eef1f5;
+  color: #6b778c;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  padding: 4px 10px !important;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: normal !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* line 183, app/assets/stylesheets/commo_plans.scss */
+.add-page-row {
+  margin: 10px 0 20px;
+}
+
+/* line 185, app/assets/stylesheets/commo_plans.scss */
+.add-page-row form {
+  display: inline;
+  margin: 0;
+}
+
+/* line 186, app/assets/stylesheets/commo_plans.scss */
+.add-page-row .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 193, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 20px;
+}
+
+/* line 199, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions .inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 200, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 205, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint {
+  margin: 8px 0 12px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #5e6c84;
+  background: #f4f5f7;
+  border-left: 3px solid #b3bac5;
+  border-radius: 2px;
+}
+
+/* line 213, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint strong {
+  color: #172b4d;
+}
+
+/* line 214, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint em {
+  color: #6b778c;
+  font-style: normal;
+}
+
+/* line 218, app/assets/stylesheets/commo_plans.scss */
+.cp-chip {
+  position: absolute;
+  z-index: 1000;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(9, 30, 66, 0.2);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+/* line 232, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-copy {
+  background: #0052cc;
+  color: #fff;
+  border-color: #0043a4;
+}
+
+/* line 236, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-copy:hover {
+  background: #0043a4;
+}
+
+/* line 239, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-paste {
+  background: #fff;
+  color: #172b4d;
+  border-color: #0052cc;
+}
+
+/* line 243, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-paste:hover {
+  background: #eaf1fb;
+}
+
+/* line 249, app/assets/stylesheets/commo_plans.scss */
+.cp-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  padding: 8px 12px;
+  background: #172b4d;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* line 268, app/assets/stylesheets/commo_plans.scss */
+.cp-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* line 274, app/assets/stylesheets/commo_plans.scss */
+.cp-toast .cp-toast-cancel {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* line 284, app/assets/stylesheets/commo_plans.scss */
+.cp-toast .cp-toast-cancel:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 /* line 1, app/assets/stylesheets/covers.css.scss */
 .block {
@@ -24151,6 +24315,299 @@ body.ir-modal-open {
     display: none !important;
   }
 }
+
+/* line 138, app/assets/stylesheets/issue_report.scss */
+.ir-features-link {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+/* line 144, app/assets/stylesheets/issue_report.scss */
+.ir-features-link .ir-features-link-anchor {
+  font-size: 12px;
+  color: #0052cc;
+  text-decoration: none;
+}
+
+/* line 148, app/assets/stylesheets/issue_report.scss */
+.ir-features-link .ir-features-link-anchor:hover {
+  text-decoration: underline;
+}
+
+/* line 153, app/assets/stylesheets/issue_report.scss */
+.fr-page {
+  max-width: 780px;
+  margin: 30px auto 60px;
+}
+
+/* line 157, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head {
+  margin-bottom: 20px;
+}
+
+/* line 159, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* line 160, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head .text-muted {
+  color: #6b778c;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* line 163, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-back {
+  color: #5e6c84;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+/* line 167, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-back:hover {
+  color: #172b4d;
+  text-decoration: underline;
+}
+
+/* line 171, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 174, app/assets/stylesheets/issue_report.scss */
+.fr-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 180, app/assets/stylesheets/issue_report.scss */
+.fr-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+/* line 190, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* line 192, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  text-decoration: none;
+}
+
+/* line 198, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-title:hover {
+  color: #0052cc;
+  text-decoration: underline;
+}
+
+/* line 201, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b778c;
+}
+
+/* line 205, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-meta span + span {
+  margin-left: 2px;
+}
+
+/* line 211, app/assets/stylesheets/issue_report.scss */
+.fr-upvote {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #b3bac5;
+  border-radius: 4px;
+  background: #f4f5f7;
+  color: #5e6c84;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+/* line 228, app/assets/stylesheets/issue_report.scss */
+.fr-upvote .fr-upvote-arrow {
+  font-size: 9px;
+  line-height: 1;
+}
+
+/* line 229, app/assets/stylesheets/issue_report.scss */
+.fr-upvote .fr-upvote-count {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* line 231, app/assets/stylesheets/issue_report.scss */
+.fr-upvote:hover {
+  background: #eaf1fb;
+  border-color: #0052cc;
+  color: #0052cc;
+}
+
+/* line 237, app/assets/stylesheets/issue_report.scss */
+.fr-upvote.is-upvoted {
+  background: #0052cc;
+  border-color: #0043a4;
+  color: #fff;
+}
+
+/* line 241, app/assets/stylesheets/issue_report.scss */
+.fr-upvote.is-upvoted:hover {
+  background: #0043a4;
+}
+
+/* line 247, app/assets/stylesheets/issue_report.scss */
+.fr-upvote-lg {
+  /* same 30x30 as .fr-upvote */
+}
+
+/* line 250, app/assets/stylesheets/issue_report.scss */
+.fr-detail {
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+}
+
+/* line 257, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+/* line 264, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-title-block {
+  flex: 1;
+  min-width: 0;
+}
+
+/* line 267, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-title-block h1 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* line 270, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-item-meta {
+  font-size: 12px;
+  color: #6b778c;
+}
+
+/* line 272, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-body {
+  color: #172b4d;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* line 276, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 281, app/assets/stylesheets/issue_report.scss */
+.fr-comments h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  margin: 0 0 12px;
+}
+
+/* line 288, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+/* line 294, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment {
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+/* line 301, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+/* line 307, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-author {
+  font-weight: 600;
+  color: #172b4d;
+  font-size: 13px;
+}
+
+/* line 308, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-when {
+  color: #8993a4;
+  font-size: 11px;
+}
+
+/* line 309, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-body {
+  color: #172b4d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* line 310, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 312, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-form {
+  background: #fafbfc;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+/* line 317, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-form textarea {
+  margin-bottom: 8px;
+}
 /* line 1, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview {
   padding-top: 20px;
@@ -26690,10 +27147,11 @@ ul#action-buttons li {
   /* Constrain best_in_place inputs in Drop Off / Pick Up cells so they
      stay inside the narrow columns instead of using the browser's
      default text-input width. */
-  /* Section 8 lightning bolt affordance in the banner header.
-     Hidden until the banner row is hovered. The ID in the selector
-     out-specifies the legacy #add-freqs-button { margin-top: 75px }
-     rule from the pre-WF layout. */
+  /* Section 8 "SELECT CHANNELS" pill button in the banner header.
+     Always visible (was hover-only w/ a lightning bolt icon) so users
+     don't have to discover it. The ID in the selector out-specifies
+     the legacy #add-freqs-button { margin-top: 75px } rule from the
+     pre-WF layout. */
   /* Section 8 freq picker (checkbox list of ICS 205 items). */
   /* best_in_place inputs sit inside cells; keep them borderless / flush. */
 }
@@ -26993,35 +27451,33 @@ ul#action-buttons li {
   padding-top: 3pt;
 }
 
-/* line 494, app/assets/stylesheets/assignments.css.scss */
+/* line 495, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #add-freqs-button.banner-add-freqs {
   display: inline-block;
-  margin: 0 0 0 8px;
-  padding: 0;
+  margin: 0 0 0 10px;
+  padding: 2px 10px;
   left: auto;
   vertical-align: middle;
-  line-height: 1;
+  line-height: 1.6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #172b4d;
+  background: #fff;
+  border: 1px solid #b3bac5;
+  border-radius: 3px;
   cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease-in;
+  text-decoration: none;
 }
 
-/* line 506, app/assets/stylesheets/assignments.css.scss */
-.ics-204-wf-page #add-freqs-button.banner-add-freqs .banner-icon {
-  width: 14px;
-  height: 14px;
-  vertical-align: middle;
-  opacity: 0.85;
+/* line 511, app/assets/stylesheets/assignments.css.scss */
+.ics-204-wf-page #add-freqs-button.banner-add-freqs:hover {
+  background: #eaf1fb;
+  border-color: #0052cc;
+  color: #0052cc;
 }
 
-/* line 512, app/assets/stylesheets/assignments.css.scss */
-.ics-204-wf-page .commo-banner tr:hover #add-freqs-button.banner-add-freqs {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* line 518, app/assets/stylesheets/assignments.css.scss */
+/* line 519, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #freq-form {
   display: none;
   padding: 8pt 10pt;
@@ -27030,32 +27486,32 @@ ul#action-buttons li {
   margin: 4pt 0;
 }
 
-/* line 524, app/assets/stylesheets/assignments.css.scss */
+/* line 525, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #freq-form ul {
   list-style: none;
   padding: 0;
   margin: 0 0 6pt;
 }
 
-/* line 528, app/assets/stylesheets/assignments.css.scss */
+/* line 529, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page #freq-form ul li {
   display: inline-block;
   margin-right: 12pt;
   font-size: 9pt;
 }
 
-/* line 536, app/assets/stylesheets/assignments.css.scss */
+/* line 537, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row td {
   height: 30pt;
 }
 
-/* line 537, app/assets/stylesheets/assignments.css.scss */
+/* line 538, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row .sig-label {
   font-size: 8pt;
   color: #000;
 }
 
-/* line 541, app/assets/stylesheets/assignments.css.scss */
+/* line 542, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row .sig-input {
   width: 100%;
   min-width: 0;
@@ -27069,12 +27525,12 @@ ul#action-buttons li {
   text-align: left;
 }
 
-/* line 553, app/assets/stylesheets/assignments.css.scss */
+/* line 554, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .sig-row .sig-input:focus {
   background: #fffbe6;
 }
 
-/* line 555, app/assets/stylesheets/assignments.css.scss */
+/* line 556, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer {
   display: flex;
   align-items: flex-end;
@@ -27083,23 +27539,23 @@ ul#action-buttons li {
   font-weight: bold;
 }
 
-/* line 562, app/assets/stylesheets/assignments.css.scss */
+/* line 563, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer .left {
   width: 25%;
 }
 
-/* line 563, app/assets/stylesheets/assignments.css.scss */
+/* line 564, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer .mid {
   width: 50%;
   text-align: center;
 }
 
-/* line 564, app/assets/stylesheets/assignments.css.scss */
+/* line 565, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .footer .right {
   width: 25%;
 }
 
-/* line 567, app/assets/stylesheets/assignments.css.scss */
+/* line 568, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page .best_in_place, .ics-204-wf-page input.best_in_place, .ics-204-wf-page textarea.best_in_place {
   font-family: inherit;
   font-size: inherit;
@@ -27107,12 +27563,12 @@ ul#action-buttons li {
   display: inline;
 }
 
-/* line 573, app/assets/stylesheets/assignments.css.scss */
+/* line 574, app/assets/stylesheets/assignments.css.scss */
 .ics-204-wf-page textarea.best_in_place {
   width: 100%;
 }
 
-/* line 575, app/assets/stylesheets/assignments.css.scss */
+/* line 576, app/assets/stylesheets/assignments.css.scss */
 td.no-padding {
   padding-right: none !important;
   padding-left: 15px !important;
@@ -27120,13 +27576,13 @@ td.no-padding {
 }
 
 @media print {
-  /* line 581, app/assets/stylesheets/assignments.css.scss */
+  /* line 582, app/assets/stylesheets/assignments.css.scss */
   div.header-row {
     background-color: #dcdcdc !important;
   }
 }
 
-/* line 585, app/assets/stylesheets/assignments.css.scss */
+/* line 586, app/assets/stylesheets/assignments.css.scss */
 div.solid {
   z-index: 7 !important;
   position: relative;
@@ -28371,87 +28827,91 @@ div.solid {
 /* line 2, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table {
   width: 100%;
+  table-layout: fixed;
 }
 
-/* line 4, app/assets/stylesheets/commo_plans.scss */
+/* line 9, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table thead {
   height: 20px;
   border: 1px solid black;
 }
 
-/* line 8, app/assets/stylesheets/commo_plans.scss */
+/* line 13, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table th {
   text-align: center;
   border-right: 1px solid black;
 }
 
-/* line 12, app/assets/stylesheets/commo_plans.scss */
+/* line 17, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table tr {
   height: 30px;
 }
 
-/* line 15, app/assets/stylesheets/commo_plans.scss */
+/* line 20, app/assets/stylesheets/commo_plans.scss */
 #commo-plan table td {
   border-right: 1px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* line 21, app/assets/stylesheets/commo_plans.scss */
+/* line 31, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .plan-panel-head {
   font-size: 1em !important;
 }
 
-/* line 24, app/assets/stylesheets/commo_plans.scss */
+/* line 34, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .top-row {
   text-align: center;
 }
 
-/* line 27, app/assets/stylesheets/commo_plans.scss */
+/* line 37, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c1 {
   width: 5%;
 }
 
-/* line 31, app/assets/stylesheets/commo_plans.scss */
+/* line 41, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c2 {
   width: 8%;
 }
 
-/* line 35, app/assets/stylesheets/commo_plans.scss */
+/* line 45, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c3 {
   width: 15%;
 }
 
-/* line 39, app/assets/stylesheets/commo_plans.scss */
+/* line 49, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c4 {
   width: 13%;
 }
 
-/* line 48, app/assets/stylesheets/commo_plans.scss */
+/* line 58, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-name {
   width: 13%;
 }
 
-/* line 49, app/assets/stylesheets/commo_plans.scss */
+/* line 59, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-tone {
   width: 6%;
 }
 
-/* line 50, app/assets/stylesheets/commo_plans.scss */
+/* line 60, app/assets/stylesheets/commo_plans.scss */
 #commo-plan .c-mode {
   width: 6%;
 }
 
-/* line 51, app/assets/stylesheets/commo_plans.scss */
+/* line 61, app/assets/stylesheets/commo_plans.scss */
 #commo-plan h4 {
   margin-top: 5px;
 }
 
-/* line 55, app/assets/stylesheets/commo_plans.scss */
+/* line 65, app/assets/stylesheets/commo_plans.scss */
 .r-b {
   border-right: 1px solid black;
   min-height: 30px;
 }
 
-/* line 59, app/assets/stylesheets/commo_plans.scss */
+/* line 69, app/assets/stylesheets/commo_plans.scss */
 .tall-row {
   height: 30px;
   border-left: 1px solid black;
@@ -28459,7 +28919,7 @@ div.solid {
   border-bottom: 1px solid black;
 }
 
-/* line 65, app/assets/stylesheets/commo_plans.scss */
+/* line 75, app/assets/stylesheets/commo_plans.scss */
 .tbl-hd {
   padding: 0px;
   text-align: center;
@@ -28469,7 +28929,7 @@ div.solid {
   overflow: hidden;
 }
 
-/* line 73, app/assets/stylesheets/commo_plans.scss */
+/* line 83, app/assets/stylesheets/commo_plans.scss */
 .head-spacer {
   background-color: #f3f3f3;
   min-height: 13px;
@@ -28477,38 +28937,38 @@ div.solid {
   border-left: 1px solid black;
 }
 
-/* line 79, app/assets/stylesheets/commo_plans.scss */
+/* line 89, app/assets/stylesheets/commo_plans.scss */
 .wrapper {
   /* this is to make sure border comes all the way to edge. */
   margin-right: -1px;
   /*  otherwise it is 1px shy */
 }
 
-/* line 83, app/assets/stylesheets/commo_plans.scss */
+/* line 93, app/assets/stylesheets/commo_plans.scss */
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: pink;
 }
 
-/* line 86, app/assets/stylesheets/commo_plans.scss */
+/* line 96, app/assets/stylesheets/commo_plans.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: pink;
 }
 
-/* line 89, app/assets/stylesheets/commo_plans.scss */
+/* line 99, app/assets/stylesheets/commo_plans.scss */
 :-ms-input-placeholder {
   /* IE 10+ */
   color: pink;
 }
 
-/* line 92, app/assets/stylesheets/commo_plans.scss */
+/* line 102, app/assets/stylesheets/commo_plans.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: pink;
 }
 
-/* line 96, app/assets/stylesheets/commo_plans.scss */
+/* line 106, app/assets/stylesheets/commo_plans.scss */
 .radio-channel {
   min-height: 30px;
   border-left: 1px solid black;
@@ -28517,17 +28977,17 @@ div.solid {
   verticle-align: middle;
 }
 
-/* line 102, app/assets/stylesheets/commo_plans.scss */
+/* line 112, app/assets/stylesheets/commo_plans.scss */
 .radio-channel :hover .new-channel {
   display: block;
 }
 
-/* line 107, app/assets/stylesheets/commo_plans.scss */
+/* line 117, app/assets/stylesheets/commo_plans.scss */
 .radio-channel input {
   width: 100%;
 }
 
-/* line 111, app/assets/stylesheets/commo_plans.scss */
+/* line 124, app/assets/stylesheets/commo_plans.scss */
 .new-channel {
   postion: absolute;
   background-color: yellow;
@@ -28536,24 +28996,24 @@ div.solid {
   width: 30px;
 }
 
-/* line 118, app/assets/stylesheets/commo_plans.scss */
+/* line 131, app/assets/stylesheets/commo_plans.scss */
 .special-instructions {
   padding: 0px 10px;
   height: 50px;
   max-height: 50px;
 }
 
-/* line 120, app/assets/stylesheets/commo_plans.scss */
+/* line 133, app/assets/stylesheets/commo_plans.scss */
 .special-instructions textarea {
   width: 100%;
 }
 
-/* line 126, app/assets/stylesheets/commo_plans.scss */
+/* line 139, app/assets/stylesheets/commo_plans.scss */
 .commo-item-form {
   display: none;
 }
 
-/* line 129, app/assets/stylesheets/commo_plans.scss */
+/* line 142, app/assets/stylesheets/commo_plans.scss */
 input.new-commo-item {
   width: 25px;
   height: 25px;
@@ -28568,20 +29028,181 @@ input.new-commo-item {
   color: #242424;
 }
 
-/* line 143, app/assets/stylesheets/commo_plans.scss */
+/* line 156, app/assets/stylesheets/commo_plans.scss */
 .br {
   border-right: 1px solid black;
 }
 
-/* line 146, app/assets/stylesheets/commo_plans.scss */
+/* line 159, app/assets/stylesheets/commo_plans.scss */
 .bb {
   border-bottom: 1px solid black;
 }
 
-/* line 149, app/assets/stylesheets/commo_plans.scss */
+/* line 162, app/assets/stylesheets/commo_plans.scss */
 .commo-items {
   margin-right: 20px;
   font-weight: 500;
+}
+
+/* line 168, app/assets/stylesheets/commo_plans.scss */
+.page-break-row td {
+  background: #eef1f5;
+  color: #6b778c;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  padding: 4px 10px !important;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: normal !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* line 183, app/assets/stylesheets/commo_plans.scss */
+.add-page-row {
+  margin: 10px 0 20px;
+}
+
+/* line 185, app/assets/stylesheets/commo_plans.scss */
+.add-page-row form {
+  display: inline;
+  margin: 0;
+}
+
+/* line 186, app/assets/stylesheets/commo_plans.scss */
+.add-page-row .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 193, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 20px;
+}
+
+/* line 199, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions .inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 200, app/assets/stylesheets/commo_plans.scss */
+.commo-plan-actions .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 205, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint {
+  margin: 8px 0 12px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #5e6c84;
+  background: #f4f5f7;
+  border-left: 3px solid #b3bac5;
+  border-radius: 2px;
+}
+
+/* line 213, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint strong {
+  color: #172b4d;
+}
+
+/* line 214, app/assets/stylesheets/commo_plans.scss */
+.cp-copy-hint em {
+  color: #6b778c;
+  font-style: normal;
+}
+
+/* line 218, app/assets/stylesheets/commo_plans.scss */
+.cp-chip {
+  position: absolute;
+  z-index: 1000;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(9, 30, 66, 0.2);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+/* line 232, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-copy {
+  background: #0052cc;
+  color: #fff;
+  border-color: #0043a4;
+}
+
+/* line 236, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-copy:hover {
+  background: #0043a4;
+}
+
+/* line 239, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-paste {
+  background: #fff;
+  color: #172b4d;
+  border-color: #0052cc;
+}
+
+/* line 243, app/assets/stylesheets/commo_plans.scss */
+.cp-chip.cp-chip-paste:hover {
+  background: #eaf1fb;
+}
+
+/* line 249, app/assets/stylesheets/commo_plans.scss */
+.cp-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  padding: 8px 12px;
+  background: #172b4d;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* line 268, app/assets/stylesheets/commo_plans.scss */
+.cp-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* line 274, app/assets/stylesheets/commo_plans.scss */
+.cp-toast .cp-toast-cancel {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* line 284, app/assets/stylesheets/commo_plans.scss */
+.cp-toast .cp-toast-cancel:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 
 @media all {

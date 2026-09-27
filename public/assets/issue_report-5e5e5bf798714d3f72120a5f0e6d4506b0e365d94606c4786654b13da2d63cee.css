@@ -1,0 +1,473 @@
+/* line 4, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 900;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: #3d3d3d;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* line 23, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:hover {
+  background: #d9534f;
+  transform: translateY(-2px);
+}
+
+/* line 24, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:active {
+  transform: translateY(0);
+}
+
+/* line 25, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn:focus {
+  outline: 2px solid #4286f4;
+  outline-offset: 2px;
+}
+
+/* line 27, app/assets/stylesheets/issue_report.scss */
+.issue-report-btn .fa {
+  line-height: 1;
+}
+
+/* line 30, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+}
+
+/* line 35, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* line 41, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-dialog {
+  position: relative;
+  width: 92vw;
+  max-width: 600px;
+  margin: 8vh auto 0;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+/* line 55, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-dialog *,
+.issue-report-modal .ir-dialog *::before,
+.issue-report-modal .ir-dialog *::after {
+  box-sizing: border-box;
+}
+
+/* line 59, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* line 66, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* line 67, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header .ir-close {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: #888;
+  padding: 0 4px;
+}
+
+/* line 75, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-header .ir-close:hover {
+  color: #333;
+}
+
+/* line 79, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body {
+  padding: 20px 24px 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* line 88, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body .form-control,
+.issue-report-modal .ir-body input[type="text"],
+.issue-report-modal .ir-body input[type="email"],
+.issue-report-modal .ir-body textarea,
+.issue-report-modal .ir-body select {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+/* line 97, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-body textarea {
+  resize: vertical;
+}
+
+/* line 100, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-loading {
+  text-align: center;
+  color: #888;
+  padding: 24px 0;
+}
+
+/* line 106, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-row {
+  display: flex;
+  gap: 16px;
+}
+
+/* line 111, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* line 118, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-kind-option input {
+  margin: 0;
+}
+
+/* line 121, app/assets/stylesheets/issue_report.scss */
+.issue-report-modal .ir-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* line 129, app/assets/stylesheets/issue_report.scss */
+body.ir-modal-open {
+  overflow: hidden;
+}
+
+@media print {
+  /* line 133, app/assets/stylesheets/issue_report.scss */
+  .issue-report-btn,
+.issue-report-modal {
+    display: none !important;
+  }
+}
+
+/* line 138, app/assets/stylesheets/issue_report.scss */
+.ir-features-link {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+/* line 144, app/assets/stylesheets/issue_report.scss */
+.ir-features-link .ir-features-link-anchor {
+  font-size: 12px;
+  color: #0052cc;
+  text-decoration: none;
+}
+
+/* line 148, app/assets/stylesheets/issue_report.scss */
+.ir-features-link .ir-features-link-anchor:hover {
+  text-decoration: underline;
+}
+
+/* line 153, app/assets/stylesheets/issue_report.scss */
+.fr-page {
+  max-width: 780px;
+  margin: 30px auto 60px;
+}
+
+/* line 157, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head {
+  margin-bottom: 20px;
+}
+
+/* line 159, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* line 160, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head .text-muted {
+  color: #6b778c;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* line 163, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-back {
+  color: #5e6c84;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+/* line 167, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-back:hover {
+  color: #172b4d;
+  text-decoration: underline;
+}
+
+/* line 171, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 174, app/assets/stylesheets/issue_report.scss */
+.fr-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 180, app/assets/stylesheets/issue_report.scss */
+.fr-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+/* line 190, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* line 192, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  text-decoration: none;
+}
+
+/* line 198, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-title:hover {
+  color: #0052cc;
+  text-decoration: underline;
+}
+
+/* line 201, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b778c;
+}
+
+/* line 205, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-meta span + span {
+  margin-left: 2px;
+}
+
+/* line 211, app/assets/stylesheets/issue_report.scss */
+.fr-upvote {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #b3bac5;
+  border-radius: 4px;
+  background: #f4f5f7;
+  color: #5e6c84;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+/* line 228, app/assets/stylesheets/issue_report.scss */
+.fr-upvote .fr-upvote-arrow {
+  font-size: 9px;
+  line-height: 1;
+}
+
+/* line 229, app/assets/stylesheets/issue_report.scss */
+.fr-upvote .fr-upvote-count {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* line 231, app/assets/stylesheets/issue_report.scss */
+.fr-upvote:hover {
+  background: #eaf1fb;
+  border-color: #0052cc;
+  color: #0052cc;
+}
+
+/* line 237, app/assets/stylesheets/issue_report.scss */
+.fr-upvote.is-upvoted {
+  background: #0052cc;
+  border-color: #0043a4;
+  color: #fff;
+}
+
+/* line 241, app/assets/stylesheets/issue_report.scss */
+.fr-upvote.is-upvoted:hover {
+  background: #0043a4;
+}
+
+/* line 247, app/assets/stylesheets/issue_report.scss */
+.fr-upvote-lg {
+  /* same 30x30 as .fr-upvote */
+}
+
+/* line 250, app/assets/stylesheets/issue_report.scss */
+.fr-detail {
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+}
+
+/* line 257, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+/* line 264, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-title-block {
+  flex: 1;
+  min-width: 0;
+}
+
+/* line 267, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-title-block h1 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* line 270, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-item-meta {
+  font-size: 12px;
+  color: #6b778c;
+}
+
+/* line 272, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-body {
+  color: #172b4d;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* line 276, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 281, app/assets/stylesheets/issue_report.scss */
+.fr-comments h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  margin: 0 0 12px;
+}
+
+/* line 288, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+/* line 294, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment {
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+/* line 301, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+/* line 307, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-author {
+  font-weight: 600;
+  color: #172b4d;
+  font-size: 13px;
+}
+
+/* line 308, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-when {
+  color: #8993a4;
+  font-size: 11px;
+}
+
+/* line 309, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-body {
+  color: #172b4d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* line 310, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 312, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-form {
+  background: #fafbfc;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+/* line 317, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-form textarea {
+  margin-bottom: 8px;
+}
