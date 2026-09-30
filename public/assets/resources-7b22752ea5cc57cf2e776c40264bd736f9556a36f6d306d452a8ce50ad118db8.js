@@ -140,24 +140,35 @@ $(document).on("turbolinks:load", function() {
     $('#demob-info').hide();
     $('#glide-info').hide();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#glide-tab').click(function (){
     $('#ics-211-info').hide();
     $('#demob-info').hide();
     $('#glide-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#demob-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').show();
     $('#tally-info').hide();
+    $('#non-209-info').hide();
   })
   $('a#tally-tab').click(function (){
     $('#ics-211-info').hide();
     $('#glide-info').hide();
     $('#demob-info').hide();
     $('#tally-info').show();
+    $('#non-209-info').hide();
+  })
+  $('a#non-209-tab').click(function (){
+    $('#ics-211-info').hide();
+    $('#glide-info').hide();
+    $('#demob-info').hide();
+    $('#tally-info').hide();
+    $('#non-209-info').show();
   })
 
   // Print button on the Resource Tally panel. Tag <body> with a class
@@ -165,7 +176,44 @@ $(document).on("turbolinks:load", function() {
   // just the tally table.
   $(document).off('click.tallyPrint').on('click.tallyPrint', '.tally-print-btn', function () {
     $('body').addClass('printing-tally');
-    var restore = function () { $('body').removeClass('printing-tally'); };
+
+    // Inject a top-level @page rule for landscape orientation. Browsers
+    // ignore @page rules nested inside other selectors (e.g. body.foo),
+    // so it must be at stylesheet root. We add it just before printing
+    // and rip it out after so it doesn't affect other prints.
+    var pageStyle = document.createElement('style');
+    pageStyle.id  = 'tally-print-page-style';
+    pageStyle.textContent = '@page { size: Letter landscape; margin: 0.4in; }';
+    document.head.appendChild(pageStyle);
+
+    // Auto-fit the tally to landscape Letter: measure the table's
+    // natural width and scale the wrap down if it exceeds the page
+    // width. Runs after the printing-tally class applies (which
+    // triggers the compact print styles) so measurement reflects the
+    // print-time layout.
+    var wrap  = document.querySelector('.tally-table-wrap');
+    var table = wrap && wrap.querySelector('.tally-table');
+    var appliedTransform = null;
+    if (wrap && table) {
+      var pageWidth = 979; // landscape Letter @ 0.4in margins, 96dpi
+      var natural   = table.scrollWidth;
+      if (natural > pageWidth) {
+        var scale = pageWidth / natural;
+        appliedTransform = 'scale(' + scale + ')';
+        wrap.style.transform = appliedTransform;
+        wrap.style.height    = (table.scrollHeight * scale) + 'px';
+      }
+    }
+
+    var restore = function () {
+      $('body').removeClass('printing-tally');
+      if (wrap && appliedTransform) {
+        wrap.style.transform = '';
+        wrap.style.height    = '';
+      }
+      var s = document.getElementById('tally-print-page-style');
+      if (s) s.remove();
+    };
     window.addEventListener('afterprint', restore, { once: true });
     window.print();
     // Fallback in case afterprint doesn't fire (some browsers).
@@ -176,6 +224,28 @@ $(document).on("turbolinks:load", function() {
   // $('#submit-resource-button').click(function() {
   //   window.location.reload();
   // })
+
+  // New-resource form: if the order_number uses dot notation (subordinate)
+  // and a parent with the base number exists, confirm the intent before
+  // submitting. Server auto-detects and creates a Roster on the parent.
+  $(document).off('submit.subConfirm').on('submit.subConfirm', '#new_resource', function (e) {
+    var $form = $(this);
+    var $orderNum = $form.find('input[name="resource[order_number]"]');
+    var val = ($orderNum.val() || '').trim();
+    if (!val.includes('.')) return;
+    // Only prompt once per submission — attach a flag so the callback
+    // doesn't fire again when the form re-submits after confirm.
+    if ($form.data('subordinate-confirmed')) return;
+    var base = val.split('.')[0];
+    var msg  = 'Order number ' + val + ' looks like a subordinate of #' +
+               base + '. Add as a subordinate to that resource?\n\n' +
+               'Cancel and change the number if this should be a standalone resource.';
+    if (!confirm(msg)) {
+      e.preventDefault();
+      return;
+    }
+    $form.data('subordinate-confirmed', true);
+  });
 
   // submitting forms
 
