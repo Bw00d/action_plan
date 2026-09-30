@@ -42,6 +42,26 @@ class Resource < ApplicationRecord
 
   after_create :create_demob, unless: :spacer?
 
+  # Positions that should auto-route to the Non-209 org unit instead of
+  # sitting in Unassigned. These are support/logistics/services roles
+  # that don't belong on the 209 rollup (medical vans, showers, potties,
+  # forklifts, tents, generators, etc.). Codes are matched case-
+  # insensitively against Resource#position. Fires for both hand-created
+  # resources and iSuite-imported ones (same after_create callback).
+  NON_209_POSITIONS = %w[
+    AADM ACDP AREP ARPL AUTO BLGT BSU1 BSU2 BSU3 BUSH BUYL BUYM BUYT BWFS
+    CLSU COM1 COM2 COM3 COMA COTR DUTY ELEC EOCO FLAT FLIA FLOP FORK GENR
+    GOLF GWT1 GWT2 GWT3 GWT4 GWTA HND1 HND2 HNDA HVAC IADP IBU1 IBU2 LAU1
+    LAU2 LITK LITR MBLP MCCO MCIF MEDV MESU MESV MFSU MKUS MOTL MOTS MSFU
+    OFFT PIRD PLJK POT1 POT2 POT3 POT4 POTA PPTS PROB PRSS PWSP RAPT REF1
+    REF2 REF3 REFA REPP SATP SATR SATS SCDB SIRF SLGT SLP1 SLP2 SLP3 SLPA
+    SLRR SMEC SMKM SMRB STFR STK1 STK2 STKA STMH STML STMT TNT1 TNT2 TNT3
+    TNT4 TNTA TOWT TPPU TRQA TTCH TUBG UTT1 UTT2 VANB VANP VSRS VTEC VUTV
+    WEBS WEED WHHR WHLR WWCB
+  ].to_set.freeze
+
+  after_create :auto_route_to_non_209, unless: :spacer?
+
   # Demobed resources shouldn't linger as OrgUnitAssignments on the board.
   # The board hides them via `.active`, but leaving the row lets them leak
   # into any downstream lookup that doesn't filter — e.g. a 204 built later
@@ -53,6 +73,26 @@ class Resource < ApplicationRecord
   def remove_from_board_on_demob
     return if release_date.nil?
     org_unit_assignment&.destroy
+  end
+
+  # If this resource's position is in NON_209_POSITIONS, drop it onto the
+  # incident's Non-209 org unit instead of leaving it in Unassigned.
+  # Idempotent: skips if an OrgUnitAssignment already exists (e.g., an
+  # iSuite re-import), skips if there's no Non-209 unit yet, and rescues
+  # so a routing failure never blocks resource creation.
+  def auto_route_to_non_209
+    return if position.blank?
+    code = position.to_s.strip.upcase
+    return unless NON_209_POSITIONS.include?(code)
+    return if org_unit_assignment.present?
+
+    non_209_unit = incident.org_units.where(kind: OrgUnit.kinds[:non_209]).first
+    return unless non_209_unit
+
+    OrgUnitAssignment.create!(resource: self, org_unit: non_209_unit)
+  rescue => e
+    Rails.logger.warn "Resource##{id} auto_route_to_non_209 failed: #{e.class}: #{e.message}"
+    nil
   end
 
   # Guard against ActiveRecord's stricter date coercion turning
