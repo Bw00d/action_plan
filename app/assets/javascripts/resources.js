@@ -176,7 +176,44 @@ $(document).on("turbolinks:load", function() {
   // just the tally table.
   $(document).off('click.tallyPrint').on('click.tallyPrint', '.tally-print-btn', function () {
     $('body').addClass('printing-tally');
-    var restore = function () { $('body').removeClass('printing-tally'); };
+
+    // Inject a top-level @page rule for landscape orientation. Browsers
+    // ignore @page rules nested inside other selectors (e.g. body.foo),
+    // so it must be at stylesheet root. We add it just before printing
+    // and rip it out after so it doesn't affect other prints.
+    var pageStyle = document.createElement('style');
+    pageStyle.id  = 'tally-print-page-style';
+    pageStyle.textContent = '@page { size: Letter landscape; margin: 0.4in; }';
+    document.head.appendChild(pageStyle);
+
+    // Auto-fit the tally to landscape Letter: measure the table's
+    // natural width and scale the wrap down if it exceeds the page
+    // width. Runs after the printing-tally class applies (which
+    // triggers the compact print styles) so measurement reflects the
+    // print-time layout.
+    var wrap  = document.querySelector('.tally-table-wrap');
+    var table = wrap && wrap.querySelector('.tally-table');
+    var appliedTransform = null;
+    if (wrap && table) {
+      var pageWidth = 979; // landscape Letter @ 0.4in margins, 96dpi
+      var natural   = table.scrollWidth;
+      if (natural > pageWidth) {
+        var scale = pageWidth / natural;
+        appliedTransform = 'scale(' + scale + ')';
+        wrap.style.transform = appliedTransform;
+        wrap.style.height    = (table.scrollHeight * scale) + 'px';
+      }
+    }
+
+    var restore = function () {
+      $('body').removeClass('printing-tally');
+      if (wrap && appliedTransform) {
+        wrap.style.transform = '';
+        wrap.style.height    = '';
+      }
+      var s = document.getElementById('tally-print-page-style');
+      if (s) s.remove();
+    };
     window.addEventListener('afterprint', restore, { once: true });
     window.print();
     // Fallback in case afterprint doesn't fire (some browsers).

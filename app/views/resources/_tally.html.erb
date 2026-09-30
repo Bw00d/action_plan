@@ -9,10 +9,20 @@
     <div class="tally-container">
       <div class="tally-header">
         <div class="tally-header-actions no-print">
+          <%# Both buttons open the Grover-generated PDF (landscape,
+              auto-scaled to fit). window.print() can't reliably force
+              landscape in Chrome — the injected @page rule is only a
+              suggestion and the print dialog defaults to portrait —
+              so we route the Print button through the PDF viewer too,
+              where the PDF's baked-in orientation is respected. %>
           <%= link_to 'Download PDF',
                       tally_to_pdf_incident_resources_path(@incident, format: :pdf),
                       class: 'btn btn-primary btn-xs', target: :_blank %>
-          <button type="button" class="btn btn-default btn-xs tally-print-btn">Print</button>
+          <%= link_to 'Print',
+                      tally_to_pdf_incident_resources_path(@incident, format: :pdf),
+                      class: 'btn btn-default btn-xs tally-print-link',
+                      target: :_blank,
+                      title: "Opens the PDF in a new tab — hit Cmd/Ctrl+P from there." %>
         </div>
         <h2>RESOURCE TALLY</h2>
         <p class="muted">Live counts — updates automatically as resources check in or demob.</p>

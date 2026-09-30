@@ -10,7 +10,11 @@
     existing rows with changes are unchecked — tick the ones you want to update.
   </p>
 
-  <%= form_with url: apply_isuite_import_incident_resources_path(@incident), method: :post, local: true, html: { id: 'isuite-apply-form' } do |f| %>
+  <%= form_with url: apply_isuite_import_incident_resources_path(@incident),
+                method: :post,
+                local: true,
+                html: { id: 'isuite-apply-form',
+                        onsubmit: "document.getElementById('isuite-loading').style.display='flex';" } do |f| %>
     <%= hidden_field_tag :import_token, @import_token %>
 
     <%# ── Summary bar ─────────────────────────────────────────── %>
@@ -183,4 +187,15 @@
       <%= f.submit 'Apply Selected', class: 'btn btn-success' %>
     </div>
   <% end %>
+
+  <%# Full-screen overlay shown while the selected updates are being
+      written. Toggled by the form's onsubmit above; automatically
+      replaced when the response renders the next page. %>
+  <div id="isuite-loading" class="isuite-loading" style="display:none;" aria-live="polite">
+    <div class="isuite-loading-card">
+      <div class="isuite-spinner" aria-hidden="true"></div>
+      <div class="isuite-loading-title">Applying selected changes…</div>
+      <div class="isuite-loading-msg">Large imports can take 30 seconds or more.<br>Please don't refresh or navigate away.</div>
+    </div>
+  </div>
 </div>

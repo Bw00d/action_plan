@@ -378,7 +378,11 @@ a.delete-resource:hover {
   padding-top: 24px;
 
   .tally-container {
-    max-width: 1200px;
+    // No hard cap — very wide tallies (many kinds × many agencies) need
+    // to use every available pixel and then scroll horizontally in the
+    // wrap when there's still not enough room. Was 1200px which cut
+    // columns off on large incidents.
+    // max-width: 100%;
     margin: 0 auto;
     padding: 0 20px;
   }
@@ -410,7 +414,12 @@ a.delete-resource:hover {
     border-collapse: collapse;
     font-size: 12px;
     color: #172b4d;
-    width: 100%;
+    // Grow with content so column names + counts stay legible.
+    // min-width: 100% keeps small tables filling the wrap so they
+    // don't look orphaned on a wide screen; wider tables extend past
+    // and the wrap's overflow-x:auto adds a horizontal scrollbar.
+    width: auto;
+    min-width: 100%;
 
     th, td {
       border: 1px solid #c1c7d0;
@@ -706,16 +715,39 @@ input.fwd-datepicker {
 
     #tally-info { display: block !important; padding-top: 0; }
 
+    // Compact fonts + tight padding for print. Combined with the JS
+    // auto-fit, wide tallies scale down to fit landscape Letter
+    // instead of clipping columns.
+    .tally-container { max-width: none !important; padding: 0 !important; }
     .tally-table {
-      font-size: 10px;
+      font-size: 8pt;
+      width: auto !important;
+      min-width: 0 !important;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
       page-break-inside: avoid;
+      th, td {
+        padding: 2pt 4pt !important;
+        white-space: nowrap;
+      }
     }
-    .tally-table-wrap { overflow: visible !important; box-shadow: none; }
-
-    @page { size: Letter landscape; margin: 0.4in; }
+    .tally-table-wrap {
+      // border/shadow gone — after the JS transform:scale shrinks the
+      // table, the wrap's original border would trail past the visible
+      // table edge as a stray line. overflow:hidden clips anything the
+      // browser tries to paint past the scaled box.
+      border: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+      transform-origin: 0 0;
+    }
   }
+
+  // NOTE: @page rules must be at the top level of a stylesheet — nesting
+  // them under `body.printing-tally` (like it used to be) is invalid CSS
+  // and the browser silently falls back to portrait. The landscape @page
+  // is now injected dynamically by the Print button (see resources.js)
+  // so it only affects the tally print, not other prints.
 }
 
 // ICS-211 / Non-209 LWD cell — red background when the resource is past

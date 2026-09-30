@@ -1,48 +1,74 @@
 <style>
   @page { size: Letter landscape; margin: 0.4in; }
   html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; color: #000; }
-  h1 { font-size: 16pt; margin: 0 0 4pt; }
-  .meta { font-size: 10pt; margin-bottom: 10pt; color: #333; }
-  .meta span { margin-right: 14pt; }
+  h1 { font-size: 14pt; margin: 0 0 4pt; }
+  .meta { font-size: 9pt; margin-bottom: 8pt; color: #333; }
+  .meta span { margin-right: 12pt; }
+
+  /* Wrap the table so JS can measure width and scale to fit the page. */
+  .tally-wrap {
+    transform-origin: 0 0;
+    width: 100%;
+  }
 
   table.tally {
-    width: 100%;
+    /* Grow with content — combined with the JS auto-fit below, wide
+       tallies scale down to fit the landscape page instead of clipping. */
+    width: auto;
+    min-width: 100%;
     border-collapse: collapse;
-    font-size: 9pt;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    font-size: 8pt;
+  }
+  /* Force every cell (and thead/tbody/tr) to paint its background in
+     print. Chrome's print-color-adjust doesn't always inherit down the
+     table tree, so we set it on all descendants to be safe. Combined
+     with Grover's print_background:true, this gives us the shaded
+     agency rows / overhead / total columns in the PDF. */
+  table.tally,
+  table.tally *,
+  table.tally thead,
+  table.tally tbody,
+  table.tally tr,
+  table.tally th,
+  table.tally td {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
   table.tally th, table.tally td {
     border: 0.75pt solid #666;
-    padding: 3pt 5pt;
+    padding: 2pt 4pt;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap;
   }
+  /* Slightly stronger tones than the on-screen palette so shading
+     stays visible at 8pt print. */
   table.tally thead th {
-    background: #ececec;
+    background: #d9e2ec !important;
     font-weight: 600;
   }
   table.tally .agency-col { text-align: left; width: 18%; }
   table.tally .agency-cell {
     text-align: left;
     font-weight: 600;
-    background: #f7f7f7;
+    background: #eef1f5 !important;
   }
   table.tally .count-label {
     text-align: right;
     font-style: italic;
     color: #555;
     font-size: 8pt;
-    background: #fafafa;
+    background: #f5f6f8 !important;
   }
-  table.tally .is-overhead { background: #fff6e6; }
-  table.tally .is-total    { background: #e6f0ff; font-weight: 600; }
+  table.tally .is-overhead { background: #ffe9c2 !important; }
+  table.tally .is-total    { background: #d5e3ff !important; font-weight: 600; }
   table.tally .total-row td {
-    background: #f0f0f0;
+    background: #e3e6ec !important;
     font-weight: 700;
   }
-  table.tally .total-row .is-overhead { background: #ffecc9; }
-  table.tally .total-row .is-total    { background: #cfe0ff; }
+  table.tally .total-row .is-overhead { background: #ffd88a !important; }
+  table.tally .total-row .is-total    { background: #b8ceff !important; }
   .col-header { writing-mode: horizontal-tb; }
 </style>
 
@@ -56,7 +82,7 @@
 <% if pivot[:agencies].empty? %>
   <p><em>No assigned resources with a recognizable agency.</em></p>
 <% else %>
-  <table class="tally">
+  <div class="tally-wrap"><table class="tally">
     <thead>
       <tr>
         <th class="agency-col">Agency or Organization</th>
@@ -116,5 +142,27 @@
         <% end %>
       </tr>
     </tbody>
-  </table>
+  </table></div>
 <% end %>
+
+<script>
+  // Auto-fit wide tallies to the landscape Letter page. Measure the
+  // table's natural width; if it exceeds the printable width, scale the
+  // whole wrap down so every column stays visible. Runs before Grover
+  // captures the PDF (Puppeteer waits for the DOM to settle).
+  (function () {
+    var wrap  = document.querySelector('.tally-wrap');
+    var table = wrap && wrap.querySelector('table.tally');
+    if (!wrap || !table) return;
+    // Landscape Letter minus 0.4in margins = 10.2in × 96dpi ≈ 979px.
+    var pageWidth = 979;
+    var natural   = table.scrollWidth;
+    if (natural > pageWidth) {
+      var scale = pageWidth / natural;
+      wrap.style.transform = 'scale(' + scale + ')';
+      // Compensate the parent height so any content below (footer text,
+      // etc.) doesn't get pushed off the page.
+      wrap.style.height = (table.scrollHeight * scale) + 'px';
+    }
+  })();
+</script>
