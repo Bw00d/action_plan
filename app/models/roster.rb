@@ -6,6 +6,11 @@ class Roster < ApplicationRecord
   # by roster_id. dependent: :destroy keeps the ICS-221 sheet tied to the
   # roster's lifetime; note the parent resource's demob is untouched.
   has_one :demob, dependent: :destroy
+  # Same reason as Resource#demob_notifications — demob_notifications.roster_id
+  # carries a DB-level FK, and without owning them here a Roster destroy
+  # (from incident/resource teardown) would race the Incident's own
+  # cleanup and raise ForeignKeyViolation.
+  has_many :demob_notifications, dependent: :destroy
 
   before_validation :default_agency_from_resource, on: :create
   # Create an ICS-221 demob sheet up front, same as Resource does. Users

@@ -4,6 +4,13 @@ class Resource < ApplicationRecord
   has_one :org_unit_assignment, dependent: :destroy
   has_one :org_unit, through: :org_unit_assignment
   has_many :rosters, dependent: :destroy
+  # demob_notifications.resource_id carries a DB-level FK. Incident owns
+  # these too, but Rails cascades dependents in declaration order and
+  # resources is declared first, so without this line each resource gets
+  # DELETEd while its notifications still reference it → incident.destroy
+  # fails with ForeignKeyViolation. Owning them here cleans them up as
+  # part of the resource's own destroy cascade.
+  has_many :demob_notifications, dependent: :destroy
 
   scope :unassigned, lambda {
     left_outer_joins(:org_unit_assignment)
