@@ -24315,25 +24315,371 @@ body.ir-modal-open {
     display: none !important;
   }
 }
-/* line 1, app/assets/stylesheets/isuite_import.scss */
+
+/* line 138, app/assets/stylesheets/issue_report.scss */
+.ir-features-link {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+/* line 144, app/assets/stylesheets/issue_report.scss */
+.ir-features-link .ir-features-link-anchor {
+  font-size: 12px;
+  color: #0052cc;
+  text-decoration: none;
+}
+
+/* line 148, app/assets/stylesheets/issue_report.scss */
+.ir-features-link .ir-features-link-anchor:hover {
+  text-decoration: underline;
+}
+
+/* line 153, app/assets/stylesheets/issue_report.scss */
+.fr-page {
+  max-width: 780px;
+  margin: 30px auto 60px;
+}
+
+/* line 157, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head {
+  margin-bottom: 20px;
+}
+
+/* line 159, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* line 160, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-page-head .text-muted {
+  color: #6b778c;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* line 163, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-back {
+  color: #5e6c84;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+/* line 167, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-back:hover {
+  color: #172b4d;
+  text-decoration: underline;
+}
+
+/* line 171, app/assets/stylesheets/issue_report.scss */
+.fr-page .fr-inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 174, app/assets/stylesheets/issue_report.scss */
+.fr-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 180, app/assets/stylesheets/issue_report.scss */
+.fr-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+/* line 190, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* line 192, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  text-decoration: none;
+}
+
+/* line 198, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-title:hover {
+  color: #0052cc;
+  text-decoration: underline;
+}
+
+/* line 201, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b778c;
+}
+
+/* line 205, app/assets/stylesheets/issue_report.scss */
+.fr-item .fr-item-meta span + span {
+  margin-left: 2px;
+}
+
+/* line 211, app/assets/stylesheets/issue_report.scss */
+.fr-upvote {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #b3bac5;
+  border-radius: 4px;
+  background: #f4f5f7;
+  color: #5e6c84;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+/* line 228, app/assets/stylesheets/issue_report.scss */
+.fr-upvote .fr-upvote-arrow {
+  font-size: 9px;
+  line-height: 1;
+}
+
+/* line 229, app/assets/stylesheets/issue_report.scss */
+.fr-upvote .fr-upvote-count {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* line 231, app/assets/stylesheets/issue_report.scss */
+.fr-upvote:hover {
+  background: #eaf1fb;
+  border-color: #0052cc;
+  color: #0052cc;
+}
+
+/* line 237, app/assets/stylesheets/issue_report.scss */
+.fr-upvote.is-upvoted {
+  background: #0052cc;
+  border-color: #0043a4;
+  color: #fff;
+}
+
+/* line 241, app/assets/stylesheets/issue_report.scss */
+.fr-upvote.is-upvoted:hover {
+  background: #0043a4;
+}
+
+/* line 247, app/assets/stylesheets/issue_report.scss */
+.fr-upvote-lg {
+  /* same 30x30 as .fr-upvote */
+}
+
+/* line 250, app/assets/stylesheets/issue_report.scss */
+.fr-detail {
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+}
+
+/* line 257, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+/* line 264, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-title-block {
+  flex: 1;
+  min-width: 0;
+}
+
+/* line 267, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-title-block h1 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* line 270, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-item-meta {
+  font-size: 12px;
+  color: #6b778c;
+}
+
+/* line 272, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-body {
+  color: #172b4d;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* line 276, app/assets/stylesheets/issue_report.scss */
+.fr-detail .fr-detail-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 281, app/assets/stylesheets/issue_report.scss */
+.fr-comments h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+  margin: 0 0 12px;
+}
+
+/* line 288, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+/* line 294, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment {
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+/* line 301, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+/* line 307, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-author {
+  font-weight: 600;
+  color: #172b4d;
+  font-size: 13px;
+}
+
+/* line 308, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-when {
+  color: #8993a4;
+  font-size: 11px;
+}
+
+/* line 309, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-body {
+  color: #172b4d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* line 310, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 312, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-form {
+  background: #fafbfc;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+/* line 317, app/assets/stylesheets/issue_report.scss */
+.fr-comments .fr-comment-form textarea {
+  margin-bottom: 8px;
+}
+/* line 5, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(23, 43, 77, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line 15, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 28px 34px;
+  min-width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* line 23, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading-card .isuite-loading-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #172b4d;
+  margin: 14px 0 6px;
+}
+
+/* line 29, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading-card .isuite-loading-msg {
+  font-size: 12px;
+  color: #5e6c84;
+  line-height: 1.5;
+}
+
+/* line 36, app/assets/stylesheets/isuite_import.scss */
+.isuite-spinner {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto;
+  border: 4px solid #dfe4ec;
+  border-top-color: #0052cc;
+  border-radius: 50%;
+  animation: isuite-spin 0.9s linear infinite;
+}
+
+@keyframes isuite-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 50, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview {
   padding-top: 20px;
   padding-bottom: 40px;
 }
 
-/* line 5, app/assets/stylesheets/isuite_import.scss */
+/* line 54, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview h2 {
   margin-top: 0;
 }
 
-/* line 6, app/assets/stylesheets/isuite_import.scss */
+/* line 55, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .muted {
   color: #6b778c;
   font-size: 12px;
   font-weight: 400;
 }
 
-/* line 8, app/assets/stylesheets/isuite_import.scss */
+/* line 57, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-summary {
   display: flex;
   flex-wrap: wrap;
@@ -24346,87 +24692,117 @@ body.ir-modal-open {
   font-size: 13px;
 }
 
-/* line 18, app/assets/stylesheets/isuite_import.scss */
+/* line 67, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-summary strong {
   color: #172b4d;
 }
 
-/* line 21, app/assets/stylesheets/isuite_import.scss */
+/* line 70, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-section {
   margin-bottom: 28px;
 }
 
-/* line 23, app/assets/stylesheets/isuite_import.scss */
+/* line 72, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-section h3 {
   font-size: 15px;
   margin-bottom: 8px;
 }
 
-/* line 26, app/assets/stylesheets/isuite_import.scss */
+/* line 75, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-table {
   font-size: 12px;
 }
 
-/* line 28, app/assets/stylesheets/isuite_import.scss */
+/* line 77, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-table th {
   background: #eaf1f8;
 }
 
-/* line 29, app/assets/stylesheets/isuite_import.scss */
+/* line 78, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-table th, .isuite-preview .ii-table td {
   vertical-align: top;
   padding: 6px 8px;
 }
 
-/* line 30, app/assets/stylesheets/isuite_import.scss */
+/* line 79, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-table th:first-child, .isuite-preview .ii-table td:first-child {
   width: 32px;
   text-align: center;
 }
 
-/* line 33, app/assets/stylesheets/isuite_import.scss */
+/* line 82, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-diff-list {
   margin: 0;
   padding-left: 0;
   list-style: none;
 }
 
-/* line 37, app/assets/stylesheets/isuite_import.scss */
+/* line 86, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-diff-list li {
   padding: 1px 0;
 }
 
-/* line 39, app/assets/stylesheets/isuite_import.scss */
+/* line 88, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-diff-list li strong {
   color: #172b4d;
   font-weight: 600;
 }
 
-/* line 41, app/assets/stylesheets/isuite_import.scss */
+/* line 90, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-diff-list .ii-old {
   color: #c0392b;
   text-decoration: line-through;
 }
 
-/* line 42, app/assets/stylesheets/isuite_import.scss */
+/* line 91, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-diff-list .ii-new {
   color: #1a7f37;
   font-weight: 600;
 }
 
-/* line 43, app/assets/stylesheets/isuite_import.scss */
+/* line 92, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-diff-list .ii-blank {
   color: #999;
   font-style: italic;
 }
 
-/* line 46, app/assets/stylesheets/isuite_import.scss */
+/* line 95, app/assets/stylesheets/isuite_import.scss */
 .isuite-preview .ii-actions {
   display: flex;
   gap: 8px;
   justify-content: flex-end;
   padding-top: 12px;
   border-top: 1px solid #eee;
+}
+
+/* line 105, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-row {
+  background: #fff5f5;
+}
+
+/* line 107, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-row td {
+  border-color: #f4c7c7 !important;
+}
+
+/* line 110, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: #c0392b;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* line 123, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .muted {
+  color: #6b778c;
+  font-size: 11px;
 }
 /* line 1, app/assets/stylesheets/ops.scss */
 .ops-container {
@@ -32064,32 +32440,31 @@ body.printing-glide table.table td {
 
 /* line 380, app/assets/stylesheets/resources.scss */
 #tally-info .tally-container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* line 385, app/assets/stylesheets/resources.scss */
+/* line 389, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header {
   margin-bottom: 12px;
   position: relative;
 }
 
-/* line 388, app/assets/stylesheets/resources.scss */
+/* line 392, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header h2 {
   margin: 0 0 4px;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-/* line 389, app/assets/stylesheets/resources.scss */
+/* line 393, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header .muted {
   color: #6b778c;
   font-size: 13px;
   margin: 0;
 }
 
-/* line 391, app/assets/stylesheets/resources.scss */
+/* line 395, app/assets/stylesheets/resources.scss */
 #tally-info .tally-header .tally-header-actions {
   position: absolute;
   top: 0;
@@ -32098,7 +32473,7 @@ body.printing-glide table.table td {
   gap: 6px;
 }
 
-/* line 402, app/assets/stylesheets/resources.scss */
+/* line 406, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table-wrap {
   overflow-x: auto;
   border: 1px solid #c1c7d0;
@@ -32106,15 +32481,16 @@ body.printing-glide table.table td {
   box-shadow: 0 1px 2px rgba(9, 30, 66, 0.05);
 }
 
-/* line 409, app/assets/stylesheets/resources.scss */
+/* line 413, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table {
   border-collapse: collapse;
   font-size: 12px;
   color: #172b4d;
-  width: 100%;
+  width: auto;
+  min-width: 100%;
 }
 
-/* line 415, app/assets/stylesheets/resources.scss */
+/* line 424, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table th, #tally-info .tally-table td {
   border: 1px solid #c1c7d0;
   padding: 4px 6px;
@@ -32122,7 +32498,7 @@ body.printing-glide table.table td {
   text-align: center;
 }
 
-/* line 423, app/assets/stylesheets/resources.scss */
+/* line 432, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table thead th {
   background: #eaf1f8;
   font-weight: 600;
@@ -32130,19 +32506,19 @@ body.printing-glide table.table td {
   vertical-align: bottom;
 }
 
-/* line 429, app/assets/stylesheets/resources.scss */
+/* line 438, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-col {
   width: 140px;
   text-align: left;
   padding-left: 10px;
 }
 
-/* line 434, app/assets/stylesheets/resources.scss */
+/* line 443, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-count-col {
   width: 60px;
 }
 
-/* line 436, app/assets/stylesheets/resources.scss */
+/* line 445, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-col-header {
   min-width: 30px;
   max-width: 44px;
@@ -32150,7 +32526,7 @@ body.printing-glide table.table td {
   padding: 4px 0;
 }
 
-/* line 443, app/assets/stylesheets/resources.scss */
+/* line 452, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-col-label {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -32160,30 +32536,30 @@ body.printing-glide table.table td {
   line-height: 1.1;
 }
 
-/* line 451, app/assets/stylesheets/resources.scss */
+/* line 460, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-col-header.is-overhead .tally-col-label,
 #tally-info .tally-table .tally-col-header.is-total .tally-col-label {
   font-weight: 700;
 }
 
-/* line 458, app/assets/stylesheets/resources.scss */
+/* line 467, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-row td {
   background: #fff;
 }
 
-/* line 461, app/assets/stylesheets/resources.scss */
+/* line 470, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-row.is-even td {
   background: #fbf8f0;
 }
 
-/* line 464, app/assets/stylesheets/resources.scss */
+/* line 473, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-agency-cell {
   text-align: left;
   padding-left: 10px;
   font-weight: 700;
 }
 
-/* line 469, app/assets/stylesheets/resources.scss */
+/* line 478, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-count-label {
   font-style: italic;
   color: #6b778c;
@@ -32192,56 +32568,56 @@ body.printing-glide table.table td {
   font-size: 11px;
 }
 
-/* line 476, app/assets/stylesheets/resources.scss */
+/* line 485, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-cell {
   min-width: 30px;
 }
 
-/* line 478, app/assets/stylesheets/resources.scss */
+/* line 487, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-cell.is-overhead, #tally-info .tally-table .tally-cell.is-total {
   background: #f4f5f7 !important;
   font-weight: 600;
 }
 
-/* line 486, app/assets/stylesheets/resources.scss */
+/* line 495, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-total-row td {
   background: #f4f5f7;
   font-weight: 700;
 }
 
-/* line 490, app/assets/stylesheets/resources.scss */
+/* line 499, app/assets/stylesheets/resources.scss */
 #tally-info .tally-table .tally-total-label {
   color: #172b4d;
 }
 
-/* line 496, app/assets/stylesheets/resources.scss */
+/* line 505, app/assets/stylesheets/resources.scss */
 .dashed {
   border: 1px dashed orange;
 }
 
-/* line 499, app/assets/stylesheets/resources.scss */
+/* line 508, app/assets/stylesheets/resources.scss */
 img#new-resource {
   height: 20px;
   width: 20px;
 }
 
-/* line 503, app/assets/stylesheets/resources.scss */
+/* line 512, app/assets/stylesheets/resources.scss */
 .grayed {
   background-color: #f5f5f5;
 }
 
-/* line 506, app/assets/stylesheets/resources.scss */
+/* line 515, app/assets/stylesheets/resources.scss */
 .resource-information {
   background-color: yellow;
 }
 
-/* line 510, app/assets/stylesheets/resources.scss */
+/* line 519, app/assets/stylesheets/resources.scss */
 .view-resource img {
   width: 20px;
   height: auto;
 }
 
-/* line 518, app/assets/stylesheets/resources.scss */
+/* line 527, app/assets/stylesheets/resources.scss */
 .resource-panel {
   position: fixed;
   inset: 0;
@@ -32254,12 +32630,12 @@ img#new-resource {
   overflow-y: auto;
 }
 
-/* line 529, app/assets/stylesheets/resources.scss */
+/* line 538, app/assets/stylesheets/resources.scss */
 .resource-panel.is-hidden {
   display: none;
 }
 
-/* line 532, app/assets/stylesheets/resources.scss */
+/* line 541, app/assets/stylesheets/resources.scss */
 .resource-panel-inner {
   position: relative;
   background: #fff;
@@ -32270,7 +32646,7 @@ img#new-resource {
   padding: 20px 24px 24px;
 }
 
-/* line 542, app/assets/stylesheets/resources.scss */
+/* line 551, app/assets/stylesheets/resources.scss */
 .resource-panel-close {
   position: absolute;
   top: 8px;
@@ -32284,12 +32660,12 @@ img#new-resource {
   padding: 4px 8px;
 }
 
-/* line 554, app/assets/stylesheets/resources.scss */
+/* line 563, app/assets/stylesheets/resources.scss */
 .resource-panel-close:hover {
   color: #172b4d;
 }
 
-/* line 556, app/assets/stylesheets/resources.scss */
+/* line 565, app/assets/stylesheets/resources.scss */
 button.resource-panel-close {
   -webkit-appearance: none;
   appearance: none;
@@ -32299,7 +32675,7 @@ button.resource-panel-close {
   background: transparent !important;
 }
 
-/* line 564, app/assets/stylesheets/resources.scss */
+/* line 573, app/assets/stylesheets/resources.scss */
 button.resource-panel-close:hover, button.resource-panel-close:focus, button.resource-panel-close:active {
   border: none !important;
   outline: none !important;
@@ -32307,7 +32683,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   background: transparent !important;
 }
 
-/* line 574, app/assets/stylesheets/resources.scss */
+/* line 583, app/assets/stylesheets/resources.scss */
 .resource-panel-title {
   margin: 0 32px 12px 0;
   font-size: 16px;
@@ -32315,21 +32691,21 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   color: #172b4d;
 }
 
-/* line 581, app/assets/stylesheets/resources.scss */
+/* line 590, app/assets/stylesheets/resources.scss */
 .resource-panel-fields {
   display: grid;
   grid-template-columns: repeat(3, minmax(160px, 1fr));
   gap: 10px 16px;
 }
 
-/* line 587, app/assets/stylesheets/resources.scss */
+/* line 596, app/assets/stylesheets/resources.scss */
 .resource-panel-field {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* line 592, app/assets/stylesheets/resources.scss */
+/* line 601, app/assets/stylesheets/resources.scss */
 .resource-panel-field label {
   font-size: 11px;
   font-weight: 600;
@@ -32339,7 +32715,7 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   margin: 0 0 2px;
 }
 
-/* line 601, app/assets/stylesheets/resources.scss */
+/* line 610, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place {
   display: inline-block;
   min-height: 20px;
@@ -32350,23 +32726,23 @@ button.resource-panel-close:hover, button.resource-panel-close:focus, button.res
   cursor: text;
 }
 
-/* line 610, app/assets/stylesheets/resources.scss */
+/* line 619, app/assets/stylesheets/resources.scss */
 .resource-panel-field .best_in_place:hover {
   background: #e6effd;
 }
 
-/* line 613, app/assets/stylesheets/resources.scss */
+/* line 622, app/assets/stylesheets/resources.scss */
 .resource-panel-field .static-field {
   padding: 2px 6px;
   color: #6b778c;
 }
 
-/* line 619, app/assets/stylesheets/resources.scss */
+/* line 628, app/assets/stylesheets/resources.scss */
 .resource-panel-field-wide {
   grid-column: 1 / -1;
 }
 
-/* line 622, app/assets/stylesheets/resources.scss */
+/* line 631, app/assets/stylesheets/resources.scss */
 input.fwd-datepicker {
   border: none !important;
   width: 36px;
@@ -32378,7 +32754,7 @@ input.fwd-datepicker {
   box-sizing: content-box;
 }
 
-/* line 638, app/assets/stylesheets/resources.scss */
+/* line 647, app/assets/stylesheets/resources.scss */
 .roster-toggle-slot {
   display: inline-block;
   width: 14px;
@@ -32387,7 +32763,7 @@ input.fwd-datepicker {
   color: #a1a8b4;
 }
 
-/* line 646, app/assets/stylesheets/resources.scss */
+/* line 655, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle {
   display: inline;
   cursor: pointer;
@@ -32398,22 +32774,22 @@ input.fwd-datepicker {
   user-select: none;
 }
 
-/* line 655, app/assets/stylesheets/resources.scss */
+/* line 664, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle:hover {
   color: #172b4d;
 }
 
-/* line 656, app/assets/stylesheets/resources.scss */
+/* line 665, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle:focus {
   outline: none;
 }
 
-/* line 657, app/assets/stylesheets/resources.scss */
+/* line 666, app/assets/stylesheets/resources.scss */
 .resource-roster-toggle[aria-expanded="true"] .roster-toggle-caret {
   transform: rotate(90deg);
 }
 
-/* line 660, app/assets/stylesheets/resources.scss */
+/* line 669, app/assets/stylesheets/resources.scss */
 .roster-toggle-caret {
   display: inline-block;
   transition: transform 0.12s ease;
@@ -32421,17 +32797,17 @@ input.fwd-datepicker {
   vertical-align: baseline;
 }
 
-/* line 667, app/assets/stylesheets/resources.scss */
+/* line 676, app/assets/stylesheets/resources.scss */
 .resource-roster-row {
   background: #f7f8fa;
 }
 
-/* line 670, app/assets/stylesheets/resources.scss */
+/* line 679, app/assets/stylesheets/resources.scss */
 .resource-roster-row.is-hidden {
   display: none;
 }
 
-/* line 672, app/assets/stylesheets/resources.scss */
+/* line 681, app/assets/stylesheets/resources.scss */
 .resource-roster-row td {
   color: #5e6c84;
   font-size: 12px;
@@ -32439,19 +32815,19 @@ input.fwd-datepicker {
   border-top: 1px dashed #e6e8ec;
 }
 
-/* line 679, app/assets/stylesheets/resources.scss */
+/* line 688, app/assets/stylesheets/resources.scss */
 .resource-roster-row .roster-order-cell {
   font-family: Menlo, Consolas, monospace;
   white-space: nowrap;
 }
 
-/* line 684, app/assets/stylesheets/resources.scss */
+/* line 693, app/assets/stylesheets/resources.scss */
 .resource-roster-row.depth-2 {
   background: #eef1f5;
 }
 
 @media print {
-  /* line 692, app/assets/stylesheets/resources.scss */
+  /* line 701, app/assets/stylesheets/resources.scss */
   body.printing-tally .no-print,
 body.printing-tally .tally-header-actions,
 body.printing-tally .resources-panel-head,
@@ -32468,33 +32844,40 @@ body.printing-tally nav,
 body.printing-tally footer {
     display: none !important;
   }
-  /* line 707, app/assets/stylesheets/resources.scss */
+  /* line 716, app/assets/stylesheets/resources.scss */
   body.printing-tally #tally-info {
     display: block !important;
     padding-top: 0;
   }
-  /* line 709, app/assets/stylesheets/resources.scss */
+  /* line 721, app/assets/stylesheets/resources.scss */
+  body.printing-tally .tally-container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  /* line 722, app/assets/stylesheets/resources.scss */
   body.printing-tally .tally-table {
-    font-size: 10px;
+    font-size: 8pt;
+    width: auto !important;
+    min-width: 0 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     page-break-inside: avoid;
   }
-  /* line 715, app/assets/stylesheets/resources.scss */
-  body.printing-tally .tally-table-wrap {
-    overflow: visible !important;
-    box-shadow: none;
+  /* line 729, app/assets/stylesheets/resources.scss */
+  body.printing-tally .tally-table th, body.printing-tally .tally-table td {
+    padding: 2pt 4pt !important;
+    white-space: nowrap;
   }
-  @page {
-    /* line 691, app/assets/stylesheets/resources.scss */
-    body.printing-tally {
-      size: Letter landscape;
-      margin: 0.4in;
-    }
+  /* line 734, app/assets/stylesheets/resources.scss */
+  body.printing-tally .tally-table-wrap {
+    border: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    transform-origin: 0 0;
   }
 }
 
-/* line 725, app/assets/stylesheets/resources.scss */
+/* line 757, app/assets/stylesheets/resources.scss */
 .lwd-overdue {
   background-color: #f8d7da !important;
   color: #721c24;

@@ -1,0 +1,196 @@
+/* line 5, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(23, 43, 77, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line 15, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 28px 34px;
+  min-width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* line 23, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading-card .isuite-loading-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #172b4d;
+  margin: 14px 0 6px;
+}
+
+/* line 29, app/assets/stylesheets/isuite_import.scss */
+.isuite-loading-card .isuite-loading-msg {
+  font-size: 12px;
+  color: #5e6c84;
+  line-height: 1.5;
+}
+
+/* line 36, app/assets/stylesheets/isuite_import.scss */
+.isuite-spinner {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto;
+  border: 4px solid #dfe4ec;
+  border-top-color: #0052cc;
+  border-radius: 50%;
+  animation: isuite-spin 0.9s linear infinite;
+}
+
+@keyframes isuite-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 50, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+/* line 54, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview h2 {
+  margin-top: 0;
+}
+
+/* line 55, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .muted {
+  color: #6b778c;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* line 57, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 10px 14px;
+  background: #f6f8fa;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  margin: 10px 0 20px;
+  font-size: 13px;
+}
+
+/* line 67, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-summary strong {
+  color: #172b4d;
+}
+
+/* line 70, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-section {
+  margin-bottom: 28px;
+}
+
+/* line 72, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-section h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+/* line 75, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table {
+  font-size: 12px;
+}
+
+/* line 77, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table th {
+  background: #eaf1f8;
+}
+
+/* line 78, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table th, .isuite-preview .ii-table td {
+  vertical-align: top;
+  padding: 6px 8px;
+}
+
+/* line 79, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-table th:first-child, .isuite-preview .ii-table td:first-child {
+  width: 32px;
+  text-align: center;
+}
+
+/* line 82, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* line 86, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list li {
+  padding: 1px 0;
+}
+
+/* line 88, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list li strong {
+  color: #172b4d;
+  font-weight: 600;
+}
+
+/* line 90, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list .ii-old {
+  color: #c0392b;
+  text-decoration: line-through;
+}
+
+/* line 91, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list .ii-new {
+  color: #1a7f37;
+  font-weight: 600;
+}
+
+/* line 92, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-diff-list .ii-blank {
+  color: #999;
+  font-style: italic;
+}
+
+/* line 95, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+/* line 105, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-row {
+  background: #fff5f5;
+}
+
+/* line 107, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-row td {
+  border-color: #f4c7c7 !important;
+}
+
+/* line 110, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: #c0392b;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* line 123, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .muted {
+  color: #6b778c;
+  font-size: 11px;
+}
