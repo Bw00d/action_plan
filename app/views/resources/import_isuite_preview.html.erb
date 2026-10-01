@@ -25,6 +25,7 @@
       <span><strong><%= @plan.roster_changes.size %></strong> roster change<%= 's' unless @plan.roster_changes.size == 1 %></span>
       <span class="muted"><%= @plan.unchanged_count %> unchanged</span>
       <% if @plan.demobed_skipped.positive? %><span class="muted"><%= @plan.demobed_skipped %> demobed skipped</span><% end %>
+      <% if @plan.filled_skipped.positive?  %><span class="muted"><%= @plan.filled_skipped  %> filled skipped</span><% end %>
       <% if @plan.service_skipped.positive? %><span class="muted"><%= @plan.service_skipped %> service rows skipped</span><% end %>
     </div>
 
@@ -83,7 +84,7 @@
           </thead>
           <tbody>
             <% @plan.resource_changes.each do |change| %>
-              <tr>
+              <tr class="<%= 'ii-demob-row' if change[:demob] %>">
                 <td>
                   <%= check_box_tag 'resource_ids[]', change[:resource_id], false,
                                      class: 'ii-resource-check', id: "res_#{change[:resource_id]}" %>
@@ -92,16 +93,21 @@
                 <td><%= change[:name] %></td>
                 <td><%= change[:position] %></td>
                 <td>
-                  <ul class="ii-diff-list">
-                    <% change[:diffs].each do |field, (old_val, new_val)| %>
-                      <li>
-                        <strong><%= field.to_s.humanize %>:</strong>
-                        <span class="ii-old"><%= format_diff_value(old_val) %></span>
-                        →
-                        <span class="ii-new"><%= format_diff_value(new_val) %></span>
-                      </li>
-                    <% end %>
-                  </ul>
+                  <% if change[:demob] %>
+                    <span class="ii-demob-badge">DEMOB</span>
+                    <span class="muted">iSuite marks this resource demobed — accepting sets release date to <%= change[:diffs][:release_date].last.strftime('%m/%d/%Y') %>.</span>
+                  <% else %>
+                    <ul class="ii-diff-list">
+                      <% change[:diffs].each do |field, (old_val, new_val)| %>
+                        <li>
+                          <strong><%= field.to_s.humanize %>:</strong>
+                          <span class="ii-old"><%= format_diff_value(old_val) %></span>
+                          →
+                          <span class="ii-new"><%= format_diff_value(new_val) %></span>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
                 </td>
               </tr>
             <% end %>
@@ -155,7 +161,7 @@
           </thead>
           <tbody>
             <% @plan.roster_changes.each do |change| %>
-              <tr>
+              <tr class="<%= 'ii-demob-row' if change[:demob] %>">
                 <td>
                   <%= check_box_tag 'roster_ids[]', change[:roster_id], false,
                                      class: 'ii-roster-check', id: "ros_#{change[:roster_id]}" %>
@@ -164,16 +170,21 @@
                 <td><%= change[:name] %></td>
                 <td><%= change[:position] %></td>
                 <td>
-                  <ul class="ii-diff-list">
-                    <% change[:diffs].each do |field, (old_val, new_val)| %>
-                      <li>
-                        <strong><%= field.to_s.humanize %>:</strong>
-                        <span class="ii-old"><%= format_diff_value(old_val) %></span>
-                        →
-                        <span class="ii-new"><%= format_diff_value(new_val) %></span>
-                      </li>
-                    <% end %>
-                  </ul>
+                  <% if change[:demob] %>
+                    <span class="ii-demob-badge">DEMOB</span>
+                    <span class="muted">iSuite marks this subordinate demobed — accepting releases them now.</span>
+                  <% else %>
+                    <ul class="ii-diff-list">
+                      <% change[:diffs].each do |field, (old_val, new_val)| %>
+                        <li>
+                          <strong><%= field.to_s.humanize %>:</strong>
+                          <span class="ii-old"><%= format_diff_value(old_val) %></span>
+                          →
+                          <span class="ii-new"><%= format_diff_value(new_val) %></span>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

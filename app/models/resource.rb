@@ -42,25 +42,67 @@ class Resource < ApplicationRecord
 
   after_create :create_demob, unless: :spacer?
 
-  # Positions that should auto-route to the Non-209 org unit instead of
-  # sitting in Unassigned. These are support/logistics/services roles
-  # that don't belong on the 209 rollup (medical vans, showers, potties,
-  # forklifts, tents, generators, etc.). Codes are matched case-
+  # Position-code buckets for the auto-router. Each list maps a set of
+  # NWCG position codes → the org unit a newly-created Resource should
+  # land on (instead of sitting in Unassigned). Codes are matched case-
   # insensitively against Resource#position. Fires for both hand-created
-  # resources and iSuite-imported ones (same after_create callback).
+  # resources and iSuite-imported ones via the after_create below.
+  #
+  # Precedence: COMMAND / PLANS / LOGISTICS / FINANCE / OPERATIONS win
+  # over NON_209 when a code appears in both — section lists are more
+  # specific placements, NON_209 is the catch-all for off-209 support.
+  COMMAND_POSITIONS = %w[
+    ICT1 ICT2 ICT3 ICT4 ICT5 ICA2 ICA3 ACDR PIOF PIO1 PIO2 PIO3 PIA2
+    SOF1 SOF2 SOF3 SOA2 SOFR SOFO LOFR
+  ].to_set.freeze
+
+  OPERATIONS_POSITIONS = %w[
+    OSC1 OSC2 OSC3 OPS3 OSA2 OPBD DIVA DIVS DLEO DSAR ATFL TFLD STCR
+    STEN STEQ STLM
+  ].to_set.freeze
+
+  PLANS_POSITIONS = %w[
+    PSCC PSC1 PSC2 PSC3 PSA2 ACPC RESL SITL SIAL DMOB DOCL SCKN DPRO
+    FOBS FBAN FEMO GISS HRSP IRIN IARR LTAN SOPL TNSP WOBS FLIR IMET
+    GEOG GEOL GEOP OCEA SCEN SCPH
+  ].to_set.freeze
+
+  LOGISTICS_POSITIONS = %w[
+    LSCC LSC1 LSC2 LSC3 COML COMC COMT FACL GSUL SPUL FDUL MEDL BCMG
+    STAM ORDM FCMG WHLR WHHR CASC CAST CDSP EQPM EQPI DRIV DRVA DRVB
+    LOAD MOTL MOTS KMGR CAMP
+  ].to_set.freeze
+
+  FINANCE_POSITIONS = %w[
+    FSCC FSC1 FSC2 FSC3 COST COSP TIME PROC COMP CLMS INJR PTRC EQTR
+    FTSC CATS CONS COPA COTR PPTS
+  ].to_set.freeze
+
   NON_209_POSITIONS = %w[
     AADM ACDP AREP ARPL AUTO BLGT BSU1 BSU2 BSU3 BUSH BUYL BUYM BUYT BWFS
     CLSU COM1 COM2 COM3 COMA COTR DUTY ELEC EOCO FLAT FLIA FLOP FORK GENR
     GOLF GWT1 GWT2 GWT3 GWT4 GWTA HND1 HND2 HNDA HVAC IADP IBU1 IBU2 LAU1
     LAU2 LITK LITR MBLP MCCO MCIF MEDV MESU MESV MFSU MKUS MOTL MOTS MSFU
     OFFT PIRD PLJK POT1 POT2 POT3 POT4 POTA PPTS PROB PRSS PUP1 PUP2 PUP3
-    PWSP RAPT REF1 REF2 REF3 REFA REPP SATP SATR SATS SCDB SIRF SLGT SLP1 
-    SLP2 SLP3 SLPA SLRR SMEC SMKM SMRB STFR STK1 STK2 STKA STMH STML STMT 
-    TNT1 TNT2 TNT3 TNT4 TNTA TOWT TPPU TRQA TTCH TUBG UTT1 UTT2 VANB VANP 
-    VSRS VTEC VUTV WEBS WEED WHHR WHLR WWCB 
+    PWSP RAPT REF1 REF2 REF3 REFA REPP SATP SATR SATS SCDB SIRF SLGT SLP1
+    SLP2 SLP3 SLPA SLRR SMEC SMKM SMRB STFR STK1 STK2 STKA STMH STML STMT
+    TNT1 TNT2 TNT3 TNT4 TNTA TOWT TPPU TRQA TTCH TUBG UTT1 UTT2 VANB VANP
+    VSRS VTEC VUTV WEBS WEED WHHR WHLR WWCB
   ].to_set.freeze
 
-  after_create :auto_route_to_non_209, unless: :spacer?
+  # Routing table — ORDER MATTERS. First matching entry wins, so sections
+  # (command/plans/logistics/finance/operations) take precedence over the
+  # Non-209 catch-all.
+  AUTO_ROUTE_TABLE = [
+    { codes: COMMAND_POSITIONS,    kind:         :command    },
+    { codes: PLANS_POSITIONS,      section_name: 'Plans'     },
+    { codes: LOGISTICS_POSITIONS,  section_name: 'Logistics' },
+    { codes: FINANCE_POSITIONS,    section_name: 'Finance'   },
+    { codes: OPERATIONS_POSITIONS, section_name: 'Operations' },
+    { codes: NON_209_POSITIONS,    kind:         :non_209    }
+  ].freeze
+
+  after_create :auto_route_by_position, unless: :spacer?
 
   # Demobed resources shouldn't linger as OrgUnitAssignments on the board.
   # The board hides them via `.active`, but leaving the row lets them leak
@@ -75,24 +117,36 @@ class Resource < ApplicationRecord
     org_unit_assignment&.destroy
   end
 
-  # If this resource's position is in NON_209_POSITIONS, drop it onto the
-  # incident's Non-209 org unit instead of leaving it in Unassigned.
-  # Idempotent: skips if an OrgUnitAssignment already exists (e.g., an
-  # iSuite re-import), skips if there's no Non-209 unit yet, and rescues
-  # so a routing failure never blocks resource creation.
-  def auto_route_to_non_209
+  # Drop a newly-created resource onto the appropriate section org unit
+  # based on its position code. AUTO_ROUTE_TABLE is checked in order;
+  # the first matching bucket wins (Plans/Logistics/Finance before
+  # Non-209). Idempotent: skips if an OrgUnitAssignment already exists
+  # (e.g. an iSuite re-import), skips when the target org unit is
+  # missing on the incident, and rescues so a routing failure never
+  # blocks resource creation.
+  def auto_route_by_position
     return if position.blank?
-    code = position.to_s.strip.upcase
-    return unless NON_209_POSITIONS.include?(code)
     return if org_unit_assignment.present?
 
-    non_209_unit = incident.org_units.where(kind: OrgUnit.kinds[:non_209]).first
-    return unless non_209_unit
+    code = position.to_s.strip.upcase
+    bucket = AUTO_ROUTE_TABLE.find { |b| b[:codes].include?(code) }
+    return unless bucket
 
-    OrgUnitAssignment.create!(resource: self, org_unit: non_209_unit)
+    target = target_org_unit_for(bucket)
+    return unless target
+
+    OrgUnitAssignment.create!(resource: self, org_unit: target)
   rescue => e
-    Rails.logger.warn "Resource##{id} auto_route_to_non_209 failed: #{e.class}: #{e.message}"
+    Rails.logger.warn "Resource##{id} auto_route_by_position failed: #{e.class}: #{e.message}"
     nil
+  end
+
+  def target_org_unit_for(bucket)
+    if bucket[:kind]
+      incident.org_units.where(kind: OrgUnit.kinds[bucket[:kind]]).first
+    elsif bucket[:section_name]
+      incident.section(bucket[:section_name])
+    end
   end
 
   # Guard against ActiveRecord's stricter date coercion turning

@@ -35,23 +35,18 @@ class IsuiteImporter
   Result = Struct.new(
     :resources_created, :resources_skipped, :resources_updated,
     :rosters_created,   :rosters_skipped,   :rosters_updated,
-    :demobed_skipped,   :service_skipped,
+    :resources_demobed, :rosters_demobed,
+    :demobed_skipped,   :filled_skipped,    :service_skipped,
     :errors,
     keyword_init: true
   )
 
   # Preview plan built from the CSV. Everything is plain data (no AR
   # objects) so it round-trips through Rails.cache cleanly.
-  #   new_resources: [row hash, ...]
-  #   new_rosters:   [row hash, ...]
-  #   resource_changes: [{ resource_id:, request:, name:, diffs: {field=>[old,new]} }, ...]
-  #   roster_changes:   [{ roster_id:,   request:, name:, diffs: {...} }, ...]
-  #   unchanged_count:  Integer
-  #   demobed_skipped:, service_skipped:, errors:
   Plan = Struct.new(
     :new_resources, :new_rosters,
     :resource_changes, :roster_changes,
-    :unchanged_count, :demobed_skipped, :service_skipped, :errors,
+    :unchanged_count, :demobed_skipped, :filled_skipped, :service_skipped, :errors,
     keyword_init: true
   )
 
@@ -108,14 +103,52 @@ class IsuiteImporter
     plan = Plan.new(
       new_resources: [], new_rosters: [],
       resource_changes: [], roster_changes: [],
-      unchanged_count: 0, demobed_skipped: 0, service_skipped: 0, errors: []
+      unchanged_count: 0,
+      demobed_skipped: 0, filled_skipped: 0, service_skipped: 0,
+      errors: []
     )
 
+    # Status handling:
+    #   C = Checked in     → import as active
+    #   R = On R&R         → import with r_and_r: true
+    #   F = Filled (iSuite requisition filled elsewhere) → ignore entirely
+    #   D = Demobed →
+    #     • not in our DB OR already released here → ignore
+    #     • in our DB and still active → surface as a "DEMOB" change the
+    #       user can accept in the preview; apply sets release_date and
+    #       cascades through the normal demob flow (DemobNotification +
+    #       remove_from_board).
     parents.each do |row|
-      if row[:status] == "D" then plan.demobed_skipped += 1; next; end
       if row[:category].nil? then plan.service_skipped += 1; next; end
+      # F = Filled requisition (filled from elsewhere) → ignore. Other
+      # statuses pass through: C/R/P are all currently checked in
+      # (P = pending demob, usually within 48h, treated same as C), and
+      # D gets its own branch below.
+      if row[:status] == "F" then plan.filled_skipped += 1; next; end
 
       existing = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
+
+      if row[:status] == "D"
+        if existing.nil? || existing.release_date.present?
+          plan.demobed_skipped += 1
+        else
+          # Active in our DB but iSuite marks demobed → propose a demob.
+          # Prefer the CSV's Actual Release Date when provided; fall
+          # back to today for older exports that omit it.
+          release_date = row[:actual_release_date] || Date.current
+          plan.resource_changes << {
+            resource_id:  existing.id,
+            request:      row[:request],
+            name:         existing.name,
+            position:     existing.position,
+            diffs:        { release_date: [existing.release_date, release_date] },
+            demob:        true,
+            release_time: row[:actual_release_time].presence
+          }
+        end
+        next
+      end
+
       if existing.nil?
         plan.new_resources << row
       else
@@ -135,17 +168,38 @@ class IsuiteImporter
     end
 
     children.each do |row|
-      if row[:status] == "D" then plan.demobed_skipped += 1; next; end
       if row[:category].nil? then plan.service_skipped += 1; next; end
+      # F = Filled requisition (filled from elsewhere) → ignore. Other
+      # statuses pass through: C/R/P are all currently checked in
+      # (P = pending demob, usually within 48h, treated same as C), and
+      # D gets its own branch below.
+      if row[:status] == "F" then plan.filled_skipped += 1; next; end
 
-      parent = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
+      parent          = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
+      existing_roster = parent&.rosters&.find_by(order_number: row[:child_num])
+
+      if row[:status] == "D"
+        if existing_roster.nil? || existing_roster.released_at.present?
+          plan.demobed_skipped += 1
+        else
+          plan.roster_changes << {
+            roster_id:   existing_roster.id,
+            request:     row[:request],
+            name:        existing_roster.name,
+            position:    existing_roster.position,
+            diffs:       { released: [false, true] },
+            demob:       true
+          }
+        end
+        next
+      end
+
       unless parent
         # Parent will be created this run — treat as new roster to add.
         plan.new_rosters << row
         next
       end
 
-      existing_roster = parent.rosters.find_by(order_number: row[:child_num])
       if existing_roster.nil?
         plan.new_rosters << row
       else
@@ -218,7 +272,12 @@ class IsuiteImporter
       assignment_length: length,
       checkin_date:      row[:checkin_date],
       fwd:               row[:fwd],
-      r_and_r:           row[:status] == "R"
+      r_and_r:           row[:status] == "R",
+      # Newer-export fields — only diff when the CSV actually provided
+      # a non-blank value so sparse exports don't wipe existing data.
+      leader:            row[:leader_name].presence,
+      phone:             row[:cell_phone].presence,
+      return_city:       row[:demob_city].presence
     }
   end
 
@@ -237,7 +296,9 @@ class IsuiteImporter
     result = Result.new(
       resources_created: 0, resources_skipped: 0, resources_updated: 0,
       rosters_created:   0, rosters_skipped:   0, rosters_updated:   0,
+      resources_demobed: 0, rosters_demobed:   0,
       demobed_skipped:   plan.demobed_skipped,
+      filled_skipped:    plan.filled_skipped,
       service_skipped:   plan.service_skipped,
       errors:            plan.errors.dup
     )
@@ -269,7 +330,10 @@ class IsuiteImporter
         assignment_length: length,
         checkin_date:      row[:checkin_date],
         fwd:               row[:fwd],
-        r_and_r:           row[:status] == "R"
+        r_and_r:           row[:status] == "R",
+        leader:            row[:leader_name].presence,
+        phone:             row[:cell_phone].presence,
+        return_city:       row[:demob_city].presence
       )
       if resource.save
         resource_by_key[key] = resource
@@ -285,11 +349,27 @@ class IsuiteImporter
         next unless resource_ids.include?(change[:resource_id])
         resource = incident.resources.find_by(id: change[:resource_id])
         next unless resource
-        attrs = change[:diffs].transform_values(&:last)
-        if resource.update(attrs)
-          result.resources_updated += 1
+
+        if change[:demob]
+          # Route through the Demob record so the normal release flow
+          # fires: Demob#release_resource sets resource.release_date,
+          # resource.remove_from_board_on_demob destroys the OrgUnit
+          # assignment, and DemobNotification.from_demob is created.
+          demob = resource.demob || Demob.create!(resource_id: resource.id)
+          attrs = { actual_release_date: change[:diffs][:release_date].last }
+          attrs[:actual_release_time] = change[:release_time] if change[:release_time]
+          if demob.update(attrs)
+            result.resources_demobed += 1
+          else
+            result.errors << "#{change[:request]}: #{demob.errors.full_messages.join('; ')}"
+          end
         else
-          result.errors << "#{change[:request]}: #{resource.errors.full_messages.join('; ')}"
+          attrs = change[:diffs].transform_values(&:last)
+          if resource.update(attrs)
+            result.resources_updated += 1
+          else
+            result.errors << "#{change[:request]}: #{resource.errors.full_messages.join('; ')}"
+          end
         end
       end
     end
@@ -325,17 +405,26 @@ class IsuiteImporter
         next unless roster_ids.include?(change[:roster_id])
         roster = Roster.find_by(id: change[:roster_id])
         next unless roster
-        attrs = change[:diffs].each_with_object({}) do |(field, (_old, new_val)), h|
-          if field == :released
-            h[:released_at] = new_val ? (roster.released_at || Time.current) : nil
+
+        if change[:demob]
+          if roster.update(released_at: Time.current)
+            result.rosters_demobed += 1
           else
-            h[field] = new_val
+            result.errors << "#{change[:request]}: #{roster.errors.full_messages.join('; ')}"
           end
-        end
-        if roster.update(attrs)
-          result.rosters_updated += 1
         else
-          result.errors << "#{change[:request]}: #{roster.errors.full_messages.join('; ')}"
+          attrs = change[:diffs].each_with_object({}) do |(field, (_old, new_val)), h|
+            if field == :released
+              h[:released_at] = new_val ? (roster.released_at || Time.current) : nil
+            else
+              h[field] = new_val
+            end
+          end
+          if roster.update(attrs)
+            result.rosters_updated += 1
+          else
+            result.errors << "#{change[:request]}: #{roster.errors.full_messages.join('; ')}"
+          end
         end
       end
     end
@@ -356,22 +445,33 @@ class IsuiteImporter
 
       parent_num, child_num = rest.split(".", 2)
 
+      # Any column not present in the particular CSV returns nil via
+      # CSV::Row#[], which `.to_s` turns into "" — the import tolerates
+      # missing columns automatically and never errors on exports with
+      # a smaller schema than this importer knows about. New columns
+      # that show up in future exports simply go unused.
       out << {
-        request:           request,
-        prefix:            prefix,
-        parent_num:        parent_num,
-        child_num:         child_num,
-        category:          CATEGORY_FROM_PREFIX[prefix],
-        name:              csv_row["Resource Name"].to_s.strip,
-        item_code:         csv_row["Item Code"].to_s.strip,
-        status:            csv_row["Status"].to_s.strip,
-        agency:            csv_row["Agency"].to_s.strip,
-        item_name:         csv_row["Item Name"].to_s.strip,
-        unit_id:           csv_row["Unit ID"].to_s.strip,
-        checkin_date:      parse_date(csv_row["Check-In Date"]),
-        fwd:               parse_date(csv_row["First Work Day"]),
-        assignment_length: csv_row["Length of Assignment"].to_s.strip,
-        personnel:         csv_row["# Personnel"].to_s.strip
+        request:              request,
+        prefix:               prefix,
+        parent_num:           parent_num,
+        child_num:            child_num,
+        category:             CATEGORY_FROM_PREFIX[prefix],
+        name:                 csv_row["Resource Name"].to_s.strip,
+        item_code:            csv_row["Item Code"].to_s.strip,
+        status:               csv_row["Status"].to_s.strip,
+        agency:               csv_row["Agency"].to_s.strip,
+        item_name:            csv_row["Item Name"].to_s.strip,
+        unit_id:              csv_row["Unit ID"].to_s.strip,
+        checkin_date:         parse_date(csv_row["Check-In Date"]),
+        fwd:                  parse_date(csv_row["First Work Day"]),
+        assignment_length:    csv_row["Length of Assignment"].to_s.strip,
+        personnel:            csv_row["# Personnel"].to_s.strip,
+        # Newer-export columns — safe no-ops when the column is missing.
+        actual_release_date:  parse_date(csv_row["Actual Release Date"]),
+        actual_release_time:  csv_row["Actual Release Time"].to_s.strip,
+        cell_phone:           csv_row["Cell Phone"].to_s.strip,
+        demob_city:           csv_row["Demob City"].to_s.strip,
+        leader_name:          csv_row["Leader Name"].to_s.strip
       }
     end
   end

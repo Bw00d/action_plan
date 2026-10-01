@@ -207,8 +207,11 @@ class ResourcesController < ApplicationController
     parts << "#{result.rosters_created} roster entr#{result.rosters_created == 1 ? 'y' : 'ies'} added"     if result.rosters_created.positive?
     parts << "updated #{result.resources_updated} resource#{'s' if result.resources_updated != 1}"         if result.resources_updated.positive?
     parts << "updated #{result.rosters_updated} roster entr#{result.rosters_updated == 1 ? 'y' : 'ies'}"   if result.rosters_updated.positive?
-    parts << "#{result.demobed_skipped} demobed"      if result.demobed_skipped.positive?
-    parts << "#{result.service_skipped} service rows" if result.service_skipped.positive?
+    parts << "demobbed #{result.resources_demobed} resource#{'s' if result.resources_demobed != 1}"        if result.resources_demobed.positive?
+    parts << "demobbed #{result.rosters_demobed} roster entr#{result.rosters_demobed == 1 ? 'y' : 'ies'}"  if result.rosters_demobed.positive?
+    parts << "#{result.demobed_skipped} demobed skipped"       if result.demobed_skipped.positive?
+    parts << "#{result.filled_skipped} filled skipped"         if result.filled_skipped.positive?
+    parts << "#{result.service_skipped} service rows skipped"  if result.service_skipped.positive?
     notice = parts.any? ? (parts.join(", ") + ".") : "Nothing to do — no items were selected."
     notice += " Errors: #{result.errors.first(3).join(' | ')}#{'…' if result.errors.size > 3}" if result.errors.any?
 

@@ -99,4 +99,26 @@
     padding-top: 12px;
     border-top: 1px solid #eee;
   }
+
+  // Demob changes stand out from field-update changes — they're a
+  // different kind of action (release, not edit).
+  .ii-demob-row {
+    background: #fff5f5;
+    td { border-color: #f4c7c7 !important; }
+  }
+
+  .ii-demob-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    margin-right: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background: #c0392b;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+
+  .muted { color: #6b778c; font-size: 11px; }
 }

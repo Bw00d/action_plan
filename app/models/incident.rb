@@ -18,6 +18,13 @@ class Incident < ApplicationRecord
 
   after_create :seed_default_schedule
   after_create :seed_non_209_bucket
+  after_create :seed_default_sections
+
+  # Section org_units (kind=section) auto-seeded on incident creation so
+  # the Resource position auto-router has somewhere to drop plans /
+  # logistics / finance / operations resources. Names use titleize to
+  # match Incident#section lookups.
+  DEFAULT_SECTION_NAMES = %w[Plans Logistics Finance Operations].freeze
 
   # Normalize free-form cost input. Users routinely type formatted numbers
   # like "3,000,000" or "$3,000,000" — ActiveRecord's decimal cast stops
@@ -166,5 +173,21 @@ class Incident < ApplicationRecord
   def seed_non_209_bucket
     return if org_units.where(kind: OrgUnit.kinds[:non_209]).exists?
     org_units.create!(kind: :non_209, name: 'Non-209', parent_id: nil)
+  end
+
+  # Create the standard section org units (Plans / Logistics / Finance /
+  # Operations) and the Command unit if missing, idempotently. Lets the
+  # Resource auto-router drop position-matched resources onto them from
+  # day one.
+  def seed_default_sections
+    DEFAULT_SECTION_NAMES.each do |name|
+      next if org_units.kind_section.where(name: name).exists?
+      org_units.create!(kind: :section, name: name, parent_id: nil)
+    end
+    unless org_units.kind_command.exists?
+      org_units.create!(kind: :command, name: 'Command', parent_id: nil)
+    end
+  rescue => e
+    Rails.logger.warn "Incident##{id} seed_default_sections failed: #{e.class}: #{e.message}"
   end
 end
