@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_01_000000) do
+ActiveRecord::Schema.define(version: 2026_10_01_010000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -381,7 +381,16 @@ ActiveRecord::Schema.define(version: 2026_10_01_000000) do
     t.datetime "expires_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0, null: false
+    t.text "selected_resource_ids"
+    t.text "selected_roster_ids"
+    t.text "result"
+    t.text "error_message"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.string "job_id"
     t.index ["expires_at"], name: "index_isuite_import_stagings_on_expires_at"
+    t.index ["status"], name: "index_isuite_import_stagings_on_status"
     t.index ["token"], name: "index_isuite_import_stagings_on_token", unique: true
   end
 

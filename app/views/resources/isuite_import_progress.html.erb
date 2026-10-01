@@ -1,0 +1,167 @@
+<% content_for :title, "iSuite Import — Applying" %>
+<div class="incident-name">
+  <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+</div>
+
+<div class="container isuite-progress">
+  <div class="isuite-loading-card" id="isuite-progress-card">
+    <div id="isuite-progress-active">
+      <div class="isuite-spinner" aria-hidden="true"></div>
+      <div class="isuite-loading-title" id="isuite-progress-title">Applying iSuite import…</div>
+      <div class="isuite-loading-msg">
+        This runs in the background so a slow import won't time out.<br>
+        You can stay on this page or come back later —
+        <%= link_to "Resources", incident_resources_path(@incident) %> will reflect the changes as soon as it finishes.
+      </div>
+      <div class="isuite-elapsed muted" id="isuite-elapsed">Elapsed: 0s</div>
+    </div>
+
+    <div id="isuite-progress-done" style="display:none;"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var statusUrl = "<%= isuite_import_status_incident_resources_path(@incident, import_token: @import_token) %>";
+  var pollMs = 2500;
+  var startedAt = Date.now();
+
+  function fmtElapsed(sec) {
+    if (sec < 60) return sec + "s";
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return m + "m " + (s < 10 ? "0" : "") + s + "s";
+  }
+
+  function tickElapsed() {
+    var el = document.getElementById('isuite-elapsed');
+    if (!el) return;
+    var sec = Math.floor((Date.now() - startedAt) / 1000);
+    el.textContent = "Elapsed: " + fmtElapsed(sec);
+  }
+  var elapsedTimer = setInterval(tickElapsed, 1000);
+
+  function showDone(html) {
+    document.getElementById('isuite-progress-active').style.display = 'none';
+    var done = document.getElementById('isuite-progress-done');
+    done.innerHTML = html;
+    done.style.display = 'block';
+    clearInterval(elapsedTimer);
+  }
+
+  // Cache-buster: every poll URL is unique so no intermediary (browser,
+  // Heroku router, etc.) can serve a stale "running" response forever.
+  function nextUrl() {
+    return statusUrl + (statusUrl.indexOf('?') === -1 ? '?' : '&') + '_=' + Date.now();
+  }
+
+  var pollCount = 0;
+  var errorCount = 0;
+  var lastErrorDetail = '';
+  // Deliberately generous — even on a slow worker + chatty session store
+  // the actual error cases we care about (missing route, auth lost,
+  // server crash) will keep failing well past this cap, while transient
+  // issues get a long window to self-heal.
+  var MAX_ERRORS = 24;  // ~60s of continuous failure → surface it
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // Pulls as much diagnostic context as possible out of a failed poll:
+  // HTTP status + the first ~400 chars of the response body. Rails
+  // returning an auth redirect / HTML error page would show up here as
+  // "<!DOCTYPE html>…" which is the giveaway we're after.
+  function describeHttpFailure(response) {
+    return response.text().then(function(body) {
+      var snippet = (body || '').slice(0, 400);
+      return 'HTTP ' + response.status + ' ' + response.statusText + '\n' + snippet;
+    }).catch(function() {
+      return 'HTTP ' + response.status + ' ' + response.statusText + ' (body unreadable)';
+    });
+  }
+
+  function noteError(detail) {
+    errorCount += 1;
+    lastErrorDetail = detail;
+    console.warn('[isuite-import] poll error ' + errorCount + '/' + MAX_ERRORS + ':\n' + detail);
+  }
+
+  function poll() {
+    pollCount += 1;
+    fetch(nextUrl(), {
+      headers: { 'Accept': 'application/json' },
+      credentials: 'same-origin',
+      cache: 'no-store',
+      redirect: 'manual'  // don't silently follow a login redirect — surface it
+    })
+      .then(function(r) {
+        if (r.type === 'opaqueredirect') {
+          throw new Error('Server returned a redirect (likely an expired session or signed-out user)');
+        }
+        if (!r.ok) {
+          return describeHttpFailure(r).then(function(detail) { throw new Error(detail); });
+        }
+        return r.json();
+      })
+      .then(function(data) {
+        errorCount = 0;
+        if (data.status === 'running') {
+          var title = document.getElementById('isuite-progress-title');
+          if (title) title.textContent = "Writing changes to the database…";
+        }
+        if (data.done) {
+          if (data.status === 'succeeded') {
+            showDone(
+              '<div class="isuite-done-check">✓</div>' +
+              '<div class="isuite-loading-title">Import complete</div>' +
+              (data.summary_html || '') +
+              '<div class="isuite-done-actions">' +
+                '<a class="btn btn-success" href="' + data.return_url + '">Back to Resources</a>' +
+              '</div>'
+            );
+          } else {
+            showDone(
+              '<div class="isuite-done-x">✗</div>' +
+              '<div class="isuite-loading-title">Import failed</div>' +
+              '<div class="isuite-loading-msg"><pre style="white-space:pre-wrap;text-align:left;">' +
+                escapeHtml(data.error_message || 'Unknown error') +
+              '</pre></div>' +
+              '<div class="isuite-done-actions">' +
+                '<a class="btn btn-default" href="' + data.return_url + '">Back to Resources</a>' +
+              '</div>'
+            );
+          }
+          return;
+        }
+        setTimeout(poll, pollMs);
+      })
+      .catch(function(err) {
+        noteError(err && err.message ? err.message : String(err));
+        if (errorCount >= MAX_ERRORS) {
+          showDone(
+            '<div class="isuite-done-x">?</div>' +
+            '<div class="isuite-loading-title">Lost contact with the server</div>' +
+            '<div class="isuite-loading-msg">' +
+              'The import may still be running — ' +
+              '<a href="<%= incident_resources_path(@incident) %>">open Resources</a> to check.' +
+            '</div>' +
+            '<details style="margin-top:14px;text-align:left;font-size:11px;">' +
+              '<summary style="cursor:pointer;color:#5e6c84;">Show diagnostic (' + errorCount + ' failed polls)</summary>' +
+              '<pre style="white-space:pre-wrap;margin:8px 0 0;padding:8px;background:#f6f8fa;border-radius:4px;max-height:200px;overflow:auto;">' +
+                escapeHtml(lastErrorDetail) +
+              '</pre>' +
+            '</details>'
+          );
+          return;
+        }
+        setTimeout(poll, pollMs);
+      });
+  }
+
+  setTimeout(poll, 500);
+})();
+</script>

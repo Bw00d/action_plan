@@ -67,6 +67,8 @@ Rails.application.routes.draw do
       collection do
         post :import_isuite
         post :apply_isuite_import
+        get  :isuite_import_progress
+        get  :isuite_import_status
         get  :tally_to_pdf
       end
       resources :demobs

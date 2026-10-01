@@ -185,6 +185,10 @@ class ResourcesController < ApplicationController
 
   # POST /incidents/:incident_id/resources/apply_isuite_import
   # Body: import_token, resource_ids[] (checked), roster_ids[] (checked)
+  #
+  # Enqueues IsuiteImportJob and redirects to the progress page. The
+  # heavy lifting runs on the worker dyno so the request returns in
+  # milliseconds instead of racing Heroku's 30-second H12 timeout.
   def apply_isuite_import
     @incident = Incident.find(params[:incident_id])
     staging   = IsuiteImportStaging.find_active(params[:import_token])
@@ -194,28 +198,73 @@ class ResourcesController < ApplicationController
       return
     end
 
-    rows = IsuiteImporter.new(StringIO.new(staging.csv_data)).parsed_rows
-    result = IsuiteImporter.apply(
-      @incident, rows,
-      selected_resource_ids: Array(params[:resource_ids]),
-      selected_roster_ids:   Array(params[:roster_ids])
+    staging.record_selections!(
+      resource_ids: params[:resource_ids],
+      roster_ids:   params[:roster_ids]
     )
-    staging.destroy
+    # Keep the staging row alive past its 30-min TTL — the job needs the
+    # CSV, and the user needs the progress + result page afterwards.
+    staging.update!(expires_at: 2.hours.from_now)
 
-    parts = []
-    parts << "Added #{result.resources_created} resource#{'s' if result.resources_created != 1}"           if result.resources_created.positive?
-    parts << "#{result.rosters_created} roster entr#{result.rosters_created == 1 ? 'y' : 'ies'} added"     if result.rosters_created.positive?
-    parts << "updated #{result.resources_updated} resource#{'s' if result.resources_updated != 1}"         if result.resources_updated.positive?
-    parts << "updated #{result.rosters_updated} roster entr#{result.rosters_updated == 1 ? 'y' : 'ies'}"   if result.rosters_updated.positive?
-    parts << "demobbed #{result.resources_demobed} resource#{'s' if result.resources_demobed != 1}"        if result.resources_demobed.positive?
-    parts << "demobbed #{result.rosters_demobed} roster entr#{result.rosters_demobed == 1 ? 'y' : 'ies'}"  if result.rosters_demobed.positive?
-    parts << "#{result.demobed_skipped} demobed skipped"       if result.demobed_skipped.positive?
-    parts << "#{result.filled_skipped} filled skipped"         if result.filled_skipped.positive?
-    parts << "#{result.service_skipped} service rows skipped"  if result.service_skipped.positive?
-    notice = parts.any? ? (parts.join(", ") + ".") : "Nothing to do — no items were selected."
-    notice += " Errors: #{result.errors.first(3).join(' | ')}#{'…' if result.errors.size > 3}" if result.errors.any?
+    enqueued = IsuiteImportJob.perform_later(staging.id)
+    staging.update!(job_id: enqueued.provider_job_id || enqueued.job_id)
 
-    redirect_to incident_resources_path(@incident), notice: notice
+    redirect_to isuite_import_progress_incident_resources_path(@incident,
+                                                               import_token: staging.token)
+  end
+
+  # GET /incidents/:incident_id/resources/isuite_import_progress?import_token=…
+  # The "working on it" page the user lands on after submitting the
+  # apply form. Polls isuite_import_status every couple seconds via JS;
+  # swaps to the result summary once the job finishes.
+  def isuite_import_progress
+    @incident = Incident.find(params[:incident_id])
+    @staging  = IsuiteImportStaging.find_by(token: params[:import_token])
+    unless @staging
+      redirect_to incident_resources_path(@incident),
+                  alert: "Import record not found or already expired."
+      return
+    end
+    @import_token = @staging.token
+  end
+
+  # GET /incidents/:incident_id/resources/isuite_import_status?import_token=…
+  # JSON polled by the progress page every ~2s. Returns the staging
+  # record's status + (when done) the result summary / error.
+  def isuite_import_status
+    # Same URL polled over and over — without this, some browsers will
+    # serve the first "running" response from cache for the whole life
+    # of the job and the UI never sees "succeeded".
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate'
+    response.headers['Pragma']        = 'no-cache'
+
+    @incident = Incident.find(params[:incident_id])
+    staging   = IsuiteImportStaging.find_by(token: params[:import_token])
+    if staging.nil?
+      render json: { status: 'missing' }, status: :not_found
+      return
+    end
+
+    payload = {
+      status:       staging.status,
+      done:         staging.done?,
+      started_at:   staging.started_at,
+      finished_at:  staging.finished_at,
+      elapsed_sec:  staging.started_at ? ((staging.finished_at || Time.current) - staging.started_at).to_i : 0
+    }
+    if staging.succeeded?
+      # formats: [:html] is required — this action responds as JSON, so
+      # without it Rails looks for _isuite_result_summary.json.erb and
+      # raises MissingTemplate.
+      payload[:summary_html] = view_context.render(partial: 'resources/isuite_result_summary',
+                                                   formats: [:html],
+                                                   locals: { result: staging.result_hash })
+      payload[:return_url]   = incident_resources_path(@incident)
+    elsif staging.failed?
+      payload[:error_message] = staging.error_message
+      payload[:return_url]    = incident_resources_path(@incident)
+    end
+    render json: payload
   end
 
   # DELETE /resources/1

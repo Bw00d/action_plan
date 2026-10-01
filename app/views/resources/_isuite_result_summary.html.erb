@@ -1,0 +1,41 @@
+<%#
+  Rendered from the isuite_import_status JSON endpoint — the keys here
+  come from IsuiteImporter::Result#to_h (via staging.result_hash). Keep
+  the field list in sync with the Result struct.
+%>
+<ul class="isuite-result-list">
+  <% rc = result[:resources_created].to_i %>
+  <% rsu = result[:resources_updated].to_i %>
+  <% rrc = result[:rosters_created].to_i %>
+  <% rru = result[:rosters_updated].to_i %>
+  <% rd  = result[:resources_demobed].to_i %>
+  <% rrd = result[:rosters_demobed].to_i %>
+  <% ds  = result[:demobed_skipped].to_i %>
+  <% fs  = result[:filled_skipped].to_i %>
+  <% ss  = result[:service_skipped].to_i %>
+
+  <% if rc.positive?  %><li>Added <strong><%= rc %></strong> resource<%= 's' unless rc == 1 %></li><% end %>
+  <% if rrc.positive? %><li>Added <strong><%= rrc %></strong> roster entr<%= rrc == 1 ? 'y' : 'ies' %></li><% end %>
+  <% if rsu.positive? %><li>Updated <strong><%= rsu %></strong> resource<%= 's' unless rsu == 1 %></li><% end %>
+  <% if rru.positive? %><li>Updated <strong><%= rru %></strong> roster entr<%= rru == 1 ? 'y' : 'ies' %></li><% end %>
+  <% if rd.positive?  %><li>Demobbed <strong><%= rd %></strong> resource<%= 's' unless rd == 1 %></li><% end %>
+  <% if rrd.positive? %><li>Demobbed <strong><%= rrd %></strong> roster entr<%= rrd == 1 ? 'y' : 'ies' %></li><% end %>
+  <% if ds.positive?  %><li class="muted"><%= ds %> already-demobed row<%= 's' unless ds == 1 %> skipped</li><% end %>
+  <% if fs.positive?  %><li class="muted"><%= fs %> filled row<%= 's' unless fs == 1 %> skipped</li><% end %>
+  <% if ss.positive?  %><li class="muted"><%= ss %> service row<%= 's' unless ss == 1 %> skipped</li><% end %>
+</ul>
+
+<% errs = Array(result[:errors]) %>
+<% if errs.any? %>
+  <div class="isuite-result-errors">
+    <strong>Errors:</strong>
+    <ul>
+      <% errs.first(5).each do |err| %>
+        <li><%= err %></li>
+      <% end %>
+      <% if errs.size > 5 %>
+        <li class="muted">…and <%= errs.size - 5 %> more</li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

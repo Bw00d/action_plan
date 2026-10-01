@@ -81,6 +81,11 @@ gem 'datejs-rails'
 gem 'grover', '~> 1.1.2'
 gem 'jquery-validation-rails'
 gem 'flatpickr'
+# Background job backend — Postgres-backed ActiveJob adapter. Runs on a
+# separate worker dyno (see Procfile) so long-running work like big
+# iSuite imports doesn't hold the web request past Heroku's 30s H12
+# router timeout.
+gem 'good_job', '~> 3.99'
 
 group :test do
   gem 'database_cleaner'

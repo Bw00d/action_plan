@@ -122,3 +122,65 @@
 
   .muted { color: #6b778c; font-size: 11px; }
 }
+
+// Standalone progress page the user lands on after submitting the apply
+// form while the background job runs. Uses the same card chrome as the
+// inline overlay but centred on its own page.
+.isuite-progress {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+
+  .isuite-loading-card {
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .isuite-elapsed {
+    margin-top: 14px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+
+  .isuite-done-check,
+  .isuite-done-x {
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .isuite-done-check { color: #1a7f37; }
+  .isuite-done-x     { color: #c0392b; }
+
+  .isuite-done-actions {
+    margin-top: 18px;
+  }
+
+  .isuite-result-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px auto;
+    max-width: 360px;
+    text-align: left;
+    font-size: 13px;
+    li {
+      padding: 3px 0;
+      strong { color: #172b4d; }
+    }
+    .muted { color: #6b778c; font-size: 12px; }
+  }
+
+  .isuite-result-errors {
+    text-align: left;
+    margin: 16px auto 0;
+    max-width: 420px;
+    padding: 10px 14px;
+    background: #fff5f5;
+    border: 1px solid #f4c7c7;
+    border-radius: 4px;
+    font-size: 12px;
+    strong { color: #c0392b; }
+    ul { margin: 6px 0 0; padding-left: 18px; }
+    .muted { color: #6b778c; }
+  }
+}
