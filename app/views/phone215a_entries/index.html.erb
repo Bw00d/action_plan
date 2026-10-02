@@ -1,0 +1,80 @@
+<% content_for :title, "215A Phone List" %>
+<div class="container">
+  <div class="col-xs-12 col-lg-10 center-block">
+
+    <%# Plan tabrow — matches the other ICS form pages. If the incident
+        has no plans yet, we still render the row but the plan-scoped
+        links collapse to just a back link. %>
+    <div class="row">
+      <div class="plan-panel-head">
+        <ul class="tabrow">
+          <% if @plan %>
+            <li><%= link_to 'Plan',    incident_plan_path(@incident, @plan) %></li>
+            <li><%= link_to 'Cover',   incident_plan_covers_path(@incident, @plan) %></li>
+            <li><%= link_to '202',     "/incidents/#{@incident.id}/plans/#{@plan.id}/202" %></li>
+            <li><%= link_to '203',     "/incidents/#{@incident.id}/plans/#{@plan.id}/203" %></li>
+            <li><%= link_to '204',     incident_plan_assignments_path(@incident, @plan) %></li>
+            <li><%= link_to '205',     incident_plan_commo_plans_path(@incident, @plan) %></li>
+            <li><%= link_to '206',     '#' %></li>
+            <li class="selected"><%= link_to '215A', incident_phone_215a_entries_path(@incident) %></li>
+            <li><%= link_to '220',     '#' %></li>
+            <li><%= link_to 'Safety Message', incident_plan_safety_messages_path(@incident, @plan) %></li>
+          <% else %>
+            <li><%= link_to 'Back to incident', @incident %></li>
+            <li class="selected"><%= link_to '215A', incident_phone_215a_entries_path(@incident) %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="masking-tape"></div>
+    </div>
+
+    <div class="phone-215a">
+      <h3 class="phone-215a-title"><%= @incident.name.to_s.upcase %> PHONE LIST</h3>
+
+      <%# ── Add-entry form ──────────────────────────────────────── %>
+      <%= form_with model: [@incident, @entry],
+                    url: incident_phone_215a_entries_path(@incident),
+                    method: :post,
+                    local: true,
+                    html: { class: 'phone-215a-add-form' } do |f| %>
+        <div class="phone-215a-add-row">
+          <%= f.text_field :name,         placeholder: 'Name',         required: true %>
+          <%= f.text_field :position,     placeholder: 'Position' %>
+          <%= f.text_field :phone_number, placeholder: 'Phone Number' %>
+          <%= f.select :section,
+                       Phone215aEntry::SECTIONS,
+                       { include_blank: 'Section…' },
+                       required: true %>
+          <%= f.submit 'Add', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+
+      <%# ── Section cards ──────────────────────────────────────────
+          CSS multi-column lays sections into 2 side-by-side columns
+          (flowing top→bottom in the left column, then top→bottom in
+          the right). `break-inside: avoid` on each card keeps a
+          single section from splitting across the column break.
+          If the total entry count is small enough to fit comfortably
+          in one column, a `.single-col` modifier switches to a
+          centered single-column layout instead.
+      %>
+      <% total_entries = @entries_by_section.values.sum(&:size) %>
+      <% single_col = total_entries <= 10 %>
+      <div class="phone-215a-grid <%= 'single-col' if single_col %>">
+        <% Phone215aEntry::SECTIONS.each do |section| %>
+          <% entries = Array(@entries_by_section[section]) %>
+          <% next if entries.empty? && total_entries.positive?  # hide empty sections once there's data %>
+          <section class="phone-215a-card">
+            <h4 class="phone-215a-section-title"><%= section.upcase %></h4>
+            <% if entries.empty? %>
+              <div class="phone-215a-empty">No entries yet.</div>
+            <% else %>
+              <%= render partial: 'table', locals: { incident: @incident, entries: entries } %>
+            <% end %>
+          </section>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>

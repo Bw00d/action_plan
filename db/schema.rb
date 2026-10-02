@@ -529,6 +529,19 @@ ActiveRecord::Schema.define(version: 2026_10_02_135035) do
     t.index ["parent_id"], name: "index_org_units_on_parent_id"
   end
 
+  create_table "phone_215a_entries", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.string "name"
+    t.string "position"
+    t.string "phone_number"
+    t.string "section"
+    t.integer "sort_order", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id", "section"], name: "index_phone_215a_entries_on_incident_id_and_section"
+    t.index ["incident_id"], name: "index_phone_215a_entries_on_incident_id"
+  end
+
   create_table "plan_assignment_snapshots", force: :cascade do |t|
     t.bigint "plan_id", null: false
     t.bigint "org_unit_id"
@@ -770,6 +783,7 @@ ActiveRecord::Schema.define(version: 2026_10_02_135035) do
   add_foreign_key "org_unit_assignments", "resources"
   add_foreign_key "org_units", "incidents"
   add_foreign_key "org_units", "org_units", column: "parent_id"
+  add_foreign_key "phone_215a_entries", "incidents"
   add_foreign_key "plan_assignment_snapshots", "org_units"
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
