@@ -24774,6 +24774,134 @@ body.ir-modal-open {
   padding-top: 12px;
   border-top: 1px solid #eee;
 }
+
+/* line 105, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-row {
+  background: #fff5f5;
+}
+
+/* line 107, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-row td {
+  border-color: #f4c7c7 !important;
+}
+
+/* line 110, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .ii-demob-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: #c0392b;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* line 123, app/assets/stylesheets/isuite_import.scss */
+.isuite-preview .muted {
+  color: #6b778c;
+  font-size: 11px;
+}
+
+/* line 129, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* line 134, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-loading-card {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+}
+
+/* line 140, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-elapsed {
+  margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+}
+
+/* line 146, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-done-check,
+.isuite-progress .isuite-done-x {
+  font-size: 56px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+/* line 152, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-done-check {
+  color: #1a7f37;
+}
+
+/* line 153, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-done-x {
+  color: #c0392b;
+}
+
+/* line 155, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-done-actions {
+  margin-top: 18px;
+}
+
+/* line 159, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px auto;
+  max-width: 360px;
+  text-align: left;
+  font-size: 13px;
+}
+
+/* line 166, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-list li {
+  padding: 3px 0;
+}
+
+/* line 168, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-list li strong {
+  color: #172b4d;
+}
+
+/* line 170, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-list .muted {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+/* line 173, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-errors {
+  text-align: left;
+  margin: 16px auto 0;
+  max-width: 420px;
+  padding: 10px 14px;
+  background: #fff5f5;
+  border: 1px solid #f4c7c7;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* line 182, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-errors strong {
+  color: #c0392b;
+}
+
+/* line 183, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-errors ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+
+/* line 184, app/assets/stylesheets/isuite_import.scss */
+.isuite-progress .isuite-result-errors .muted {
+  color: #6b778c;
+}
 /* line 1, app/assets/stylesheets/ops.scss */
 .ops-container {
   padding: 12px 4px 32px;
@@ -29308,6 +29436,208 @@ input.new-commo-item {
     border: 1px solid #000 !important;
     /*background: white !important;*/
   }
+}
+/* line 6, app/assets/stylesheets/phone_215a.scss */
+.phone-215a {
+  padding: 18px 10px 40px;
+}
+
+/* line 10, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-title {
+  margin: 0 0 14px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #000;
+}
+
+/* line 20, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-add-form {
+  background: #f6f8fa;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+}
+
+/* line 28, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* line 34, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-add-row input[type="text"], .phone-215a-add-row select {
+  flex: 1 1 160px;
+  min-width: 140px;
+  height: 32px;
+  padding: 4px 8px;
+  border: 1px solid #c1c7d0;
+  border-radius: 3px;
+  font-size: 13px;
+  background: #fff;
+}
+
+/* line 45, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-add-row select {
+  flex: 0 0 150px;
+}
+
+/* line 47, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-add-row .btn {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 4px 16px;
+}
+
+/* line 58, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-grid {
+  column-count: 2;
+  column-gap: 24px;
+}
+
+/* line 62, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-grid.single-col {
+  column-count: 1;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* line 69, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-card {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 14px;
+  border: 1px solid #000;
+  background: #fff;
+  display: inline-block;
+  width: 100%;
+}
+
+/* line 80, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-section-title {
+  margin: 0;
+  padding: 5px 10px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  line-height: 1.3;
+}
+
+/* line 92, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-empty {
+  padding: 6px 10px;
+  color: #6b778c;
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* line 100, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* line 105, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table tbody td {
+  padding: 5px 8px;
+  border-bottom: 1px solid #dde3ea;
+  vertical-align: middle;
+  color: #000;
+  line-height: 1.3;
+}
+
+/* line 113, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* line 115, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+/* line 117, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table .col-position {
+  width: 24%;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* line 118, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table .col-name {
+  width: 30%;
+}
+
+/* line 119, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table .col-phone {
+  width: 22%;
+  white-space: nowrap;
+}
+
+/* line 120, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table .col-section {
+  width: 20%;
+  color: #5e6c84;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+/* line 121, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table .col-del {
+  width: 20px;
+  text-align: center;
+  padding: 2px 4px;
+}
+
+/* line 124, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table .best_in_place {
+  display: inline-block;
+  min-width: 20px;
+  padding: 1px 2px;
+  border-radius: 2px;
+  cursor: text;
+}
+
+/* line 130, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-table .best_in_place:hover {
+  background: #f0f6ff;
+}
+
+/* line 134, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-del {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 16px;
+  text-align: center;
+  color: #c0392b;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+/* line 147, app/assets/stylesheets/phone_215a.scss */
+tr:hover .phone-215a-del {
+  opacity: 1;
+}
+
+/* line 148, app/assets/stylesheets/phone_215a.scss */
+.phone-215a-del:hover {
+  background: #c0392b;
+  color: #fff;
+  text-decoration: none;
 }
 /* line 1, app/assets/stylesheets/planning-p.css.scss */
 .p-container {
