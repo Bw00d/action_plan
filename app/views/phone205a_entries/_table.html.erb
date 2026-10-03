@@ -1,14 +1,14 @@
 <%#
-  One phone-list sub-table matching the printed-215A row shape:
+  One phone-list sub-table matching the printed-205A row shape:
   Position | Name | Phone — no header row, just data. Cells are
   best_in_place so operators can tweak values without a round-trip
   through an edit page. Section is editable as a dropdown too; saving
   it reloads the page so the entry visibly jumps to its new card.
 %>
-<table class="phone-215a-table">
+<table class="phone-205a-table">
   <tbody>
     <% entries.each do |entry| %>
-      <% path = incident_phone_215a_entry_path(incident, entry) %>
+      <% path = incident_phone_205a_entry_path(incident, entry) %>
       <tr>
         <td class="col-position"><%= best_in_place entry, :position, as: :input,
                                        path: path,
@@ -24,17 +24,17 @@
               lands under its new section card. %>
           <%= best_in_place entry, :section,
                             as: :select,
-                            collection: Phone215aEntry::SECTIONS.map { |s| [s, s] },
+                            collection: Phone205aEntry::SECTIONS.map { |s| [s, s] },
                             path: path,
                             html_attrs: { 'data-reload-on-save' => true },
                             display_with: ->(v) { v.presence || '(section)' } %>
         </td>
         <td class="col-del">
           <%= link_to '×',
-                      incident_phone_215a_entry_path(incident, entry),
+                      incident_phone_205a_entry_path(incident, entry),
                       method: :delete,
                       data: { confirm: "Delete #{entry.name}?" },
-                      class: 'phone-215a-del',
+                      class: 'phone-205a-del',
                       title: 'Delete' %>
         </td>
       </tr>

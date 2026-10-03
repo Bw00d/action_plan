@@ -107,11 +107,12 @@ Rails.application.routes.draw do
 
     resources :org_units, only: [:create, :destroy]
 
-    # ICS "215A" phone list — one list per incident, surfaced via a tab
-    # on the plan tabrows. Pretty URL is /incidents/:id/phone_215a.
-    resources :phone_215a_entries,
+    # ICS "205A" Communications List (phone list) — one list per
+    # incident, surfaced via a tab on the plan tabrows. Pretty URL is
+    # /incidents/:id/phone_205a.
+    resources :phone_205a_entries,
               only: [:index, :create, :update, :destroy],
-              path: 'phone_215a'
+              path: 'phone_205a'
   end
  
 

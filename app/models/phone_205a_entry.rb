@@ -1,13 +1,13 @@
-# Entries on the ICS "215A" phone list — one row per contact, grouped
-# by section on the incident's phone list page. Scoped to the incident
-# (one list per incident, stable across operational periods — unlike
-# the per-plan ICS forms).
-class Phone215aEntry < ApplicationRecord
-  # Rails' default tableize collapses "Phone215aEntry" → "phone215a_entries"
+# Entries on the ICS "205A" Communications List — one row per contact,
+# grouped by section on the incident's phone list page. Scoped to the
+# incident (one list per incident, stable across operational periods —
+# unlike the per-plan ICS forms).
+class Phone205aEntry < ApplicationRecord
+  # Rails' default tableize collapses "Phone205aEntry" → "phone205a_entries"
   # (no underscore before digits), which doesn't match the migration's
-  # readable "phone_215a_entries". Pin it explicitly so both the file
+  # readable "phone_205a_entries". Pin it explicitly so both the file
   # names and the SQL stay human-friendly.
-  self.table_name = 'phone_215a_entries'
+  self.table_name = 'phone_205a_entries'
 
   belongs_to :incident
 

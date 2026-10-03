@@ -1,4 +1,4 @@
-<% content_for :title, "215A Phone List" %>
+<% content_for :title, "205A Phone List" %>
 <div class="container">
   <div class="col-xs-12 col-lg-10 center-block">
 
@@ -15,34 +15,34 @@
             <li><%= link_to '203',     "/incidents/#{@incident.id}/plans/#{@plan.id}/203" %></li>
             <li><%= link_to '204',     incident_plan_assignments_path(@incident, @plan) %></li>
             <li><%= link_to '205',     incident_plan_commo_plans_path(@incident, @plan) %></li>
+            <li class="selected"><%= link_to '205A', incident_phone_205a_entries_path(@incident) %></li>
             <li><%= link_to '206',     '#' %></li>
-            <li class="selected"><%= link_to '215A', incident_phone_215a_entries_path(@incident) %></li>
             <li><%= link_to '220',     '#' %></li>
             <li><%= link_to 'Safety Message', incident_plan_safety_messages_path(@incident, @plan) %></li>
           <% else %>
             <li><%= link_to 'Back to incident', @incident %></li>
-            <li class="selected"><%= link_to '215A', incident_phone_215a_entries_path(@incident) %></li>
+            <li class="selected"><%= link_to '205A', incident_phone_205a_entries_path(@incident) %></li>
           <% end %>
         </ul>
       </div>
       <div class="masking-tape"></div>
     </div>
 
-    <div class="phone-215a">
-      <h3 class="phone-215a-title"><%= @incident.name.to_s.upcase %> PHONE LIST</h3>
+    <div class="phone-205a">
+      <h3 class="phone-205a-title"><%= @incident.name.to_s.upcase %> PHONE LIST</h3>
 
       <%# ── Add-entry form ──────────────────────────────────────── %>
       <%= form_with model: [@incident, @entry],
-                    url: incident_phone_215a_entries_path(@incident),
+                    url: incident_phone_205a_entries_path(@incident),
                     method: :post,
                     local: true,
-                    html: { class: 'phone-215a-add-form' } do |f| %>
-        <div class="phone-215a-add-row">
+                    html: { class: 'phone-205a-add-form' } do |f| %>
+        <div class="phone-205a-add-row">
           <%= f.text_field :name,         placeholder: 'Name',         required: true %>
           <%= f.text_field :position,     placeholder: 'Position' %>
           <%= f.text_field :phone_number, placeholder: 'Phone Number' %>
           <%= f.select :section,
-                       Phone215aEntry::SECTIONS,
+                       Phone205aEntry::SECTIONS,
                        { include_blank: 'Section…' },
                        required: true %>
           <%= f.submit 'Add', class: 'btn btn-primary' %>
@@ -60,14 +60,14 @@
       %>
       <% total_entries = @entries_by_section.values.sum(&:size) %>
       <% single_col = total_entries <= 10 %>
-      <div class="phone-215a-grid <%= 'single-col' if single_col %>">
-        <% Phone215aEntry::SECTIONS.each do |section| %>
+      <div class="phone-205a-grid <%= 'single-col' if single_col %>">
+        <% Phone205aEntry::SECTIONS.each do |section| %>
           <% entries = Array(@entries_by_section[section]) %>
           <% next if entries.empty? && total_entries.positive?  # hide empty sections once there's data %>
-          <section class="phone-215a-card">
-            <h4 class="phone-215a-section-title"><%= section.upcase %></h4>
+          <section class="phone-205a-card">
+            <h4 class="phone-205a-section-title"><%= section.upcase %></h4>
             <% if entries.empty? %>
-              <div class="phone-215a-empty">No entries yet.</div>
+              <div class="phone-205a-empty">No entries yet.</div>
             <% else %>
               <%= render partial: 'table', locals: { incident: @incident, entries: entries } %>
             <% end %>

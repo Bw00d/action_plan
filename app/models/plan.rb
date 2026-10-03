@@ -126,14 +126,24 @@ class Plan < ApplicationRecord
     end
   end
 
+  # Clone the previous plan's ICS 205. Catch: CommoPlan's after_create
+  # callback `seed_first_page` auto-creates 16 blank channels the moment
+  # the new row is saved — so without clearing those, we end up with the
+  # 16 blanks PLUS the copied channels on top (32 total → an extra blank
+  # page). Destroy the seeded blanks before copying.
   def duplicate_commo_plan
-    if self.incident.plans.last(2).first.commo_plan
-      commo_plan = self.incident.plans.last(2).first.commo_plan.dup
-      commo_plan.update_attributes(plan_id: self.id)
-      self.incident.plans.last(2).first.commo_plan.commo_items.each do |item|
-        new_item = item.dup
-        new_item.update_attributes(commo_plan_id: commo_plan.id)
-      end
+    prev = self.incident.plans.last(2).first
+    return unless prev&.commo_plan
+
+    new_cp = prev.commo_plan.dup
+    new_cp.plan_id = self.id
+    new_cp.save!                   # triggers seed_first_page → 16 blanks
+    new_cp.commo_items.destroy_all # wipe them before importing the real set
+
+    prev.commo_plan.commo_items.order(:id).each do |item|
+      copied = item.dup
+      copied.commo_plan_id = new_cp.id
+      copied.save!
     end
   end
 
