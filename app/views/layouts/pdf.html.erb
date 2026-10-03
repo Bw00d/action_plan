@@ -219,6 +219,16 @@
       .ics-204-wf-pdf .wf-page:last-child {
         page-break-after: auto;
         break-after: auto;
+        /* Last page carries box-6 (Control Operations). If the operator
+           types more text than the fixed 10.2in slot can hold, the
+           earlier `overflow: hidden` on .wf-page would silently clip it.
+           Lifting the cap here lets long Control Operations copy flow
+           onto a continuation physical page instead of being truncated.
+           Earlier pages still keep the strict height so sections 8-9
+           stay pinned to the bottom. */
+        height: auto;
+        max-height: none;
+        overflow: visible;
       }
 
       /* Header (blocks 1-4) sits at the top of every page. */
@@ -254,11 +264,22 @@
         padding: 3pt 4pt;
         font-size: 8pt;
         vertical-align: top;
+        /* The shared on-screen scope (.ics-204-wf-page .box-6) sets a
+           hard `height: 1.15in`. Both classes apply to the PDF div
+           (<div class="ics-204-wf-page ics-204-wf-pdf">), and `height`
+           beats `min-height` for the actual box size — leaving long
+           Control Ops text bleeding onto sections 7-8. Override to
+           auto so content drives the box's height. */
+        height: auto !important;
       }
-      .ics-204-wf-pdf .narrative-print .box-6 { min-height: 1.15in; }
+      /* Smaller default heights so empty sections aren't big white
+         voids — box-6 grows naturally with its content, and the
+         last-page overflow unlock above makes sure long entries
+         aren't clipped. */
+      .ics-204-wf-pdf .narrative-print .box-6 { min-height: 0.4in; }
       .ics-204-wf-pdf .narrative-print .box-7 {
         flex: 1 1 auto;            /* expand to fill leftover space */
-        min-height: 0.75in;
+        min-height: 0.4in;
       }
 
       /* Keep a resource row from being split across pages mid-line. */
