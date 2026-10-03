@@ -39,15 +39,25 @@ class Plan < ApplicationRecord
     end
   end
 
-  # 202 free-text carries over — Objectives + SafetyMessage are handled by
-  # their own duplicate_* methods. update_columns writes directly to bypass
-  # callbacks (we're already inside after_create).
+  # 202 free-text carries over — Objective records + SafetyMessage are
+  # handled by their own duplicate_* methods. update_columns writes
+  # directly to bypass callbacks (we're already inside after_create).
+  #
+  # Covers:
+  #   §3  objectives_text              (Objectives free text)
+  #   §4  weather                      (Operational Period Command Emphasis)
+  #       general_safety               (General Situational Awareness)
+  #   §5  site_safety_plan_required    (Yes/No)
+  #       site_safety_plan_location    (Approved SSP location)
   def duplicate_202_fields
     prev = self.incident.plans.last(2).first
     return unless prev
     self.update_columns(
-      weather:        prev.weather,
-      general_safety: prev.general_safety
+      objectives_text:            prev.objectives_text,
+      weather:                    prev.weather,
+      general_safety:             prev.general_safety,
+      site_safety_plan_required:  prev.site_safety_plan_required,
+      site_safety_plan_location:  prev.site_safety_plan_location
     )
   end
 
@@ -143,10 +153,25 @@ class Plan < ApplicationRecord
   ].freeze
   ICS_202_ATTACHMENT_SLOTS = 18
 
+  # Section 6 attachments. If a previous plan exists on the incident,
+  # carry over its 18 slots verbatim (description + attached state) so
+  # custom labels and ticked boxes persist to the next operational
+  # period. Falls back to the seeded defaults for the very first plan.
   def add_attachments
-    blanks = Array.new(ICS_202_ATTACHMENT_SLOTS - ICS_202_ATTACHMENTS.length, "")
-    (ICS_202_ATTACHMENTS + blanks).each do |a|
-      Attachment.create!(description: a, plan_id: self.id)
+    prev = self.incident.plans.where.not(id: self.id).order(:id).last
+    if prev && prev.attachments.any?
+      prev.attachments.order(:id).each do |a|
+        Attachment.create!(
+          plan_id:     self.id,
+          description: a.description,
+          attached:    a.attached
+        )
+      end
+    else
+      blanks = Array.new(ICS_202_ATTACHMENT_SLOTS - ICS_202_ATTACHMENTS.length, "")
+      (ICS_202_ATTACHMENTS + blanks).each do |a|
+        Attachment.create!(description: a, plan_id: self.id)
+      end
     end
   end
 
