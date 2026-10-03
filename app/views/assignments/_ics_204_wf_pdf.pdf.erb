@@ -197,11 +197,15 @@
         </tr>
       </table>
 
-      <div class="footer">
-        <div class="left">ICS 204 WF (08/25)</div>
-        <div class="mid">Controlled Unclassified Information//Basic</div>
-        <div class="right">Page <%= idx + 1 %> of <%= total_pages %></div>
-      </div>
+      <%# The ICS marker + CUI banner + Page X of Y bar used to live
+          here, but was fragile — if a page's content ran tight the
+          flex column would push this div past the .wf-page's hard
+          height cap and `overflow: hidden` would silently clip it,
+          making the Page X of Y disappear on all but the last page.
+          Rendered now by Grover's displayHeaderFooter config
+          (see AssignmentsController#assignment_to_pdf) which paints
+          it on every physical page outside the content area, so it
+          can't be clipped. %>
     </div>
   </div>
 <% end %>
