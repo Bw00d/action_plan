@@ -176,6 +176,8 @@
 // title). Section cards go full-width in one column by default on
 // paper; browsers still obey the 2-column CSS flow if content fits.
 @media print {
+  @page { size: letter; margin: 0.4in; }
+
   .plan-panel-head,
   .masking-tape,
   .phone-205a-add-form,
@@ -186,14 +188,20 @@
     display: none !important;
   }
 
+  .phone-205a-title {
+    font-size: 12pt;
+    margin: 0 0 8px;
+  }
+
   .phone-205a-grid {
     column-count: 2;        // keep the 2-up layout on paper
-    column-gap: 20px;
+    column-gap: 14px;
   }
 
   .phone-205a-card {
     border: 1px solid #000 !important;
     box-shadow: none !important;
+    margin-bottom: 8px;
     break-inside: avoid;
     page-break-inside: avoid;
   }
@@ -201,9 +209,32 @@
   .phone-205a-section-title {
     background: #000 !important;
     color: #fff !important;
+    font-size: 9pt;
+    padding: 3px 6px;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
+  .phone-205a-table {
+    font-size: 8.5pt;
+    table-layout: fixed;      // enforce the column widths below
+    width: 100%;
+  }
+  .phone-205a-table tbody td {
+    padding: 2px 4px;
+    line-height: 1.2;
+  }
+  // Give the three visible columns a sane split on paper.
+  // Position gets more room and is allowed to wrap (long titles like
+  // "Incident Commander (t)" otherwise force the table past the card
+  // edge and the phone number gets clipped).
+  .phone-205a-table .col-position {
+    width: 40%;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .phone-205a-table .col-name  { width: 35%; }
+  .phone-205a-table .col-phone { width: 25%; white-space: nowrap; }
 
   .phone-205a-table tbody tr:hover { background: transparent !important; }
 }
