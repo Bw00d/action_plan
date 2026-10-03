@@ -60,11 +60,14 @@
       %>
       <% total_entries = @entries_by_section.values.sum(&:size) %>
       <% single_col = total_entries <= 10 %>
-      <div class="phone-205a-grid <%= 'single-col' if single_col %>">
+      <%# data-sort-url + data-section (on each card) feed the sortable
+          JS in phone_205a.js so it can PATCH the new order back here. %>
+      <div class="phone-205a-grid <%= 'single-col' if single_col %>"
+           data-sort-url="<%= sort_incident_phone_205a_entries_path(@incident) %>">
         <% Phone205aEntry::SECTIONS.each do |section| %>
           <% entries = Array(@entries_by_section[section]) %>
           <% next if entries.empty? && total_entries.positive?  # hide empty sections once there's data %>
-          <section class="phone-205a-card">
+          <section class="phone-205a-card" data-section="<%= section %>">
             <h4 class="phone-205a-section-title"><%= section.upcase %></h4>
             <% if entries.empty? %>
               <div class="phone-205a-empty">No entries yet.</div>

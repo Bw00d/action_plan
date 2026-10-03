@@ -9,7 +9,11 @@
   <tbody>
     <% entries.each do |entry| %>
       <% path = incident_phone_205a_entry_path(incident, entry) %>
-      <tr>
+      <tr data-entry-id="<%= entry.id %>">
+        <%# Drag handle — grip icon, cursor:grab. The sortable JS in
+            phone_205a.js uses this cell as the drag handle so clicks
+            on the data cells still activate best_in_place. %>
+        <td class="col-drag" title="Drag to reorder">⠿</td>
         <td class="col-position"><%= best_in_place entry, :position, as: :input,
                                        path: path,
                                        place_holder: '(position)' %></td>

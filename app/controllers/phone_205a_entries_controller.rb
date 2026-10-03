@@ -56,6 +56,22 @@ class Phone205aEntriesController < ApplicationController
     redirect_to incident_phone_205a_entries_path(@incident)
   end
 
+  # PATCH /incidents/:incident_id/phone_205a/sort
+  # Body: { section: 'Command', ordered_ids: [12, 7, 15, ...] }
+  # Fires on drag-drop within a section card. Rewrites sort_order on
+  # exactly the rows being reshuffled; untouched sections are left alone.
+  def sort
+    section     = params[:section].to_s
+    ordered_ids = Array(params[:ordered_ids]).map(&:to_i)
+    entries = @incident.phone_205a_entries
+                       .where(section: section, id: ordered_ids)
+                       .index_by(&:id)
+    ordered_ids.each_with_index do |id, idx|
+      entries[id]&.update_column(:sort_order, idx)
+    end
+    head :ok
+  end
+
   private
 
   def set_incident

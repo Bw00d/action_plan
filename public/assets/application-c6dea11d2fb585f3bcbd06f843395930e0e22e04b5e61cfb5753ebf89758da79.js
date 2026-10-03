@@ -51065,14 +51065,39 @@ document.addEventListener("turbolinks:load", function() {
       $(this).closest('.board-add-child-form').hide();
     });
 
+    // --- Trello-style expanded card modal -------------------------------
+    // Double-click a card to pull its details into a fixed, centered
+    // modal with a dimmed backdrop. Close via the X, backdrop click, or
+    // Escape key. Only one card can be expanded at a time.
+    var $overlay = $('#board-card-overlay');
+
+    function closeExpandedCard() {
+      $('.board-card.is-expanded', page).removeClass('is-expanded');
+      $overlay.removeClass('is-visible');
+    }
+
     $(page).on('dblclick', '.board-card', function (e) {
       if ($(e.target).closest('.board-card-details').length > 0) return;
-      $(this).find('.board-card-details').toggle();
+      var $card = $(this);
+      var wasExpanded = $card.hasClass('is-expanded');
+      closeExpandedCard();
+      if (!wasExpanded) {
+        $card.addClass('is-expanded');
+        $overlay.addClass('is-visible');
+      }
     });
 
     $(page).on('click', '.board-card-details-close', function (e) {
       e.stopPropagation();
-      $(this).closest('.board-card-details').hide();
+      closeExpandedCard();
+    });
+
+    $overlay.on('click', closeExpandedCard);
+
+    $(document).on('keydown.boardCardModal', function (e) {
+      if (e.key === 'Escape' && $('.board-card.is-expanded', page).length) {
+        closeExpandedCard();
+      }
     });
 
     // --- Hover move affordance --------------------------------------------
@@ -53722,6 +53747,52 @@ $(document).on("turbolinks:load", function () {
     });
   });
 });
+// ICS 205A phone list — drag-to-reorder rows within a section card.
+// Grab the ⠿ handle on the left of a row and drop it where you want it.
+// After the drop we POST the new ordered id list back to the server
+// which rewrites sort_order on each row in that section.
+$(document).on('turbolinks:load', function () {
+  var $grid = $('.phone-205a-grid');
+  if (!$grid.length) return;
+
+  var sortUrl = $grid.data('sort-url');
+  var csrfToken = $('meta[name=csrf-token]').attr('content');
+
+  $grid.find('.phone-205a-card').each(function () {
+    var $card    = $(this);
+    var section  = $card.data('section');
+    var $tbody   = $card.find('.phone-205a-table tbody');
+    if (!$tbody.length) return;
+
+    $tbody.sortable({
+      handle: '.col-drag',
+      items:  '> tr',
+      axis:   'y',
+      tolerance: 'pointer',
+      // Preserve column widths while the row is being dragged — without
+      // this the clone collapses to text width and looks jarring.
+      helper: function (e, tr) {
+        var $originals = tr.children();
+        var $helper = tr.clone();
+        $helper.children().each(function (i) {
+          $(this).width($originals.eq(i).outerWidth());
+        });
+        return $helper;
+      },
+      update: function () {
+        var orderedIds = $tbody.children('tr').map(function () {
+          return $(this).data('entry-id');
+        }).get();
+        $.ajax({
+          url:    sortUrl,
+          method: 'PATCH',
+          data:   { section: section, ordered_ids: orderedIds },
+          headers: { 'X-CSRF-Token': csrfToken }
+        });
+      }
+    }).disableSelection();
+  });
+});
 $(document).on("turbolinks:load", function() {
    /* Activating Best In Place */
     jQuery(".best_in_place").best_in_place();
@@ -54419,7 +54490,44 @@ $(document).on("turbolinks:load", function() {
   // just the tally table.
   $(document).off('click.tallyPrint').on('click.tallyPrint', '.tally-print-btn', function () {
     $('body').addClass('printing-tally');
-    var restore = function () { $('body').removeClass('printing-tally'); };
+
+    // Inject a top-level @page rule for landscape orientation. Browsers
+    // ignore @page rules nested inside other selectors (e.g. body.foo),
+    // so it must be at stylesheet root. We add it just before printing
+    // and rip it out after so it doesn't affect other prints.
+    var pageStyle = document.createElement('style');
+    pageStyle.id  = 'tally-print-page-style';
+    pageStyle.textContent = '@page { size: Letter landscape; margin: 0.4in; }';
+    document.head.appendChild(pageStyle);
+
+    // Auto-fit the tally to landscape Letter: measure the table's
+    // natural width and scale the wrap down if it exceeds the page
+    // width. Runs after the printing-tally class applies (which
+    // triggers the compact print styles) so measurement reflects the
+    // print-time layout.
+    var wrap  = document.querySelector('.tally-table-wrap');
+    var table = wrap && wrap.querySelector('.tally-table');
+    var appliedTransform = null;
+    if (wrap && table) {
+      var pageWidth = 979; // landscape Letter @ 0.4in margins, 96dpi
+      var natural   = table.scrollWidth;
+      if (natural > pageWidth) {
+        var scale = pageWidth / natural;
+        appliedTransform = 'scale(' + scale + ')';
+        wrap.style.transform = appliedTransform;
+        wrap.style.height    = (table.scrollHeight * scale) + 'px';
+      }
+    }
+
+    var restore = function () {
+      $('body').removeClass('printing-tally');
+      if (wrap && appliedTransform) {
+        wrap.style.transform = '';
+        wrap.style.height    = '';
+      }
+      var s = document.getElementById('tally-print-page-style');
+      if (s) s.remove();
+    };
     window.addEventListener('afterprint', restore, { once: true });
     window.print();
     // Fallback in case afterprint doesn't fire (some browsers).

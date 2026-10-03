@@ -112,7 +112,9 @@ Rails.application.routes.draw do
     # /incidents/:id/phone_205a.
     resources :phone_205a_entries,
               only: [:index, :create, :update, :destroy],
-              path: 'phone_205a'
+              path: 'phone_205a' do
+      collection { patch :sort }
+    end
   end
  
 

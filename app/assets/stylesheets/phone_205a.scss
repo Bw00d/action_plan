@@ -114,11 +114,28 @@
 
   tbody tr:hover { background: #fafbfc; }
 
-  .col-position { width: 24%; font-weight: 700; white-space: nowrap; }
-  .col-name     { width: 30%; }
+  .col-drag {
+    width: 16px;
+    padding: 2px 2px 2px 4px;
+    color: #c1c7d0;
+    text-align: center;
+    cursor: grab;
+    user-select: none;
+    font-size: 14px;
+    line-height: 1;
+    &:hover { color: #6b778c; }
+  }
+  .col-position { width: 22%; font-weight: 700; white-space: nowrap; }
+  .col-name     { width: 28%; }
   .col-phone    { width: 22%; white-space: nowrap; }
   .col-section  { width: 20%; color: #5e6c84; font-size: 11px; text-transform: uppercase; }
   .col-del      { width: 20px; text-align: center; padding: 2px 4px; }
+
+  // While a row is being dragged, show a faint highlight so the user
+  // can see where it will land. ui-sortable-helper is the moving row;
+  // ui-sortable-placeholder is the gap left behind.
+  tr.ui-sortable-helper      { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18); background: #fff; }
+  tr.ui-sortable-placeholder { background: #eaf1fb; visibility: visible !important; height: 28px; }
 
   // best_in_place inline-edit polish — flat text until hovered.
   .best_in_place {
