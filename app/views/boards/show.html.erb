@@ -40,5 +40,11 @@
     </button>
     <span class="board-footer-hint">Drop a blank row into any column to leave a gap on the ICS 204.</span>
   </div>
+
+  <%# Shared backdrop for the Trello-style card modal. The expanded
+      .board-card-details becomes a fixed-position modal (see boards.scss)
+      and this overlay dims the rest of the page behind it. Toggled by
+      the `is-visible` class in boards.js. %>
+  <div id="board-card-overlay" aria-hidden="true"></div>
 </div>
 

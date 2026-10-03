@@ -70,14 +70,39 @@
       $(this).closest('.board-add-child-form').hide();
     });
 
+    // --- Trello-style expanded card modal -------------------------------
+    // Double-click a card to pull its details into a fixed, centered
+    // modal with a dimmed backdrop. Close via the X, backdrop click, or
+    // Escape key. Only one card can be expanded at a time.
+    var $overlay = $('#board-card-overlay');
+
+    function closeExpandedCard() {
+      $('.board-card.is-expanded', page).removeClass('is-expanded');
+      $overlay.removeClass('is-visible');
+    }
+
     $(page).on('dblclick', '.board-card', function (e) {
       if ($(e.target).closest('.board-card-details').length > 0) return;
-      $(this).find('.board-card-details').toggle();
+      var $card = $(this);
+      var wasExpanded = $card.hasClass('is-expanded');
+      closeExpandedCard();
+      if (!wasExpanded) {
+        $card.addClass('is-expanded');
+        $overlay.addClass('is-visible');
+      }
     });
 
     $(page).on('click', '.board-card-details-close', function (e) {
       e.stopPropagation();
-      $(this).closest('.board-card-details').hide();
+      closeExpandedCard();
+    });
+
+    $overlay.on('click', closeExpandedCard);
+
+    $(document).on('keydown.boardCardModal', function (e) {
+      if (e.key === 'Escape' && $('.board-card.is-expanded', page).length) {
+        closeExpandedCard();
+      }
     });
 
     // --- Hover move affordance --------------------------------------------

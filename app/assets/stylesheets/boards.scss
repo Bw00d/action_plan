@@ -298,41 +298,84 @@
   color: #5e6c84;
 }
 
+// Trello-style expanded card: when the parent .board-card has
+// `.is-expanded`, the details slab is pulled out of the card and
+// painted as a centered, fixed-position modal over the board. A
+// shared overlay (#board-card-overlay) sits behind it for the
+// obscured-background effect. See boards.js for the toggle wiring.
 .board-card-details {
-  background: #fafbfc;
-  border-top: 1px solid #ebecf0;
-  padding: 10px;
-  font-size: 12px;
+  display: none;
+  background: #fff;
+  padding: 20px 24px;
+  font-size: 13px;
   cursor: default;
 }
 
+.board-card.is-expanded > .board-card-details {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 720px;
+  max-width: calc(100vw - 40px);
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  z-index: 2001;
+}
+
+#board-card-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 43, 77, 0.55);
+  z-index: 2000;
+}
+#board-card-overlay.is-visible { display: block; }
+
+// Modal header mirrors the small card's colored strip (icon + agency,
+// background painted inline from resource_strip_color) so the modal
+// feels like an expansion of the card you clicked, not a separate
+// dialog. The close button lives on the right of the strip.
 .board-card-details-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
+  gap: 8px;
+  padding: 8px 12px;
+  margin: -20px -24px 14px;         // bleed to the modal's edges
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 
-.board-card-details-title {
-  font-weight: 600;
-  color: #172b4d;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  font-size: 11px;
+  .board-card-icon { font-size: 16px; }
+  .resource-icon-svg { height: 16px; }
+
+  .board-card-agency {
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 13px;
+  }
 }
 
 .board-card-details-close {
   background: none;
-  border: none;
-  font-size: 18px;
+  border: none !important;
+  outline: 0;              // kills the focus ring Chrome/FF paint around buttons
+  box-shadow: none;        // and any Bootstrap-ish focus shadow
+  -webkit-appearance: none;
+  font-size: 22px;
   line-height: 1;
-  color: #6b778c;
+  color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   padding: 0 4px;
 
-  &:hover {
-    color: #172b4d;
-  }
+  &:hover,
+  &:focus,
+  &:active { color: #fff; outline: 0; box-shadow: none; border: 0; }
 }
 
 .board-card-fields {

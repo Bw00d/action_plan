@@ -40,9 +40,15 @@
     <% end %>
   </div>
 
-  <div class="board-card-details" style="display:none;">
-    <div class="board-card-details-header">
-      <span class="board-card-details-title">Edit resource</span>
+  <%# No inline display:none — the modal visibility is driven by the
+      `.board-card.is-expanded` toggle in boards.scss / boards.js. %>
+  <div class="board-card-details">
+    <%# Colored header strip matching the small card — same category
+        color + icon + agency so the modal feels like a continuation
+        of the card you double-clicked. %>
+    <div class="board-card-details-header" style="background: <%= resource_strip_color(resource) %>;">
+      <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
+      <span class="board-card-agency"><%= resource.agency %></span>
       <button type="button" class="board-card-details-close" aria-label="Close">&times;</button>
     </div>
 
