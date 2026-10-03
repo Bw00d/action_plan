@@ -204,14 +204,14 @@
       .ics-204-wf-pdf .wf-page {
         page-break-after: always;
         break-after: page;
-        /* Printable area is 10.15in with Grover margins 0.25in top /
-           0.6in bottom (bottom was widened to give Grover's PDF-level
-           footer bar room to render without edge clipping — see
-           AssignmentsController). Undershoot by ~0.25in to absorb
-           puppeteer rounding and keep sections 8-9 pinned cleanly to
-           the block's bottom edge. */
-        height: 9.9in;
-        max-height: 9.9in;
+        /* Printable area is 10.5in with Grover margin 0.25in top/bottom.
+           Undershoot by 0.3in to absorb puppeteer's rounding + any
+           default margin fallback (Grover's default is ~0.39in). Content
+           caps upstream keep the flowing content shorter, and the flex
+           middle stretches to keep sections 8-9 pinned to the block's
+           bottom edge. */
+        height: 10.2in;
+        max-height: 10.2in;
         overflow: hidden;
         display: flex;
         flex-direction: column;

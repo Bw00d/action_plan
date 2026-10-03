@@ -190,9 +190,12 @@
             <div class="sig-label">Date</div>
             <div><%= @assignment.prepared_date&.strftime("%m/%d/%Y") %></div>
           </td>
+          <%# "Time" cell repurposed as the page-number cell — reliably
+              rendered inside the regular section 9 border so it can't
+              be clipped by any flex / overflow issue above. %>
           <td style="width:15%">
-            <div class="sig-label">Time</div>
-            <div><%= @assignment.prepared_time %></div>
+            <div class="sig-label">Page</div>
+            <div><%= idx + 1 %> of <%= total_pages %></div>
           </td>
         </tr>
       </table>

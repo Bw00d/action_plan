@@ -46,40 +46,12 @@ class AssignmentsController < ApplicationController
         # Explicit margins so puppeteer doesn't fall back to its 1cm
         # defaults, which shrink the printable area below what the
         # server-paginated .wf-page blocks assume.
-        #
-        # display_header_footer + footer_template: the three-column
-        # bottom bar (ICS marker, CUI banner, Page X of Y) is rendered
-        # by Puppeteer on every physical page instead of being baked
-        # into the .wf-page flex column. This stops the bar from being
-        # clipped when a page's content runs tight, and keeps numbering
-        # correct even when the last page's Control Ops text spills
-        # onto a continuation sheet.
-        # Puppeteer's footer-template runs in its own isolated context
-        # and is picky — flex-end alignment plus a tight bottom margin
-        # pushes text straight into the page-cut edge, so we align to
-        # the top of the footer zone and pad left/right for the Grover
-        # margins. Font size kept at 9pt (anything smaller gets
-        # rendered noticeably faint by puppeteer's print engine).
-        footer_template = <<~HTML
-          <div style="font-size:9pt;font-family:Arial,sans-serif;font-weight:bold;color:#000;width:100%;padding:0.05in 0.4in 0;display:flex;justify-content:space-between;align-items:flex-start;line-height:1.2;">
-            <span style="width:25%;text-align:left;">ICS 204 WF (08/25)</span>
-            <span style="width:50%;text-align:center;">Controlled Unclassified Information//Basic</span>
-            <span style="width:25%;text-align:right;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
-          </div>
-        HTML
-
         pdf = Grover.new(
           html,
           display_url: request.base_url,
           format: 'Letter',
-          # Bottom margin generously sized so puppeteer has room to
-          # paint the footer bar without any clipping from the physical
-          # page edge.
-          margin: { top: '0.25in', right: '0.4in', bottom: '0.6in', left: '0.4in' },
-          prefer_css_page_size: false,
-          display_header_footer: true,
-          header_template: '<div></div>',
-          footer_template: footer_template
+          margin: { top: '0.25in', right: '0.4in', bottom: '0.25in', left: '0.4in' },
+          prefer_css_page_size: false
         ).to_pdf
 
         disposition = params[:download].present? ? 'attachment' : 'inline'
