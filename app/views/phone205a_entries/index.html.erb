@@ -38,14 +38,20 @@
                     local: true,
                     html: { class: 'phone-205a-add-form' } do |f| %>
         <div class="phone-205a-add-row">
-          <%= f.text_field :name,         placeholder: 'Name',         required: true %>
           <%= f.text_field :position,     placeholder: 'Position' %>
+          <%= f.text_field :name,         placeholder: 'Name',         required: true %>
           <%= f.text_field :phone_number, placeholder: 'Phone Number' %>
           <%= f.select :section,
                        Phone205aEntry::SECTIONS,
                        { include_blank: 'Section…' },
                        required: true %>
           <%= f.submit 'Add', class: 'btn btn-primary' %>
+          <%# Browser-native print — CSS at the bottom of phone_205a.scss
+              hides the tabrow, add-form, drag/delete columns, and
+              Section column while printing so only the phone-list
+              content lands on paper. %>
+          <button type="button" class="btn btn-success phone-205a-print"
+                  onclick="window.print()">Print</button>
         </div>
       <% end %>
 

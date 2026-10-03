@@ -164,3 +164,46 @@
   tr:hover & { opacity: 1; }
   &:hover { background: #c0392b; color: #fff; text-decoration: none; }
 }
+
+.phone-205a-print {
+  margin-left: auto;        // pushes to the right end of the flex row
+}
+
+// ── Print styles ─────────────────────────────────────────────────
+// Strip the on-screen chrome so the printed sheet looks like a
+// clean phone list: no tabrow, no add-form, no drag handles, no
+// delete buttons, no Section column (section is already the card
+// title). Section cards go full-width in one column by default on
+// paper; browsers still obey the 2-column CSS flow if content fits.
+@media print {
+  .plan-panel-head,
+  .masking-tape,
+  .phone-205a-add-form,
+  .phone-205a-print,
+  .phone-205a-table .col-drag,
+  .phone-205a-table .col-section,
+  .phone-205a-table .col-del {
+    display: none !important;
+  }
+
+  .phone-205a-grid {
+    column-count: 2;        // keep the 2-up layout on paper
+    column-gap: 20px;
+  }
+
+  .phone-205a-card {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .phone-205a-section-title {
+    background: #000 !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .phone-205a-table tbody tr:hover { background: transparent !important; }
+}
