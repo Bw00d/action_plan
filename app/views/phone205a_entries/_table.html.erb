@@ -22,17 +22,11 @@
         <td class="col-phone"><%=    best_in_place entry, :phone_number, as: :input,
                                        path: path,
                                        place_holder: '(add later)' %></td>
-        <td class="col-section">
-          <%# data-reload-on-save (handled in incidents.js) refreshes
-              the page after a successful section change so the row
-              lands under its new section card. %>
-          <%= best_in_place entry, :section,
-                            as: :select,
-                            collection: Phone205aEntry::SECTIONS.map { |s| [s, s] },
-                            path: path,
-                            html_attrs: { 'data-reload-on-save' => true },
-                            display_with: ->(v) { v.presence || '(section)' } %>
-        </td>
+        <%# Section column intentionally removed — the card header
+            already shows the section name, so echoing it on every row
+            was just noise. If an entry needs to move to a different
+            section, delete it here and re-add it under the right
+            card. %>
         <td class="col-del">
           <%= link_to '×',
                       incident_phone_205a_entry_path(incident, entry),
