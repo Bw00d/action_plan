@@ -72,10 +72,16 @@
       <dd><%= best_in_place resource, :number_personnel, as: :input %></dd>
 
       <dt>Assignment days</dt>
-      <dd><%= best_in_place resource, :assignment_length, as: :input %></dd>
+      <dd data-field="assignment_length"><%= best_in_place resource, :assignment_length, as: :input %></dd>
 
       <dt>FWD</dt>
-      <dd><%= best_in_place resource, :fwd, as: :input %></dd>
+      <dd data-field="fwd"><%= best_in_place resource, :fwd, as: :input %></dd>
+
+      <%# LWD is derived (fwd + assignment_length - 1 day). Display-only;
+          boards.js keeps it in sync whenever FWD or Assignment days
+          change, without waiting for the AJAX save round-trip. %>
+      <dt>LWD</dt>
+      <dd data-field="lwd" class="board-card-lwd-display"><%= resource.last_work_day %></dd>
 
       <dt>Release</dt>
       <dd><%= best_in_place resource, :release_date, as: :input %></dd>

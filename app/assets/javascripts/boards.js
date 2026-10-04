@@ -105,6 +105,72 @@
       }
     });
 
+    // --- Live LWD recalc on the expanded card ------------------------------
+    // LWD = FWD + assignment_length - 1 day. We update it on the fly as the
+    // user tabs out of either input, before best_in_place's AJAX save returns
+    // — the user wants instant feedback, not a server round-trip wait.
+    function parseFlexibleDate(s) {
+      if (s == null) return null;
+      s = String(s).trim();
+      if (!s) return null;
+      var m;
+      // ISO: YYYY-MM-DD
+      m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+      // US: M/D/YYYY or MM/DD/YY
+      m = s.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/);
+      if (m) {
+        var year = m[3] ? +m[3] : new Date().getFullYear();
+        if (year < 100) year += 2000;
+        return new Date(year, +m[1] - 1, +m[2]);
+      }
+      var d = new Date(s);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function fmtIsoDate(d) {
+      var y = d.getFullYear();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + dd;
+    }
+
+    function readFieldValue($card, fieldName) {
+      // Prefer the live input value (while editor is open), fall back to
+      // the best_in_place span's stored data-bip-value, then the raw text.
+      var $cell = $card.find('[data-field="' + fieldName + '"]');
+      var $input = $cell.find('input, textarea, select');
+      if ($input.length) return $input.val();
+      var $bip = $cell.find('.best_in_place').first();
+      var dataVal = $bip.attr('data-bip-value') || $bip.data('bipValue');
+      return dataVal != null && dataVal !== '' ? dataVal : $bip.text().trim();
+    }
+
+    function recalcLwd($card) {
+      var fwdVal    = readFieldValue($card, 'fwd');
+      var lengthVal = readFieldValue($card, 'assignment_length');
+      var fwd       = parseFlexibleDate(fwdVal);
+      var length    = parseInt(lengthVal, 10);
+      var $lwdCell  = $card.find('[data-field="lwd"]');
+      if (!fwd || isNaN(length) || length < 1) {
+        $lwdCell.text('—');
+        return;
+      }
+      var lwd = new Date(fwd.getFullYear(), fwd.getMonth(), fwd.getDate() + length - 1);
+      $lwdCell.text(fmtIsoDate(lwd));
+    }
+
+    // Fire on blur of either editor (immediate, pre-save), AND on
+    // best_in_place:success (post-save, in case the server normalized
+    // the value differently from what we parsed locally).
+    $(page).on('blur',
+      '[data-field="fwd"] input, [data-field="assignment_length"] input',
+      function () { recalcLwd($(this).closest('.board-card')); });
+
+    $(page).on('best_in_place:success',
+      '[data-field="fwd"] .best_in_place, [data-field="assignment_length"] .best_in_place',
+      function () { recalcLwd($(this).closest('.board-card')); });
+
     // --- Hover move affordance --------------------------------------------
     // Build the target list from the DOM at click time so it reflects any
     // columns that were just added/deleted without a page reload.
