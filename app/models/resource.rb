@@ -11,6 +11,14 @@ class Resource < ApplicationRecord
   # fails with ForeignKeyViolation. Owning them here cleans them up as
   # part of the resource's own destroy cascade.
   has_many :demob_notifications, dependent: :destroy
+  # Same shape as demob_notifications: PlanAssignmentSnapshot has a
+  # DB-level FK to resources, Plan owns the collection, but Resource
+  # didn't — so deleting a resource (even a blank spacer) would fail
+  # with a FK violation. Owning them here cleans snapshots up inside
+  # the resource's own destroy cascade. Snapshots are frozen records
+  # of what was on a published plan; destroying them when the resource
+  # itself is gone is consistent with the Roster/Demob pattern.
+  has_many :plan_assignment_snapshots, dependent: :destroy
 
   scope :unassigned, lambda {
     left_outer_joins(:org_unit_assignment)
