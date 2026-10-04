@@ -9,7 +9,10 @@
   padding: 8px 4px 16px;
 
   label { font-weight: 600; margin: 0; }
-  select { min-width: 220px; padding: 4px 6px; }
+  select { padding: 4px 6px; }
+  #ops-org-unit-picker { min-width: 220px; }
+  #ops-days-picker { min-width: 64px; }
+  .ops-days-label { margin-left: 8px; }
   .ops-day-range { margin-left: auto; font-size: 12px; }
   .ops-toolbar-actions { display: flex; gap: 6px; margin-left: 12px; }
 }

@@ -51065,6 +51065,14 @@ document.addEventListener("turbolinks:load", function() {
       $(this).closest('.board-add-child-form').hide();
     });
 
+    // --- Header "+ New Column" opener/closer -----------------------------
+    $(page).on('click', '.board-new-column-toggle', function () {
+      $(this).closest('.board-new-column').find('.board-new-column-form').toggle();
+    });
+    $(page).on('click', '.board-new-column-cancel', function () {
+      $(this).closest('.board-new-column-form').hide();
+    });
+
     // --- Trello-style expanded card modal -------------------------------
     // Double-click a card to pull its details into a fixed, centered
     // modal with a dimmed backdrop. Close via the X, backdrop click, or
@@ -51102,17 +51110,22 @@ document.addEventListener("turbolinks:load", function() {
 
     // --- Live LWD recalc on the expanded card ------------------------------
     // LWD = FWD + assignment_length - 1 day. We update it on the fly as the
-    // user tabs out of either input, before best_in_place's AJAX save returns
-    // — the user wants instant feedback, not a server round-trip wait.
+    // user edits either input, before best_in_place's AJAX save returns —
+    // the user wants instant feedback, not a server round-trip wait.
+    //
+    // Last-known-good values are mirrored to data-fwd / data-assignment-length
+    // on the <li>; this lets a change to just one field reliably pick up the
+    // OTHER field's value without having to parse best_in_place's rendered
+    // display text (which can vary by Rails format config).
     function parseFlexibleDate(s) {
       if (s == null) return null;
       s = String(s).trim();
       if (!s) return null;
       var m;
-      // ISO: YYYY-MM-DD
-      m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      // ISO: YYYY-MM-DD(THH:MM...) — handles both bare dates and full ISO
+      m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
       if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
-      // US: M/D/YYYY or MM/DD/YY
+      // US: M/D/YYYY or M/D/YY or M/D (current year)
       m = s.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/);
       if (m) {
         var year = m[3] ? +m[3] : new Date().getFullYear();
@@ -51123,48 +51136,55 @@ document.addEventListener("turbolinks:load", function() {
       return isNaN(d.getTime()) ? null : d;
     }
 
-    function fmtIsoDate(d) {
-      var y = d.getFullYear();
+    // MM/DD/YY — matches the LWD format used elsewhere in the app.
+    function fmtShortDate(d) {
+      var y = String(d.getFullYear()).slice(-2);
       var m = String(d.getMonth() + 1).padStart(2, '0');
       var dd = String(d.getDate()).padStart(2, '0');
-      return y + '-' + m + '-' + dd;
-    }
-
-    function readFieldValue($card, fieldName) {
-      // Prefer the live input value (while editor is open), fall back to
-      // the best_in_place span's stored data-bip-value, then the raw text.
-      var $cell = $card.find('[data-field="' + fieldName + '"]');
-      var $input = $cell.find('input, textarea, select');
-      if ($input.length) return $input.val();
-      var $bip = $cell.find('.best_in_place').first();
-      var dataVal = $bip.attr('data-bip-value') || $bip.data('bipValue');
-      return dataVal != null && dataVal !== '' ? dataVal : $bip.text().trim();
+      return m + '/' + dd + '/' + y;
     }
 
     function recalcLwd($card) {
-      var fwdVal    = readFieldValue($card, 'fwd');
-      var lengthVal = readFieldValue($card, 'assignment_length');
-      var fwd       = parseFlexibleDate(fwdVal);
-      var length    = parseInt(lengthVal, 10);
+      var fwdStr    = String($card.attr('data-fwd') || '').trim();
+      var lengthStr = String($card.attr('data-assignment-length') || '').trim();
+      var fwd       = parseFlexibleDate(fwdStr);
+      var length    = parseInt(lengthStr, 10);
       var $lwdCell  = $card.find('[data-field="lwd"]');
       if (!fwd || isNaN(length) || length < 1) {
         $lwdCell.text('—');
         return;
       }
       var lwd = new Date(fwd.getFullYear(), fwd.getMonth(), fwd.getDate() + length - 1);
-      $lwdCell.text(fmtIsoDate(lwd));
+      $lwdCell.text(fmtShortDate(lwd));
     }
 
-    // Fire on blur of either editor (immediate, pre-save), AND on
-    // best_in_place:success (post-save, in case the server normalized
-    // the value differently from what we parsed locally).
-    $(page).on('blur',
-      '[data-field="fwd"] input, [data-field="assignment_length"] input',
-      function () { recalcLwd($(this).closest('.board-card')); });
+    // Keep the <li> data-* attrs in sync with whatever the user types.
+    // 'input' fires on every keystroke (instant feedback), 'change' catches
+    // paste / autofill, 'best_in_place:success' catches the final
+    // server-normalized value in case we parsed something unusual.
+    function stashFromInput(input, cardAttr) {
+      var $card = $(input).closest('.board-card');
+      $card.attr(cardAttr, $(input).val());
+      recalcLwd($card);
+    }
 
-    $(page).on('best_in_place:success',
-      '[data-field="fwd"] .best_in_place, [data-field="assignment_length"] .best_in_place',
-      function () { recalcLwd($(this).closest('.board-card')); });
+    $(page).on('input change blur',
+      '[data-field="fwd"] input', function () { stashFromInput(this, 'data-fwd'); });
+
+    $(page).on('input change blur',
+      '[data-field="assignment_length"] input', function () { stashFromInput(this, 'data-assignment-length'); });
+
+    $(page).on('best_in_place:success', '[data-field="fwd"] .best_in_place', function () {
+      var $card = $(this).closest('.board-card');
+      $card.attr('data-fwd', $(this).text().trim());
+      recalcLwd($card);
+    });
+
+    $(page).on('best_in_place:success', '[data-field="assignment_length"] .best_in_place', function () {
+      var $card = $(this).closest('.board-card');
+      $card.attr('data-assignment-length', $(this).text().trim());
+      recalcLwd($card);
+    });
 
     // --- Hover move affordance --------------------------------------------
     // Build the target list from the DOM at click time so it reflects any
@@ -51189,7 +51209,9 @@ document.addEventListener("turbolinks:load", function() {
     $(page).on('click', '.board-card-move-toggle', function (e) {
       e.stopPropagation();
       var $card = $(this).closest('.board-card');
-      var $menu = $card.find('.board-card-move-menu');
+      // Scope to the toggle's own parent — the modal header has its
+      // own MOVE button + menu pair separate from the small-strip one.
+      var $menu = $(this).parent().find('.board-card-move-menu').first();
       var currentOrgUnitId = $card.closest('.board-column').data('org-unit-id') || '';
       $('.board-card-move-menu').not($menu).hide();
       if ($menu.is(':visible')) { $menu.hide(); return; }
@@ -53685,6 +53707,16 @@ $(document).on("turbolinks:load", function () {
     var id      = $picker.val();
     var sep     = base.indexOf("?") === -1 ? "?" : "&";
     window.location = base + sep + "org_unit_id=" + id;
+  });
+
+  // Day-count picker: navigate with the chosen day count. base-url already
+  // carries tab + org_unit_id so switching days preserves the rest of the view.
+  $(document).on("change.ops", "#ops-days-picker", function () {
+    var $picker = $(this);
+    var base    = $picker.data("base-url");
+    var days    = $picker.val();
+    var sep     = base.indexOf("?") === -1 ? "?" : "&";
+    window.location = base + sep + "days=" + days;
   });
 
   // Add a new Kind/Type row to a 215 table. Row is client-side only until

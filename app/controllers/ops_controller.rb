@@ -7,7 +7,10 @@ class OpsController < ApplicationController
   # GET /incidents/:incident_id/ops
   def show
     @tab = params[:tab].in?(%w[ics_215 projections]) ? params[:tab] : 'ics_215'
-    @selected_org_unit = @org_units.find_by(id: params[:org_unit_id]) || @org_units.first
+    # @org_units is an Array (section + branches/D/G), so use Array#find
+    # rather than AR's find_by.
+    @selected_org_unit = @org_units.find { |u| u.id.to_s == params[:org_unit_id].to_s } ||
+                         @org_units.first
     return unless @selected_org_unit
 
     @days = compute_day_range
@@ -38,7 +41,10 @@ class OpsController < ApplicationController
   # the same params.
   def to_pdf
     @tab = params[:tab].in?(%w[ics_215 projections]) ? params[:tab] : 'ics_215'
-    @selected_org_unit = @org_units.find_by(id: params[:org_unit_id]) || @org_units.first
+    # @org_units is an Array (section + branches/D/G), so use Array#find
+    # rather than AR's find_by.
+    @selected_org_unit = @org_units.find { |u| u.id.to_s == params[:org_unit_id].to_s } ||
+                         @org_units.first
     return head :not_found unless @selected_org_unit
 
     @days = compute_day_range
@@ -120,28 +126,65 @@ class OpsController < ApplicationController
   end
 
   def load_org_units
-    @org_units = @incident.org_units
-                          .where(kind: [OrgUnit.kinds[:branch],
-                                        OrgUnit.kinds[:division],
-                                        OrgUnit.kinds[:group]])
-                          .order(:kind, :name)
+    branches_dgs = @incident.org_units
+                            .where(kind: [OrgUnit.kinds[:branch],
+                                          OrgUnit.kinds[:division],
+                                          OrgUnit.kinds[:group]])
+                            .order(:kind, :name)
+    # "Operations" (the section itself) sits at the top of the picker
+    # so the user can see every D/G rolled up under Ops in one view.
+    ops = @incident.org_units.kind_section.find_by(name: 'Operations')
+    @org_units = ([ops].compact + branches_dgs.to_a)
   end
 
-  # A branch expands to its direct D/G children; anything else is itself.
+  # Expand the selected picker option into the list of units the
+  # projection/215 tabs should render one block for.
+  #   Section (Operations) → the section itself + every D/G descendant
+  #                          (recursing through nested Branches)
+  #   Branch               → direct D/G children
+  #   D/G                  → just itself
   def branch_children(unit)
-    return [unit] unless unit.kind_branch?
-    unit.children
-        .where(kind: [OrgUnit.kinds[:division], OrgUnit.kinds[:group]])
-        .order(:kind, :name)
+    if unit.kind_section?
+      [unit] + collect_dg_descendants(unit)
+    elsif unit.kind_branch?
+      unit.children
+          .where(kind: [OrgUnit.kinds[:division], OrgUnit.kinds[:group]])
+          .order(:kind, :name).to_a
+    else
+      [unit]
+    end
   end
 
-  # Day 1 = today; days 2 and 3 are the next two days. The 215 is a
-  # forward-looking planning worksheet, so anchoring on the calendar (per
-  # the user's timezone) matches how ops fills it out at the start of a
-  # shift regardless of when the most recent plan was created.
+  # Walk the tree below `unit` and return every Division + Group leaf
+  # regardless of how many Branches sit in between.
+  def collect_dg_descendants(unit)
+    result = []
+    unit.children.order(:kind, :name).each do |child|
+      if child.kind_branch?
+        result += collect_dg_descendants(child)
+      elsif child.kind_division? || child.kind_group?
+        result << child
+      end
+    end
+    result
+  end
+
+  # Day 1 = today; subsequent days extend forward based on the user's
+  # `days` picker (3–14, default 3). 215 is a forward-looking planning
+  # worksheet, so anchoring on the calendar matches how ops fills it
+  # out at the start of a shift.
+  DAY_COUNT_CHOICES = [3, 5, 7, 10, 14].freeze
+  DEFAULT_DAY_COUNT = 3
+
   def compute_day_range
+    @day_count = coerce_day_count(params[:days])
     start = Time.current.to_date
-    [start, start + 1, start + 2]
+    (0...@day_count).map { |i| start + i }
+  end
+
+  def coerce_day_count(raw)
+    n = raw.to_i
+    DAY_COUNT_CHOICES.include?(n) ? n : DEFAULT_DAY_COUNT
   end
 
   # Resource is "present" on a given day when it's assigned, not R&R, not

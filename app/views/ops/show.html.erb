@@ -6,11 +6,11 @@
 <div class="resources-panel-head">
   <ul class="tabrow resource-tabs">
     <li class="resource-tab <%= 'selected' if @tab == 'ics_215' %>">
-      <%= link_to 'ICS-215', incident_ops_path(@incident, tab: 'ics_215', org_unit_id: @selected_org_unit&.id),
+      <%= link_to 'ICS-215', incident_ops_path(@incident, tab: 'ics_215', org_unit_id: @selected_org_unit&.id, days: @day_count),
                   class: "resource-tab-link" %>
     </li>
     <li class="resource-tab <%= 'selected' if @tab == 'projections' %>">
-      <%= link_to 'Projections', incident_ops_path(@incident, tab: 'projections', org_unit_id: @selected_org_unit&.id),
+      <%= link_to 'Projections', incident_ops_path(@incident, tab: 'projections', org_unit_id: @selected_org_unit&.id, days: @day_count),
                   class: "resource-tab-link" %>
     </li>
   </ul>
@@ -24,9 +24,11 @@
     </p>
   <% else %>
     <div class="ops-toolbar">
-      <label for="ops-org-unit-picker">Branch / Division / Group:</label>
+      <label for="ops-org-unit-picker">Section / Branch / Division / Group:</label>
+      <%# base-url carries tab + days so the picker preserves the current
+          day-count selection when the user switches between units. %>
       <select id="ops-org-unit-picker"
-              data-base-url="<%= incident_ops_path(@incident, tab: @tab) %>">
+              data-base-url="<%= incident_ops_path(@incident, tab: @tab, days: @day_count) %>">
         <% @org_units.group_by(&:kind).each do |kind, units| %>
           <optgroup label="<%= kind.titleize %>">
             <% units.each do |unit| %>
@@ -37,12 +39,21 @@
           </optgroup>
         <% end %>
       </select>
+
+      <label for="ops-days-picker" class="ops-days-label">Days:</label>
+      <select id="ops-days-picker"
+              data-base-url="<%= incident_ops_path(@incident, tab: @tab, org_unit_id: @selected_org_unit&.id) %>">
+        <% OpsController::DAY_COUNT_CHOICES.each do |n| %>
+          <option value="<%= n %>" <%= 'selected' if n == @day_count %>><%= n %></option>
+        <% end %>
+      </select>
+
       <span class="ops-day-range text-muted">
-        Days: <%= @days.map { |d| d.strftime('%a %-m/%-d') }.join(' · ') %>
+        <%= @days.first.strftime('%a %-m/%-d') %> – <%= @days.last.strftime('%a %-m/%-d') %>
       </span>
       <div class="ops-toolbar-actions no-print">
         <%= link_to 'Download PDF',
-                    to_pdf_incident_ops_path(@incident, tab: @tab, org_unit_id: @selected_org_unit.id, format: :pdf),
+                    to_pdf_incident_ops_path(@incident, tab: @tab, org_unit_id: @selected_org_unit.id, days: @day_count, format: :pdf),
                     class: 'btn btn-primary btn-xs', target: :_blank %>
         <button type="button" class="btn btn-default btn-xs ops-print-btn">Print</button>
       </div>
@@ -54,7 +65,10 @@
       </p>
     <% else %>
       <% @sections.each do |section| %>
-        <% if @selected_org_unit.kind_branch? %>
+        <%# Show a per-block heading whenever the picker expanded into
+            multiple blocks — true for both a Branch (D/G children) and
+            the Operations Section (section itself + every D/G below). %>
+        <% if @selected_org_unit.kind_branch? || @selected_org_unit.kind_section? %>
           <h3 class="ops-section-heading">
             <%= section[:unit].kind.titleize %>: <%= section[:unit].name %>
           </h3>
