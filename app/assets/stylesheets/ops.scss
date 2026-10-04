@@ -26,6 +26,15 @@
   &:first-of-type { margin-top: 0; }
 }
 
+// Grand-total table sits below the per-section tables with a bit of
+// extra breathing room and a stronger header stripe so it reads as a
+// summary, not just another section.
+.ops-grand-total-table {
+  margin-top: 28px;
+  thead th { background: #172b4d !important; color: #fff; }
+  tbody td { font-size: 13px; }
+}
+
 table.ops-215-table,
 table.ops-projections-table {
   width: 100%;

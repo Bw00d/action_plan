@@ -87,6 +87,31 @@
                      days: @days %>
         <% end %>
       <% end %>
+
+      <%# Grand total — sum of each section's Total Personnel per day.
+          Only meaningful on the Projections tab, and only when more
+          than one section is on screen (otherwise it duplicates the
+          single section's own total row). %>
+      <% if @tab == 'projections' && @sections.size > 1 && @operations_total_per_day %>
+        <table class="ops-projections-table ops-grand-total-table">
+          <thead>
+            <tr>
+              <th class="ops-215-kind">Operations Personnel Total</th>
+              <% @days.each do |day| %>
+                <th><%= day.strftime('%a %-m/%-d') %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="ops-total-row">
+              <td class="ops-215-kind"><strong>All sections combined</strong></td>
+              <% @operations_total_per_day.each do |cell| %>
+                <td class="centered"><strong><%= cell[:total] %></strong></td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
     <% end %>
   <% end %>
 </div>

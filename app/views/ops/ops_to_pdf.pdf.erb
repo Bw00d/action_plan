@@ -108,3 +108,25 @@
     </table>
   <% end %>
 <% end %>
+
+<% if @tab == 'projections' && @sections.size > 1 && @operations_total_per_day %>
+  <h2>Operations Personnel Total</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="kind">All sections combined</th>
+        <% @days.each do |day| %>
+          <th class="day"><%= day.strftime('%a %-m/%-d') %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="kind"><strong>Total</strong></td>
+        <% @operations_total_per_day.each do |cell| %>
+          <td><strong><%= cell[:total] %></strong></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

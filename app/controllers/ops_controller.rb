@@ -31,6 +31,7 @@ class OpsController < ApplicationController
           rows:           build_projection_rows(u),
           day_personnel:  compute_day_personnel_totals(u) }
       end
+      @operations_total_per_day = compute_grand_total_per_day(@sections, @days)
     end
   end
 
@@ -58,6 +59,7 @@ class OpsController < ApplicationController
           rows:           build_projection_rows(u),
           day_personnel:  compute_day_personnel_totals(u) }
       end
+      @operations_total_per_day = compute_grand_total_per_day(@sections, @days)
     end
 
     Rails.application.routes.default_url_options[:host]     = request.host_with_port
@@ -241,6 +243,19 @@ class OpsController < ApplicationController
     @days.map do |day|
       total = resources.select { |r| resource_present_on?(r, day) }
                        .sum { |r| r.number_personnel.to_i }
+      { day: day, total: total }
+    end
+  end
+
+  # Sum each section's day_personnel row-wise across all displayed
+  # sections — gives the "Operations Personnel Total" line at the
+  # bottom of the Projections tab.
+  def compute_grand_total_per_day(sections, days)
+    days.map do |day|
+      total = sections.sum do |s|
+        cell = s[:day_personnel].find { |dp| dp[:day] == day }
+        cell ? cell[:total].to_i : 0
+      end
       { day: day, total: total }
     end
   end
