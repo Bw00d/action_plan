@@ -447,6 +447,14 @@
     grid-column: 1 / -1;
   }
 
+  // Name + Leader get a roomier input slot — doubled from the default
+  // ~120px natural width so the full value is visible and there's room
+  // to type without the input immediately scrolling horizontally.
+  dd.wide {
+    .best_in_place { min-width: 300px; }
+    input { min-width: 300px; }
+  }
+
   .best_in_place {
     display: inline-block;
     min-width: 60px;
