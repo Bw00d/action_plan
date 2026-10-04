@@ -41,11 +41,19 @@
     <div class="sheet-header-right">
       <div class="sheet-header-op">
         <span class="sheet-header-op-label strong">2. Operational Period:</span>
-        <%# Click the value to switch between DAY / NIGHT. Defaults to
-            DAY at the DB layer (migration backfills existing rows). %>
+        <%# Click the value to switch between DAY / NIGHT / blank. The
+            blank entry sits at the END so macOS native <select> popups
+            don't open above the trigger when DAY/NIGHT is selected.
+            The blank option carries the sentinel value "BLANK" instead
+            of an empty string — best_in_place 3.0.3 can't reliably
+            re-render the display after an AJAX save when the submitted
+            value is "". Plan#shift= normalizes "BLANK" (and plain
+            blanks) back to nil, so the DB still stores NULL for an
+            unset shift. display_with handles the resting label. %>
         <%= best_in_place @plan, :shift,
                           as: :select,
-                          collection: [["DAY", "DAY"], ["NIGHT", "NIGHT"]],
+                          collection: [["DAY", "DAY"], ["NIGHT", "NIGHT"], ["BLANK", "—"]],
+                          display_with: ->(v) { v.presence || "—" },
                           class: "sheet-header-op-value" %>
       </div>
       <div class="sheet-header-dates">

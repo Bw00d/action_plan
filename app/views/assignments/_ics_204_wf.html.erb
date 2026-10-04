@@ -131,13 +131,15 @@
       <tr>
         <td class="box-6">
           <span class="num">6.</span> Control Operations/Work Assignments:<br>
-          <%= best_in_place @assignment, :control_operations, as: :textarea, place_holder: "(click to add content)", display_with: :simple_format, ok_button: "Save", ok_button_class: "btn btn-info tiny", cancel_button: "Cancel", cancel_button_class: "btn btn-default sm-margin-left tiny" %>
+          <%# No ok/cancel buttons — saves on blur to match the rest of
+              the app's inline-edit pattern. %>
+          <%= best_in_place @assignment, :control_operations, as: :textarea, place_holder: "(click to add content)", display_with: :simple_format %>
         </td>
       </tr>
       <tr>
         <td class="box-7">
           <span class="num">7.</span> Special Instructions:<br>
-          <%= best_in_place @assignment, :special_instructions, as: :textarea, place_holder: "(add content or leave blank)", display_with: :simple_format, ok_button: "Save", ok_button_class: "btn btn-info tiny", cancel_button: "Cancel", cancel_button_class: "btn btn-default sm-margin-left tiny" %>
+          <%= best_in_place @assignment, :special_instructions, as: :textarea, place_holder: "(add content or leave blank)", display_with: :simple_format %>
         </td>
       </tr>
     </table>

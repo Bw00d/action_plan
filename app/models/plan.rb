@@ -229,6 +229,17 @@ class Plan < ApplicationRecord
     super(parse_ops_datetime(value))
   end
 
+  # ICS 202 "shift" selector. The dropdown offers DAY / NIGHT / blank;
+  # the blank option carries the sentinel "BLANK" (best_in_place 3.x
+  # has trouble re-rendering a select display when the submitted value
+  # is an empty string). Normalize the sentinel + any plain blank back
+  # to nil so the DB stores NULL for an unset shift.
+  def shift=(value)
+    normalized = value.to_s.strip
+    normalized = nil if normalized.blank? || normalized.casecmp('blank').zero?
+    super(normalized)
+  end
+
   private
 
   def parse_ops_datetime(value)
