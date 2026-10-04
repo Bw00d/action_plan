@@ -51065,14 +51065,39 @@ document.addEventListener("turbolinks:load", function() {
       $(this).closest('.board-add-child-form').hide();
     });
 
+    // --- Trello-style expanded card modal -------------------------------
+    // Double-click a card to pull its details into a fixed, centered
+    // modal with a dimmed backdrop. Close via the X, backdrop click, or
+    // Escape key. Only one card can be expanded at a time.
+    var $overlay = $('#board-card-overlay');
+
+    function closeExpandedCard() {
+      $('.board-card.is-expanded', page).removeClass('is-expanded');
+      $overlay.removeClass('is-visible');
+    }
+
     $(page).on('dblclick', '.board-card', function (e) {
-      if ($(e.target).closest('.board-card-details').length > 0) return;
-      $(this).find('.board-card-details').toggle();
+      if ($(e.target).closest('.board-card-details, .board-card-actions').length > 0) return;
+      var $card = $(this);
+      var wasExpanded = $card.hasClass('is-expanded');
+      closeExpandedCard();
+      if (!wasExpanded) {
+        $card.addClass('is-expanded');
+        $overlay.addClass('is-visible');
+      }
     });
 
     $(page).on('click', '.board-card-details-close', function (e) {
       e.stopPropagation();
-      $(this).closest('.board-card-details').hide();
+      closeExpandedCard();
+    });
+
+    $overlay.on('click', closeExpandedCard);
+
+    $(document).on('keydown.boardCardModal', function (e) {
+      if (e.key === 'Escape' && $('.board-card.is-expanded', page).length) {
+        closeExpandedCard();
+      }
     });
 
     // --- Hover move affordance --------------------------------------------
@@ -53720,6 +53745,52 @@ $(document).on("turbolinks:load", function () {
         (body.length > 400 ? body.slice(0, 400) + "…" : body)
       );
     });
+  });
+});
+// ICS 205A phone list — drag-to-reorder rows within a section card.
+// Grab the ⠿ handle on the left of a row and drop it where you want it.
+// After the drop we POST the new ordered id list back to the server
+// which rewrites sort_order on each row in that section.
+$(document).on('turbolinks:load', function () {
+  var $grid = $('.phone-205a-grid');
+  if (!$grid.length) return;
+
+  var sortUrl = $grid.data('sort-url');
+  var csrfToken = $('meta[name=csrf-token]').attr('content');
+
+  $grid.find('.phone-205a-card').each(function () {
+    var $card    = $(this);
+    var section  = $card.data('section');
+    var $tbody   = $card.find('.phone-205a-table tbody');
+    if (!$tbody.length) return;
+
+    $tbody.sortable({
+      handle: '.col-drag',
+      items:  '> tr',
+      axis:   'y',
+      tolerance: 'pointer',
+      // Preserve column widths while the row is being dragged — without
+      // this the clone collapses to text width and looks jarring.
+      helper: function (e, tr) {
+        var $originals = tr.children();
+        var $helper = tr.clone();
+        $helper.children().each(function (i) {
+          $(this).width($originals.eq(i).outerWidth());
+        });
+        return $helper;
+      },
+      update: function () {
+        var orderedIds = $tbody.children('tr').map(function () {
+          return $(this).data('entry-id');
+        }).get();
+        $.ajax({
+          url:    sortUrl,
+          method: 'PATCH',
+          data:   { section: section, ordered_ids: orderedIds },
+          headers: { 'X-CSRF-Token': csrfToken }
+        });
+      }
+    }).disableSelection();
   });
 });
 $(document).on("turbolinks:load", function() {

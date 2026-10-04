@@ -298,6 +298,49 @@
   color: #5e6c84;
 }
 
+// Modal footer actions — trash (left) + Demob (right). Rendered
+// inside .board-card-details so they only appear on the expanded
+// Trello-style card. Bleeds to the modal's edges with negative
+// margins so it reads as a proper footer bar.
+.board-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  margin: 20px -24px -20px;
+  border-top: 1px solid #ebecf0;
+  background: #fafbfc;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.board-card-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  line-height: 1;
+
+  &:hover { text-decoration: none; }
+}
+
+.board-card-action--delete {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  color: #97a0af;
+  font-size: 15px;
+  border-radius: 3px;
+
+  &:hover { background: #fde0e0; color: #c62828; }
+}
+
+// .board-card-action--demob removed — the Demob button on the T-card
+// modal now uses the same `demob-button btn tiny btn-dark` classes as
+// the ICS 211 (see colors.css.scss for .btn-dark).
+
 // Trello-style expanded card: when the parent .board-card has
 // `.is-expanded`, the details slab is pulled out of the card and
 // painted as a centered, fixed-position modal over the board. A

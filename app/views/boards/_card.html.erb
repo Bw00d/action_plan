@@ -89,6 +89,27 @@
       <dt>Comment</dt>
       <dd class="full-width"><%= best_in_place resource, :comment, as: :textarea %></dd>
     </dl>
+
+    <%# Modal footer actions — trash (left) + Demob (right). Shown only
+        in the expanded modal because .board-card-actions lives inside
+        .board-card-details, which is hidden until the card is expanded. %>
+    <div class="board-card-actions">
+      <%= link_to resource_path(resource),
+                  method: :delete,
+                  data: { confirm: "Delete #{resource.full_order_number} #{resource.name}?" },
+                  class: 'board-card-action board-card-action--delete',
+                  title: 'Delete resource' do %>
+        <i class="fa fa-trash" aria-hidden="true"></i>
+      <% end %>
+      <% if resource.demob %>
+        <%# Mirrors the DMB button on the ICS 211 — same classes, same
+            nested path, so the look + click target behave identically
+            across the two views. %>
+        <%= link_to 'DMB',
+                    incident_resource_demob_path(@incident, resource, resource.demob),
+                    class: 'demob-button btn tiny btn-dark' %>
+      <% end %>
+    </div>
   </div>
 </li>
 <% end %>
