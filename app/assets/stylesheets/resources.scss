@@ -401,6 +401,73 @@ a.delete-resource:hover {
     }
   }
 
+  // ── 7-day forecast tabs ──────────────────────────────────────
+  .tally-forecast {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid #dde3ea;
+  }
+  .tally-forecast-title {
+    margin: 0 0 4px;
+    font-size: 16px;
+    color: #172b4d;
+  }
+  .tally-forecast-sub {
+    margin: 0 0 14px;
+    font-size: 12px;
+  }
+
+  .tally-forecast-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .tally-forecast-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 68px;
+    padding: 6px 12px;
+    background: #f6f8fa;
+    border: 1px solid #dde3ea;
+    border-radius: 4px;
+    color: #42526e;
+    font-size: 12px;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+
+    .tally-forecast-tab-dow { font-weight: 700; letter-spacing: 0.3px; }
+    .tally-forecast-tab-date { font-size: 11px; opacity: 0.85; }
+
+    &:hover:not(.is-active) {
+      background: #eaf1fb;
+      border-color: #b3c7e0;
+      color: #172b4d;
+    }
+    &.is-active {
+      background: #0052cc;
+      border-color: #0052cc;
+      color: #fff;
+      .tally-forecast-tab-date { opacity: 1; }
+    }
+    &:focus { outline: 0; box-shadow: 0 0 0 2px rgba(9, 30, 66, 0.15); }
+  }
+
+  .tally-forecast-panel {
+    display: none;
+    &.is-active { display: block; }
+  }
+
+  .tally-forecast-panel-title {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #42526e;
+    font-weight: 600;
+  }
+
   // Horizontal scroll for wide tallies — many resource kinds don't fit
   // on a laptop screen, so wrap in an overflow container.
   .tally-table-wrap {

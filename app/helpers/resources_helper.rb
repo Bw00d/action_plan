@@ -74,8 +74,23 @@ module ResourcesHelper
   # (category, position) among CREW/AIRCRAFT/EQUIPMENT, plus a fixed
   # "Overhead Personnel" column (aggregates all OVERHEAD) and a
   # "Total Personnel" column (row-wise sum, no resource count).
-  def resource_tally_pivot(incident)
+  # Pass `on_date:` to project the tally forward — only resources that
+  # are expected to still be on the incident on that date are counted.
+  # A resource stays included when its LWD is nil / non-date (unknown,
+  # keep) or on-or-after the target date, AND when it hasn't already
+  # released by then. Used for the 7-day forecast tabs below the main
+  # tally.
+  def resource_tally_pivot(incident, on_date: nil)
     resources = incident.tally_resources.includes(:rosters)
+
+    if on_date
+      resources = resources.select do |r|
+        lwd = r.last_work_day
+        lwd_ok     = !lwd.is_a?(Date) || lwd >= on_date
+        release_ok = r.release_date.nil? || r.release_date > on_date
+        lwd_ok && release_ok
+      end
+    end
 
     # Discover positions per category. Skip blank positions — those
     # don't have anywhere sensible to bucket.

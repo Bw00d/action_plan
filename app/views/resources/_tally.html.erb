@@ -28,75 +28,74 @@
         <p class="muted">Live counts — updates automatically as resources check in or demob.</p>
       </div>
 
-      <% if pivot[:agencies].empty? %>
-        <p class="muted"><em>No assigned resources with a recognizable agency.</em></p>
-      <% else %>
-        <div class="tally-table-wrap">
-          <table class="tally-table">
-            <thead>
-              <tr>
-                <th class="tally-agency-col">Agency or Organization</th>
-                <th class="tally-count-col"></th>
-                <% pivot[:columns].each do |col| %>
-                  <th class="tally-col-header <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
-                    <div class="tally-col-label"><%= col[:label] %></div>
-                  </th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% pivot[:agencies].each_with_index do |agency, idx| %>
-                <% cells = pivot[:rows][agency] %>
-                <tr class="tally-agency-row <%= 'is-even' if idx.even? %>">
-                  <td class="tally-agency-cell" rowspan="2"><%= agency %></td>
-                  <td class="tally-count-label">resources</td>
-                  <% pivot[:columns].each do |col| %>
-                    <% cell = cells[col[:key]] %>
-                    <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
-                      <% unless col[:overhead] || col[:total] %>
-                        <%= cell[:resources].positive? ? cell[:resources] : '' %>
-                      <% end %>
-                    </td>
-                  <% end %>
-                </tr>
-                <tr class="tally-agency-row <%= 'is-even' if idx.even? %>">
-                  <td class="tally-count-label">personnel</td>
-                  <% pivot[:columns].each do |col| %>
-                    <% cell = cells[col[:key]] %>
-                    <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
-                      <%= cell[:personnel].positive? ? cell[:personnel] : '' %>
-                    </td>
-                  <% end %>
-                </tr>
-              <% end %>
+      <%= render partial: 'tally_pivot', locals: { pivot: pivot } %>
 
-              <%# Total row — matches the ICS form footer. %>
-              <tr class="tally-total-row">
-                <td class="tally-agency-cell tally-total-label" rowspan="2">Total</td>
-                <td class="tally-count-label">resources</td>
-                <% pivot[:columns].each do |col| %>
-                  <% t = pivot[:totals][col[:key]] %>
-                  <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
-                    <% unless col[:overhead] || col[:total] %>
-                      <%= t[:resources].positive? ? t[:resources] : '' %>
-                    <% end %>
-                  </td>
-                <% end %>
-              </tr>
-              <tr class="tally-total-row">
-                <td class="tally-count-label">personnel</td>
-                <% pivot[:columns].each do |col| %>
-                  <% t = pivot[:totals][col[:key]] %>
-                  <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
-                    <%= t[:personnel].positive? ? t[:personnel] : '' %>
-                  </td>
-                <% end %>
-              </tr>
-            </tbody>
-          </table>
+      <%# ── Daily tally: today + next 6 days ──────────────────────
+          Today's panel shows the actual current roster — every
+          resource that's checked in and not released, regardless of
+          LWD (so late-staying resources still appear). Days 2-7
+          project forward on the assumption that each resource demobs
+          on its LWD, so they only include resources whose LWD is on
+          or after the target date. All panels are pre-rendered —
+          query cache means it's still just 2 SQL hits. %>
+      <% today = Date.current %>
+      <div class="tally-forecast no-print">
+        <h3 class="tally-forecast-title">Daily Tally — Next 7 Days</h3>
+        <p class="muted tally-forecast-sub">
+          <strong>Today</strong> shows actual assigned resources regardless of LWD.
+          Future days project the roster forward on the assumption that each
+          resource demobs on its LWD; resources with no LWD are kept in every day's count.
+        </p>
+
+        <div class="tally-forecast-tabs" role="tablist">
+          <% 7.times do |i| %>
+            <% date = today + i %>
+            <button type="button"
+                    class="tally-forecast-tab <%= 'is-active' if i.zero? %>"
+                    data-forecast-date="<%= date.iso8601 %>">
+              <span class="tally-forecast-tab-dow"><%= i.zero? ? 'Today' : date.strftime('%a') %></span>
+              <span class="tally-forecast-tab-date"><%= date.strftime('%-m/%-d') %></span>
+            </button>
+          <% end %>
         </div>
-      <% end %>
+
+        <% 7.times do |i| %>
+          <% date = today + i %>
+          <%# Today = actual current roster (no LWD filter). Future
+              days = projected using the on_date filter. %>
+          <% day_pivot = i.zero? ? resource_tally_pivot(@incident)
+                                 : resource_tally_pivot(@incident, on_date: date) %>
+          <div class="tally-forecast-panel <%= 'is-active' if i.zero? %>"
+               data-forecast-panel="<%= date.iso8601 %>"
+               role="tabpanel">
+            <h4 class="tally-forecast-panel-title">
+              <%= i.zero? ? 'Today — ' : '' %><%= date.strftime('%A, %B %-d') %>
+            </h4>
+            <%= render partial: 'tally_pivot', locals: { pivot: day_pivot } %>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% end %>
   <div class="panel-foot"></div>
 </div>
+
+<script>
+  // Forecast tab switcher — toggles active class on buttons + panels.
+  // Delegated so it survives Turbolinks swaps on the resources index.
+  (function () {
+    document.addEventListener('click', function (e) {
+      var tab = e.target.closest('.tally-forecast-tab');
+      if (!tab) return;
+      var forecast = tab.closest('.tally-forecast');
+      if (!forecast) return;
+      var date = tab.getAttribute('data-forecast-date');
+      forecast.querySelectorAll('.tally-forecast-tab').forEach(function (b) {
+        b.classList.toggle('is-active', b === tab);
+      });
+      forecast.querySelectorAll('.tally-forecast-panel').forEach(function (p) {
+        p.classList.toggle('is-active', p.getAttribute('data-forecast-panel') === date);
+      });
+    });
+  })();
+</script>

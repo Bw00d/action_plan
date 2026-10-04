@@ -14,7 +14,11 @@
   </div>
 </li>
 <% else %>
-<li class="board-card" data-resource-id="<%= resource.id %>" data-personnel="<%= resource.effective_personnel.to_i %>">
+<li class="board-card"
+    data-resource-id="<%= resource.id %>"
+    data-personnel="<%= resource.effective_personnel.to_i %>"
+    data-fwd="<%= resource.fwd&.iso8601 %>"
+    data-assignment-length="<%= resource.assignment_length %>">
   <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
     <span class="board-card-agency"><%= resource.agency %></span>
@@ -81,7 +85,11 @@
           boards.js keeps it in sync whenever FWD or Assignment days
           change, without waiting for the AJAX save round-trip. %>
       <dt>LWD</dt>
-      <dd data-field="lwd" class="board-card-lwd-display"><%= resource.last_work_day %></dd>
+      <%# Resource#last_work_day returns a Date OR a space string when
+          FWD / assignment_length are missing. strftime only on Date. %>
+      <dd data-field="lwd" class="board-card-lwd-display">
+        <%= resource.last_work_day.is_a?(Date) ? resource.last_work_day.strftime('%m/%d/%y') : '' %>
+      </dd>
 
       <dt>Release</dt>
       <dd><%= best_in_place resource, :release_date, as: :input %></dd>

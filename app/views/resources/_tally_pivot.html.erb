@@ -1,0 +1,74 @@
+<%#
+  Pivot-table markup for the Resource Tally. Takes a `pivot` local
+  built by resource_tally_pivot (optionally scoped to a future date for
+  the forecast tabs). Rendering is identical for the live tally and
+  each forecast panel.
+%>
+<% if pivot[:agencies].empty? %>
+  <p class="muted"><em>No assigned resources on this date.</em></p>
+<% else %>
+  <div class="tally-table-wrap">
+    <table class="tally-table">
+      <thead>
+        <tr>
+          <th class="tally-agency-col">Agency or Organization</th>
+          <th class="tally-count-col"></th>
+          <% pivot[:columns].each do |col| %>
+            <th class="tally-col-header <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+              <div class="tally-col-label"><%= col[:label] %></div>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% pivot[:agencies].each_with_index do |agency, idx| %>
+          <% cells = pivot[:rows][agency] %>
+          <tr class="tally-agency-row <%= 'is-even' if idx.even? %>">
+            <td class="tally-agency-cell" rowspan="2"><%= agency %></td>
+            <td class="tally-count-label">resources</td>
+            <% pivot[:columns].each do |col| %>
+              <% cell = cells[col[:key]] %>
+              <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+                <% unless col[:overhead] || col[:total] %>
+                  <%= cell[:resources].positive? ? cell[:resources] : '' %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+          <tr class="tally-agency-row <%= 'is-even' if idx.even? %>">
+            <td class="tally-count-label">personnel</td>
+            <% pivot[:columns].each do |col| %>
+              <% cell = cells[col[:key]] %>
+              <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+                <%= cell[:personnel].positive? ? cell[:personnel] : '' %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+
+        <%# Total row — matches the ICS form footer. %>
+        <tr class="tally-total-row">
+          <td class="tally-agency-cell tally-total-label" rowspan="2">Total</td>
+          <td class="tally-count-label">resources</td>
+          <% pivot[:columns].each do |col| %>
+            <% t = pivot[:totals][col[:key]] %>
+            <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+              <% unless col[:overhead] || col[:total] %>
+                <%= t[:resources].positive? ? t[:resources] : '' %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+        <tr class="tally-total-row">
+          <td class="tally-count-label">personnel</td>
+          <% pivot[:columns].each do |col| %>
+            <% t = pivot[:totals][col[:key]] %>
+            <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+              <%= t[:personnel].positive? ? t[:personnel] : '' %>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>
