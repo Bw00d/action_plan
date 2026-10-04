@@ -53,6 +53,15 @@
     <div class="board-card-details-header" style="background: <%= resource_strip_color(resource) %>;">
       <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
       <span class="board-card-agency"><%= resource.agency %></span>
+      <%# Reuses the small-card MOVE handler in boards.js — the click
+          handler scopes the menu to the toggle's own parent, so this
+          header's menu operates independently of the small-strip one. %>
+      <button type="button" class="board-card-move-toggle" title="Move to another section">
+        <i class="fa fa-arrows" aria-hidden="true"></i> Move
+      </button>
+      <div class="board-card-move-menu" style="display:none;">
+        <ul class="board-card-move-menu-list"></ul>
+      </div>
       <button type="button" class="board-card-details-close" aria-label="Close">&times;</button>
     </div>
 

@@ -70,6 +70,14 @@
       $(this).closest('.board-add-child-form').hide();
     });
 
+    // --- Header "+ New Column" opener/closer -----------------------------
+    $(page).on('click', '.board-new-column-toggle', function () {
+      $(this).closest('.board-new-column').find('.board-new-column-form').toggle();
+    });
+    $(page).on('click', '.board-new-column-cancel', function () {
+      $(this).closest('.board-new-column-form').hide();
+    });
+
     // --- Trello-style expanded card modal -------------------------------
     // Double-click a card to pull its details into a fixed, centered
     // modal with a dimmed backdrop. Close via the X, backdrop click, or
@@ -206,7 +214,9 @@
     $(page).on('click', '.board-card-move-toggle', function (e) {
       e.stopPropagation();
       var $card = $(this).closest('.board-card');
-      var $menu = $card.find('.board-card-move-menu');
+      // Scope to the toggle's own parent — the modal header has its
+      // own MOVE button + menu pair separate from the small-strip one.
+      var $menu = $(this).parent().find('.board-card-move-menu').first();
       var currentOrgUnitId = $card.closest('.board-column').data('org-unit-id') || '';
       $('.board-card-move-menu').not($menu).hide();
       if ($menu.is(':visible')) { $menu.hide(); return; }

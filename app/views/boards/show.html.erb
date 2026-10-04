@@ -6,6 +6,51 @@
   <h1><%= link_to @incident.display_incident_name, @incident %></h1>
 </div>
     <p class="text-muted">Drag resources between sections to assign them.</p>
+
+    <%# Right-aligned "+ New Column" opener. Clicking the pill reveals
+        the inline form; posts to the standard org_units create endpoint
+        which redirects back to the board on success. Possible parents
+        are limited to units that already allow children, so the server
+        can only ever get a valid (kind, parent) pair. %>
+    <div class="board-new-column">
+      <button type="button" class="board-new-column-toggle btn btn-primary btn-sm">
+        + New Column
+      </button>
+
+      <%= form_with url: incident_org_units_path(@incident),
+                    method: :post,
+                    local: true,
+                    html: { class: 'board-new-column-form', style: 'display:none;' } do |f| %>
+        <div class="board-new-column-row">
+          <%= select_tag 'org_unit[kind]',
+                         options_for_select(%w[branch division group].map { |k| [k.capitalize, k] }, 'division'),
+                         class: 'form-control input-sm' %>
+          <%= select_tag 'org_unit[parent_id]',
+                         options_from_collection_for_select(
+                           @incident.org_units
+                                    .where(kind: [OrgUnit.kinds[:section],
+                                                  OrgUnit.kinds[:branch],
+                                                  OrgUnit.kinds[:command]])
+                                    .order(:kind, :name),
+                           :id,
+                           ->(u) { "#{u.kind.capitalize} — #{u.name}" }
+                         ),
+                         include_blank: 'Parent…',
+                         required: true,
+                         class: 'form-control input-sm' %>
+          <%= text_field_tag 'org_unit[name]', nil,
+                             placeholder: 'Name (e.g. Div A)',
+                             required: true,
+                             class: 'form-control input-sm' %>
+          <%= text_field_tag 'org_unit[designator]', nil,
+                             placeholder: 'Designator',
+                             class: 'form-control input-sm' %>
+          <%= submit_tag 'Create', class: 'btn btn-primary btn-sm' %>
+          <button type="button" class="btn btn-default btn-sm board-new-column-cancel">Cancel</button>
+        </div>
+      <% end %>
+    </div>
+
     <% if flash[:notice] %><div class="alert alert-success"><%= flash[:notice] %></div><% end %>
     <% if flash[:error] %><div class="alert alert-danger"><%= flash[:error] %></div><% end %>
   </header>

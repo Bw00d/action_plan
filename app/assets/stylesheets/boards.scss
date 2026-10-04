@@ -3,11 +3,51 @@
 }
 
 .board-header {
+  position: relative;             // anchor for the right-aligned "+ New Column"
   margin-bottom: 16px;
 
   h2 {
     margin: 0 0 4px;
   }
+}
+
+// Right-aligned "+ New Column" opener + inline form, pinned to the
+// top-right of the board page. Form is a flex row of inputs that wraps
+// on narrow viewports.
+.board-new-column {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.board-new-column-toggle {
+  // Inherits .btn .btn-primary .btn-sm; small nudge so it visually
+  // aligns with the incident-name heading on the left.
+  margin-top: 2px;
+}
+
+.board-new-column-form {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  box-shadow: 0 6px 20px rgba(9, 30, 66, 0.18);
+  z-index: 100;
+  min-width: 420px;
+}
+
+.board-new-column-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+
+  input, select { flex: 1 1 100px; min-width: 100px; }
+  .btn { flex: 0 0 auto; }
 }
 
 .board-layout {
@@ -401,6 +441,21 @@
     flex: 1 1 auto;
     text-align: center;
     font-size: 13px;
+  }
+
+  // Modal MOVE button is always visible (small-card variant fades
+  // in on card hover; the modal doesn't need that affordance).
+  position: relative;      // anchor for the move menu
+  .board-card-move-toggle {
+    opacity: 1;
+    pointer-events: auto;
+    margin-right: 4px;
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  .board-card-move-menu {
+    top: calc(100% + 4px);
+    right: 8px;
   }
 }
 

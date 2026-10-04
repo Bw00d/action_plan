@@ -70,6 +70,14 @@
       $(this).closest('.board-add-child-form').hide();
     });
 
+    // --- Header "+ New Column" opener/closer -----------------------------
+    $(page).on('click', '.board-new-column-toggle', function () {
+      $(this).closest('.board-new-column').find('.board-new-column-form').toggle();
+    });
+    $(page).on('click', '.board-new-column-cancel', function () {
+      $(this).closest('.board-new-column-form').hide();
+    });
+
     // --- Trello-style expanded card modal -------------------------------
     // Double-click a card to pull its details into a fixed, centered
     // modal with a dimmed backdrop. Close via the X, backdrop click, or
@@ -105,6 +113,84 @@
       }
     });
 
+    // --- Live LWD recalc on the expanded card ------------------------------
+    // LWD = FWD + assignment_length - 1 day. We update it on the fly as the
+    // user edits either input, before best_in_place's AJAX save returns —
+    // the user wants instant feedback, not a server round-trip wait.
+    //
+    // Last-known-good values are mirrored to data-fwd / data-assignment-length
+    // on the <li>; this lets a change to just one field reliably pick up the
+    // OTHER field's value without having to parse best_in_place's rendered
+    // display text (which can vary by Rails format config).
+    function parseFlexibleDate(s) {
+      if (s == null) return null;
+      s = String(s).trim();
+      if (!s) return null;
+      var m;
+      // ISO: YYYY-MM-DD(THH:MM...) — handles both bare dates and full ISO
+      m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+      if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+      // US: M/D/YYYY or M/D/YY or M/D (current year)
+      m = s.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/);
+      if (m) {
+        var year = m[3] ? +m[3] : new Date().getFullYear();
+        if (year < 100) year += 2000;
+        return new Date(year, +m[1] - 1, +m[2]);
+      }
+      var d = new Date(s);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    // MM/DD/YY — matches the LWD format used elsewhere in the app.
+    function fmtShortDate(d) {
+      var y = String(d.getFullYear()).slice(-2);
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return m + '/' + dd + '/' + y;
+    }
+
+    function recalcLwd($card) {
+      var fwdStr    = String($card.attr('data-fwd') || '').trim();
+      var lengthStr = String($card.attr('data-assignment-length') || '').trim();
+      var fwd       = parseFlexibleDate(fwdStr);
+      var length    = parseInt(lengthStr, 10);
+      var $lwdCell  = $card.find('[data-field="lwd"]');
+      if (!fwd || isNaN(length) || length < 1) {
+        $lwdCell.text('—');
+        return;
+      }
+      var lwd = new Date(fwd.getFullYear(), fwd.getMonth(), fwd.getDate() + length - 1);
+      $lwdCell.text(fmtShortDate(lwd));
+    }
+
+    // Keep the <li> data-* attrs in sync with whatever the user types.
+    // 'input' fires on every keystroke (instant feedback), 'change' catches
+    // paste / autofill, 'best_in_place:success' catches the final
+    // server-normalized value in case we parsed something unusual.
+    function stashFromInput(input, cardAttr) {
+      var $card = $(input).closest('.board-card');
+      $card.attr(cardAttr, $(input).val());
+      recalcLwd($card);
+    }
+
+    $(page).on('input change blur',
+      '[data-field="fwd"] input', function () { stashFromInput(this, 'data-fwd'); });
+
+    $(page).on('input change blur',
+      '[data-field="assignment_length"] input', function () { stashFromInput(this, 'data-assignment-length'); });
+
+    $(page).on('best_in_place:success', '[data-field="fwd"] .best_in_place', function () {
+      var $card = $(this).closest('.board-card');
+      $card.attr('data-fwd', $(this).text().trim());
+      recalcLwd($card);
+    });
+
+    $(page).on('best_in_place:success', '[data-field="assignment_length"] .best_in_place', function () {
+      var $card = $(this).closest('.board-card');
+      $card.attr('data-assignment-length', $(this).text().trim());
+      recalcLwd($card);
+    });
+
     // --- Hover move affordance --------------------------------------------
     // Build the target list from the DOM at click time so it reflects any
     // columns that were just added/deleted without a page reload.
@@ -128,7 +214,9 @@
     $(page).on('click', '.board-card-move-toggle', function (e) {
       e.stopPropagation();
       var $card = $(this).closest('.board-card');
-      var $menu = $card.find('.board-card-move-menu');
+      // Scope to the toggle's own parent — the modal header has its
+      // own MOVE button + menu pair separate from the small-strip one.
+      var $menu = $(this).parent().find('.board-card-move-menu').first();
       var currentOrgUnitId = $card.closest('.board-column').data('org-unit-id') || '';
       $('.board-card-move-menu').not($menu).hide();
       if ($menu.is(':visible')) { $menu.hide(); return; }
