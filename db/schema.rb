@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_03_000000) do
+ActiveRecord::Schema.define(version: 2026_10_05_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -640,6 +640,23 @@ ActiveRecord::Schema.define(version: 2026_10_03_000000) do
     t.index ["iroc_res_id"], name: "index_requests_on_iroc_res_id"
   end
 
+  create_table "resource_events", force: :cascade do |t|
+    t.bigint "resource_id", null: false
+    t.bigint "user_id"
+    t.integer "kind", default: 0, null: false
+    t.text "body"
+    t.string "leader"
+    t.date "fwd"
+    t.date "lwd"
+    t.string "phone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["resource_id", "created_at"], name: "index_resource_events_on_resource_id_and_created_at"
+    t.index ["resource_id", "kind"], name: "index_resource_events_on_resource_id_and_kind"
+    t.index ["resource_id"], name: "index_resource_events_on_resource_id"
+    t.index ["user_id"], name: "index_resource_events_on_user_id"
+  end
+
   create_table "resources", force: :cascade do |t|
     t.string "name"
     t.string "leader"
@@ -788,6 +805,8 @@ ActiveRecord::Schema.define(version: 2026_10_03_000000) do
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
   add_foreign_key "requests", "incidents"
+  add_foreign_key "resource_events", "resources"
+  add_foreign_key "resource_events", "users"
   add_foreign_key "rosters", "requests"
   add_foreign_key "rosters", "resources"
   add_foreign_key "rosters", "resources", column: "promoted_resource_id"

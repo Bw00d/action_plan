@@ -65,57 +65,128 @@
       <button type="button" class="board-card-details-close" aria-label="Close">&times;</button>
     </div>
 
-    <dl class="board-card-fields">
-      <dt>Order #</dt>
-      <dd><%= best_in_place resource, :order_number, as: :input %></dd>
+    <%# Two-column body: left = fields + footer actions, right = activity
+        feed (comments + scheduled crew swaps + completed swap history). %>
+    <div class="board-card-details-body" data-events-url="<%= resource_events_path(resource) %>">
+      <div class="board-card-details-main">
+        <dl class="board-card-fields">
+          <dt>Order #</dt>
+          <dd><%= best_in_place resource, :order_number, as: :input %></dd>
 
-      <dt>Name</dt>
-      <dd class="wide"><%= best_in_place resource, :name, as: :input %></dd>
+          <dt>Name</dt>
+          <dd class="wide"><%= best_in_place resource, :name, as: :input %></dd>
 
-      <dt>Position</dt>
-      <dd><%= best_in_place resource, :position, as: :input %></dd>
+          <dt>Position</dt>
+          <dd><%= best_in_place resource, :position, as: :input %></dd>
 
-      <dt>Leader</dt>
-      <dd class="wide"><%= best_in_place resource, :leader, as: :input %></dd>
+          <dt>Leader</dt>
+          <dd class="wide"><%= best_in_place resource, :leader, as: :input %></dd>
 
-      <dt>Agency</dt>
-      <dd><%= best_in_place resource, :agency, as: :input %></dd>
+          <dt>Agency</dt>
+          <dd><%= best_in_place resource, :agency, as: :input %></dd>
 
-      <dt>Personnel</dt>
-      <dd><%= best_in_place resource, :number_personnel, as: :input %></dd>
+          <dt>Personnel</dt>
+          <dd><%= best_in_place resource, :number_personnel, as: :input %></dd>
 
-      <dt>Assignment days</dt>
-      <dd data-field="assignment_length"><%= best_in_place resource, :assignment_length, as: :input %></dd>
+          <dt>Assignment days</dt>
+          <dd data-field="assignment_length"><%= best_in_place resource, :assignment_length, as: :input %></dd>
 
-      <dt>FWD</dt>
-      <dd data-field="fwd"><%= best_in_place resource, :fwd, as: :input %></dd>
+          <dt>FWD</dt>
+          <dd data-field="fwd"><%= best_in_place resource, :fwd, as: :input %></dd>
 
-      <%# LWD is derived (fwd + assignment_length - 1 day). Display-only;
-          boards.js keeps it in sync whenever FWD or Assignment days
-          change, without waiting for the AJAX save round-trip. %>
-      <dt>LWD</dt>
-      <%# Resource#last_work_day returns a Date OR a space string when
-          FWD / assignment_length are missing. strftime only on Date. %>
-      <dd data-field="lwd" class="board-card-lwd-display">
-        <%= resource.last_work_day.is_a?(Date) ? resource.last_work_day.strftime('%m/%d/%y') : '' %>
-      </dd>
+          <%# LWD is derived (fwd + assignment_length - 1 day). Display-only;
+              boards.js keeps it in sync whenever FWD or Assignment days
+              change, without waiting for the AJAX save round-trip. %>
+          <dt>LWD</dt>
+          <dd data-field="lwd" class="board-card-lwd-display">
+            <%= resource.last_work_day.is_a?(Date) ? resource.last_work_day.strftime('%m/%d/%y') : '' %>
+          </dd>
 
-      <dt>Release</dt>
-      <dd><%= best_in_place resource, :release_date, as: :input %></dd>
+          <dt>Release</dt>
+          <dd><%= best_in_place resource, :release_date, as: :input %></dd>
 
-      <dt>Phone</dt>
-      <dd><%= best_in_place resource, :phone, as: :input %></dd>
+          <dt>Phone</dt>
+          <dd><%= best_in_place resource, :phone, as: :input %></dd>
 
-      <dt>Email</dt>
-      <dd><%= best_in_place resource, :email, as: :input %></dd>
+          <dt>Email</dt>
+          <dd><%= best_in_place resource, :email, as: :input %></dd>
+        </dl>
+      </div>
 
-      <dt>Comment</dt>
-      <dd class="full-width"><%= best_in_place resource, :comment, as: :textarea %></dd>
-    </dl>
+      <aside class="board-card-details-side" data-resource-id="<%= resource.id %>">
+        <h4 class="board-card-side-title">Comments &amp; Activity</h4>
 
-    <%# Modal footer actions — trash (left) + Demob (right). Shown only
-        in the expanded modal because .board-card-actions lives inside
-        .board-card-details, which is hidden until the card is expanded. %>
+        <%# Compose row — comment input + "+ Schedule Swap" trigger. %>
+        <div class="board-card-side-compose">
+          <form class="board-card-comment-form"
+                data-url="<%= resource_events_path(resource) %>">
+            <input type="hidden" name="resource_event[kind]" value="comment">
+            <textarea name="resource_event[body]" rows="2"
+                      placeholder="Write a comment…"
+                      class="form-control input-sm"></textarea>
+            <div class="board-card-compose-actions">
+              <button type="submit" class="btn btn-primary btn-xs">Comment</button>
+              <button type="button" class="btn btn-default btn-xs board-card-schedule-swap-toggle">
+                + Schedule Swap
+              </button>
+            </div>
+          </form>
+
+          <%# Hidden inline swap-schedule form. User enters FWD + the
+              assignment length (days); JS derives LWD and injects it
+              as a hidden field on submit so the server's existing
+              fwd/lwd fields keep working unchanged. %>
+          <form class="board-card-swap-form" style="display:none;"
+                data-url="<%= resource_events_path(resource) %>">
+            <input type="hidden" name="resource_event[kind]" value="scheduled_swap">
+            <input type="hidden" name="resource_event[lwd]" value="">
+            <div class="board-card-swap-row">
+              <label>Leader</label>
+              <input type="text" name="resource_event[leader]" class="form-control input-sm" required>
+            </div>
+            <div class="board-card-swap-row">
+              <label>Phone</label>
+              <input type="text" name="resource_event[phone]" class="form-control input-sm">
+            </div>
+            <div class="board-card-swap-row board-card-swap-row-dates">
+              <div>
+                <label>FWD</label>
+                <input type="date" name="resource_event[fwd]"
+                       class="form-control input-sm board-card-swap-fwd" required>
+              </div>
+              <div>
+                <label>Assignment days</label>
+                <input type="number" min="1" step="1"
+                       class="form-control input-sm board-card-swap-length" required>
+              </div>
+            </div>
+            <div class="board-card-swap-row board-card-swap-preview">
+              <span class="muted">LWD will be:</span>
+              <strong class="board-card-swap-lwd-preview">—</strong>
+            </div>
+            <div class="board-card-swap-row">
+              <label>Notes</label>
+              <textarea name="resource_event[body]" rows="1"
+                        class="form-control input-sm"
+                        placeholder="Optional"></textarea>
+            </div>
+            <div class="board-card-compose-actions">
+              <button type="submit" class="btn btn-primary btn-xs">Schedule</button>
+              <button type="button" class="btn btn-default btn-xs board-card-schedule-swap-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="board-card-activity-feed">
+          <%= render partial: 'boards/activity_feed',
+                     locals: { resource: resource, events: resource.resource_events.newest_first } %>
+        </div>
+      </aside>
+    </div>
+
+    <%# Full-width bottom cap — trash on the left, Demob on the right.
+        Lives outside .board-card-details-body so it spans the modal
+        edge to edge regardless of column heights. %>
     <div class="board-card-actions">
       <%= link_to resource_path(resource),
                   method: :delete,
@@ -125,9 +196,6 @@
         <i class="fa fa-trash" aria-hidden="true"></i>
       <% end %>
       <% if resource.demob %>
-        <%# Mirrors the DMB button on the ICS 211 — same classes, same
-            nested path, so the look + click target behave identically
-            across the two views. %>
         <%= link_to 'DMB',
                     incident_resource_demob_path(@incident, resource, resource.demob),
                     class: 'demob-button btn tiny btn-dark' %>

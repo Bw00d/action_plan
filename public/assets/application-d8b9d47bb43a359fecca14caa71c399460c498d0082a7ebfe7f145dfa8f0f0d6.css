@@ -19742,51 +19742,96 @@ div.solid {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
-/* line 150, app/assets/stylesheets/boards.scss */
+/* line 154, app/assets/stylesheets/boards.scss */
+.board-roster-group-title .board-roster-group-name {
+  flex: 1 1 auto;
+}
+
+/* line 155, app/assets/stylesheets/boards.scss */
 .board-roster-group-title .muted {
   color: #c1c7d0;
   font-weight: 500;
   margin-left: 4px;
 }
 
-/* line 153, app/assets/stylesheets/boards.scss */
+/* line 160, app/assets/stylesheets/boards.scss */
+.board-roster-group-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #c1c7d0;
+  cursor: pointer;
+}
+
+/* line 173, app/assets/stylesheets/boards.scss */
+.board-roster-group-check input {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* line 174, app/assets/stylesheets/boards.scss */
+.board-roster-group-check:hover {
+  color: #fff;
+}
+
+/* line 179, app/assets/stylesheets/boards.scss */
+.board-roster-group--excluded {
+  opacity: 0.35;
+}
+
+/* line 181, app/assets/stylesheets/boards.scss */
+.board-roster-group--excluded .board-roster-table {
+  filter: grayscale(1);
+}
+
+/* line 184, app/assets/stylesheets/boards.scss */
 .board-roster-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
 }
 
-/* line 158, app/assets/stylesheets/boards.scss */
+/* line 189, app/assets/stylesheets/boards.scss */
 .board-roster-table td {
   padding: 3px 8px;
   border-bottom: 1px solid #dde3ea;
   vertical-align: middle;
 }
 
-/* line 163, app/assets/stylesheets/boards.scss */
+/* line 194, app/assets/stylesheets/boards.scss */
 .board-roster-table tr:last-child td {
   border-bottom: 0;
 }
 
-/* line 165, app/assets/stylesheets/boards.scss */
+/* line 196, app/assets/stylesheets/boards.scss */
 .board-roster-table .col-order {
   width: 72px;
   font-weight: 700;
   white-space: nowrap;
 }
 
-/* line 166, app/assets/stylesheets/boards.scss */
+/* line 197, app/assets/stylesheets/boards.scss */
 .board-roster-table .col-position {
   width: 80px;
   color: #42526e;
   white-space: nowrap;
 }
 
-/* line 167, app/assets/stylesheets/boards.scss */
+/* line 198, app/assets/stylesheets/boards.scss */
 .board-roster-table .col-name {
   color: #172b4d;
 }
@@ -19796,36 +19841,51 @@ div.solid {
     size: letter;
     margin: 0.4in;
   }
-  /* line 172, app/assets/stylesheets/boards.scss */
+  /* line 203, app/assets/stylesheets/boards.scss */
   .no-print {
     display: none !important;
   }
-  /* line 173, app/assets/stylesheets/boards.scss */
+  /* line 204, app/assets/stylesheets/boards.scss */
   .print-only {
     display: block;
   }
-  /* line 174, app/assets/stylesheets/boards.scss */
+  /* line 205, app/assets/stylesheets/boards.scss */
   .board-roster {
     padding: 0;
     max-width: none;
   }
-  /* line 175, app/assets/stylesheets/boards.scss */
+  /* line 206, app/assets/stylesheets/boards.scss */
   .board-roster-group {
     break-inside: avoid;
     page-break-inside: avoid;
   }
-  /* line 176, app/assets/stylesheets/boards.scss */
-  .board-roster-table {
-    font-size: 10pt;
+  /* line 207, app/assets/stylesheets/boards.scss */
+  .board-roster-group--excluded {
+    display: none !important;
+  }
+  /* line 213, app/assets/stylesheets/boards.scss */
+  .board-roster .board-roster-table {
+    font-size: 8pt !important;
+    line-height: 1.15 !important;
+  }
+  /* line 217, app/assets/stylesheets/boards.scss */
+  .board-roster .board-roster-table td {
+    padding: 1px 5px !important;
+    font-size: 8pt !important;
+  }
+  /* line 222, app/assets/stylesheets/boards.scss */
+  .board-roster .board-roster-group-title {
+    font-size: 9pt !important;
+    padding: 2px 6px !important;
   }
 }
 
-/* line 179, app/assets/stylesheets/boards.scss */
+/* line 228, app/assets/stylesheets/boards.scss */
 .board-new-column-toggle {
   margin-top: 2px;
 }
 
-/* line 185, app/assets/stylesheets/boards.scss */
+/* line 234, app/assets/stylesheets/boards.scss */
 .board-new-column-form {
   position: absolute;
   top: 100%;
@@ -19840,7 +19900,7 @@ div.solid {
   min-width: 420px;
 }
 
-/* line 199, app/assets/stylesheets/boards.scss */
+/* line 248, app/assets/stylesheets/boards.scss */
 .board-new-column-row {
   display: flex;
   flex-wrap: wrap;
@@ -19848,30 +19908,30 @@ div.solid {
   align-items: center;
 }
 
-/* line 205, app/assets/stylesheets/boards.scss */
+/* line 254, app/assets/stylesheets/boards.scss */
 .board-new-column-row input, .board-new-column-row select {
   flex: 1 1 100px;
   min-width: 100px;
 }
 
-/* line 206, app/assets/stylesheets/boards.scss */
+/* line 255, app/assets/stylesheets/boards.scss */
 .board-new-column-row .btn {
   flex: 0 0 auto;
 }
 
-/* line 209, app/assets/stylesheets/boards.scss */
+/* line 258, app/assets/stylesheets/boards.scss */
 .board-layout {
   display: flex;
   gap: 12px;
   align-items: flex-start;
 }
 
-/* line 215, app/assets/stylesheets/boards.scss */
+/* line 264, app/assets/stylesheets/boards.scss */
 .board-fixed {
   flex: 0 0 260px;
 }
 
-/* line 219, app/assets/stylesheets/boards.scss */
+/* line 268, app/assets/stylesheets/boards.scss */
 .board-columns {
   display: flex;
   gap: 12px;
@@ -19882,7 +19942,7 @@ div.solid {
   min-width: 0;
 }
 
-/* line 229, app/assets/stylesheets/boards.scss */
+/* line 278, app/assets/stylesheets/boards.scss */
 .board-column {
   flex: 0 0 260px;
   background: #f4f5f7;
@@ -19893,13 +19953,13 @@ div.solid {
   flex-direction: column;
 }
 
-/* line 239, app/assets/stylesheets/boards.scss */
+/* line 288, app/assets/stylesheets/boards.scss */
 .board-column-header {
   margin-bottom: 8px;
   padding: 0 4px;
 }
 
-/* line 244, app/assets/stylesheets/boards.scss */
+/* line 293, app/assets/stylesheets/boards.scss */
 .board-column-subtitle {
   font-size: 11px;
   color: #6b778c;
@@ -19907,7 +19967,7 @@ div.solid {
   letter-spacing: 0.4px;
 }
 
-/* line 251, app/assets/stylesheets/boards.scss */
+/* line 300, app/assets/stylesheets/boards.scss */
 .board-column-title-row {
   display: flex;
   align-items: center;
@@ -19915,7 +19975,7 @@ div.solid {
   gap: 4px;
 }
 
-/* line 258, app/assets/stylesheets/boards.scss */
+/* line 307, app/assets/stylesheets/boards.scss */
 .board-column-title {
   font-size: 14px;
   font-weight: 600;
@@ -19927,7 +19987,7 @@ div.solid {
   white-space: nowrap;
 }
 
-/* line 269, app/assets/stylesheets/boards.scss */
+/* line 318, app/assets/stylesheets/boards.scss */
 .board-column-personnel {
   font-size: 11px;
   font-weight: 600;
@@ -19936,22 +19996,22 @@ div.solid {
   margin-left: 6px;
 }
 
-/* line 276, app/assets/stylesheets/boards.scss */
+/* line 325, app/assets/stylesheets/boards.scss */
 .board-column-personnel .fa {
   margin-right: 3px;
 }
 
-/* line 280, app/assets/stylesheets/boards.scss */
+/* line 329, app/assets/stylesheets/boards.scss */
 .board-column-personnel.is-empty {
   display: none;
 }
 
-/* line 285, app/assets/stylesheets/boards.scss */
+/* line 334, app/assets/stylesheets/boards.scss */
 .board-column-204 {
   margin-top: 4px;
 }
 
-/* line 287, app/assets/stylesheets/boards.scss */
+/* line 336, app/assets/stylesheets/boards.scss */
 .board-column-204 .board-column-204-link {
   display: inline-block;
   font-size: 11px;
@@ -19963,19 +20023,19 @@ div.solid {
   text-decoration: none;
 }
 
-/* line 296, app/assets/stylesheets/boards.scss */
+/* line 345, app/assets/stylesheets/boards.scss */
 .board-column-204 .board-column-204-link:hover {
   background: #d3e2f7;
   text-decoration: none;
 }
 
-/* line 300, app/assets/stylesheets/boards.scss */
+/* line 349, app/assets/stylesheets/boards.scss */
 .board-column-delete-form {
   display: inline-block;
   margin: 0;
 }
 
-/* line 305, app/assets/stylesheets/boards.scss */
+/* line 354, app/assets/stylesheets/boards.scss */
 .board-column-delete {
   background: none;
   border: none;
@@ -19987,13 +20047,13 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 315, app/assets/stylesheets/boards.scss */
+/* line 364, app/assets/stylesheets/boards.scss */
 .board-column-delete:hover {
   background: #ebecf0;
   color: #c62828;
 }
 
-/* line 321, app/assets/stylesheets/boards.scss */
+/* line 370, app/assets/stylesheets/boards.scss */
 .board-cards {
   list-style: none;
   margin: 0;
@@ -20003,7 +20063,7 @@ div.solid {
   flex: 1;
 }
 
-/* line 330, app/assets/stylesheets/boards.scss */
+/* line 379, app/assets/stylesheets/boards.scss */
 .board-card {
   background: #fff;
   border-radius: 4px;
@@ -20016,18 +20076,18 @@ div.solid {
   position: relative;
 }
 
-/* line 340, app/assets/stylesheets/boards.scss */
+/* line 389, app/assets/stylesheets/boards.scss */
 .board-card:hover {
   background: #fafbfc;
 }
 
-/* line 343, app/assets/stylesheets/boards.scss */
+/* line 392, app/assets/stylesheets/boards.scss */
 .board-card:hover .board-card-move-toggle {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* line 349, app/assets/stylesheets/boards.scss */
+/* line 398, app/assets/stylesheets/boards.scss */
 .board-card-strip {
   display: flex;
   align-items: center;
@@ -20042,7 +20102,7 @@ div.solid {
   /* anchor for .board-card-move-menu */
 }
 
-/* line 362, app/assets/stylesheets/boards.scss */
+/* line 411, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle {
   background: rgba(255, 255, 255, 0.85);
   color: #222;
@@ -20059,23 +20119,23 @@ div.solid {
   transition: opacity 0.12s ease-in;
 }
 
-/* line 377, app/assets/stylesheets/boards.scss */
+/* line 426, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle .fa {
   margin-right: 3px;
 }
 
-/* line 378, app/assets/stylesheets/boards.scss */
+/* line 427, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle:hover {
   background: #fff;
 }
 
-/* line 379, app/assets/stylesheets/boards.scss */
+/* line 428, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle:focus {
   outline: 0;
   box-shadow: 0 0 0 2px rgba(9, 30, 66, 0.15);
 }
 
-/* line 382, app/assets/stylesheets/boards.scss */
+/* line 431, app/assets/stylesheets/boards.scss */
 .board-card-move-menu {
   position: absolute;
   top: 100%;
@@ -20094,26 +20154,26 @@ div.solid {
   font-weight: 400;
 }
 
-/* line 399, app/assets/stylesheets/boards.scss */
+/* line 448, app/assets/stylesheets/boards.scss */
 .board-card-move-menu ul {
   list-style: none;
   padding: 4px 0;
   margin: 0;
 }
 
-/* line 404, app/assets/stylesheets/boards.scss */
+/* line 453, app/assets/stylesheets/boards.scss */
 .board-card-move-menu li {
   padding: 5px 12px;
   font-size: 12px;
   cursor: pointer;
 }
 
-/* line 408, app/assets/stylesheets/boards.scss */
+/* line 457, app/assets/stylesheets/boards.scss */
 .board-card-move-menu li:hover {
   background: #eef4ff;
 }
 
-/* line 412, app/assets/stylesheets/boards.scss */
+/* line 461, app/assets/stylesheets/boards.scss */
 .board-card-icon {
   display: inline-flex;
   align-items: center;
@@ -20122,32 +20182,32 @@ div.solid {
   color: #fff;
 }
 
-/* line 419, app/assets/stylesheets/boards.scss */
+/* line 468, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg {
   height: 14px;
   width: auto;
   fill: currentColor;
 }
 
-/* line 423, app/assets/stylesheets/boards.scss */
+/* line 472, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg * {
   fill: currentColor;
 }
 
-/* line 427, app/assets/stylesheets/boards.scss */
+/* line 476, app/assets/stylesheets/boards.scss */
 .board-card-agency {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* line 433, app/assets/stylesheets/boards.scss */
+/* line 482, app/assets/stylesheets/boards.scss */
 .board-card-body {
   padding: 8px 10px 22px;
   position: relative;
 }
 
-/* line 438, app/assets/stylesheets/boards.scss */
+/* line 487, app/assets/stylesheets/boards.scss */
 .board-card-lwd {
   position: absolute;
   right: 8px;
@@ -20161,70 +20221,70 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 450, app/assets/stylesheets/boards.scss */
+/* line 499, app/assets/stylesheets/boards.scss */
 .board-card-lwd .fa {
   margin-right: 2px;
   font-size: 10px;
 }
 
-/* line 456, app/assets/stylesheets/boards.scss */
+/* line 505, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-normal {
   color: #000;
   padding: 0;
   background: transparent;
 }
 
-/* line 463, app/assets/stylesheets/boards.scss */
+/* line 512, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-soon {
   background: #e65100;
   color: #fff;
 }
 
-/* line 469, app/assets/stylesheets/boards.scss */
+/* line 518, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-today {
   background: #c62828;
   color: #fff;
 }
 
-/* line 475, app/assets/stylesheets/boards.scss */
+/* line 524, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-past {
   background: #000;
   color: #fff;
 }
 
-/* line 481, app/assets/stylesheets/boards.scss */
+/* line 530, app/assets/stylesheets/boards.scss */
 .board-card-order {
   font-size: 11px;
   color: #6b778c;
   font-weight: 600;
 }
 
-/* line 487, app/assets/stylesheets/boards.scss */
+/* line 536, app/assets/stylesheets/boards.scss */
 .board-card-name {
   font-weight: 600;
   color: #172b4d;
 }
 
-/* line 492, app/assets/stylesheets/boards.scss */
+/* line 541, app/assets/stylesheets/boards.scss */
 .board-card-position {
   font-size: 12px;
   color: #5e6c84;
 }
 
-/* line 501, app/assets/stylesheets/boards.scss */
+/* line 550, app/assets/stylesheets/boards.scss */
 .board-card-actions {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
-  margin: 20px -24px -20px;
+  padding: 10px 20px;
   border-top: 1px solid #ebecf0;
   background: #fafbfc;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 
-/* line 513, app/assets/stylesheets/boards.scss */
+/* line 562, app/assets/stylesheets/boards.scss */
 .board-card-action {
   display: inline-flex;
   align-items: center;
@@ -20235,12 +20295,12 @@ div.solid {
   line-height: 1;
 }
 
-/* line 522, app/assets/stylesheets/boards.scss */
+/* line 571, app/assets/stylesheets/boards.scss */
 .board-card-action:hover {
   text-decoration: none;
 }
 
-/* line 525, app/assets/stylesheets/boards.scss */
+/* line 574, app/assets/stylesheets/boards.scss */
 .board-card-action--delete {
   width: 32px;
   height: 32px;
@@ -20250,38 +20310,264 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 533, app/assets/stylesheets/boards.scss */
+/* line 582, app/assets/stylesheets/boards.scss */
 .board-card-action--delete:hover {
   background: #fde0e0;
   color: #c62828;
 }
 
-/* line 545, app/assets/stylesheets/boards.scss */
+/* line 594, app/assets/stylesheets/boards.scss */
 .board-card-details {
   display: none;
   background: #fff;
-  padding: 20px 24px;
   font-size: 13px;
   cursor: default;
 }
 
-/* line 553, app/assets/stylesheets/boards.scss */
+/* line 601, app/assets/stylesheets/boards.scss */
 .board-card.is-expanded > .board-card-details {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 720px;
+  width: 1000px;
   max-width: calc(100vw - 40px);
+  height: 560px;
   max-height: 85vh;
-  overflow-y: auto;
+  overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   z-index: 2001;
 }
 
-/* line 568, app/assets/stylesheets/boards.scss */
+/* line 627, app/assets/stylesheets/boards.scss */
+.board-card-details-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  gap: 20px;
+  padding: 20px 24px;
+  align-items: stretch;
+}
+
+/* line 635, app/assets/stylesheets/boards.scss */
+.board-card-details-main {
+  flex: 1 1 62%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 642, app/assets/stylesheets/boards.scss */
+.board-card-details-side {
+  flex: 0 0 38%;
+  min-width: 300px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+/* line 653, app/assets/stylesheets/boards.scss */
+.board-card-side-title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #42526e;
+}
+
+/* line 664, app/assets/stylesheets/boards.scss */
+.board-card-side-compose {
+  flex: 0 0 auto;
+  background: #fff;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 14px;
+}
+
+/* line 672, app/assets/stylesheets/boards.scss */
+.board-card-side-compose textarea.form-control {
+  resize: vertical;
+}
+
+/* line 675, app/assets/stylesheets/boards.scss */
+.board-card-side-title {
+  flex: 0 0 auto;
+}
+
+/* line 677, app/assets/stylesheets/boards.scss */
+.board-card-activity-feed {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* line 683, app/assets/stylesheets/boards.scss */
+.board-card-compose-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* line 689, app/assets/stylesheets/boards.scss */
+.board-card-swap-form {
+  padding-top: 8px;
+  border-top: 1px solid #ebecf0;
+  margin-top: 8px;
+}
+
+/* line 694, app/assets/stylesheets/boards.scss */
+.board-card-swap-form .board-card-swap-row {
+  margin-bottom: 6px;
+}
+
+/* line 696, app/assets/stylesheets/boards.scss */
+.board-card-swap-form .board-card-swap-row label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #6b778c;
+  margin: 0 0 2px;
+}
+
+/* line 705, app/assets/stylesheets/boards.scss */
+.board-card-swap-form .board-card-swap-row-dates {
+  display: flex;
+  gap: 8px;
+}
+
+/* line 708, app/assets/stylesheets/boards.scss */
+.board-card-swap-form .board-card-swap-row-dates > div {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* line 710, app/assets/stylesheets/boards.scss */
+.board-card-swap-form .board-card-swap-preview {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 4px 6px;
+  background: #f0f6ff;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+/* line 718, app/assets/stylesheets/boards.scss */
+.board-card-swap-form .board-card-swap-preview strong {
+  color: #0052cc;
+  font-size: 12px;
+}
+
+/* line 724, app/assets/stylesheets/boards.scss */
+.board-card-activity-empty {
+  margin: 10px 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* line 730, app/assets/stylesheets/boards.scss */
+.board-card-activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 736, app/assets/stylesheets/boards.scss */
+.board-card-activity-item {
+  background: #fff;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #172b4d;
+}
+
+/* line 745, app/assets/stylesheets/boards.scss */
+.board-card-activity-item--scheduled_swap {
+  border-left: 3px solid #0052cc;
+}
+
+/* line 746, app/assets/stylesheets/boards.scss */
+.board-card-activity-item--completed_swap {
+  border-left: 3px solid #97a0af;
+  background: #fafbfc;
+}
+
+/* line 747, app/assets/stylesheets/boards.scss */
+.board-card-activity-item--comment {
+  border-left: 3px solid #ebecf0;
+}
+
+/* line 750, app/assets/stylesheets/boards.scss */
+.board-card-activity-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+/* line 756, app/assets/stylesheets/boards.scss */
+.board-card-activity-meta strong {
+  color: #172b4d;
+  font-weight: 600;
+}
+
+/* line 757, app/assets/stylesheets/boards.scss */
+.board-card-activity-meta .muted {
+  color: #6b778c;
+}
+
+/* line 760, app/assets/stylesheets/boards.scss */
+.board-card-activity-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #fff;
+  background: #0052cc;
+  border-radius: 3px;
+  margin-bottom: 4px;
+}
+
+/* line 772, app/assets/stylesheets/boards.scss */
+.board-card-activity-tag--past {
+  background: #97a0af;
+}
+
+/* line 775, app/assets/stylesheets/boards.scss */
+.board-card-activity-body {
+  line-height: 1.35;
+}
+
+/* line 776, app/assets/stylesheets/boards.scss */
+.board-card-activity-note {
+  margin-top: 4px;
+  color: #42526e;
+}
+
+/* line 778, app/assets/stylesheets/boards.scss */
+.board-card-activity-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* line 784, app/assets/stylesheets/boards.scss */
 #board-card-overlay {
   display: none;
   position: fixed;
@@ -20290,18 +20576,18 @@ div.solid {
   z-index: 2000;
 }
 
-/* line 575, app/assets/stylesheets/boards.scss */
+/* line 791, app/assets/stylesheets/boards.scss */
 #board-card-overlay.is-visible {
   display: block;
 }
 
-/* line 581, app/assets/stylesheets/boards.scss */
+/* line 797, app/assets/stylesheets/boards.scss */
 .board-card-details-header {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  margin: -20px -24px 14px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   color: #fff;
@@ -20310,24 +20596,24 @@ div.solid {
   position: relative;
 }
 
-/* line 593, app/assets/stylesheets/boards.scss */
+/* line 809, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-icon {
   font-size: 16px;
 }
 
-/* line 594, app/assets/stylesheets/boards.scss */
+/* line 810, app/assets/stylesheets/boards.scss */
 .board-card-details-header .resource-icon-svg {
   height: 16px;
 }
 
-/* line 596, app/assets/stylesheets/boards.scss */
+/* line 812, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-agency {
   flex: 1 1 auto;
   text-align: center;
   font-size: 13px;
 }
 
-/* line 605, app/assets/stylesheets/boards.scss */
+/* line 821, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-move-toggle {
   opacity: 1;
   pointer-events: auto;
@@ -20336,13 +20622,13 @@ div.solid {
   font-size: 11px;
 }
 
-/* line 612, app/assets/stylesheets/boards.scss */
+/* line 828, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-move-menu {
   top: calc(100% + 4px);
   right: 8px;
 }
 
-/* line 618, app/assets/stylesheets/boards.scss */
+/* line 834, app/assets/stylesheets/boards.scss */
 .board-card-details-close {
   background: none;
   border: none !important;
@@ -20356,7 +20642,7 @@ div.solid {
   padding: 0 4px;
 }
 
-/* line 630, app/assets/stylesheets/boards.scss */
+/* line 846, app/assets/stylesheets/boards.scss */
 .board-card-details-close:hover, .board-card-details-close:focus, .board-card-details-close:active {
   color: #fff;
   outline: 0;
@@ -20364,16 +20650,20 @@ div.solid {
   border: 0;
 }
 
-/* line 635, app/assets/stylesheets/boards.scss */
+/* line 851, app/assets/stylesheets/boards.scss */
 .board-card-fields {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
   display: grid;
   grid-template-columns: 80px 1fr;
   row-gap: 4px;
   column-gap: 8px;
   margin: 0;
+  padding-right: 6px;
 }
 
-/* line 642, app/assets/stylesheets/boards.scss */
+/* line 862, app/assets/stylesheets/boards.scss */
 .board-card-fields dt {
   color: #6b778c;
   font-weight: 500;
@@ -20383,29 +20673,43 @@ div.solid {
   align-self: center;
 }
 
-/* line 651, app/assets/stylesheets/boards.scss */
+/* line 871, app/assets/stylesheets/boards.scss */
 .board-card-fields dd {
   margin: 0;
   color: #172b4d;
   word-break: break-word;
 }
 
-/* line 657, app/assets/stylesheets/boards.scss */
+/* line 877, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.full-width {
   grid-column: 1 / -1;
 }
 
-/* line 665, app/assets/stylesheets/boards.scss */
+/* line 883, app/assets/stylesheets/boards.scss */
+.board-card-fields dd.full-width .best_in_place {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+}
+
+/* line 888, app/assets/stylesheets/boards.scss */
+.board-card-fields dd.full-width textarea {
+  width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+/* line 899, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.wide .best_in_place {
   min-width: 300px;
 }
 
-/* line 666, app/assets/stylesheets/boards.scss */
+/* line 900, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.wide input {
   min-width: 300px;
 }
 
-/* line 669, app/assets/stylesheets/boards.scss */
+/* line 903, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place {
   display: inline-block;
   min-width: 60px;
@@ -20413,14 +20717,14 @@ div.solid {
   border-radius: 3px;
 }
 
-/* line 675, app/assets/stylesheets/boards.scss */
+/* line 909, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place:hover {
   background: #fff;
   box-shadow: inset 0 0 0 1px #dfe1e6;
   cursor: text;
 }
 
-/* line 683, app/assets/stylesheets/boards.scss */
+/* line 917, app/assets/stylesheets/boards.scss */
 .board-card-placeholder {
   background: #dfe1e6;
   border: 2px dashed #c1c7d0;
@@ -20429,12 +20733,12 @@ div.solid {
   height: 56px;
 }
 
-/* line 691, app/assets/stylesheets/boards.scss */
+/* line 925, app/assets/stylesheets/boards.scss */
 .board-add-child {
   margin-top: 8px;
 }
 
-/* line 695, app/assets/stylesheets/boards.scss */
+/* line 929, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle {
   background: none;
   border: 1px dashed #c1c7d0;
@@ -20446,13 +20750,13 @@ div.solid {
   cursor: pointer;
 }
 
-/* line 705, app/assets/stylesheets/boards.scss */
+/* line 939, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle:hover {
   background: #ebecf0;
   color: #172b4d;
 }
 
-/* line 711, app/assets/stylesheets/boards.scss */
+/* line 945, app/assets/stylesheets/boards.scss */
 .board-add-child-form {
   background: #fff;
   border-radius: 4px;
@@ -20461,23 +20765,23 @@ div.solid {
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
 }
 
-/* line 718, app/assets/stylesheets/boards.scss */
+/* line 952, app/assets/stylesheets/boards.scss */
 .board-add-child-form .form-group {
   margin-bottom: 6px;
 }
 
-/* line 722, app/assets/stylesheets/boards.scss */
+/* line 956, app/assets/stylesheets/boards.scss */
 .board-add-child-form .input-sm {
   font-size: 12px;
 }
 
-/* line 727, app/assets/stylesheets/boards.scss */
+/* line 961, app/assets/stylesheets/boards.scss */
 .board-add-child-actions {
   display: flex;
   gap: 6px;
 }
 
-/* line 732, app/assets/stylesheets/boards.scss */
+/* line 966, app/assets/stylesheets/boards.scss */
 .board-footer {
   margin-top: 18px;
   padding-top: 12px;
@@ -20487,42 +20791,42 @@ div.solid {
   gap: 12px;
 }
 
-/* line 741, app/assets/stylesheets/boards.scss */
+/* line 975, app/assets/stylesheets/boards.scss */
 .board-footer-hint {
   color: #6c757d;
   font-size: 12px;
 }
 
-/* line 746, app/assets/stylesheets/boards.scss */
+/* line 980, app/assets/stylesheets/boards.scss */
 .board-card--spacer {
   background: repeating-linear-gradient(45deg, #f4f5f7, #f4f5f7 6px, #ebedf0 6px, #ebedf0 12px);
   border: 1px dashed #b0b7c1;
   box-shadow: none;
 }
 
-/* line 757, app/assets/stylesheets/boards.scss */
+/* line 991, app/assets/stylesheets/boards.scss */
 .board-card--spacer:hover {
   background: #eef0f3;
 }
 
-/* line 758, app/assets/stylesheets/boards.scss */
+/* line 992, app/assets/stylesheets/boards.scss */
 .board-card--spacer:hover .board-card-delete-spacer {
   opacity: 1;
 }
 
-/* line 761, app/assets/stylesheets/boards.scss */
+/* line 995, app/assets/stylesheets/boards.scss */
 .board-card-strip--spacer {
   background: transparent;
   color: #4a5361;
 }
 
-/* line 766, app/assets/stylesheets/boards.scss */
+/* line 1000, app/assets/stylesheets/boards.scss */
 .board-card-spacer-label {
   font-size: 10px;
   letter-spacing: 0.6px;
 }
 
-/* line 771, app/assets/stylesheets/boards.scss */
+/* line 1005, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer {
   background: rgba(255, 255, 255, 0.9);
   color: #b32020;
@@ -20537,13 +20841,13 @@ div.solid {
   transition: opacity 0.12s ease-in;
 }
 
-/* line 784, app/assets/stylesheets/boards.scss */
+/* line 1018, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer:hover {
   background: #fff;
   color: #7a1414;
 }
 
-/* line 785, app/assets/stylesheets/boards.scss */
+/* line 1019, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer:focus {
   outline: 0;
   box-shadow: 0 0 0 2px rgba(179, 32, 32, 0.25);

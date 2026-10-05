@@ -4,6 +4,7 @@ class Resource < ApplicationRecord
   has_one :org_unit_assignment, dependent: :destroy
   has_one :org_unit, through: :org_unit_assignment
   has_many :rosters, dependent: :destroy
+  has_many :resource_events, -> { order(:created_at) }, dependent: :destroy
   # demob_notifications.resource_id carries a DB-level FK. Incident owns
   # these too, but Rails cascades dependents in declaration order and
   # resources is declared first, so without this line each resource gets

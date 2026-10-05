@@ -543,16 +543,16 @@
   color: #5e6c84;
 }
 
-// Modal footer actions — trash (left) + Demob (right). Rendered
-// inside .board-card-details so they only appear on the expanded
-// Trello-style card. Bleeds to the modal's edges with negative
-// margins so it reads as a proper footer bar.
+// Modal footer actions — trash (left) + Demob (right). Full-width
+// bottom cap, pinned via flex: 0 0 auto in the modal's flex column.
+// Scrolling happens inside .board-card-fields + .board-card-activity-feed,
+// so this bar stays visible without the modal itself growing.
 .board-card-actions {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
-  margin: 20px -24px -20px;
+  padding: 10px 20px;
   border-top: 1px solid #ebecf0;
   background: #fafbfc;
   border-bottom-left-radius: 8px;
@@ -594,24 +594,191 @@
 .board-card-details {
   display: none;
   background: #fff;
-  padding: 20px 24px;
   font-size: 13px;
   cursor: default;
 }
 
 .board-card.is-expanded > .board-card-details {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 720px;
+  width: 1000px;
   max-width: calc(100vw - 40px);
+  // Fixed height matched to the "no comments" state so adding comments
+  // or scheduling swaps doesn't make the modal taller — the activity
+  // feed on the right scrolls internally instead. Capped at 85vh so
+  // short viewports still fit.
+  height: 560px;
   max-height: 85vh;
-  overflow-y: auto;
+  overflow: hidden;          // children handle their own scrolling
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   z-index: 2001;
+}
+
+// Two-column body inside the expanded modal: fields on the left,
+// comments + crew-swap activity feed on the right. flex:1 inside a
+// bounded modal + overflow:hidden on children lets each column scroll
+// internally while the modal header + the left-column footer stay
+// pinned.
+.board-card-details-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  gap: 20px;
+  padding: 20px 24px;
+  align-items: stretch;
+}
+.board-card-details-main {
+  flex: 1 1 62%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.board-card-details-side {
+  flex: 0 0 38%;
+  min-width: 300px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.board-card-side-title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #42526e;
+}
+
+// Compose row at the top of the activity panel — comment textarea + the
+// "+ Schedule Swap" trigger, plus the hidden inline swap form below.
+.board-card-side-compose {
+  flex: 0 0 auto;
+  background: #fff;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 14px;
+
+  textarea.form-control { resize: vertical; }
+}
+
+.board-card-side-title { flex: 0 0 auto; }
+
+.board-card-activity-feed {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.board-card-compose-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.board-card-swap-form {
+  padding-top: 8px;
+  border-top: 1px solid #ebecf0;
+  margin-top: 8px;
+
+  .board-card-swap-row {
+    margin-bottom: 6px;
+    label {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #6b778c;
+      margin: 0 0 2px;
+    }
+  }
+  .board-card-swap-row-dates {
+    display: flex;
+    gap: 8px;
+    > div { flex: 1 1 0; min-width: 0; }
+  }
+  .board-card-swap-preview {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 4px 6px;
+    background: #f0f6ff;
+    border-radius: 3px;
+    font-size: 11px;
+    strong { color: #0052cc; font-size: 12px; }
+  }
+}
+
+// Activity feed list — chronological entries with tag chips for swap
+// types and a lighter tone for completed/past records.
+.board-card-activity-empty {
+  margin: 10px 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+.board-card-activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.board-card-activity-item {
+  background: #fff;
+  border: 1px solid #dde3ea;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #172b4d;
+
+  &--scheduled_swap { border-left: 3px solid #0052cc; }
+  &--completed_swap { border-left: 3px solid #97a0af; background: #fafbfc; }
+  &--comment        { border-left: 3px solid #ebecf0; }
+}
+
+.board-card-activity-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 11px;
+  margin-bottom: 4px;
+  strong { color: #172b4d; font-weight: 600; }
+  .muted { color: #6b778c; }
+}
+
+.board-card-activity-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #fff;
+  background: #0052cc;
+  border-radius: 3px;
+  margin-bottom: 4px;
+
+  &--past { background: #97a0af; }
+}
+
+.board-card-activity-body { line-height: 1.35; }
+.board-card-activity-note { margin-top: 4px; color: #42526e; }
+
+.board-card-activity-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 #board-card-overlay {
@@ -628,11 +795,11 @@
 // feels like an expansion of the card you clicked, not a separate
 // dialog. The close button lives on the right of the strip.
 .board-card-details-header {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  margin: -20px -24px 14px;         // bleed to the modal's edges
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   color: #fff;
@@ -682,11 +849,15 @@
 }
 
 .board-card-fields {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
   display: grid;
   grid-template-columns: 80px 1fr;
   row-gap: 4px;
   column-gap: 8px;
   margin: 0;
+  padding-right: 6px;        // breathing room next to the scrollbar
 
   dt {
     color: #6b778c;

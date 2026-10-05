@@ -16,7 +16,12 @@ Rails.application.routes.draw do
   resources :activities
   resources :actions
   resources :incidents
-  resources :resources
+  resources :resources do
+    resources :events, only: [:index, :create, :update, :destroy],
+                       controller: 'resource_events' do
+      member { post :swap_now }
+    end
+  end
   resources :rosters, only: [] do
     member do
       post :promote

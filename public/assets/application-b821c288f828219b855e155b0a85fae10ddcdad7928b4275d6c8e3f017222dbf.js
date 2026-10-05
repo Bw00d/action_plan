@@ -51073,14 +51073,20 @@ document.addEventListener("turbolinks:load", function() {
       $(this).closest('.board-new-column-form').hide();
     });
 
-    // --- Board search (live client-side filter) --------------------------
-    // Hide any card whose textContent doesn't contain the query. Spacers
-    // always show (they're visual gaps, not content). We cache each
-    // card's search text on data-search-text to avoid re-walking the DOM
-    // on every keystroke.
+    // --- Board search (live client-side filter + jump-to-match) ----------
+    // Highlights every matching card without hiding its neighbors, so the
+    // user keeps their sense of position. The current match is scrolled
+    // into view (horizontally + vertically) and marked with a stronger
+    // "current" ring. Prev/Next buttons + Enter / Shift+Enter in the
+    // input cycle through all matches.
     var searchInput  = document.getElementById('board-search-input');
     var searchClear  = document.getElementById('board-search-clear');
     var searchCount  = document.getElementById('board-search-count');
+    var searchPrev   = document.getElementById('board-search-prev');
+    var searchNext   = document.getElementById('board-search-next');
+
+    var matchEls   = [];   // array of matching card nodes in DOM order
+    var matchIndex = 0;
 
     function cardSearchText(card) {
       var cached = card.getAttribute('data-search-text');
@@ -51090,36 +51096,73 @@ document.addEventListener("turbolinks:load", function() {
       return text;
     }
 
+    function clearCurrentMarker() {
+      page.querySelectorAll('.board-card--current').forEach(function (c) {
+        c.classList.remove('board-card--current');
+      });
+    }
+
+    function focusCurrent() {
+      clearCurrentMarker();
+      if (!matchEls.length) {
+        if (searchCount) searchCount.textContent = searchInput.value ? '0 matches' : '';
+        return;
+      }
+      // Wrap on overflow in either direction.
+      if (matchIndex < 0) matchIndex = matchEls.length - 1;
+      if (matchIndex >= matchEls.length) matchIndex = 0;
+      var el = matchEls[matchIndex];
+      el.classList.add('board-card--current');
+      // scrollIntoView walks every scrollable ancestor — handles the
+      // horizontal .board-columns scroll + the vertical .board-cards
+      // scroll together.
+      el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+      if (searchCount) {
+        searchCount.textContent = (matchIndex + 1) + ' of ' + matchEls.length;
+      }
+    }
+
     function applyBoardSearch() {
       if (!searchInput) return;
       var q = searchInput.value.toLowerCase().trim();
       var cards = page.querySelectorAll('.board-card');
-      var matches = 0;
+      matchEls = [];
       cards.forEach(function (card) {
-        // Spacers never highlight — they're structural, not content.
         if (card.classList.contains('board-card--spacer')) {
           card.classList.remove('board-card--match');
           return;
         }
         if (q && cardSearchText(card).indexOf(q) >= 0) {
           card.classList.add('board-card--match');
-          matches++;
+          matchEls.push(card);
         } else {
           card.classList.remove('board-card--match');
         }
       });
-      if (searchCount) {
-        searchCount.textContent = q ? (matches + ' match' + (matches === 1 ? '' : 'es')) : '';
-      }
-      // Toggled on <.board-page> so CSS can dim everything except the
-      // highlighted matches when a query is active.
       page.classList.toggle('board-search-active', !!q);
+      matchIndex = 0;
+      if (q) {
+        focusCurrent();
+      } else {
+        clearCurrentMarker();
+        if (searchCount) searchCount.textContent = '';
+      }
+    }
+
+    function stepMatch(delta) {
+      if (!matchEls.length) return;
+      matchIndex += delta;
+      focusCurrent();
     }
 
     if (searchInput) {
       searchInput.addEventListener('input', applyBoardSearch);
       searchInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { this.value = ''; applyBoardSearch(); }
+        if (e.key === 'Escape') { this.value = ''; applyBoardSearch(); return; }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          stepMatch(e.shiftKey ? -1 : 1);
+        }
       });
     }
     if (searchClear && searchInput) {
@@ -51129,6 +51172,145 @@ document.addEventListener("turbolinks:load", function() {
         searchInput.focus();
       });
     }
+    if (searchPrev) searchPrev.addEventListener('click', function () { stepMatch(-1); });
+    if (searchNext) searchNext.addEventListener('click', function () { stepMatch(1);  });
+
+    // --- Activity panel (comments + scheduled crew swaps) ----------------
+    // All AJAX returns the re-rendered activity_feed partial as HTML so we
+    // can swap it in without re-fetching the whole modal.
+    function csrf() { return $('meta[name=csrf-token]').attr('content'); }
+
+    function replaceFeed($side, html) {
+      $side.find('.board-card-activity-feed').html(html);
+    }
+
+    // Toggle the scheduled-swap form.
+    $(page).on('click', '.board-card-schedule-swap-toggle', function () {
+      var $side = $(this).closest('.board-card-details-side');
+      $side.find('.board-card-comment-form').hide();
+      $side.find('.board-card-swap-form').show().find('input[name="resource_event[leader]"]').focus();
+    });
+    $(page).on('click', '.board-card-schedule-swap-cancel', function () {
+      var $side = $(this).closest('.board-card-details-side');
+      $side.find('.board-card-swap-form').hide()[0].reset();
+      $side.find('.board-card-comment-form').show();
+    });
+
+    // Live LWD preview on the scheduled-swap form. User enters FWD +
+    // assignment-length days; we compute the resulting LWD and set the
+    // hidden lwd field so the server stores a proper date.
+    function fmtIsoShort(d) {
+      var y = String(d.getFullYear()).slice(-2);
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return m + '/' + dd + '/' + y;
+    }
+    function fmtIsoFull(d) {
+      var y = d.getFullYear();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + dd;
+    }
+    function computeSwapLwd($form) {
+      var fwdStr   = $form.find('.board-card-swap-fwd').val();
+      var lengthN  = parseInt($form.find('.board-card-swap-length').val(), 10);
+      var $hidden  = $form.find('input[name="resource_event[lwd]"]');
+      var $preview = $form.find('.board-card-swap-lwd-preview');
+      if (!fwdStr || isNaN(lengthN) || lengthN < 1) {
+        $hidden.val('');
+        $preview.text('—');
+        return;
+      }
+      var parts = fwdStr.split('-');
+      var fwd   = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      var lwd   = new Date(fwd.getFullYear(), fwd.getMonth(), fwd.getDate() + lengthN - 1);
+      $hidden.val(fmtIsoFull(lwd));
+      $preview.text(fmtIsoShort(lwd));
+    }
+    $(page).on('input change',
+      '.board-card-swap-fwd, .board-card-swap-length',
+      function () { computeSwapLwd($(this).closest('.board-card-swap-form')); });
+
+    // Submit either compose form (comment OR scheduled swap).
+    $(page).on('submit', '.board-card-comment-form, .board-card-swap-form', function (e) {
+      e.preventDefault();
+      var $form = $(this);
+      var $side = $form.closest('.board-card-details-side');
+      // Make sure LWD is up to date before serializing on the swap form.
+      if ($form.hasClass('board-card-swap-form')) computeSwapLwd($form);
+      $.ajax({
+        url:    $form.data('url'),
+        method: 'POST',
+        data:   $form.serialize(),
+        headers: { 'X-CSRF-Token': csrf(), 'Accept': 'text/html' }
+      }).done(function (html) {
+        replaceFeed($side, html);
+        $form[0].reset();
+        if ($form.hasClass('board-card-swap-form')) {
+          $form.find('.board-card-swap-lwd-preview').text('—');
+          $form.hide();
+          $side.find('.board-card-comment-form').show();
+        }
+      }).fail(function (xhr) {
+        var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Save failed']).join(', ');
+        alert(msg);
+      });
+    });
+
+    // Delete an event (scheduled swap or comment only — server also
+    // enforces this).
+    $(page).on('click', '.board-card-event-delete', function () {
+      var $btn = $(this);
+      if (!window.confirm($btn.data('confirm') || 'Delete this entry?')) return;
+      var $side = $btn.closest('.board-card-details-side');
+      $.ajax({
+        url:    $btn.data('url'),
+        method: 'DELETE',
+        headers: { 'X-CSRF-Token': csrf(), 'Accept': 'text/html' }
+      }).done(function (html) { replaceFeed($side, html); })
+        .fail(function (xhr) {
+          var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Delete failed']).join(', ');
+          alert(msg);
+        });
+    });
+
+    // Patch a single best_in_place display + its data-bip-value so the
+    // next edit opens with the fresh value. Called after SWAP NOW so
+    // the modal reflects the new operator without a page reload.
+    function patchBip($scope, attribute, value) {
+      var $bip = $scope.find('.best_in_place[data-attribute="' + attribute + '"]').first();
+      if (!$bip.length) return;
+      var text = (value == null || value === '') ? '' : String(value);
+      $bip.text(text).attr('data-bip-value', text);
+    }
+
+    // SWAP NOW — execute a scheduled swap. Server returns JSON with the
+    // new feed HTML and the updated Resource field values; we patch the
+    // modal in place so the user never loses their view of the card.
+    $(page).on('click', '.board-card-swap-now', function () {
+      var $btn  = $(this);
+      var $side = $btn.closest('.board-card-details-side');
+      var $card = $btn.closest('.board-card');
+      if (!window.confirm('Execute this crew swap now? The current operator will be moved to history.')) return;
+      $.ajax({
+        url:    $btn.data('url'),
+        method: 'POST',
+        headers: { 'X-CSRF-Token': csrf(), 'Accept': 'application/json' }
+      }).done(function (data) {
+        if (data.feed_html) replaceFeed($side, data.feed_html);
+        if (data.resource) {
+          patchBip($card, 'leader',            data.resource.leader);
+          patchBip($card, 'phone',             data.resource.phone);
+          patchBip($card, 'assignment_length', data.resource.assignment_length);
+          $card.attr('data-assignment-length', data.resource.assignment_length);
+          if (data.resource.fwd) $card.attr('data-fwd', data.resource.fwd);
+          $card.find('[data-field="lwd"]').text(data.resource.lwd || '');
+        }
+      }).fail(function (xhr) {
+        var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Swap failed']).join(', ');
+        alert(msg);
+      });
+    });
 
     // --- Trello-style expanded card modal -------------------------------
     // Double-click a card to pull its details into a fixed, centered
@@ -51146,6 +51328,14 @@ document.addEventListener("turbolinks:load", function() {
       var $card = $(this);
       var wasExpanded = $card.hasClass('is-expanded');
       closeExpandedCard();
+      // Clear any active search before expanding — the search-active
+      // dim rule (opacity: 0.25) also dims the modal content inside the
+      // card, which makes editing basically unreadable. User's done
+      // finding the card; drop the filter so they can work on it.
+      if (searchInput && searchInput.value) {
+        searchInput.value = '';
+        applyBoardSearch();
+      }
       if (!wasExpanded) {
         $card.addClass('is-expanded');
         $overlay.addClass('is-visible');

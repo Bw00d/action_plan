@@ -1,0 +1,63 @@
+<%#
+  Locals: resource (Resource), events (ordered newest-first ResourceEvents)
+  Rendered inside the right-hand activity panel of the expanded T-card
+  modal, and also returned raw from ResourceEventsController after any
+  create/update/destroy/swap_now to re-paint the panel inline.
+%>
+<% if events.empty? %>
+  <p class="board-card-activity-empty muted">
+    No activity yet. Add a comment or schedule a crew swap above.
+  </p>
+<% else %>
+  <ul class="board-card-activity-list">
+    <% events.each do |ev| %>
+      <li class="board-card-activity-item board-card-activity-item--<%= ev.kind %>"
+          data-event-id="<%= ev.id %>">
+        <div class="board-card-activity-meta">
+          <strong><%= ev.user&.full_name.presence || ev.user&.email&.split('@')&.first || 'System' %></strong>
+          <span class="muted"><%= ev.created_at.strftime('%b %-d, %-l:%M %p') %></span>
+        </div>
+
+        <% case ev.kind.to_sym %>
+        <% when :comment %>
+          <div class="board-card-activity-body"><%= simple_format(ev.body.to_s) %></div>
+
+        <% when :scheduled_swap %>
+          <div class="board-card-activity-tag">UPCOMING SWAP</div>
+          <div class="board-card-activity-body">
+            <div><strong><%= ev.leader %></strong></div>
+            <div class="muted">
+              FWD <%= ev.fwd&.strftime('%m/%d/%y') || '—' %>
+              → LWD <%= ev.lwd&.strftime('%m/%d/%y') || '—' %>
+            </div>
+            <% if ev.phone.present? %>
+              <div class="muted">Phone: <%= ev.phone %></div>
+            <% end %>
+            <% if ev.body.present? %>
+              <div class="board-card-activity-note"><%= simple_format(ev.body) %></div>
+            <% end %>
+          </div>
+          <div class="board-card-activity-actions">
+            <button type="button" class="btn btn-success btn-xs board-card-swap-now"
+                    data-url="<%= swap_now_resource_event_path(resource, ev) %>">
+              SWAP NOW
+            </button>
+            <button type="button" class="btn btn-default btn-xs board-card-event-delete"
+                    data-url="<%= resource_event_path(resource, ev) %>"
+                    data-confirm="Delete this scheduled swap?">Delete</button>
+          </div>
+
+        <% when :completed_swap %>
+          <div class="board-card-activity-tag board-card-activity-tag--past">FORMER OPERATOR</div>
+          <div class="board-card-activity-body">
+            <div><strong><%= ev.leader || '—' %></strong></div>
+            <div class="muted">
+              <%= ev.fwd&.strftime('%m/%d/%y') || '—' %>
+              – <%= ev.lwd&.strftime('%m/%d/%y') || '—' %>
+            </div>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
