@@ -14,19 +14,248 @@
   margin: 0 0 4px;
 }
 
-/* line 17, app/assets/stylesheets/boards.scss */
+/* line 18, app/assets/stylesheets/boards.scss */
+.board-page.board-search-active .board-card:not(.board-card--match):not(.board-card--spacer) {
+  opacity: 0.25;
+  filter: saturate(0.4);
+}
+
+/* line 22, app/assets/stylesheets/boards.scss */
+.board-card--match {
+  box-shadow: 0 0 0 2px #ffb400, 0 2px 6px rgba(255, 180, 0, 0.4);
+  background: #fffbea !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* line 32, app/assets/stylesheets/boards.scss */
+.board-card--current {
+  box-shadow: 0 0 0 3px #e65100, 0 6px 14px rgba(230, 81, 0, 0.45) !important;
+  background: #fff2d6 !important;
+  z-index: 2;
+}
+
+/* line 41, app/assets/stylesheets/boards.scss */
+.board-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 10px;
+}
+
+/* line 48, app/assets/stylesheets/boards.scss */
+.board-search input[type="search"] {
+  width: 320px;
+  padding-right: 28px;
+}
+
+/* line 52, app/assets/stylesheets/boards.scss */
+.board-search .board-search-clear {
+  position: absolute;
+  top: 4px;
+  left: 294px;
+  width: 22px;
+  height: 22px;
+  line-height: 20px;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  color: #97a0af;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 0;
+}
+
+/* line 67, app/assets/stylesheets/boards.scss */
+.board-search .board-search-clear:hover {
+  background: #ebecf0;
+  color: #42526e;
+}
+
+/* line 69, app/assets/stylesheets/boards.scss */
+.board-search .board-search-nav {
+  padding: 2px 8px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* line 74, app/assets/stylesheets/boards.scss */
+.board-search .board-search-count {
+  font-size: 12px;
+}
+
+/* line 82, app/assets/stylesheets/boards.scss */
 .board-new-column {
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
 }
 
-/* line 23, app/assets/stylesheets/boards.scss */
+/* line 93, app/assets/stylesheets/boards.scss */
+.board-print-roster {
+  margin-top: 2px;
+}
+
+/* line 100, app/assets/stylesheets/boards.scss */
+.board-roster {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* line 106, app/assets/stylesheets/boards.scss */
+.board-roster-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* line 112, app/assets/stylesheets/boards.scss */
+.board-roster-head h1 {
+  margin: 0;
+  font-size: 20px;
+  color: #172b4d;
+}
+
+/* line 113, app/assets/stylesheets/boards.scss */
+.board-roster-head .board-roster-head-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* line 116, app/assets/stylesheets/boards.scss */
+.board-roster-print-head {
+  display: none;
+  margin-bottom: 16px;
+}
+
+/* line 119, app/assets/stylesheets/boards.scss */
+.board-roster-print-head h2 {
+  margin: 0 0 2px;
+  font-size: 15pt;
+  color: #000;
+}
+
+/* line 120, app/assets/stylesheets/boards.scss */
+.board-roster-print-head .muted {
+  font-size: 10pt;
+  color: #555;
+}
+
+/* line 122, app/assets/stylesheets/boards.scss */
+.print-only {
+  display: none;
+}
+
+/* line 124, app/assets/stylesheets/boards.scss */
+.board-roster-grid {
+  column-count: 2;
+  column-gap: 24px;
+}
+
+/* line 129, app/assets/stylesheets/boards.scss */
+.board-roster-group {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 16px;
+  border: 1px solid #000;
+}
+
+/* line 138, app/assets/stylesheets/boards.scss */
+.board-roster-group-title {
+  margin: 0;
+  padding: 4px 8px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* line 150, app/assets/stylesheets/boards.scss */
+.board-roster-group-title .muted {
+  color: #c1c7d0;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+/* line 153, app/assets/stylesheets/boards.scss */
+.board-roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* line 158, app/assets/stylesheets/boards.scss */
+.board-roster-table td {
+  padding: 3px 8px;
+  border-bottom: 1px solid #dde3ea;
+  vertical-align: middle;
+}
+
+/* line 163, app/assets/stylesheets/boards.scss */
+.board-roster-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* line 165, app/assets/stylesheets/boards.scss */
+.board-roster-table .col-order {
+  width: 72px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* line 166, app/assets/stylesheets/boards.scss */
+.board-roster-table .col-name {
+  color: #172b4d;
+}
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.4in;
+  }
+  /* line 171, app/assets/stylesheets/boards.scss */
+  .no-print {
+    display: none !important;
+  }
+  /* line 172, app/assets/stylesheets/boards.scss */
+  .print-only {
+    display: block;
+  }
+  /* line 173, app/assets/stylesheets/boards.scss */
+  .board-roster {
+    padding: 0;
+    max-width: none;
+  }
+  /* line 174, app/assets/stylesheets/boards.scss */
+  .board-roster-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* line 175, app/assets/stylesheets/boards.scss */
+  .board-roster-table {
+    font-size: 10pt;
+  }
+}
+
+/* line 178, app/assets/stylesheets/boards.scss */
 .board-new-column-toggle {
   margin-top: 2px;
 }
 
-/* line 29, app/assets/stylesheets/boards.scss */
+/* line 184, app/assets/stylesheets/boards.scss */
 .board-new-column-form {
   position: absolute;
   top: 100%;
@@ -41,7 +270,7 @@
   min-width: 420px;
 }
 
-/* line 43, app/assets/stylesheets/boards.scss */
+/* line 198, app/assets/stylesheets/boards.scss */
 .board-new-column-row {
   display: flex;
   flex-wrap: wrap;
@@ -49,30 +278,30 @@
   align-items: center;
 }
 
-/* line 49, app/assets/stylesheets/boards.scss */
+/* line 204, app/assets/stylesheets/boards.scss */
 .board-new-column-row input, .board-new-column-row select {
   flex: 1 1 100px;
   min-width: 100px;
 }
 
-/* line 50, app/assets/stylesheets/boards.scss */
+/* line 205, app/assets/stylesheets/boards.scss */
 .board-new-column-row .btn {
   flex: 0 0 auto;
 }
 
-/* line 53, app/assets/stylesheets/boards.scss */
+/* line 208, app/assets/stylesheets/boards.scss */
 .board-layout {
   display: flex;
   gap: 12px;
   align-items: flex-start;
 }
 
-/* line 59, app/assets/stylesheets/boards.scss */
+/* line 214, app/assets/stylesheets/boards.scss */
 .board-fixed {
   flex: 0 0 260px;
 }
 
-/* line 63, app/assets/stylesheets/boards.scss */
+/* line 218, app/assets/stylesheets/boards.scss */
 .board-columns {
   display: flex;
   gap: 12px;
@@ -83,7 +312,7 @@
   min-width: 0;
 }
 
-/* line 73, app/assets/stylesheets/boards.scss */
+/* line 228, app/assets/stylesheets/boards.scss */
 .board-column {
   flex: 0 0 260px;
   background: #f4f5f7;
@@ -94,13 +323,13 @@
   flex-direction: column;
 }
 
-/* line 83, app/assets/stylesheets/boards.scss */
+/* line 238, app/assets/stylesheets/boards.scss */
 .board-column-header {
   margin-bottom: 8px;
   padding: 0 4px;
 }
 
-/* line 88, app/assets/stylesheets/boards.scss */
+/* line 243, app/assets/stylesheets/boards.scss */
 .board-column-subtitle {
   font-size: 11px;
   color: #6b778c;
@@ -108,7 +337,7 @@
   letter-spacing: 0.4px;
 }
 
-/* line 95, app/assets/stylesheets/boards.scss */
+/* line 250, app/assets/stylesheets/boards.scss */
 .board-column-title-row {
   display: flex;
   align-items: center;
@@ -116,7 +345,7 @@
   gap: 4px;
 }
 
-/* line 102, app/assets/stylesheets/boards.scss */
+/* line 257, app/assets/stylesheets/boards.scss */
 .board-column-title {
   font-size: 14px;
   font-weight: 600;
@@ -128,7 +357,7 @@
   white-space: nowrap;
 }
 
-/* line 113, app/assets/stylesheets/boards.scss */
+/* line 268, app/assets/stylesheets/boards.scss */
 .board-column-personnel {
   font-size: 11px;
   font-weight: 600;
@@ -137,22 +366,22 @@
   margin-left: 6px;
 }
 
-/* line 120, app/assets/stylesheets/boards.scss */
+/* line 275, app/assets/stylesheets/boards.scss */
 .board-column-personnel .fa {
   margin-right: 3px;
 }
 
-/* line 124, app/assets/stylesheets/boards.scss */
+/* line 279, app/assets/stylesheets/boards.scss */
 .board-column-personnel.is-empty {
   display: none;
 }
 
-/* line 129, app/assets/stylesheets/boards.scss */
+/* line 284, app/assets/stylesheets/boards.scss */
 .board-column-204 {
   margin-top: 4px;
 }
 
-/* line 131, app/assets/stylesheets/boards.scss */
+/* line 286, app/assets/stylesheets/boards.scss */
 .board-column-204 .board-column-204-link {
   display: inline-block;
   font-size: 11px;
@@ -164,19 +393,19 @@
   text-decoration: none;
 }
 
-/* line 140, app/assets/stylesheets/boards.scss */
+/* line 295, app/assets/stylesheets/boards.scss */
 .board-column-204 .board-column-204-link:hover {
   background: #d3e2f7;
   text-decoration: none;
 }
 
-/* line 144, app/assets/stylesheets/boards.scss */
+/* line 299, app/assets/stylesheets/boards.scss */
 .board-column-delete-form {
   display: inline-block;
   margin: 0;
 }
 
-/* line 149, app/assets/stylesheets/boards.scss */
+/* line 304, app/assets/stylesheets/boards.scss */
 .board-column-delete {
   background: none;
   border: none;
@@ -188,13 +417,13 @@
   border-radius: 3px;
 }
 
-/* line 159, app/assets/stylesheets/boards.scss */
+/* line 314, app/assets/stylesheets/boards.scss */
 .board-column-delete:hover {
   background: #ebecf0;
   color: #c62828;
 }
 
-/* line 165, app/assets/stylesheets/boards.scss */
+/* line 320, app/assets/stylesheets/boards.scss */
 .board-cards {
   list-style: none;
   margin: 0;
@@ -204,7 +433,7 @@
   flex: 1;
 }
 
-/* line 174, app/assets/stylesheets/boards.scss */
+/* line 329, app/assets/stylesheets/boards.scss */
 .board-card {
   background: #fff;
   border-radius: 4px;
@@ -217,18 +446,18 @@
   position: relative;
 }
 
-/* line 184, app/assets/stylesheets/boards.scss */
+/* line 339, app/assets/stylesheets/boards.scss */
 .board-card:hover {
   background: #fafbfc;
 }
 
-/* line 187, app/assets/stylesheets/boards.scss */
+/* line 342, app/assets/stylesheets/boards.scss */
 .board-card:hover .board-card-move-toggle {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* line 193, app/assets/stylesheets/boards.scss */
+/* line 348, app/assets/stylesheets/boards.scss */
 .board-card-strip {
   display: flex;
   align-items: center;
@@ -243,7 +472,7 @@
   /* anchor for .board-card-move-menu */
 }
 
-/* line 206, app/assets/stylesheets/boards.scss */
+/* line 361, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle {
   background: rgba(255, 255, 255, 0.85);
   color: #222;
@@ -260,23 +489,23 @@
   transition: opacity 0.12s ease-in;
 }
 
-/* line 221, app/assets/stylesheets/boards.scss */
+/* line 376, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle .fa {
   margin-right: 3px;
 }
 
-/* line 222, app/assets/stylesheets/boards.scss */
+/* line 377, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle:hover {
   background: #fff;
 }
 
-/* line 223, app/assets/stylesheets/boards.scss */
+/* line 378, app/assets/stylesheets/boards.scss */
 .board-card-move-toggle:focus {
   outline: 0;
   box-shadow: 0 0 0 2px rgba(9, 30, 66, 0.15);
 }
 
-/* line 226, app/assets/stylesheets/boards.scss */
+/* line 381, app/assets/stylesheets/boards.scss */
 .board-card-move-menu {
   position: absolute;
   top: 100%;
@@ -295,26 +524,26 @@
   font-weight: 400;
 }
 
-/* line 243, app/assets/stylesheets/boards.scss */
+/* line 398, app/assets/stylesheets/boards.scss */
 .board-card-move-menu ul {
   list-style: none;
   padding: 4px 0;
   margin: 0;
 }
 
-/* line 248, app/assets/stylesheets/boards.scss */
+/* line 403, app/assets/stylesheets/boards.scss */
 .board-card-move-menu li {
   padding: 5px 12px;
   font-size: 12px;
   cursor: pointer;
 }
 
-/* line 252, app/assets/stylesheets/boards.scss */
+/* line 407, app/assets/stylesheets/boards.scss */
 .board-card-move-menu li:hover {
   background: #eef4ff;
 }
 
-/* line 256, app/assets/stylesheets/boards.scss */
+/* line 411, app/assets/stylesheets/boards.scss */
 .board-card-icon {
   display: inline-flex;
   align-items: center;
@@ -323,32 +552,32 @@
   color: #fff;
 }
 
-/* line 263, app/assets/stylesheets/boards.scss */
+/* line 418, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg {
   height: 14px;
   width: auto;
   fill: currentColor;
 }
 
-/* line 267, app/assets/stylesheets/boards.scss */
+/* line 422, app/assets/stylesheets/boards.scss */
 .board-card-icon .resource-icon-svg * {
   fill: currentColor;
 }
 
-/* line 271, app/assets/stylesheets/boards.scss */
+/* line 426, app/assets/stylesheets/boards.scss */
 .board-card-agency {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* line 277, app/assets/stylesheets/boards.scss */
+/* line 432, app/assets/stylesheets/boards.scss */
 .board-card-body {
   padding: 8px 10px 22px;
   position: relative;
 }
 
-/* line 282, app/assets/stylesheets/boards.scss */
+/* line 437, app/assets/stylesheets/boards.scss */
 .board-card-lwd {
   position: absolute;
   right: 8px;
@@ -362,57 +591,57 @@
   border-radius: 3px;
 }
 
-/* line 294, app/assets/stylesheets/boards.scss */
+/* line 449, app/assets/stylesheets/boards.scss */
 .board-card-lwd .fa {
   margin-right: 2px;
   font-size: 10px;
 }
 
-/* line 300, app/assets/stylesheets/boards.scss */
+/* line 455, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-normal {
   color: #000;
   padding: 0;
   background: transparent;
 }
 
-/* line 307, app/assets/stylesheets/boards.scss */
+/* line 462, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-soon {
   background: #e65100;
   color: #fff;
 }
 
-/* line 313, app/assets/stylesheets/boards.scss */
+/* line 468, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-today {
   background: #c62828;
   color: #fff;
 }
 
-/* line 319, app/assets/stylesheets/boards.scss */
+/* line 474, app/assets/stylesheets/boards.scss */
 .board-card-lwd.lwd-past {
   background: #000;
   color: #fff;
 }
 
-/* line 325, app/assets/stylesheets/boards.scss */
+/* line 480, app/assets/stylesheets/boards.scss */
 .board-card-order {
   font-size: 11px;
   color: #6b778c;
   font-weight: 600;
 }
 
-/* line 331, app/assets/stylesheets/boards.scss */
+/* line 486, app/assets/stylesheets/boards.scss */
 .board-card-name {
   font-weight: 600;
   color: #172b4d;
 }
 
-/* line 336, app/assets/stylesheets/boards.scss */
+/* line 491, app/assets/stylesheets/boards.scss */
 .board-card-position {
   font-size: 12px;
   color: #5e6c84;
 }
 
-/* line 345, app/assets/stylesheets/boards.scss */
+/* line 500, app/assets/stylesheets/boards.scss */
 .board-card-actions {
   display: flex;
   align-items: center;
@@ -425,7 +654,7 @@
   border-bottom-right-radius: 8px;
 }
 
-/* line 357, app/assets/stylesheets/boards.scss */
+/* line 512, app/assets/stylesheets/boards.scss */
 .board-card-action {
   display: inline-flex;
   align-items: center;
@@ -436,12 +665,12 @@
   line-height: 1;
 }
 
-/* line 366, app/assets/stylesheets/boards.scss */
+/* line 521, app/assets/stylesheets/boards.scss */
 .board-card-action:hover {
   text-decoration: none;
 }
 
-/* line 369, app/assets/stylesheets/boards.scss */
+/* line 524, app/assets/stylesheets/boards.scss */
 .board-card-action--delete {
   width: 32px;
   height: 32px;
@@ -451,13 +680,13 @@
   border-radius: 3px;
 }
 
-/* line 377, app/assets/stylesheets/boards.scss */
+/* line 532, app/assets/stylesheets/boards.scss */
 .board-card-action--delete:hover {
   background: #fde0e0;
   color: #c62828;
 }
 
-/* line 389, app/assets/stylesheets/boards.scss */
+/* line 544, app/assets/stylesheets/boards.scss */
 .board-card-details {
   display: none;
   background: #fff;
@@ -466,7 +695,7 @@
   cursor: default;
 }
 
-/* line 397, app/assets/stylesheets/boards.scss */
+/* line 552, app/assets/stylesheets/boards.scss */
 .board-card.is-expanded > .board-card-details {
   display: block;
   position: fixed;
@@ -482,7 +711,7 @@
   z-index: 2001;
 }
 
-/* line 412, app/assets/stylesheets/boards.scss */
+/* line 567, app/assets/stylesheets/boards.scss */
 #board-card-overlay {
   display: none;
   position: fixed;
@@ -491,12 +720,12 @@
   z-index: 2000;
 }
 
-/* line 419, app/assets/stylesheets/boards.scss */
+/* line 574, app/assets/stylesheets/boards.scss */
 #board-card-overlay.is-visible {
   display: block;
 }
 
-/* line 425, app/assets/stylesheets/boards.scss */
+/* line 580, app/assets/stylesheets/boards.scss */
 .board-card-details-header {
   display: flex;
   align-items: center;
@@ -511,24 +740,24 @@
   position: relative;
 }
 
-/* line 437, app/assets/stylesheets/boards.scss */
+/* line 592, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-icon {
   font-size: 16px;
 }
 
-/* line 438, app/assets/stylesheets/boards.scss */
+/* line 593, app/assets/stylesheets/boards.scss */
 .board-card-details-header .resource-icon-svg {
   height: 16px;
 }
 
-/* line 440, app/assets/stylesheets/boards.scss */
+/* line 595, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-agency {
   flex: 1 1 auto;
   text-align: center;
   font-size: 13px;
 }
 
-/* line 449, app/assets/stylesheets/boards.scss */
+/* line 604, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-move-toggle {
   opacity: 1;
   pointer-events: auto;
@@ -537,13 +766,13 @@
   font-size: 11px;
 }
 
-/* line 456, app/assets/stylesheets/boards.scss */
+/* line 611, app/assets/stylesheets/boards.scss */
 .board-card-details-header .board-card-move-menu {
   top: calc(100% + 4px);
   right: 8px;
 }
 
-/* line 462, app/assets/stylesheets/boards.scss */
+/* line 617, app/assets/stylesheets/boards.scss */
 .board-card-details-close {
   background: none;
   border: none !important;
@@ -557,7 +786,7 @@
   padding: 0 4px;
 }
 
-/* line 474, app/assets/stylesheets/boards.scss */
+/* line 629, app/assets/stylesheets/boards.scss */
 .board-card-details-close:hover, .board-card-details-close:focus, .board-card-details-close:active {
   color: #fff;
   outline: 0;
@@ -565,7 +794,7 @@
   border: 0;
 }
 
-/* line 479, app/assets/stylesheets/boards.scss */
+/* line 634, app/assets/stylesheets/boards.scss */
 .board-card-fields {
   display: grid;
   grid-template-columns: 80px 1fr;
@@ -574,7 +803,7 @@
   margin: 0;
 }
 
-/* line 486, app/assets/stylesheets/boards.scss */
+/* line 641, app/assets/stylesheets/boards.scss */
 .board-card-fields dt {
   color: #6b778c;
   font-weight: 500;
@@ -584,29 +813,29 @@
   align-self: center;
 }
 
-/* line 495, app/assets/stylesheets/boards.scss */
+/* line 650, app/assets/stylesheets/boards.scss */
 .board-card-fields dd {
   margin: 0;
   color: #172b4d;
   word-break: break-word;
 }
 
-/* line 501, app/assets/stylesheets/boards.scss */
+/* line 656, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.full-width {
   grid-column: 1 / -1;
 }
 
-/* line 509, app/assets/stylesheets/boards.scss */
+/* line 664, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.wide .best_in_place {
   min-width: 300px;
 }
 
-/* line 510, app/assets/stylesheets/boards.scss */
+/* line 665, app/assets/stylesheets/boards.scss */
 .board-card-fields dd.wide input {
   min-width: 300px;
 }
 
-/* line 513, app/assets/stylesheets/boards.scss */
+/* line 668, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place {
   display: inline-block;
   min-width: 60px;
@@ -614,14 +843,14 @@
   border-radius: 3px;
 }
 
-/* line 519, app/assets/stylesheets/boards.scss */
+/* line 674, app/assets/stylesheets/boards.scss */
 .board-card-fields .best_in_place:hover {
   background: #fff;
   box-shadow: inset 0 0 0 1px #dfe1e6;
   cursor: text;
 }
 
-/* line 527, app/assets/stylesheets/boards.scss */
+/* line 682, app/assets/stylesheets/boards.scss */
 .board-card-placeholder {
   background: #dfe1e6;
   border: 2px dashed #c1c7d0;
@@ -630,12 +859,12 @@
   height: 56px;
 }
 
-/* line 535, app/assets/stylesheets/boards.scss */
+/* line 690, app/assets/stylesheets/boards.scss */
 .board-add-child {
   margin-top: 8px;
 }
 
-/* line 539, app/assets/stylesheets/boards.scss */
+/* line 694, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle {
   background: none;
   border: 1px dashed #c1c7d0;
@@ -647,13 +876,13 @@
   cursor: pointer;
 }
 
-/* line 549, app/assets/stylesheets/boards.scss */
+/* line 704, app/assets/stylesheets/boards.scss */
 .board-add-child-toggle:hover {
   background: #ebecf0;
   color: #172b4d;
 }
 
-/* line 555, app/assets/stylesheets/boards.scss */
+/* line 710, app/assets/stylesheets/boards.scss */
 .board-add-child-form {
   background: #fff;
   border-radius: 4px;
@@ -662,23 +891,23 @@
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.15);
 }
 
-/* line 562, app/assets/stylesheets/boards.scss */
+/* line 717, app/assets/stylesheets/boards.scss */
 .board-add-child-form .form-group {
   margin-bottom: 6px;
 }
 
-/* line 566, app/assets/stylesheets/boards.scss */
+/* line 721, app/assets/stylesheets/boards.scss */
 .board-add-child-form .input-sm {
   font-size: 12px;
 }
 
-/* line 571, app/assets/stylesheets/boards.scss */
+/* line 726, app/assets/stylesheets/boards.scss */
 .board-add-child-actions {
   display: flex;
   gap: 6px;
 }
 
-/* line 576, app/assets/stylesheets/boards.scss */
+/* line 731, app/assets/stylesheets/boards.scss */
 .board-footer {
   margin-top: 18px;
   padding-top: 12px;
@@ -688,42 +917,42 @@
   gap: 12px;
 }
 
-/* line 585, app/assets/stylesheets/boards.scss */
+/* line 740, app/assets/stylesheets/boards.scss */
 .board-footer-hint {
   color: #6c757d;
   font-size: 12px;
 }
 
-/* line 590, app/assets/stylesheets/boards.scss */
+/* line 745, app/assets/stylesheets/boards.scss */
 .board-card--spacer {
   background: repeating-linear-gradient(45deg, #f4f5f7, #f4f5f7 6px, #ebedf0 6px, #ebedf0 12px);
   border: 1px dashed #b0b7c1;
   box-shadow: none;
 }
 
-/* line 601, app/assets/stylesheets/boards.scss */
+/* line 756, app/assets/stylesheets/boards.scss */
 .board-card--spacer:hover {
   background: #eef0f3;
 }
 
-/* line 602, app/assets/stylesheets/boards.scss */
+/* line 757, app/assets/stylesheets/boards.scss */
 .board-card--spacer:hover .board-card-delete-spacer {
   opacity: 1;
 }
 
-/* line 605, app/assets/stylesheets/boards.scss */
+/* line 760, app/assets/stylesheets/boards.scss */
 .board-card-strip--spacer {
   background: transparent;
   color: #4a5361;
 }
 
-/* line 610, app/assets/stylesheets/boards.scss */
+/* line 765, app/assets/stylesheets/boards.scss */
 .board-card-spacer-label {
   font-size: 10px;
   letter-spacing: 0.6px;
 }
 
-/* line 615, app/assets/stylesheets/boards.scss */
+/* line 770, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer {
   background: rgba(255, 255, 255, 0.9);
   color: #b32020;
@@ -738,13 +967,13 @@
   transition: opacity 0.12s ease-in;
 }
 
-/* line 628, app/assets/stylesheets/boards.scss */
+/* line 783, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer:hover {
   background: #fff;
   color: #7a1414;
 }
 
-/* line 629, app/assets/stylesheets/boards.scss */
+/* line 784, app/assets/stylesheets/boards.scss */
 .board-card-delete-spacer:focus {
   outline: 0;
   box-shadow: 0 0 0 2px rgba(179, 32, 32, 0.25);

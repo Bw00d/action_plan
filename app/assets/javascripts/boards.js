@@ -78,14 +78,20 @@
       $(this).closest('.board-new-column-form').hide();
     });
 
-    // --- Board search (live client-side filter) --------------------------
-    // Hide any card whose textContent doesn't contain the query. Spacers
-    // always show (they're visual gaps, not content). We cache each
-    // card's search text on data-search-text to avoid re-walking the DOM
-    // on every keystroke.
+    // --- Board search (live client-side filter + jump-to-match) ----------
+    // Highlights every matching card without hiding its neighbors, so the
+    // user keeps their sense of position. The current match is scrolled
+    // into view (horizontally + vertically) and marked with a stronger
+    // "current" ring. Prev/Next buttons + Enter / Shift+Enter in the
+    // input cycle through all matches.
     var searchInput  = document.getElementById('board-search-input');
     var searchClear  = document.getElementById('board-search-clear');
     var searchCount  = document.getElementById('board-search-count');
+    var searchPrev   = document.getElementById('board-search-prev');
+    var searchNext   = document.getElementById('board-search-next');
+
+    var matchEls   = [];   // array of matching card nodes in DOM order
+    var matchIndex = 0;
 
     function cardSearchText(card) {
       var cached = card.getAttribute('data-search-text');
@@ -95,36 +101,73 @@
       return text;
     }
 
+    function clearCurrentMarker() {
+      page.querySelectorAll('.board-card--current').forEach(function (c) {
+        c.classList.remove('board-card--current');
+      });
+    }
+
+    function focusCurrent() {
+      clearCurrentMarker();
+      if (!matchEls.length) {
+        if (searchCount) searchCount.textContent = searchInput.value ? '0 matches' : '';
+        return;
+      }
+      // Wrap on overflow in either direction.
+      if (matchIndex < 0) matchIndex = matchEls.length - 1;
+      if (matchIndex >= matchEls.length) matchIndex = 0;
+      var el = matchEls[matchIndex];
+      el.classList.add('board-card--current');
+      // scrollIntoView walks every scrollable ancestor — handles the
+      // horizontal .board-columns scroll + the vertical .board-cards
+      // scroll together.
+      el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+      if (searchCount) {
+        searchCount.textContent = (matchIndex + 1) + ' of ' + matchEls.length;
+      }
+    }
+
     function applyBoardSearch() {
       if (!searchInput) return;
       var q = searchInput.value.toLowerCase().trim();
       var cards = page.querySelectorAll('.board-card');
-      var matches = 0;
+      matchEls = [];
       cards.forEach(function (card) {
-        // Spacers never highlight — they're structural, not content.
         if (card.classList.contains('board-card--spacer')) {
           card.classList.remove('board-card--match');
           return;
         }
         if (q && cardSearchText(card).indexOf(q) >= 0) {
           card.classList.add('board-card--match');
-          matches++;
+          matchEls.push(card);
         } else {
           card.classList.remove('board-card--match');
         }
       });
-      if (searchCount) {
-        searchCount.textContent = q ? (matches + ' match' + (matches === 1 ? '' : 'es')) : '';
-      }
-      // Toggled on <.board-page> so CSS can dim everything except the
-      // highlighted matches when a query is active.
       page.classList.toggle('board-search-active', !!q);
+      matchIndex = 0;
+      if (q) {
+        focusCurrent();
+      } else {
+        clearCurrentMarker();
+        if (searchCount) searchCount.textContent = '';
+      }
+    }
+
+    function stepMatch(delta) {
+      if (!matchEls.length) return;
+      matchIndex += delta;
+      focusCurrent();
     }
 
     if (searchInput) {
       searchInput.addEventListener('input', applyBoardSearch);
       searchInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { this.value = ''; applyBoardSearch(); }
+        if (e.key === 'Escape') { this.value = ''; applyBoardSearch(); return; }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          stepMatch(e.shiftKey ? -1 : 1);
+        }
       });
     }
     if (searchClear && searchInput) {
@@ -134,6 +177,8 @@
         searchInput.focus();
       });
     }
+    if (searchPrev) searchPrev.addEventListener('click', function () { stepMatch(-1); });
+    if (searchNext) searchNext.addEventListener('click', function () { stepMatch(1);  });
 
     // --- Trello-style expanded card modal -------------------------------
     // Double-click a card to pull its details into a fixed, centered

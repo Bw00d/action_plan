@@ -21,6 +21,19 @@
               class="board-search-clear"
               title="Clear search"
               aria-label="Clear search">×</button>
+      <%# Prev / next step through multiple matches so the user can
+          flick between e.g. E-29, E-290, E-291. Enter in the input
+          advances to next; Shift+Enter goes previous. %>
+      <button type="button"
+              id="board-search-prev"
+              class="btn btn-default btn-sm board-search-nav"
+              title="Previous match (Shift+Enter)"
+              aria-label="Previous match">↑</button>
+      <button type="button"
+              id="board-search-next"
+              class="btn btn-default btn-sm board-search-nav"
+              title="Next match (Enter)"
+              aria-label="Next match">↓</button>
       <span id="board-search-count" class="board-search-count text-muted"></span>
     </div>
 

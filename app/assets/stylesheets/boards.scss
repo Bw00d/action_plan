@@ -26,6 +26,15 @@
   z-index: 1;
 }
 
+// The currently-focused match (prev/next cursor) gets a stronger
+// orange ring + subtle lift so the user can see which of the N matches
+// they're on after cycling.
+.board-card--current {
+  box-shadow: 0 0 0 3px #e65100, 0 6px 14px rgba(230, 81, 0, 0.45) !important;
+  background: #fff2d6 !important;
+  z-index: 2;
+}
+
 // Live client-side search box in the header. Keeps a compact
 // width — hiding cards is the main affordance; the match-count label
 // to the right confirms the filter worked.
@@ -56,6 +65,11 @@
     border-radius: 3px;         // square with rounded corners
     padding: 0;
     &:hover { background: #ebecf0; color: #42526e; }
+  }
+  .board-search-nav {
+    padding: 2px 8px;
+    line-height: 1.3;
+    font-weight: 700;
   }
   .board-search-count {
     font-size: 12px;
