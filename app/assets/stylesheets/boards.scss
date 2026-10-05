@@ -144,10 +144,41 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 
+  .board-roster-group-name { flex: 1 1 auto; }
   .muted { color: #c1c7d0; font-weight: 500; margin-left: 4px; }
+}
+
+// Right-side include toggle inside the header strip. Reads as a plain
+// checkbox + "Print" label on screen; hidden on paper by `.no-print`.
+.board-roster-group-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #c1c7d0;
+  cursor: pointer;
+
+  input { margin: 0; cursor: pointer; }
+  &:hover { color: #fff; }
+}
+
+// Excluded sections stay in the on-screen DOM but drop to low opacity
+// so you can still see WHAT you've excluded; hidden entirely on print.
+.board-roster-group--excluded {
+  opacity: 0.35;
+  .board-roster-table { filter: grayscale(1); }
 }
 
 .board-roster-table {
@@ -173,7 +204,25 @@
   .print-only { display: block; }
   .board-roster { padding: 0; max-width: none; }
   .board-roster-group { break-inside: avoid; page-break-inside: avoid; }
-  .board-roster-table { font-size: 10pt; }
+  .board-roster-group--excluded { display: none !important; }
+
+  // !important here beats the on-screen `.board-roster-table { font-size: 12px }`
+  // base rule in case the browser cache is still serving an older
+  // version of the CSS where the print rule and base rule had the
+  // same specificity.
+  .board-roster .board-roster-table {
+    font-size: 8pt !important;
+    line-height: 1.15 !important;
+
+    td {
+      padding: 1px 5px !important;
+      font-size: 8pt !important;
+    }
+  }
+  .board-roster .board-roster-group-title {
+    font-size: 9pt !important;
+    padding: 2px 6px !important;
+  }
 }
 
 .board-new-column-toggle {

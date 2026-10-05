@@ -3,7 +3,11 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content_for?(:title) ? "Action Plan | " + yield( :title) : "Action Plan" %></title>
+  <%# Multi-tab workflow: tab title shows ONLY the per-page content so
+      side-by-side tabs are easy to distinguish ("Resources" vs
+      "Requests" instead of two "Action Plan | …" rows). Fallback to
+      "Action Plan" only when a page didn't set its own title. %>
+  <title><%= content_for?(:title) ? yield(:title) : "Action Plan" %></title>
   <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Insert description" %>">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <%# Signals user_timezone.js to POST the browser's detected timezone

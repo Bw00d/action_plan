@@ -4,6 +4,11 @@
   <div class="board-roster-head no-print">
     <h1><%= @incident.display_incident_name %> — Board Roster</h1>
     <div class="board-roster-head-actions">
+      <%# Bulk toggles — flip every section's checkbox at once so the
+          user can start from "nothing checked" if they only want a
+          couple of columns. %>
+      <button type="button" class="btn btn-default btn-sm" id="board-roster-select-all">Check all</button>
+      <button type="button" class="btn btn-default btn-sm" id="board-roster-select-none">Uncheck all</button>
       <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
       <%= link_to 'Back to Board', incident_board_path(@incident), class: 'btn btn-default' %>
     </div>
@@ -18,10 +23,16 @@
       <% next if group[:resources].empty? %>
       <section class="board-roster-group">
         <h3 class="board-roster-group-title">
-          <%= group[:unit].name %>
-          <% if group[:unit].designator.present? %>
-            <span class="muted">(<%= group[:unit].designator %>)</span>
-          <% end %>
+          <span class="board-roster-group-name">
+            <%= group[:unit].name %>
+            <% if group[:unit].designator.present? %>
+              <span class="muted">(<%= group[:unit].designator %>)</span>
+            <% end %>
+          </span>
+          <label class="board-roster-group-check no-print" title="Include this section when printing">
+            <input type="checkbox" class="board-roster-include" checked>
+            <span>Print</span>
+          </label>
         </h3>
         <table class="board-roster-table">
           <% group[:resources].each do |r| %>
@@ -37,7 +48,13 @@
 
     <% if @unassigned_resources.any? %>
       <section class="board-roster-group">
-        <h3 class="board-roster-group-title">Unassigned</h3>
+        <h3 class="board-roster-group-title">
+          <span class="board-roster-group-name">Unassigned</span>
+          <label class="board-roster-group-check no-print" title="Include this section when printing">
+            <input type="checkbox" class="board-roster-include" checked>
+            <span>Print</span>
+          </label>
+        </h3>
         <table class="board-roster-table">
           <% @unassigned_resources.each do |r| %>
             <tr>
@@ -51,3 +68,28 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  // Per-section include toggles — unchecking marks the section with
+  // .board-roster-group--excluded; CSS dims it on screen and hides
+  // it entirely via @media print.
+  (function () {
+    function syncSection(cb) {
+      var section = cb.closest('.board-roster-group');
+      if (section) section.classList.toggle('board-roster-group--excluded', !cb.checked);
+    }
+    document.querySelectorAll('.board-roster-include').forEach(function (cb) {
+      cb.addEventListener('change', function () { syncSection(cb); });
+    });
+    function setAll(state) {
+      document.querySelectorAll('.board-roster-include').forEach(function (cb) {
+        cb.checked = state;
+        syncSection(cb);
+      });
+    }
+    var selAll  = document.getElementById('board-roster-select-all');
+    var selNone = document.getElementById('board-roster-select-none');
+    if (selAll)  selAll.addEventListener('click',  function () { setAll(true);  });
+    if (selNone) selNone.addEventListener('click', function () { setAll(false); });
+  })();
+</script>
