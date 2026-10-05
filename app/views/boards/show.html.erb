@@ -7,6 +7,23 @@
 </div>
     <p class="text-muted">Drag resources between sections to assign them.</p>
 
+    <%# Live client-side filter — hides any card whose text doesn't match
+        the query. Searches order #, name, position, agency, plus the
+        modal fields (leader, phone, email, comment) via textContent. %>
+    <div class="board-search no-print">
+      <input type="search"
+             id="board-search-input"
+             class="form-control input-sm"
+             placeholder="Search by name, order #, position, agency, phone…"
+             autocomplete="off">
+      <button type="button"
+              id="board-search-clear"
+              class="board-search-clear"
+              title="Clear search"
+              aria-label="Clear search">×</button>
+      <span id="board-search-count" class="board-search-count text-muted"></span>
+    </div>
+
     <%# Right-aligned "+ New Column" opener. Clicking the pill reveals
         the inline form; posts to the standard org_units create endpoint
         which redirects back to the board on success. Possible parents

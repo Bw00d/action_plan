@@ -78,6 +78,63 @@
       $(this).closest('.board-new-column-form').hide();
     });
 
+    // --- Board search (live client-side filter) --------------------------
+    // Hide any card whose textContent doesn't contain the query. Spacers
+    // always show (they're visual gaps, not content). We cache each
+    // card's search text on data-search-text to avoid re-walking the DOM
+    // on every keystroke.
+    var searchInput  = document.getElementById('board-search-input');
+    var searchClear  = document.getElementById('board-search-clear');
+    var searchCount  = document.getElementById('board-search-count');
+
+    function cardSearchText(card) {
+      var cached = card.getAttribute('data-search-text');
+      if (cached != null) return cached;
+      var text = (card.textContent || '').toLowerCase().replace(/\s+/g, ' ').trim();
+      card.setAttribute('data-search-text', text);
+      return text;
+    }
+
+    function applyBoardSearch() {
+      if (!searchInput) return;
+      var q = searchInput.value.toLowerCase().trim();
+      var cards = page.querySelectorAll('.board-card');
+      var matches = 0;
+      cards.forEach(function (card) {
+        // Spacers never highlight — they're structural, not content.
+        if (card.classList.contains('board-card--spacer')) {
+          card.classList.remove('board-card--match');
+          return;
+        }
+        if (q && cardSearchText(card).indexOf(q) >= 0) {
+          card.classList.add('board-card--match');
+          matches++;
+        } else {
+          card.classList.remove('board-card--match');
+        }
+      });
+      if (searchCount) {
+        searchCount.textContent = q ? (matches + ' match' + (matches === 1 ? '' : 'es')) : '';
+      }
+      // Toggled on <.board-page> so CSS can dim everything except the
+      // highlighted matches when a query is active.
+      page.classList.toggle('board-search-active', !!q);
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', applyBoardSearch);
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { this.value = ''; applyBoardSearch(); }
+      });
+    }
+    if (searchClear && searchInput) {
+      searchClear.addEventListener('click', function () {
+        searchInput.value = '';
+        applyBoardSearch();
+        searchInput.focus();
+      });
+    }
+
     // --- Trello-style expanded card modal -------------------------------
     // Double-click a card to pull its details into a fixed, centered
     // modal with a dimmed backdrop. Close via the X, backdrop click, or

@@ -51065,6 +51065,71 @@ document.addEventListener("turbolinks:load", function() {
       $(this).closest('.board-add-child-form').hide();
     });
 
+    // --- Header "+ New Column" opener/closer -----------------------------
+    $(page).on('click', '.board-new-column-toggle', function () {
+      $(this).closest('.board-new-column').find('.board-new-column-form').toggle();
+    });
+    $(page).on('click', '.board-new-column-cancel', function () {
+      $(this).closest('.board-new-column-form').hide();
+    });
+
+    // --- Board search (live client-side filter) --------------------------
+    // Hide any card whose textContent doesn't contain the query. Spacers
+    // always show (they're visual gaps, not content). We cache each
+    // card's search text on data-search-text to avoid re-walking the DOM
+    // on every keystroke.
+    var searchInput  = document.getElementById('board-search-input');
+    var searchClear  = document.getElementById('board-search-clear');
+    var searchCount  = document.getElementById('board-search-count');
+
+    function cardSearchText(card) {
+      var cached = card.getAttribute('data-search-text');
+      if (cached != null) return cached;
+      var text = (card.textContent || '').toLowerCase().replace(/\s+/g, ' ').trim();
+      card.setAttribute('data-search-text', text);
+      return text;
+    }
+
+    function applyBoardSearch() {
+      if (!searchInput) return;
+      var q = searchInput.value.toLowerCase().trim();
+      var cards = page.querySelectorAll('.board-card');
+      var matches = 0;
+      cards.forEach(function (card) {
+        // Spacers never highlight — they're structural, not content.
+        if (card.classList.contains('board-card--spacer')) {
+          card.classList.remove('board-card--match');
+          return;
+        }
+        if (q && cardSearchText(card).indexOf(q) >= 0) {
+          card.classList.add('board-card--match');
+          matches++;
+        } else {
+          card.classList.remove('board-card--match');
+        }
+      });
+      if (searchCount) {
+        searchCount.textContent = q ? (matches + ' match' + (matches === 1 ? '' : 'es')) : '';
+      }
+      // Toggled on <.board-page> so CSS can dim everything except the
+      // highlighted matches when a query is active.
+      page.classList.toggle('board-search-active', !!q);
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', applyBoardSearch);
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { this.value = ''; applyBoardSearch(); }
+      });
+    }
+    if (searchClear && searchInput) {
+      searchClear.addEventListener('click', function () {
+        searchInput.value = '';
+        applyBoardSearch();
+        searchInput.focus();
+      });
+    }
+
     // --- Trello-style expanded card modal -------------------------------
     // Double-click a card to pull its details into a fixed, centered
     // modal with a dimmed backdrop. Close via the X, backdrop click, or
@@ -51201,7 +51266,9 @@ document.addEventListener("turbolinks:load", function() {
     $(page).on('click', '.board-card-move-toggle', function (e) {
       e.stopPropagation();
       var $card = $(this).closest('.board-card');
-      var $menu = $card.find('.board-card-move-menu');
+      // Scope to the toggle's own parent — the modal header has its
+      // own MOVE button + menu pair separate from the small-strip one.
+      var $menu = $(this).parent().find('.board-card-move-menu').first();
       var currentOrgUnitId = $card.closest('.board-column').data('org-unit-id') || '';
       $('.board-card-move-menu').not($menu).hide();
       if ($menu.is(':visible')) { $menu.hide(); return; }
@@ -53697,6 +53764,16 @@ $(document).on("turbolinks:load", function () {
     var id      = $picker.val();
     var sep     = base.indexOf("?") === -1 ? "?" : "&";
     window.location = base + sep + "org_unit_id=" + id;
+  });
+
+  // Day-count picker: navigate with the chosen day count. base-url already
+  // carries tab + org_unit_id so switching days preserves the rest of the view.
+  $(document).on("change.ops", "#ops-days-picker", function () {
+    var $picker = $(this);
+    var base    = $picker.data("base-url");
+    var days    = $picker.val();
+    var sep     = base.indexOf("?") === -1 ? "?" : "&";
+    window.location = base + sep + "days=" + days;
   });
 
   // Add a new Kind/Type row to a 215 table. Row is client-side only until

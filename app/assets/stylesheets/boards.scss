@@ -11,6 +11,57 @@
   }
 }
 
+// When the search box has a query, dim every non-matching card so
+// the user can see WHERE matches sit relative to their neighbors in
+// each column, then paint a yellow outline + background glow on the
+// matches themselves. Columns + their counts stay fully opaque.
+.board-page.board-search-active .board-card:not(.board-card--match):not(.board-card--spacer) {
+  opacity: 0.25;
+  filter: saturate(0.4);
+}
+.board-card--match {
+  box-shadow: 0 0 0 2px #ffb400, 0 2px 6px rgba(255, 180, 0, 0.4);
+  background: #fffbea !important;
+  position: relative;
+  z-index: 1;
+}
+
+// Live client-side search box in the header. Keeps a compact
+// width — hiding cards is the main affordance; the match-count label
+// to the right confirms the filter worked.
+.board-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 10px;
+
+  input[type="search"] {
+    width: 320px;
+    padding-right: 28px;        // leave room for the clear × button
+  }
+  .board-search-clear {
+    position: absolute;
+    top: 4px;
+    left: 294px;                // sits inside the input, right side
+    width: 22px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    background: transparent;
+    border: 0;
+    color: #97a0af;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 3px;         // square with rounded corners
+    padding: 0;
+    &:hover { background: #ebecf0; color: #42526e; }
+  }
+  .board-search-count {
+    font-size: 12px;
+  }
+}
+
 // Right-aligned "+ New Column" opener + inline form, pinned to the
 // top-right of the board page. Form is a flex row of inputs that wraps
 // on narrow viewports.
