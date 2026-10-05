@@ -121,6 +121,9 @@ class Plan < ApplicationRecord
     if self.incident.plans.last(2).first.assignments
       self.incident.plans.last(2).first.assignments.each do |a|
         assignment = a.dup
+        # Reset prepared_date to the new plan's date so each 204
+        # starts labelled for the new op period. User can override.
+        assignment.prepared_date = self.date if self.date
         assignment.update_attributes(plan_id: self.id)
       end
     end
@@ -137,6 +140,9 @@ class Plan < ApplicationRecord
 
     new_cp = prev.commo_plan.dup
     new_cp.plan_id = self.id
+    # 205 date_prepared is a free-text column — format MM/DD/YY so it
+    # matches what the user would type if entering by hand.
+    new_cp.date_prepared = self.date.strftime('%m/%d/%y') if self.date
     new_cp.save!                   # triggers seed_first_page → 16 blanks
     new_cp.commo_items.destroy_all # wipe them before importing the real set
 
@@ -148,9 +154,15 @@ class Plan < ApplicationRecord
   end
 
   def duplicate_safety_message
-    if self.incident.plans.last(2).first.safety_message
-       SafetyMessage.create( plan_id: self.id, hazards: self.incident.plans.last(2).first.safety_message.hazards)
-    end
+    prev = self.incident.plans.last(2).first
+    return unless prev.safety_message
+    # date_prepared is a free-text column on SafetyMessage — format
+    # MM/DD/YY to match the typed-in style. Users can edit on the form.
+    SafetyMessage.create(
+      plan_id:       self.id,
+      hazards:       prev.safety_message.hazards,
+      date_prepared: self.date&.strftime('%m/%d/%y')
+    )
   end
 
   # ICS 202 section 6: 18-slot grid (3 columns × 6 rows). First 11

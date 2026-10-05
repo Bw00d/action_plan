@@ -705,6 +705,20 @@
 
   dd.full-width {
     grid-column: 1 / -1;
+
+    // Make the Comment best_in_place fill the available width — the
+    // inline-block default sized itself to the content, leaving the
+    // field looking cramped even though the dd spanned both columns.
+    .best_in_place {
+      display: block;
+      width: 100%;
+      min-height: 44px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      box-sizing: border-box;
+    }
   }
 
   // Name + Leader get a roomier input slot — doubled from the default
