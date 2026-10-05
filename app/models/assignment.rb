@@ -15,7 +15,8 @@ class Assignment < ApplicationRecord
     'Branch Director',
     'Division/Group Supervisor',
     'Air Attack Supervisor',
-    'Air Operations'
+    'Air Operations',
+    'Safety'
   ].freeze
 
   def freqs
