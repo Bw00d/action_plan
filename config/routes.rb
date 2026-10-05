@@ -96,6 +96,7 @@ Rails.application.routes.draw do
 
     resource :board, only: [:show] do
       patch :move
+      get   :roster
       post   'spacers',     action: :create_spacer
       delete 'spacers/:id', action: :destroy_spacer, as: :spacer
     end

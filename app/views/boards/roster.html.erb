@@ -1,0 +1,51 @@
+<% content_for :title, "Board Roster — #{@incident.name}" %>
+
+<div class="board-roster">
+  <div class="board-roster-head no-print">
+    <h1><%= @incident.display_incident_name %> — Board Roster</h1>
+    <div class="board-roster-head-actions">
+      <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+      <%= link_to 'Back to Board', incident_board_path(@incident), class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="print-only board-roster-print-head">
+    <h2><%= @incident.display_incident_name %> — Board Roster</h2>
+    <div class="muted"><%= Time.current.strftime('%Y-%m-%d %H:%M') %></div>
+  </div>
+
+  <div class="board-roster-grid">
+    <% @groups.each do |group| %>
+      <% next if group[:resources].empty? %>
+      <section class="board-roster-group">
+        <h3 class="board-roster-group-title">
+          <%= group[:unit].name %>
+          <% if group[:unit].designator.present? %>
+            <span class="muted">(<%= group[:unit].designator %>)</span>
+          <% end %>
+        </h3>
+        <table class="board-roster-table">
+          <% group[:resources].each do |r| %>
+            <tr>
+              <td class="col-order"><%= r.full_order_number %></td>
+              <td class="col-name"><%= r.name %></td>
+            </tr>
+          <% end %>
+        </table>
+      </section>
+    <% end %>
+
+    <% if @unassigned_resources.any? %>
+      <section class="board-roster-group">
+        <h3 class="board-roster-group-title">Unassigned</h3>
+        <table class="board-roster-table">
+          <% @unassigned_resources.each do |r| %>
+            <tr>
+              <td class="col-order"><%= r.full_order_number %></td>
+              <td class="col-name"><%= r.name %></td>
+            </tr>
+          <% end %>
+        </table>
+      </section>
+    <% end %>
+  </div>
+</div>

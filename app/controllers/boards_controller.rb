@@ -34,10 +34,31 @@ class BoardsController < ApplicationController
     head :no_content
   end
 
+  # GET /incidents/:incident_id/board/roster
+  # Printable list of every resource on the T-card board, grouped by
+  # column (org_unit). Spacers are hidden; the Unassigned bucket is
+  # appended at the bottom. Rendered standalone so the user can hit
+  # Cmd/Ctrl+P and get a clean list — Order Number + Name only.
+  def roster
+    @groups = []
+    @incident.org_units.roots.includes(:children).order(:kind, :position).each do |root|
+      walk_with_resources(root, @groups)
+    end
+    @unassigned_resources = @incident.resources.unassigned.active
+                                     .where(spacer: false)
+                                     .order(:category, :order_number)
+  end
+
   private
 
   def set_incident
     @incident = Incident.find(params[:incident_id])
+  end
+
+  def walk_with_resources(node, groups)
+    groups << { unit: node,
+                resources: node.resources.active.where(spacer: false).order(:position) }
+    node.children.order(:position).each { |child| walk_with_resources(child, groups) }
   end
 
   def apply_move(resource, target_org_unit, position)

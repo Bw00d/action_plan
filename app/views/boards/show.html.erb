@@ -13,6 +13,12 @@
         are limited to units that already allow children, so the server
         can only ever get a valid (kind, parent) pair. %>
     <div class="board-new-column">
+      <%= link_to 'Print Roster',
+                  roster_incident_board_path(@incident),
+                  class: 'btn btn-default btn-sm board-print-roster',
+                  target: '_blank',
+                  title: 'Open a printable list of every resource grouped by column' %>
+
       <button type="button" class="board-new-column-toggle btn btn-primary btn-sm">
         + New Column
       </button>

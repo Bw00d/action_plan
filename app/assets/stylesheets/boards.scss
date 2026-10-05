@@ -18,6 +18,96 @@
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+// Print Roster button sits next to "+ New Column" in the header's
+// top-right action strip.
+.board-print-roster {
+  margin-top: 2px;
+}
+
+// Full-page printable roster list (GET /incidents/:id/board/roster).
+// Section cards in a 2-column flow with each card unsplittable across
+// column / page breaks.
+.board-roster {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.board-roster-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h1 { margin: 0; font-size: 20px; color: #172b4d; }
+  .board-roster-head-actions { display: flex; gap: 6px; }
+}
+
+.board-roster-print-head {
+  display: none;
+  margin-bottom: 16px;
+  h2 { margin: 0 0 2px; font-size: 15pt; color: #000; }
+  .muted { font-size: 10pt; color: #555; }
+}
+.print-only { display: none; }
+
+.board-roster-grid {
+  column-count: 2;
+  column-gap: 24px;
+}
+
+.board-roster-group {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  display: inline-block;         // required for break-inside in some engines
+  width: 100%;
+  margin: 0 0 16px;
+  border: 1px solid #000;
+}
+
+.board-roster-group-title {
+  margin: 0;
+  padding: 4px 8px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
+  .muted { color: #c1c7d0; font-weight: 500; margin-left: 4px; }
+}
+
+.board-roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+
+  td {
+    padding: 3px 8px;
+    border-bottom: 1px solid #dde3ea;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: 0; }
+
+  .col-order { width: 72px; font-weight: 700; white-space: nowrap; }
+  .col-name  { color: #172b4d; }
+}
+
+@media print {
+  @page { size: letter; margin: 0.4in; }
+  .no-print { display: none !important; }
+  .print-only { display: block; }
+  .board-roster { padding: 0; max-width: none; }
+  .board-roster-group { break-inside: avoid; page-break-inside: avoid; }
+  .board-roster-table { font-size: 10pt; }
 }
 
 .board-new-column-toggle {
