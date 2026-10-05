@@ -27,6 +27,7 @@
           <% group[:resources].each do |r| %>
             <tr>
               <td class="col-order"><%= r.full_order_number %></td>
+              <td class="col-position"><%= r.position %></td>
               <td class="col-name"><%= r.name %></td>
             </tr>
           <% end %>
@@ -41,6 +42,7 @@
           <% @unassigned_resources.each do |r| %>
             <tr>
               <td class="col-order"><%= r.full_order_number %></td>
+              <td class="col-position"><%= r.position %></td>
               <td class="col-name"><%= r.name %></td>
             </tr>
           <% end %>

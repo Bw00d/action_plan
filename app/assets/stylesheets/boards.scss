@@ -162,8 +162,9 @@
   }
   tr:last-child td { border-bottom: 0; }
 
-  .col-order { width: 72px; font-weight: 700; white-space: nowrap; }
-  .col-name  { color: #172b4d; }
+  .col-order    { width: 72px; font-weight: 700; white-space: nowrap; }
+  .col-position { width: 80px; color: #42526e; white-space: nowrap; }
+  .col-name     { color: #172b4d; }
 }
 
 @media print {
