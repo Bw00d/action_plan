@@ -55,6 +55,54 @@ class ResourcesController < ApplicationController
                    type: 'application/pdf', disposition: 'inline'
   end
 
+  # GET /incidents/:incident_id/resources/tally_to_csv
+  # Flat CSV of the Resource Tally pivot — opens cleanly in Excel /
+  # Numbers / Google Sheets. First column is the agency; next column
+  # labels the count type (resources vs personnel); remaining columns
+  # mirror the on-screen tally (per-position + Overhead + Total +
+  # Non-209 + Total Incident). The Total row from the on-screen footer
+  # is appended at the bottom.
+  def tally_to_csv
+    require 'csv'
+    @incident = Incident.find(params[:incident_id])
+    pivot     = helpers.resource_tally_pivot(@incident)
+
+    # Columns that only carry a personnel value (no per-row resource
+    # count) — Overhead rolls up resources without position buckets,
+    # and the three summaries are purely personnel sums.
+    personnel_only_keys = %w[OVERHEAD TOTAL NON_209 TOTAL_INCIDENT].freeze
+
+    csv = CSV.generate do |out|
+      out << ['Agency', 'Count'] + pivot[:columns].map { |c| c[:label] }
+
+      pivot[:agencies].each do |agency|
+        cells = pivot[:rows][agency]
+        %i[resources personnel].each do |kind|
+          out << [agency, kind.to_s] +
+                 pivot[:columns].map { |c|
+                   next '' if kind == :resources && personnel_only_keys.include?(c[:key])
+                   v = cells[c[:key]][kind]
+                   v.to_i.zero? ? '' : v
+                 }
+        end
+      end
+
+      # Grand-total footer rows.
+      %i[resources personnel].each do |kind|
+        out << ['Total', kind.to_s] +
+               pivot[:columns].map { |c|
+                 next '' if kind == :resources && personnel_only_keys.include?(c[:key])
+                 v = pivot[:totals][c[:key]][kind]
+                 v.to_i.zero? ? '' : v
+               }
+      end
+    end
+
+    stamp    = Time.current.strftime('%Y%m%d_%H%M')
+    filename = "resource_tally_#{@incident.id}_#{stamp}.csv"
+    send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
+  end
+
   # GET /resources/new
   def new
     @resource = Resource.new

@@ -75,6 +75,7 @@ Rails.application.routes.draw do
         get  :isuite_import_progress
         get  :isuite_import_status
         get  :tally_to_pdf
+        get  :tally_to_csv
       end
       resources :demobs
     end

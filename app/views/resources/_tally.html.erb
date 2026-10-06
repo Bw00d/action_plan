@@ -18,6 +18,10 @@
           <%= link_to 'Download PDF',
                       tally_to_pdf_incident_resources_path(@incident, format: :pdf),
                       class: 'btn btn-primary btn-xs', target: :_blank %>
+          <%= link_to 'Download CSV',
+                      tally_to_csv_incident_resources_path(@incident),
+                      class: 'btn btn-default btn-xs',
+                      title: 'Export the live tally as CSV — opens in Excel, Numbers, or Google Sheets.' %>
           <%= link_to 'Print',
                       tally_to_pdf_incident_resources_path(@incident, format: :pdf),
                       class: 'btn btn-default btn-xs tally-print-link',
