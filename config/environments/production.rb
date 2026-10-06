@@ -22,6 +22,14 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
+  # Tell browsers to hard-cache fingerprinted asset files for a year.
+  # Rails adds a content hash to each asset filename, so a deploy that
+  # changes the file also changes its URL — browsers never serve stale
+  # bytes. Dramatic reduction in asset round-trips per page load.
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{1.year.to_i}, immutable"
+  }
+
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 

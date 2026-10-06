@@ -86,6 +86,10 @@ gem 'flatpickr'
 # iSuite imports doesn't hold the web request past Heroku's 30s H12
 # router timeout.
 gem 'good_job', '~> 3.99'
+# Aborts any request that exceeds RACK_TIMEOUT_SERVICE_TIMEOUT so a
+# slow query can't tie up a Puma worker indefinitely — the worker is
+# freed to serve the next user instead of racing Heroku's 30s H12.
+gem 'rack-timeout'
 
 group :test do
   gem 'database_cleaner'
