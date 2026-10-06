@@ -3,9 +3,26 @@ class DumpImportsController < ApplicationController
 
   before_action :set_incident
 
+  # Trimmed to actual US-state zones only. ActiveSupport's built-in
+  # .us_zones returns ~20 entries including Mexico/Canada/Pacific-island
+  # zones that share US offsets (Mazatlan, Chihuahua, Saskatchewan,
+  # Samoa, etc) — unhelpful noise in the IROC-dump importer.
+  US_ZONE_NAMES = [
+    'Hawaii', 'Alaska',
+    'Pacific Time (US & Canada)',
+    'Mountain Time (US & Canada)', 'Arizona',
+    'Central Time (US & Canada)',
+    'Eastern Time (US & Canada)', 'Indiana (East)'
+  ].freeze
+
   def new
-    @time_zones = ActiveSupport::TimeZone.us_zones
-    @default_zone = @incident.time_zone.presence || "Alaska"
+    @time_zones = US_ZONE_NAMES.map { |n| ActiveSupport::TimeZone[n] }.compact
+    # Prefer the incident's own zone when set, then the signed-in user's
+    # detected zone (populated by user_timezone.js on first page load),
+    # then Alaska as a last-ditch fallback.
+    @default_zone = @incident.time_zone.presence ||
+                    current_user&.time_zone.presence ||
+                    "Alaska"
   end
 
   def create
