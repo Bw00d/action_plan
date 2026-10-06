@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       member { post :swap_now }
     end
   end
-  resources :rosters, only: [] do
+  resources :rosters, only: [:update] do
     member do
       post :promote
       get  :demob_checkout   # lazy-creates the roster's demob, then redirects to it

@@ -10,10 +10,13 @@ module ApplicationHelper
     layout.is_a?(String) ? layout : layout.virtual_path.split('/').last
   end
 
-  # Select the appropriate Boostrap class for Rails's flash messages
+  # Select the appropriate Boostrap class for Rails's flash messages.
+  # `notice` is Rails' default success-ish flash key (what every
+  # controller uses when `redirect_to … notice: "Added …"`) — map it
+  # to the green alert-success for a consistent app-wide look.
   def bootstrap_class_for(flash_type)
     case flash_type
-    when 'success'
+    when 'notice', 'success'
       'alert-success'   # Green
     when 'error'
       'alert-danger'    # Red

@@ -42,9 +42,15 @@
                     data-url="<%= swap_now_resource_event_path(resource, ev) %>">
               SWAP NOW
             </button>
+            <%# No data-confirm — jQuery UJS would catch it and show the
+                app-styled sweetalert, but we also run our own confirm
+                flow in boards.js (via sweetalert2 directly) so the
+                feed can refresh after the ajax DELETE. Keeping both
+                would double-prompt. The data-message attribute carries
+                the confirmation text for the JS handler. %>
             <button type="button" class="btn btn-default btn-xs board-card-event-delete"
                     data-url="<%= resource_event_path(resource, ev) %>"
-                    data-confirm="Delete this scheduled swap?">Delete</button>
+                    data-message="Delete this scheduled swap?">Delete</button>
           </div>
 
         <% when :completed_swap %>

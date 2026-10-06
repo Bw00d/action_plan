@@ -23,6 +23,21 @@ class Roster < ApplicationRecord
   scope :released,   -> { where.not(released_at: nil) }
   scope :unpromoted, -> { where(promoted_resource_id: nil) }
   scope :promoted,   -> { where.not(promoted_resource_id: nil) }
+  # Per-subordinate status for tally math. C = Checked in (present,
+  # counted); F = Filled (on the roster but not here, excluded from
+  # personnel_by_agency). Added so long crew rosters can show every
+  # person without inflating the on-the-ground headcount.
+  scope :checked_in, -> { where(status: 'C') }
+  scope :filled,     -> { where(status: 'F') }
+
+  STATUS_CHOICES = { 'C' => 'C — Checked in', 'F' => 'F — Filled (not present)' }.freeze
+
+  def checked_in?
+    status.to_s == 'C'
+  end
+  def filled?
+    status.to_s == 'F'
+  end
 
   default_scope { order(:position_num, :order_number) }
 

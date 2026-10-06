@@ -87,8 +87,8 @@
       <% end %>
     </div>
 
-    <% if flash[:notice] %><div class="alert alert-success"><%= flash[:notice] %></div><% end %>
-    <% if flash[:error] %><div class="alert alert-danger"><%= flash[:error] %></div><% end %>
+    <%# Flash messages are already rendered globally by layouts/application.html.erb
+        (with a close button). Keeping a second copy here duplicates every notice. %>
   </header>
 
   <div class="board-layout">

@@ -1,7 +1,22 @@
 class RostersController < ApplicationController
   include SkipAuthorization
 
-  before_action :set_roster, only: [:promote, :demob_checkout]
+  before_action :set_roster, only: [:update, :promote, :demob_checkout]
+
+  # PATCH /rosters/:id — inline best_in_place edits. Right now only
+  # `status` (C / F) is exposed; other roster fields are edited
+  # elsewhere or set by the import flow.
+  def update
+    respond_to do |format|
+      if @roster.update(roster_params)
+        format.html { redirect_back fallback_location: root_path }
+        format.json { respond_with_bip(@roster) }
+      else
+        format.html { redirect_back fallback_location: root_path, alert: @roster.errors.full_messages.to_sentence }
+        format.json { respond_with_bip(@roster) }
+      end
+    end
+  end
 
   # POST /rosters/:id/promote
   def promote
@@ -31,5 +46,9 @@ class RostersController < ApplicationController
 
   def set_roster
     @roster = Roster.find(params[:id])
+  end
+
+  def roster_params
+    params.require(:roster).permit(:status)
   end
 end

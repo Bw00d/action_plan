@@ -97,13 +97,25 @@
               not after "1" (default DB order is lexicographic string). %>
           <% r.rosters.active.sort_by(&:natural_sort_key).each do |ros| %>
             <% depth = ros.full_order_number.count('.') %>
-            <tr class="resource-roster-row is-hidden depth-<%= depth %>" data-resource-id="<%= r.id %>">
+            <tr class="resource-roster-row is-hidden depth-<%= depth %> roster-status-<%= ros.status %>"
+                data-resource-id="<%= r.id %>">
               <td class="roster-order-cell" style="padding-left: <%= 20 + depth * 20 %>px">
                 <%= ros.full_order_number %>
               </td>
               <td class="roster-position-cell"><%= ros.position %></td>
               <td class="roster-name-cell"><%= ros.name %></td>
               <td colspan="9" class="roster-filler-cell">
+                <%# C / F toggle. Filled subordinates stay on the list
+                    but are excluded from Resource#personnel_by_agency,
+                    so the tally reflects only who's actually on the
+                    ground. best_in_place PATCHes the roster inline. %>
+                <%= best_in_place ros, :status,
+                                  as: :select,
+                                  collection: Roster::STATUS_CHOICES,
+                                  path: roster_path(ros),
+                                  html_attrs: { class: 'roster-status-pill',
+                                                'data-reload-on-save' => true },
+                                  display_with: ->(v) { v == 'F' ? 'Filled' : 'Checked in' } %>
                 <% if ros.promoted? %>
                   <span class="text-muted small">&rarr; Promoted to <%= ros.promoted_resource.full_order_number %></span>
                 <% else %>

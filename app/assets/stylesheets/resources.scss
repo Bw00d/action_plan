@@ -745,6 +745,14 @@ input.fwd-datepicker {
 
   &.is-hidden { display: none; }
 
+  // "Filled" roster rows — listed but not counted in the tally. Dimmed
+  // + italicized so operators can scan the list and see at a glance
+  // who's on paper vs. who's actually on the ground.
+  &.roster-status-F {
+    opacity: 0.55;
+    .roster-name-cell, .roster-position-cell { font-style: italic; }
+  }
+
   td {
     color: #5e6c84;
     font-size: 12px;
@@ -758,6 +766,39 @@ input.fwd-datepicker {
   }
 
   &.depth-2 { background: #eef1f5; }
+}
+
+// Status pill (C/F best_in_place select). Tiny, pill-shaped — reads
+// like a label, not a field. The adjacent-sibling + descendant rules
+// shrink the <select> widget best_in_place swaps in on click so it
+// doesn't inherit a form-wide width.
+.roster-status-pill {
+  display: inline-block;
+  width: auto;
+  padding: 1px 8px;
+  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  background: #e3f2e3;
+  color: #1b5e20;
+  cursor: pointer;
+  .roster-status-F & { background: #ececec; color: #666; }
+}
+
+// Compact the <select> element that best_in_place drops in while the
+// user is picking a value — without this it inherits Bootstrap's
+// 100%-width .form-control sizing.
+.roster-filler-cell select {
+  width: auto !important;
+  min-width: 0 !important;
+  display: inline-block;
+  height: auto;
+  padding: 1px 20px 1px 6px;
+  font-size: 11px;
+  line-height: 1.3;
 }
 
 // Resource Tally print — activated by adding .printing-tally on <body>

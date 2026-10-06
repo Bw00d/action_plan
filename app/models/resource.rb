@@ -221,12 +221,15 @@ class Resource < ApplicationRecord
   end
 
   # Breaks the resource's personnel count down by agency. When a roster
-  # exists (imported subordinates), each active roster row is one person
-  # in its own agency; when no roster exists, the whole crew rolls up
-  # under the parent resource's agency using number_personnel.
+  # exists (imported subordinates), each CHECKED-IN roster row is one
+  # person in its own agency; "Filled" rosters are listed but excluded
+  # from the live count so a 20-person crew that only sent 15 can show
+  # all 20 names without inflating the tally. When no roster exists at
+  # all, the whole crew rolls up under the parent resource's agency
+  # using number_personnel.
   def personnel_by_agency
     if rosters.exists?
-      rosters.active.unpromoted
+      rosters.active.unpromoted.checked_in
              .group_by { |r| r.agency.presence || agency }
              .transform_values(&:count)
     else

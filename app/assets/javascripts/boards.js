@@ -263,20 +263,43 @@
     });
 
     // Delete an event (scheduled swap or comment only — server also
-    // enforces this).
+    // enforces this). Uses sweetalert2 (loaded globally) so the prompt
+    // matches the app's other destructive confirmations instead of the
+    // browser's native window.confirm.
     $(page).on('click', '.board-card-event-delete', function () {
-      var $btn = $(this);
-      if (!window.confirm($btn.data('confirm') || 'Delete this entry?')) return;
+      var $btn  = $(this);
       var $side = $btn.closest('.board-card-details-side');
-      $.ajax({
-        url:    $btn.data('url'),
-        method: 'DELETE',
-        headers: { 'X-CSRF-Token': csrf(), 'Accept': 'text/html' }
-      }).done(function (html) { replaceFeed($side, html); })
-        .fail(function (xhr) {
-          var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Delete failed']).join(', ');
-          alert(msg);
-        });
+      var message = $btn.data('message') || 'Delete this entry?';
+      function doDelete() {
+        $.ajax({
+          url:    $btn.data('url'),
+          method: 'DELETE',
+          headers: { 'X-CSRF-Token': csrf(), 'Accept': 'text/html' }
+        }).done(function (html) { replaceFeed($side, html); })
+          .fail(function (xhr) {
+            var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Delete failed']).join(', ');
+            alert(msg);
+          });
+      }
+      // Match the app's custom-confirmation-popup.js override — it uses
+      // the legacy `sweetAlert` global (not `Swal.fire`), so that's
+      // what's actually loaded here. Keeping settings consistent with
+      // that override so this dialog looks identical to every other
+      // confirm in the app.
+      if (typeof sweetAlert === 'function') {
+        sweetAlert({
+          title: message,
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Confirm',
+          confirmButtonColor: '#d9534f',
+          allowEnterKey: false
+        }).then(function () { doDelete(); },
+                function () { /* dismissed */ });
+      } else {
+        // Fallback — only reached if sweetalert2 fails to load.
+        if (window.confirm(message)) doDelete();
+      }
     });
 
     // Patch a single best_in_place display + its data-bip-value so the
