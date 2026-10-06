@@ -19,9 +19,21 @@
     data-personnel="<%= resource.effective_personnel.to_i %>"
     data-fwd="<%= resource.fwd&.iso8601 %>"
     data-assignment-length="<%= resource.assignment_length %>">
+  <% scheduled_swap = resource.resource_events.where(kind: ResourceEvent.kinds[:scheduled_swap]).order(:fwd).first %>
   <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
     <span class="board-card-agency"><%= resource.agency %></span>
+    <%# Pulsing yellow pill when a crew swap is scheduled — immediate
+        visual tickler on the small card without expanding. Tooltip
+        shows the incoming operator + their FWD so the user doesn't
+        have to open the modal to recall what's pending. %>
+    <% if scheduled_swap %>
+      <% swap_tip = "Swap scheduled: #{scheduled_swap.leader}" \
+                    "#{" (FWD #{scheduled_swap.fwd.strftime('%-m/%-d')})" if scheduled_swap.fwd}" %>
+      <span class="board-card-swap-flag" title="<%= swap_tip %>">
+        <i class="fa fa-exchange" aria-hidden="true"></i> SWAP
+      </span>
+    <% end %>
     <button type="button" class="board-card-move-toggle" title="Move to another section">
       <i class="fa fa-arrows" aria-hidden="true"></i> Move
     </button>

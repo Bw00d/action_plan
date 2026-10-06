@@ -22,10 +22,11 @@ class ResourceEvent < ApplicationRecord
 
   validates :kind, presence: true
 
-  # Comment events need a body; swap events need at least a leader to
-  # be worth logging. LWD stays optional at the model level (the
-  # scheduled form requires it client-side) so legacy data can import
-  # cleanly.
+  # Comment events need a body; SCHEDULED swap events need at least a
+  # leader (the user is entering a future operator — blank is almost
+  # certainly a mistake). COMPLETED swap events have no such minimum —
+  # they're historical snapshots of whatever was on the Resource at
+  # swap time, including resources that had no leader logged yet.
   validate :body_or_swap_fields_present
 
   # `.reorder` instead of `.order` — the Resource has_many sets a
@@ -49,8 +50,9 @@ class ResourceEvent < ApplicationRecord
   def body_or_swap_fields_present
     if comment?
       errors.add(:body, "can't be blank") if body.blank?
-    elsif swap?
+    elsif scheduled_swap?
       errors.add(:leader, "can't be blank") if leader.blank?
     end
+    # completed_swap: no required fields — purely historical.
   end
 end

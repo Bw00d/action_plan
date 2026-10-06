@@ -479,6 +479,37 @@
   text-overflow: ellipsis;
 }
 
+// Pulsing yellow "SWAP" chip on the small-card strip when a crew swap
+// is scheduled. Sized small so it fits in the strip alongside the
+// icon + agency, with a slow glow so it reads as a tickler without
+// being hostile. Hidden on print.
+.board-card-swap-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  margin-left: 6px;
+  background: #ffb400;
+  color: #000;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  animation: board-swap-pulse 2.2s ease-in-out infinite;
+
+  .fa { font-size: 10px; }
+}
+
+@keyframes board-swap-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 180, 0, 0.65); }
+  50%      { box-shadow: 0 0 0 5px rgba(255, 180, 0, 0.0); }
+}
+
+@media print {
+  .board-card-swap-flag { animation: none; display: none; }
+}
+
 .board-card-body {
   padding: 8px 10px 22px;
   position: relative;
