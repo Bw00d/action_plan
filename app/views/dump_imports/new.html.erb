@@ -1,10 +1,10 @@
 <%= content_for :title, "Import IROC Dump" %>
 
-<div class="incident-name">
-  <h1><%= link_to @incident.display_incident_name, @incident %></h1>
-</div>
 
 <div class="dump-import">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
   <h2>Import IROC Dump</h2>
   <p class="muted">
     Upload an IROC / e-ISuite Cognos XML dump for this incident. New request lines
