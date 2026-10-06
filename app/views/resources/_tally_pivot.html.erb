@@ -3,7 +3,19 @@
   built by resource_tally_pivot (optionally scoped to a future date for
   the forecast tabs). Rendering is identical for the live tally and
   each forecast panel.
+
+  Columns:
+    - Per-position Crew/Aircraft/Equipment (per-row resource count AND
+      personnel count).
+    - "# of Overhead" (personnel-only — overhead resources aren't
+      kind-typed into position buckets).
+    - Three summary columns at the far right:
+        TOTAL          — sum of all per-position + Overhead personnel
+        NON_209        — personnel assigned to the Non-209 org_unit
+        TOTAL_INCIDENT — TOTAL + NON_209
+      Summary columns show personnel only (no resource count).
 %>
+<% personnel_only_keys = %w[OVERHEAD TOTAL NON_209 TOTAL_INCIDENT].freeze %>
 <% if pivot[:agencies].empty? %>
   <p class="muted"><em>No assigned resources on this date.</em></p>
 <% else %>
@@ -14,7 +26,7 @@
           <th class="tally-agency-col">Agency or Organization</th>
           <th class="tally-count-col"></th>
           <% pivot[:columns].each do |col| %>
-            <th class="tally-col-header <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+            <th class="tally-col-header <%= 'is-total' if col[:total] %>">
               <div class="tally-col-label"><%= col[:label] %></div>
             </th>
           <% end %>
@@ -28,8 +40,8 @@
             <td class="tally-count-label">resources</td>
             <% pivot[:columns].each do |col| %>
               <% cell = cells[col[:key]] %>
-              <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
-                <% unless col[:overhead] || col[:total] %>
+              <td class="tally-cell <%= 'is-total' if col[:total] %>">
+                <% unless personnel_only_keys.include?(col[:key]) %>
                   <%= cell[:resources].positive? ? cell[:resources] : '' %>
                 <% end %>
               </td>
@@ -39,7 +51,7 @@
             <td class="tally-count-label">personnel</td>
             <% pivot[:columns].each do |col| %>
               <% cell = cells[col[:key]] %>
-              <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+              <td class="tally-cell <%= 'is-total' if col[:total] %>">
                 <%= cell[:personnel].positive? ? cell[:personnel] : '' %>
               </td>
             <% end %>
@@ -52,8 +64,8 @@
           <td class="tally-count-label">resources</td>
           <% pivot[:columns].each do |col| %>
             <% t = pivot[:totals][col[:key]] %>
-            <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
-              <% unless col[:overhead] || col[:total] %>
+            <td class="tally-cell <%= 'is-total' if col[:total] %>">
+              <% unless personnel_only_keys.include?(col[:key]) %>
                 <%= t[:resources].positive? ? t[:resources] : '' %>
               <% end %>
             </td>
@@ -63,7 +75,7 @@
           <td class="tally-count-label">personnel</td>
           <% pivot[:columns].each do |col| %>
             <% t = pivot[:totals][col[:key]] %>
-            <td class="tally-cell <%= 'is-overhead' if col[:overhead] %> <%= 'is-total' if col[:total] %>">
+            <td class="tally-cell <%= 'is-total' if col[:total] %>">
               <%= t[:personnel].positive? ? t[:personnel] : '' %>
             </td>
           <% end %>

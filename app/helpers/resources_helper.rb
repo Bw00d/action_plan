@@ -83,13 +83,22 @@ module ResourcesHelper
   def resource_tally_pivot(incident, on_date: nil)
     resources = incident.tally_resources.includes(:rosters)
 
+    # Non-209 resources (sidelined support slots — buyers, dispatch, etc)
+    # are tracked in their own column so leadership can see the full
+    # footprint without them polluting the per-position breakdown. Also
+    # projected forward when on_date is supplied.
+    non_209_resources = Resource.where(id: incident.non_209_resource_ids)
+                                .includes(:rosters).to_a
+
     if on_date
-      resources = resources.select do |r|
+      lwd_release_filter = ->(r) {
         lwd = r.last_work_day
         lwd_ok     = !lwd.is_a?(Date) || lwd >= on_date
         release_ok = r.release_date.nil? || r.release_date > on_date
         lwd_ok && release_ok
-      end
+      }
+      resources         = resources.select(&lwd_release_filter)
+      non_209_resources = non_209_resources.select(&lwd_release_filter)
     end
 
     # Discover positions per category. Skip blank positions — those
@@ -101,7 +110,7 @@ module ResourcesHelper
     end
 
     # Build column list in a stable order: Crew, Aircraft, Equipment,
-    # then Overhead, then Total.
+    # Overhead, then the three summary columns.
     columns = []
     %w[CREW AIRCRAFT EQUIPMENT].each do |cat|
       positions_by_category[cat].to_a.sort.each do |pos|
@@ -113,12 +122,19 @@ module ResourcesHelper
         }
       end
     end
-    columns << { key: 'OVERHEAD', label: '# of Overhead', overhead: true }
-    columns << { key: 'TOTAL',    label: 'Total Personnel',         total:    true }
+    # Overhead is a per-position style column (no longer flagged as a
+    # summary/total column) so it gets the same visual treatment as the
+    # Crew/Aircraft/Equipment columns.
+    columns << { key: 'OVERHEAD',       label: '# of Overhead',    category: 'OVERHEAD' }
+    columns << { key: 'TOTAL',          label: 'Total Personnel',  total: true }
+    columns << { key: 'NON_209',        label: 'Non-209',          total: true }
+    columns << { key: 'TOTAL_INCIDENT', label: 'Total Incident',   total: true }
 
-    # Discover agencies and initialize empty cells.
+    # Agencies come from BOTH the main tally AND the Non-209 bucket, so
+    # a Non-209-only agency still gets a row (even if its per-position
+    # cells are all empty).
     agencies = Set.new
-    resources.each do |r|
+    (resources + non_209_resources).each do |r|
       r.personnel_by_agency.each_key { |a| agencies << a if a.present? }
     end
     agencies = agencies.to_a.sort
@@ -128,9 +144,7 @@ module ResourcesHelper
       h[agency] = columns.each_with_object({}) { |c, cells| cells[c[:key]] = empty_cell.call }
     end
 
-    # Fill cells. A resource contributes to a (agency, column) bucket
-    # once per agency in its personnel_by_agency map. Overhead resources
-    # roll up into the single OVERHEAD column regardless of position.
+    # Fill the per-position + overhead cells from the main tally scope.
     resources.each do |r|
       col_key =
         case r.category
@@ -150,13 +164,29 @@ module ResourcesHelper
       end
     end
 
-    # Row-wise Total Personnel — sum every non-Total column's personnel.
-    rows.each do |_agency, cells|
-      cells['TOTAL'][:personnel] = cells.reject { |k, _| k == 'TOTAL' }
-                                        .values.sum { |v| v[:personnel] }
+    # Fill the Non-209 column from the Non-209 bucket. Personnel-only;
+    # resource count is intentionally omitted to match the Overhead
+    # treatment (they're grouped, not kind-typed).
+    non_209_resources.each do |r|
+      r.personnel_by_agency.each do |agency, count|
+        next if agency.blank?
+        next unless rows[agency]
+        rows[agency]['NON_209'][:personnel] += count
+      end
     end
 
-    # Column totals.
+    # Row-wise summaries:
+    #   Total Personnel  = sum of every per-position + Overhead column
+    #   Total Incident   = Total Personnel + Non-209
+    summary_keys = %w[TOTAL NON_209 TOTAL_INCIDENT].freeze
+    rows.each do |_agency, cells|
+      cells['TOTAL'][:personnel] =
+        cells.reject { |k, _| summary_keys.include?(k) }.values.sum { |v| v[:personnel] }
+      cells['TOTAL_INCIDENT'][:personnel] =
+        cells['TOTAL'][:personnel] + cells['NON_209'][:personnel]
+    end
+
+    # Column totals (footer row). Same shape as rows.
     totals = columns.each_with_object({}) { |c, h| h[c[:key]] = empty_cell.call }
     rows.each_value do |cells|
       cells.each do |k, v|
