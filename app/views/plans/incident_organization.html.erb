@@ -68,11 +68,9 @@
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
 
-  # Split "0800 - 2200" style ops_period into from / to halves for the
-  # standard-form Date/Time header cells. Gracefully falls back to the
-  # whole string in "from" if there's no separator.
-  op_from, op_to = @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).map(&:presence)
-  date_str = @plan.date&.strftime('%m/%d/%Y')
+  # Date/Time From / To header cells are now editable flatpickr inputs
+  # bound to plan.ops_period_from / ops_period_to (see below), so the
+  # previous op_from / op_to / date_str string-splitting is gone.
 %>
 <div id="organization-assignments">
   <div class="container">
@@ -119,14 +117,23 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-6 content-box org-header-cell">
-              <div class="org-header-label"><span class="small">Date/Time From:</span></div>
-              <div class="org-header-value"><%= [date_str, op_from].compact.join(' ') %></div>
-            </div>
-            <div class="col-xs-6 content-box org-header-cell">
-              <div class="org-header-label"><span class="small">Date/Time To:</span></div>
-              <div class="org-header-value"><%= [date_str, op_to].compact.join(' ') %></div>
-            </div>
+            <%# Editable Date/Time From / To — same flatpickr inputs the
+                202 uses on plan.ops_period_from / ops_period_to. Edits
+                here flow through to the 202 header + the 204 PDF too,
+                since all three forms share the same Plan columns. %>
+            <% [:ops_period_from, :ops_period_to].each_with_index do |field, i| %>
+              <div class="col-xs-6 content-box org-header-cell">
+                <div class="org-header-label"><span class="small"><%= i.zero? ? 'Date/Time From:' : 'Date/Time To:' %></span></div>
+                <div class="org-header-value">
+                  <input type="text"
+                         class="org-dt-picker"
+                         data-url="<%= incident_plan_path(@incident, @plan) %>"
+                         data-field="plan[<%= field %>]"
+                         value="<%= @plan.public_send(field)&.strftime('%m/%d/%Y %H:%M') %>"
+                         placeholder="MM/DD/YYYY HH:MM">
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
@@ -480,6 +487,40 @@
     $(document).off("change.orgPrep focusout.orgPrep")
                .on("change.orgPrep focusout.orgPrep", ".org-prepared-at-picker", function () {
       savePreparedAt(this.value || "");
+    });
+
+    // Date/Time From / To inputs in the 203 header. Same flatpickr +
+    // auto-save pattern as the 202's sheet-dt-pickers — PATCHes the
+    // plan directly, so the 202 and 204 pick up the change too.
+    var dtInputs = document.querySelectorAll(".org-dt-picker");
+    function saveDtInput(input, dateStr) {
+      var data = { authenticity_token: $('meta[name="csrf-token"]').attr("content") };
+      data[input.dataset.field] = dateStr;
+      $.ajax({
+        url:     input.dataset.url,
+        type:    "PATCH",
+        data:    data,
+        dataType: "json",
+        headers: { "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content") }
+      }).fail(function (xhr) {
+        console.error("ops_period save failed:", xhr.status, xhr.responseText);
+      });
+    }
+    if (typeof flatpickr !== "undefined") {
+      dtInputs.forEach(function (input) {
+        flatpickr(input, {
+          enableTime: true,
+          time_24hr:  true,
+          dateFormat: "m/d/Y H:i",
+          allowInput: true,
+          onChange: function (_d, dateStr) { saveDtInput(input, dateStr); },
+          onClose:  function (_d, dateStr) { saveDtInput(input, dateStr); }
+        });
+      });
+    }
+    $(document).off("change.orgDt focusout.orgDt")
+               .on("change.orgDt focusout.orgDt", ".org-dt-picker", function () {
+      saveDtInput(this, this.value || "");
     });
   });
 </script>

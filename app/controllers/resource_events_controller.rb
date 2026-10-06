@@ -107,7 +107,12 @@ class ResourceEventsController < ApplicationController
     @resource.reload
     lwd = @resource.last_work_day
     render json: {
+      # formats: [:html] is required — this action responds as JSON, so
+      # render_to_string inherits that format and would look for
+      # _activity_feed.json.erb (which doesn't exist) and raise
+      # MissingTemplate. Same gotcha as the iSuite import summary.
       feed_html: render_to_string(partial: 'boards/activity_feed',
+                                  formats: [:html],
                                   locals:  { resource: @resource, events: @resource.resource_events.newest_first }),
       resource: {
         leader:            @resource.leader.to_s,

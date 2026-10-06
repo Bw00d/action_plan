@@ -33,3 +33,11 @@ coverage/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Precompiled assets — Heroku's buildpack runs rake assets:precompile
+# on every deploy, so these shouldn't be in the repo. Committing them
+# bloats history and causes the buildpack to SKIP its own precompile
+# (which would serve stale CSS/JS in prod if the local build was stale).
+/public/assets
+/public/packs
+/public/packs-test

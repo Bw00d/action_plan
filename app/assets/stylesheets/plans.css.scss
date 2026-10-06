@@ -736,6 +736,39 @@ input.org-prepared-at-picker.form-control,
     background: #fffbe6 !important;
   }
 }
+
+// 203 header Date/Time From / To pickers — same borderless treatment
+// as the footer prepared-at picker above so they read as plain text
+// in the ICS header cell, not a bordered form input.
+input.org-dt-picker,
+input.org-dt-picker.flatpickr-input,
+input.org-dt-picker.form-control,
+.org-dt-picker {
+  display: inline;
+  width: 100%;
+  height: auto !important;
+  line-height: inherit !important;
+  vertical-align: baseline;
+  border: 0 none !important;
+  outline: 0 none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font: inherit;
+  color: inherit;
+  border-radius: 0 !important;
+  -webkit-appearance: none !important;
+  -moz-appearance:    none !important;
+  appearance:         none !important;
+  &:focus, &:active, &:hover {
+    border: 0 none !important;
+    outline: 0 none !important;
+    box-shadow: none !important;
+    background: #fffbe6 !important;
+  }
+}
+
 .org-footer-meta {
   padding: 4px 8px 0;
   font-size: 0.85em;
