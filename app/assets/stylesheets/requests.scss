@@ -1,5 +1,16 @@
 // Styles for the /incidents/:id/requests index page (IROC dump viewer)
 
+// Shared container for the IROC dump importer screen — matches the
+// requests-index wrapper width so the form doesn't stretch edge-to-edge.
+.dump-import {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 20px;
+
+  h2 { margin: 0 0 8px; }
+  .form-group { max-width: 520px; }
+}
+
 .requests-index {
   max-width: 1200px;
   margin: 24px auto;
