@@ -78,6 +78,39 @@
 
         <div class="csp-sep"></div>
 
+        <%# Text color — click swatch to open a small palette. Mirrors
+            the font-family picker pattern: the trigger is a button that
+            previews the current color; selecting an option sends a
+            PATCH + applies the color to the selected block live. %>
+        <div class="csp-color-picker-wrap">
+          <button type="button" class="csp-btn csp-color-picker" title="Text color">
+            <span class="csp-color-swatch" style="background: #000;">A</span>
+          </button>
+          <div class="csp-color-menu" style="display:none;">
+            <% [
+                 ['Black',       '#000000'],
+                 ['Dark Gray',   '#424242'],
+                 ['White',       '#ffffff'],
+                 ['Red',         '#c62828'],
+                 ['Orange',      '#ef6c00'],
+                 ['Yellow',      '#f9a825'],
+                 ['Green',       '#2e7d32'],
+                 ['Teal',        '#00695c'],
+                 ['Blue',        '#1565c0'],
+                 ['Navy',        '#0d3b66'],
+                 ['Purple',      '#6a1b9a'],
+                 ['Brown',       '#5d4037']
+               ].each do |name, hex| %>
+              <button type="button" class="csp-color-option"
+                      data-value="<%= hex %>"
+                      title="<%= name %>"
+                      style="background: <%= hex %>;"></button>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="csp-sep"></div>
+
         <%# Alignment — icons for left / center / right. %>
         <button type="button" class="csp-btn csp-align-btn" data-attr="text_align" data-value="left"   title="Align left"  >L</button>
         <button type="button" class="csp-btn csp-align-btn" data-attr="text_align" data-value="center" title="Align center">C</button>

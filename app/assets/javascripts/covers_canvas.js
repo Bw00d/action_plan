@@ -321,6 +321,16 @@ $(document).on("turbolinks:load", function () {
     } else {
       $pxInput.val("");
     }
+
+    // Mirror the selected block's text color onto the picker swatch so
+    // the user sees "this is the current color" at a glance.
+    var $swatch = $panel.find(".csp-color-picker .csp-color-swatch");
+    if ($block && !isNonText) {
+      var color = $block.css("color") || $block.attr("data-text-color") || "#000";
+      $swatch.css("background", color);
+    } else {
+      $swatch.css("background", "#000");
+    }
   }
 
   function setSelected($block) {
@@ -348,8 +358,8 @@ $(document).on("turbolinks:load", function () {
   $(document).off("click.coverDeselect").on("click.coverDeselect", function (e) {
     if ($(e.target).closest(".cover-block, .cover-style-panel, .cover-upload-form").length) return;
     setSelected(null);
-    // Any click outside the panel also closes the font menu.
-    $(".csp-font-menu").hide();
+    // Any click outside the panel also closes the pop-up menus.
+    $(".csp-font-menu, .csp-color-menu").hide();
   });
 
   // ── Font family picker ─────────────────────────────────────────────
@@ -376,6 +386,32 @@ $(document).on("turbolinks:load", function () {
 
     $selected.css("font-family", value);
     saveBlockRect($selected.data("block-id"), { font_family: value });
+    refreshPanelFromBlock($selected);
+  });
+
+  // ── Text color picker ──────────────────────────────────────────────
+  // Same pattern as the font-family picker. Swatch button opens a small
+  // palette; clicking a swatch applies the color inline on the selected
+  // block and PATCHes text_color. No-op (menu toggle only) when nothing
+  // is selected or when the selection is an image block.
+  $panel.off("click.coverColorPicker").on("click.coverColorPicker", ".csp-color-picker", function (e) {
+    e.stopPropagation();
+    $panel.find(".csp-color-menu").toggle();
+  });
+
+  $panel.off("click.coverColorOption").on("click.coverColorOption", ".csp-color-option", function (e) {
+    e.stopPropagation();
+    var value = $(this).data("value") || "";
+    $panel.find(".csp-color-menu").hide();
+
+    var $selected = $canvas.find(".cover-block.is-selected");
+    if (!$selected.length) return;
+    if ($selected.hasClass("is-image")) return;
+
+    $selected.css("color", value);
+    // Mirror the swatch so the swatch button previews the current color.
+    $panel.find(".csp-color-picker .csp-color-swatch").css("background", value);
+    saveBlockRect($selected.data("block-id"), { text_color: value });
     refreshPanelFromBlock($selected);
   });
 

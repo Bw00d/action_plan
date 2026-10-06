@@ -655,6 +655,53 @@
     &:focus  { outline: none; }
   }
 
+  // Text-color picker — same positioning pattern as the font picker.
+  // Swatch button shows the current color; the pop-up menu lays swatches
+  // out in a 4-wide grid so the full palette is visible at a glance.
+  .csp-color-picker-wrap { position: relative; }
+
+  .csp-color-swatch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+    line-height: 1;
+  }
+
+  .csp-color-menu {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    margin-right: 6px;
+    background: #3d3d3d;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    padding: 6px;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: repeat(4, 22px);
+    gap: 6px;
+  }
+
+  .csp-color-option {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 0;
+    cursor: pointer;
+
+    &:hover { transform: scale(1.1); border-color: #fff; }
+    &:focus { outline: none; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); }
+  }
+
   // Pixel size input — matches the panel's dark strip aesthetic.
   .csp-px-input {
     width: 100%;
