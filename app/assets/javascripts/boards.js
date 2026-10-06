@@ -282,8 +282,12 @@
     // Patch a single best_in_place display + its data-bip-value so the
     // next edit opens with the fresh value. Called after SWAP NOW so
     // the modal reflects the new operator without a page reload.
+    //
+    // best_in_place 3.x stores the field name on `data-bip-attribute`,
+    // not `data-attribute` — the latter was a long-standing wrong
+    // assumption in this app that only worked by coincidence elsewhere.
     function patchBip($scope, attribute, value) {
-      var $bip = $scope.find('.best_in_place[data-attribute="' + attribute + '"]').first();
+      var $bip = $scope.find('.best_in_place[data-bip-attribute="' + attribute + '"]').first();
       if (!$bip.length) return;
       var text = (value == null || value === '') ? '' : String(value);
       $bip.text(text).attr('data-bip-value', text);
