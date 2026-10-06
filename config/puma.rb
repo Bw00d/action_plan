@@ -19,20 +19,25 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
-# Specifies the number of `workers` to boot in clustered mode.
-# Workers are forked web server processes. If using threads and workers together
-# the concurrency of the application would be max `threads` * `workers`.
-# Workers do not work on JRuby or Windows (both of which do not support
-# processes).
-#
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+# Clustered mode — forks N worker processes so the app can handle
+# multiple requests in parallel on real CPU cores. WEB_CONCURRENCY is
+# set in Heroku config; defaults to 2 for Standard-1X / 3 for
+# Standard-2X. Combined with 5 threads each, that's ~10–15 concurrent
+# in-flight requests before any queue — plenty for ~24 concurrent
+# users of this app.
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
-# Use the `preload_app!` method when specifying a `workers` number.
-# This directive tells Puma to first boot the application and load code
-# before forking the application. This takes advantage of Copy On Write
-# process behavior so workers use less memory.
-#
-# preload_app!
+# preload_app! lets the N workers share the already-loaded application
+# via copy-on-write, so memory per extra worker is a fraction of a
+# fresh boot. Required for the on_worker_boot DB reconnection below.
+preload_app!
+
+# After the master forks a worker, re-establish its ActiveRecord
+# connection — without this, forked workers inherit the master's
+# connection and fight over it.
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+end
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
