@@ -3,12 +3,29 @@ class AssignmentsController < ApplicationController
   include SkipAuthorization
   # skip_before_action :authenticate_user!
 
+  # Sort the plan's assignments for the tab row display: Divisions
+  # first (alphabetical by designator), then Groups (alphabetical by
+  # designator), then anything else (legacy / no org_unit) alphabetically.
+  # OrgUnit.kinds[:division] = 3, [:group] = 4; everything else sorts
+  # after via the 99 fallback.
+  def ordered_assignments(plan)
+    plan.assignments.includes(:org_unit).sort_by do |a|
+      kind     = a.org_unit&.kind
+      bucket   = case kind
+                 when 'division' then 0
+                 when 'group'    then 1
+                 else                 2
+                 end
+      [bucket, a.display_designator.to_s.upcase]
+    end
+  end
+
   # GET /assignments
   # GET /assignments.json
   def index
     @plan = Plan.find(params[:plan_id])
     @incident = Incident.find(@plan.incident_id)
-    @assignments = @plan.assignments
+    @assignments = ordered_assignments(@plan)
   end
 
   # GET /assignments/1
@@ -16,7 +33,7 @@ class AssignmentsController < ApplicationController
   def show
     @plan = Plan.find(params[:plan_id])
     @incident = Incident.find(@plan.incident_id)
-    @assignments = @plan.assignments
+    @assignments = ordered_assignments(@plan)
     # @freq = Freq.new
   end
 
@@ -24,7 +41,7 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.find(params[:id])
     @plan = Plan.find(@assignment.plan_id)
     @incident = Incident.find(@plan.incident_id)
-    @assignments = @plan.assignments
+    @assignments = ordered_assignments(@plan)
     
     respond_to do |format|
       format.pdf do
