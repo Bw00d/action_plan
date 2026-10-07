@@ -11,13 +11,19 @@
   font_px   = 24 if font_px <= 0
 %>
 <% is_notes = block.kind == "notes" %>
+<% is_border = block.kind == 'border' %>
 <div id="<%= dom_id(block) %>"
-     class="cover-block <%= 'is-image' if block.image_block? %> <%= 'is-notes' if is_notes %> <%= block.font_size %> weight-<%= block.font_weight %> style-<%= block.text_style %> align-<%= block.text_align %>"
+     class="cover-block <%= 'is-image' if block.image_block? %> <%= 'is-notes' if is_notes %> <%= 'is-border' if is_border %> <%= block.font_size %> weight-<%= block.font_weight %> style-<%= block.text_style %> align-<%= block.text_align %>"
      data-block-id="<%= block.id %>"
      data-font-size="<%= block.font_size %>"
      data-text-color="<%= block.text_color %>"
-     style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= block.width %>%; height: <%= block.height %>%; <%= "font-size: #{font_px}px;" unless block.image_block? || is_notes %> <%= "font-family: #{block.font_family};" if block.font_family.present? && !block.image_block? && !is_notes %> <%= "color: #{block.text_color};" if block.text_color.present? && !block.image_block? %>">
-  <% if is_notes %>
+     data-border-width="<%= block.border_width %>"
+     data-kind="<%= block.kind %>"
+     style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= block.width %>%; height: <%= block.height %>%; <%= "font-size: #{font_px}px;" unless block.image_block? || is_notes || is_border %> <%= "font-family: #{block.font_family};" if block.font_family.present? && !block.image_block? && !is_notes && !is_border %> <%= "color: #{block.text_color};" if block.text_color.present? && !block.image_block? && !is_border %> <%= "border: #{block.border_width || 2}px solid #{block.text_color.presence || '#000'};" if is_border %>">
+  <% if is_border %>
+    <%# Border/frame block — intentionally empty. All visual comes from
+        the inline border style on the parent div. %>
+  <% elsif is_notes %>
     <div class="cover-notes">
       <div class="cover-notes-header">NOTES</div>
       <div class="cover-notes-lines">

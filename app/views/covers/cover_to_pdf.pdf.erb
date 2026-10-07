@@ -90,9 +90,10 @@
     <% top_pct  = b.y.to_f - b.height.to_f / 2.0 %>
     <% font_px = preset_px[b.font_size] || b.font_size.to_i %>
     <% font_px = 24 if font_px <= 0 %>
-    <% is_notes = b.kind == "notes" %>
-    <div class="cover-block <%= 'is-notes' if is_notes %> <%= b.font_size %> weight-<%= b.font_weight %> style-<%= b.text_style %> align-<%= b.text_align %>"
-         style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= b.width %>%; height: <%= b.height %>%; <%= "font-family: #{b.font_family};" if b.font_family.present? && !b.image_block? && !is_notes %> <%= "color: #{b.text_color};" if b.text_color.present? && !b.image_block? %>">
+    <% is_notes  = b.kind == "notes" %>
+    <% is_border = b.kind == "border" %>
+    <div class="cover-block <%= 'is-notes' if is_notes %> <%= 'is-border' if is_border %> <%= b.font_size %> weight-<%= b.font_weight %> style-<%= b.text_style %> align-<%= b.text_align %>"
+         style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= b.width %>%; height: <%= b.height %>%; <%= "font-family: #{b.font_family};" if b.font_family.present? && !b.image_block? && !is_notes && !is_border %> <%= "color: #{b.text_color};" if b.text_color.present? && !b.image_block? && !is_border %> <%= "border: #{b.border_width || 2}px solid #{b.text_color.presence || '#000'};" if is_border %>">
       <% if is_notes %>
         <div class="cover-notes">
           <div class="cover-notes-header">NOTES</div>

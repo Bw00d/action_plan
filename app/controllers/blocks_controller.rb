@@ -76,7 +76,7 @@ class BlocksController < ApplicationController
                                     :main_image, :bottom_padding, :id, :font_weight, :text_align,
                                     :text_style, :image_block, :is_blank, :position, :insertion_type, :split_block,
                                     :pair_id, :image_width, :image_height, :image_position_x,
-                                    :x, :y, :width, :height, :kind,
+                                    :x, :y, :width, :height, :kind, :border_width,
                                     other_images: [])
     end
     

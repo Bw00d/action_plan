@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_06_100000) do
+ActiveRecord::Schema.define(version: 2026_10_06_110000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 2026_10_06_100000) do
     t.decimal "height", precision: 6, scale: 3, default: "8.0"
     t.string "kind", default: "text"
     t.string "text_color"
+    t.string "border_width", default: "2"
   end
 
   create_table "checkins", force: :cascade do |t|

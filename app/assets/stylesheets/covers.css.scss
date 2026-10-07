@@ -806,6 +806,30 @@
   // canvas edge. Blocks themselves don't drift much because the drag
   // containment only lets a block center reach x=0/100%.
   overflow: visible;
+
+  // Alignment grid (toggled via .csp-grid-toggle). 5% minor grid +
+  // 25% major grid, drawn as two layered linear gradients. On-screen
+  // only; the PDF export doesn't include the class.
+  &.cover-canvas-grid {
+    background-image:
+      linear-gradient(to right,  rgba(0, 82, 204, 0.22) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 82, 204, 0.22) 1px, transparent 1px),
+      linear-gradient(to right,  rgba(0, 82, 204, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 82, 204, 0.08) 1px, transparent 1px);
+    background-size:
+      25% 25%,   // major vertical
+      25% 25%,   // major horizontal
+      5% 5%,     // minor vertical
+      5% 5%;     // minor horizontal
+    background-position: 0 0;
+  }
+}
+
+// Grid toggle button active state — same lit-up treatment as the other
+// panel buttons (uses :root --accent fallback to the sheet's blue).
+.csp-grid-toggle.is-active {
+  background: #0052cc;
+  color: #fff;
 }
 
 .cover-block {
@@ -949,6 +973,32 @@
   font-size: 12px;
   border: 1px dashed #b0b7c3;
   border-radius: 3px;
+}
+
+// Border block — plain frame around nothing. Inline border style set
+// on the element itself; this rule just handles cursor + sizing. Uses
+// box-sizing: border-box so the stroke thickness doesn't change the
+// clickable area as the user cranks it up.
+.cover-block.is-border {
+  cursor: move;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+// Width input in the style panel — hidden until a border block is
+// selected (JS reveals it inside refreshPanelFromBlock).
+.csp-border-width-input {
+  display: none;        // JS flips to inline-block when a border is selected
+  width: 54px;
+  height: 26px;
+  margin-left: 2px;
+  padding: 0 6px;
+  background: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
 }
 
 // Notes block — a bordered box with a "NOTES" header and ruled writing lines

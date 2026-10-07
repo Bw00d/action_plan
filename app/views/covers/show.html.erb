@@ -128,6 +128,22 @@
         <%# Add a "Notes" block — a bordered box with a header and ruled lines. %>
         <button type="button" class="csp-btn csp-add-notes" title="Add notes block">Notes</button>
 
+        <%# Add a plain "Box" (border frame) block. Resizable + draggable
+            like any other block; thickness controlled by the input that
+            appears next to this button when the border block is
+            selected. %>
+        <button type="button" class="csp-btn csp-add-border" title="Add border box">Box</button>
+        <input type="number" class="csp-border-width-input" min="1" max="30" step="1"
+               placeholder="px" title="Border thickness (selected box)">
+
+        <div class="csp-sep"></div>
+
+        <%# Grid toggle — turns on a light alignment grid on the canvas.
+            Preference persists per browser via localStorage so it stays
+            on across page loads once a user turns it on. Not printed /
+            not in the PDF. %>
+        <button type="button" class="csp-btn csp-grid-toggle" title="Toggle alignment grid">Grid</button>
+
         <%# Delete the selected block. Sends a JS DELETE via covers_canvas.js. %>
         <button type="button" class="csp-btn csp-icon csp-delete-selected" title="Delete selected">
           <%= image_tag('white-trash.png') %>

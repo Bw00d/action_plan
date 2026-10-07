@@ -141,15 +141,17 @@ $(document).on("turbolinks:load", function () {
       if ($block.data("uiResizable")) return;
 
       // Text blocks aren't resizable — their size comes from the H1–H4
-      // buttons or the pixel input in the style panel. Image and notes
-      // blocks get corner handles.
-      if (!$block.hasClass("is-image") && !$block.hasClass("is-notes")) return;
+      // buttons or the pixel input in the style panel. Image, notes,
+      // and border blocks all get corner handles.
+      if (!$block.hasClass("is-image") &&
+          !$block.hasClass("is-notes") &&
+          !$block.hasClass("is-border")) return;
       $block.resizable({
         handles: "ne, nw, se, sw",
         minWidth: 24,
         minHeight: 20,
-        // Images stay proportional; notes blocks resize freely so users
-        // can make them tall or wide as needed.
+        // Images stay proportional; notes + border blocks resize freely
+        // so users can make them any aspect they want.
         aspectRatio: $block.hasClass("is-image"),
         grid: [GRID_PX, GRID_PX],   // resize in 10px steps for uniformity
         // Same reasoning as drag start: close the uploader so it doesn't
@@ -300,9 +302,11 @@ $(document).on("turbolinks:load", function () {
   var $pxInput = $panel.find(".csp-px-input");
 
   function refreshPanelFromBlock($block) {
-    // Image and notes blocks don't have font/weight/style/align — disable
-    // those panel buttons so they can't be clicked and don't light up.
-    var isNonText = $block && ($block.hasClass("is-image") || $block.hasClass("is-notes"));
+    // Image, notes, and border blocks don't have font/weight/style/align
+    // — disable those panel buttons so they can't be clicked and don't
+    // light up.
+    var isNonText = $block && ($block.hasClass("is-image") || $block.hasClass("is-notes") || $block.hasClass("is-border"));
+    var isBorder  = $block && $block.hasClass("is-border");
 
     $panel.find(".csp-btn[data-attr]").each(function () {
       var attr = $(this).data("attr");
@@ -323,13 +327,27 @@ $(document).on("turbolinks:load", function () {
     }
 
     // Mirror the selected block's text color onto the picker swatch so
-    // the user sees "this is the current color" at a glance.
+    // the user sees "this is the current color" at a glance. Border
+    // blocks DO carry a color (the border stroke) so the swatch should
+    // mirror those too.
     var $swatch = $panel.find(".csp-color-picker .csp-color-swatch");
-    if ($block && !isNonText) {
+    if ($block && (!isNonText || isBorder)) {
       var color = $block.css("color") || $block.attr("data-text-color") || "#000";
+      if (isBorder) {
+        color = $block.css("border-top-color") || color;
+      }
       $swatch.css("background", color);
     } else {
       $swatch.css("background", "#000");
+    }
+
+    // Border-width input — show + populate when a border block is
+    // selected, hide otherwise.
+    var $bwInput = $panel.find(".csp-border-width-input");
+    if (isBorder) {
+      $bwInput.show().val(parseInt($block.attr("data-border-width"), 10) || 2);
+    } else {
+      $bwInput.hide().val("");
     }
   }
 
@@ -408,7 +426,15 @@ $(document).on("turbolinks:load", function () {
     if (!$selected.length) return;
     if ($selected.hasClass("is-image")) return;
 
-    $selected.css("color", value);
+    if ($selected.hasClass("is-border")) {
+      // Border block: color = stroke color. Keep the existing width.
+      var bw = parseInt($selected.attr("data-border-width"), 10) || 2;
+      $selected.css("border", bw + "px solid " + value);
+      $selected.css("color",  value);  // keep in sync so refresh reads it back
+      $selected.attr("data-text-color", value);
+    } else {
+      $selected.css("color", value);
+    }
     // Mirror the swatch so the swatch button previews the current color.
     $panel.find(".csp-color-picker .csp-color-swatch").css("background", value);
     saveBlockRect($selected.data("block-id"), { text_color: value });
@@ -835,6 +861,44 @@ $(document).on("turbolinks:load", function () {
     }).then(function () { window.location.reload(); });
   });
 
+  // Box button — add a plain border-frame block.
+  $panel.off("click.coverAddBorder").on("click.coverAddBorder", ".csp-add-border", function () {
+    var params = new URLSearchParams();
+    params.append("block[cover_id]",      $canvas.data("cover-id"));
+    params.append("block[kind]",          "border");
+    params.append("block[x]",             50);
+    params.append("block[y]",             50);
+    params.append("block[width]",         50);
+    params.append("block[height]",        30);
+    params.append("block[border_width]",  "2");
+    fetch("/blocks", {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": csrfToken(),
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    }).then(function () { window.location.reload(); });
+  });
+
+  // Border-width input — only visible when a border block is selected.
+  // On input, update the live block style AND save via saveBlockRect.
+  var $bwInput = $panel.find(".csp-border-width-input");
+  $panel.off("input.coverBorderWidth change.coverBorderWidth")
+        .on("input.coverBorderWidth change.coverBorderWidth",
+            ".csp-border-width-input",
+            function () {
+    var $selected = $canvas.find(".cover-block.is-selected");
+    if (!$selected.length || !$selected.hasClass("is-border")) return;
+    var raw = parseInt($(this).val(), 10);
+    if (isNaN(raw) || raw < 1) raw = 1;
+    if (raw > 30) raw = 30;
+    var color = $selected.css("color") || $selected.attr("data-text-color") || "#000";
+    $selected.css("border", raw + "px solid " + color);
+    $selected.attr("data-border-width", String(raw));
+    saveBlockRect($selected.data("block-id"), { border_width: String(raw) });
+  });
+
   // Trash icon: delete the currently selected block. (Moved here from
   // the earlier location so image-related handlers are grouped.)
   // (Delete handler is defined above in the style-panel section.)
@@ -852,4 +916,21 @@ $(document).on("turbolinks:load", function () {
   initDrag();
   initResize();
   refreshPanelFromBlock(null);
+
+  // ── Alignment grid toggle ──────────────────────────────────────────
+  // Adds .cover-canvas-grid to #cover-canvas so a light background grid
+  // paints behind the blocks. Preference is stored per-browser in
+  // localStorage so it survives reloads. Button lights up when active.
+  // Not printed / not in the PDF (CSS keeps the overlay on screen only).
+  var GRID_KEY = "cover_canvas_grid";
+  function applyGrid(on) {
+    $canvas.toggleClass("cover-canvas-grid", !!on);
+    $panel.find(".csp-grid-toggle").toggleClass("is-active", !!on);
+  }
+  applyGrid(localStorage.getItem(GRID_KEY) === "1");
+  $panel.off("click.coverGridToggle").on("click.coverGridToggle", ".csp-grid-toggle", function () {
+    var next = !$canvas.hasClass("cover-canvas-grid");
+    localStorage.setItem(GRID_KEY, next ? "1" : "0");
+    applyGrid(next);
+  });
 });
