@@ -821,6 +821,11 @@
 }
 #board-card-overlay.is-visible { display: block; }
 
+// SweetAlert2 defaults to z-index 1060, which puts its container BEHIND
+// the T-card modal (z-index 2001). Force it above so delete / confirm
+// prompts fired from inside the open modal are actually visible.
+.swal2-container { z-index: 3000 !important; }
+
 // Modal header mirrors the small card's colored strip (icon + agency,
 // background painted inline from resource_strip_color) so the modal
 // feels like an expansion of the card you clicked, not a separate
