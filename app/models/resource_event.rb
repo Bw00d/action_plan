@@ -29,11 +29,26 @@ class ResourceEvent < ApplicationRecord
   # swap time, including resources that had no leader logged yet.
   validate :body_or_swap_fields_present
 
+  # Feed ordering: scheduled swaps float to the top, sorted by their
+  # swap FWD (earliest = next-up) so the user sees "the next thing I
+  # need to action" at a glance. Everything else (comments, completed
+  # swaps) falls below in newest-first chronological order.
+  #
+  # Done as a two-key SQL ORDER:
+  #   1. kind=scheduled_swap first (0), everything else (1)
+  #   2. scheduled: fwd ASC (NULLs last — treat as "future-dated unknown")
+  #      others:    created_at DESC
+  #
   # `.reorder` instead of `.order` — the Resource has_many sets a
-  # default ASC order, and .order APPENDS clauses (so the final SQL
-  # would be "ORDER BY created_at ASC, created_at DESC" and the DESC
-  # would be ignored). .reorder blows the ASC away cleanly.
-  scope :newest_first, -> { reorder(created_at: :desc) }
+  # default ASC order and `.order` APPENDS, so the DESC would get
+  # ignored. `.reorder` blows the default away.
+  scope :newest_first, -> {
+    reorder(
+      Arel.sql("CASE WHEN kind = #{kinds[:scheduled_swap]} THEN 0 ELSE 1 END ASC"),
+      Arel.sql('CASE WHEN kind = 1 THEN fwd END ASC NULLS LAST'),
+      created_at: :desc
+    )
+  }
 
   def swap?
     scheduled_swap? || completed_swap?
