@@ -103,12 +103,15 @@
 
     <div class="board-columns">
       <% @columns.each do |unit| %>
+        <%# @resources_by_unit was preloaded in the controller with all
+            per-card associations (rosters/demob/events/assignment) so
+            the cards render without firing per-row queries. %>
         <%= render 'column',
                    column_id: "org-unit-#{unit.id}",
                    org_unit_id: unit.id,
                    title: unit.name,
                    subtitle: column_subtitle(unit),
-                   resources: unit.resources.active.order(:position),
+                   resources: @resources_by_unit[unit.id],
                    unit: unit %>
       <% end %>
     </div>

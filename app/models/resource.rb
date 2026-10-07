@@ -227,8 +227,17 @@ class Resource < ApplicationRecord
   # all 20 names without inflating the tally. When no roster exists at
   # all, the whole crew rolls up under the parent resource's agency
   # using number_personnel.
+  #
+  # If `rosters` was eager-loaded by the caller (common on the T-card
+  # board + ICS 211), we filter in Ruby to avoid firing a fresh query
+  # per resource. Falls back to SQL when the association wasn't
+  # preloaded.
   def personnel_by_agency
-    if rosters.exists?
+    if rosters.loaded?
+      live = rosters.select { |r| r.released_at.nil? && r.promoted_resource_id.nil? && r.status.to_s == 'C' }
+      return { agency => number_personnel.to_i } if live.empty? && rosters.empty?
+      live.group_by { |r| r.agency.presence || agency }.transform_values(&:count)
+    elsif rosters.exists?
       rosters.active.unpromoted.checked_in
              .group_by { |r| r.agency.presence || agency }
              .transform_values(&:count)

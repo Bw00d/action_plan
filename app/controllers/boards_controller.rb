@@ -5,7 +5,34 @@ class BoardsController < ApplicationController
 
   def show
     @columns = build_columns(@incident)
-    @unassigned_resources = @incident.resources.unassigned.active.order(:category, :order_number)
+
+    # Eager-load everything each _card partial reads so the board stops
+    # firing 5-6 queries per card. For a 150-card board this takes the
+    # view from ~1000 SQL hits down to a handful.
+    #
+    # - rosters         → effective_personnel / personnel_by_agency
+    # - demob           → DMB button URL in the modal footer
+    # - resource_events → scheduled-swap flag + activity feed count
+    @board_includes = [:rosters, :demob, :resource_events, :org_unit_assignment]
+
+    @unassigned_resources = @incident.resources.unassigned.active
+                                     .includes(@board_includes)
+                                     .order(:category, :order_number)
+
+    # Preload per-column resource lists once (grouped by org_unit_id)
+    # so the view can look up a column's cards without re-querying per
+    # column.
+    unit_ids = @columns.map(&:id)
+    assignments_by_unit = OrgUnitAssignment
+      .where(org_unit_id: unit_ids)
+      .includes(resource: @board_includes)
+      .order(:org_unit_id, :position)
+      .group_by(&:org_unit_id)
+
+    @resources_by_unit = assignments_by_unit.transform_values do |asgs|
+      asgs.map(&:resource).select { |r| r && r.release_date.nil? && !r.r_and_r }
+    end
+    @resources_by_unit.default = []
   end
 
   def move

@@ -19,7 +19,13 @@
     data-personnel="<%= resource.effective_personnel.to_i %>"
     data-fwd="<%= resource.fwd&.iso8601 %>"
     data-assignment-length="<%= resource.assignment_length %>">
-  <% scheduled_swap = resource.resource_events.where(kind: ResourceEvent.kinds[:scheduled_swap]).order(:fwd).first %>
+  <%# Rely on the eager-loaded resource.resource_events (preloaded in
+      BoardsController#show) so this doesn't fire a per-card query.
+      In-memory select + sort instead of SQL where+order. %>
+  <% scheduled_swap = resource.resource_events
+                              .select(&:scheduled_swap?)
+                              .sort_by { |e| e.fwd || Date.new(9999, 12, 31) }
+                              .first %>
   <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
     <span class="board-card-agency"><%= resource.agency %></span>
@@ -190,8 +196,19 @@
         </div>
 
         <div class="board-card-activity-feed">
+          <%# Sort the already-loaded resource_events in Ruby instead of
+              re-querying. Mirrors the ResourceEvent.newest_first order:
+              scheduled swaps first (by FWD asc, nulls last), then
+              everything else by created_at desc. %>
+          <% sorted_events = resource.resource_events.sort_by { |e|
+               if e.scheduled_swap?
+                 [0, e.fwd || Date.new(9999, 12, 31), -e.created_at.to_i]
+               else
+                 [1, Date.new(0), -e.created_at.to_i]
+               end
+             } %>
           <%= render partial: 'boards/activity_feed',
-                     locals: { resource: resource, events: resource.resource_events.newest_first } %>
+                     locals: { resource: resource, events: sorted_events } %>
         </div>
       </aside>
     </div>

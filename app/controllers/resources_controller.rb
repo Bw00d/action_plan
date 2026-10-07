@@ -8,15 +8,24 @@ class ResourcesController < ApplicationController
   def index
     @incident = Incident.find(params[:incident_id])
     @resource = Resource.new
-    @resources = @incident.resources.includes(:rosters).order(:category, :order_number)
+
+    # Eager-load every association the 6 partials walk. Without this
+    # each row fires fresh queries for its rosters / demob / events /
+    # assignment — easily hundreds of queries per page on a busy
+    # incident. Kept as a Relation (not .to_a) because downstream
+    # partials chain scopes like .assigned, .on_rnr, .overhead onto it.
+    base = @incident.resources
+                    .includes(:rosters, :demob, :resource_events, :org_unit_assignment)
+                    .order(:category, :order_number)
+    @resources = base
+
     # Same list minus any resource parked in a Non-209 org_unit. Used by
     # the ICS-211, Glide Path, and Resource Tally tabs (see the partials);
     # the resource panels / edit forms still use @resources so users can
     # still manage Non-209 resources from the side panel.
     non_209_ids = @incident.non_209_resource_ids
-    @tally_resources = non_209_ids.any? ? @resources.where.not(id: non_209_ids) : @resources
-    # Just the Non-209 slice — used by the Non-209 tab.
-    @non_209_resources = non_209_ids.any? ? @resources.where(id: non_209_ids) : Resource.none
+    @tally_resources   = non_209_ids.any? ? base.where.not(id: non_209_ids) : base
+    @non_209_resources = non_209_ids.any? ? base.where(id: non_209_ids) : Resource.none
     @overhead  = @resources.overhead
     @equipment = @resources.equipment
     @crews     = @resources.crew
