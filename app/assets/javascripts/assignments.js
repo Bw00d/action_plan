@@ -76,5 +76,27 @@ $(document).on("turbolinks:load", function() {
     $('#resource-assignments-form').hide();
   });
 
+  // Re-apply simple_format newlines after a best_in_place save on
+  // sections 6 and 7 of the 204. best_in_place writes the raw server
+  // response back into the span without re-running the display_with
+  // helper, so typed newlines would collapse until the next page
+  // reload. This handler converts `\n` → `<br>` and double newlines →
+  // paragraph breaks in place, matching simple_format's output.
+  function reapplySimpleFormat($el) {
+    var text = $el.text();                           // raw text (newlines preserved by browser)
+    if (text == null || text.indexOf('\n') === -1) return;
+    var html = text
+      .split(/\n{2,}/)                               // paragraph breaks on blank lines
+      .map(function (para) {
+        return '<p>' + para.replace(/\n/g, '<br>') + '</p>';
+      })
+      .join('');
+    $el.html(html);
+  }
+
+  $(document).off('best_in_place:success.ics204Narrative')
+             .on('best_in_place:success.ics204Narrative',
+                 '.box-6 .best_in_place, .box-7 .best_in_place',
+                 function () { reapplySimpleFormat($(this)); });
 
 });

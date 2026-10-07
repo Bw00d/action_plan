@@ -131,8 +131,10 @@
       <tr>
         <td class="box-6">
           <span class="num">6.</span> Control Operations/Work Assignments:<br>
-          <%# No ok/cancel buttons — saves on blur to match the rest of
-              the app's inline-edit pattern. %>
+          <%# No ok/cancel buttons — saves on blur. display_with runs on
+              initial render; a JS handler (assignments.js) re-applies
+              simple_format after each best_in_place save so line breaks
+              survive the AJAX round-trip without a page reload. %>
           <%= best_in_place @assignment, :control_operations, as: :textarea, place_holder: "(click to add content)", display_with: :simple_format %>
         </td>
       </tr>
