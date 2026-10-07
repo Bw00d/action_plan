@@ -979,10 +979,42 @@
 // on the element itself; this rule just handles cursor + sizing. Uses
 // box-sizing: border-box so the stroke thickness doesn't change the
 // clickable area as the user cranks it up.
+//
+// pointer-events: none on the block itself means clicks pass through
+// the interior to any block sitting behind. The 4 edge strips below
+// have pointer-events: auto so clicking the frame still selects /
+// drags the box, and jQuery UI's resize handles (which it adds as
+// separate children at the corners) are also clickable.
 .cover-block.is-border {
   cursor: move;
   background: transparent;
   box-sizing: border-box;
+  pointer-events: none;
+
+  // Resize handles need to stay reactive even while the block itself
+  // is click-through. jQuery UI gives them .ui-resizable-handle.
+  .ui-resizable-handle { pointer-events: auto; }
+}
+
+// Four edge strips that overlay each side of the border frame. Each
+// is 1px thicker than the border on all sides so even a 1px frame
+// gives the user a comfortable click target. Visually they're
+// transparent — the actual stroke is the parent's CSS border.
+.cover-border-edges {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;    // container is passthrough
+}
+.cover-border-edge {
+  position: absolute;
+  pointer-events: auto;
+  cursor: move;
+  // Each strip is thickness-6px wide (3px extra on each side of the
+  // actual border) so even a very thin frame is grabbable.
+  &.top    { top: -6px;    left: 0;      right: 0;     height: 12px; }
+  &.bottom { bottom: -6px; left: 0;      right: 0;     height: 12px; }
+  &.left   { top: 0;       bottom: 0;    left: -6px;   width: 12px;  }
+  &.right  { top: 0;       bottom: 0;    right: -6px;  width: 12px;  }
 }
 
 // Width input in the style panel — hidden until a border block is

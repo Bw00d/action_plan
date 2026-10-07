@@ -45,6 +45,12 @@
     // Match on-screen (which is overflow: visible). Clipping here was
     // hiding the last character or two of blocks that hugged their text.
     overflow: visible;
+    // Force the text block + anything nested inside it (best_in_place
+    // sometimes wraps saved HTML in <span style="color: #000">...) to
+    // inherit color from the parent .cover-block — otherwise the inline
+    // color set by the user's palette never takes effect on paper.
+    color: inherit !important;
+    * { color: inherit !important; }
   }
 
   .cover-block-image {

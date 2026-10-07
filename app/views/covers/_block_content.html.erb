@@ -21,8 +21,19 @@
      data-kind="<%= block.kind %>"
      style="left: <%= left_pct %>%; top: <%= top_pct %>%; width: <%= block.width %>%; height: <%= block.height %>%; <%= "font-size: #{font_px}px;" unless block.image_block? || is_notes || is_border %> <%= "font-family: #{block.font_family};" if block.font_family.present? && !block.image_block? && !is_notes && !is_border %> <%= "color: #{block.text_color};" if block.text_color.present? && !block.image_block? && !is_border %> <%= "border: #{block.border_width || 2}px solid #{block.text_color.presence || '#000'};" if is_border %>">
   <% if is_border %>
-    <%# Border/frame block — intentionally empty. All visual comes from
-        the inline border style on the parent div. %>
+    <%# Border block — the interior is click-through so blocks sitting
+        underneath can still be selected. These 4 overlay strips are the
+        only parts of the block that catch pointer events: each strip
+        covers an edge of the frame, so clicking the border edge selects
+        / drags, and clicking the empty middle passes through to any
+        block beneath. The resize handles jQuery UI adds live at the
+        corners (on top of these strips) and still work. %>
+    <div class="cover-border-edges">
+      <div class="cover-border-edge top"></div>
+      <div class="cover-border-edge right"></div>
+      <div class="cover-border-edge bottom"></div>
+      <div class="cover-border-edge left"></div>
+    </div>
   <% elsif is_notes %>
     <div class="cover-notes">
       <div class="cover-notes-header">NOTES</div>
