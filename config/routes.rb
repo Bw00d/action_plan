@@ -112,6 +112,13 @@ Rails.application.routes.draw do
       get   :to_pdf
     end
 
+    # Planning Section tools — reconcile IROC exports, future planning
+    # utilities, etc. "Planning" instead of "Plans" to avoid clashing
+    # with the existing /plans route (which is the IAP).
+    resource :planning, only: [:show], controller: 'planning' do
+      post :reconcile_iroc
+    end
+
     resources :org_units, only: [:create, :destroy]
 
     # ICS "205A" Communications List (phone list) — one list per

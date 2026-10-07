@@ -1,0 +1,72 @@
+<% content_for :title, "Plans" %>
+
+<div class="planning-page">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <h2 class="planning-title">Planning Tools</h2>
+
+  <section class="planning-tool">
+    <h3>Reconcile IROC</h3>
+    <p class="muted">
+      Upload a CSV of resources from IROC. We'll compare the "At Incident"
+      rows (Aircraft, Crews, Equipment, Overhead) against what's checked
+      in here and list anyone IROC says is on the fire but isn't in our
+      records yet.
+    </p>
+
+    <%= form_with url: reconcile_iroc_incident_planning_path(@incident),
+                  method: :post,
+                  multipart: true,
+                  local: true,
+                  html: { class: 'planning-tool-form' } do |f| %>
+      <%= file_field_tag :iroc_csv, accept: '.csv', required: true, class: 'form-control-file' %>
+      <%= f.submit 'Reconcile', class: 'btn btn-primary' %>
+    <% end %>
+
+    <% if @result %>
+      <div class="planning-result">
+        <h4>Reconciliation Results</h4>
+        <ul class="planning-summary muted">
+          <li><strong><%= @result.matched_count %></strong> matched — in IROC and here</li>
+          <li><strong><%= @result.missing.size %></strong> on IROC but not here</li>
+          <% if @result.skipped_bad_prefix.positive? %>
+            <li><%= @result.skipped_bad_prefix %> row<%= 's' unless @result.skipped_bad_prefix == 1 %> skipped (not A/C/E/O)</li>
+          <% end %>
+          <% if @result.skipped_bad_status.positive? %>
+            <li><%= @result.skipped_bad_status %> row<%= 's' unless @result.skipped_bad_status == 1 %> skipped (not "At Incident")</li>
+          <% end %>
+        </ul>
+
+        <% if @result.missing.any? %>
+          <h5>Missing from this incident (on IROC, not checked in here)</h5>
+          <table class="table planning-missing-table">
+            <thead>
+              <tr>
+                <th>Request #</th>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Agency</th>
+                <th>Kind</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @result.missing.each do |row| %>
+                <tr>
+                  <td class="col-order"><%= row.request %></td>
+                  <td><%= row.category %></td>
+                  <td><%= row.name %></td>
+                  <td><%= row.agency %></td>
+                  <td><%= row.kind %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="text-success"><strong>Everything matches.</strong> Nothing on IROC is missing from this incident.</p>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+</div>
