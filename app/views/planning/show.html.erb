@@ -51,8 +51,27 @@
             </thead>
             <tbody>
               <% @result.missing.each do |row| %>
-                <tr class="<%= 'planning-missing-row--demobbed' if row.released_on %>">
-                  <td class="col-order"><%= row.request %></td>
+                <% has_kids = row.children.any? %>
+                <tr class="<%= 'planning-missing-row--demobbed' if row.released_on %> <%= 'planning-missing-row--parent' if has_kids %>"
+                    <%= "data-group-id=\"grp-#{row.request}\"".html_safe if has_kids %>>
+                  <td class="col-order">
+                    <% if has_kids %>
+                      <%# Expand/collapse carat for missing parents with
+                          nested missing subordinates. Hidden by default
+                          so the user isn't buried in 14 sub rows per
+                          crew. %>
+                      <button type="button" class="planning-missing-toggle"
+                              data-group-target="grp-<%= row.request %>"
+                              aria-expanded="false"
+                              title="Show <%= row.children.size %> subordinate<%= 's' unless row.children.size == 1 %>">
+                        ▸
+                      </button>
+                    <% end %>
+                    <%= row.request %>
+                    <% if has_kids %>
+                      <span class="planning-child-count">+<%= row.children.size %> sub<%= 's' unless row.children.size == 1 %></span>
+                    <% end %>
+                  </td>
                   <td><%= row.category %></td>
                   <td><%= row.name %></td>
                   <td><%= row.agency %></td>
@@ -67,6 +86,26 @@
                     <% end %>
                   </td>
                 </tr>
+                <% row.children.each do |child| %>
+                  <tr class="planning-missing-row--child <%= 'planning-missing-row--demobbed' if child.released_on %>"
+                      data-group-child="grp-<%= row.request %>"
+                      style="display:none;">
+                    <td class="col-order planning-missing-row--child-indent"><%= child.request %></td>
+                    <td><%= child.category %></td>
+                    <td><%= child.name %></td>
+                    <td><%= child.agency %></td>
+                    <td><%= child.kind %></td>
+                    <td>
+                      <% if child.released_on %>
+                        <span class="planning-demob-tag">
+                          Demobilized — <%= child.released_on.strftime('%m/%d/%y') %>
+                        </span>
+                      <% else %>
+                        <span class="muted">Not on incident</span>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
             </tbody>
           </table>
@@ -77,3 +116,22 @@
     <% end %>
   </section>
 </div>
+
+<script>
+  // Collapse/expand the hidden child rows under a missing parent in
+  // the IROC reconcile table. Carat flips between ▸ (closed) and ▾
+  // (open) so the state is obvious.
+  (function () {
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.planning-missing-toggle');
+      if (!btn) return;
+      var groupId = btn.getAttribute('data-group-target');
+      var open    = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      btn.textContent = open ? '▸' : '▾';
+      document.querySelectorAll('[data-group-child="' + groupId + '"]').forEach(function (row) {
+        row.style.display = open ? 'none' : '';
+      });
+    });
+  })();
+</script>

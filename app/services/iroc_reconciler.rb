@@ -30,8 +30,12 @@ class IrocReconciler
   # resources that's already been demobilized. Lets the view flag "we
   # had them, but they're already gone" instead of lumping it in with
   # "never on our incident".
+  #
+  # `children` holds any missing SUBORDINATE rows (C-73.1, C-73.2 under
+  # C-73). Populated during reconcile — the view uses it to collapse a
+  # missing parent + its missing kids into a single expandable row.
   MissingRow = Struct.new(:request, :category, :name, :agency, :kind,
-                          :released_on,
+                          :released_on, :children,
                           keyword_init: true)
 
   Result = Struct.new(
@@ -73,17 +77,25 @@ class IrocReconciler
           name:        row[:name],
           agency:      row[:agency],
           kind:        row[:kind],
-          released_on: released_lookup[req]   # nil if we never had them
+          released_on: released_lookup[req],   # nil if we never had them
+          children:    []
         )
       end
     end
 
+    # Group missing subordinates under their missing parent so a whole
+    # unchecked crew (E-118 + E-118.1..13) collapses to a single
+    # expandable row instead of 14 separate lines.
+    grouped = group_missing(missing)
+
     # Sort by category then request number, numeric-aware (so C-10 comes
-    # after C-9, not C-100).
-    missing.sort_by! { |m| [m.category, natural_key(m.request)] }
+    # after C-9, not C-100). Children inside a group are sorted the
+    # same way.
+    grouped.sort_by! { |m| [m.category, natural_key(m.request)] }
+    grouped.each { |m| m.children.sort_by! { |c| natural_key(c.request) } }
 
     Result.new(
-      missing:            missing,
+      missing:            grouped,
       matched_count:      matched,
       skipped_bad_prefix: bad_pfx,
       errors:             []
@@ -91,6 +103,32 @@ class IrocReconciler
   end
 
   private
+
+  # Collapse missing subordinate rows under their missing parent so a
+  # whole unchecked crew (E-118 + E-118.1..13) shows as one expandable
+  # row instead of 14 lines. If a child's parent is NOT missing
+  # (either because the parent is checked in, or just isn't on the
+  # IROC export at all), the child stays as its own top-level row —
+  # hiding it under a non-existent parent would make it invisible.
+  def group_missing(rows)
+    parents_by_req = rows.reject { |r| r.request.include?('.') }
+                         .each_with_object({}) { |r, h| h[r.request] = r }
+    orphans = []
+
+    rows.each do |row|
+      next unless row.request.include?('.')
+      parent_req = row.request.sub(/\..+\z/, '')
+      if (parent = parents_by_req[parent_req])
+        parent.children << row
+      else
+        orphans << row
+      end
+    end
+
+    # Final top-level list: every missing parent + any orphan children
+    # whose parent isn't on this missing list.
+    parents_by_req.values + orphans
+  end
 
   # Build a lookup Set of our incident's resource full_order_numbers,
   # including subordinates (rosters). IROC exports treat subordinates

@@ -77,3 +77,35 @@
   border-radius: 10px;
   white-space: nowrap;
 }
+
+// Expand/collapse carat on parent rows with hidden subordinates.
+.planning-missing-toggle {
+  background: none;
+  border: 0;
+  padding: 0 6px 0 0;
+  color: #42526e;
+  font-size: 11px;
+  cursor: pointer;
+  &:hover  { color: #0052cc; }
+  &:focus  { outline: 0; }
+}
+.planning-child-count {
+  margin-left: 6px;
+  padding: 1px 6px;
+  background: #ebecf0;
+  color: #42526e;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+// Child rows — slightly indented + muted so the parent/child
+// relationship reads at a glance when expanded.
+.planning-missing-row--child {
+  background: #fafbfc;
+  td { color: #5e6c84; }
+  &.planning-missing-row--demobbed { background: #fff8e1; }
+}
+.planning-missing-row--child-indent {
+  padding-left: 28px !important;
+}
