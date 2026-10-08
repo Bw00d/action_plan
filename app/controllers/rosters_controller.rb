@@ -1,7 +1,7 @@
 class RostersController < ApplicationController
   include SkipAuthorization
 
-  before_action :set_roster, only: [:update, :promote, :demob_checkout]
+  before_action :set_roster, only: [:update, :destroy, :promote, :demob_checkout]
 
   # PATCH /rosters/:id — inline best_in_place edits. Right now only
   # `status` (C / F) is exposed; other roster fields are edited
@@ -16,6 +16,18 @@ class RostersController < ApplicationController
         format.json { respond_with_bip(@roster) }
       end
     end
+  end
+
+  # DELETE /rosters/:id — remove a subordinate from the roster entirely.
+  # Cascades to the roster's own demob record (Roster has_one :demob
+  # with dependent: :destroy) and any demob_notifications tied to this
+  # roster row.
+  def destroy
+    name = @roster.name.presence || @roster.full_order_number
+    @roster.destroy
+    redirect_back fallback_location: root_path, notice: "Deleted #{name} from the roster."
+  rescue => e
+    redirect_back fallback_location: root_path, alert: "Could not delete: #{e.message}"
   end
 
   # POST /rosters/:id/promote

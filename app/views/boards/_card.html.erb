@@ -133,17 +133,29 @@
 
           <dt>Email</dt>
           <dd><%= best_in_place resource, :email, as: :input %></dd>
-
-          <%# Read-only Notes row — mirrors the Notes field from the
-              earliest-FWD scheduled crew swap so operators can see the
-              context without opening the activity feed. `scheduled_swap`
-              is computed at the top of this card. Edit happens by
-              scheduling / editing the swap itself in the activity panel. %>
-          <% if scheduled_swap && scheduled_swap.body.present? %>
-            <dt>Notes</dt>
-            <dd class="full-width board-card-swap-notes"><%= simple_format(scheduled_swap.body) %></dd>
-          <% end %>
         </dl>
+
+        <%# Read-only Notes block — pulls the body from every scheduled
+            crew swap on this resource (sorted by FWD) so operators see
+            the context without opening the activity feed. Sits OUTSIDE
+            the fields grid so it's always visible even when the fields
+            area scrolls on a tall card. %>
+        <% swap_notes = resource.resource_events
+                                .select { |e| e.scheduled_swap? && e.body.present? }
+                                .sort_by { |e| e.fwd || Date.new(9999, 12, 31) } %>
+        <% if swap_notes.any? %>
+          <div class="board-card-swap-notes-wrap">
+            <div class="board-card-swap-notes-label">Notes</div>
+            <% swap_notes.each do |ev| %>
+              <div class="board-card-swap-notes">
+                <% if ev.leader.present? %>
+                  <div class="board-card-swap-notes-head"><%= ev.leader %><% if ev.fwd %> · FWD <%= ev.fwd.strftime('%m/%d/%y') %><% end %></div>
+                <% end %>
+                <%= simple_format(ev.body) %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
 
         <%# Collapsible roster list — subordinates (crew members, module
             personnel) imported with the parent resource. Hidden by

@@ -889,18 +889,40 @@
   &:active { color: #fff; outline: 0; box-shadow: none; border: 0; }
 }
 
-// Read-only Notes row on the expanded T-card — mirrors the latest
-// scheduled-swap's notes so operators see the context inline with the
-// other fields. Soft amber background so it reads as "incoming swap
-// info" rather than part of the resource itself.
+// Read-only Notes block on the expanded T-card — mirrors scheduled
+// crew-swap notes so operators see the context inline with the other
+// fields. Lives OUTSIDE the scrollable fields grid so it's always
+// visible even when the fields are tall and need scrolling. Soft
+// amber accents so it reads as "incoming swap info" rather than
+// editable resource data.
+.board-card-swap-notes-wrap {
+  flex: 0 0 auto;
+  margin: 10px 0 0;
+}
+.board-card-swap-notes-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #6b778c;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
 .board-card-swap-notes {
   background: #fff8e1;
   border-left: 3px solid #ffb400;
   padding: 6px 10px;
-  margin: 2px 0;
+  margin: 0 0 6px;
   font-size: 12px;
-  line-height: 1.3;
+  line-height: 1.35;
   white-space: pre-wrap;
+
+  &:last-child { margin-bottom: 0; }
+}
+.board-card-swap-notes-head {
+  font-weight: 700;
+  color: #42526e;
+  margin-bottom: 2px;
+  font-size: 11px;
 }
 
 // Collapsible roster block on the expanded T-card. Lives at the

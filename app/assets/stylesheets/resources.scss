@@ -797,6 +797,19 @@ input.fwd-datepicker {
   cursor: default !important;
 }
 
+// Trash icon on roster rows — muted grey until hovered, then red.
+// Keeps the row visually calm so the destructive action doesn't
+// shout for attention next to the DMB button.
+.roster-delete-btn {
+  color: #97a0af;
+  font-size: 12px;
+  padding: 2px 4px;
+  text-decoration: none;
+  border-radius: 3px;
+  &:hover { color: #c62828; background: #fde0e0; text-decoration: none; }
+  &:focus { outline: 0; }
+}
+
 // Demobed roster row — faded + strike-through position/name so you
 // can scan the 211 roster list and see at a glance who's gone.
 .resource-roster-row.roster-status-D {

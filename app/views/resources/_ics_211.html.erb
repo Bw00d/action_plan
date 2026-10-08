@@ -143,6 +143,18 @@
                               demob_checkout_roster_path(ros),
                               class: "btn btn-xs #{demobed ? 'btn-info' : 'btn-dark'} sm-margin-left",
                               title: "Open ICS-221 checkout for #{ros.name}" %>
+                  <%# Trash — permanently removes the subordinate (plus
+                      their demob record + any demob notifications).
+                      Confirms before firing because deletion is
+                      destructive — demobbing is usually the right call
+                      instead. %>
+                  <%= link_to roster_path(ros),
+                              method: :delete,
+                              class: 'roster-delete-btn sm-margin-left',
+                              title: "Delete #{ros.name} from roster",
+                              data: { confirm: "Delete #{ros.name} from the roster? This can't be undone. (If you just want to release them, use DMB instead.)" } do %>
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
