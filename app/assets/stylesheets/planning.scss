@@ -56,4 +56,24 @@
   th { background: #f6f8fa; color: #42526e; font-size: 11px;
        text-transform: uppercase; letter-spacing: 0.3px; }
   td.col-order { font-weight: 700; white-space: nowrap; }
+  .muted { color: #97a0af; font-style: italic; }
+}
+
+// Demobilized tag — amber chip in the Status column + subtle row
+// tint so entries we already demobbed read as "already handled" vs
+// the white rows which are truly missing / never checked in.
+.planning-missing-row--demobbed {
+  background: #fff8e1;
+}
+.planning-demob-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  background: #ef6c00;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  white-space: nowrap;
 }

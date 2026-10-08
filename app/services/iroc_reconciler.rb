@@ -26,10 +26,16 @@ class IrocReconciler
     kind:     ['kind', 'catalog item', 'item code', 'kind/type', 'resource kind']
   }.freeze
 
-  MissingRow = Struct.new(:request, :category, :name, :agency, :kind, keyword_init: true)
+  # `released_on` is set when the IROC request # maps to one of our
+  # resources that's already been demobilized. Lets the view flag "we
+  # had them, but they're already gone" instead of lumping it in with
+  # "never on our incident".
+  MissingRow = Struct.new(:request, :category, :name, :agency, :kind,
+                          :released_on,
+                          keyword_init: true)
 
   Result = Struct.new(
-    :missing,            # [MissingRow] — on IROC but not in our incident
+    :missing,            # [MissingRow] — on IROC but not currently active on our incident
     :matched_count,      # how many IROC rows did match
     :skipped_bad_prefix, # non-A/C/E/O rows ignored
     :errors,             # parse errors
@@ -41,11 +47,12 @@ class IrocReconciler
   end
 
   def reconcile(incident)
-    rows      = parse_rows
-    our_set   = build_our_set(incident)
-    missing   = []
-    matched   = 0
-    bad_pfx   = 0
+    rows             = parse_rows
+    our_set          = build_our_set(incident)
+    released_lookup  = build_released_lookup(incident)
+    missing          = []
+    matched          = 0
+    bad_pfx          = 0
 
     rows.each do |row|
       req = normalize_request(row[:request])
@@ -61,11 +68,12 @@ class IrocReconciler
         matched += 1
       else
         missing << MissingRow.new(
-          request:  req,
-          category: CATEGORY_FROM_PREFIX[prefix],
-          name:     row[:name],
-          agency:   row[:agency],
-          kind:     row[:kind]
+          request:     req,
+          category:    CATEGORY_FROM_PREFIX[prefix],
+          name:        row[:name],
+          agency:      row[:agency],
+          kind:        row[:kind],
+          released_on: released_lookup[req]   # nil if we never had them
         )
       end
     end
@@ -85,15 +93,53 @@ class IrocReconciler
   private
 
   # Build a lookup Set of our incident's resource full_order_numbers,
-  # upcased so case variants don't miss. Skip spacers and anything
-  # released.
+  # including subordinates (rosters). IROC exports treat subordinates
+  # like C-73.1, C-73.2 as top-level request numbers, but internally
+  # they're Roster rows under parent resource C-73 — this reconciler
+  # has to look at BOTH or every subordinate shows up as "missing".
+  # Skip spacers / released; those go into the released_lookup below.
   def build_our_set(incident)
     set = Set.new
-    incident.resources.active.where(spacer: false).find_each do |r|
+    incident.resources.active.where(spacer: false).includes(:rosters).find_each do |r|
       full = r.full_order_number.to_s.upcase.strip
       set << full if full.present?
+
+      # Subordinates — only count ones that are still here (not released
+      # and not promoted into standalone T-cards).
+      r.rosters.each do |ros|
+        next if ros.released_at.present? || ros.promoted_resource_id.present?
+        subfull = ros.full_order_number.to_s.upcase.strip
+        set << subfull if subfull.present?
+      end
     end
     set
+  end
+
+  # Lookup of request# → release date for resources + rosters we have
+  # on the incident that are already demobilized. Used to annotate
+  # missing rows with "Demobilized — MM/DD/YY" instead of leaving them
+  # as "never on our incident".
+  def build_released_lookup(incident)
+    h = {}
+    # Released parent resources.
+    incident.resources
+            .where.not(release_date: nil)
+            .where(spacer: false)
+            .find_each do |r|
+      full = r.full_order_number.to_s.upcase.strip
+      h[full] = r.release_date if full.present?
+    end
+    # Released subordinates (rosters). released_at is a datetime; take
+    # the date portion for display.
+    Roster.joins(:resource)
+          .where(resources: { incident_id: incident.id })
+          .where.not(released_at: nil)
+          .includes(:resource)
+          .find_each do |ros|
+      subfull = ros.full_order_number.to_s.upcase.strip
+      h[subfull] = ros.released_at.to_date if subfull.present?
+    end
+    h
   end
 
   # Normalize an IROC request number into our "A-NN" form. Handles raw

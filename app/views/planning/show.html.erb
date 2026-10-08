@@ -46,16 +46,26 @@
                 <th>Name</th>
                 <th>Agency</th>
                 <th>Kind</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <% @result.missing.each do |row| %>
-                <tr>
+                <tr class="<%= 'planning-missing-row--demobbed' if row.released_on %>">
                   <td class="col-order"><%= row.request %></td>
                   <td><%= row.category %></td>
                   <td><%= row.name %></td>
                   <td><%= row.agency %></td>
                   <td><%= row.kind %></td>
+                  <td>
+                    <% if row.released_on %>
+                      <span class="planning-demob-tag">
+                        Demobilized — <%= row.released_on.strftime('%m/%d/%y') %>
+                      </span>
+                    <% else %>
+                      <span class="muted">Not on incident</span>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
