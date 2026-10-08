@@ -265,16 +265,61 @@
       $btn.text(verb + ' Roster (' + count + ')');
     });
 
+    // Open the swap compose form in CREATE mode. Clears any edit state
+    // so submitting posts a new scheduled swap instead of updating an
+    // existing one.
     $(page).on('click', '.board-card-schedule-swap-toggle', function () {
       var $side = $(this).closest('.board-card-details-side');
+      var $form = $side.find('.board-card-swap-form');
+      resetSwapForm($form);
       $side.find('.board-card-comment-form').hide();
-      $side.find('.board-card-swap-form').show().find('input[name="resource_event[leader]"]').focus();
+      $form.show().find('input[name="resource_event[leader]"]').focus();
     });
     $(page).on('click', '.board-card-schedule-swap-cancel', function () {
       var $side = $(this).closest('.board-card-details-side');
-      $side.find('.board-card-swap-form').hide()[0].reset();
+      resetSwapForm($side.find('.board-card-swap-form').hide());
       $side.find('.board-card-comment-form').show();
     });
+
+    // Pencil on an UPCOMING SWAP item — load its values into the compose
+    // form and flip the form into EDIT mode. Submit will PATCH the
+    // existing event instead of creating a new one.
+    $(page).on('click', '.board-card-swap-edit', function () {
+      var $side = $(this).closest('.board-card-details-side');
+      var $form = $side.find('.board-card-swap-form');
+      var $body = $(this).closest('.board-card-activity-item').find('.board-card-activity-body');
+      var fwdIso = $body.data('swap-fwd') || '';
+      var lwdIso = $body.data('swap-lwd') || '';
+      var days   = '';
+      if (fwdIso && lwdIso) {
+        var f = new Date(fwdIso);
+        var l = new Date(lwdIso);
+        days = Math.round((l - f) / (1000 * 60 * 60 * 24)) + 1;
+      }
+      resetSwapForm($form);
+      $form.attr('data-editing-url', $body.data('swap-edit-url'));
+      $form.find('input[name="resource_event[leader]"]').val($body.data('swap-leader') || '');
+      $form.find('input[name="resource_event[phone]"]').val($body.data('swap-phone') || '');
+      $form.find('.board-card-swap-fwd').val(fwdIso);
+      $form.find('.board-card-swap-length').val(days);
+      $form.find('textarea[name="resource_event[body]"]').val($body.data('swap-body') || '');
+      $form.find('button[type="submit"]').text('Update');
+      computeSwapLwd($form);
+      $side.find('.board-card-comment-form').hide();
+      $form.show();
+      $form[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      $form.find('input[name="resource_event[leader]"]').focus();
+    });
+
+    // Reset the swap form back to CREATE mode — called when opening the
+    // form fresh, on cancel, or after a successful save.
+    function resetSwapForm($form) {
+      if (!$form.length) return;
+      $form[0].reset();
+      $form.removeAttr('data-editing-url');
+      $form.find('.board-card-swap-lwd-preview').text('—');
+      $form.find('button[type="submit"]').text('Schedule');
+    }
 
     // Live LWD preview on the scheduled-swap form. User enters FWD +
     // assignment-length days; we compute the resulting LWD and set the
@@ -318,18 +363,25 @@
       var $side = $form.closest('.board-card-details-side');
       // Make sure LWD is up to date before serializing on the swap form.
       if ($form.hasClass('board-card-swap-form')) computeSwapLwd($form);
+      // Edit mode (pencil-populated swap form) PATCHes the existing
+      // event instead of POSTing a new one. data-editing-url is set
+      // by the pencil click handler and cleared by resetSwapForm.
+      var editUrl = $form.attr('data-editing-url');
+      var ajaxUrl = editUrl || $form.data('url');
+      var method  = editUrl ? 'PATCH' : 'POST';
       $.ajax({
-        url:    $form.data('url'),
-        method: 'POST',
+        url:    ajaxUrl,
+        method: method,
         data:   $form.serialize(),
         headers: { 'X-CSRF-Token': csrf(), 'Accept': 'text/html' }
       }).done(function (html) {
         replaceFeed($side, html);
-        $form[0].reset();
         if ($form.hasClass('board-card-swap-form')) {
-          $form.find('.board-card-swap-lwd-preview').text('—');
+          resetSwapForm($form);
           $form.hide();
           $side.find('.board-card-comment-form').show();
+        } else {
+          $form[0].reset();
         }
       }).fail(function (xhr) {
         var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Save failed']).join(', ');

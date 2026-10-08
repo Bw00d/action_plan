@@ -23,8 +23,16 @@
           <div class="board-card-activity-body"><%= simple_format(ev.body.to_s) %></div>
 
         <% when :scheduled_swap %>
+          <%# Values stashed as data attrs so the pencil button can
+              repopulate the compose form without a server round-trip. %>
           <div class="board-card-activity-tag">UPCOMING SWAP</div>
-          <div class="board-card-activity-body">
+          <div class="board-card-activity-body"
+               data-swap-leader="<%= ev.leader %>"
+               data-swap-phone="<%= ev.phone %>"
+               data-swap-fwd="<%= ev.fwd&.iso8601 %>"
+               data-swap-lwd="<%= ev.lwd&.iso8601 %>"
+               data-swap-body="<%= ev.body %>"
+               data-swap-edit-url="<%= resource_event_path(resource, ev) %>">
             <div><strong><%= ev.leader %></strong></div>
             <div class="muted">
               FWD <%= ev.fwd&.strftime('%m/%d/%y') || '—' %>
@@ -51,6 +59,12 @@
             <button type="button" class="btn btn-default btn-xs board-card-event-delete"
                     data-url="<%= resource_event_path(resource, ev) %>"
                     data-message="Delete this scheduled swap?">Delete</button>
+            <%# Pencil — populate the swap compose form on the right with
+                this swap's values and switch the form into edit mode. %>
+            <button type="button" class="board-card-swap-edit"
+                    title="Edit this scheduled swap">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
           </div>
 
         <% when :completed_swap %>
