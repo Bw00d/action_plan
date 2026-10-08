@@ -61,6 +61,34 @@
       }
     }).disableSelection();
 
+    // --- Column reordering (drag columns side-to-side) -------------------
+    // Only the scrollable .board-columns wrapper (not the pinned
+    // Unassigned column in .board-fixed) is sortable. On stop, send the
+    // DOM order to the server; the controller groups by parent and
+    // reassigns position within each parent via acts_as_list.
+    //
+    // Handle = .board-column-header so the user has to grab the
+    // header strip. Clicking inside a card still just selects / drags
+    // the card, not the whole column.
+    $('.board-columns', page).sortable({
+      axis:      'x',
+      handle:    '.board-column-header',
+      items:     '> .board-column',
+      tolerance: 'pointer',
+      opacity:   0.85,
+      update: function () {
+        var orderedIds = $('.board-columns > .board-column', page).map(function () {
+          return $(this).data('org-unit-id');
+        }).get().filter(function (id) { return id !== '' && id != null; });
+        $.ajax({
+          url:     '/incidents/' + incidentId + '/board/reorder_columns',
+          method:  'PATCH',
+          data:    { org_unit_ids: orderedIds },
+          headers: { 'X-CSRF-Token': csrfToken }
+        });
+      }
+    }).disableSelection();
+
     $(page).on('click', '.board-add-child-toggle', function () {
       var $wrapper = $(this).closest('.board-add-child');
       $wrapper.find('.board-add-child-form').toggle();

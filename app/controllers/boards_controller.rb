@@ -53,6 +53,33 @@ class BoardsController < ApplicationController
     render partial: 'card', locals: { resource: resource }
   end
 
+  # PATCH /incidents/:incident_id/board/reorder_columns
+  # Body: { org_unit_ids: [12, 7, 15, ...] }  — the DOM-order list the
+  # user ended up with after dragging columns around.
+  #
+  # Columns live in a tree (section → branch → division/group) and
+  # `position` is scoped per parent via acts_as_list. We can't just
+  # reparent on drop, but we CAN reassign position within each parent
+  # based on the user's new order. Cross-parent drags are silent no-ops.
+  def reorder_columns
+    ids = Array(params[:org_unit_ids]).map(&:to_i)
+    units_by_id = @incident.org_units.where(id: ids).index_by(&:id)
+    # Group the dragged order by parent_id, preserving sequence.
+    ordered_by_parent = Hash.new { |h, k| h[k] = [] }
+    ids.each do |id|
+      unit = units_by_id[id]
+      next unless unit
+      ordered_by_parent[unit.parent_id] << unit
+    end
+    # acts_as_list#insert_at renumbers siblings cleanly within each parent.
+    ordered_by_parent.each_value do |siblings|
+      siblings.each_with_index do |unit, idx|
+        unit.insert_at(idx + 1) if unit.position != idx + 1
+      end
+    end
+    head :ok
+  end
+
   def destroy_spacer
     resource = @incident.resources.where(spacer: true).find_by(id: params[:id])
     return head :not_found unless resource

@@ -288,6 +288,11 @@
 .board-column-header {
   margin-bottom: 8px;
   padding: 0 4px;
+  // Drag handle for column reordering — grab the header strip and
+  // shuffle left/right. jQuery UI's draggable sets this cursor to
+  // `grabbing` during an active drag.
+  cursor: grab;
+  &:active { cursor: grabbing; }
 }
 
 .board-column-subtitle {
