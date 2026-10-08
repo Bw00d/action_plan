@@ -190,6 +190,22 @@
     }
 
     // Toggle the scheduled-swap form.
+    // Toggle the collapsible roster list on an expanded T-card. Button
+    // label flips between "Show Roster (N)" and "Hide Roster (N)". We
+    // pull the count out of the current text once (ignoring any
+    // leading/trailing whitespace from the ERB) and rebuild the label
+    // cleanly so the state is always correct.
+    $(page).on('click', '.board-card-roster-toggle', function () {
+      var $btn    = $(this);
+      var $list   = $btn.siblings('.board-card-roster-list');
+      var showing = $list.is(':visible');
+      $list.toggle(!showing);
+      var countMatch = $btn.text().match(/\((\d+)\)/);
+      var count      = countMatch ? countMatch[1] : '';
+      var verb       = showing ? 'Show' : 'Hide';
+      $btn.text(verb + ' Roster (' + count + ')');
+    });
+
     $(page).on('click', '.board-card-schedule-swap-toggle', function () {
       var $side = $(this).closest('.board-card-details-side');
       $side.find('.board-card-comment-form').hide();

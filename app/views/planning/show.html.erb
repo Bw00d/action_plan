@@ -34,9 +34,6 @@
           <% if @result.skipped_bad_prefix.positive? %>
             <li><%= @result.skipped_bad_prefix %> row<%= 's' unless @result.skipped_bad_prefix == 1 %> skipped (not A/C/E/O)</li>
           <% end %>
-          <% if @result.skipped_bad_status.positive? %>
-            <li><%= @result.skipped_bad_status %> row<%= 's' unless @result.skipped_bad_status == 1 %> skipped (not "At Incident")</li>
-          <% end %>
         </ul>
 
         <% if @result.missing.any? %>

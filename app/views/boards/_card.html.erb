@@ -34,8 +34,9 @@
         shows the incoming operator + their FWD so the user doesn't
         have to open the modal to recall what's pending. %>
     <% if scheduled_swap %>
-      <% swap_tip = "Swap scheduled: #{scheduled_swap.leader}" \
-                    "#{" (FWD #{scheduled_swap.fwd.strftime('%-m/%-d')})" if scheduled_swap.fwd}" %>
+      <% swap_tip = "Swap scheduled: #{scheduled_swap.leader}"
+         swap_tip << " (FWD #{scheduled_swap.fwd.strftime('%-m/%-d')})" if scheduled_swap.fwd
+         swap_tip << "\n\nNotes: #{scheduled_swap.body}"              if scheduled_swap.body.present? %>
       <span class="board-card-swap-flag" title="<%= swap_tip %>">
         <i class="fa fa-exchange" aria-hidden="true"></i> SWAP
       </span>
@@ -129,6 +130,46 @@
           <dt>Email</dt>
           <dd><%= best_in_place resource, :email, as: :input %></dd>
         </dl>
+
+        <%# Collapsible roster list — subordinates (crew members, module
+            personnel) imported with the parent resource. Hidden by
+            default; "Show Roster (N)" button reveals. Uses in-memory
+            resource.rosters since it's eager-loaded in BoardsController. %>
+        <% active_rosters = resource.rosters.select { |r| r.released_at.nil? && r.promoted_resource_id.nil? } %>
+        <% if active_rosters.any? %>
+          <div class="board-card-roster">
+            <button type="button" class="btn btn-default btn-xs board-card-roster-toggle">
+              Show Roster (<%= active_rosters.size %>)
+            </button>
+            <ul class="board-card-roster-list" style="display:none;">
+              <% active_rosters.sort_by(&:natural_sort_key).each do |ros| %>
+                <li class="board-card-roster-item roster-status-<%= ros.status %>">
+                  <span class="roster-order"><%= ros.full_order_number %></span>
+                  <span class="roster-name"><%= ros.name %></span>
+                  <% if ros.position.present? %>
+                    <span class="roster-position muted"><%= ros.position %></span>
+                  <% end %>
+                  <% if ros.agency.present? && ros.agency != resource.agency %>
+                    <span class="roster-agency muted"><%= ros.agency %></span>
+                  <% end %>
+                  <%# C / F toggle — matches the ICS 211. Saves on
+                      change via best_in_place → RostersController#update
+                      → reloads so the parent's tally reflects the new
+                      status immediately. %>
+                  <span class="roster-status-pill-wrap">
+                    <%= best_in_place ros, :status,
+                                      as: :select,
+                                      collection: Roster::STATUS_CHOICES,
+                                      path: roster_path(ros),
+                                      html_attrs: { class: 'roster-status-pill',
+                                                    'data-reload-on-save' => true },
+                                      display_with: ->(v) { v == 'F' ? 'F' : 'C' } %>
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
       </div>
 
       <aside class="board-card-details-side" data-resource-id="<%= resource.id %>">

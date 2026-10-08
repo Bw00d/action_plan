@@ -1,17 +1,15 @@
 require 'csv'
 
 # Compares an IROC "resources at incident" CSV export against the
-# resources checked in to a given incident. Returns a list of resources
-# that IROC says are at the incident but we have no record of — i.e.
-# people who physically showed up but never got checked in to our system.
+# resources checked in to a given incident. Every A/C/E/O row in the
+# upload is treated as At Incident (that's what the whole export means
+# — no need for a per-row status filter, which was eating rows when
+# the CSV used a different status wording). Any A/C/E/O request number
+# that isn't matched by one of our incident's resource order numbers
+# gets listed as "missing".
 #
 # Only four categories matter: Aircraft (A), Crews (C), Equipment (E),
-# Overhead (O). Service rows and anything else are skipped.
-#
-# CSV format: tolerates several common column-name variations IROC
-# dispatches use. Required: a "Request Number" style column + a "Status"
-# column. Optional: Resource Name, Agency, Kind — surfaced to the user
-# in the result list so they know who's missing.
+# Overhead (O). Anything else is skipped.
 class IrocReconciler
   CATEGORY_FROM_PREFIX = {
     'A' => 'AIRCRAFT',
@@ -20,24 +18,20 @@ class IrocReconciler
     'O' => 'OVERHEAD'
   }.freeze
 
-  AT_INCIDENT_STATUSES = ['at incident', 'at_incident', 'at-incident'].freeze
-
   # Column name aliases — case- and punctuation-insensitive match.
   COLUMN_ALIASES = {
     request:  ['request number', 'request #', 'request_number', 'request', 'req #', 'req number'],
-    status:   ['status', 'resource status', 'current status'],
     name:     ['resource name', 'name', 'resource', 'personnel name'],
     agency:   ['agency', 'home unit', 'provider unit', 'home dispatch'],
     kind:     ['kind', 'catalog item', 'item code', 'kind/type', 'resource kind']
   }.freeze
 
-  MissingRow = Struct.new(:request, :category, :name, :agency, :kind, :status, keyword_init: true)
+  MissingRow = Struct.new(:request, :category, :name, :agency, :kind, keyword_init: true)
 
   Result = Struct.new(
     :missing,            # [MissingRow] — on IROC but not in our incident
     :matched_count,      # how many IROC rows did match
     :skipped_bad_prefix, # non-A/C/E/O rows ignored
-    :skipped_bad_status, # rows not At Incident
     :errors,             # parse errors
     keyword_init: true
   )
@@ -52,7 +46,6 @@ class IrocReconciler
     missing   = []
     matched   = 0
     bad_pfx   = 0
-    bad_stat  = 0
 
     rows.each do |row|
       req = normalize_request(row[:request])
@@ -64,12 +57,6 @@ class IrocReconciler
         next
       end
 
-      status = row[:status].to_s.downcase.strip
-      unless AT_INCIDENT_STATUSES.include?(status)
-        bad_stat += 1
-        next
-      end
-
       if our_set.include?(req)
         matched += 1
       else
@@ -78,8 +65,7 @@ class IrocReconciler
           category: CATEGORY_FROM_PREFIX[prefix],
           name:     row[:name],
           agency:   row[:agency],
-          kind:     row[:kind],
-          status:   row[:status]
+          kind:     row[:kind]
         )
       end
     end
@@ -92,7 +78,6 @@ class IrocReconciler
       missing:            missing,
       matched_count:      matched,
       skipped_bad_prefix: bad_pfx,
-      skipped_bad_status: bad_stat,
       errors:             []
     )
   end
@@ -144,7 +129,6 @@ class IrocReconciler
     csv.map do |row|
       {
         request: row[header_map[:request]],
-        status:  row[header_map[:status]],
         name:    header_map[:name]   && row[header_map[:name]],
         agency:  header_map[:agency] && row[header_map[:agency]],
         kind:    header_map[:kind]   && row[header_map[:kind]]
