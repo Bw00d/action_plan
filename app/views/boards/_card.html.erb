@@ -136,27 +136,22 @@
           <dd><%= best_in_place resource, :email, as: :input %></dd>
         </dl>
 
-        <%# Read-only Notes block — pulls the body from every scheduled
-            crew swap on this resource (sorted by FWD) so operators see
-            the context without opening the activity feed. Sits OUTSIDE
-            the fields grid so it's always visible even when the fields
-            area scrolls on a tall card. %>
-        <% swap_notes = resource.resource_events
-                                .select { |e| e.scheduled_swap? && e.body.present? }
-                                .sort_by { |e| e.fwd || Date.new(9999, 12, 31) } %>
-        <% if swap_notes.any? %>
-          <div class="board-card-swap-notes-wrap">
-            <div class="board-card-swap-notes-label">Notes</div>
-            <% swap_notes.each do |ev| %>
-              <div class="board-card-swap-notes">
-                <% if ev.leader.present? %>
-                  <div class="board-card-swap-notes-head"><%= ev.leader %><% if ev.fwd %> · FWD <%= ev.fwd.strftime('%m/%d/%y') %><% end %></div>
-                <% end %>
-                <%= simple_format(ev.body) %>
-              </div>
-            <% end %>
+        <%# Notes about the CURRENT operator. Lives on resource.notes
+            (not on scheduled_swap events) so a swap in the future
+            doesn't change the note the user sees right now. On SWAP
+            NOW the previous notes are appended to the outgoing
+            completed_swap body (preserved in the activity log) and
+            the incoming swap's notes replace resource.notes.
+            Editable inline so the user can also tweak directly. %>
+        <div class="board-card-swap-notes-wrap">
+          <div class="board-card-swap-notes-label">Notes</div>
+          <div class="board-card-swap-notes" data-field="notes">
+            <%= best_in_place resource, :notes,
+                              as: :textarea,
+                              place_holder: '(click to add notes about the current operator)',
+                              display_with: :simple_format %>
           </div>
-        <% end %>
+        </div>
 
         <%# Roster block — rendered via partial so the inline add form
             can POST and swap the whole block in place. %>

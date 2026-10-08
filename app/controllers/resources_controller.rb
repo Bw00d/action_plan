@@ -344,7 +344,7 @@ class ResourcesController < ApplicationController
     def resource_params
       params.require(:resource).permit(:name, :leader, :number_personnel, :position, :agency,
                                        :order_number, :lwd, :checkin_date, :incident_id, :category,
-                                       :phone, :email, :comment, :fwd, :assignment_length, :release_date,
+                                       :phone, :email, :comment, :notes, :fwd, :assignment_length, :release_date,
                                        :r_and_r, :jetport, :return_city, :return_state,
                                        :drop_off_pt_time, :pick_up_pt_time)
     end

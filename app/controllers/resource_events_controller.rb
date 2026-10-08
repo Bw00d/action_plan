@@ -67,8 +67,20 @@ class ResourceEventsController < ApplicationController
     end
 
     ResourceEvent.transaction do
-      # 1 + 2: snapshot the outgoing operator.
-      outgoing_lwd = (@resource.last_work_day if @resource.last_work_day.is_a?(Date))
+      # 1 + 2: snapshot the outgoing operator. If the outgoing
+      # operator had notes attached (saved on resource.notes when the
+      # previous swap executed), append them to the completed_swap
+      # body so the log preserves the full context — the T-card itself
+      # will immediately be rewritten with the incoming operator's
+      # notes below, so this is the last chance to capture the old
+      # ones for history.
+      outgoing_lwd    = (@resource.last_work_day if @resource.last_work_day.is_a?(Date))
+      outgoing_notes  = @resource.notes.to_s.strip
+      log_body = if outgoing_notes.present?
+                   "Rotated off\n\nNotes: #{outgoing_notes}"
+                 else
+                   "Rotated off"
+                 end
       @resource.resource_events.create!(
         kind:   :completed_swap,
         user:   current_user,
@@ -76,15 +88,16 @@ class ResourceEventsController < ApplicationController
         fwd:    @resource.fwd,
         lwd:    outgoing_lwd,
         phone:  @resource.phone,
-        body:   "Rotated off"
+        body:   log_body
       )
 
-      # 3: update the Resource. Leader + phone switch to the new operator.
-      # The equipment's own FWD is left alone (it's been on the incident
-      # since its original check-in). assignment_length is EXTENDED by
-      # the new operator's commitment length so Resource#last_work_day
-      # (fwd + length - 1) rolls forward to the new LWD without rewriting
-      # history.
+      # 3: update the Resource. Leader + phone switch to the new
+      # operator. The equipment's own FWD is left alone (it's been on
+      # the incident since its original check-in). assignment_length
+      # is EXTENDED by the new operator's commitment length so
+      # Resource#last_work_day (fwd + length - 1) rolls forward to the
+      # new LWD without rewriting history. The incoming swap's notes
+      # become the resource's current notes.
       added_days = if @event.fwd && @event.lwd
                      ((@event.lwd - @event.fwd).to_i + 1)
                    else
@@ -93,7 +106,8 @@ class ResourceEventsController < ApplicationController
       @resource.update!(
         leader:            @event.leader,
         phone:             @event.phone.presence || @resource.phone,
-        assignment_length: @resource.assignment_length.to_i + added_days
+        assignment_length: @resource.assignment_length.to_i + added_days,
+        notes:             @event.body       # may be nil — that's fine, clears old notes
       )
 
       # 4: scheduled event is consumed by the swap.
@@ -119,7 +133,8 @@ class ResourceEventsController < ApplicationController
         phone:             @resource.phone.to_s,
         fwd:               @resource.fwd&.iso8601,
         assignment_length: @resource.assignment_length.to_i,
-        lwd:               lwd.is_a?(Date) ? lwd.strftime('%m/%d/%y') : ''
+        lwd:               lwd.is_a?(Date) ? lwd.strftime('%m/%d/%y') : '',
+        notes:             @resource.notes.to_s
       }
     }
   end

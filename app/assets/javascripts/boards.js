@@ -493,6 +493,7 @@
           patchBip($card, 'leader',            data.resource.leader);
           patchBip($card, 'phone',             data.resource.phone);
           patchBip($card, 'assignment_length', data.resource.assignment_length);
+          patchBip($card, 'notes',             data.resource.notes);
           $card.attr('data-assignment-length', data.resource.assignment_length);
           if (data.resource.fwd) $card.attr('data-fwd', data.resource.fwd);
           $card.find('[data-field="lwd"]').text(data.resource.lwd || '');
