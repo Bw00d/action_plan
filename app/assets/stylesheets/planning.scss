@@ -78,6 +78,53 @@
   white-space: nowrap;
 }
 
+// Crew Swaps Log page — spreadsheet-style report of every scheduled
+// and completed swap across the incident.
+.planning-crew-swaps-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+.planning-crew-swaps-head-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.planning-crew-swaps-table {
+  font-size: 12px;
+  th {
+    background: #f6f8fa;
+    color: #42526e;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  td.col-order { font-weight: 700; white-space: nowrap; }
+  td.nowrap    { white-space: nowrap; }
+  td.muted     { color: #6b778c; }
+  td.planning-swap-notes-cell { color: #42526e; max-width: 320px; }
+}
+
+.planning-swap-tag {
+  display: inline-block;
+  padding: 1px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+.planning-swap-tag--scheduled { background: #0052cc; }
+.planning-swap-tag--completed { background: #97a0af; }
+
+// Completed swaps dim slightly to let the scheduled rows pop.
+.planning-swap-row--completed_swap { background: #fafbfc; }
+
 // Expand/collapse carat on parent rows with hidden subordinates.
 // Kills every border / outline / box-shadow across all states so no
 // chrome ring appears when the button is focused after a click.

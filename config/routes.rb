@@ -113,11 +113,12 @@ Rails.application.routes.draw do
       get   :to_pdf
     end
 
-    # Planning Section tools — reconcile IROC exports, future planning
-    # utilities, etc. "Planning" instead of "Plans" to avoid clashing
-    # with the existing /plans route (which is the IAP).
+    # Planning Section tools — reconcile IROC exports, crew swap log,
+    # future planning utilities. "Planning" instead of "Plans" to
+    # avoid clashing with the existing /plans route (which is the IAP).
     resource :planning, only: [:show], controller: 'planning' do
       post :reconcile_iroc
+      get  :crew_swaps
     end
 
     resources :org_units, only: [:create, :destroy]

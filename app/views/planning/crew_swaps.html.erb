@@ -1,0 +1,67 @@
+<% content_for :title, "Crew Swaps" %>
+
+<div class="planning-page">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <div class="planning-crew-swaps-head">
+    <div>
+      <h2 class="planning-title">Crew Swaps Log</h2>
+      <p class="muted">
+        Every scheduled + completed crew swap across the incident. One
+        row per entry. Sorted by resource, then forward-work date.
+      </p>
+    </div>
+    <div class="planning-crew-swaps-head-actions">
+      <%= link_to 'Download CSV',
+                  crew_swaps_incident_planning_path(@incident, format: :csv),
+                  class: 'btn btn-primary btn-xs',
+                  title: 'Export this log as CSV — opens in Excel, Numbers, or Google Sheets.' %>
+      <%= link_to '← Back to Plans', incident_planning_path(@incident),
+                  class: 'btn btn-default btn-xs' %>
+    </div>
+  </div>
+
+  <% if @swap_events.empty? %>
+    <p class="muted"><em>No crew swaps have been scheduled or executed on this incident yet.</em></p>
+  <% else %>
+    <table class="table planning-crew-swaps-table">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Status</th>
+          <th>Leader</th>
+          <th>FWD</th>
+          <th>LWD</th>
+          <th>Phone</th>
+          <th>Notes</th>
+          <th>Logged by</th>
+          <th>Logged at</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @swap_events.each do |ev| %>
+          <% r = ev.resource %>
+          <tr class="planning-swap-row planning-swap-row--<%= ev.kind %>">
+            <td class="col-order"><%= r.full_order_number %> <span class="muted"><%= r.name %></span></td>
+            <td>
+              <% if ev.scheduled_swap? %>
+                <span class="planning-swap-tag planning-swap-tag--scheduled">Scheduled</span>
+              <% else %>
+                <span class="planning-swap-tag planning-swap-tag--completed">Completed</span>
+              <% end %>
+            </td>
+            <td><%= ev.leader %></td>
+            <td class="nowrap"><%= ev.fwd&.strftime('%m/%d/%y') %></td>
+            <td class="nowrap"><%= ev.lwd&.strftime('%m/%d/%y') %></td>
+            <td class="nowrap"><%= ev.phone %></td>
+            <td class="planning-swap-notes-cell"><%= simple_format(ev.body.to_s) %></td>
+            <td><%= ev.user&.full_name.presence || ev.user&.email&.split('@')&.first %></td>
+            <td class="nowrap muted"><%= ev.created_at.strftime('%m/%d/%y %-l:%M%P') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

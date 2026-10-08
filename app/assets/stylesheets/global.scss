@@ -318,3 +318,20 @@ div.alert {
 .strong {
   font-weight: 700 !important;
 }
+
+// Suppress the browser default focus/active ring on buttons and links
+// app-wide. Our destructive-action elements (DMB buttons, pencils,
+// trash icons, carats) still get their own hover + focus color via
+// their individual stylesheets; this rule just kills the stray black
+// outline/border that keeps leaking through from the UA + Bootstrap
+// defaults. Form inputs (text/email/number/password/textarea/select)
+// keep their rings so form accessibility isn't degraded.
+button,
+a {
+  &:focus,
+  &:focus-visible,
+  &:active {
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+}

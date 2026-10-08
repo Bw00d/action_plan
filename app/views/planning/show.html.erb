@@ -115,6 +115,18 @@
       </div>
     <% end %>
   </section>
+
+  <section class="planning-tool">
+    <h3>Crew Swaps Log</h3>
+    <p class="muted">
+      Spreadsheet view of every scheduled + completed crew swap on this
+      incident — one row per swap, so you can review turnover across
+      the length of the fire.
+    </p>
+    <%= link_to 'Open crew swaps log →',
+                crew_swaps_incident_planning_path(@incident),
+                class: 'btn btn-primary' %>
+  </section>
 </div>
 
 <script>
