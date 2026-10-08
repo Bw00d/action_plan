@@ -193,12 +193,36 @@ class Resource < ApplicationRecord
     end
   end
 
+  # Projected end-of-assignment date.
+  #
+  # Baseline is `fwd + assignment_length - 1 day` — the on-paper LWD
+  # from the original check-in. If any scheduled crew swaps are on the
+  # books, we extend to the latest scheduled swap's LWD so the planning
+  # view reflects reality (incoming operators keep the resource at the
+  # incident past its original LWD). Taking the MAX means a shorter
+  # pre-scheduled swap can't accidentally shrink the end date below
+  # what the resource was already committed to.
+  #
+  # Preserves the historical " " return value when fwd/assignment_length
+  # are both missing AND no swap exists, so legacy callers that
+  # pattern-match on `is_a?(String)` keep working.
   def last_work_day
-    if self.fwd && self.assignment_length
-      return self.fwd + self.assignment_length-1.days 
-    else
-      return " "
-    end
+    base = (fwd + assignment_length - 1.days if fwd && assignment_length)
+    swap = latest_scheduled_swap_lwd
+    [base, swap].compact.max || " "
+  end
+
+  # Max LWD across all scheduled (not yet executed) crew swaps on this
+  # resource. Nil when none exist. Uses the in-memory association when
+  # it's been eager-loaded (common on the board + 211 pages) to avoid
+  # a per-row SQL query.
+  def latest_scheduled_swap_lwd
+    swaps = if resource_events.loaded?
+              resource_events.select { |e| e.kind.to_s == 'scheduled_swap' }
+            else
+              resource_events.where(kind: ResourceEvent.kinds[:scheduled_swap])
+            end
+    swaps.map(&:lwd).compact.max
   end
 
   def formatted_fwd

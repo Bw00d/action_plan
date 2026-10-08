@@ -788,6 +788,23 @@ input.fwd-datepicker {
   .roster-status-F & { background: #ececec; color: #666; }
 }
 
+// Static D pill — demobed rosters don't open a dropdown; status is
+// bound to the demob record. Blue to parallel the blue DMB button
+// that appears when a roster/resource has been released.
+.roster-status-pill--d {
+  background: #d0e6fb !important;
+  color: #0b4a86 !important;
+  cursor: default !important;
+}
+
+// Demobed roster row — faded + strike-through position/name so you
+// can scan the 211 roster list and see at a glance who's gone.
+.resource-roster-row.roster-status-D {
+  opacity: 0.5;
+  .roster-name-cell,
+  .roster-position-cell { text-decoration: line-through; font-style: italic; }
+}
+
 // Compact the <select> element that best_in_place drops in while the
 // user is picking a value — without this it inherits Bootstrap's
 // 100%-width .form-control sizing.

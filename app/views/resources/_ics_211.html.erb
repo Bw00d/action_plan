@@ -95,8 +95,13 @@
               the expansion (their demob notification lives on the demob
               notifications tab). Sort naturally so "10" comes after "9",
               not after "1" (default DB order is lexicographic string). %>
-          <% r.rosters.active.sort_by(&:natural_sort_key).each do |ros| %>
-            <% depth = ros.full_order_number.count('.') %>
+          <%# Show every roster (including demobed) so the operator keeps
+              the full crew history visible on the 211 as the roster
+              rotates in/out. Demobed rows are tinted + the DMB button
+              turns blue so "already handled" reads at a glance. %>
+          <% r.rosters.sort_by(&:natural_sort_key).each do |ros| %>
+            <% depth    = ros.full_order_number.count('.') %>
+            <% demobed  = ros.demobed? %>
             <tr class="resource-roster-row is-hidden depth-<%= depth %> roster-status-<%= ros.status %>"
                 data-resource-id="<%= r.id %>">
               <td class="roster-order-cell" style="padding-left: <%= 20 + depth * 20 %>px">
@@ -105,29 +110,38 @@
               <td class="roster-position-cell"><%= ros.position %></td>
               <td class="roster-name-cell"><%= ros.name %></td>
               <td colspan="9" class="roster-filler-cell">
-                <%# C / F toggle. Filled subordinates stay on the list
-                    but are excluded from Resource#personnel_by_agency,
-                    so the tally reflects only who's actually on the
-                    ground. best_in_place PATCHes the roster inline. %>
-                <%= best_in_place ros, :status,
-                                  as: :select,
-                                  collection: Roster::STATUS_CHOICES,
-                                  path: roster_path(ros),
-                                  html_attrs: { class: 'roster-status-pill',
-                                                'data-reload-on-save' => true },
-                                  display_with: ->(v) { v == 'F' ? 'Filled' : 'Checked in' } %>
+                <%# C / F toggle (demobed rosters show a static D pill
+                    instead — don't let the user flip D via this pill
+                    because that would decouple status from the demob
+                    record. Status syncs automatically to D when
+                    released_at is set / back to C on undo). %>
+                <% if demobed %>
+                  <span class="roster-status-pill roster-status-pill--d">Demobed</span>
+                <% else %>
+                  <%= best_in_place ros, :status,
+                                    as: :select,
+                                    collection: Roster::STATUS_CHOICES,
+                                    path: roster_path(ros),
+                                    html_attrs: { class: 'roster-status-pill',
+                                                  'data-reload-on-save' => true },
+                                    display_with: ->(v) { v == 'F' ? 'Filled' : 'Checked in' } %>
+                <% end %>
                 <% if ros.promoted? %>
                   <span class="text-muted small">&rarr; Promoted to <%= ros.promoted_resource.full_order_number %></span>
                 <% else %>
-                  <%= button_to "Promote to T-card",
-                                promote_roster_path(ros),
-                                method: :post,
-                                class: "btn btn-xs btn-default",
-                                form: { style: "display:inline" },
-                                data: { confirm: "Carve #{ros.name} out as a standalone T-card?" } %>
+                  <% unless demobed %>
+                    <%= button_to "Promote to T-card",
+                                  promote_roster_path(ros),
+                                  method: :post,
+                                  class: "btn btn-xs btn-default",
+                                  form: { style: "display:inline" },
+                                  data: { confirm: "Carve #{ros.name} out as a standalone T-card?" } %>
+                  <% end %>
+                  <%# DMB link — black while active, blue once demobed
+                      (parallel to the parent-resource DMB on this 211). %>
                   <%= link_to "DMB",
                               demob_checkout_roster_path(ros),
-                              class: "btn btn-xs btn-dark sm-margin-left",
+                              class: "btn btn-xs #{demobed ? 'btn-info' : 'btn-dark'} sm-margin-left",
                               title: "Open ICS-221 checkout for #{ros.name}" %>
                 <% end %>
               </td>

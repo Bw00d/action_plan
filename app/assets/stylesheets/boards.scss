@@ -889,6 +889,20 @@
   &:active { color: #fff; outline: 0; box-shadow: none; border: 0; }
 }
 
+// Read-only Notes row on the expanded T-card — mirrors the latest
+// scheduled-swap's notes so operators see the context inline with the
+// other fields. Soft amber background so it reads as "incoming swap
+// info" rather than part of the resource itself.
+.board-card-swap-notes {
+  background: #fff8e1;
+  border-left: 3px solid #ffb400;
+  padding: 6px 10px;
+  margin: 2px 0;
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: pre-wrap;
+}
+
 // Collapsible roster block on the expanded T-card. Lives at the
 // bottom of the left-column fields area; the button is always
 // visible, the list only when expanded.
@@ -924,6 +938,13 @@
     opacity: 0.55;
     .roster-name, .roster-position { font-style: italic; }
   }
+
+  // Demobed rosters stay listed but dim with a strike-through so the
+  // crew history reads clearly as "already gone".
+  &.roster-status-D {
+    opacity: 0.5;
+    .roster-name, .roster-position { text-decoration: line-through; font-style: italic; }
+  }
 }
 .roster-status-pill-small {
   display: inline-block;
@@ -940,6 +961,16 @@
 // override so best_in_place's edit widget doesn't balloon to 100%.
 .roster-status-pill-wrap {
   margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  .roster-dmb-btn {
+    padding: 1px 8px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+  }
 
   .roster-status-pill {
     display: inline-block;

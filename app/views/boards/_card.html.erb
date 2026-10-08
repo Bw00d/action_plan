@@ -18,7 +18,11 @@
     data-resource-id="<%= resource.id %>"
     data-personnel="<%= resource.effective_personnel.to_i %>"
     data-fwd="<%= resource.fwd&.iso8601 %>"
-    data-assignment-length="<%= resource.assignment_length %>">
+    data-assignment-length="<%= resource.assignment_length %>"
+    <%# When any scheduled swap exists, its latest LWD wins over the
+        fwd + assignment_length calc — the JS live-recalc reads this
+        and skips its own math whenever this attr is populated. %>
+    data-swap-lwd="<%= resource.latest_scheduled_swap_lwd&.iso8601 %>">
   <%# Rely on the eager-loaded resource.resource_events (preloaded in
       BoardsController#show) so this doesn't fire a per-card query.
       In-memory select + sort instead of SQL where+order. %>
@@ -129,20 +133,34 @@
 
           <dt>Email</dt>
           <dd><%= best_in_place resource, :email, as: :input %></dd>
+
+          <%# Read-only Notes row — mirrors the Notes field from the
+              earliest-FWD scheduled crew swap so operators can see the
+              context without opening the activity feed. `scheduled_swap`
+              is computed at the top of this card. Edit happens by
+              scheduling / editing the swap itself in the activity panel. %>
+          <% if scheduled_swap && scheduled_swap.body.present? %>
+            <dt>Notes</dt>
+            <dd class="full-width board-card-swap-notes"><%= simple_format(scheduled_swap.body) %></dd>
+          <% end %>
         </dl>
 
         <%# Collapsible roster list — subordinates (crew members, module
             personnel) imported with the parent resource. Hidden by
             default; "Show Roster (N)" button reveals. Uses in-memory
             resource.rosters since it's eager-loaded in BoardsController. %>
-        <% active_rosters = resource.rosters.select { |r| r.released_at.nil? && r.promoted_resource_id.nil? } %>
-        <% if active_rosters.any? %>
+        <%# All non-promoted rosters — including demobed, so the
+            parent's crew history stays visible as people cycle in and
+            out. Demobed entries get a static D pill (status syncs
+            automatically with released_at; see Roster model). %>
+        <% roster_rows = resource.rosters.select { |r| r.promoted_resource_id.nil? } %>
+        <% if roster_rows.any? %>
           <div class="board-card-roster">
             <button type="button" class="btn btn-default btn-xs board-card-roster-toggle">
-              Show Roster (<%= active_rosters.size %>)
+              Show Roster (<%= roster_rows.size %>)
             </button>
             <ul class="board-card-roster-list" style="display:none;">
-              <% active_rosters.sort_by(&:natural_sort_key).each do |ros| %>
+              <% roster_rows.sort_by(&:natural_sort_key).each do |ros| %>
                 <li class="board-card-roster-item roster-status-<%= ros.status %>">
                   <span class="roster-order"><%= ros.full_order_number %></span>
                   <span class="roster-name"><%= ros.name %></span>
@@ -152,18 +170,24 @@
                   <% if ros.agency.present? && ros.agency != resource.agency %>
                     <span class="roster-agency muted"><%= ros.agency %></span>
                   <% end %>
-                  <%# C / F toggle — matches the ICS 211. Saves on
-                      change via best_in_place → RostersController#update
-                      → reloads so the parent's tally reflects the new
-                      status immediately. %>
                   <span class="roster-status-pill-wrap">
-                    <%= best_in_place ros, :status,
-                                      as: :select,
-                                      collection: Roster::STATUS_CHOICES,
-                                      path: roster_path(ros),
-                                      html_attrs: { class: 'roster-status-pill',
-                                                    'data-reload-on-save' => true },
-                                      display_with: ->(v) { v == 'F' ? 'F' : 'C' } %>
+                    <% if ros.demobed? %>
+                      <span class="roster-status-pill roster-status-pill--d">D</span>
+                    <% else %>
+                      <%= best_in_place ros, :status,
+                                        as: :select,
+                                        collection: Roster::STATUS_CHOICES,
+                                        path: roster_path(ros),
+                                        html_attrs: { class: 'roster-status-pill',
+                                                      'data-reload-on-save' => true },
+                                        display_with: ->(v) { v == 'F' ? 'F' : 'C' } %>
+                    <% end %>
+                    <%# DMB — black while active, blue once demobed, mirrors
+                        the parent card's DMB and the 211's roster DMB. %>
+                    <%= link_to 'DMB',
+                                demob_checkout_roster_path(ros),
+                                class: "btn btn-xs #{ros.demobed? ? 'btn-info' : 'btn-dark'} roster-dmb-btn",
+                                title: "Open ICS-221 checkout for #{ros.name}" %>
                   </span>
                 </li>
               <% end %>

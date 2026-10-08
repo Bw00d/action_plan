@@ -214,7 +214,38 @@
     function csrf() { return $('meta[name=csrf-token]').attr('content'); }
 
     function replaceFeed($side, html) {
-      $side.find('.board-card-activity-feed').html(html);
+      var $feed = $side.find('.board-card-activity-feed').html(html);
+      syncSwapLwdAttr($side.closest('.board-card'), $feed);
+    }
+
+    // Walk the activity feed for scheduled_swap items, grab each item's
+    // LWD line, and stash the latest one on the card's data-swap-lwd
+    // attr. Keeps the client-side LWD recalc in step with whatever is
+    // currently scheduled, without needing a server round-trip just to
+    // learn the new max. If no scheduled swaps exist, clears the attr
+    // so recalcLwd falls back to the fwd + assignment_length math.
+    function syncSwapLwdAttr($card, $feed) {
+      if (!$card || !$card.length) return;
+      var latest = null;
+      $feed.find('.board-card-activity-item--scheduled_swap').each(function () {
+        // Each scheduled-swap item renders "FWD mm/dd/yy → LWD mm/dd/yy"
+        // in a .muted div. Grab the LWD half.
+        var txt   = $(this).text();
+        var match = txt.match(/LWD\s+(\d{2})\/(\d{2})\/(\d{2})/);
+        if (!match) return;
+        var m = +match[1], d = +match[2], y = 2000 + (+match[3]);
+        var dt = new Date(y, m - 1, d);
+        if (!latest || dt > latest) latest = dt;
+      });
+      if (latest) {
+        var iso = latest.getFullYear() + '-' +
+                  String(latest.getMonth() + 1).padStart(2, '0') + '-' +
+                  String(latest.getDate()).padStart(2, '0');
+        $card.attr('data-swap-lwd', iso);
+      } else {
+        $card.removeAttr('data-swap-lwd');
+      }
+      recalcLwd($card);
     }
 
     // Toggle the scheduled-swap form.
@@ -468,11 +499,22 @@
     }
 
     function recalcLwd($card) {
+      var $lwdCell = $card.find('[data-field="lwd"]');
+      // When any scheduled swap is on this card, it wins over the
+      // fwd + assignment_length math — mirrors Resource#last_work_day
+      // which also takes the max of (base, latest scheduled swap).
+      var swapStr = String($card.attr('data-swap-lwd') || '').trim();
+      if (swapStr) {
+        var swapDate = parseFlexibleDate(swapStr);
+        if (swapDate) {
+          $lwdCell.text(fmtShortDate(swapDate));
+          return;
+        }
+      }
       var fwdStr    = String($card.attr('data-fwd') || '').trim();
       var lengthStr = String($card.attr('data-assignment-length') || '').trim();
       var fwd       = parseFlexibleDate(fwdStr);
       var length    = parseInt(lengthStr, 10);
-      var $lwdCell  = $card.find('[data-field="lwd"]');
       if (!fwd || isNaN(length) || length < 1) {
         $lwdCell.text('—');
         return;

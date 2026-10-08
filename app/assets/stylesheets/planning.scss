@@ -79,15 +79,26 @@
 }
 
 // Expand/collapse carat on parent rows with hidden subordinates.
+// Kills every border / outline / box-shadow across all states so no
+// chrome ring appears when the button is focused after a click.
 .planning-missing-toggle {
   background: none;
-  border: 0;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
   padding: 0 6px 0 0;
   color: #42526e;
   font-size: 11px;
   cursor: pointer;
-  &:hover  { color: #0052cc; }
-  &:focus  { outline: 0; }
+  &:hover,
+  &:focus,
+  &:active {
+    color: #0052cc;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
 }
 .planning-child-count {
   margin-left: 6px;

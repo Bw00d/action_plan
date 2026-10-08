@@ -23,13 +23,19 @@ class Roster < ApplicationRecord
   scope :released,   -> { where.not(released_at: nil) }
   scope :unpromoted, -> { where(promoted_resource_id: nil) }
   scope :promoted,   -> { where.not(promoted_resource_id: nil) }
-  # Per-subordinate status for tally math. C = Checked in (present,
-  # counted); F = Filled (on the roster but not here, excluded from
-  # personnel_by_agency). Added so long crew rosters can show every
-  # person without inflating the on-the-ground headcount.
+  # Per-subordinate status for tally math.
+  #   C = Checked in (present, counted)
+  #   F = Filled (on roster but not here, excluded from personnel count)
+  #   D = Demobed (released; stays visible on the 211 + T-card roster
+  #       for history but excluded from personnel count)
   scope :checked_in, -> { where(status: 'C') }
   scope :filled,     -> { where(status: 'F') }
+  scope :demobed,    -> { where(status: 'D') }
 
+  # Only C and F are user-selectable from the status pill. D is set
+  # automatically by the before_save sync below when released_at
+  # flips, and flipped back to C on un-demob. Lets the pill stay a
+  # simple binary toggle while the demob flow owns the D side.
   STATUS_CHOICES = { 'C' => 'C — Checked in', 'F' => 'F — Filled (not present)' }.freeze
 
   def checked_in?
@@ -38,6 +44,29 @@ class Roster < ApplicationRecord
   def filled?
     status.to_s == 'F'
   end
+  def demobed?
+    status.to_s == 'D'
+  end
+
+  # Keep status locked in step with released_at — whenever a subordinate
+  # gets a release timestamp, their status becomes D; clearing it (via
+  # the undo-demob path) flips it back to C. Done as a before_save
+  # callback so it fires regardless of which code path mutates
+  # released_at (Roster#release!, DemobsController#undo, Demob model
+  # cleanup, direct update_columns, etc).
+  before_save :sync_status_with_released_at
+
+  private
+
+  def sync_status_with_released_at
+    if released_at.present?
+      self.status = 'D' unless demobed?
+    elsif demobed?
+      self.status = 'C'
+    end
+  end
+
+  public
 
   default_scope { order(:position_num, :order_number) }
 

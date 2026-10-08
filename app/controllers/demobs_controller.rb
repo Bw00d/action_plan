@@ -82,7 +82,10 @@ class DemobsController < ApplicationController
     Demob.transaction do
       @demob.update_columns(actual_release_date: nil, actual_release_time: nil)
       if @demob.roster
-        @demob.roster.update_columns(released_at: nil) if @demob.roster.released_at.present?
+        # update_columns bypasses the before_save sync on Roster, so we
+        # explicitly flip status back to C alongside clearing
+        # released_at. The two must move together.
+        @demob.roster.update_columns(released_at: nil, status: 'C') if @demob.roster.released_at.present?
       else
         @demob.resource.update_columns(release_date: nil) if @demob.resource.release_date.present?
       end
