@@ -40,6 +40,13 @@
        <% end %>
      </div>
       <%= form_for @demob, :html => {id: "demob-form"} do |f| %>
+        <%# Hidden return_to — DMB links from different pages (T-cards
+            board vs. Resources) pass their origin URL as a query
+            string; carrying it through the form lets DemobsController
+            send the user back where they started on save. %>
+        <% if params[:return_to].present? %>
+          <%= hidden_field_tag :return_to, params[:return_to] %>
+        <% end %>
       <div id="form-container" class="row">
         <div class="row">
           <div class="col-xs-12 bb">

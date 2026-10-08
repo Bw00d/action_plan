@@ -266,8 +266,11 @@
         <i class="fa fa-trash" aria-hidden="true"></i>
       <% end %>
       <% if resource.demob %>
+        <%# return_to brings the user back to the T-cards board after
+            they save the demob, instead of the default resources page. %>
         <%= link_to 'DMB',
-                    incident_resource_demob_path(@incident, resource, resource.demob),
+                    incident_resource_demob_path(@incident, resource, resource.demob,
+                                                 return_to: incident_board_path(@incident)),
                     class: 'demob-button btn tiny btn-dark' %>
       <% end %>
     </div>

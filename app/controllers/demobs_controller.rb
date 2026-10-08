@@ -48,7 +48,7 @@ class DemobsController < ApplicationController
   def update
     respond_to do |format|
       if @demob.update(demob_params)
-        format.html { redirect_to incident_resources_path(@demob.resource.incident) }
+        format.html { redirect_to post_demob_redirect_url(@demob) }
         format.json { render :show, status: :ok, location: @demob }
       else
         format.html { render :show, status: :unprocessable_entity }
@@ -56,6 +56,22 @@ class DemobsController < ApplicationController
       end
     end
   end
+
+  # Choose where to send the user after they save a demob. If a
+  # return_to was passed in (hidden field carried in from the DMB
+  # link), honor it as long as it's a safe local path. Otherwise fall
+  # back to the resources page like before.
+  def post_demob_redirect_url(demob)
+    target = params[:return_to].to_s
+    # Only allow same-origin absolute paths — no // or scheme to
+    # prevent open-redirect attacks.
+    if target.start_with?('/') && !target.start_with?('//')
+      target
+    else
+      incident_resources_path(demob.resource.incident)
+    end
+  end
+  private :post_demob_redirect_url
 
   # POST /demobs/:id/undo — reverse a demob. Clears the demob's
   # actual_release_date AND the resource's release_date (or roster's
