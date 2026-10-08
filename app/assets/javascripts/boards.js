@@ -256,13 +256,45 @@
     // cleanly so the state is always correct.
     $(page).on('click', '.board-card-roster-toggle', function () {
       var $btn    = $(this);
-      var $list   = $btn.siblings('.board-card-roster-list');
+      var $list   = $btn.closest('.board-card-roster').find('.board-card-roster-list');
       var showing = $list.is(':visible');
       $list.toggle(!showing);
       var countMatch = $btn.text().match(/\((\d+)\)/);
       var count      = countMatch ? countMatch[1] : '';
       var verb       = showing ? 'Show' : 'Hide';
       $btn.text(verb + ' Roster (' + count + ')');
+    });
+
+    // + person icon on the roster toolbar — reveals the inline add form.
+    $(page).on('click', '.board-card-roster-add-toggle', function () {
+      var $wrap = $(this).closest('.board-card-roster');
+      $wrap.find('.board-card-roster-add-form').show()
+           .find('input[name="roster[name]"]').focus();
+    });
+    $(page).on('click', '.board-card-roster-add-cancel', function () {
+      var $form = $(this).closest('.board-card-roster-add-form');
+      $form[0].reset();
+      $form.hide();
+    });
+
+    // Submit the inline add form. Server returns the re-rendered
+    // roster partial (full block) which we swap in to replace the old
+    // one — list is auto-sorted, counter is auto-updated.
+    $(page).on('submit', '.board-card-roster-add-form', function (e) {
+      e.preventDefault();
+      var $form = $(this);
+      var $wrap = $form.closest('.board-card-roster');
+      $.ajax({
+        url:    $form.data('url'),
+        method: 'POST',
+        data:   $form.serialize(),
+        headers: { 'X-CSRF-Token': csrf(), 'Accept': 'text/html' }
+      }).done(function (html) {
+        $wrap.replaceWith(html);
+      }).fail(function (xhr) {
+        var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Could not add roster entry']).join(', ');
+        alert(msg);
+      });
     });
 
     // Open the swap compose form in CREATE mode. Clears any edit state

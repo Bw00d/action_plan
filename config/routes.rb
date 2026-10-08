@@ -21,6 +21,11 @@ Rails.application.routes.draw do
                        controller: 'resource_events' do
       member { post :swap_now }
     end
+    # Nested create for roster add — the parent resource comes from the
+    # URL so the controller can't accidentally create against a
+    # different one. Non-nested rosters are updated/destroyed/etc. via
+    # the top-level rosters routes below.
+    resources :rosters, only: [:create]
   end
   resources :rosters, only: [:update, :destroy] do
     member do

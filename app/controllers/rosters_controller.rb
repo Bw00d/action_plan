@@ -3,6 +3,25 @@ class RostersController < ApplicationController
 
   before_action :set_roster, only: [:update, :destroy, :promote, :demob_checkout]
 
+  # POST /resources/:resource_id/rosters
+  # Inline add from the T-card roster block. Minimal fields — Name is
+  # required; agency defaults to the parent via Roster's
+  # default_agency_from_resource callback; order_number auto-fills to
+  # the next sequential child when blank. Responds with the re-rendered
+  # roster partial so the T-card modal can swap it in-place without a
+  # page reload.
+  def create
+    resource = Resource.find(params[:resource_id])
+    roster   = resource.rosters.new(roster_create_params)
+    roster.order_number = next_child_order_number(resource) if roster.order_number.blank?
+
+    if roster.save
+      render partial: 'boards/roster_list', formats: [:html], locals: { resource: resource }
+    else
+      render json: { errors: roster.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   # PATCH /rosters/:id — inline best_in_place edits. Right now only
   # `status` (C / F) is exposed; other roster fields are edited
   # elsewhere or set by the import flow.
@@ -62,5 +81,22 @@ class RostersController < ApplicationController
 
   def roster_params
     params.require(:roster).permit(:status)
+  end
+
+  def roster_create_params
+    params.require(:roster).permit(:name, :position, :agency, :order_number, :phone, :status)
+  end
+
+  # Figure out the next sequential child order_number for a new roster
+  # on this parent resource. Walks existing rosters, picks the trailing
+  # integer from each (either "131.5" or "5" style — Roster
+  # #full_order_number handles both). New number is max + 1, or 1 if
+  # the parent has no rosters yet.
+  def next_child_order_number(resource)
+    existing = resource.rosters.map do |r|
+      s = r.order_number.to_s
+      s.include?('.') ? s.split('.').last.to_i : s.to_i
+    end
+    (existing.max || 0) + 1
   end
 end

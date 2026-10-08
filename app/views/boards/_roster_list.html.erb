@@ -1,0 +1,72 @@
+<%#
+  Collapsible roster block on the expanded T-card. Rendered inline from
+  the main _card template on first paint, and re-rendered by
+  RostersController#create after an inline add so the list refreshes
+  without a page reload.
+
+  Local: resource
+%>
+<% roster_rows = resource.rosters.select { |r| r.promoted_resource_id.nil? } %>
+<div class="board-card-roster" data-resource-id="<%= resource.id %>">
+  <div class="board-card-roster-toolbar">
+    <% if roster_rows.any? %>
+      <button type="button" class="btn btn-default btn-xs board-card-roster-toggle">
+        Show Roster (<%= roster_rows.size %>)
+      </button>
+    <% else %>
+      <span class="muted small">No roster entries yet</span>
+    <% end %>
+    <%# Add-roster icon — reveals the inline add form below. %>
+    <button type="button" class="board-card-roster-add-toggle"
+            title="Add a person to this roster">
+      <i class="fa fa-user-plus" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <%# Inline add form — hidden until the + icon is clicked. Fields are
+      intentionally minimal: Name required, everything else optional
+      (agency defaults to parent's via default_agency_from_resource;
+      order_number auto-computes to the next sequential child if blank). %>
+  <form class="board-card-roster-add-form" style="display:none;"
+        data-url="<%= resource_rosters_path(resource) %>">
+    <div class="board-card-roster-add-row">
+      <input type="text" name="roster[name]"         placeholder="Name"           class="form-control input-sm" required>
+      <input type="text" name="roster[position]"     placeholder="Position"       class="form-control input-sm">
+      <input type="text" name="roster[order_number]" placeholder="Order # (auto)" class="form-control input-sm">
+      <button type="submit" class="btn btn-primary btn-xs">Add</button>
+      <button type="button" class="btn btn-default btn-xs board-card-roster-add-cancel">Cancel</button>
+    </div>
+  </form>
+
+  <ul class="board-card-roster-list" style="display:none;">
+    <% roster_rows.sort_by(&:natural_sort_key).each do |ros| %>
+      <li class="board-card-roster-item roster-status-<%= ros.status %>">
+        <span class="roster-order"><%= ros.full_order_number %></span>
+        <span class="roster-name"><%= ros.name %></span>
+        <% if ros.position.present? %>
+          <span class="roster-position muted"><%= ros.position %></span>
+        <% end %>
+        <% if ros.agency.present? && ros.agency != resource.agency %>
+          <span class="roster-agency muted"><%= ros.agency %></span>
+        <% end %>
+        <span class="roster-status-pill-wrap">
+          <% if ros.demobed? %>
+            <span class="roster-status-pill roster-status-pill--d">D</span>
+          <% else %>
+            <%= best_in_place ros, :status,
+                              as: :select,
+                              collection: Roster::STATUS_CHOICES,
+                              path: roster_path(ros),
+                              html_attrs: { class: 'roster-status-pill',
+                                            'data-reload-on-save' => true },
+                              display_with: ->(v) { v == 'F' ? 'F' : 'C' } %>
+          <% end %>
+          <%= link_to 'DMB',
+                      demob_checkout_roster_path(ros),
+                      class: "btn btn-xs #{ros.demobed? ? 'btn-info' : 'btn-dark'} roster-dmb-btn",
+                      title: "Open ICS-221 checkout for #{ros.name}" %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+</div>

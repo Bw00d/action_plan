@@ -125,9 +125,10 @@
             <%= resource.last_work_day.is_a?(Date) ? resource.last_work_day.strftime('%m/%d/%y') : '' %>
           </dd>
 
-          <dt>Release</dt>
-          <dd><%= best_in_place resource, :release_date, as: :input %></dd>
-
+          <%# Release date removed — the T-card disappears from the
+              board the moment a resource is released, so showing the
+              field here was dead weight. Release is still set via the
+              DMB (demob) flow. %>
           <dt>Phone</dt>
           <dd><%= best_in_place resource, :phone, as: :input %></dd>
 
@@ -157,55 +158,9 @@
           </div>
         <% end %>
 
-        <%# Collapsible roster list — subordinates (crew members, module
-            personnel) imported with the parent resource. Hidden by
-            default; "Show Roster (N)" button reveals. Uses in-memory
-            resource.rosters since it's eager-loaded in BoardsController. %>
-        <%# All non-promoted rosters — including demobed, so the
-            parent's crew history stays visible as people cycle in and
-            out. Demobed entries get a static D pill (status syncs
-            automatically with released_at; see Roster model). %>
-        <% roster_rows = resource.rosters.select { |r| r.promoted_resource_id.nil? } %>
-        <% if roster_rows.any? %>
-          <div class="board-card-roster">
-            <button type="button" class="btn btn-default btn-xs board-card-roster-toggle">
-              Show Roster (<%= roster_rows.size %>)
-            </button>
-            <ul class="board-card-roster-list" style="display:none;">
-              <% roster_rows.sort_by(&:natural_sort_key).each do |ros| %>
-                <li class="board-card-roster-item roster-status-<%= ros.status %>">
-                  <span class="roster-order"><%= ros.full_order_number %></span>
-                  <span class="roster-name"><%= ros.name %></span>
-                  <% if ros.position.present? %>
-                    <span class="roster-position muted"><%= ros.position %></span>
-                  <% end %>
-                  <% if ros.agency.present? && ros.agency != resource.agency %>
-                    <span class="roster-agency muted"><%= ros.agency %></span>
-                  <% end %>
-                  <span class="roster-status-pill-wrap">
-                    <% if ros.demobed? %>
-                      <span class="roster-status-pill roster-status-pill--d">D</span>
-                    <% else %>
-                      <%= best_in_place ros, :status,
-                                        as: :select,
-                                        collection: Roster::STATUS_CHOICES,
-                                        path: roster_path(ros),
-                                        html_attrs: { class: 'roster-status-pill',
-                                                      'data-reload-on-save' => true },
-                                        display_with: ->(v) { v == 'F' ? 'F' : 'C' } %>
-                    <% end %>
-                    <%# DMB — black while active, blue once demobed, mirrors
-                        the parent card's DMB and the 211's roster DMB. %>
-                    <%= link_to 'DMB',
-                                demob_checkout_roster_path(ros),
-                                class: "btn btn-xs #{ros.demobed? ? 'btn-info' : 'btn-dark'} roster-dmb-btn",
-                                title: "Open ICS-221 checkout for #{ros.name}" %>
-                  </span>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
+        <%# Roster block — rendered via partial so the inline add form
+            can POST and swap the whole block in place. %>
+        <%= render 'boards/roster_list', resource: resource %>
       </div>
 
       <aside class="board-card-details-side" data-resource-id="<%= resource.id %>">
