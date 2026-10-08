@@ -105,7 +105,9 @@
     </tr>
     <% resource_rows.each do |r| %>
       <tr class="res-row">
-        <td class="r-desig"><%= [r.cat, r.order_number, r.position, r.name].compact.join(" ") %></td>
+        <%# Join everything with " " EXCEPT the cat prefix — "O-" + "321"
+            needs to come out as "O-321" (no gap after the dash). %>
+        <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
         <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
         <td class="r-lead"><%= r.leader %></td>
         <td class="r-pers ctr"><%= r.number_personnel %></td>

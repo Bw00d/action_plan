@@ -121,7 +121,7 @@
           </tr>
           <% page[:resources].each do |r| %>
             <tr class="res-row">
-              <td class="r-desig"><%= [r.cat, r.order_number, r.position, r.name].compact.join(" ") %></td>
+              <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
               <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
               <td class="r-lead"><%= r.leader %></td>
               <td class="r-pers ctr"><%= r.number_personnel %></td>
