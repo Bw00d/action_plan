@@ -47,7 +47,10 @@
             <td class="col-order"><%= r.full_order_number %> <span class="muted"><%= r.name %></span></td>
             <td>
               <% if ev.scheduled_swap? %>
-                <span class="planning-swap-tag planning-swap-tag--scheduled">Scheduled</span>
+                <%# Red when FWD is today, tomorrow, or already past —
+                    these are the swaps the planner needs to act on now. %>
+                <% imminent = ev.fwd && ev.fwd <= Date.current + 1.day %>
+                <span class="planning-swap-tag planning-swap-tag--scheduled<%= ' planning-swap-tag--imminent' if imminent %>">Scheduled</span>
               <% else %>
                 <span class="planning-swap-tag planning-swap-tag--completed">Completed</span>
               <% end %>

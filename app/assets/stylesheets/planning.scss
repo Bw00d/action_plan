@@ -121,6 +121,9 @@
 }
 .planning-swap-tag--scheduled { background: #0052cc; }
 .planning-swap-tag--completed { background: #97a0af; }
+// Imminent — FWD is today, tomorrow, or already past. Overrides the
+// blue so it visually jumps off the row.
+.planning-swap-tag--imminent  { background: #d0021b; }
 
 // Completed swaps dim slightly to let the scheduled rows pop.
 .planning-swap-row--completed_swap { background: #fafbfc; }

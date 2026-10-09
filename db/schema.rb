@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_06_110000) do
+ActiveRecord::Schema.define(version: 2026_10_08_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -684,6 +684,7 @@ ActiveRecord::Schema.define(version: 2026_10_06_110000) do
     t.string "drop_off_pt_time"
     t.string "pick_up_pt_time"
     t.boolean "spacer", default: false, null: false
+    t.text "notes"
     t.index ["spacer"], name: "index_resources_on_spacer"
   end
 
