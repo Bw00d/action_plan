@@ -468,11 +468,23 @@
     // best_in_place 3.x stores the field name on `data-bip-attribute`,
     // not `data-attribute` — the latter was a long-standing wrong
     // assumption in this app that only worked by coincidence elsewhere.
+    //
+    // We also have to overwrite the editor instance's cached
+    // `original_content` and the `data-bip-original-content` attribute.
+    // best_in_place's activate() uses the cached original_content first
+    // (see best_in_place.js line ~313), so without this the editor
+    // would open with the pre-swap value even though the display shows
+    // the new one — then if the user tabs out without typing, the old
+    // value gets written back on top of the fresh one.
     function patchBip($scope, attribute, value) {
       var $bip = $scope.find('.best_in_place[data-bip-attribute="' + attribute + '"]').first();
       if (!$bip.length) return;
       var text = (value == null || value === '') ? '' : String(value);
-      $bip.text(text).attr('data-bip-value', text);
+      $bip.text(text)
+          .attr('data-bip-value', text)
+          .attr('data-bip-original-content', text);
+      var editor = $bip.data('bestInPlaceEditor');
+      if (editor) editor.original_content = text;
     }
 
     // SWAP NOW — execute a scheduled swap. Server returns JSON with the
