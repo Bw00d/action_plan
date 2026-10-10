@@ -1,3 +1,19 @@
+// best_in_place's default sanitizeValue runs jQuery.trim, which strips
+// leading/trailing whitespace — including the blank lines operators
+// intentionally type into sections 6/7 to pad the field for hand
+// notes on the printed 204. Patch sanitizeValue to skip trimming on
+// those two fields; every other best_in_place field keeps default
+// trimming behavior.
+if (typeof BestInPlaceEditor !== 'undefined' && BestInPlaceEditor.prototype) {
+  var _bipOrigSanitize = BestInPlaceEditor.prototype.sanitizeValue;
+  BestInPlaceEditor.prototype.sanitizeValue = function (s) {
+    if (this.element && this.element.closest('.box-6, .box-7').length) {
+      return (s == null) ? '' : String(s);
+    }
+    return _bipOrigSanitize.call(this, s);
+  };
+}
+
 $(document).on("turbolinks:load", function() {
 
 
@@ -76,27 +92,28 @@ $(document).on("turbolinks:load", function() {
     $('#resource-assignments-form').hide();
   });
 
-  // Re-apply simple_format newlines after a best_in_place save on
-  // sections 6 and 7 of the 204. best_in_place writes the raw server
-  // response back into the span without re-running the display_with
-  // helper, so typed newlines would collapse until the next page
-  // reload. This handler converts `\n` → `<br>` and double newlines →
-  // paragraph breaks in place, matching simple_format's output.
-  function reapplySimpleFormat($el) {
-    var text = $el.text();                           // raw text (newlines preserved by browser)
+  // Fallback newline formatter for sections 6/7 of the 204. The
+  // server's display_with Proc already renders <br> for every newline
+  // on save, so normally this is a no-op. We only kick in if the
+  // response somehow landed as raw text (<br>-free) with embedded
+  // newlines — convert them to <br> so blank lines survive.
+  function reapplyNarrativeFormat($el) {
+    var html = $el.html();
+    if (html == null) return;
+    if (/<br\s*\/?>/i.test(html)) return;            // server already formatted
+    var text = $el.text();
     if (text == null || text.indexOf('\n') === -1) return;
-    var html = text
-      .split(/\n{2,}/)                               // paragraph breaks on blank lines
-      .map(function (para) {
-        return '<p>' + para.replace(/\n/g, '<br>') + '</p>';
-      })
-      .join('');
-    $el.html(html);
+    var escaped = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+    $el.html(escaped.replace(/\n/g, '<br>'));
   }
 
   $(document).off('best_in_place:success.ics204Narrative')
              .on('best_in_place:success.ics204Narrative',
                  '.box-6 .best_in_place, .box-7 .best_in_place',
-                 function () { reapplySimpleFormat($(this)); });
+                 function () { reapplyNarrativeFormat($(this)); });
 
 });

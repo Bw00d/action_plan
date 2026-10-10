@@ -131,19 +131,33 @@
   <div class="narrative">
     <table>
       <tr>
+        <%# Proc version of AssignmentsHelper#preserve_blank_lines —
+            best_in_place looks up symbol :display_with methods on its
+            own ViewHelpers module (not the app's helpers), so inline
+            the lambda here instead. Converts every \n to <br> so
+            operators can intentionally pad the field with blank lines
+            for hand-written notes on the printed form. %>
+        <% preserve_blanks = ->(text) {
+             # Don't use .blank? here — a string of just newlines IS blank
+             # by Rails' definition, but we want those blank lines rendered
+             # as <br>s so the operator's padding survives the round trip.
+             next "" if text.nil? || text == ""
+             ERB::Util.h(text.to_s).gsub("\n", "<br>").html_safe
+           } %>
         <td class="box-6">
           <span class="num">6.</span> Control Operations/Work Assignments:<br>
           <%# No ok/cancel buttons — saves on blur. display_with runs on
               initial render; a JS handler (assignments.js) re-applies
-              simple_format after each best_in_place save so line breaks
-              survive the AJAX round-trip without a page reload. %>
-          <%= best_in_place @assignment, :control_operations, as: :textarea, place_holder: "(click to add content)", display_with: :simple_format %>
+              the <br>-per-newline formatting after each best_in_place
+              save so line breaks (including intentional blank lines
+              for padding) survive the AJAX round-trip without reload. %>
+          <%= best_in_place @assignment, :control_operations, as: :textarea, place_holder: "(click to add content)", display_with: preserve_blanks %>
         </td>
       </tr>
       <tr>
         <td class="box-7">
           <span class="num">7.</span> Special Instructions:<br>
-          <%= best_in_place @assignment, :special_instructions, as: :textarea, place_holder: "(add content or leave blank)", display_with: :simple_format %>
+          <%= best_in_place @assignment, :special_instructions, as: :textarea, place_holder: "(add content or leave blank)", display_with: preserve_blanks %>
         </td>
       </tr>
     </table>

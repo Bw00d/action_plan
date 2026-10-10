@@ -225,26 +225,74 @@ class OpsController < ApplicationController
   end
 
   def build_projection_rows(unit)
-    resources = resources_for(unit)
-    positions = resources.map(&:position).compact.uniq.sort
+    resources    = resources_for(unit)
+    stored_lines = ops_215_lines_for(unit)
+    # Positions come from both the currently-assigned resources AND
+    # any extra kind/types Ops has typed into the 215 — the 215's Req
+    # override is only meaningful if those positions show up here too.
+    positions = (resources.map(&:position).compact + stored_lines.map(&:position)).uniq.sort
 
     positions.map do |position|
       per_position = resources.select { |r| r.position == position }
+      per_unit     = personnel_per_unit_for(per_position)
       day_data = @days.map do |day|
         present = per_position.select { |r| resource_present_on?(r, day) }
-        { day: day, count: present.count, personnel: present.sum { |r| r.number_personnel.to_i } }
+        req     = stored_lines.find { |l| l.day == day && l.position == position }&.req
+        if req
+          { day: day, count: req, personnel: req * per_unit }
+        else
+          { day: day, count: present.count, personnel: present.sum { |r| r.number_personnel.to_i } }
+        end
       end
       { position: position, days: day_data }
     end
   end
 
   def compute_day_personnel_totals(unit)
-    resources = resources_for(unit)
+    resources    = resources_for(unit)
+    stored_lines = ops_215_lines_for(unit)
+    positions    = (resources.map(&:position).compact + stored_lines.map(&:position)).uniq
+    # Precompute personnel-per-unit for every position so we can resolve
+    # Req × per_unit without re-filtering resources inside the day loop.
+    per_unit_by_position = positions.each_with_object({}) do |pos, h|
+      h[pos] = personnel_per_unit_for(resources.select { |r| r.position == pos })
+    end
+
     @days.map do |day|
-      total = resources.select { |r| resource_present_on?(r, day) }
-                       .sum { |r| r.number_personnel.to_i }
+      total = positions.sum do |position|
+        req = stored_lines.find { |l| l.day == day && l.position == position }&.req
+        if req
+          req * per_unit_by_position[position]
+        else
+          resources.select { |r| r.position == position && resource_present_on?(r, day) }
+                   .sum { |r| r.number_personnel.to_i }
+        end
+      end
       { day: day, total: total }
     end
+  end
+
+  # Preload the stored 215 lines once per unit so both the projection
+  # rows and the day-personnel totals share the same AR query result.
+  def ops_215_lines_for(unit)
+    @incident.ops_215_lines
+             .where(org_unit_id: unit.id, day: @days)
+             .to_a
+  end
+
+  # How many personnel one "unit" of a given position represents. Ops
+  # types *resource counts* into the 215 (e.g. 2 Type-2 crews), while
+  # Projections rolls up *personnel*, so we need a multiplier. Median
+  # across currently-assigned resources of that position is forgiving
+  # when a few resources have odd personnel numbers; falls back to 1
+  # for brand-new positions that only live in the 215.
+  def personnel_per_unit_for(resources_for_position)
+    nums = resources_for_position.map { |r| r.number_personnel.to_i }
+                                 .reject(&:zero?)
+    return 1 if nums.empty?
+    sorted = nums.sort
+    mid    = sorted.length / 2
+    sorted.length.odd? ? sorted[mid] : ((sorted[mid - 1] + sorted[mid]) / 2.0).round
   end
 
   # Sum each section's day_personnel row-wise across all displayed
