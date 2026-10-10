@@ -101,6 +101,45 @@ $(document).on("turbolinks:load", function() {
 
   });
 
+ // Glide path section filter — five checkboxes above the table toggle
+ // row visibility by ICS section (Command / Operations / Plans /
+ // Logistics / Finance). Each <tr> is tagged with data-section via
+ // Resource#ics_section. Resources with no classification (empty
+ // data-section) stay visible only when every checkbox is checked, so
+ // partial filters give a predictable "only these sections" result.
+ // Selection persists per-incident in localStorage.
+ (function () {
+   var $filter = $('.glide-section-filter');
+   if ($filter.length === 0) return;
+   var storageKey = 'glideSectionFilter:' + ($filter.data('incident-id') || 'default');
+
+   function applyFilter() {
+     var selected = $filter.find('.glide-section-filter-checkbox:checked')
+                           .map(function () { return this.value; }).get();
+     var allChecked = selected.length === $filter.find('.glide-section-filter-checkbox').length;
+     $('#glide-info tbody tr').each(function () {
+       var sec = (this.getAttribute('data-section') || '').toLowerCase();
+       var visible = sec === '' ? allChecked : selected.indexOf(sec) !== -1;
+       this.style.display = visible ? '' : 'none';
+     });
+     try {
+       localStorage.setItem(storageKey, JSON.stringify(selected));
+     } catch (e) { /* localStorage may be disabled; ignore */ }
+   }
+
+   try {
+     var saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+     if (Array.isArray(saved)) {
+       $filter.find('.glide-section-filter-checkbox').each(function () {
+         this.checked = saved.indexOf(this.value) !== -1;
+       });
+     }
+   } catch (e) { /* bad JSON; leave defaults */ }
+
+   $filter.on('change', '.glide-section-filter-checkbox', applyFilter);
+   applyFilter();
+ })();
+
  // Style glide rows
  //   demob day (LWD + 1) → black
  //   LWD                 → red

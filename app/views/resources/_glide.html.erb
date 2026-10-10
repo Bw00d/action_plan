@@ -5,6 +5,20 @@
     </div>
 <!-- Default panel contents -->
   <% if !@incident.resources.empty? %>
+    <%# Section filter. Checkboxes are all checked by default; unchecking
+        one hides rows tagged with that section. Resource#ics_section
+        tags the row via data-section (lowercase); resources with no
+        classification stay visible only when every box is checked. %>
+    <div class="glide-section-filter no-print" data-incident-id="<%= @incident.id %>">
+      <span class="glide-section-filter-label">Sections:</span>
+      <% Resource::ICS_SECTIONS.each do |sec| %>
+        <label class="glide-section-filter-option">
+          <input type="checkbox" class="glide-section-filter-checkbox"
+                 value="<%= sec.downcase %>" checked>
+          <%= sec %>
+        </label>
+      <% end %>
+    </div>
     <!-- Table -->
     <table class="table">
       <thead>
@@ -33,7 +47,7 @@
       </thead>
       <tbody>
         <% @tally_resources.assigned.each do |r|  %>
-        <tr>
+        <tr data-section="<%= r.ics_section&.downcase %>">
           <td class=" table-col">
             <a href="javascript:;" class="glide-order-link"
                data-resource-id="<%= r.id %>"

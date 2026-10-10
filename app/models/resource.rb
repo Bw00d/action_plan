@@ -106,6 +106,9 @@ class Resource < ApplicationRecord
     VSRS VTEC VUTV WEBS WEED WHHR WHLR WWCB
   ].to_set.freeze
 
+  # Five General Staff buckets used by the glide-path section filter.
+  ICS_SECTIONS = %w[Command Operations Plans Logistics Finance].freeze
+
   # Routing table — ORDER MATTERS. First matching entry wins, so sections
   # (command/plans/logistics/finance/operations) take precedence over the
   # Non-209 catch-all.
@@ -155,6 +158,25 @@ class Resource < ApplicationRecord
   rescue => e
     Rails.logger.warn "Resource##{id} auto_route_by_position failed: #{e.class}: #{e.message}"
     nil
+  end
+
+  # Which General Staff section this resource belongs to for the glide-
+  # path section filter. Prefers the resource's actual org_unit root
+  # (section or command). Falls back to the position-code routing table
+  # when the resource isn't on the board yet or sits under a non-209
+  # bucket. Returns nil only when neither path yields a classification.
+  def ics_section
+    if org_unit.present?
+      root = org_unit
+      root = root.parent while root.parent.present?
+      return 'Command' if root.kind_command?
+      return root.name if root.kind_section? && ICS_SECTIONS.include?(root.name)
+    end
+    return nil if position.blank?
+    bucket = AUTO_ROUTE_TABLE.find { |b| b[:codes].include?(position.to_s.strip.upcase) }
+    return nil unless bucket
+    return 'Command' if bucket[:kind] == :command
+    bucket[:section_name]
   end
 
   def target_org_unit_for(bucket)
