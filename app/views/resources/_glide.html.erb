@@ -47,6 +47,11 @@
       </thead>
       <tbody>
         <% @tally_resources.assigned.each do |r|  %>
+        <%# Swap indicator — scheduled takes precedence over completed so
+            the yellow "upcoming" pulse wins when both exist. In-memory
+            walk of the already-loaded resource_events; no extra query. %>
+        <% has_scheduled = r.resource_events.any?(&:scheduled_swap?) %>
+        <% has_completed = r.resource_events.any?(&:completed_swap?) %>
         <tr data-section="<%= r.ics_section&.downcase %>">
           <td class=" table-col">
             <a href="javascript:;" class="glide-order-link"
@@ -54,15 +59,33 @@
                title="Edit resource details"><%= r.full_order_number %></a>
           </td>
           <td class=" table-col"><%=  r.position%></td>
-          <td class="table-col name-col"><%=  r.name %></td>
+          <td class="table-col name-col">
+            <%= r.name %>
+            <% if has_scheduled %>
+              <i class="fa fa-exchange glide-swap-icon glide-swap-icon--scheduled"
+                 title="Crew swap scheduled" aria-hidden="true"></i>
+            <% elsif has_completed %>
+              <i class="fa fa-exchange glide-swap-icon glide-swap-icon--completed"
+                 title="Crew swap completed" aria-hidden="true"></i>
+            <% end %>
+          </td>
           <% if !r.last_work_day.blank? %>
             <td class=" table-col"><%=  r.last_work_day.strftime("%m/%d") %></td>
           <% else %>
           <td class=" table-col"></td>
           <% end %>
 
+          <%# Days where a scheduled crew swap kicks in (FWD of the
+              incoming operator). Precomputed per resource so the 14-day
+              cell loop is just a Set include? check. %>
+          <% swap_fwds = r.resource_events.select(&:scheduled_swap?)
+                                           .map(&:fwd).compact.to_set %>
           <% 14.times do |d| %>
-            <td class="glide-calendar glide-row" data-day="<%= Time.zone.today + d.days %>" data-lwd="<%= r.last_work_day %>"></td>
+            <% cell_day = Time.zone.today + d.days %>
+            <% is_swap  = swap_fwds.include?(cell_day) %>
+            <td class="glide-calendar glide-row<%= ' glide-swap-day' if is_swap %>"
+                data-day="<%= cell_day %>"
+                data-lwd="<%= r.last_work_day %>"><%= 'SWAP' if is_swap %></td>
           <% end %>
         </tr>
         <% end %>

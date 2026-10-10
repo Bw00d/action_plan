@@ -147,6 +147,9 @@ $(document).on("turbolinks:load", function() {
  //   LWD - 3..LWD - 5    → yellow   (3 days before that)
  //   anything earlier    → green
    $( ".glide-row" ).each( function( index, element ) {
+      // Server-marked scheduled-swap FWD cells keep their own text +
+      // style; don't let the LWD colorizer overwrite "SWAP" with "LWD".
+      if (this.classList.contains('glide-swap-day')) return;
       const day = Date.parse($(this).attr('data-day'))
       const lwd = Date.parse($(this).attr('data-lwd'))
       if (isNaN(lwd)) return;

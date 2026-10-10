@@ -126,6 +126,29 @@ a.delete-resource:hover {
   input { margin: 0; cursor: pointer; }
 }
 
+// Crew-swap indicator in the Name column of the glide path.
+// Scheduled = amber (something coming up); Completed = grey (history).
+.glide-swap-icon {
+  margin-left: 6px;
+  font-size: 11px;
+  vertical-align: baseline;
+}
+.glide-swap-icon--scheduled { color: #f29100; }
+.glide-swap-icon--completed { color: #97a0af; }
+
+// Calendar cell that lands on a scheduled swap's FWD date. Blue fill
+// + bold white "SWAP" label so it reads independently of the
+// green/yellow/orange/red LWD gradient. Overrides .green/.yellow/etc.
+// by virtue of coming later in the cascade — the JS colorizer also
+// skips cells carrying this class so the label stays visible.
+.glide-row.glide-swap-day {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
 // Pin the three thead rows to the top of the viewport while the user
 // scrolls through the resource list. Hardcoded line-height + top
 // offsets keep the rows aligned predictably without a JS resize dance.
