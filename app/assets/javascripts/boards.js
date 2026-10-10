@@ -658,14 +658,21 @@
 
     $(page).on('click', '.board-card-move-toggle', function (e) {
       e.stopPropagation();
-      var $card = $(this).closest('.board-card');
+      var $toggle = $(this);
+      var $card = $toggle.closest('.board-card');
       // Scope to the toggle's own parent — the modal header has its
       // own MOVE button + menu pair separate from the small-strip one.
-      var $menu = $(this).parent().find('.board-card-move-menu').first();
+      var $menu = $toggle.parent().find('.board-card-move-menu').first();
       var currentOrgUnitId = $card.closest('.board-column').data('org-unit-id') || '';
       $('.board-card-move-menu').not($menu).hide();
       if ($menu.is(':visible')) { $menu.hide(); return; }
       buildMoveMenu($menu, currentOrgUnitId);
+      // position:fixed in CSS — compute from the toggle's viewport rect
+      // so the menu floats above the board and escapes column overflow.
+      var rect = $toggle[0].getBoundingClientRect();
+      var menuWidth = 180;
+      var left = Math.max(4, Math.min(rect.right - menuWidth, window.innerWidth - menuWidth - 4));
+      $menu.css({ top: rect.bottom + 2, left: left, right: 'auto' });
       $menu.show();
     });
 
@@ -699,6 +706,16 @@
     $(document).on('click.boardMoveMenu', function () {
       $('.board-card-move-menu', page).hide();
     });
+
+    // The menu is position:fixed, so if the user scrolls the board
+    // (horizontally or vertically) while it's open, the menu would
+    // float away from its toggle. Hide on scroll — cheaper than
+    // repositioning, and matches native select-dropdown behavior.
+    $(page).find('.board-columns, .board-cards')
+           .add(window)
+           .on('scroll.boardMoveMenu', function () {
+             $('.board-card-move-menu', page).hide();
+           });
 
     // --- Blank-row (spacer) create/delete ---------------------------------
     $(page).on('click', '.board-add-spacer', function () {

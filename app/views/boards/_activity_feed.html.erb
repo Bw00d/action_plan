@@ -25,7 +25,8 @@
         <% when :scheduled_swap %>
           <%# Values stashed as data attrs so the pencil button can
               repopulate the compose form without a server round-trip. %>
-          <div class="board-card-activity-tag">UPCOMING SWAP</div>
+          <% swap_imminent = ev.fwd && ev.fwd <= Date.current + 1.day %>
+          <div class="board-card-activity-tag<%= ' board-card-activity-tag--imminent' if swap_imminent %>">UPCOMING SWAP</div>
           <div class="board-card-activity-body"
                data-swap-leader="<%= ev.leader %>"
                data-swap-phone="<%= ev.phone %>"

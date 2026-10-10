@@ -41,7 +41,10 @@
       <% swap_tip = "Swap scheduled: #{scheduled_swap.leader}"
          swap_tip << " (FWD #{scheduled_swap.fwd.strftime('%-m/%-d')})" if scheduled_swap.fwd
          swap_tip << "\n\nNotes: #{scheduled_swap.body}"              if scheduled_swap.body.present? %>
-      <span class="board-card-swap-flag" title="<%= swap_tip %>">
+      <%# Imminent = FWD today, tomorrow, or already past. Flip the
+          pill red so the user sees the needs-action swap at a glance. %>
+      <% swap_imminent = scheduled_swap.fwd && scheduled_swap.fwd <= Date.current + 1.day %>
+      <span class="board-card-swap-flag<%= ' board-card-swap-flag--imminent' if swap_imminent %>" title="<%= swap_tip %>">
         <i class="fa fa-exchange" aria-hidden="true"></i> SWAP
       </span>
     <% end %>
