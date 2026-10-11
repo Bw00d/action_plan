@@ -265,6 +265,15 @@
       $btn.text(verb + ' Roster (' + count + ')');
     });
 
+    // Calendar icon on the resource-info section — toggle the hidden
+    // calendar panel showing the resource's assignment month(s).
+    $(page).on('click', '.board-card-cal-toggle', function (e) {
+      e.stopPropagation();
+      var $panel = $(this).closest('.board-card-details-main')
+                          .find('.board-card-calendar-panel').first();
+      $panel.toggle();
+    });
+
     // + person icon on the roster toolbar — reveals the inline add form.
     $(page).on('click', '.board-card-roster-add-toggle', function () {
       var $wrap = $(this).closest('.board-card-roster');

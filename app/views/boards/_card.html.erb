@@ -100,6 +100,16 @@
         feed (comments + scheduled crew swaps + completed swap history). %>
     <div class="board-card-details-body" data-events-url="<%= resource_events_path(resource) %>">
       <div class="board-card-details-main">
+        <%# Calendar visualization toggle. Hidden panel below shows one
+            month-grid per month the assignment spans, with FWD / LWD /
+            scheduled-swap days highlighted. %>
+        <button type="button" class="board-card-cal-toggle"
+                title="Show assignment on a calendar"
+                aria-label="Show assignment calendar">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+        </button>
+        <%= render 'boards/card_calendar', resource: resource %>
+
         <dl class="board-card-fields">
           <dt>Order #</dt>
           <dd><%= best_in_place resource, :order_number, as: :input %></dd>
