@@ -96,6 +96,13 @@ class AssignmentsController < ApplicationController
     @plan = Plan.find(params[:plan_id])
     @incident = Incident.find(@plan.incident_id)
     @assignment = Assignment.new(assignment_params)
+    # Seed the operational period from the parent plan when the create
+    # form didn't supply its own. Keeps the 204 editable per assignment
+    # (any edit on the form still saves to the assignment row) while
+    # giving every new 204 a sensible default date/time out of the gate.
+    @assignment.plan_id          ||= @plan.id
+    @assignment.ops_period_from  ||= @plan.ops_period_from
+    @assignment.ops_period_to    ||= @plan.ops_period_to
 
     respond_to do |format|
       if @assignment.save

@@ -19,6 +19,26 @@
     <%= f.hidden_field :user_id, value: current_user.id, class: 'form-control' %>
   </div>
 
+  <%# Operational period start + end — stored on the plan and inherited
+      by every new ICS-204 (and other dated forms) created under this
+      plan. The 204's own fields stay editable per assignment; this is
+      just the default seed. Parser accepts "MM/DD/YYYY HHMM" or any
+      format Time.zone.parse understands (see Plan#ops_period_from=). %>
+  <div class="form-group">
+    <%= f.label :ops_period_from, "Operational Period — From (date + time)" %>
+    <%= f.text_field :ops_period_from,
+                      class: "form-control",
+                      placeholder: "MM/DD/YYYY HHMM",
+                      value: f.object.ops_period_from&.strftime("%m/%d/%Y %H%M") %>
+  </div>
+  <div class="form-group">
+    <%= f.label :ops_period_to, "Operational Period — To (date + time)" %>
+    <%= f.text_field :ops_period_to,
+                      class: "form-control",
+                      placeholder: "MM/DD/YYYY HHMM",
+                      value: f.object.ops_period_to&.strftime("%m/%d/%Y %H%M") %>
+  </div>
+
 
 
   <div class="actions">
