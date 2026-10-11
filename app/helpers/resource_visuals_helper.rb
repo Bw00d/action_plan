@@ -197,23 +197,23 @@ module ResourceVisualsHelper
     codes.each { |code| h[code] = bucket }
   end.freeze
 
-  # Muted/deep palette matching the existing agency-color style (M700–M900
-  # range) so the T-card board stays visually quiet instead of looking
-  # like a highlighter box. Buckets follow the ICS 219 scheme.
+  # Pulled from the same muted M800/900 palette used by the agency
+  # colors above — same visual weight as a USFS/BLM/NPS strip so the
+  # board stays quiet. Buckets follow the ICS 219 scheme.
   COLOR_SCHEMES = {
-    crew:            { bg: '#2e7d32', fg: '#fff' }, # deep green  (219-2)
-    helicopter:      { bg: '#ad1457', fg: '#fff' }, # deep rose   (219-3)
-    aircraft:        { bg: '#1565c0', fg: '#fff' }, # deep blue   (219-7, A-numbers not heli)
-    engine:          { bg: '#f9a825', fg: '#222' }, # dark amber  (219-4)
-    dozer:           { bg: '#546e7a', fg: '#fff' }, # slate gray  (219-5)
-    tractor_plow:    { bg: '#6d4c41', fg: '#fff' }, # tan/brown   (219-6)
-    water_tender:    { bg: '#00838f', fg: '#fff' }, # teal        (219-10)
-    medical:         { bg: '#c2185b', fg: '#fff' }, # pink        (219-11)
-    facilities:      { bg: '#6a1b9a', fg: '#fff' }, # lavender    (219-12)
+    crew:            { bg: '#2e7d32', fg: '#fff' }, # green       (219-2)   — same as USFS
+    helicopter:      { bg: '#ad1457', fg: '#fff' }, # rose        (219-3)
+    aircraft:        { bg: '#1565c0', fg: '#fff' }, # blue        (219-7)   — same as STATE
+    engine:          { bg: '#b08800', fg: '#fff' }, # dark gold   (219-4)   — same as BLM
+    dozer:           { bg: '#546e7a', fg: '#fff' }, # slate       (219-5)   — same as CONTRACT
+    tractor_plow:    { bg: '#5d4037', fg: '#fff' }, # brown       (219-6)   — same as NPS
+    water_tender:    { bg: '#00838f', fg: '#fff' }, # teal        (219-10)  — same as USFWS
+    medical:         { bg: '#880e4f', fg: '#fff' }, # deep pink   (219-11)
+    facilities:      { bg: '#6a1b9a', fg: '#fff' }, # purple      (219-12)  — same as COUNTY
     supply:          { bg: '#eceff1', fg: '#222' }, # near-white  (219-1, no S category yet)
-    equipment_other: { bg: '#ef6c00', fg: '#fff' }, # orange      (219-8 default)
-    overhead_other:  { bg: '#8e24aa', fg: '#fff' }, # muted purple (O default)
-    unknown:         { bg: '#546e7a', fg: '#fff' }
+    equipment_other: { bg: '#ef6c00', fg: '#fff' }, # dark orange (219-8 default)
+    overhead_other:  { bg: '#4527a0', fg: '#fff' }, # indigo      (O default)
+    unknown:         { bg: '#37474f', fg: '#fff' }
   }.freeze
 
   def resource_strip_color(resource)
