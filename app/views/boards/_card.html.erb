@@ -30,7 +30,8 @@
                               .select(&:scheduled_swap?)
                               .sort_by { |e| e.fwd || Date.new(9999, 12, 31) }
                               .first %>
-  <div class="board-card-strip" style="background: <%= resource_strip_color(resource) %>;">
+  <% strip_colors = resource_strip_color(resource) %>
+  <div class="board-card-strip" style="background: <%= strip_colors[:bg] %>; color: <%= strip_colors[:fg] %>;">
     <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
     <span class="board-card-agency"><%= resource.agency %></span>
     <%# Pulsing yellow pill when a crew swap is scheduled — immediate
@@ -76,7 +77,7 @@
     <%# Colored header strip matching the small card — same category
         color + icon + agency so the modal feels like a continuation
         of the card you double-clicked. %>
-    <div class="board-card-details-header" style="background: <%= resource_strip_color(resource) %>;">
+    <div class="board-card-details-header" style="background: <%= strip_colors[:bg] %>; color: <%= strip_colors[:fg] %>;">
       <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
       <span class="board-card-agency"><%= resource.agency %></span>
       <%# Reuses the small-card MOVE handler in boards.js — the click

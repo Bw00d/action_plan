@@ -469,7 +469,7 @@
   align-items: center;
   font-size: 14px;
   line-height: 1;
-  color: #fff;                 // FontAwesome icons pick up this color
+  color: inherit;              // follows the strip's inline text color (ICS 219 scheme — light fills need dark icons)
 
   .resource-icon-svg {
     height: 14px;

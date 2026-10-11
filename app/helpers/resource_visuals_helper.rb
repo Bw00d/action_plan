@@ -168,9 +168,71 @@ module ResourceVisualsHelper
     end
   end
 
+  # Standard ICS 219 T-card color scheme, keyed by position code or
+  # falling back to the resource category. Returns a hash with :bg
+  # (strip background) and :fg (text + icon color) so light fills
+  # (yellow, pink, white, tan, lavender, light blue, light purple)
+  # still have readable text.
+  POSITION_COLOR_BUCKETS = {
+    # 219-2 Crews — green
+    crew: %w[SMOD FMOD CS12 CS1I CS2A CS2I CST1 CST2 CSTA CRW1 CRW2 CRWA CRWC CRWK CRWT],
+    # 219-3 Helicopters — rose/salmon
+    helicopter: %w[HE1R HE1S HE2R HE2S HE3R HE3S],
+    # 219-4 Engines — yellow
+    engine: %w[EN12 EN36 ENG1 ENG2 ENG3 ENG4 ENG5 ENG6 ENG7 ENGA ES36 EST1 EST2 EST3 EST4 EST5 EST6 EST7 ESTA],
+    # 219-5 Dozers — gray
+    dozer: %w[DZR1 DZR2 DZR3 DZR4 DZRA DZS1 DZS2 DZS3 DZS4 DZSA],
+    # 219-6 Tractor/Plows — tan
+    tractor_plow: %w[TPIA TPOP TPS],
+    # 219-10 Water Tenders — light blue
+    water_tender: %w[GWT1 GWT2 GWT3 GWT4 GWTA WTC1 WTC2 WTCA WTS1 WTS2 WTS3 WTSA WTT1 WTT2 WTTA FUT1 FUT2 FUT3 FUTA],
+    # 219-11 Medical — pink
+    medical: %w[EMPF AEMF AEMT AMB1 AMB2 AMB3 AMB4 AMBA EMTB EMTF EMTP IMDT IMSA IMSM IMST MEDL MEDV MERT MESU MESV REM1 REM2 REM3],
+    # 219-12 Facilities — lavender
+    facilities: %w[TNT1 TNT2 TNT3 TNT4 TNTA GENR OFFT SLP1 SLP2 SLP3 SLPA MFSU MSFU]
+  }.freeze
+
+  # Reverse lookup: position code → bucket symbol. Built once at load.
+  POSITION_TO_BUCKET = POSITION_COLOR_BUCKETS.each_with_object({}) do |(bucket, codes), h|
+    codes.each { |code| h[code] = bucket }
+  end.freeze
+
+  COLOR_SCHEMES = {
+    crew:            { bg: '#4caf50', fg: '#fff' },
+    helicopter:      { bg: '#e57373', fg: '#fff' },
+    aircraft:        { bg: '#1976d2', fg: '#fff' },  # 219-7, A-numbers that aren't helicopters
+    engine:          { bg: '#fdd835', fg: '#222' },
+    dozer:           { bg: '#9e9e9e', fg: '#fff' },
+    tractor_plow:    { bg: '#c9a35e', fg: '#222' },
+    water_tender:    { bg: '#81d4fa', fg: '#222' },
+    medical:         { bg: '#f8bbd0', fg: '#222' },
+    facilities:      { bg: '#b39ddb', fg: '#222' },
+    supply:          { bg: '#ffffff', fg: '#222' }, # 219-1, S-numbers (unused — no S category yet)
+    equipment_other: { bg: '#ff9800', fg: '#fff' }, # 219-8, E-numbers not in a more specific bucket
+    overhead_other:  { bg: '#ce93d8', fg: '#222' }, # O-numbers not in a more specific bucket
+    unknown:         { bg: '#9e9e9e', fg: '#fff' }
+  }.freeze
+
   def resource_strip_color(resource)
-    key = resource.agency.to_s.strip.upcase
-    AGENCY_COLORS[key] || fallback_color(key)
+    COLOR_SCHEMES[resource_color_bucket(resource)]
+  end
+
+  # Pick the bucket. Explicit position-code mappings win; otherwise fall
+  # back to category (AIRCRAFT → aircraft/blue, EQUIPMENT → orange,
+  # OVERHEAD → light purple). Crews with no explicit code still get
+  # green by default.
+  def resource_color_bucket(resource)
+    code = resource.position.to_s.strip.upcase
+    bucket = POSITION_TO_BUCKET[code]
+    return bucket if bucket
+
+    case resource.category
+    when 'AIRCRAFT'  then :aircraft
+    when 'EQUIPMENT' then :equipment_other
+    when 'OVERHEAD'  then :overhead_other
+    when 'CREW'      then :crew
+    else :unknown
+    end
   end
 
   # Returns a CSS class describing how close `today` is to the resource's
