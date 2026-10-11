@@ -38,12 +38,19 @@
     </tr>
     <tr>
       <% [:ops_period_from, :ops_period_to].each do |field| %>
+        <%# Display-time fallback: assignments that pre-date the plan's
+            ops period (or that were created before the inheritance
+            seed landed) have ops_period_from/to = nil. Show the plan's
+            value so the 204 header reads correctly out of the gate.
+            The first inline edit saves to assignment.<field> and
+            overrides from then on. %>
+        <% effective = @assignment.public_send(field).presence || @plan.public_send(field) %>
         <td class="op-entry">
           <input type="text"
                  class="op-dt-picker"
                  data-url="<%= incident_plan_assignment_path(@incident, @plan, @assignment) %>"
                  data-field="assignment[<%= field %>]"
-                 value="<%= @assignment.public_send(field)&.strftime("%m/%d/%Y %H:%M") %>"
+                 value="<%= effective&.strftime("%m/%d/%Y %H:%M") %>"
                  placeholder="MM/DD/YYYY HH:MM">
         </td>
       <% end %>

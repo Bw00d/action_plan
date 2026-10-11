@@ -38,7 +38,12 @@
                 </li>
               <%# end %>
               <% @incident.plans.order(date: :asc).each do |p|  %>
-                <li id=<%= p.id %>><%= link_to p.date.try(:strftime,"%-m/%d"), incident_plan_path(@incident, p) %></li>
+                <%# id prefix + quoted attr — bare numeric ids are legal
+                    HTML5 but jQuery's modern selector path routes
+                    `li#123` through querySelector which throws
+                    SyntaxError on digit-leading ids, so the inline
+                    script below silently failed to tag the active tab. %>
+                <li id="plan-tab-<%= p.id %>"><%= link_to p.date.try(:strftime,"%-m/%d"), incident_plan_path(@incident, p) %></li>
               <% end %>
             
             </ul>
@@ -73,10 +78,18 @@
   </div>
 </div>
 <script type="text/javascript">
-  $(document).on("turbolinks:load", function(){
-    id = "<%= @plan.id %>"
+  // Namespace + .off().on() so repeat visits don't stack duplicate
+  // bindings. Guard with a .length check so this handler is a no-op on
+  // pages that don't have the plan-tabs row (202, 203, 204, etc. have
+  // their own tabrow with its own server-rendered `.selected` class —
+  // without the guard, this handler would strip that class every time
+  // Turbolinks fired `load` on those pages).
+  $(document).off("turbolinks:load.planShowTabs")
+             .on("turbolinks:load.planShowTabs", function(){
+    var id = "<%= @plan.id %>";
+    var $target = $('li#plan-tab-' + id);
+    if ($target.length === 0) return;
     $('.tabrow li').removeClass('selected');
-    $('li#'+ id).addClass('selected');
+    $target.addClass('selected');
   });
-
 </script>

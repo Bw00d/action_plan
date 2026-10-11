@@ -72,9 +72,14 @@
           <td class="ctr" style="width:28.5%">Date/Time From:</td>
           <td class="ctr" style="width:28.5%">Date/Time To:</td>
         </tr>
+        <%# Same fallback as the editable 204 view — if the assignment
+            hasn't been explicitly set, fall back to the plan's ops
+            period so the printed PDF matches what's on screen. %>
+        <% pdf_from = @assignment.ops_period_from.presence || @plan.ops_period_from %>
+        <% pdf_to   = @assignment.ops_period_to.presence   || @plan.ops_period_to %>
         <tr>
-          <td class="op-entry"><%= @assignment.ops_period_from&.strftime("%m/%d/%Y %H:%M") %></td>
-          <td class="op-entry"><%= @assignment.ops_period_to&.strftime("%m/%d/%Y %H:%M") %></td>
+          <td class="op-entry"><%= pdf_from&.strftime("%m/%d/%Y %H:%M") %></td>
+          <td class="op-entry"><%= pdf_to&.strftime("%m/%d/%Y %H:%M") %></td>
         </tr>
       </table>
 
