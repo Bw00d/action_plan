@@ -79,7 +79,11 @@
         of the card you double-clicked. %>
     <div class="board-card-details-header" style="background: <%= strip_colors[:bg] %>; color: <%= strip_colors[:fg] %>;">
       <span class="board-card-icon"><%= resource_icon_html(resource) %></span>
-      <span class="board-card-agency"><%= resource.agency %></span>
+      <%# Show which board (org_unit column) this card lives on so the
+          user can orient themselves while the small card is hidden
+          behind the expanded modal. Falls back to "Unassigned" when
+          the resource isn't on any column yet. %>
+      <span class="board-card-agency"><%= resource.org_unit&.name.presence || 'Unassigned' %></span>
       <%# Reuses the small-card MOVE handler in boards.js — the click
           handler scopes the menu to the toggle's own parent, so this
           header's menu operates independently of the small-strip one. %>
