@@ -197,20 +197,23 @@ module ResourceVisualsHelper
     codes.each { |code| h[code] = bucket }
   end.freeze
 
+  # Muted/deep palette matching the existing agency-color style (M700–M900
+  # range) so the T-card board stays visually quiet instead of looking
+  # like a highlighter box. Buckets follow the ICS 219 scheme.
   COLOR_SCHEMES = {
-    crew:            { bg: '#4caf50', fg: '#fff' },
-    helicopter:      { bg: '#e57373', fg: '#fff' },
-    aircraft:        { bg: '#1976d2', fg: '#fff' },  # 219-7, A-numbers that aren't helicopters
-    engine:          { bg: '#fdd835', fg: '#222' },
-    dozer:           { bg: '#9e9e9e', fg: '#fff' },
-    tractor_plow:    { bg: '#c9a35e', fg: '#222' },
-    water_tender:    { bg: '#81d4fa', fg: '#222' },
-    medical:         { bg: '#f8bbd0', fg: '#222' },
-    facilities:      { bg: '#b39ddb', fg: '#222' },
-    supply:          { bg: '#ffffff', fg: '#222' }, # 219-1, S-numbers (unused — no S category yet)
-    equipment_other: { bg: '#ff9800', fg: '#fff' }, # 219-8, E-numbers not in a more specific bucket
-    overhead_other:  { bg: '#ce93d8', fg: '#222' }, # O-numbers not in a more specific bucket
-    unknown:         { bg: '#9e9e9e', fg: '#fff' }
+    crew:            { bg: '#2e7d32', fg: '#fff' }, # deep green  (219-2)
+    helicopter:      { bg: '#ad1457', fg: '#fff' }, # deep rose   (219-3)
+    aircraft:        { bg: '#1565c0', fg: '#fff' }, # deep blue   (219-7, A-numbers not heli)
+    engine:          { bg: '#f9a825', fg: '#222' }, # dark amber  (219-4)
+    dozer:           { bg: '#546e7a', fg: '#fff' }, # slate gray  (219-5)
+    tractor_plow:    { bg: '#6d4c41', fg: '#fff' }, # tan/brown   (219-6)
+    water_tender:    { bg: '#00838f', fg: '#fff' }, # teal        (219-10)
+    medical:         { bg: '#c2185b', fg: '#fff' }, # pink        (219-11)
+    facilities:      { bg: '#6a1b9a', fg: '#fff' }, # lavender    (219-12)
+    supply:          { bg: '#eceff1', fg: '#222' }, # near-white  (219-1, no S category yet)
+    equipment_other: { bg: '#ef6c00', fg: '#fff' }, # orange      (219-8 default)
+    overhead_other:  { bg: '#8e24aa', fg: '#fff' }, # muted purple (O default)
+    unknown:         { bg: '#546e7a', fg: '#fff' }
   }.freeze
 
   def resource_strip_color(resource)
