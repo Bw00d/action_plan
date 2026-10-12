@@ -722,19 +722,36 @@
       });
     }
 
+    // One shared menu element attached to <body> — not to any card.
+    // The expanded T-card modal has `transform` applied for centering,
+    // which turns it into the containing block for any position:fixed
+    // descendant. That meant the per-card menu rendered relative to
+    // the modal with viewport-based coordinates and ended up off-screen.
+    // Living on body keeps it free of transformed ancestors.
+    function getMoveMenu() {
+      var el = document.getElementById('board-move-menu-global');
+      if (el) return $(el);
+      el = document.createElement('div');
+      el.id = 'board-move-menu-global';
+      el.className = 'board-card-move-menu';
+      el.style.display = 'none';
+      el.innerHTML = '<ul class="board-card-move-menu-list"></ul>';
+      document.body.appendChild(el);
+      return $(el);
+    }
+
     $(page).on('click', '.board-card-move-toggle', function (e) {
       e.stopPropagation();
       var $toggle = $(this);
       var $card = $toggle.closest('.board-card');
-      // Scope to the toggle's own parent — the modal header has its
-      // own MOVE button + menu pair separate from the small-strip one.
-      var $menu = $toggle.parent().find('.board-card-move-menu').first();
+      var $menu = getMoveMenu();
       var currentOrgUnitId = $card.closest('.board-column').data('org-unit-id') || '';
-      $('.board-card-move-menu').not($menu).hide();
-      if ($menu.is(':visible')) { $menu.hide(); return; }
+      if ($menu.is(':visible') && $menu.data('activeToggle') === this) {
+        $menu.hide();
+        return;
+      }
+      $menu.data('activeToggle', this).data('activeCard', $card);
       buildMoveMenu($menu, currentOrgUnitId);
-      // position:fixed in CSS — compute from the toggle's viewport rect
-      // so the menu floats above the board and escapes column overflow.
       var rect = $toggle[0].getBoundingClientRect();
       var menuWidth = 180;
       var left = Math.max(4, Math.min(rect.right - menuWidth, window.innerWidth - menuWidth - 4));
@@ -742,11 +759,16 @@
       $menu.show();
     });
 
-    $(page).on('click', '.board-card-move-menu-item', function (e) {
+    $(document).on('click', '.board-card-move-menu-item', function (e) {
       e.stopPropagation();
       var $item = $(this);
       var targetOrgUnitId = String($item.data('target-org-unit-id') || '');
-      var $card = $item.closest('.board-card');
+      // The menu lives on <body>, so .closest('.board-card') won't find
+      // one. The toggle handler stashed the originating card on the
+      // menu — route the AJAX back through that reference.
+      var $menu = $item.closest('.board-card-move-menu');
+      var $card = $menu.data('activeCard');
+      if (!$card || !$card.length) return;
       var resourceId = $card.data('resource-id');
       var $target = $('.board-column[data-org-unit-id="' + targetOrgUnitId + '"] .board-cards', page);
 
@@ -761,26 +783,24 @@
         headers: { 'X-CSRF-Token': csrfToken }
       })
         .done(function () {
-          $card.find('.board-card-move-menu').hide();
+          $menu.hide();
           $card.appendTo($target);
           recomputePersonnel();
         })
         .fail(function () { alert('Move failed. Refresh the page.'); });
     });
 
-    // Click outside closes any open menu.
+    // Click outside closes the shared menu.
     $(document).on('click.boardMoveMenu', function () {
-      $('.board-card-move-menu', page).hide();
+      $('#board-move-menu-global').hide();
     });
 
-    // The menu is position:fixed, so if the user scrolls the board
-    // (horizontally or vertically) while it's open, the menu would
-    // float away from its toggle. Hide on scroll — cheaper than
-    // repositioning, and matches native select-dropdown behavior.
+    // The menu is position:fixed; hide it on any board scroll so it
+    // doesn't float away from the toggle it was anchored to.
     $(page).find('.board-columns, .board-cards')
            .add(window)
            .on('scroll.boardMoveMenu', function () {
-             $('.board-card-move-menu', page).hide();
+             $('#board-move-menu-global').hide();
            });
 
     // --- Blank-row (spacer) create/delete ---------------------------------
