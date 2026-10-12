@@ -963,6 +963,44 @@
   }
 }
 
+// Pencil icon on comments — same muted/hover treatment as the swap
+// edit button above. Rendered server-side only for the comment owner.
+.board-card-comment-edit {
+  background: transparent;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  padding: 2px 6px;
+  color: #97a0af;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  &:hover,
+  &:focus,
+  &:active,
+  &:focus-visible {
+    color: #0052cc;
+    background: #f0f6ff;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+// Inline edit form that swaps in over a comment body when the pencil
+// is clicked. Save/Cancel sit in a right-aligned row below the textarea.
+.board-card-comment-edit-form {
+  margin-top: 4px;
+  textarea { width: 100%; resize: vertical; }
+}
+.board-card-comment-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 4px;
+}
+
 #board-card-overlay {
   display: none;
   position: fixed;

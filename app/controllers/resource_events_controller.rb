@@ -29,9 +29,18 @@ class ResourceEventsController < ApplicationController
 
   # PATCH /resources/:resource_id/events/:id
   # Only editable kinds (comment / scheduled_swap) accept updates.
+  # Comments are additionally locked to their original author — the
+  # pencil only shows up in the UI for the owner, but we double-check
+  # server-side so a hand-crafted request can't rewrite someone else's
+  # note. Scheduled swaps stay editable by any user with incident
+  # access since they're planning-side data, not personal commentary.
   def update
     unless @event.editable?
       render json: { errors: ['This entry is no longer editable.'] }, status: :forbidden
+      return
+    end
+    if @event.comment? && @event.user_id != current_user.id
+      render json: { errors: ['Only the author can edit this comment.'] }, status: :forbidden
       return
     end
     if @event.update(event_params)

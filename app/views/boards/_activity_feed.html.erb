@@ -20,7 +20,20 @@
 
         <% case ev.kind.to_sym %>
         <% when :comment %>
-          <div class="board-card-activity-body"><%= simple_format(ev.body.to_s) %></div>
+          <%# Raw body stashed on a data attr so the JS edit flow can
+              populate the textarea without extracting plain text from
+              simple_format's <p>/<br> output. %>
+          <div class="board-card-activity-body"
+               data-comment-body="<%= ev.body.to_s %>"><%= simple_format(ev.body.to_s) %></div>
+          <% if ev.user_id == current_user&.id %>
+            <div class="board-card-activity-actions">
+              <button type="button" class="board-card-comment-edit"
+                      data-url="<%= resource_event_path(resource, ev) %>"
+                      title="Edit this comment">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+            </div>
+          <% end %>
 
         <% when :scheduled_swap %>
           <%# Values stashed as data attrs so the pencil button can

@@ -470,6 +470,51 @@
       }
     });
 
+    // Edit a comment — pencil icon only renders for the comment author
+    // (view-side check); server also enforces owner-only updates. Swaps
+    // the body for an inline textarea + Save/Cancel, PATCHes the raw
+    // body, then refreshes the whole feed on success.
+    $(page).on('click', '.board-card-comment-edit', function () {
+      var $btn = $(this);
+      var $item = $btn.closest('.board-card-activity-item');
+      if ($item.find('.board-card-comment-edit-form').length) return; // already editing
+      var $body = $item.find('.board-card-activity-body').first();
+      var raw   = $body.attr('data-comment-body') || $body.text();
+      var $form = $('<div class="board-card-comment-edit-form">' +
+                      '<textarea class="form-control input-sm" rows="3"></textarea>' +
+                      '<div class="board-card-comment-edit-actions">' +
+                        '<button type="button" class="btn btn-primary btn-xs comment-edit-save">Save</button>' +
+                        '<button type="button" class="btn btn-default btn-xs comment-edit-cancel">Cancel</button>' +
+                      '</div>' +
+                    '</div>');
+      $form.find('textarea').val(raw);
+      $body.hide();
+      $btn.closest('.board-card-activity-actions').hide();
+      $body.after($form);
+      $form.find('textarea').focus();
+
+      $form.on('click', '.comment-edit-cancel', function () {
+        $form.remove();
+        $body.show();
+        $btn.closest('.board-card-activity-actions').show();
+      });
+      $form.on('click', '.comment-edit-save', function () {
+        var $side = $item.closest('.board-card-details-side');
+        var newBody = $form.find('textarea').val();
+        $.ajax({
+          url:    $btn.data('url'),
+          method: 'PATCH',
+          data:   { resource_event: { body: newBody } },
+          headers: { 'X-CSRF-Token': csrf(), 'Accept': 'text/html' }
+        }).done(function (html) {
+          replaceFeed($side, html);
+        }).fail(function (xhr) {
+          var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Edit failed']).join(', ');
+          alert(msg);
+        });
+      });
+    });
+
     // Patch a single best_in_place display + its data-bip-value so the
     // next edit opens with the fresh value. Called after SWAP NOW so
     // the modal reflects the new operator without a page reload.
