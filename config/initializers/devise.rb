@@ -11,16 +11,23 @@ Devise.setup do |config|
   #   '1b28ec872b'
 
   # ==> Mailer Configuration
-  # Configure the e-mail address which will be shown in Devise::Mailer,
-  # note that it will be overwritten if you use your own mailer class
-  # with default "from" parameter.
-  config.mailer_sender = 'bwoodreid@gmail.com'
+  # Match ApplicationMailer's sender so password-reset / confirmation
+  # mail goes out from the Mailgun-verified address (MAIL_FROM env var)
+  # instead of a hardcoded personal gmail that Mailgun would silently
+  # reject. ApplicationMailer's `default from:` wins at send time once
+  # parent_mailer below is set to ApplicationMailer, but keeping this
+  # in sync avoids surprises if the parent class ever changes back.
+  config.mailer_sender = ENV.fetch('MAIL_FROM', 'Action Plan <bwoodreid@gmail.com>')
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
-  # Configure the parent class responsible to send e-mails.
-  # config.parent_mailer = 'ActionMailer::Base'
+  # Inherit from ApplicationMailer so Devise::Mailer picks up the same
+  # `default from:` (Mailgun-verified sender) and the shared `mailer`
+  # layout. Previously Devise inherited from ActionMailer::Base, which
+  # meant it ignored ApplicationMailer's from-address and sent as the
+  # hardcoded mailer_sender above — Mailgun rejected those messages.
+  config.parent_mailer = 'ApplicationMailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
