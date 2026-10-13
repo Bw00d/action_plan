@@ -1,19 +1,18 @@
 class Schedule < ApplicationRecord
   belongs_to :incident
+  # user_id nil → shared incident "Meeting Schedule" row.
+  # user_id set → private "My Schedule" row owned by that user.
+  belongs_to :user, optional: true
 
-  # Planning-P meeting sequence used when a schedule is first set up for an
-  # incident. Order matches the position column so the UI can render them
-  # top-to-bottom without extra sorting.
+  # Planning-P meeting sequence used when a schedule is first set up.
+  # Used both for the incident-wide schedule and (same list) for each
+  # user's "My Schedule" seed.
   DEFAULT_MEETINGS = [
     'Operations Briefing',
     'Objectives Meeting',
-    'Command & General Staff Meeting',
-    'Tactics Preparation',
+    'Command & General Staff',
     'Tactics Meeting',
-    'Execute & Assess',
-    'Prep for Planning',
-    'Planning Meeting',
-    'IAP Prep'
+    'Planning Meeting'
   ].freeze
 
   validates :meeting_name, presence: true
@@ -38,13 +37,20 @@ class Schedule < ApplicationRecord
 
   default_scope -> { order(:position, :id) }
 
-  # Idempotently seed the default set of meetings for an incident (time and
-  # location blank). Existing meeting rows are untouched; missing ones get
-  # added at their canonical position.
-  def self.seed_defaults!(incident)
+  # Idempotently seed the default set of meetings for an incident. When
+  # user is nil, seeds the shared "Meeting Schedule." When user is set,
+  # seeds that user's personal "My Schedule." Existing rows in the given
+  # scope are untouched; missing ones get added at their canonical
+  # position.
+  def self.seed_defaults!(incident, user: nil)
+    scope = incident.schedules.where(user_id: user&.id)
     DEFAULT_MEETINGS.each_with_index do |name, i|
-      next if incident.schedules.exists?(meeting_name: name)
-      incident.schedules.create!(meeting_name: name, position: i + 1)
+      next if scope.exists?(meeting_name: name)
+      incident.schedules.create!(
+        meeting_name: name,
+        position:     i + 1,
+        user_id:      user&.id
+      )
     end
   end
 end

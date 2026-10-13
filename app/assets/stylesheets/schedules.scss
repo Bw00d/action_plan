@@ -13,6 +13,15 @@
   }
 }
 
+// Each panel is its own <section class="schedule-panel"> inside
+// .schedule-panels. Space between stacked panels so the two tables
+// read as separate things, with a subtle divider on top of panels 2+.
+.schedule-panels > .schedule-panel + .schedule-panel {
+  margin-top: 56px;
+  padding-top: 36px;
+  border-top: 1px solid #ebecf0;
+}
+
 .schedule-table {
   width: 100%;
   border-collapse: separate;
@@ -150,5 +159,13 @@
         background: transparent !important;
       }
     }
+  }
+
+  // Scoped print: a specific panel's Print button added a body class
+  // like `printing-scope-meeting` or `printing-scope-my`; hide every
+  // other panel + its print-only header so only the chosen one prints.
+  body.printing-scope-meeting .schedule-panel:not([data-scope="meeting"]),
+  body.printing-scope-my      .schedule-panel:not([data-scope="my"]) {
+    display: none !important;
   }
 }

@@ -1,0 +1,99 @@
+<%#
+  Shared panel markup used by both the Meeting Schedule and the per-user
+  My Schedule. The outer <section data-scope="..."> is what the print
+  logic keys off: clicking a panel's Print button sets a body class so
+  the sibling panel gets hidden via @media print rules.
+  Locals:
+    title     — human heading
+    schedules — AR relation / array of Schedule rows
+    scope     — 'meeting' or 'my'
+%>
+<section class="schedule-panel" data-scope="<%= scope %>">
+  <div class="schedule-header">
+    <h2><%= title %></h2>
+    <p class="muted">Click a time or location to edit in place. Uncheck any meetings you don't want on the printed schedule.</p>
+  </div>
+
+  <h2 class="schedule-print-header print-only">
+    <%= @incident.name %> <%= @incident.incident_type %> — <%= title %>
+  </h2>
+
+  <% if schedules.empty? %>
+    <p>No meetings on this schedule yet.</p>
+  <% else %>
+    <table class="schedule-table" data-scope="<%= scope %>">
+      <thead>
+        <tr>
+          <th class="col-check no-print">
+            <input type="checkbox" class="schedule-check-all" data-scope="<%= scope %>" checked title="Select / clear all">
+          </th>
+          <th class="col-name">Meeting</th>
+          <th class="col-time">Time</th>
+          <th class="col-location">Location</th>
+          <th class="col-actions no-print"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% schedules.each do |meeting| %>
+          <tr id="schedule-<%= scope %>-<%= meeting.id %>">
+            <td class="col-check no-print">
+              <input type="checkbox" class="schedule-check" data-scope="<%= scope %>"
+                     data-row="schedule-<%= scope %>-<%= meeting.id %>" checked>
+            </td>
+            <td class="col-name"><%= meeting.meeting_name %></td>
+            <td class="col-time">
+              <%= best_in_place meeting, :time,
+                                url: incident_schedule_path(@incident, meeting),
+                                as: :input,
+                                place_holder: "—" %>
+            </td>
+            <td class="col-location">
+              <%= best_in_place meeting, :location,
+                                url: incident_schedule_path(@incident, meeting),
+                                as: :input,
+                                place_holder: "—" %>
+            </td>
+            <td class="col-actions no-print">
+              <%= link_to incident_schedule_path(@incident, meeting),
+                          method: :delete,
+                          data: { confirm: "Remove \"#{meeting.meeting_name}\" from this schedule?" },
+                          class: "schedule-delete",
+                          title: "Remove meeting" do %>
+                <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% if schedules.any? %>
+    <div class="schedule-print-actions no-print">
+      <button type="button" class="btn btn-primary schedule-print-btn" data-scope="<%= scope %>">
+        <%= fa_icon 'print' %> Print <%= title %>
+      </button>
+    </div>
+  <% end %>
+
+  <div class="schedule-add">
+    <h3>Add a meeting</h3>
+    <%= form_with url: incident_schedules_path(@incident),
+                  scope: :schedule,
+                  method: :post,
+                  local: true,
+                  html: { class: 'schedule-add-form' } do |f| %>
+      <%= f.hidden_field :scope, value: scope %>
+      <%= f.text_field :meeting_name, placeholder: "MEETING NAME", class: 'form-control', required: true %>
+      <%= f.text_field :time,
+                       placeholder: "TIME (24-hour, e.g. 0700)",
+                       pattern: "\\d{4}",
+                       maxlength: 4,
+                       inputmode: "numeric",
+                       title: "24-hour format, four digits (e.g. 0700, 1330)",
+                       class: 'form-control' %>
+      <%= f.text_field :location,     placeholder: "LOCATION (optional)", class: 'form-control' %>
+      <%= f.submit "Add", class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</section>

@@ -5,97 +5,64 @@
     <h1><%= link_to @incident.display_incident_name, @incident %></h1>
   </div>
 
-  <div class="schedule-header">
-    <h2>Meeting Schedule</h2>
-    <p class="muted">Click a time or location to edit in place. Uncheck any meetings you don't want on the printed schedule.</p>
-  </div>
-
-  <h2 class="schedule-print-header print-only">
-    <%= @incident.name %> <%= @incident.incident_type %> Meeting Schedule
-  </h2>
-
-  <% if @schedules.empty? %>
-    <p>No meetings on the schedule yet.</p>
-  <% else %>
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th class="col-check no-print">
-            <input type="checkbox" id="schedule-check-all" checked title="Select / clear all">
-          </th>
-          <th class="col-name">Meeting</th>
-          <th class="col-time">Time</th>
-          <th class="col-location">Location</th>
-          <th class="col-actions no-print"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @schedules.each do |meeting| %>
-          <tr id="schedule-<%= meeting.id %>">
-            <td class="col-check no-print">
-              <input type="checkbox" class="schedule-check" data-row="schedule-<%= meeting.id %>" checked>
-            </td>
-            <td class="col-name"><%= meeting.meeting_name %></td>
-            <td class="col-time">
-              <%= best_in_place meeting, :time,
-                                url: incident_schedule_path(@incident, meeting),
-                                as: :input,
-                                place_holder: "—" %>
-            </td>
-            <td class="col-location">
-              <%= best_in_place meeting, :location,
-                                url: incident_schedule_path(@incident, meeting),
-                                as: :input,
-                                place_holder: "—" %>
-            </td>
-            <td class="col-actions no-print">
-              <%= link_to incident_schedule_path(@incident, meeting),
-                          method: :delete,
-                          data: { confirm: "Remove \"#{meeting.meeting_name}\" from this schedule?" },
-                          class: "schedule-delete",
-                          title: "Remove meeting" do %>
-                <%= image_tag 'trash-can.svg', class: 'medium-icon' %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-
-  <% unless @schedules.empty? %>
-    <div class="schedule-print-actions no-print">
-      <button type="button" id="print-schedule" class="btn btn-primary" onclick="printSchedule()">
-        <%= fa_icon 'print' %> Print Schedule
-      </button>
+  <% if @schedule.errors.any? %>
+    <div class="alert alert-danger">
+      <strong>Could not add meeting:</strong>
+      <ul>
+        <% @schedule.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+      </ul>
     </div>
   <% end %>
 
+  <div class="schedule-panels">
+    <%= render 'schedule_panel',
+               title:     'Meeting Schedule',
+               schedules: @meeting_schedules,
+               scope:     'meeting' %>
+
+    <% if current_user %>
+      <%= render 'schedule_panel',
+                 title:     'My Schedule',
+                 schedules: @my_schedules,
+                 scope:     'my' %>
+    <% end %>
+  </div>
+
   <script>
     document.addEventListener('turbolinks:load', function () {
-      var all = document.getElementById('schedule-check-all');
-      if (!all) return;
-      all.addEventListener('change', function () {
-        document.querySelectorAll('.schedule-check').forEach(function (cb) { cb.checked = all.checked; });
+      // Each panel's select-all is scoped by data-scope so toggling one
+      // doesn't affect the other panel's rows.
+      document.querySelectorAll('.schedule-check-all').forEach(function (master) {
+        master.addEventListener('change', function () {
+          var scope = master.dataset.scope;
+          document.querySelectorAll('.schedule-check[data-scope="' + scope + '"]')
+            .forEach(function (cb) { cb.checked = master.checked; });
+        });
+      });
+
+      // Per-panel print. Set a scope class on body so the @media print
+      // rules can hide the sibling panel for the duration of the dialog.
+      document.querySelectorAll('.schedule-print-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () { printSchedule(btn.dataset.scope); });
       });
     });
 
-    function printSchedule() {
+    function printSchedule(scope) {
       var body = document.body;
-      var checks = document.querySelectorAll('.schedule-check');
-      checks.forEach(function (cb) {
+      // Hide any unchecked rows (within the panel we're actually printing).
+      document.querySelectorAll('.schedule-check[data-scope="' + scope + '"]').forEach(function (cb) {
         var row = document.getElementById(cb.dataset.row);
         if (row) row.classList.toggle('is-print-hidden', !cb.checked);
       });
 
-      body.classList.add('printing-schedule');
+      body.classList.add('printing-schedule', 'printing-scope-' + scope);
       var style = document.createElement('style');
       style.id = 'print-orientation';
       style.textContent = '@page { size: portrait; margin: 0.5in; }';
       document.head.appendChild(style);
 
       var cleanup = function () {
-        body.classList.remove('printing-schedule');
+        body.classList.remove('printing-schedule', 'printing-scope-' + scope);
         var s = document.getElementById('print-orientation');
         if (s) s.remove();
         document.querySelectorAll('tr.is-print-hidden').forEach(function (r) {
@@ -107,33 +74,4 @@
       window.print();
     }
   </script>
-
-  <div class="schedule-add">
-    <h3>Add a meeting</h3>
-    <%= form_with url: incident_schedules_path(@incident),
-                  scope: :schedule,
-                  method: :post,
-                  local: true,
-                  html: { class: 'schedule-add-form' } do |f| %>
-      <% if @schedule.errors.any? %>
-        <div class="alert alert-danger">
-          <strong>Could not add meeting:</strong>
-          <ul>
-            <% @schedule.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <%= f.text_field :meeting_name, placeholder: "MEETING NAME", class: 'form-control', required: true %>
-      <%= f.text_field :time,
-                       placeholder: "TIME (24-hour, e.g. 0700)",
-                       pattern: "\\d{4}",
-                       maxlength: 4,
-                       inputmode: "numeric",
-                       title: "24-hour format, four digits (e.g. 0700, 1330)",
-                       class: 'form-control' %>
-      <%= f.text_field :location,     placeholder: "LOCATION (optional)", class: 'form-control' %>
-      <%= f.submit "Add", class: 'btn btn-primary' %>
-    <% end %>
-  </div>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_08_000000) do
+ActiveRecord::Schema.define(version: 2026_10_13_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -729,8 +729,11 @@ ActiveRecord::Schema.define(version: 2026_10_08_000000) do
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["incident_id", "position"], name: "index_schedules_on_incident_id_and_position"
+    t.index ["incident_id", "user_id"], name: "index_schedules_on_incident_id_and_user_id"
     t.index ["incident_id"], name: "index_schedules_on_incident_id"
+    t.index ["user_id"], name: "index_schedules_on_user_id"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -816,4 +819,5 @@ ActiveRecord::Schema.define(version: 2026_10_08_000000) do
   add_foreign_key "rosters", "resources"
   add_foreign_key "rosters", "resources", column: "promoted_resource_id"
   add_foreign_key "schedules", "incidents"
+  add_foreign_key "schedules", "users"
 end
