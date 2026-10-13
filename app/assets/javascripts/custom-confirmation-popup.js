@@ -8,11 +8,22 @@ $.rails.allowAction = function (link) {
     return false;
 };
 
-// User click confirm button
+// User click confirm button. Rails UJS attaches different event
+// handlers depending on element type — anchors / buttons respond to
+// click.rails, forms respond to submit.rails. The original version
+// only triggered click.rails, so confirmed form submissions (like the
+// "Remove collaborator" form on the incident users page) silently did
+// nothing after the user clicked Confirm. Also strip the data attr so
+// retriggering doesn't re-prompt.
 $.rails.confirmed = function (link) {
     "use strict";
     link.data("confirm", null);
-    link.trigger("click.rails");
+    link.removeAttr("data-confirm");
+    if (link.is("form")) {
+        link.trigger("submit.rails");
+    } else {
+        link.trigger("click.rails");
+    }
 };
 
 //  Display our version of the confirmation dialog
