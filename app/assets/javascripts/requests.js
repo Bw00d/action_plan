@@ -193,4 +193,42 @@ $(document).on('turbolinks:load', function () {
     }
     applyFilters();
   });
+
+  // Per-panel asc / desc sort toggle. The server renders rows in natural
+  // numeric order; this just reverses the group of (parent + its detail
+  // row + any nested descendant rows + their detail rows) as a block so
+  // the tree stays intact.
+  $index.on('click', '.catalog-sort-toggle', function () {
+    var $btn = $(this);
+    var $section = $btn.closest('.catalog-section');
+    var $tbody = $section.find('.requests-table tbody').first();
+    if (!$tbody.length) return;
+
+    // Walk tbody children, grouping each parent block (starts at a
+    // .request-row.depth-0, ends just before the next depth-0 row).
+    var blocks = [];
+    var current = [];
+    $tbody.children().each(function () {
+      var isTopParent = this.classList.contains('request-row') &&
+                        this.classList.contains('depth-0');
+      if (isTopParent) {
+        if (current.length) blocks.push(current);
+        current = [this];
+      } else {
+        current.push(this);
+      }
+    });
+    if (current.length) blocks.push(current);
+    blocks.reverse();
+    blocks.forEach(function (block) {
+      block.forEach(function (el) { $tbody[0].appendChild(el); });
+    });
+
+    var isDesc = $btn.attr('data-direction') === 'desc';
+    var next   = isDesc ? 'asc' : 'desc';
+    $btn.attr('data-direction', next);
+    $btn.find('.catalog-sort-toggle-label').text(next === 'desc' ? 'Desc' : 'Asc');
+    $btn.find('.fa').toggleClass('fa-sort-amount-asc',  next === 'asc')
+                    .toggleClass('fa-sort-amount-desc', next === 'desc');
+  });
 });

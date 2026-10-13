@@ -51,7 +51,17 @@
       <% catalog_key = catalog.to_s.parameterize %>
 
       <div class="catalog-section" data-catalog="<%= catalog_key %>">
-      <h3 class="catalog-heading"><%= catalog %> <span class="muted">(<%= parents.size %>)</span></h3>
+      <h3 class="catalog-heading">
+        <%= catalog %> <span class="muted">(<%= parents.size %>)</span>
+        <%# Per-panel sort toggle — flips the parent-row order without
+            touching the server-side natural-numeric sort. Children stay
+            nested under their parents. %>
+        <button type="button" class="catalog-sort-toggle" data-direction="asc"
+                title="Toggle ascending / descending">
+          <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+          <span class="catalog-sort-toggle-label">Asc</span>
+        </button>
+      </h3>
 
       <table class="requests-table" data-catalog="<%= catalog_key %>">
         <thead>

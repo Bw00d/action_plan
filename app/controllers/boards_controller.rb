@@ -13,7 +13,12 @@ class BoardsController < ApplicationController
     # - rosters         → effective_personnel / personnel_by_agency
     # - demob           → DMB button URL in the modal footer
     # - resource_events → scheduled-swap flag + activity feed count
-    @board_includes = [:rosters, :demob, :resource_events, :org_unit_assignment]
+    # :org_unit nested under :org_unit_assignment — the expanded T-card
+    # header shows resource.org_unit&.name, which is a has_one through
+    # the assignment. Without preloading the nested :org_unit, every
+    # card fires its own OrgUnit SELECT on render, and a board with a
+    # few hundred cards blows past the dyno's memory quota (R15 crash).
+    @board_includes = [:rosters, :demob, :resource_events, org_unit_assignment: :org_unit]
 
     @unassigned_resources = @incident.resources.unassigned.active
                                      .includes(@board_includes)
