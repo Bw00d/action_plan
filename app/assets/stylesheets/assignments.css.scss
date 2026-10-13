@@ -463,29 +463,17 @@ ul#action-buttons {
   }
 
   .narrative { display: flex; flex-direction: column; }
-  // Sections 6 + 7: min-height gives a baseline clickable area for the
-  // best_in_place span (otherwise an empty field collapses to the
-  // heading line and there's barely anything to click). Height is
-  // explicitly released so the cell grows with content (including
-  // intentionally blank lines added via the preserve_blank_lines Proc).
-  .box-6 {
-    min-height: 1.15in;
-    height: auto;
-  }
-  .box-7 {
-    min-height: 0.75in;
-    height: auto;
-  }
-  // Make the best_in_place display itself fill the cell's remaining
-  // vertical space so clicking anywhere below the heading activates
-  // the textarea editor — not just the exact pixel row of rendered
-  // text. inline-block + width:100% + display:block keeps the field
-  // tall enough to click even when empty.
+  .box-6 { height: 0.75in; }
+  .box-7 { height: 0.75in; }
+  // Fill the cell so clicking anywhere inside the box activates the
+  // best_in_place textarea — not just the pixel row of the heading.
+  // Doesn't change the cell's outer dimensions, so page layout and
+  // the bottom row's position stay the same.
   .box-6 .best_in_place,
   .box-7 .best_in_place {
     display: block;
-    min-height: 1em;
     width: 100%;
+    min-height: 1em;
   }
 
   .c-func { width: 15%; }
