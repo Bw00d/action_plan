@@ -1,13 +1,15 @@
 class FeatureRequestsController < ApplicationController
   include SkipAuthorization
 
-  before_action :set_feature, only: %i[show upvote add_comment]
+  before_action :set_feature, only: %i[show upvote add_comment toggle_complete]
 
   # GET /feature_requests
   def index
-    @features = IssueReport.feature_requests.ranked_by_upvotes.limit(200)
+    base = IssueReport.feature_requests.ranked_by_upvotes.limit(200)
+    @features           = base.open_status
+    @completed_features = base.completed
     # Preload comment counts so the index doesn't N+1.
-    ids = @features.map(&:id)
+    ids = (@features + @completed_features).map(&:id)
     @comment_counts = IssueReportComment.where(issue_report_id: ids)
                                         .group(:issue_report_id).count
   end
@@ -43,6 +45,18 @@ class FeatureRequestsController < ApplicationController
       redirect_to feature_request_path(@feature),
                   alert: comment.errors.full_messages.to_sentence
     end
+  end
+
+  # POST /feature_requests/:id/toggle_complete
+  # Admin-only (User.role == 'admin'). Toggles between "open" and
+  # "completed" — same button both ways so the UI stays single-purpose.
+  def toggle_complete
+    return redirect_to feature_requests_path, alert: "Only admins can mark features complete." unless current_user&.admin?
+
+    new_status = @feature.completed? ? 'open' : 'completed'
+    @feature.update!(status: new_status)
+    redirect_back fallback_location: feature_requests_path,
+                  notice: @feature.completed? ? "Marked complete." : "Reopened."
   end
 
   private

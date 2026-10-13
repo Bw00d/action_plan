@@ -12,12 +12,21 @@ class IssueReport < ApplicationRecord
   validates :description, presence: true
 
   scope :feature_requests, -> { where(kind: 'feature') }
+  # Open vs. completed state is stored on the existing `status` column
+  # (default "open"). "completed" shows the request moved to the
+  # Completed section at the bottom of the feature-requests page.
+  scope :open_status,  -> { where("status IS NULL OR status != 'completed'") }
+  scope :completed,    -> { where(status: 'completed') }
   # Feature requests page sort: upvotes first (most-wanted at top), then
   # newest. Uses a subquery count so ordering works across the full list.
   scope :ranked_by_upvotes, lambda {
     select("issue_reports.*, (SELECT COUNT(*) FROM issue_report_upvotes u WHERE u.issue_report_id = issue_reports.id) AS upvote_count")
       .order('upvote_count DESC, issue_reports.created_at DESC')
   }
+
+  def completed?
+    status == 'completed'
+  end
 
   def kind_label
     case kind

@@ -1,0 +1,42 @@
+<%#
+  One feature-request row. Rendered from both the active list and the
+  Completed section — `completed_class` is just a visual-dimming hook
+  for the completed variant; the button logic is the same either way.
+%>
+<li class="fr-item <%= 'fr-item--completed' if feature.completed? %>">
+  <%= button_to upvote_feature_request_path(feature),
+                method: :post,
+                class:  "fr-upvote #{'is-upvoted' if feature.upvoted_by?(current_user)}",
+                form:   { class: "fr-inline-form" },
+                title:  (feature.upvoted_by?(current_user) ? "You upvoted this — click to remove" : "Upvote") do %>
+    <span class="fr-upvote-arrow">▲</span>
+    <span class="fr-upvote-count"><%= feature.upvotes.size %></span>
+  <% end %>
+
+  <div class="fr-item-body">
+    <%= link_to feature_request_path(feature), class: "fr-item-title" do %>
+      <%= feature.title %>
+    <% end %>
+    <div class="fr-item-meta">
+      <span><%= feature.author_name %></span>
+      <span>·</span>
+      <span><%= feature.created_at.strftime('%b %-d, %Y') %></span>
+      <span>·</span>
+      <span><%= @comment_counts[feature.id].to_i %> comment<%= 's' unless @comment_counts[feature.id].to_i == 1 %></span>
+      <% if feature.completed? %>
+        <span>·</span>
+        <span class="fr-completed-tag">COMPLETED</span>
+      <% end %>
+    </div>
+  </div>
+
+  <% if current_user&.admin? %>
+    <%= button_to toggle_complete_feature_request_path(feature),
+                  method: :post,
+                  class:  "fr-complete-btn btn btn-xs #{feature.completed? ? 'btn-default' : 'btn-success'}",
+                  form:   { class: "fr-inline-form" },
+                  title:  (feature.completed? ? "Reopen this request" : "Mark complete") do %>
+      <%= feature.completed? ? 'Reopen' : 'Mark complete' %>
+    <% end %>
+  <% end %>
+</li>

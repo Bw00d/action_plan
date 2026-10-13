@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     member do
       post :upvote
       post :add_comment
+      post :toggle_complete
     end
   end
   root to: 'home#index'
