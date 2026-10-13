@@ -8,5 +8,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Bruno Facca <bruno@facca.info>",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": "20.x"
+  }
 }
