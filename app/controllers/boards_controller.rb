@@ -124,17 +124,51 @@ class BoardsController < ApplicationController
     assignment = resource.org_unit_assignment
 
     if target_org_unit.nil?
+      old_unit = assignment&.org_unit
       assignment&.destroy
+      compact_positions_for(old_unit)
       return
     end
 
-    if assignment.nil?
-      OrgUnitAssignment.create!(resource: resource, org_unit: target_org_unit).tap do |a|
-        a.insert_at(position) if position.positive?
+    OrgUnitAssignment.transaction do
+      old_unit   = assignment&.org_unit
+      cross_unit = assignment && assignment.org_unit_id != target_org_unit.id
+
+      if assignment.nil?
+        # New assignment. Compact target first so the incoming
+        # DOM-index-based position maps to the right slot.
+        compact_positions_for(target_org_unit)
+        OrgUnitAssignment.create!(resource: resource, org_unit: target_org_unit).tap do |a|
+          a.insert_at(position) if position.positive?
+        end
+      else
+        assignment.update!(org_unit: target_org_unit) if cross_unit
+        # Compact BEFORE insert_at. acts_as_list positions can drift
+        # sparse over time (gaps from destroys / scope changes); if a
+        # column has gaps, a DOM-index position like "31" would resolve
+        # to a middle slot instead of the last one. Compacting to 1..N
+        # first guarantees DOM-index == position.
+        compact_positions_for(target_org_unit)
+        assignment.reload
+        assignment.insert_at(position) if position.positive?
       end
-    else
-      assignment.update!(org_unit: target_org_unit)
-      assignment.insert_at(position) if position.positive?
+
+      # Clean up the vacated old column too so its next drag isn't
+      # tripped by the fresh gap we just created there.
+      compact_positions_for(old_unit) if cross_unit && old_unit
+    end
+  end
+
+  # Renumber every OrgUnitAssignment in a column to 1..N in current
+  # sort order. Uses update_column to skip acts_as_list's callbacks
+  # (which would try to re-sort mid-compaction and fight us).
+  def compact_positions_for(org_unit)
+    return unless org_unit
+    OrgUnitAssignment.where(org_unit_id: org_unit.id)
+                     .order(:position, :id)
+                     .each_with_index do |a, idx|
+      new_pos = idx + 1
+      a.update_column(:position, new_pos) if a.position != new_pos
     end
   end
 
