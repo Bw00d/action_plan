@@ -265,13 +265,29 @@
       $btn.text(verb + ' Roster (' + count + ')');
     });
 
-    // Calendar icon on the resource-info section — toggle the hidden
-    // calendar panel showing the resource's assignment month(s).
+    // Calendar icon on the resource-info section. The panel is lazy —
+    // on first click we fetch the rendered month grid from the server
+    // and inject it; subsequent clicks just toggle visibility. Rendering
+    // one per card up front was crashing the dyno on big boards.
     $(page).on('click', '.board-card-cal-toggle', function (e) {
       e.stopPropagation();
       var $panel = $(this).closest('.board-card-details-main')
                           .find('.board-card-calendar-panel').first();
-      $panel.toggle();
+      if (!$panel.length) return;
+
+      if ($panel.attr('data-loaded') === 'true') {
+        $panel.toggle();
+        return;
+      }
+
+      var url = $panel.attr('data-url');
+      if (!url) return;
+      $panel.html('<p class="muted small" style="margin:4px 0;">Loading…</p>').show();
+      $.get(url).done(function (html) {
+        $panel.html(html).attr('data-loaded', 'true');
+      }).fail(function () {
+        $panel.html('<p class="muted small" style="margin:4px 0;">Could not load calendar.</p>');
+      });
     });
 
     // + person icon on the roster toolbar — reveals the inline add form.

@@ -1,9 +1,10 @@
 <%#
-  Hidden calendar panel that toggles open from the calendar icon in the
-  top-right of the resource info section. Renders one month grid per
-  month the assignment spans; cells are tagged by day class so the CSS
-  can color FWD (first day), LWD (last day), scheduled-swap FWDs, and
-  the active range between.
+  Inner contents of the T-card calendar panel. Rendered on demand via
+  ResourcesController#calendar — the board view ships an empty
+  .board-card-calendar-panel placeholder, and boards.js fetches this
+  partial into it the first time the user clicks the calendar icon.
+  Doing it lazily avoids ~84+ day-cell renders per card on every board
+  load (which was crashing the dyno on big boards).
 
   Local: resource
 %>
@@ -12,75 +13,71 @@
 <% swap_days = resource.resource_events.select(&:scheduled_swap?)
                                         .map(&:fwd).compact.to_set %>
 
-<div class="board-card-calendar-panel" style="display:none;"
-     data-fwd="<%= fwd&.iso8601 %>"
-     data-lwd="<%= lwd&.iso8601 %>">
-  <% if fwd.nil? || lwd.nil? %>
-    <p class="muted small">
-      Set FWD and Assignment days to see the calendar view.
-    </p>
-  <% else %>
-    <% start_month = fwd.beginning_of_month %>
-    <% end_month   = lwd.beginning_of_month %>
-    <% months = []
-       m = start_month
-       while m <= end_month
-         months << m
-         m = m.next_month
-       end %>
-    <div class="board-card-calendar-months">
-      <% months.each do |month_start| %>
-        <% month_end = month_start.end_of_month %>
-        <% grid_start = month_start - month_start.wday  # back up to Sunday %>
-        <% grid_end   = month_end + (6 - month_end.wday) # forward to Saturday %>
-        <div class="board-card-calendar-month">
-          <div class="board-card-calendar-month-title">
-            <%= month_start.strftime('%B %Y') %>
-          </div>
-          <table class="board-card-calendar-grid">
-            <thead>
+<% if fwd.nil? || lwd.nil? %>
+  <p class="muted small">
+    Set FWD and Assignment days to see the calendar view.
+  </p>
+<% else %>
+  <% start_month = fwd.beginning_of_month %>
+  <% end_month   = lwd.beginning_of_month %>
+  <% months = []
+     m = start_month
+     while m <= end_month
+       months << m
+       m = m.next_month
+     end %>
+  <div class="board-card-calendar-months">
+    <% months.each do |month_start| %>
+      <% month_end = month_start.end_of_month %>
+      <% grid_start = month_start - month_start.wday  # back up to Sunday %>
+      <% grid_end   = month_end + (6 - month_end.wday) # forward to Saturday %>
+      <div class="board-card-calendar-month">
+        <div class="board-card-calendar-month-title">
+          <%= month_start.strftime('%B %Y') %>
+        </div>
+        <table class="board-card-calendar-grid">
+          <thead>
+            <tr>
+              <% %w[S M T W T F S].each do |dow| %>
+                <th><%= dow %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% (grid_start..grid_end).each_slice(7) do |week| %>
               <tr>
-                <% %w[S M T W T F S].each do |dow| %>
-                  <th><%= dow %></th>
+                <% week.each do |day| %>
+                  <% in_month = day.month == month_start.month
+                     in_range = fwd <= day && day <= lwd
+                     is_fwd   = day == fwd
+                     is_lwd   = day == lwd
+                     is_swap  = swap_days.include?(day) %>
+                  <td class="<%= 'cal-out-of-month' unless in_month %>
+                             <%= 'cal-in-range'    if in_range %>
+                             <%= 'cal-fwd'         if is_fwd %>
+                             <%= 'cal-lwd'         if is_lwd %>
+                             <%= 'cal-swap'        if is_swap && in_range %>">
+                    <span class="cal-day"><%= day.day %></span>
+                    <% if is_swap && in_range %>
+                      <span class="cal-tag">SWAP</span>
+                    <% elsif is_fwd %>
+                      <span class="cal-tag">FWD</span>
+                    <% elsif is_lwd %>
+                      <span class="cal-tag">LWD</span>
+                    <% end %>
+                  </td>
                 <% end %>
               </tr>
-            </thead>
-            <tbody>
-              <% (grid_start..grid_end).each_slice(7) do |week| %>
-                <tr>
-                  <% week.each do |day| %>
-                    <% in_month = day.month == month_start.month
-                       in_range = fwd <= day && day <= lwd
-                       is_fwd   = day == fwd
-                       is_lwd   = day == lwd
-                       is_swap  = swap_days.include?(day) %>
-                    <td class="<%= 'cal-out-of-month' unless in_month %>
-                               <%= 'cal-in-range'    if in_range %>
-                               <%= 'cal-fwd'         if is_fwd %>
-                               <%= 'cal-lwd'         if is_lwd %>
-                               <%= 'cal-swap'        if is_swap && in_range %>">
-                      <span class="cal-day"><%= day.day %></span>
-                      <% if is_swap && in_range %>
-                        <span class="cal-tag">SWAP</span>
-                      <% elsif is_fwd %>
-                        <span class="cal-tag">FWD</span>
-                      <% elsif is_lwd %>
-                        <span class="cal-tag">LWD</span>
-                      <% end %>
-                    </td>
-                  <% end %>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      <% end %>
-    </div>
-    <div class="board-card-calendar-legend">
-      <span class="cal-legend-item"><span class="cal-swatch cal-swatch--fwd"></span> FWD</span>
-      <span class="cal-legend-item"><span class="cal-swatch cal-swatch--range"></span> On assignment</span>
-      <span class="cal-legend-item"><span class="cal-swatch cal-swatch--swap"></span> Scheduled swap</span>
-      <span class="cal-legend-item"><span class="cal-swatch cal-swatch--lwd"></span> LWD</span>
-    </div>
-  <% end %>
-</div>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+  <div class="board-card-calendar-legend">
+    <span class="cal-legend-item"><span class="cal-swatch cal-swatch--fwd"></span> FWD</span>
+    <span class="cal-legend-item"><span class="cal-swatch cal-swatch--range"></span> On assignment</span>
+    <span class="cal-legend-item"><span class="cal-swatch cal-swatch--swap"></span> Scheduled swap</span>
+    <span class="cal-legend-item"><span class="cal-swatch cal-swatch--lwd"></span> LWD</span>
+  </div>
+<% end %>

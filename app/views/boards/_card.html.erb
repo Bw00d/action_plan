@@ -100,15 +100,20 @@
         feed (comments + scheduled crew swaps + completed swap history). %>
     <div class="board-card-details-body" data-events-url="<%= resource_events_path(resource) %>">
       <div class="board-card-details-main">
-        <%# Calendar visualization toggle. Hidden panel below shows one
-            month-grid per month the assignment spans, with FWD / LWD /
-            scheduled-swap days highlighted. %>
+        <%# Calendar visualization toggle. The actual month-grid panel
+            is lazy-loaded on first click — rendering one per card on
+            page load crashed the dyno on large boards (R15 memory
+            quota). The empty placeholder below gets filled by JS via
+            the data-url endpoint when the user actually opens it. %>
         <button type="button" class="board-card-cal-toggle"
                 title="Show assignment on a calendar"
                 aria-label="Show assignment calendar">
           <i class="fa fa-calendar" aria-hidden="true"></i>
         </button>
-        <%= render 'boards/card_calendar', resource: resource %>
+        <div class="board-card-calendar-panel"
+             style="display:none;"
+             data-url="<%= calendar_resource_path(resource) %>"
+             data-loaded="false"></div>
 
         <dl class="board-card-fields">
           <dt>Order #</dt>

@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   resources :actions
   resources :incidents
   resources :resources do
+    # Lazy-loaded T-card calendar panel. The board no longer renders
+    # one per card up front; the icon fires AJAX to this on first open.
+    member { get :calendar }
     resources :events, only: [:index, :create, :update, :destroy],
                        controller: 'resource_events' do
       member { post :swap_now }

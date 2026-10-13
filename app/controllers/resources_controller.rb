@@ -37,6 +37,19 @@ class ResourcesController < ApplicationController
   def show
   end
 
+  # GET /resources/:id/calendar
+  # Lazy-loaded T-card calendar panel. Returns just the single-resource
+  # calendar partial — the board intentionally doesn't render these up
+  # front anymore (the 42-cell month grid × hundreds of cards was blowing
+  # the dyno's memory quota). Preloads resource_events so the partial's
+  # scheduled-swap lookup doesn't trigger an extra query.
+  def calendar
+    resource = Resource.includes(:resource_events).find(params[:id])
+    render partial: 'boards/card_calendar',
+           locals:  { resource: resource },
+           layout:  false
+  end
+
   # GET /incidents/:incident_id/resources/tally_to_pdf.pdf
   # Renders the Resource Tally pivot as a landscape PDF via Grover.
   def tally_to_pdf
