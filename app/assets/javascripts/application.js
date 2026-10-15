@@ -17,7 +17,16 @@
 // rails-ujs, mainly because it makes it easier to override $.rails.allowAction
 // to replace JavaScript confirmation dialogs with application-specific modals.
 //= require jquery_ujs
-//= require jquery-ui
+// Only load the jQuery UI widgets this app actually uses (sortable for
+// the T-card board, draggable for the cover canvas). The full
+// jquery-ui bundle included the Datepicker widget, which carries
+// GHSA-h6gj-6jjq-h8g9 (CVE-2022-31160) — XSS in Datepicker's `*Text`
+// options. We use bootstrap-datepicker (loaded below), not jQuery UI's
+// datepicker, so narrowing the require ships zero datepicker code
+// from jQuery UI → the vulnerable code path isn't reachable from the
+// browser at all.
+//= require jquery-ui/widgets/sortable
+//= require jquery-ui/widgets/draggable
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker

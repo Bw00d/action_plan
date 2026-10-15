@@ -14,7 +14,11 @@ gem 'rails', '~> 6.0.0'
 gem 'nokogiri', '~> 1.13'
 gem 'psych', '< 4'
 # Use Puma as the app server
-gem 'puma', '~> 4.1'
+# Pinned >= 5.6.9 to patch the HTTP request/response smuggling CVE
+# (GHSA-68xg-gqqm-vgj8). Puma 4.x is EOL and will not receive the fix.
+# 5.6.x stays on the Rails 6.0-compatible line without the bigger
+# config changes Puma 6 introduces.
+gem 'puma', '~> 5.6', '>= 5.6.9'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -70,6 +74,12 @@ gem "font-awesome-rails"
 gem 'font_awesome5_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'american_date'
+# jmespath comes in as a transitive dep of aws-sdk-core; the
+# aws-sdk-core gemspec only requires `~> 1.0`, which the resolver
+# satisfies with 1.4.0. Pin to >= 1.6.2 to patch CVE-2022-32511
+# (JMESPath for Ruby uses unsafe JSON.load — swap to safe JSON.parse).
+gem 'jmespath', '~> 1.6', '>= 1.6.2'
+
 gem 'aws-sdk-s3', require: false
 # aws-sdk-s3 1.74.0's legacy_signer.rb requires 'webrick/httputils'.
 # Ruby 3.0+ removed webrick from stdlib, so pin the gem explicitly.
