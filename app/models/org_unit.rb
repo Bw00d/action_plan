@@ -24,6 +24,20 @@ class OrgUnit < ApplicationRecord
   validates :kind, presence: true
   validate :parent_kind_must_be_valid
 
+  # Branches, divisions, and groups show up on the 204 header via their
+  # designator. If the user doesn't type one in when creating the unit,
+  # fall back to the name so the 204 isn't left with an empty cell.
+  # Scoped to the three kinds that actually use a designator — sections
+  # and the command/non_209 roots don't.
+  DESIGNATOR_KINDS = %w[branch division group].freeze
+  before_validation :default_designator_from_name
+
+  def default_designator_from_name
+    return unless DESIGNATOR_KINDS.include?(kind.to_s)
+    return if designator.present?
+    self.designator = name
+  end
+
   scope :roots, -> { where(parent_id: nil) }
 
   ALLOWED_PARENT_KINDS = {
