@@ -3,6 +3,10 @@ require 'uri'
 
 class IncidentsController < ApplicationController
   before_action :set_incident, only: [:show, :edit, :update, :destroy]
+  # Server-side guard matching the view check (hiding the DELETE link
+  # alone isn't security — a crafted DELETE request would still fire).
+  # Only the incident's owner or a site admin can destroy it.
+  before_action :require_owner_or_admin_for_destroy, only: :destroy
   include SkipAuthorization
   # skip_before_action :authenticate_user!
 
@@ -410,6 +414,11 @@ class IncidentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_incident
       @incident = Incident.find(params[:id])
+    end
+
+    def require_owner_or_admin_for_destroy
+      return if current_user && (current_user.admin? || @incident.user_id == current_user.id)
+      redirect_to @incident, alert: "Only the incident owner or an admin can delete this incident."
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,4 +1,14 @@
 module IncidentsHelper
+  # Destroying an incident wipes every resource, plan, assignment, etc.
+  # tied to it. Restrict to the incident's owner (incident.user_id) and
+  # site admins (User.role == 'admin'). Views call this to hide the
+  # DELETE link; the controller enforces the same check server-side so
+  # a crafted request can't bypass the UI.
+  def can_delete_incident?(incident)
+    return false unless current_user
+    current_user.admin? || incident.user_id == current_user.id
+  end
+
   # 2-letter USPS state codes → full state names, plus DC and inhabited
   # territories. Values match the format WFIGS/IRWIN expects (after prefixing
   # with "US-" in the controller for their query).

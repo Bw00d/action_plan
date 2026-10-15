@@ -142,7 +142,9 @@
       <div class="form-group">
         <div class="actions">
           <%= form.submit 'SUBMIT', class: 'btn btn-success tiny' %>
-          <%= link_to 'DELETE', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right tiny' %>
+          <% if incident.persisted? && can_delete_incident?(incident) %>
+            <%= link_to 'DELETE', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right tiny' %>
+          <% end %>
         </div>
       </div>
 
