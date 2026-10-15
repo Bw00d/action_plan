@@ -290,6 +290,49 @@
       });
     });
 
+    // Primary-star toggle on a roster row inside the open T-card modal.
+    // AJAX PATCH so the modal stays open; on success we flip the clicked
+    // star + clear sibling stars (model enforces single-primary, we
+    // mirror that visually) and push the fresh leader value into the
+    // card's best_in_place field so it updates in place.
+    $(page).on('click', '.board-card-roster .roster-primary-btn', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var $btn        = $(this);
+      var $card       = $btn.closest('.board-card');
+      var $rosterWrap = $btn.closest('.board-card-roster');
+      var currentlyPrimary = $btn.attr('data-primary') === 'true';
+      var nextPrimary      = !currentlyPrimary;
+
+      $.ajax({
+        url:    $btn.data('url'),
+        method: 'PATCH',
+        data:   { roster: { primary: nextPrimary } },
+        headers: { 'X-CSRF-Token': csrf(), 'Accept': 'application/json' }
+      }).done(function (data) {
+        // Flip every star in this roster list off, then this one on
+        // (matches the model's one-primary-per-parent enforcement).
+        $rosterWrap.find('.roster-primary-btn').each(function () {
+          var $other = $(this);
+          $other.removeClass('is-primary').attr('data-primary', 'false')
+                .attr('title', 'Mark as primary (leader)');
+          $other.find('i').removeClass('fa-star').addClass('fa-star-o');
+        });
+        if (data.primary) {
+          $btn.addClass('is-primary').attr('data-primary', 'true')
+              .attr('title', 'Primary — click to clear');
+          $btn.find('i').removeClass('fa-star-o').addClass('fa-star');
+        }
+        // Push the server-returned leader into the card's Leader field
+        // so the user sees it update without reopening the card.
+        if (data.leader !== undefined) {
+          patchBip($card, 'leader', data.leader);
+        }
+      }).fail(function (xhr) {
+        alert('Could not update primary: ' + (xhr.statusText || 'error'));
+      });
+    });
+
     // + person icon on the roster toolbar — reveals the inline add form.
     $(page).on('click', '.board-card-roster-add-toggle', function () {
       var $wrap = $(this).closest('.board-card-roster');
@@ -355,17 +398,33 @@
       }
       resetSwapForm($form);
       $form.attr('data-editing-url', $body.data('swap-edit-url'));
-      $form.find('input[name="resource_event[leader]"]').val($body.data('swap-leader') || '');
+      var leader = $body.data('swap-leader') || '';
+      $form.find('input[name="resource_event[leader]"]').val(leader);
       $form.find('input[name="resource_event[phone]"]').val($body.data('swap-phone') || '');
       $form.find('.board-card-swap-fwd').val(fwdIso);
       $form.find('.board-card-swap-length').val(days);
       $form.find('textarea[name="resource_event[body]"]').val($body.data('swap-body') || '');
       $form.find('button[type="submit"]').text('Update');
       computeSwapLwd($form);
+      // Sync the roster-picker to the loaded leader if we have one and
+      // the name matches a roster option; otherwise flip to manual mode
+      // so the user can see / edit the free-form name.
+      var $picker = $form.find('.board-card-swap-leader-picker');
+      if ($picker.length) {
+        var match = $picker.find('option').filter(function () {
+          return this.value === leader;
+        }).val();
+        if (leader && match) {
+          $picker.val(match);
+          $form.find('.board-card-swap-leader-input').hide();
+        } else if (leader) {
+          $picker.val('__manual__');
+          $form.find('.board-card-swap-leader-input').show();
+        }
+      }
       $side.find('.board-card-comment-form').hide();
       $form.show();
       $form[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      $form.find('input[name="resource_event[leader]"]').focus();
     });
 
     // Reset the swap form back to CREATE mode — called when opening the
@@ -376,7 +435,33 @@
       $form.removeAttr('data-editing-url');
       $form.find('.board-card-swap-lwd-preview').text('—');
       $form.find('button[type="submit"]').text('Schedule');
+      // Collapse the leader input back under the picker if one exists.
+      var $picker = $form.find('.board-card-swap-leader-picker');
+      if ($picker.length) {
+        $picker.val('');
+        $form.find('.board-card-swap-leader-input').val('').hide();
+      }
     }
+
+    // Leader picker on the scheduled-swap form. When the resource has
+    // roster entries, the UI shows a <select> of them above the text
+    // input; picking a roster entry fills the (hidden) leader input +
+    // phone, picking "Enter name manually" shows the text input so the
+    // user can type an off-roster name.
+    $(page).on('change', '.board-card-swap-leader-picker', function () {
+      var $sel   = $(this);
+      var $form  = $sel.closest('form');
+      var $input = $form.find('.board-card-swap-leader-input');
+      var $phone = $form.find('.board-card-swap-phone-input');
+      var val    = $sel.val();
+      if (val === '__manual__') {
+        $input.val('').show().focus();
+      } else {
+        $input.val(val || '').hide();
+        var phone = $sel.find('option:selected').attr('data-phone') || '';
+        if (phone) $phone.val(phone);
+      }
+    });
 
     // Live LWD preview on the scheduled-swap form. User enters FWD +
     // assignment-length days; we compute the resulting LWD and set the
@@ -571,6 +656,13 @@
         headers: { 'X-CSRF-Token': csrf(), 'Accept': 'application/json' }
       }).done(function (data) {
         if (data.feed_html) replaceFeed($side, data.feed_html);
+        // Swap the roster block in place so the primary star jumps to
+        // whichever subordinate matches the new leader (server already
+        // moved the primary flag; this re-renders the stars to match).
+        if (data.roster_html) {
+          var $rosterWrap = $card.find('.board-card-roster').first();
+          if ($rosterWrap.length) $rosterWrap.replaceWith(data.roster_html);
+        }
         if (data.resource) {
           patchBip($card, 'leader',            data.resource.leader);
           patchBip($card, 'phone',             data.resource.phone);

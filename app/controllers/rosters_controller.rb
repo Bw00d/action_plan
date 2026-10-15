@@ -26,10 +26,30 @@ class RostersController < ApplicationController
   # `status` (C / F) is exposed; other roster fields are edited
   # elsewhere or set by the import flow.
   def update
+    toggling_primary = params.dig(:roster, :primary).present?
+
     respond_to do |format|
       if @roster.update(roster_params)
         format.html { redirect_back fallback_location: root_path }
-        format.json { respond_with_bip(@roster) }
+        format.json do
+          if toggling_primary
+            # Primary-star AJAX call from the T-card roster list wants the
+            # new state back so it can repaint stars + the parent Leader
+            # display inline without reloading the page (a page reload
+            # tears down the expanded card modal). Reload resource to
+            # pick up the leader value the Roster callback just wrote.
+            parent = @roster.resource
+            parent.reload
+            render json: {
+              id:            @roster.id,
+              primary:       @roster.primary,
+              resource_id:   parent.id,
+              leader:        parent.leader
+            }
+          else
+            respond_with_bip(@roster)
+          end
+        end
       else
         format.html { redirect_back fallback_location: root_path, alert: @roster.errors.full_messages.to_sentence }
         format.json { respond_with_bip(@roster) }
@@ -80,7 +100,7 @@ class RostersController < ApplicationController
   end
 
   def roster_params
-    params.require(:roster).permit(:status)
+    params.require(:roster).permit(:status, :primary, :name, :position)
   end
 
   def roster_create_params

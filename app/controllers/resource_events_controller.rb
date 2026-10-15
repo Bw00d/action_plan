@@ -119,6 +119,18 @@ class ResourceEventsController < ApplicationController
         notes:             @event.body       # may be nil — that's fine, clears old notes
       )
 
+      # Move the primary-star to the incoming leader. If the new leader
+      # name matches an active roster entry, mark that entry primary
+      # (model clears siblings via enforce_single_primary). Otherwise
+      # the leader came in off-roster — just clear every star so the
+      # UI doesn't still point at the former operator.
+      incoming = @resource.rosters.active.unpromoted.find { |r| r.name == @event.leader }
+      if incoming
+        incoming.update!(primary: true)
+      else
+        @resource.rosters.where(primary: true).update_all(primary: false)
+      end
+
       # 4: scheduled event is consumed by the swap.
       @event.destroy!
     end
@@ -134,9 +146,12 @@ class ResourceEventsController < ApplicationController
       # render_to_string inherits that format and would look for
       # _activity_feed.json.erb (which doesn't exist) and raise
       # MissingTemplate. Same gotcha as the iSuite import summary.
-      feed_html: render_to_string(partial: 'boards/activity_feed',
-                                  formats: [:html],
-                                  locals:  { resource: @resource, events: @resource.resource_events.newest_first }),
+      feed_html:   render_to_string(partial: 'boards/activity_feed',
+                                    formats: [:html],
+                                    locals:  { resource: @resource, events: @resource.resource_events.newest_first }),
+      roster_html: render_to_string(partial: 'boards/roster_list',
+                                    formats: [:html],
+                                    locals:  { resource: @resource }),
       resource: {
         leader:            @resource.leader.to_s,
         phone:             @resource.phone.to_s,

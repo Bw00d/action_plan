@@ -208,13 +208,36 @@
                 data-url="<%= resource_events_path(resource) %>">
             <input type="hidden" name="resource_event[kind]" value="scheduled_swap">
             <input type="hidden" name="resource_event[lwd]" value="">
+            <%# Leader picker. When the resource has active roster entries
+                (subordinates), offer them in a dropdown so the user can
+                promote one into the swap without retyping. Falling back
+                to a free-text input via "Enter name manually" covers
+                leaders coming in off-roster. The underlying
+                resource_event[leader] field is always a text input the
+                JS keeps in sync — easier than swapping form fields. %>
+            <% swap_rosters = resource.rosters.active.unpromoted.sort_by(&:natural_sort_key) %>
             <div class="board-card-swap-row">
               <label>Leader</label>
-              <input type="text" name="resource_event[leader]" class="form-control input-sm" required>
+              <% if swap_rosters.any? %>
+                <select class="form-control input-sm board-card-swap-leader-picker">
+                  <option value="">— Choose from roster —</option>
+                  <% swap_rosters.each do |ros| %>
+                    <option value="<%= ros.name %>">
+                      <%= ros.full_order_number %> — <%= ros.name %><%= " · #{ros.position}" if ros.position.present? %>
+                    </option>
+                  <% end %>
+                  <option value="__manual__">✎ Enter name manually</option>
+                </select>
+              <% end %>
+              <input type="text" name="resource_event[leader]"
+                     class="form-control input-sm board-card-swap-leader-input"
+                     <%= 'style=display:none;'.html_safe if swap_rosters.any? %>
+                     required>
             </div>
             <div class="board-card-swap-row">
               <label>Phone</label>
-              <input type="text" name="resource_event[phone]" class="form-control input-sm">
+              <input type="text" name="resource_event[phone]"
+                     class="form-control input-sm board-card-swap-phone-input">
             </div>
             <div class="board-card-swap-row board-card-swap-row-dates">
               <div>

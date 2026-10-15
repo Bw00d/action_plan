@@ -13,6 +13,17 @@ class Roster < ApplicationRecord
   has_many :demob_notifications, dependent: :destroy
 
   before_validation :default_agency_from_resource, on: :create
+  # Only one primary per parent. When this row is marked primary, clear
+  # the flag on any sibling. Fires before save so the uniqueness holds
+  # even if two toggles land in the same transaction.
+  before_save :enforce_single_primary, if: :primary?
+  # Keep the parent resource's leader in sync with whichever roster
+  # is currently marked primary — toggling primary on this row updates
+  # resource.leader to the row's name (reformatted for display). Also
+  # fires when the primary row's NAME is edited (fix a typo on the
+  # leader's name → resource.leader picks up the correction).
+  after_save  :sync_resource_leader,
+              if: -> { primary? && (saved_change_to_primary? || saved_change_to_name?) }
   # Create an ICS-221 demob sheet up front, same as Resource does. Users
   # can print the sheet before they know the release date; the demob's
   # after_update callback wires up the release + notification once the
@@ -64,6 +75,18 @@ class Roster < ApplicationRecord
     elsif demobed?
       self.status = 'C'
     end
+  end
+
+  def enforce_single_primary
+    return unless resource_id
+    Roster.where(resource_id: resource_id, primary: true)
+          .where.not(id: id)
+          .update_all(primary: false)
+  end
+
+  def sync_resource_leader
+    return unless primary? && resource.present?
+    resource.update_columns(leader: Resource.format_leader_name(name))
   end
 
   public

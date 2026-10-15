@@ -20,11 +20,26 @@ class RequestCheckinsController < ApplicationController
     children_map = Request.build_children_map(@incident.requests)
     descendants  = Request.descendants_of(@request.req_number, children_map)
     direct_subs  = Request.direct_children_of(@request.req_number, children_map)
-    leader_name  = direct_subs.first&.suggested_resource_name
     personnel    = descendants.any? ? descendants.size : nil
 
+    # Leader-name derivation:
+    # - Resource has subordinates → use the first direct sub's name
+    #   (same as before; whichever sub later gets marked :primary via
+    #   the roster UI will take over via Roster#sync_resource_leader).
+    # - Overhead single person (no subs) → format the resource's own
+    #   name "LAST, FIRST MIDDLE" into "FIRST MIDDLE LAST" so the
+    #   Leader column reads naturally.
+    # - Anything else without subs → leave blank for manual entry.
+    raw_name = @request.suggested_resource_name
+    leader_name =
+      if direct_subs.any?
+        direct_subs.first&.suggested_resource_name
+      elsif @request.resource_category == 'OVERHEAD'
+        Resource.format_leader_name(raw_name)
+      end
+
     @resource = @incident.resources.new(
-      name:              @request.suggested_resource_name,
+      name:              raw_name,
       category:          @request.resource_category,
       position:          @request.filled_catalog_item_code,
       agency:            @request.res_prov_agency_abbrev,

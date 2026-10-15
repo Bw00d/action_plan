@@ -7,10 +7,21 @@
   Local: resource
 %>
 <% roster_rows = resource.rosters.select { |r| r.promoted_resource_id.nil? } %>
+<%# Checked-in count = roster entries with status "C" (present), not
+    demobed (D) and not "F" (filled-but-not-here). Compared to the
+    resource's declared number_personnel; if the checked-in count
+    exceeds the slot count we flag the toggle button so the operator
+    sees at a glance that this equipment is carrying more bodies than
+    it's supposed to. %>
+<% checked_in_count = roster_rows.count { |r| r.status.to_s == 'C' } %>
+<% personnel_cap   = resource.number_personnel.to_i %>
+<% overbooked      = personnel_cap > 0 && checked_in_count > personnel_cap %>
 <div class="board-card-roster" data-resource-id="<%= resource.id %>">
   <div class="board-card-roster-toolbar">
     <% if roster_rows.any? %>
-      <button type="button" class="btn btn-default btn-xs board-card-roster-toggle">
+      <button type="button"
+              class="btn btn-xs board-card-roster-toggle <%= overbooked ? 'is-overbooked' : 'btn-default' %>"
+              title="<%= overbooked ? "#{checked_in_count} checked in · only #{personnel_cap} seats on this resource" : nil %>">
         Show Roster (<%= roster_rows.size %>)
       </button>
     <% else %>
@@ -41,8 +52,26 @@
   <ul class="board-card-roster-list" style="display:none;">
     <% roster_rows.sort_by(&:natural_sort_key).each do |ros| %>
       <li class="board-card-roster-item roster-status-<%= ros.status %>">
+        <%# Primary toggle — AJAX PATCH so clicking doesn't tear down the
+            open T-card modal (a form submit would redirect-back and
+            collapse it). JS flips the star + sibling stars + the parent
+            card's Leader best_in_place display in place on success. %>
+        <button type="button"
+                class="roster-primary-btn <%= 'is-primary' if ros.primary %>"
+                data-url="<%= roster_path(ros) %>"
+                data-primary="<%= ros.primary %>"
+                data-roster-name="<%= ros.name %>"
+                title="<%= ros.primary ? 'Primary — click to clear' : 'Mark as primary (leader)' %>">
+          <i class="fa <%= ros.primary ? 'fa-star' : 'fa-star-o' %>" aria-hidden="true"></i>
+        </button>
         <span class="roster-order"><%= ros.full_order_number %></span>
-        <span class="roster-name"><%= ros.name %></span>
+        <span class="roster-name">
+          <%= best_in_place ros, :name,
+                            as: :input,
+                            path: roster_path(ros),
+                            place_holder: '(name)',
+                            html_attrs: { class: 'roster-name-bip' } %>
+        </span>
         <% if ros.position.present? %>
           <span class="roster-position muted"><%= ros.position %></span>
         <% end %>

@@ -883,6 +883,34 @@ input.fwd-datepicker {
   cursor: default !important;
 }
 
+// Primary-subordinate star toggle. Muted outline when inactive, solid
+// gold when this row is the parent resource's Leader. Form wrapper
+// kills its own default margins so the button sits inline with the
+// row's text.
+.roster-primary-form {
+  display: inline;
+  margin: 0;
+}
+.roster-primary-btn {
+  background: transparent;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  padding: 0 4px 0 0;
+  color: #c1c7d0;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  vertical-align: middle;
+  &:hover  { color: #f29100; }
+  &:focus,
+  &:active { color: #f29100; outline: 0 !important; box-shadow: none !important; }
+  &.is-primary {
+    color: #f6b100;
+    &:hover { color: #b17a00; }
+  }
+}
+
 // Trash icon on roster rows — muted grey until hovered, then red.
 // Keeps the row visually calm so the destructive action doesn't
 // shout for attention next to the DMB button.

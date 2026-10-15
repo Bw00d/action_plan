@@ -1,6 +1,18 @@
 class Resource < ApplicationRecord
   belongs_to :incident
   has_one :demob
+
+  # "LAST, FIRST MIDDLE" (how IROC / check-in forms arrive) → "FIRST
+  # MIDDLE LAST" for display as a Leader name. Idempotent: strings
+  # without a comma pass through unchanged, so re-formatting an already-
+  # swapped value doesn't double-flip. Trims runs of whitespace.
+  def self.format_leader_name(raw)
+    s = raw.to_s.strip
+    return s if s.empty?
+    return s unless s.include?(',')
+    last, rest = s.split(',', 2)
+    [rest.to_s.strip, last.to_s.strip].reject(&:empty?).join(' ').squeeze(' ')
+  end
   has_one :org_unit_assignment, dependent: :destroy
   has_one :org_unit, through: :org_unit_assignment
   has_many :rosters, dependent: :destroy

@@ -105,10 +105,31 @@
             <tr class="resource-roster-row is-hidden depth-<%= depth %> roster-status-<%= ros.status %>"
                 data-resource-id="<%= r.id %>">
               <td class="roster-order-cell" style="padding-left: <%= 20 + depth * 20 %>px">
+                <%# Primary toggle — click to mark this subordinate as the
+                    parent resource's Leader. Model clears the flag on
+                    siblings and syncs resource.leader automatically. %>
+                <%= button_to roster_path(ros),
+                              method: :patch,
+                              params: { roster: { primary: !ros.primary } },
+                              form: { class: 'roster-primary-form' },
+                              class: "roster-primary-btn #{'is-primary' if ros.primary}",
+                              title: (ros.primary ? 'Primary — click to clear' : 'Mark as primary (leader)') do %>
+                  <i class="fa <%= ros.primary ? 'fa-star' : 'fa-star-o' %>" aria-hidden="true"></i>
+                <% end %>
                 <%= ros.full_order_number %>
               </td>
-              <td class="roster-position-cell"><%= ros.position %></td>
-              <td class="roster-name-cell"><%= ros.name %></td>
+              <td class="roster-position-cell">
+                <%= best_in_place ros, :position,
+                                  as: :input,
+                                  path: roster_path(ros),
+                                  place_holder: '—' %>
+              </td>
+              <td class="roster-name-cell">
+                <%= best_in_place ros, :name,
+                                  as: :input,
+                                  path: roster_path(ros),
+                                  place_holder: '(name)' %>
+              </td>
               <td colspan="9" class="roster-filler-cell">
                 <%# C / F toggle (demobed rosters show a static D pill
                     instead — don't let the user flip D via this pill

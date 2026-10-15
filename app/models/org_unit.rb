@@ -35,7 +35,9 @@ class OrgUnit < ApplicationRecord
   def default_designator_from_name
     return unless DESIGNATOR_KINDS.include?(kind.to_s)
     return if designator.present?
+    return if name.blank?
     self.designator = name
+    nil  # explicit nil return so this never halts the callback chain
   end
 
   scope :roots, -> { where(parent_id: nil) }

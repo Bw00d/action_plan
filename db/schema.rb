@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_13_000000) do
+ActiveRecord::Schema.define(version: 2026_10_15_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -702,9 +702,11 @@ ActiveRecord::Schema.define(version: 2026_10_13_000000) do
     t.datetime "released_at"
     t.bigint "promoted_resource_id"
     t.string "status", default: "C", null: false
+    t.boolean "primary", default: false, null: false
     t.index ["promoted_resource_id"], name: "index_rosters_on_promoted_resource_id"
     t.index ["released_at"], name: "index_rosters_on_released_at"
     t.index ["request_id"], name: "index_rosters_on_request_id"
+    t.index ["resource_id", "primary"], name: "index_rosters_on_resource_id_and_primary"
     t.index ["resource_id"], name: "index_rosters_on_resource_id"
     t.index ["status"], name: "index_rosters_on_status"
   end

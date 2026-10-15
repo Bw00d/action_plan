@@ -1142,6 +1142,22 @@
   font-weight: 600;
 }
 
+// Overbooked state — more roster rows are checked in (status "C")
+// than the resource's declared personnel count. Red-amber fill makes
+// the operator notice without being quite the color of a hard error.
+.board-card-roster-toggle.is-overbooked {
+  background: #d0021b;
+  border-color: #a50115 !important;
+  color: #fff;
+  &:hover,
+  &:focus,
+  &:active {
+    background: #b70118;
+    border-color: #a50115 !important;
+    color: #fff;
+  }
+}
+
 // + person icon — muted, pops blue on hover. Matches the "quiet
 // action" treatment used for the pencil edit and trash buttons.
 // Full border/outline/box-shadow override across every state because
