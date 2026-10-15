@@ -7,15 +7,25 @@ class Resource < ApplicationRecord
   # Inverse of Roster#promoted_resource — rosters on OTHER resources that
   # point here because this record was promoted off their roster. We
   # don't own those rows (the parent resource does), so just nullify the
-  # pointer on destroy. Without this, destroying a promoted resource
-  # (e.g. during incident teardown) raises FK violation on the
-  # fk_rails_0f4a109932 constraint since the referencing roster row
-  # survives on a different resource.
+  # pointer on destroy.
   has_many :promoted_from_rosters,
            class_name: 'Roster',
            foreign_key: :promoted_resource_id,
            dependent:   :nullify,
            inverse_of:  :promoted_resource
+
+  # Belt-and-suspenders: the dependent: :nullify above should handle it,
+  # but incident teardown has been observed to still hit the
+  # fk_rails_0f4a109932 FK violation on rosters.promoted_resource_id —
+  # likely because the destroy order between the owning resource and
+  # the referenced (promoted) resource races. This explicit callback
+  # fires an unconditional UPDATE before DELETE so the FK is clear
+  # regardless of order.
+  before_destroy :nullify_roster_promotion_refs
+
+  def nullify_roster_promotion_refs
+    Roster.where(promoted_resource_id: id).update_all(promoted_resource_id: nil)
+  end
   has_many :resource_events, -> { order(:created_at) }, dependent: :destroy
   # demob_notifications.resource_id carries a DB-level FK. Incident owns
   # these too, but Rails cascades dependents in declaration order and
