@@ -239,11 +239,32 @@
   </div>
 
   <%# 6 & 7 — zones (division/branch/group and remote camps). Same
-      block of fields, so they share a partial. %>
+      block of fields, so they share a partial. The section header is a
+      two-cell table matching the zone-grid's column widths so it reads
+      as the thead for every zone block below. Per-zone thead was
+      removed to keep the stack from repeating column labels. %>
   <div class="sheet-section med-section">
-    <div class="med-section-head">6. Division | Branch | Group — Area Location Capability</div>
+    <table class="med-zone-grid med-zone-grid-head">
+      <colgroup>
+        <col class="med-zone-grid-col-name">
+        <col class="med-zone-grid-col-label">
+        <col class="med-zone-grid-col-value">
+        <col class="med-zone-grid-col-x">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="med-zone-grid-name-head">6. Division | Branch | Group</th>
+          <th colspan="2" class="med-zone-grid-area-head">Area Location Capability</th>
+          <th class="col-x no-print"></th>
+        </tr>
+      </thead>
+    </table>
     <% @medical_plan.medical_divisions.each do |z| %>
-      <%= render 'zone_block', zone: z, show_poc: false %>
+      <%# Wrap in a div so page-break-inside / break-inside sticks —
+          Chrome / Safari often ignore break-inside on a bare <table>. %>
+      <div class="med-zone-wrap">
+        <%= render 'zone_block', zone: z, show_poc: false %>
+      </div>
     <% end %>
     <div class="no-print">
       <%= button_to '+ Add division',
@@ -254,9 +275,25 @@
   </div>
 
   <div class="sheet-section med-section">
-    <div class="med-section-head">7. Remote Camp Locations</div>
+    <table class="med-zone-grid med-zone-grid-head">
+      <colgroup>
+        <col class="med-zone-grid-col-name">
+        <col class="med-zone-grid-col-label">
+        <col class="med-zone-grid-col-value">
+        <col class="med-zone-grid-col-x">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="med-zone-grid-name-head">7. Name &amp; Location</th>
+          <th colspan="2" class="med-zone-grid-area-head">Remote Camp Locations</th>
+          <th class="col-x no-print"></th>
+        </tr>
+      </thead>
+    </table>
     <% @medical_plan.medical_camps.each do |z| %>
-      <%= render 'zone_block', zone: z, show_poc: true %>
+      <div class="med-zone-wrap">
+        <%= render 'zone_block', zone: z, show_poc: true %>
+      </div>
     <% end %>
     <div class="no-print">
       <%= button_to '+ Add camp',

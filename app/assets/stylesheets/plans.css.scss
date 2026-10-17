@@ -1528,17 +1528,35 @@ img#add-freqs-button {
     input:first-of-type { text-align: right; }
     .med-op-period-sep  { flex: 0 0 auto; color: #6b778c; }
   }
+  // Section wrapper — no inner padding so tables run edge-to-edge
+  // inside the sheet border, matching the printed 206 layout. The
+  // gray section banner sits flush against the top border.
   .med-section {
     border-top: 1px solid #000;
-    padding: 6px 8px 10px;
+    padding: 0;
   }
   .med-section-head {
     font-weight: 700;
-    background: #eceff1;
+    background: #dcdcdc;
     padding: 4px 6px;
-    margin: -6px -8px 6px;
-    border-bottom: 1px solid #000;
+    margin: 0;
+    // No bottom border here — the table immediately below provides its
+    // own top border via the cell `border: 1px solid #000`. With both,
+    // the lines stacked into a 2px double.
     font-size: 11px;
+  }
+
+  // With sections running edge-to-edge, each inner table's own
+  // left/right borders would double up against the sheet border.
+  // Drop just those side edges — internal column borders between
+  // cells are kept, and bottom borders are retained so each table
+  // closes with its own bottom rule before the next section's top
+  // border.
+  .med-table,
+  .med-zone-grid,
+  .med-footer {
+    tr > :first-child { border-left:  0; }
+    tr > :last-child  { border-right: 0; }
   }
   .med-table {
     width: 100%;
@@ -1562,7 +1580,7 @@ img#add-freqs-button {
       textarea { width: 100%; box-sizing: border-box; }
     }
     th {
-      background: #f4f5f7;
+      background: #fff;
       font-weight: 600;
       text-align: center;
     }
@@ -1600,10 +1618,30 @@ img#add-freqs-button {
   // centered name on the left spans the full block height, with a
   // label / value grid on the right stacking EMS Responders,
   // Equipment, Channel, Helispots, Ground + Air Response Time rows.
+  // .med-zone-grid-head is the standalone two-cell banner that sits
+  // once at the top of section 6 / 7, acting as the shared column
+  // header for every zone block below. Nothing extra to style — the
+  // existing `thead th` rule paints the gray fill — but we zero the
+  // top margin so it hugs the section's top border, and skip the
+  // top-border on every zone block that follows so stacked tables
+  // don't double up a 2px separator line between the head and the
+  // first zone, or between consecutive zones.
+  .med-zone-grid-head { margin: 0 !important; }
+  // Each zone block is wrapped in .med-zone-wrap so browsers honor
+  // break-inside: avoid in print (they often ignore it on raw <table>).
+  // The wrapper also receives the -1px top margin that overlaps the
+  // previous element's bottom border, giving a shared single-pixel
+  // separator between stacked zones (head→wrap, wrap→wrap).
+  .med-zone-wrap { break-inside: avoid; page-break-inside: avoid; }
+  .med-section > .med-zone-grid-head + .med-zone-wrap,
+  .med-section > .med-zone-wrap + .med-zone-wrap {
+    margin-top: -1px;
+  }
+
   .med-zone-grid {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 0;
     font-size: 10px;
     table-layout: fixed;
     th, td {
@@ -1617,7 +1655,7 @@ img#add-freqs-button {
       box-sizing: border-box;
     }
     thead th {
-      background: #f4f5f7;
+      background: #dcdcdc;
       font-weight: 700;
       text-align: center;
       padding: 6px 8px;
@@ -1676,7 +1714,7 @@ img#add-freqs-button {
     }
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 0;
     table-layout: fixed;
     th, td {
       border: 1px solid #000;
@@ -1685,7 +1723,7 @@ img#add-freqs-button {
       vertical-align: middle;
     }
     .med-footer-head {
-      background: #eceff1;
+      background: #dcdcdc;
       color: #172b4d;
       font-weight: 700;
       font-size: 10px;
@@ -1697,7 +1735,10 @@ img#add-freqs-button {
     .med-footer-center   { text-align: center; }
   }
 
-  .med-add-btn   { margin-top: 6px; }
+  // Give the "+ Add …" buttons a little breathing room — otherwise
+  // they sit flush against the sheet's left border + the next
+  // section's top border now that sections run edge-to-edge.
+  .med-add-btn   { margin: 6px 0 6px 8px; }
   .med-row-delete {
     display: inline-block;
     width: 20px; height: 20px; line-height: 18px;
@@ -1723,6 +1764,19 @@ img#add-freqs-button {
 // afterprint. Strips app chrome (tabrow, add-row buttons, delete
 // icons, shadows) so the printed page carries just the 206 content.
 @media print {
+  // Browsers add their own padding to <body> / Bootstrap adds padding
+  // to the container wrappers around the sheet — all invisible on
+  // screen but when printing, that padding pushes the sheet down from
+  // the top of the printable area. Zero it so the sheet starts at the
+  // @page margin exactly.
+  body.printing-medical-206,
+  body.printing-medical-206 .container,
+  body.printing-medical-206 .container > .col-xs-12,
+  body.printing-medical-206 .container > .col-xs-12 > .row {
+    margin:  0 !important;
+    padding: 0 !important;
+  }
+
   body.printing-medical-206 {
     .plan-panel-head,
     .masking-tape,
@@ -1735,11 +1789,14 @@ img#add-freqs-button {
     }
     .ics-206-sheet {
       box-shadow: none !important;
-      // Keep the sheet's 1px frame on print so the outer rectangle
-      // containing all sections is drawn — without it, section
-      // headers run flush to the paper edge and the sheet reads as
-      // a loose stack of tables rather than one bounded form.
-      border: 1px solid #000 !important;
+      // Drop the sheet's own border in print. The sheet spans
+      // multiple pages, and when one of its sections pushed a child
+      // to the next page via break-inside:avoid, the sheet's left +
+      // right borders continued down the blank bottom area of the
+      // previous page — appearing as phantom column walls. Each
+      // inner table already has its own borders, so the sheet frame
+      // is redundant here.
+      border: 0 !important;
       margin: 0 auto !important;
       width: 100% !important;
       min-height: 0 !important;
@@ -1777,7 +1834,12 @@ img#add-freqs-button {
       .med-section-head,
       .med-footer-head,
       .med-zone-grid thead th {
-        background-color: #eceff1 !important;
+        background-color: #dcdcdc !important;
+      }
+      // Per-table column headers (sections 3/4/5) are white on screen
+      // and stay white in print — no gray fill override here.
+      .med-table th {
+        background-color: #fff !important;
       }
 
       // best_in_place renders the place_holder ("—") as literal text
@@ -1788,6 +1850,97 @@ img#add-freqs-button {
       .best_in_place:not([data-bip-value]) {
         visibility: hidden;
       }
+
+      // Collapse the per-section padding on print so each table runs
+      // edge to edge inside the sheet border — the 6/8/10px gaps
+      // around each section look fine on screen but add visual noise
+      // + wasted vertical space on paper. The .med-section-head's
+      // negative margins (-6px -8px 6px) which previously fought the
+      // padding are also zeroed so the gray banner still fills the
+      // row cleanly.
+      .med-section {
+        padding: 0 !important;
+        // Drop both the top AND bottom border on the wrapper. The
+        // outer .sheet-section rule gives every section a 1px bottom
+        // border which, combined with the inner .med-table's own
+        // last-row bottom border, drew two visible lines above every
+        // header below section 3. Let the inner table's border be
+        // the single separator between sections.
+        border-top:    0 !important;
+        border-bottom: 0 !important;
+      }
+      .med-section-head {
+        // Match the on-screen zero-margin, no-bottom-border look so
+        // the gray banner butts right up to the table below.
+        margin: 0 !important;
+        border-bottom: 0 !important;
+      }
+
+      // Force every bit of text on the sheet to pure black. Default
+      // color was #172b4d (navy) which prints as a muted dark blue
+      // on some devices; user wants a plain-black 206.
+      color: #000 !important;
+      *, *::before, *::after {
+        color: #000 !important;
+      }
+
+      // On screen we drop the left + right outer borders on each
+      // table's first/last cells because the sheet frame provides
+      // those edges — but in print the sheet frame is gone, so we
+      // need to restore those cells' side borders. The !important
+      // overrides the on-screen `.med-table / .med-zone-grid /
+      // .med-footer tr > :first-child/:last-child { border: 0 }`.
+      .med-table,
+      .med-zone-grid,
+      .med-footer {
+        tr > :first-child { border-left:  1px solid #000 !important; }
+        tr > :last-child  { border-right: 1px solid #000 !important; }
+      }
+
+      // Targeted outer-edge borders in print. The sheet frame is
+      // gone, so sections at the far left / right need their own
+      // outer side borders. Minimal set:
+      //   - Section 1 (incident name) → left border on its label + value
+      //   - Section 2 (operational period) → right border on its label + value
+      //   - Sections 3-5 section banners → left + right borders
+      .sheet-header-left > .sheet-header-label,
+      .sheet-header-left > .sheet-header-value {
+        border-left: 1px solid #000 !important;
+      }
+      .sheet-header-right > .sheet-header-label,
+      .sheet-header-right > .sheet-header-value {
+        border-right: 1px solid #000 !important;
+      }
+      .med-section-head {
+        border-left:  1px solid #000 !important;
+        border-right: 1px solid #000 !important;
+      }
+
+      // Section 6 / 7 head is a separate <table>, sitting above the
+      // first zone block's table. Its right border rendered ~2px
+      // past the right edge of the body tables below (sub-pixel
+      // rendering difference between the two tables' box models,
+      // compounded by the border-collapse +  <colgroup> col widths).
+      // Shrink the head's width via calc() so its right border lands
+      // on the same column as the body table's below.
+      .med-zone-grid-head {
+        width: calc(100% - 1px) !important;
+      }
+      // Still have the hidden .col-x issue — its matching cell is
+      // display:none so the real visible last cell needs its right
+      // border restored (and the invisible col-x cell shouldn't
+      // leave a reserved border either). Use the :has(+ .col-x)
+      // helper so the actual visible-last cell gets a right border.
+      .med-table tr > *:has(+ .col-x),
+      .med-zone-grid tr > *:has(+ .col-x) {
+        border-right: 1px solid #000 !important;
+      }
+
+      // Belt-and-suspenders: reiterate the break-inside:avoid on the
+      // wrapper in print mode too (defined on-screen above). The
+      // wrapper is what the browser actually honors — raw <table>s
+      // often get split regardless.
+      .med-zone-wrap { break-inside: avoid !important; page-break-inside: avoid !important; }
       // Native text inputs show their placeholder attribute only in
       // the editing UI, but a stray stored "—" would still print.
       // No action needed for those — browsers don't print the

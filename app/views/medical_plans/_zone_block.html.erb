@@ -17,13 +17,9 @@
     <col class="med-zone-grid-col-value">
     <col class="med-zone-grid-col-x">
   </colgroup>
-  <thead>
-    <tr>
-      <th class="med-zone-grid-name-head"><%= show_poc ? 'Name & Location' : 'Division | Branch | Group' %></th>
-      <th colspan="2" class="med-zone-grid-area-head">Area Location Capability</th>
-      <th class="col-x no-print"></th>
-    </tr>
-  </thead>
+  <%# No per-zone <thead> — the parent section renders one
+      .med-zone-grid-head table above the zone stack whose two cells
+      visually act as the column headers for every zone block below. %>
   <tbody>
     <% rows = []
        rows << [:poc,              'Point of Contact:']        if show_poc
