@@ -1126,7 +1126,7 @@ img#add-freqs-button {
   // ── 1. Incident Name + 2. Operational Period + Date/Time From/To ──
   > .sheet-header {
     flex: none;
-    height: 78px;   // 30px op-period + 48px date-cell (label + value)
+    height: 60px;   // 30px op-period + 30px date-cell (label + value)
     display: flex;
     padding: 0;
 
@@ -1502,3 +1502,296 @@ img#add-freqs-button {
 }
 
 
+
+/* ─── ICS 206 WF (Medical Plan) ───────────────────────────────── */
+.ics-206-sheet {
+  // Override the shared .ics-form-sheet single-page sizing. The 206
+  // has repeatable sections (3-7) that can grow with each new row,
+  // and section 7 was being clipped by the parent's fixed 10in height
+  // + overflow:hidden. Let it grow naturally to fit all content.
+  height: auto;
+  min-height: 10in;
+  overflow: visible;
+
+  // Section 2 operational-period layout — two inline flatpickr fields
+  // (from – to) separated by a hyphen. The inputs themselves inherit
+  // the fully borderless .sheet-dt-picker styling defined earlier
+  // in this file; we just handle layout here.
+  .med-op-period {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    input { flex: 1 1 auto; min-width: 0; }
+    // Right-align the "from" input so its text hugs the hyphen; left-
+    // align the "to" input so its text starts right after the hyphen.
+    // Removes the visual gap caused by both fields defaulting left.
+    input:first-of-type { text-align: right; }
+    .med-op-period-sep  { flex: 0 0 auto; color: #6b778c; }
+  }
+  .med-section {
+    border-top: 1px solid #000;
+    padding: 6px 8px 10px;
+  }
+  .med-section-head {
+    font-weight: 700;
+    background: #eceff1;
+    padding: 4px 6px;
+    margin: -6px -8px 6px;
+    border-bottom: 1px solid #000;
+    font-size: 11px;
+  }
+  .med-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 10px;
+    th, td {
+      border: 1px solid #000;
+      padding: 3px 5px;
+      vertical-align: top;
+      word-break: break-word;
+
+      // simple_format wraps saved values in <p> tags with a default
+      // 1em bottom margin → every textarea cell gets a trailing blank
+      // line. Zero it out so sections 3/4/5 cells hug their content.
+      p { margin: 0; }
+
+      // Textareas opened via best_in_place inline edit need to fill
+      // the cell width so long content (e.g. aircraft capability
+      // descriptions) doesn't shrink into the browser's narrow default.
+      textarea { width: 100%; box-sizing: border-box; }
+    }
+    th {
+      background: #f4f5f7;
+      font-weight: 600;
+      text-align: center;
+    }
+    .col-als        { width: 48px; text-align: center; }
+    .col-x          { width: 28px; text-align: center; }
+    .col-phone-free { text-align: center; }
+  }
+
+  // Drag-to-resize columns on tables marked .med-resizable-table. Each
+  // header gets a 6px wide invisible grabber on its right edge; the
+  // JS below listens for pointerdown on these and updates the th's
+  // inline width style. localStorage persists widths per table.
+  .med-resizable-table th {
+    position: relative;
+    .col-resize {
+      position: absolute;
+      top: 0;
+      right: -3px;
+      width: 6px;
+      height: 100%;
+      cursor: col-resize;
+      user-select: none;
+      z-index: 2;
+      &:hover,
+      &.is-dragging { background: rgba(76, 154, 255, 0.35); }
+    }
+    .muted   { color: #6b778c; font-size: 11px; }
+  }
+  .med-latlong {
+    label { display: inline-block; width: 36px; color: #6b778c; font-size: 11px; }
+    div   { line-height: 1.5; }
+  }
+
+  // Section 6 / 7 zone block — "Medical Unit Leader" layout: a large
+  // centered name on the left spans the full block height, with a
+  // label / value grid on the right stacking EMS Responders,
+  // Equipment, Channel, Helispots, Ground + Air Response Time rows.
+  .med-zone-grid {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 10px;
+    table-layout: fixed;
+    th, td {
+      border: 1px solid #000;
+      padding: 4px 8px;
+      vertical-align: middle;
+      // Force border-box so the `width:` rules on label/name columns
+      // mean the full rendered cell width, not the content-box width.
+      // Without this, 240px + 8+8 padding + 2 border rendered as 258px
+      // and no amount of `!important` on the width would change it.
+      box-sizing: border-box;
+    }
+    thead th {
+      background: #f4f5f7;
+      font-weight: 700;
+      text-align: center;
+      padding: 6px 8px;
+    }
+    // ── Column widths — set on <col> elements inside <colgroup>.
+    // These are the single source of truth for the four columns'
+    // widths because the thead's `colspan=2` cell makes browsers
+    // ignore `width:` on individual td/th cells here. Tweak these
+    // numbers to resize columns.
+    .med-zone-grid-col-name  { width: 22%;  }
+    .med-zone-grid-col-label { width: 25%; }
+    .med-zone-grid-col-value { width: auto; }
+    .med-zone-grid-col-x     { width: 28px; }
+
+    .med-zone-grid-name-head { font-size: 10px; }
+
+    .med-zone-grid-name {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      vertical-align: middle;
+      padding: 10px 8px;
+    }
+    .med-zone-grid-label {
+      background: #fafbfc;
+      font-weight: 600;
+      padding: 4px 8px;
+      vertical-align: top;
+    }
+    .med-zone-grid-value {
+      padding: 4px 8px;
+      vertical-align: top;
+      word-break: break-word;
+      // simple_format wraps the stored value in <p> tags, and <p>'s
+      // default 1em bottom margin leaves a visible blank line after
+      // every cell's text. Zero it out so the cell hugs its content.
+      p { margin: 0; }
+      textarea {
+        width: 100%;
+      }
+      input[type="text"] {
+        width: 100%;
+      }
+    }
+    .col-x { text-align: center; vertical-align: middle; }
+  }
+
+  // Section 8-11 footer — matches sections 6/7's style: light-gray
+  // headers with dark text, shared borders between cells, value row
+  // underneath. Table (not grid) so the four cells share clean cell
+  // borders without needing a gap workaround.
+  .med-footer {
+    input[type="text"] {
+      width: 100%;
+      border: none !important;
+    }
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    table-layout: fixed;
+    th, td {
+      border: 1px solid #000;
+      padding: 6px 8px;
+      box-sizing: border-box;
+      vertical-align: middle;
+    }
+    .med-footer-head {
+      background: #eceff1;
+      color: #172b4d;
+      font-weight: 700;
+      font-size: 10px;
+      text-align: left;
+      padding: 6px 10px;
+    }
+    .med-footer-col-wide { width: auto; }
+    .med-footer-col-date { width: 20%;  }
+    .med-footer-center   { text-align: center; }
+  }
+
+  .med-add-btn   { margin-top: 6px; }
+  .med-row-delete {
+    display: inline-block;
+    width: 20px; height: 20px; line-height: 18px;
+    text-align: center;
+    color: #97a0af;
+    font-size: 16px;
+    border-radius: 3px;
+    text-decoration: none;
+    &:hover { color: #d0021b; background: #fdecee; text-decoration: none; }
+  }
+}
+
+// Print button container — right-aligned under the sheet, hidden in
+// the printed output via the .no-print class carried on the wrapper.
+.med-print-actions {
+  width: 7.5in;
+  margin: 12px auto 24px;
+  text-align: right;
+}
+
+// Scoped print rules for the 206 sheet. Triggered by the JS adding
+// body.printing-medical-206 before window.print() and removing it on
+// afterprint. Strips app chrome (tabrow, add-row buttons, delete
+// icons, shadows) so the printed page carries just the 206 content.
+@media print {
+  body.printing-medical-206 {
+    .plan-panel-head,
+    .masking-tape,
+    .no-print,
+    .med-add-btn,
+    .med-row-delete,
+    .col-x,
+    .col-resize {
+      display: none !important;
+    }
+    .ics-206-sheet {
+      box-shadow: none !important;
+      // Keep the sheet's 1px frame on print so the outer rectangle
+      // containing all sections is drawn — without it, section
+      // headers run flush to the paper edge and the sheet reads as
+      // a loose stack of tables rather than one bounded form.
+      border: 1px solid #000 !important;
+      margin: 0 auto !important;
+      width: 100% !important;
+      min-height: 0 !important;
+
+      // The delete-column cells are hidden via `display:none` above,
+      // but the matching <col> in <colgroup> still reserves its
+      // width in a table-layout:fixed table — leaving a gap on the
+      // right where the column used to be. Zero out those cols on
+      // print so the value column expands to fill the row width.
+      .med-zone-grid-col-x,
+      .med-table .col-x {
+        width: 0 !important;
+      }
+
+      // Browsers strip background colors on print by default to save
+      // ink, which was leaving the section headers ("3. Ambulance
+      // Services", "6. Division | ...", footer labels, table <th>s)
+      // all showing with plain text and no gray banner. Force every
+      // element in the sheet to render its background on paper too.
+      *,
+      *::before,
+      *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust:         exact !important;
+        color-adjust:               exact !important;
+      }
+
+      // print-color-adjust tells the browser to render the color we
+      // chose, but if a user-agent / Bootstrap print default resets
+      // background-color on these elements, there's nothing to render.
+      // Re-assert the gray fill with !important so section 3-7 heads,
+      // the 8-11 footer heads, and the zone-grid thead cells all
+      // print with their banner tint. (section 1's .gray-row already
+      // carries !important, which is why it was the only one working.)
+      .med-section-head,
+      .med-footer-head,
+      .med-zone-grid thead th {
+        background-color: #eceff1 !important;
+      }
+
+      // best_in_place renders the place_holder ("—") as literal text
+      // inside the span when the field is empty. The best_in_place
+      // helper only emits data-bip-value when the stored value is
+      // present, so :not([data-bip-value]) matches empty fields —
+      // hide their contents in print so blank cells really print blank.
+      .best_in_place:not([data-bip-value]) {
+        visibility: hidden;
+      }
+      // Native text inputs show their placeholder attribute only in
+      // the editing UI, but a stray stored "—" would still print.
+      // No action needed for those — browsers don't print the
+      // placeholder attribute itself.
+    }
+  }
+}

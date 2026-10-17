@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_15_000000) do
+ActiveRecord::Schema.define(version: 2026_10_16_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -484,6 +484,78 @@ ActiveRecord::Schema.define(version: 2026_10_15_000000) do
     t.index ["token"], name: "index_isuite_import_stagings_on_token", unique: true
   end
 
+  create_table "medical_air_ambulances", force: :cascade do |t|
+    t.bigint "medical_plan_id", null: false
+    t.string "name"
+    t.string "phone"
+    t.string "aircraft_capability"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["medical_plan_id"], name: "index_medical_air_ambulances_on_medical_plan_id"
+  end
+
+  create_table "medical_ambulances", force: :cascade do |t|
+    t.bigint "medical_plan_id", null: false
+    t.string "name"
+    t.string "address"
+    t.string "phone_ems_freq"
+    t.boolean "als", default: false, null: false
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["medical_plan_id"], name: "index_medical_ambulances_on_medical_plan_id"
+  end
+
+  create_table "medical_hospitals", force: :cascade do |t|
+    t.bigint "medical_plan_id", null: false
+    t.string "name"
+    t.string "address"
+    t.string "lat"
+    t.string "long"
+    t.string "vhf"
+    t.string "travel_air"
+    t.string "travel_gnd"
+    t.string "phone"
+    t.boolean "helipad", default: false, null: false
+    t.string "level_of_care"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["medical_plan_id"], name: "index_medical_hospitals_on_medical_plan_id"
+  end
+
+  create_table "medical_plans", force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.string "prepared_by"
+    t.string "prepared_at"
+    t.string "reviewed_by"
+    t.string "reviewed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["plan_id"], name: "index_medical_plans_on_plan_id", unique: true
+  end
+
+  create_table "medical_zones", force: :cascade do |t|
+    t.bigint "medical_plan_id", null: false
+    t.integer "kind", default: 0, null: false
+    t.string "name"
+    t.string "poc"
+    t.text "ems_responders"
+    t.text "equipment"
+    t.string "medical_channel"
+    t.string "eta_air"
+    t.string "eta_ground"
+    t.string "helispot"
+    t.string "helispot_lat"
+    t.string "helispot_long"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["medical_plan_id", "kind", "position"], name: "idx_med_zones_plan_kind_pos"
+    t.index ["medical_plan_id"], name: "index_medical_zones_on_medical_plan_id"
+  end
+
   create_table "objectives", force: :cascade do |t|
     t.integer "plan_id"
     t.string "description"
@@ -804,6 +876,11 @@ ActiveRecord::Schema.define(version: 2026_10_15_000000) do
   add_foreign_key "financial_codes", "incidents"
   add_foreign_key "incident_events", "incidents"
   add_foreign_key "incident_events", "users", on_delete: :nullify
+  add_foreign_key "medical_air_ambulances", "medical_plans"
+  add_foreign_key "medical_ambulances", "medical_plans"
+  add_foreign_key "medical_hospitals", "medical_plans"
+  add_foreign_key "medical_plans", "plans"
+  add_foreign_key "medical_zones", "medical_plans"
   add_foreign_key "ops_215_lines", "incidents"
   add_foreign_key "ops_215_lines", "org_units"
   add_foreign_key "org_unit_assignments", "org_units"

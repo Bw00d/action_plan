@@ -1,0 +1,388 @@
+<%= content_for :title, "206" %>
+
+<%# Tabs — app chrome. %>
+<div class="container">
+  <div class="col-xs-12 col-lg-8 center-block">
+    <div class="row">
+      <div class="plan-panel-head">
+        <ul class="tabrow">
+          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+          <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
+          <li><%= link_to "202", "../#{@plan.id}/202" %></li>
+          <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+          <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+          <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
+          <li><%= link_to "205A", incident_phone_205a_entries_path(@incident) %></li>
+          <li class="selected"><%= link_to "206", incident_plan_medical_plan_path(@incident, @plan) %></li>
+          <li><%= link_to "220", '#' %></li>
+          <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
+        </ul>
+      </div>
+      <div class="masking-tape"></div>
+    </div>
+  </div>
+</div>
+
+<%# ─── ICS 206 WF sheet ─── Follows the same wrapper as the 202 /
+    203 so the printed look lines up. Each section 3–7 is a tabular
+    block with inline best_in_place edits and an "+ Add row" button;
+    the trash icon at the right of each row removes that entry. %>
+<div class="ics-form-sheet ics-206-sheet" data-plan-id="<%= @plan.id %>">
+
+  <div class="sheet-section sheet-title">
+    MEDICAL PLAN (ICS 206 WF)
+  </div>
+
+  <%# 1 & 2 — single-row header. %>
+  <div class="sheet-section sheet-header">
+    <div class="sheet-header-left">
+      <div class="sheet-header-label gray-row strong">1. Incident Name:</div>
+      <div class="sheet-header-value"><%= @incident.name %></div>
+    </div>
+    <div class="sheet-header-right">
+      <div class="sheet-header-label gray-row strong">2. Operational Period</div>
+      <%# Same inline date/time pickers as the 204 — flatpickr via the
+          .op-dt-picker class in assignments.js auto-saves to the plan
+          on change. Two inputs separated by a hyphen, mirroring the
+          "from – to" format on the printed form. %>
+      <div class="sheet-header-value med-op-period">
+        <input type="text"
+               class="op-dt-picker sheet-dt-picker"
+               data-url="<%= incident_plan_path(@incident, @plan) %>"
+               data-field="plan[ops_period_from]"
+               value="<%= @plan.ops_period_from&.strftime('%m/%d/%Y %H:%M') %>"
+               placeholder="MM/DD/YYYY HH:MM">
+        <span class="med-op-period-sep">&ndash;</span>
+        <input type="text"
+               class="op-dt-picker sheet-dt-picker"
+               data-url="<%= incident_plan_path(@incident, @plan) %>"
+               data-field="plan[ops_period_to]"
+               value="<%= @plan.ops_period_to&.strftime('%m/%d/%Y %H:%M') %>"
+               placeholder="MM/DD/YYYY HH:MM">
+      </div>
+    </div>
+  </div>
+
+  <%# 3 — Ambulance Services. %>
+  <div class="sheet-section med-section">
+    <div class="med-section-head">3. Ambulance Services</div>
+    <table class="med-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Complete Address</th>
+          <th>Phone &amp; EMS Frequency</th>
+          <th class="col-als">ALS</th>
+          <th class="col-x no-print"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @medical_plan.medical_ambulances.each do |amb| %>
+          <tr>
+            <td><%= best_in_place amb, :name,           as: :input, place_holder: '—' %></td>
+            <td><%= best_in_place amb, :address,        as: :input, place_holder: '—' %></td>
+            <%# Free text so operators can write things like
+                "911 / (503) 555-1212" verbatim. data-no-phone-format
+                opts the cell out of phone_format.js, which otherwise
+                matches any input whose name contains "phone". %>
+            <td class="col-phone-free" data-no-phone-format>
+              <%# textarea + simple_format so operators can split the
+                  cell across lines (e.g. 911 on one line, dispatch
+                  number on another). %>
+              <%= best_in_place amb, :phone_ems_freq,
+                                as: :textarea,
+                                place_holder: '—',
+                                display_with: :simple_format %>
+            </td>
+            <td class="col-als">
+              <%# display_with Proc runs on both the initial render AND
+                  the AJAX save response, so clicking the checkbox
+                  updates the "Yes" / "No" label in place without a
+                  page refresh. %>
+              <%= best_in_place amb, :als,
+                                as: :checkbox,
+                                collection: ['No', 'Yes'],
+                                display_with: ->(v) { v ? 'Yes' : 'No' } %>
+            </td>
+            <td class="col-x no-print">
+              <%= link_to medical_ambulance_path(amb),
+                          method: :delete,
+                          data: { confirm: 'Remove this ambulance?' },
+                          class: 'med-row-delete',
+                          title: 'Remove row' do %>
+                &times;
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="no-print">
+      <%= button_to '+ Add ambulance',
+                    incident_plan_medical_plan_ambulances_path(@incident, @plan),
+                    method: :post,
+                    class: 'btn btn-default btn-xs med-add-btn' %>
+    </div>
+  </div>
+
+  <%# 4 — Air Ambulance Services. %>
+  <div class="sheet-section med-section">
+    <div class="med-section-head">4. Air Ambulance Services</div>
+    <table class="med-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Type of Aircraft &amp; Capability</th>
+          <th class="col-x no-print"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @medical_plan.medical_air_ambulances.each do |a| %>
+          <tr>
+            <td><%= best_in_place a, :name,                as: :input, place_holder: '—' %></td>
+            <td data-no-phone-format>
+              <%= best_in_place a, :phone, as: :input, place_holder: '—' %>
+            </td>
+            <td><%= best_in_place a, :aircraft_capability, as: :textarea, place_holder: '—' %></td>
+            <td class="col-x no-print">
+              <%= link_to medical_air_ambulance_path(a),
+                          method: :delete,
+                          data: { confirm: 'Remove this air ambulance?' },
+                          class: 'med-row-delete',
+                          title: 'Remove row' do %>&times;<% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="no-print">
+      <%= button_to '+ Add air ambulance',
+                    incident_plan_medical_plan_air_ambulances_path(@incident, @plan),
+                    method: :post,
+                    class: 'btn btn-default btn-xs med-add-btn' %>
+    </div>
+  </div>
+
+  <%# 5 — Hospitals. %>
+  <div class="sheet-section med-section">
+    <div class="med-section-head">5. Hospitals</div>
+    <%# Resizable columns — drag the handle on the right edge of any
+        header cell to adjust. Widths persist per browser in
+        localStorage under the key below. %>
+    <table class="med-table med-resizable-table"
+           data-resize-key="med-206-hospitals">
+      <thead>
+        <tr>
+          <th data-col-key="name"    style="width:28%;">Name &amp; Address<span class="col-resize"></span></th>
+          <th data-col-key="latlong" style="width:18%;">Lat / Long / VHF<span class="col-resize"></span></th>
+          <th data-col-key="air"     style="width:6%;" >Air<span class="col-resize"></span></th>
+          <th data-col-key="gnd"     style="width:6%;" >Gnd<span class="col-resize"></span></th>
+          <th data-col-key="phone"   style="width:13%;">Phone<span class="col-resize"></span></th>
+          <th data-col-key="helipad" style="width:7%;" >Helipad<span class="col-resize"></span></th>
+          <th data-col-key="loc"     style="width:17%;">Level of Care<span class="col-resize"></span></th>
+          <th class="col-x no-print" style="width:4%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @medical_plan.medical_hospitals.each do |h| %>
+          <tr>
+            <td>
+              <%# textarea + simple_format so a long hospital name or
+                  multi-line street / city / zip address wraps and
+                  keeps line breaks between save and reload. %>
+              <div>
+                <%= best_in_place h, :name,
+                                  as: :textarea,
+                                  place_holder: 'Name',
+                                  display_with: :simple_format %>
+              </div>
+              <div class="muted">
+                <%= best_in_place h, :address,
+                                  as: :textarea,
+                                  place_holder: 'Address',
+                                  display_with: :simple_format %>
+              </div>
+            </td>
+            <td class="med-latlong">
+              <div><label>Lat</label>  <%= best_in_place h, :lat,  as: :input, place_holder: '—' %></div>
+              <div><label>Long</label> <%= best_in_place h, :long, as: :input, place_holder: '—' %></div>
+              <div><label>VHF</label>  <%= best_in_place h, :vhf,  as: :input, place_holder: '—' %></div>
+            </td>
+            <td class="text-center"><%= best_in_place h, :travel_air,    as: :input, place_holder: '—' %></td>
+            <td class="text-center"><%= best_in_place h, :travel_gnd,    as: :input, place_holder: '—' %></td>
+            <td class="text-center"><%= best_in_place h, :phone,         as: :input, place_holder: '—' %></td>
+            <td class="text-center">
+              <%= best_in_place h, :helipad,
+                                as: :checkbox,
+                                collection: ['No', 'Yes'],
+                                display_with: ->(v) { v ? 'Yes' : 'No' } %>
+            </td>
+            <td class="text-center"><%= best_in_place h, :level_of_care, as: :input, place_holder: '—' %></td>
+            <td class="col-x no-print">
+              <%= link_to medical_hospital_path(h),
+                          method: :delete,
+                          data: { confirm: 'Remove this hospital?' },
+                          class: 'med-row-delete',
+                          title: 'Remove row' do %>&times;<% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="no-print">
+      <%= button_to '+ Add hospital',
+                    incident_plan_medical_plan_hospitals_path(@incident, @plan),
+                    method: :post,
+                    class: 'btn btn-default btn-xs med-add-btn' %>
+    </div>
+  </div>
+
+  <%# 6 & 7 — zones (division/branch/group and remote camps). Same
+      block of fields, so they share a partial. %>
+  <div class="sheet-section med-section">
+    <div class="med-section-head">6. Division | Branch | Group — Area Location Capability</div>
+    <% @medical_plan.medical_divisions.each do |z| %>
+      <%= render 'zone_block', zone: z, show_poc: false %>
+    <% end %>
+    <div class="no-print">
+      <%= button_to '+ Add division',
+                    incident_plan_medical_plan_zones_path(@incident, @plan, kind: 'division'),
+                    method: :post,
+                    class: 'btn btn-default btn-xs med-add-btn' %>
+    </div>
+  </div>
+
+  <div class="sheet-section med-section">
+    <div class="med-section-head">7. Remote Camp Locations</div>
+    <% @medical_plan.medical_camps.each do |z| %>
+      <%= render 'zone_block', zone: z, show_poc: true %>
+    <% end %>
+    <div class="no-print">
+      <%= button_to '+ Add camp',
+                    incident_plan_medical_plan_zones_path(@incident, @plan, kind: 'camp'),
+                    method: :post,
+                    class: 'btn btn-default btn-xs med-add-btn' %>
+    </div>
+  </div>
+
+  <script>
+    // Drag-to-resize column handles on any .med-resizable-table. On
+    // mousedown we snapshot the starting width + x; mousemove updates
+    // the th's inline width in px; mouseup commits to localStorage so
+    // the user's layout survives reloads. Keyed by the table's
+    // data-resize-key + each column's data-col-key.
+    (function () {
+      var storageKey = function (table, colKey) {
+        return 'medPlanCol:' + table.dataset.resizeKey + ':' + colKey;
+      };
+      // Apply any saved widths on load.
+      document.querySelectorAll('.med-resizable-table').forEach(function (table) {
+        table.querySelectorAll('th[data-col-key]').forEach(function (th) {
+          try {
+            var saved = localStorage.getItem(storageKey(table, th.dataset.colKey));
+            if (saved) th.style.width = saved;
+          } catch (e) { /* localStorage blocked — fall through to defaults */ }
+        });
+      });
+      // Drag logic.
+      document.addEventListener('mousedown', function (e) {
+        if (!e.target.classList.contains('col-resize')) return;
+        var handle   = e.target;
+        var th       = handle.parentElement;
+        var table    = th.closest('.med-resizable-table');
+        if (!table) return;
+        var startX   = e.clientX;
+        var startW   = th.getBoundingClientRect().width;
+        handle.classList.add('is-dragging');
+        document.body.style.cursor = 'col-resize';
+
+        function onMove(ev) {
+          var newW = Math.max(40, startW + (ev.clientX - startX));
+          th.style.width = newW + 'px';
+        }
+        function onUp() {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          handle.classList.remove('is-dragging');
+          document.body.style.cursor = '';
+          try {
+            localStorage.setItem(storageKey(table, th.dataset.colKey), th.style.width);
+          } catch (e) { /* ignore */ }
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+        e.preventDefault();
+      });
+    })();
+  </script>
+
+  <%# 8-11 — footer. Table matches the look of sections 6/7: light-
+      gray header cells with dark text, shared borders between cells,
+      value cells underneath for inline editing. %>
+  <table class="med-footer">
+    <thead>
+      <tr>
+        <th class="med-footer-head med-footer-col-wide">8. Prepared By (Medical Unit Leader)</th>
+        <th class="med-footer-head med-footer-col-date">9. Date/Time</th>
+        <th class="med-footer-head med-footer-col-wide">10. Reviewed By (Safety Officer)</th>
+        <th class="med-footer-head med-footer-col-date">11. Date/Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= best_in_place @medical_plan, :prepared_by, as: :input, place_holder: '—' %></td>
+        <%# Flatpickr-backed inputs — same .op-dt-picker + .sheet-dt-picker
+            classes used by section 2 and the 204, so the picker init in
+            assignments.js wires them up and the borderless styling
+            applies. autoSave sends a PATCH to medical_plan_path with
+            medical_plan[<field>] = value. %>
+        <td class="med-footer-center">
+          <input type="text"
+                 class="op-dt-picker sheet-dt-picker"
+                 data-url="<%= medical_plan_path(@medical_plan) %>"
+                 data-field="medical_plan[prepared_at]"
+                 value="<%= @medical_plan.prepared_at %>"
+                 placeholder="MM/DD/YYYY HH:MM">
+        </td>
+        <td><%= best_in_place @medical_plan, :reviewed_by, as: :input, place_holder: '—' %></td>
+        <td class="med-footer-center">
+          <input type="text"
+                 class="op-dt-picker sheet-dt-picker"
+                 data-url="<%= medical_plan_path(@medical_plan) %>"
+                 data-field="medical_plan[reviewed_at]"
+                 value="<%= @medical_plan.reviewed_at %>"
+                 placeholder="MM/DD/YYYY HH:MM">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<%# Print controls — hidden on print itself (.no-print). Click triggers
+    the browser's print dialog; @media print rules in the stylesheet
+    hide the app chrome (tabrow, add-row buttons, delete icons, etc.)
+    so the printed page carries just the 206 sheet. %>
+<div class="med-print-actions no-print">
+  <button type="button" class="btn btn-primary" onclick="printMedicalPlan206()">
+    <%= fa_icon 'print' %> Print 206
+  </button>
+</div>
+
+<script>
+  function printMedicalPlan206() {
+    document.body.classList.add('printing-medical-206');
+    var style = document.createElement('style');
+    style.id = 'print-orientation';
+    style.textContent = '@page { size: portrait; margin: 0.4in; }';
+    document.head.appendChild(style);
+    var cleanup = function () {
+      document.body.classList.remove('printing-medical-206');
+      var s = document.getElementById('print-orientation');
+      if (s) s.remove();
+      window.removeEventListener('afterprint', cleanup);
+    };
+    window.addEventListener('afterprint', cleanup);
+    window.print();
+  }
+</script>

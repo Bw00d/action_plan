@@ -62,7 +62,13 @@
     var type = (el.type || '').toLowerCase();
     if (type && type !== 'text' && type !== 'tel') return false;
     var name = el.getAttribute('name') || '';
-    return /phone/i.test(name);
+    if (!/phone/i.test(name)) return false;
+    // Opt-out: any ancestor marked data-no-phone-format escapes the
+    // auto-formatter. Used by fields where "phone" appears in the
+    // column name but the value is really free text (e.g. the 206
+    // "Phone & EMS Frequency" cell, which may hold "911 / (503)…").
+    if (el.closest && el.closest('[data-no-phone-format]')) return false;
+    return true;
   }
 
   document.addEventListener('input', function (e) {

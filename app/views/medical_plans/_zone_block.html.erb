@@ -1,0 +1,67 @@
+<%#
+  Section 6 (division/branch/group) + 7 (remote camps) block. Two-
+  column layout familiar to Medical Unit Leaders: the Division / Camp
+  name sits large and centered on the left as a rowspan, and the right
+  column stacks label/value pairs describing capability at that area.
+  Locals: zone, show_poc
+%>
+<table class="med-zone-grid">
+  <%# Authoritative column widths — the thead's colspan=2 on
+      "Area Location Capability" makes table-layout:fixed unable to
+      derive the label vs value column widths from the first row,
+      so <col> is the only reliable place to set them. Change the
+      widths here (or in the matching CSS classes) to adjust. %>
+  <colgroup>
+    <col class="med-zone-grid-col-name">
+    <col class="med-zone-grid-col-label">
+    <col class="med-zone-grid-col-value">
+    <col class="med-zone-grid-col-x">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="med-zone-grid-name-head"><%= show_poc ? 'Name & Location' : 'Division | Branch | Group' %></th>
+      <th colspan="2" class="med-zone-grid-area-head">Area Location Capability</th>
+      <th class="col-x no-print"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% rows = []
+       rows << [:poc,              'Point of Contact:']        if show_poc
+       rows << [:ems_responders,   'EMS Responders & Capability:']
+       rows << [:equipment,        'Equipment Available on Scene:']
+       rows << [:medical_channel,  'Medical Emergency Channel:']
+       rows << [:helispot,         'Helispots:']
+       rows << [:eta_ground,       'Ground Response Time To:']
+       rows << [:eta_air,          'Air Response Time To:'] %>
+    <% rows.each_with_index do |(field, label), idx| %>
+      <tr>
+        <% if idx.zero? %>
+          <%# Big centered name cell — rowspan down the whole block. %>
+          <td class="med-zone-grid-name" rowspan="<%= rows.size %>">
+            <%= best_in_place zone, :name, as: :input, place_holder: '—' %>
+          </td>
+        <% end %>
+        <td class="med-zone-grid-label"><%= label %></td>
+        <td class="med-zone-grid-value">
+          <%# All value cells are textareas so any row can hold multiple
+              lines (e.g. "Dallesport, WA to H-60: 30 Min / Bend, OR to
+              H-60: 45 Min / Aurora, OR to H-60: 20 Min" split across
+              lines). simple_format preserves the line breaks on display. %>
+          <%= best_in_place zone, field,
+                            as: :textarea,
+                            place_holder: '—',
+                            display_with: :simple_format %>
+        </td>
+        <% if idx.zero? %>
+          <td class="col-x no-print" rowspan="<%= rows.size %>">
+            <%= link_to medical_zone_path(zone),
+                        method: :delete,
+                        data: { confirm: 'Remove this entry?' },
+                        class: 'med-row-delete',
+                        title: 'Remove row' do %>&times;<% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

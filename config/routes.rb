@@ -13,6 +13,15 @@ Rails.application.routes.draw do
   resources :commo_items
   resources :commo_plans
   resources :covers
+  # Flat PATCH endpoints for best_in_place inline edits on 206 subrows.
+  # Create / destroy go through the nested routes further below (scoped
+  # to a medical_plan); update is pathed by just the row id so bip's
+  # AJAX URL stays simple.
+  resources :medical_ambulances,     only: [:update, :destroy]
+  resources :medical_air_ambulances, only: [:update, :destroy]
+  resources :medical_hospitals,      only: [:update, :destroy]
+  resources :medical_zones,          only: [:update, :destroy]
+  resources :medical_plans,          only: [:update]
   resources :activities
   resources :actions
   resources :incidents
@@ -107,6 +116,17 @@ Rails.application.routes.draw do
       end
       resources :safety_messages
       resources :covers
+      # ICS 206 WF — one medical_plan per plan with four sub-resources.
+      # Only :show is defined on medical_plan itself (lazy-created on
+      # first visit); the sub-resources carry their own create/destroy
+      # routes, with inline best_in_place edits using the standard
+      # top-level update actions below.
+      resource :medical_plan, only: [:show] do
+        resources :ambulances,     only: [:create, :destroy], controller: 'medical_ambulances'
+        resources :air_ambulances, only: [:create, :destroy], controller: 'medical_air_ambulances'
+        resources :hospitals,      only: [:create, :destroy], controller: 'medical_hospitals'
+        resources :zones,          only: [:create, :destroy], controller: 'medical_zones'
+      end
     end
 
     resource :board, only: [:show] do
