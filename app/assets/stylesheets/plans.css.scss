@@ -1968,7 +1968,7 @@ img#add-freqs-button {
 
   // ── Sheet title ──
   .sheet-section.sheet-title {
-    background: #dcdcdc;
+    background: #fff;
     font-weight: 700;
     text-align: center;
     padding: 4px;
@@ -2161,13 +2161,16 @@ img#add-freqs-button {
       vertical-align: middle;
       height: 20px;
     }
+    // Every head cell in the combined 13+14 table gets the same
+    // #dcdcdc gray as the two section-header cells, so the whole
+    // header row reads as a single banded strip.
     thead .aos-sec-head-cell {
       background: #dcdcdc;
       font-weight: 700;
       text-align: center;
     }
     thead th {
-      background: #f3f3f3;
+      background: #dcdcdc;
       font-weight: 600;
       text-align: center;
       font-size: 10px;
@@ -2177,9 +2180,10 @@ img#add-freqs-button {
       font-weight: 600;
       text-align: center;
     }
+   
     // Column widths — fixed-layout, so these are authoritative.
     .aos-fp-label      { width: 19%; text-align: center; font-weight: 600; white-space: nowrap; font-size: 10px; }
-    .aos-fp-pos-label  { width: 7%;  text-align: center; font-weight: 600; }
+    .aos-fp-pos-label  { width: 10%;  text-align: center; font-weight: 600; }
     .aos-fp-blank      { background: #fff; }
     .aos-freq-width    { width: 8%; }
     .aos-tone-width    { width: 8%; }
@@ -2340,7 +2344,7 @@ img#add-freqs-button {
     .aos-section-head,
     .aos-header-grid thead th,
     .sheet-section.sheet-title,
-    .aos-freq-pos-table thead .aos-sec-head-cell {
+    .aos-freq-pos-table thead th {
       background-color: #dcdcdc !important;
     }
     .aos-section-head.aos-section-head-dark {
