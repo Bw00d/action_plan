@@ -1,0 +1,568 @@
+<%= content_for :title, "220" %>
+
+<%# Plan tabs — matches 206. 220 marked selected. %>
+<div class="container">
+  <div class="col-xs-12 col-lg-8 center-block">
+    <div class="row">
+      <div class="plan-panel-head">
+        <ul class="tabrow">
+          <li><%= link_to 'Plan', incident_plan_path(@incident, @plan) %></li>
+          <li><%= link_to "Cover", incident_plan_covers_path(@incident, @plan) %></li>
+          <li><%= link_to "202", "../#{@plan.id}/202" %></li>
+          <li><%= link_to "203", "../#{@plan.id}/203" %></li>
+          <li><%= link_to "204", incident_plan_assignments_path(@incident, @plan) %></li>
+          <li><%= link_to "205", incident_plan_commo_plans_path(@incident, @plan) %></li>
+          <li><%= link_to "205A", incident_phone_205a_entries_path(@incident) %></li>
+          <li><%= link_to "206", incident_plan_medical_plan_path(@incident, @plan) %></li>
+          <li class="selected"><%= link_to "220", incident_plan_air_operation_path(@incident, @plan) %></li>
+          <li><%= link_to "Safety Message", incident_plan_safety_messages_path(@incident, @plan) %></li>
+        </ul>
+      </div>
+      <div class="masking-tape"></div>
+    </div>
+  </div>
+</div>
+
+<%# ─── ICS 220 WF Air Operations Summary ───
+    Sized to fit on one landscape page. The mid-section is a 4-column
+    layout (9 | 10 | 11 | 12) with sections 13 & 14 combined into a
+    single wide table underneath 9/10/11, and section 15 under section 12.
+    The bottom is a 2-column layout: 16 on the left (tall), 17/18
+    stacked on the right. %>
+<div class="ics-form-sheet ics-220-sheet" data-plan-id="<%= @plan.id %>">
+
+  <div class="sheet-section sheet-title">
+    AIR OPERATIONS SUMMARY (ICS 220 WF)
+  </div>
+
+  <%# Header strip 1 — sections 1 / 2 / 3 / 4. %>
+  <table class="aos-header-grid">
+    <thead>
+      <tr>
+        <th class="aos-h-cell aos-h-wide">1. Incident Name/Number</th>
+        <th class="aos-h-cell">2. Date Prepared</th>
+        <th class="aos-h-cell">3. Time Prepared</th>
+        <th class="aos-h-cell aos-h-wide">4. Prepared By (Air Ops Branch Director)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="aos-h-value aos-h-wide"><%= @incident.name %></td>
+        <td class="aos-h-value">
+          <%= best_in_place @air_operation, :date_prepared, as: :input, place_holder: '—' %>
+        </td>
+        <td class="aos-h-value">
+          <%= best_in_place @air_operation, :time_prepared, as: :input, place_holder: '—' %>
+        </td>
+        <td class="aos-h-value aos-h-wide">
+          <%= best_in_place @air_operation, :prepared_by, as: :input, place_holder: '—' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%# Header strip 2 — section 5 is split into three labelled cells
+      (Sunrise / Sunset / Pumpkin) in the header row itself. %>
+  <table class="aos-header-grid aos-header-grid-row2">
+    <thead>
+      <tr>
+        <th class="aos-h-cell">5. Sunrise</th>
+        <th class="aos-h-cell">Sunset</th>
+        <th class="aos-h-cell">Pumpkin Time</th>
+        <th class="aos-h-cell">6. Shutdown</th>
+        <th class="aos-h-cell">7. Op Period&nbsp;&mdash;&nbsp;From</th>
+        <th class="aos-h-cell">8. Op Period&nbsp;&mdash;&nbsp;To</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="aos-h-value"><%= best_in_place @air_operation, :sunrise,      as: :input, place_holder: '—' %></td>
+        <td class="aos-h-value"><%= best_in_place @air_operation, :sunset,       as: :input, place_holder: '—' %></td>
+        <td class="aos-h-value"><%= best_in_place @air_operation, :pumpkin_time, as: :input, place_holder: '—' %></td>
+        <td class="aos-h-value"><%= best_in_place @air_operation, :shutdown,     as: :input, place_holder: '—' %></td>
+        <td class="aos-h-value aos-h-dt">
+          <input type="text"
+                 class="op-dt-picker sheet-dt-picker"
+                 data-url="<%= incident_plan_path(@incident, @plan) %>"
+                 data-field="plan[ops_period_from]"
+                 value="<%= @plan.ops_period_from&.strftime('%m/%d/%Y %H:%M') %>"
+                 placeholder="MM/DD/YYYY HH:MM">
+        </td>
+        <td class="aos-h-value aos-h-dt">
+          <input type="text"
+                 class="op-dt-picker sheet-dt-picker"
+                 data-url="<%= incident_plan_path(@incident, @plan) %>"
+                 data-field="plan[ops_period_to]"
+                 value="<%= @plan.ops_period_to&.strftime('%m/%d/%Y %H:%M') %>"
+                 placeholder="MM/DD/YYYY HH:MM">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%# ─── Mid-section — 4-column layout ─── %>
+  <div class="aos-mid">
+    <div class="aos-mid-left">
+
+      <%# Top row: section 9 | 10 | 11 %>
+      <div class="aos-mid-top">
+
+        <%# 9. General Remarks (textarea) %>
+        <div class="aos-sec aos-sec-9">
+          <div class="aos-section-head">9. General Remarks, Safety Notes, Hazards, Air Operations Special Equipment, etc.</div>
+          <div class="aos-section-body aos-free-text">
+            <%= best_in_place @air_operation, :general_remarks,
+                              as: :textarea,
+                              place_holder: '—',
+                              display_with: :simple_format %>
+          </div>
+        </div>
+
+        <%# 10. Helibase %>
+        <div class="aos-sec aos-sec-10">
+          <div class="aos-section-head">10. Helibase Information</div>
+          <table class="aos-mini-table">
+            <tr class="helibase-name-row">
+              <th>Name:</th>
+              <td><%= best_in_place @air_operation, :helibase_name, as: :input, place_holder: '—' %></td>
+            </tr>
+            <tr>
+              <th>Latitude:</th>
+              <td><%= best_in_place @air_operation, :helibase_lat, as: :input, place_holder: '—' %></td>
+            </tr>
+            <tr>
+              <th>Longitude:</th>
+              <td><%= best_in_place @air_operation, :helibase_long, as: :input, place_holder: '—' %></td>
+            </tr>
+          </table>
+        </div>
+
+        <%# 11. TFR %>
+        <div class="aos-sec aos-sec-11">
+          <div class="aos-section-head">11. Temp. Flight Restriction (TFR)</div>
+          <table class="aos-mini-table">
+            <tr>
+              <th>NOTAM:</th>
+              <td><%= best_in_place @air_operation, :tfr_notam,     as: :input, place_holder: '—' %></td>
+            </tr>
+            <tr>
+              <th>Altitude:</th>
+              <td><%= best_in_place @air_operation, :tfr_altitude,  as: :input, place_holder: '—' %></td>
+            </tr>
+            <tr>
+              <th>Frequency:</th>
+              <td data-no-phone-format><%= best_in_place @air_operation, :tfr_frequency, as: :input, place_holder: '—' %></td>
+            </tr>
+            <tr>
+              <th>Hours:</th>
+              <td><%= best_in_place @air_operation, :tfr_hours,     as: :input, place_holder: '—' %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <%# Combined 13 + 14 table — frequency rows on the left,
+          position rows aligned across the same 5 fixed rows on the
+          right (section 13 has 8 rows, section 14 has 5, so rows
+          6-8 leave the position cells empty). %>
+      <div class="aos-sec aos-sec-13-14">
+        <table class="aos-freq-pos-table">
+          <thead>
+            <tr class="aos-fp-row-head">
+              <th class="aos-fp-label aos-sec-head-cell">13. Incident Frequencies</th>
+              <th class="aos-freq-width">RX</th>
+              <th class="aos-tone-width">Tone</th>
+              <th class="aos-freq-width">TX</th>
+              <th class="aos-tone-width">Tone</th>
+              <th class="aos-type-width">AM/FM/Digital</th>
+              <th class="aos-fp-pos-label aos-sec-head-cell">14. Position</th>
+              <th>Name</th>
+              <th class="aos-phone-width">Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% AirOperation::FREQUENCY_ROWS.each_with_index do |row, i| %>
+              <% pos = AirOperation::POSITION_ROWS[i] %>
+              <tr data-freq-row="<%= row[:key] %>">
+                <%# Row-label cell doubles as the picker trigger: the
+                    small "▾" chevron opens a <select> that lists this
+                    plan's 205 channels. Selecting one PATCHes all five
+                    cells to the right in one call (handled by the JS
+                    at the bottom of the view). Manual edits via
+                    best_in_place still work on each cell. %>
+                <th class="aos-fp-label">
+                  <%# Row label is editable — defaults to the standard
+                      ICS 220 WF channel-type name but can be overridden
+                      per plan (e.g. renamed to a local designator). %>
+                  <span class="aos-fp-label-text">
+                    <%= best_in_place @air_operation,
+                                      "freq_#{row[:key]}_label".to_sym,
+                                      as: :input,
+                                      place_holder: row[:label] %>
+                  </span>
+                  <% if @commo_items.any? %>
+                    <select class="aos-freq-picker no-print"
+                            data-row-key="<%= row[:key] %>"
+                            data-url="<%= air_operation_path(@air_operation) %>"
+                            title="Pick a channel from the 205">
+                      <option value="">▾</option>
+                      <% @commo_items.each do |ci| %>
+                        <option value="<%= ci.id %>"
+                                data-rx-freq="<%= ci.rx_freq %>"
+                                data-rx-tone="<%= ci.rx_tone %>"
+                                data-tx-freq="<%= ci.tx_freq %>"
+                                data-tx-tone="<%= ci.tx_tone %>"
+                                data-mode="<%= ci.mode %>">
+                          <%= [ci.ch_num, ci.channel_name.presence || ci.function].reject(&:blank?).join(' · ') %>
+                        </option>
+                      <% end %>
+                    </select>
+                  <% end %>
+                </th>
+                <% %i[rx tone tx tx_tone mode].each do |col| %>
+                  <%# Frequency cells start blank — users mostly leave
+                      unused rows empty, so a dash placeholder reads as
+                      noise. Click-to-edit still works from the empty
+                      cell. %>
+                  <td class="aos-fp-freq-cell"
+                      data-col="<%= col %>"
+                      data-no-phone-format>
+                    <%= best_in_place @air_operation,
+                                      "freq_#{row[:key]}_#{col}".to_sym,
+                                      as: :input, place_holder: '' %>
+                  </td>
+                <% end %>
+                <%# Position row — label, name, and phone are all
+                    editable. First 5 rows seed with the standard ICS
+                    220 WF labels (AOBD/ASGS/HEBM/HLCO/UAO); last 3
+                    start blank so users can add their own positions. %>
+                <th class="aos-fp-pos-label">
+                  <%= best_in_place @air_operation,
+                                    "pos_#{pos[:key]}_label".to_sym,
+                                    as: :input,
+                                    place_holder: pos[:label].presence || '' %>
+                </th>
+                <td>
+                  <%= best_in_place @air_operation,
+                                    "pos_#{pos[:key]}_name".to_sym,
+                                    as: :input, place_holder: '' %>
+                </td>
+                <td data-no-phone-format>
+                  <%= best_in_place @air_operation,
+                                    "pos_#{pos[:key]}_phone".to_sym,
+                                    as: :input, place_holder: '' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <%# Right pane — section 12 stacked over section 15. %>
+    <div class="aos-mid-right">
+
+      <%# 12. Extraction/Medevac — printed form has this header as
+          black-fill / white text. %>
+      <div class="aos-sec aos-sec-12">
+        <div class="aos-section-head aos-section-head-dark">12. Extraction/Medevac Information</div>
+        <table class="aos-ext-table">
+          <thead>
+            <tr>
+              <th></th>
+              <% AirOperation::EXTRACTION_COLUMNS.each do |col| %>
+                <th><%= col[:label] %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% [
+                 ['FAA#:',        :faa],
+                 ['Phone:',       :phone],
+                 ['Location:',    :location],
+                 ['Capabilities', :capabilities]
+               ].each do |label, suffix| %>
+              <tr>
+                <th><%= label %></th>
+                <% AirOperation::EXTRACTION_COLUMNS.each do |col| %>
+                  <% field = "#{col[:key]}_#{suffix}".to_sym %>
+                  <% is_phone = (suffix == :phone) %>
+                  <% is_cap   = (suffix == :capabilities) %>
+                  <td class="<%= 'aos-ext-cap' if is_cap %>"
+                      <%= 'data-no-phone-format'.html_safe if is_phone %>>
+                    <% if is_cap %>
+                      <%= best_in_place @air_operation, field,
+                                        as: :textarea,
+                                        place_holder: '—',
+                                        display_with: :simple_format %>
+                    <% else %>
+                      <%= best_in_place @air_operation, field, as: :input, place_holder: '—' %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="aos-request-through">
+          <div class="aos-request-through-label">Request Incident Personnel Extraction/Medevac Through:</div>
+          <div class="aos-request-through-value">
+            <%= best_in_place @air_operation, :request_through,
+                              as: :textarea,
+                              place_holder: '—',
+                              display_with: :simple_format %>
+          </div>
+        </div>
+      </div>
+
+      <%# 15. Equipment/Supplies %>
+      <div class="aos-sec aos-sec-15">
+        <div class="aos-section-head aos-head-centered">15. Equipment/Supplies</div>
+        <div class="aos-section-body aos-free-text">
+          <%= best_in_place @air_operation, :equipment_supplies,
+                            as: :textarea,
+                            place_holder: '—',
+                            display_with: :simple_format %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# ─── Bottom section — 16 on left, 17/18 stacked on right ─── %>
+  <div class="aos-bottom">
+    <div class="aos-bottom-left">
+
+      <%# 16. Helicopters %>
+      <div class="aos-sec aos-sec-16">
+        <div class="aos-section-head aos-head-centered">16. HELICOPTERS</div>
+        <table class="aos-wide-table">
+          <thead>
+            <tr>
+              <th class="aos-sec-16-faa">FAA #</th>
+              <th class="aos-sec-16-type">TYPE</th>
+              <th class="aos-sec-16-make">Make/Model</th>
+              <th>Helibase</th>
+              <th class="aos-sec-16-time">Start</th>
+              <th class="aos-sec-16-time">Avail.</th>
+              <th class="aos-sec-16-remarks">Remarks</th>
+              <th class="col-x no-print"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @air_operation.helicopters.each do |h| %>
+              <tr>
+                <td><%= best_in_place h, :faa_number,    as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place h, :aircraft_type, as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place h, :make_model,    as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place h, :helibase,      as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place h, :start_time,    as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place h, :available,     as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place h, :remarks,       as: :textarea, place_holder: '—', display_with: :simple_format %></td>
+                <td class="col-x no-print">
+                  <%= link_to air_ops_helicopter_path(h),
+                              method: :delete,
+                              data: { confirm: 'Remove this helicopter?' },
+                              class: 'med-row-delete',
+                              title: 'Remove row' do %>&times;<% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="no-print">
+          <%= button_to '+ Add helicopter',
+                        incident_plan_air_operation_helicopters_path(@incident, @plan),
+                        method: :post,
+                        class: 'btn btn-default btn-xs med-add-btn' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="aos-bottom-right">
+
+      <%# 17. Aerial Supervision %>
+      <div class="aos-sec aos-sec-17">
+        <div class="aos-section-head aos-head-centered">17. AERIAL SUPERVISION: AIR ATTACK/HELICOPTER COORDINATOR</div>
+        <table class="aos-wide-table">
+          <thead>
+            <tr>
+              <th class="aos-sec-16-faa">FAA #</th>
+              <th>Call Sign</th>
+              <th>Make/Model</th>
+              <th>Base</th>
+              <th class="aos-sec-16-time">Start</th>
+              <th class="aos-sec-16-time">Avail.</th>
+              <th class="aos-sec-16-remarks">Remarks</th>
+              <th class="col-x no-print"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @air_operation.supervisions.each do |s| %>
+              <tr>
+                <td><%= best_in_place s, :faa_number, as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place s, :call_sign,  as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place s, :make_model, as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place s, :base,       as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place s, :start_time, as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place s, :available,  as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place s, :remarks,    as: :textarea, place_holder: '—', display_with: :simple_format %></td>
+                <td class="col-x no-print">
+                  <%= link_to air_ops_supervision_path(s),
+                              method: :delete,
+                              data: { confirm: 'Remove this entry?' },
+                              class: 'med-row-delete',
+                              title: 'Remove row' do %>&times;<% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="no-print">
+          <%= button_to '+ Add supervision',
+                        incident_plan_air_operation_supervisions_path(@incident, @plan),
+                        method: :post,
+                        class: 'btn btn-default btn-xs med-add-btn' %>
+        </div>
+      </div>
+
+      <%# 18. UAS %>
+      <div class="aos-sec aos-sec-18">
+        <div class="aos-section-head aos-head-centered">18. UNMANNED AIRCRAFT SYSTEMS (UAS)</div>
+        <table class="aos-wide-table">
+          <thead>
+            <tr>
+              <th>Identifier</th>
+              <th class="aos-sec-16-type">Cat./<br>Type</th>
+              <th>Make/Model</th>
+              <th>Location</th>
+              <th class="aos-sec-16-time">Start</th>
+              <th class="aos-sec-16-time">Avail.</th>
+              <th>Leader/<br>Contact</th>
+              <th>Remarks</th>
+              <th class="col-x no-print"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @air_operation.uas_entries.each do |u| %>
+              <tr>
+                <td><%= best_in_place u, :identifier,     as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place u, :cat_type,       as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place u, :make_model,     as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place u, :location,       as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place u, :start_time,     as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place u, :available,      as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place u, :leader_contact, as: :input, place_holder: '—' %></td>
+                <td><%= best_in_place u, :remarks,        as: :textarea, place_holder: '—', display_with: :simple_format %></td>
+                <td class="col-x no-print">
+                  <%= link_to air_ops_uas_entry_path(u),
+                              method: :delete,
+                              data: { confirm: 'Remove this UAS entry?' },
+                              class: 'med-row-delete',
+                              title: 'Remove row' do %>&times;<% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="no-print">
+          <%= button_to '+ Add UAS',
+                        incident_plan_air_operation_uas_entries_path(@incident, @plan),
+                        method: :post,
+                        class: 'btn btn-default btn-xs med-add-btn' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# Print controls — hidden on print itself. %>
+<div class="med-print-actions no-print">
+  <button type="button" class="btn btn-primary" onclick="printAirOps220()">
+    <%= fa_icon 'print' %> Print 220
+  </button>
+</div>
+
+<script>
+  function printAirOps220() {
+    document.body.classList.add('printing-air-ops-220');
+    var style = document.createElement('style');
+    style.id = 'print-orientation';
+    // 220 is landscape on the published form.
+    style.textContent = '@page { size: landscape; margin: 0.4in; }';
+    document.head.appendChild(style);
+    var cleanup = function () {
+      document.body.classList.remove('printing-air-ops-220');
+      var s = document.getElementById('print-orientation');
+      if (s) s.remove();
+      window.removeEventListener('afterprint', cleanup);
+    };
+    window.addEventListener('afterprint', cleanup);
+    window.print();
+  }
+
+  // ── Section 13 "pick from 205" picker ──
+  // Each row has a tiny <select> listing this plan's commo_items. On
+  // change: grab the chosen option's data-* fields, PATCH all five
+  // freq cells for that row in one call to /air_operations/:id, then
+  // update the best_in_place display spans in place so no refresh is
+  // needed. The user can still edit any individual cell manually.
+  (function () {
+    var token = document.querySelector('meta[name="csrf-token"]');
+    token = token ? token.getAttribute('content') : '';
+    // RX → freq_<row>_rx, Tone → freq_<row>_tone, etc. Map once.
+    var cellMap = { rx: 'rx_freq', tone: 'rx_tone', tx: 'tx_freq',
+                    tx_tone: 'tx_tone', mode: 'mode' };
+
+    document.addEventListener('change', function (e) {
+      var sel = e.target;
+      if (!sel.classList || !sel.classList.contains('aos-freq-picker')) return;
+
+      var opt = sel.options[sel.selectedIndex];
+      if (!opt || !opt.value) return;  // placeholder "▾"
+
+      var rowKey = sel.dataset.rowKey;
+      var url    = sel.dataset.url;
+      var row    = sel.closest('tr[data-freq-row]');
+      var payload = {};
+      Object.keys(cellMap).forEach(function (col) {
+        payload['freq_' + rowKey + '_' + col] = opt.dataset[camelize(cellMap[col])] || '';
+      });
+
+      fetch(url, {
+        method: 'PATCH',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept':       'application/json',
+          'X-CSRF-Token': token
+        },
+        body: JSON.stringify({ air_operation: payload })
+      }).then(function (r) {
+        if (!r.ok) throw new Error('save failed');
+        // Update the DOM. For each freq cell in this row, replace the
+        // best_in_place span's text + data-bip-value so subsequent
+        // inline edits start from the picked value.
+        Object.keys(cellMap).forEach(function (col) {
+          var td    = row.querySelector('td.aos-fp-freq-cell[data-col="' + col + '"]');
+          if (!td) return;
+          var span  = td.querySelector('.best_in_place');
+          var value = opt.dataset[camelize(cellMap[col])] || '';
+          if (span) {
+            span.setAttribute('data-bip-value', value);
+            span.textContent = value;
+          } else {
+            td.textContent = value;
+          }
+        });
+        // Reset the dropdown so re-picking the same channel still fires.
+        sel.selectedIndex = 0;
+      }).catch(function (err) {
+        alert('Could not update frequency row: ' + err.message);
+      });
+    });
+
+    function camelize(s) {
+      return s.replace(/_([a-z])/g, function (_, c) { return c.toUpperCase(); });
+    }
+  })();
+</script>

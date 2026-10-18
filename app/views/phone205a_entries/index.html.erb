@@ -17,7 +17,7 @@
             <li><%= link_to '205',     incident_plan_commo_plans_path(@incident, @plan) %></li>
             <li class="selected"><%= link_to '205A', incident_phone_205a_entries_path(@incident) %></li>
             <li><%= link_to '206',     incident_plan_medical_plan_path(@incident, @plan) %></li>
-            <li><%= link_to '220',     '#' %></li>
+            <li><%= link_to '220',     incident_plan_air_operation_path(@incident, @plan) %></li>
             <li><%= link_to 'Safety Message', incident_plan_safety_messages_path(@incident, @plan) %></li>
           <% else %>
             <li><%= link_to 'Back to incident', @incident %></li>

@@ -9,6 +9,7 @@ class Plan < ApplicationRecord
   has_many :activities, dependent: :destroy
   has_one :commo_plan, dependent: :destroy
   has_one :medical_plan, dependent: :destroy
+  has_one :air_operation, dependent: :destroy
   has_one :safety_message, dependent: :destroy
   has_many :teams, dependent: :destroy
   has_one :cover, dependent: :destroy

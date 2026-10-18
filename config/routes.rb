@@ -22,6 +22,13 @@ Rails.application.routes.draw do
   resources :medical_hospitals,      only: [:update, :destroy]
   resources :medical_zones,          only: [:update, :destroy]
   resources :medical_plans,          only: [:update]
+  # Flat PATCH/DELETE endpoints for the ICS 220 WF — mirrors the 206
+  # layout above.  Create goes through the nested routes under plans
+  # (see further down).
+  resources :air_ops_helicopters,    only: [:update, :destroy]
+  resources :air_ops_supervisions,   only: [:update, :destroy]
+  resources :air_ops_uas_entries,    only: [:update, :destroy]
+  resources :air_operations,         only: [:update]
   resources :activities
   resources :actions
   resources :incidents
@@ -126,6 +133,14 @@ Rails.application.routes.draw do
         resources :air_ambulances, only: [:create, :destroy], controller: 'medical_air_ambulances'
         resources :hospitals,      only: [:create, :destroy], controller: 'medical_hospitals'
         resources :zones,          only: [:create, :destroy], controller: 'medical_zones'
+      end
+      # ICS 220 WF — one air_operation per plan, three repeatable sub-
+      # tables for helicopters / aerial supervision / UAS. Same lazy-
+      # create pattern as medical_plan.
+      resource :air_operation, only: [:show] do
+        resources :helicopters,  only: [:create], controller: 'air_ops_helicopters'
+        resources :supervisions, only: [:create], controller: 'air_ops_supervisions'
+        resources :uas_entries,  only: [:create], controller: 'air_ops_uas_entries'
       end
     end
 

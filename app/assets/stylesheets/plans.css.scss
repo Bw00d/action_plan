@@ -1948,3 +1948,411 @@ img#add-freqs-button {
     }
   }
 }
+
+// ── ICS 220 WF (Air Operations Summary) ─────────────────────────────
+// Scoped under .ics-220-sheet. Everything is sized to fit on one
+// letter-landscape page: a 4-column mid-section (9 / 10 / 11 / 12)
+// with sections 13+14 combined into one wide table underneath 9/10/11
+// and section 15 under section 12; a 2-column bottom with section 16
+// on the left and sections 17/18 stacked on the right.
+.ics-220-sheet {
+  // Landscape content width. Overrides .ics-form-sheet's 7.5in×10in
+  // portrait sizing; height grows with content.
+  width: 10.5in;
+  height: auto;
+  min-height: 7.5in;
+  overflow: visible;
+  margin: 24px auto;
+  font-size: 10px;
+  line-height: 1.25;
+
+  // ── Sheet title ──
+  .sheet-section.sheet-title {
+    background: #dcdcdc;
+    font-weight: 700;
+    text-align: center;
+    padding: 4px;
+    font-size: 13px;
+    border-bottom: 1px solid #000;
+  }
+
+  // ── Header grids (sections 1-4, 5-8) ──
+  .aos-header-grid {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 0;
+    th, td { border: 1px solid #000; padding: 2px 5px; vertical-align: top; }
+    thead th {
+      background: #dcdcdc;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: left;
+      padding: 2px 5px;
+    }
+    .aos-h-value {
+      height: 20px;
+      font-size: 11px;
+      .best_in_place { display: block; min-height: 16px; }
+    }
+    // Op-period flatpickr inputs — borderless so they read as plain
+    // text; the td keeps its grid border via the th,td rule above.
+    .aos-h-dt input.sheet-dt-picker,
+    .aos-h-dt input.op-dt-picker,
+    .aos-h-dt .sheet-dt-picker {
+      width: 100%;
+      border: 0 none !important;
+      outline: 0 none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 2px 4px !important;
+      margin: 0 !important;
+      font: inherit;
+      color: inherit;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+
+      &:hover { background: rgba(76, 154, 255, 0.06) !important; cursor: pointer; }
+      &:focus { background: rgba(76, 154, 255, 0.12) !important; cursor: text; }
+      &::placeholder { color: #a5adba; font-weight: 400; }
+    }
+    &.aos-header-grid-row2 {
+      border-top: 0;
+      thead tr:first-child th { border-top: 0; }
+    }
+  }
+
+  // ── Section wrapper + head ──
+  // .aos-sec is just a positioning hook; borders live on the inner
+  // table / section-head so adjacent sections share edges cleanly.
+  .aos-sec {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .aos-section-head {
+    background: #dcdcdc;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border: 1px solid #000;
+    border-top: 0;
+    line-height: 1.2;
+  }
+  .aos-section-head.aos-head-centered { text-align: center; }
+  // Section 12 has a black header in the printed form.
+  .aos-section-head.aos-section-head-dark {
+    background: #000;
+    color: #fff;
+  }
+  .aos-section-body {
+    border: 1px solid #000;
+    border-top: 0;
+    padding: 3px 5px;
+  }
+  .aos-free-text {
+    min-height: 40px;
+    .best_in_place { display: block; min-height: 32px; }
+    p { margin: 0; }
+  }
+
+  // ── Mid-section layout (two columns of unequal width) ──
+  .aos-mid {
+    display: flex;
+    align-items: stretch;
+  }
+  .aos-mid-left  { flex: 0 0 74%; min-width: 0; display: flex; flex-direction: column; }
+  .aos-mid-right { flex: 1 1 26%; min-width: 0; display: flex; flex-direction: column; margin-left: -1px; }
+
+  // Top row inside the left pane: section 9 | 10 | 11.
+  .aos-mid-top {
+    display: flex;
+    align-items: stretch;
+  }
+  .aos-sec-9  { flex: 1 1 50%; min-width: 0; display: flex; flex-direction: column; }
+  .aos-sec-10 { flex: 0 0 25%; min-width: 0; margin-left: -1px; display: flex; flex-direction: column; }
+  .aos-sec-11 { flex: 0 0 25%; min-width: 0; margin-left: -1px; display: flex; flex-direction: column; }
+  .aos-sec-9  .aos-section-body { flex: 1; }
+  .aos-sec-9  .aos-free-text    { min-height: 110px; }
+  // Section 9's header wraps to two lines ("9. General Remarks, Safety
+  // Notes, …"); match 10 & 11's heads to the same height so the three
+  // tops align. 2 lines at 10px/1.2 + 2×2px padding ≈ 28px.
+  .aos-mid-top > .aos-sec > .aos-section-head {
+    min-height: 29px;
+  }
+
+  // ── Mini-tables (sections 10, 11) ──
+  .aos-mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    th, td {
+      border: 1px solid #000;
+      border-top: 0;
+      padding: 2px 4px;
+      font-size: 10px;
+      vertical-align: top;
+      height: 28px;
+    }
+    th {
+      width: 38%;
+      background: #fff;
+      font-weight: 600;
+      text-align: left;
+    }
+    td { background: #fff; }
+    p { margin: 0; }
+    .helibase-name-row {
+      height:56px;
+    }
+  }
+
+  // ── Section 12 extraction/medevac grid ──
+  .aos-ext-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    th, td {
+      border: 1px solid #000;
+      border-top: 0;
+      padding: 2px 4px;
+      font-size: 10px;
+      vertical-align: top;
+    }
+    thead th {
+      background: #fff;
+      font-weight: 600;
+      text-align: center;
+      height: 20px;
+    }
+    tbody th {
+      background: #fff;
+      font-weight: 600;
+      text-align: left;
+      width: 70px;
+      height: 20px;
+    }
+    .aos-ext-cap {
+      height: 44px;
+    }
+    p { margin: 0; }
+  }
+  .aos-request-through {
+    border: 1px solid #000;
+    border-top: 0;
+    padding: 2px 5px;
+    font-size: 10px;
+    .aos-request-through-label { font-weight: 600; }
+    .aos-request-through-value { min-height: 40px; }
+    p { margin: 0; }
+  }
+
+  // ── Combined section 13+14 freq/position table ──
+  .aos-freq-pos-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    th, td {
+      border: 1px solid #000;
+      border-top: 0;
+      padding: 2px 4px;
+      font-size: 10px;
+      vertical-align: middle;
+      height: 20px;
+    }
+    thead .aos-sec-head-cell {
+      background: #dcdcdc;
+      font-weight: 700;
+      text-align: center;
+    }
+    thead th {
+      background: #f3f3f3;
+      font-weight: 600;
+      text-align: center;
+      font-size: 10px;
+    }
+    tbody th {
+      background: #fff;
+      font-weight: 600;
+      text-align: center;
+    }
+    // Column widths — fixed-layout, so these are authoritative.
+    .aos-fp-label      { width: 19%; text-align: center; font-weight: 600; white-space: nowrap; font-size: 10px; }
+    .aos-fp-pos-label  { width: 7%;  text-align: center; font-weight: 600; }
+    .aos-fp-blank      { background: #fff; }
+    .aos-freq-width    { width: 8%; }
+    .aos-tone-width    { width: 8%; }
+    .aos-type-width    { width: 11%; }
+    .aos-phone-width   { width: 12%; }
+    p { margin: 0; }
+
+    // Section 13 "pick from 205" selector — tiny chevron-sized dropdown
+    // next to each row label. Clipped to just its arrow glyph so it
+    // stays compact; the browser's full option list expands on click.
+    // Hover brightens so users notice it exists.
+    .aos-freq-picker {
+      display: inline-block;
+      width: 20px;
+      height: 15px;
+      margin-left: 3px;
+      padding: 0;
+      font-size: 9px;
+      line-height: 12px;
+      vertical-align: middle;
+      border: 1px solid #a5adba;
+      border-radius: 2px;
+      background: #f8f9fb;
+      color: #4c9aff;
+      cursor: pointer;
+
+      &:hover { background: #e8f0ff; color: #0052cc; }
+      &:focus { outline: 1px solid #4c9aff; }
+    }
+    .aos-fp-label-text { display: inline-block; }
+  }
+  .aos-sec {
+    input, textarea{
+      width: 100%;
+    }
+  }
+
+  // ── Section 13 Radio Freqencies ──
+
+  // ── Section 15 Equipment/Supplies ──
+  .aos-sec-15 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    .aos-section-body { flex: 1; }
+    .aos-free-text    { min-height: 80px; }
+  }
+
+  // ── Bottom section — 16 on left, 17/18 stacked on right ──
+  .aos-bottom {
+    display: flex;
+    align-items: stretch;
+    margin-top: 0;
+  }
+  .aos-bottom-left  { flex: 0 0 44%; min-width: 0; display: flex; flex-direction: column; }
+  .aos-bottom-right { flex: 1 1 56%; min-width: 0; display: flex; flex-direction: column; margin-left: -1px; }
+
+  // ── Wide tables (sections 16, 17, 18) ──
+  .aos-wide-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    th, td {
+      border: 1px solid #000;
+      border-top: 0;
+      padding: 2px 4px;
+      font-size: 10px;
+      vertical-align: top;
+    }
+    thead th {
+      background: #fff;
+      font-weight: 600;
+      text-align: left;
+      height: 20px;
+    }
+    tbody td { height: 18px; }
+    .col-x {
+      width: 24px;
+      text-align: center;
+    }
+    p { margin: 0; }
+    .med-row-delete {
+      color: #c00;
+      font-size: 14px;
+      line-height: 1;
+      text-decoration: none;
+    }
+  }
+  // ── Wide tables (sections 16) ──
+  .aos-sec-16-type {
+    width: 8%;
+  }
+  .aos-sec-16-time {
+    width: 8%;
+  }
+  .aos-sec-16-make {
+    width: 16%;
+  }
+  .aos-sec-16-faa {
+    width: 12%;
+  }
+  .aos-sec-16-remarks {
+    width: 28%;
+  }
+  // ── Add-row buttons ──
+  // button_to renders a <form class="button_to"> wrapping the button;
+  // margin on the inner button doesn't move it if the form itself is
+  // the block-level, full-width element. Put the right-side spacing
+  // on the form so the whole wrapper sits in from the border.
+  .no-print form.button_to {
+    display: inline-block;
+    margin: 4px 5px 6px 4px;
+  }
+  .med-add-btn {
+    margin: 0;
+    font-size: 11px;
+  }
+
+  // Mop up stray p-margin anywhere a textarea renders through
+  // simple_format into a <p>.
+  p { margin: 0; }
+}
+
+// ── Print rules for 220 ──
+// Toggled on by printAirOps220() via body.printing-air-ops-220. Hides
+// app chrome, forces backgrounds + black text to render reliably across
+// Chrome/Safari, and keeps the sheet on a single landscape page.
+@media print {
+  body.printing-air-ops-220,
+  body.printing-air-ops-220 .container,
+  body.printing-air-ops-220 .container > .col-xs-12,
+  body.printing-air-ops-220 .container > .col-xs-12 > .row {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.printing-air-ops-220 {
+    .plan-panel-head,
+    .masking-tape,
+    .no-print,
+    .med-add-btn,
+    .med-row-delete,
+    .col-x,
+    .med-print-actions { display: none !important; }
+
+    *, *::before, *::after {
+      color: #000 !important;
+      print-color-adjust: exact !important;
+      -webkit-print-color-adjust: exact !important;
+    }
+
+    .ics-220-sheet {
+      border: 0;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .aos-section-head,
+    .aos-header-grid thead th,
+    .sheet-section.sheet-title,
+    .aos-freq-pos-table thead .aos-sec-head-cell {
+      background-color: #dcdcdc !important;
+    }
+    .aos-section-head.aos-section-head-dark {
+      background-color: #000 !important;
+      color: #fff !important;
+      * { color: #fff !important; }
+    }
+
+    // Hide empty best_in_place placeholder dashes.
+    .best_in_place:not([data-bip-value]) { visibility: hidden; }
+
+    // Keep the whole sheet on one page.
+    .ics-220-sheet { break-inside: avoid !important; page-break-inside: avoid !important; }
+  }
+}

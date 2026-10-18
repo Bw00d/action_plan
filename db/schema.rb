@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_16_000000) do
+ActiveRecord::Schema.define(version: 2026_10_17_130000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,160 @@ ActiveRecord::Schema.define(version: 2026_10_16_000000) do
     t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "air_operations", force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.string "date_prepared"
+    t.string "time_prepared"
+    t.string "prepared_by"
+    t.string "sunrise"
+    t.string "sunset"
+    t.string "pumpkin_time"
+    t.string "shutdown"
+    t.text "general_remarks"
+    t.string "helibase_name"
+    t.string "helibase_lat"
+    t.string "helibase_long"
+    t.string "tfr_notam"
+    t.string "tfr_altitude"
+    t.string "tfr_frequency"
+    t.string "tfr_hours"
+    t.string "medevac_faa"
+    t.string "medevac_phone"
+    t.string "medevac_location"
+    t.text "medevac_capabilities"
+    t.string "shorthaul_faa"
+    t.string "shorthaul_phone"
+    t.string "shorthaul_location"
+    t.text "shorthaul_capabilities"
+    t.string "hoist_faa"
+    t.string "hoist_phone"
+    t.string "hoist_location"
+    t.text "hoist_capabilities"
+    t.text "request_through"
+    t.string "freq_aa_tfr_rx"
+    t.string "freq_aa_tfr_tone"
+    t.string "freq_aa_tfr_tx"
+    t.string "freq_aa_tfr_tx_tone"
+    t.string "freq_aa_tfr_mode"
+    t.string "freq_aa_rotor_rx"
+    t.string "freq_aa_rotor_tone"
+    t.string "freq_aa_rotor_tx"
+    t.string "freq_aa_rotor_tx_tone"
+    t.string "freq_aa_rotor_mode"
+    t.string "freq_aa_briefing_rx"
+    t.string "freq_aa_briefing_tone"
+    t.string "freq_aa_briefing_tx"
+    t.string "freq_aa_briefing_tx_tone"
+    t.string "freq_aa_briefing_mode"
+    t.string "freq_ag_primary_rx"
+    t.string "freq_ag_primary_tone"
+    t.string "freq_ag_primary_tx"
+    t.string "freq_ag_primary_tx_tone"
+    t.string "freq_ag_primary_mode"
+    t.string "freq_ag_secondary_rx"
+    t.string "freq_ag_secondary_tone"
+    t.string "freq_ag_secondary_tx"
+    t.string "freq_ag_secondary_tx_tone"
+    t.string "freq_ag_secondary_mode"
+    t.string "freq_ag_tactical_rx"
+    t.string "freq_ag_tactical_tone"
+    t.string "freq_ag_tactical_tx"
+    t.string "freq_ag_tactical_tx_tone"
+    t.string "freq_ag_tactical_mode"
+    t.string "freq_deck_rx"
+    t.string "freq_deck_tone"
+    t.string "freq_deck_tx"
+    t.string "freq_deck_tx_tone"
+    t.string "freq_deck_mode"
+    t.string "freq_tolc_rx"
+    t.string "freq_tolc_tone"
+    t.string "freq_tolc_tx"
+    t.string "freq_tolc_tx_tone"
+    t.string "freq_tolc_mode"
+    t.string "pos_aobd_name"
+    t.string "pos_aobd_phone"
+    t.string "pos_asgs_name"
+    t.string "pos_asgs_phone"
+    t.string "pos_hebm_name"
+    t.string "pos_hebm_phone"
+    t.string "pos_hlco_name"
+    t.string "pos_hlco_phone"
+    t.string "pos_uao_name"
+    t.string "pos_uao_phone"
+    t.text "equipment_supplies"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "freq_aa_tfr_label"
+    t.string "freq_aa_rotor_label"
+    t.string "freq_aa_briefing_label"
+    t.string "freq_ag_primary_label"
+    t.string "freq_ag_secondary_label"
+    t.string "freq_ag_tactical_label"
+    t.string "freq_deck_label"
+    t.string "freq_tolc_label"
+    t.string "pos_aobd_label"
+    t.string "pos_asgs_label"
+    t.string "pos_hebm_label"
+    t.string "pos_hlco_label"
+    t.string "pos_uao_label"
+    t.string "pos_extra1_label"
+    t.string "pos_extra1_name"
+    t.string "pos_extra1_phone"
+    t.string "pos_extra2_label"
+    t.string "pos_extra2_name"
+    t.string "pos_extra2_phone"
+    t.string "pos_extra3_label"
+    t.string "pos_extra3_name"
+    t.string "pos_extra3_phone"
+    t.index ["plan_id"], name: "index_air_operations_on_plan_id", unique: true
+  end
+
+  create_table "air_ops_helicopters", force: :cascade do |t|
+    t.bigint "air_operation_id", null: false
+    t.string "faa_number"
+    t.string "aircraft_type"
+    t.string "make_model"
+    t.string "helibase"
+    t.string "start_time"
+    t.string "available"
+    t.text "remarks"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["air_operation_id"], name: "index_air_ops_helicopters_on_air_operation_id"
+  end
+
+  create_table "air_ops_supervisions", force: :cascade do |t|
+    t.bigint "air_operation_id", null: false
+    t.string "faa_number"
+    t.string "call_sign"
+    t.string "make_model"
+    t.string "base"
+    t.string "start_time"
+    t.string "available"
+    t.text "remarks"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["air_operation_id"], name: "index_air_ops_supervisions_on_air_operation_id"
+  end
+
+  create_table "air_ops_uas_entries", force: :cascade do |t|
+    t.bigint "air_operation_id", null: false
+    t.string "identifier"
+    t.string "cat_type"
+    t.string "make_model"
+    t.string "location"
+    t.string "start_time"
+    t.string "available"
+    t.string "leader_contact"
+    t.text "remarks"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["air_operation_id"], name: "index_air_ops_uas_entries_on_air_operation_id"
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -867,6 +1021,10 @@ ActiveRecord::Schema.define(version: 2026_10_16_000000) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "air_operations", "plans"
+  add_foreign_key "air_ops_helicopters", "air_operations"
+  add_foreign_key "air_ops_supervisions", "air_operations"
+  add_foreign_key "air_ops_uas_entries", "air_operations"
   add_foreign_key "assignments", "org_units"
   add_foreign_key "demob_notifications", "demobs"
   add_foreign_key "demob_notifications", "incidents"
