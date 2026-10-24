@@ -27,6 +27,12 @@
 // browser at all.
 //= require jquery-ui/widgets/sortable
 //= require jquery-ui/widgets/draggable
+// disable-selection ships separately from the widgets. We chain it on
+// the sortable init (boards.js, phone_205a.js) to stop the browser's
+// text-highlighting while a user drags a card; without this require
+// $(...).sortable(...).disableSelection throws and the move handoff
+// never binds, which breaks the T-card move button.
+//= require jquery-ui/disable-selection
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker
