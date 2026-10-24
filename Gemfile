@@ -4,7 +4,7 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-ruby '3.1.4'
+ruby '3.2.2'
 
 # Choose between PostgreSQL and MySQL (comment out one of the following gems)
 gem 'pg', '~> 1.1'
@@ -69,7 +69,7 @@ gem 'ransack'
 gem 'select2-rails'
 # Get e-mail notifications when exceptions happen in the production environment
 gem 'exception_notification'
-gem 'best_in_place', '~> 3.0.1'
+gem 'best_in_place', '~> 3.1'
 gem "font-awesome-rails"
 gem 'font_awesome5_rails'
 gem 'bootstrap-datepicker-rails'
@@ -100,6 +100,19 @@ gem 'good_job', '~> 3.99'
 # slow query can't tie up a Puma worker indefinitely — the worker is
 # freed to serve the next user instead of racing Heroku's 30s H12.
 gem 'rack-timeout'
+# Anthropic SDK — powers the admin chat agent (/admin/chat). API key
+# read from ENV['ANTHROPIC_API_KEY']; on Heroku set it with
+# `heroku config:set ANTHROPIC_API_KEY=sk-ant-...`. Pinned to the
+# official 1.x line (the 0.x line is a different, unofficial gem).
+# `require: false` — the gem's eager-require path trips an autoload
+# order bug (uninitialized Anthropic::Beta). We require it inside the
+# AdminChat service, where Rails has fully booted by the time it's hit.
+gem 'anthropic', '~> 1.0', require: false   # loaded explicitly in config/application.rb
+# Redis-backed Rails.cache store on production — holds admin chat
+# history (session cookie is too small). Heroku Redis provides
+# REDIS_URL / REDIS_TLS_URL env vars via the addon.
+gem 'redis', '~> 4.8'
+gem 'hiredis', '~> 0.6'
 
 group :test do
   gem 'database_cleaner'

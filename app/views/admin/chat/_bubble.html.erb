@@ -1,0 +1,7 @@
+<% # Single chat bubble. role is "user" or "assistant"; text is the
+   # plain-text body. Called by show.html.erb for replay and by the
+   # inline JS for live turns. %>
+<div class="admin-chat-msg admin-chat-msg-<%= role %>">
+  <div class="admin-chat-msg-role"><%= role.capitalize %></div>
+  <div class="admin-chat-msg-body"><%= simple_format(text.to_s) %></div>
+</div>

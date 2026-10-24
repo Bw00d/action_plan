@@ -62,8 +62,26 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  # Shared Redis-backed cache store. Powers Rails.cache, which the
+  # admin chat (/admin/chat) uses to hold conversation history across
+  # requests. Heroku Redis exposes REDIS_TLS_URL on TLS-required plans
+  # (anything above the free tier) and REDIS_URL on the plain endpoint;
+  # prefer TLS. 1-hour per-key default TTL; the chat sets its own
+  # (2.hours) when it writes, so this just caps unbounded entries.
+  redis_url = ENV['REDIS_TLS_URL'] || ENV['REDIS_URL']
+  if redis_url.present?
+    config.cache_store = :redis_cache_store, {
+      url:               redis_url,
+      ssl_params:        { verify_mode: OpenSSL::SSL::VERIFY_NONE },
+      connect_timeout:   1,       # fail fast; falls back to null
+      read_timeout:      1,
+      write_timeout:     1,
+      reconnect_attempts: 2,
+      error_handler:     ->(method:, returning:, exception:) {
+        Rails.logger.error("[Rails.cache] #{method} -> #{exception.class}: #{exception.message}")
+      }
+    }
+  end
 
   # Background jobs run via GoodJob on a separate worker dyno (see
   # Procfile). Postgres-backed — same DB as the app, so no extra add-on.

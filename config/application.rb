@@ -1,5 +1,14 @@
 require_relative 'boot'
 
+# The anthropic gem (official 1.x SDK) re-opens nested modules like
+# `Anthropic::Beta` from many files; once Rails 6's Zeitwerk is loaded
+# below, its const_missing hook raises on those lookups mid-boot and
+# the gem fails to load. Requiring the gem FIRST — before `rails/all`
+# wires Zeitwerk up — lets Ruby define the whole module tree with
+# plain Ruby semantics. The gem is pinned `require: false` in the
+# Gemfile so Bundler.require below doesn't re-trigger loading.
+require 'anthropic'
+
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems

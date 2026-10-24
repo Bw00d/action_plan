@@ -1,0 +1,121 @@
+// Admin Chat (/admin/chat) — Claude agent UI, admin-only.
+.admin-chat {
+  margin-top: 20px;
+  margin-bottom: 40px;
+
+  .admin-chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+
+    h3 small { color: #6b778c; font-size: 13px; margin-left: 6px; }
+  }
+
+  .admin-chat-panel { padding: 0; }
+
+  .admin-chat-log {
+    height: 60vh;
+    overflow-y: auto;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e3e8ee;
+    background: #fafbfc;
+  }
+
+  .admin-chat-msg {
+    margin-bottom: 12px;
+    .admin-chat-msg-role {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b778c;
+      margin-bottom: 2px;
+    }
+    .admin-chat-msg-body {
+      background: #fff;
+      border: 1px solid #e3e8ee;
+      border-radius: 4px;
+      padding: 6px 10px;
+      p { margin: 0 0 6px; &:last-child { margin-bottom: 0; } }
+    }
+  }
+  .admin-chat-msg-user .admin-chat-msg-body {
+    background: #e8f0ff;
+    border-color: #c7d9ff;
+  }
+  .admin-chat-msg-assistant .admin-chat-msg-body {
+    background: #fff;
+  }
+  .admin-chat-msg-system .admin-chat-msg-body {
+    background: #fff6e5;
+    border-color: #ffd59a;
+    color: #7a4a00;
+  }
+
+  .admin-chat-thinking {
+    font-style: italic;
+    color: #6b778c;
+    font-size: 12px;
+    padding: 4px 8px;
+
+    &::after {
+      content: '…';
+      animation: adminChatDots 1.2s steps(4, end) infinite;
+    }
+    // When a tool call completes the JS flips the banner's class so
+    // the user sees a stable check/x instead of the animated dots.
+    &.is-ok, &.is-error { &::after { content: ''; animation: none; } }
+    &.is-ok    { color: #1a7f1a; }
+    &.is-error { color: #c00; }
+  }
+  @keyframes adminChatDots {
+    0%,20%  { content: ''; }
+    40%     { content: '.'; }
+    60%     { content: '..'; }
+    80%,100% { content: '...'; }
+  }
+
+  // Yellow proposal card the admin reviews before clicking Approve.
+  .admin-chat-proposal {
+    margin: 12px 0;
+    border: 1px solid #ffd59a;
+    background: #fff6e5;
+    border-radius: 4px;
+    padding: 10px 12px;
+
+    h5 { margin: 0 0 8px; color: #7a4a00; font-weight: 700; }
+    dl { margin: 0 0 8px; display: grid; grid-template-columns: 110px 1fr; gap: 2px 10px; }
+    dt { font-weight: 600; color: #5a3600; }
+    dd { margin: 0; color: #333; }
+
+    .admin-chat-proposal-actions { display: flex; gap: 6px; }
+    .admin-chat-proposal-result {
+      margin-top: 8px;
+      font-size: 12px;
+      &.ok    { color: #1a7f1a; font-weight: 600; }
+      &.error { color: #c00; }
+    }
+  }
+
+  .admin-chat-form {
+    display: flex;
+    gap: 6px;
+    padding: 10px;
+
+    textarea {
+      flex: 1;
+      resize: vertical;
+      min-height: 44px;
+      border: 1px solid #c1c7d0;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font: inherit;
+    }
+    button[type="submit"] { align-self: flex-end; }
+  }
+
+  .admin-chat-hint {
+    padding: 0 12px 10px;
+    color: #6b778c;
+    font-size: 11px;
+  }
+}

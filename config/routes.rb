@@ -77,6 +77,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
+    # Admin-only chat with Claude — read-only data exploration plus
+    # propose-then-approve demobs. See AdminChat::ClaudeService.
+    get    'chat',             to: 'chat#show',    as: :chat
+    post   'chat/messages',    to: 'chat#create',  as: :chat_messages
+    delete 'chat',             to: 'chat#destroy', as: :reset_chat
+    post   'chat/approvals',   to: 'chat#approve', as: :chat_approvals
   end
 
   resources :incidents do
