@@ -4,9 +4,44 @@ class DemobNotificationsController < ApplicationController
   before_action :set_incident
   before_action :set_notification, only: [:update, :destroy, :transmit]
 
+  # Fixed order so dispatcher-facing groups always render the same way,
+  # with "OTHER" collecting anything unexpected (nil / SUPPLIES / etc.).
+  CATEGORY_ORDER = %w[AIRCRAFT CREW EQUIPMENT OVERHEAD].freeze
+
   def index
-    @pending     = @incident.demob_notifications.pending.order(:actual_release_date, :id)
+    pending_scope = @incident.demob_notifications.pending
+                              .includes(:resource)
+                              .order(:actual_release_date, :id)
+    @pending     = pending_scope.to_a
     @transmitted = @incident.demob_notifications.transmitted.order(transmitted_at: :desc)
+
+    # Group by the parent resource's category so a single page can
+    # print or export JUST one dispatcher-facing bucket at a time.
+    grouped = @pending.group_by { |n| n.resource&.category.to_s.upcase.presence || 'OTHER' }
+    @pending_by_category = CATEGORY_ORDER.each_with_object({}) do |cat, h|
+      rows = grouped.delete(cat)
+      h[cat] = rows if rows.present?
+    end
+    # Anything that wasn't in CATEGORY_ORDER falls under OTHER (sorted
+    # alphabetically within the bucket so the rendered output is stable).
+    unless grouped.empty?
+      @pending_by_category['OTHER'] = grouped.values.flatten
+                                              .sort_by { |n| n.actual_release_date.to_s }
+    end
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        cat     = params[:category].to_s.upcase.presence
+        rows    = cat ? @pending_by_category.fetch(cat, []) : @pending
+        label   = cat || 'all'
+        stamp   = Time.zone.now.strftime('%Y%m%d_%H%M')
+        send_data demob_notifications_csv(rows),
+                  filename:    "demob_notifications_#{@incident.id}_#{label.downcase}_#{stamp}.csv",
+                  type:        'text/csv',
+                  disposition: 'attachment'
+      end
+    end
   end
 
   def update
@@ -52,5 +87,29 @@ class DemobNotificationsController < ApplicationController
       :est_arrival_date, :est_arrival_time,
       :remarks
     )
+  end
+
+  # Flat CSV matching the on-screen table — opens cleanly in Excel /
+  # Numbers / Sheets so a dispatcher can read it without a browser.
+  def demob_notifications_csv(rows)
+    require 'csv'
+    CSV.generate do |out|
+      out << ['Request #', 'Unit ID', 'Name',
+              'Actual Release Date', 'Actual Release Time',
+              'Return Travel Method', 'Demob City/State',
+              'RON', 'RON Location',
+              'Est Arrival Date', 'Est Arrival Time',
+              'Remarks']
+      rows.each do |n|
+        out << [
+          n.request_number, n.unit_id, n.name,
+          n.actual_release_date, n.actual_release_time,
+          n.return_travel_method, n.demob_city_state,
+          n.ron_flag, n.ron_location,
+          n.est_arrival_date, n.est_arrival_time,
+          n.remarks.to_s.gsub(/\r?\n+/, ' / ')
+        ]
+      end
+    end
   end
 end

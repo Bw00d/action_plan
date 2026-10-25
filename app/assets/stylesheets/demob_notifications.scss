@@ -127,6 +127,32 @@
   }
 }
 
+// Category cards — one per AIRCRAFT / CREW / EQUIPMENT / OVERHEAD so
+// each dispatcher-facing bucket can be printed or exported on its own.
+.dn-category-card {
+  margin: 0 0 24px;
+  padding: 10px 0 0;
+  border-top: 1px solid #c1c7d0;
+}
+.dn-category-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
+}
+.dn-category-title {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.dn-category-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 @media print {
   body.printing-demob-notifs {
     header,
@@ -150,4 +176,14 @@
       thead { display: table-header-group; }
     }
   }
+
+  // Scoped print — printDemobCategory(cat) adds body.printing-dn-only-<cat>,
+  // which hides every category card EXCEPT the one that matches. Each
+  // category we support gets a rule so unknown categories collapse
+  // (printing-dn-only-other handles the catch-all bucket).
+  body.printing-dn-only-aircraft  .dn-category-card:not([data-dn-category="aircraft"])  { display: none !important; }
+  body.printing-dn-only-crew      .dn-category-card:not([data-dn-category="crew"])      { display: none !important; }
+  body.printing-dn-only-equipment .dn-category-card:not([data-dn-category="equipment"]) { display: none !important; }
+  body.printing-dn-only-overhead  .dn-category-card:not([data-dn-category="overhead"])  { display: none !important; }
+  body.printing-dn-only-other     .dn-category-card:not([data-dn-category="other"])     { display: none !important; }
 }
