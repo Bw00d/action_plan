@@ -723,6 +723,11 @@
           $card.attr('data-assignment-length', data.resource.assignment_length);
           if (data.resource.fwd) $card.attr('data-fwd', data.resource.fwd);
           $card.find('[data-field="lwd"]').text(data.resource.lwd || '');
+          // Inline work-period hint next to the Leader field — the span
+          // is always present in the markup, possibly empty.
+          if (data.resource.leader_period !== undefined) {
+            $card.find('.board-card-leader-period').text(data.resource.leader_period || '');
+          }
         }
       }).fail(function (xhr) {
         var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Swap failed']).join(', ');

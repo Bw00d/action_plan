@@ -169,6 +169,12 @@ class ResourceEventsController < ApplicationController
     @resource.reload
     @resource.resource_events.reload   # drop any association cache from the transaction
     lwd = @resource.last_work_day
+    cwe = @resource.current_work_entry
+    leader_period = if cwe && cwe.actual_fwd && cwe.lwd
+                      "(#{cwe.actual_fwd.strftime('%-m/%-d/%y')} – #{cwe.lwd.strftime('%-m/%-d/%y')})"
+                    else
+                      ''
+                    end
     render json: {
       # formats: [:html] is required — this action responds as JSON, so
       # render_to_string inherits that format and would look for
@@ -186,7 +192,8 @@ class ResourceEventsController < ApplicationController
         fwd:               @resource.fwd&.iso8601,
         assignment_length: @resource.assignment_length.to_i,
         lwd:               lwd.is_a?(Date) ? lwd.strftime('%m/%d/%y') : '',
-        notes:             @resource.notes.to_s
+        notes:             @resource.notes.to_s,
+        leader_period:     leader_period
       }
     }
   end
