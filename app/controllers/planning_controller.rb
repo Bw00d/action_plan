@@ -62,12 +62,26 @@ class PlanningController < ApplicationController
   # Pull all swap events across every resource on the incident in a
   # single query so the view doesn't N+1 per resource. Then sort by
   # (resource category, order_number natural, FWD, created_at).
+  #
+  # Post-shift-refactor: swaps live as :work entries. Scheduled = no
+  # actual_fwd yet; completed = both actuals set; a :work entry with
+  # actual_fwd set and actual_lwd nil is the CURRENT operator and is
+  # omitted (matches the pre-refactor behavior where the current
+  # operator wasn't in the log). Legacy :scheduled_swap /
+  # :completed_swap kinds are still included for any environment that
+  # hasn't backfilled yet.
   def load_sorted_swap_events
+    legacy = [ResourceEvent.kinds[:scheduled_swap],
+              ResourceEvent.kinds[:completed_swap]]
+    work   = ResourceEvent.kinds[:work]
+
     events = ResourceEvent
       .joins(:resource)
       .where(resources: { incident_id: @incident.id })
-      .where(kind: [ResourceEvent.kinds[:scheduled_swap],
-                    ResourceEvent.kinds[:completed_swap]])
+      .where(
+        'kind IN (?) OR (kind = ? AND (actual_fwd IS NULL OR actual_lwd IS NOT NULL))',
+        legacy, work
+      )
       .includes(:resource, :user)
       .to_a
 
@@ -91,13 +105,15 @@ class PlanningController < ApplicationController
               'Phone', 'Notes', 'Logged by', 'Logged at']
       events.each do |ev|
         r = ev.resource
+        display_fwd = ev.completed_swap? ? (ev.actual_fwd || ev.fwd) : ev.fwd
+        display_lwd = ev.completed_swap? ? (ev.actual_lwd || ev.lwd) : ev.lwd
         out << [
           r.full_order_number,
           r.name,
           ev.scheduled_swap? ? 'Scheduled' : 'Completed',
           ev.leader,
-          ev.fwd&.strftime('%m/%d/%y'),
-          ev.lwd&.strftime('%m/%d/%y'),
+          display_fwd&.strftime('%m/%d/%y'),
+          display_lwd&.strftime('%m/%d/%y'),
           ev.phone,
           ev.body.to_s.gsub(/\r?\n+/, ' / '),   # flatten multi-line notes for CSV
           ev.user&.full_name.presence || ev.user&.email&.split('@')&.first,

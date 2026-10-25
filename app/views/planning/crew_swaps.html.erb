@@ -56,8 +56,14 @@
               <% end %>
             </td>
             <td><%= ev.leader %></td>
-            <td class="nowrap"><%= ev.fwd&.strftime('%m/%d/%y') %></td>
-            <td class="nowrap"><%= ev.lwd&.strftime('%m/%d/%y') %></td>
+            <%# For a completed shift show the ACTUAL window the
+                operator covered; for a scheduled upcoming shift show
+                the planned window. actual_* fall back to planned on
+                legacy rows that don't have actuals set. %>
+            <% display_fwd = ev.completed_swap? ? (ev.actual_fwd || ev.fwd) : ev.fwd %>
+            <% display_lwd = ev.completed_swap? ? (ev.actual_lwd || ev.lwd) : ev.lwd %>
+            <td class="nowrap"><%= display_fwd&.strftime('%m/%d/%y') %></td>
+            <td class="nowrap"><%= display_lwd&.strftime('%m/%d/%y') %></td>
             <td class="nowrap"><%= ev.phone %></td>
             <td class="planning-swap-notes-cell"><%= simple_format(ev.body.to_s) %></td>
             <td><%= ev.user&.full_name.presence || ev.user&.email&.split('@')&.first %></td>
