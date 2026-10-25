@@ -94,49 +94,47 @@ class ResourceEventsController < ApplicationController
 
   # POST /resources/:resource_id/events/:id/swap_now
   # Promotes an unpromoted :work entry to current operator:
-  #   1. Close out the previously-current :work entry — set its
-  #      actual_lwd to yesterday so it ends the day before the swap.
-  #   2. Promote THIS :work entry — set actual_fwd to today. Its
-  #      planned lwd stays as the user-entered end date, so
-  #      Resource#last_work_day (now max lwd across :work entries)
-  #      continues to return the right planned end.
-  #   3. Mirror the new operator's leader/phone/assignment_length onto
-  #      the Resource row. During the shift-refactor transition some
-  #      views still read these columns rather than the timeline, so
-  #      updating them keeps the UI consistent until #95 switches the
-  #      views over.
-  #   4. Move the primary-roster star to the incoming leader.
+  #   1. Compute swap date = incoming entry's PLANNED fwd (not today).
+  #      Rationale: SWAP NOW means "execute this scheduled swap";
+  #      actuals should match the plan the user entered. If the user
+  #      wants a different swap date they edit the scheduled entry
+  #      first. Falls back to today only when the entry has no
+  #      planned fwd (shouldn't happen under validation).
+  #   2. Close out the previously-current :work entry — actual_lwd =
+  #      swap_date - 1. Clamped to be no earlier than that entry's
+  #      actual_fwd so the window never inverts.
+  #   3. Promote THIS :work entry — actual_fwd = swap_date.
+  #   4. Mirror leader/phone/assignment_length onto the Resource row
+  #      for views that still read these columns.
+  #   5. Move the primary-roster star to the incoming leader.
   def swap_now
-    # scheduled_swap? is a shim that matches unpromoted :work entries,
-    # so this gate works for both legacy and new rows.
+    # scheduled_swap? is a shim that matches unpromoted :work entries.
     unless @event.scheduled_swap?
       render json: { errors: ['Only upcoming shift entries can be promoted.'] }, status: :unprocessable_entity
       return
     end
 
-    today = Date.current
+    swap_date = @event.fwd || Date.current
 
     ResourceEvent.transaction do
-      # 1. Close out the currently-active :work entry (if any). We
-      #    want the previous operator to show as having stopped the
-      #    day before this swap. Scope: :work entries that have been
-      #    promoted (actual_fwd set) but not yet closed (actual_lwd
-      #    nil).
-      @resource.resource_events
-               .where(kind: ResourceEvent.kinds[:work])
-               .where.not(actual_fwd: nil)
-               .where(actual_lwd: nil)
-               .update_all(actual_lwd: today - 1.day,
-                           updated_at: Time.current)
+      # 1. Close out the currently-active :work entry (if any). Cap
+      #    the new actual_lwd at the entry's actual_fwd so an early
+      #    swap can't produce actual_lwd < actual_fwd.
+      current_entry = @resource.resource_events
+                               .where(kind: ResourceEvent.kinds[:work])
+                               .where.not(actual_fwd: nil)
+                               .where(actual_lwd: nil)
+                               .first
+      if current_entry
+        proposed_lwd = swap_date - 1.day
+        safe_lwd     = [proposed_lwd, current_entry.actual_fwd].max
+        current_entry.update!(actual_lwd: safe_lwd)
+      end
 
       # 2. Promote the incoming :work entry.
-      @event.update!(actual_fwd: today)
+      @event.update!(actual_fwd: swap_date)
 
       # 3. Mirror onto the Resource row for views that still read it.
-      #    assignment_length is back-calculated from the event's
-      #    planned window so Resource#last_work_day (which also looks
-      #    at timeline entries) stays consistent for the legacy
-      #    callers that compute `fwd + length - 1` themselves.
       new_length = if @event.lwd && @resource.fwd
                      [(@event.lwd - @resource.fwd).to_i + 1, 1].max
                    else
