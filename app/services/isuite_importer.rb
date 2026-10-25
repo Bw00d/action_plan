@@ -27,10 +27,10 @@ class IsuiteImporter
   # only diffed when the CSV actually provided a value.
   RESOURCE_DIFF_FIELDS = %i[
     name position agency number_personnel assignment_length
-    checkin_date fwd r_and_r
+    checkin_date fwd
   ].freeze
 
-  ROSTER_DIFF_FIELDS = %i[name position agency released].freeze
+  ROSTER_DIFF_FIELDS = %i[name position agency].freeze
 
   Result = Struct.new(
     :resources_created, :resources_skipped, :resources_updated,
@@ -110,31 +110,32 @@ class IsuiteImporter
 
     # Status handling:
     #   C = Checked in     → import as active
-    #   R = On R&R         → import with r_and_r: true
+    #   P = Pending demob (~48h out) → treat same as C
     #   F = Filled (iSuite requisition filled elsewhere) → ignore entirely
-    #   D = Demobed →
+    #   D = Demobed, R = Reassigned → BOTH mean "off the incident on
+    #       this request number." Route to the demob flow:
     #     • not in our DB OR already released here → ignore
-    #     • in our DB and still active → surface as a "DEMOB" change the
-    #       user can accept in the preview; apply sets release_date and
-    #       cascades through the normal demob flow (DemobNotification +
-    #       remove_from_board).
+    #     • in our DB and still active → surface as a "DEMOB" change
+    #       the user can accept in the preview; apply sets release_date
+    #       and cascades through the normal demob flow (DemobNotification
+    #       + remove_from_board).
     parents.each do |row|
       if row[:category].nil? then plan.service_skipped += 1; next; end
       # F = Filled requisition (filled from elsewhere) → ignore. Other
-      # statuses pass through: C/R/P are all currently checked in
-      # (P = pending demob, usually within 48h, treated same as C), and
-      # D gets its own branch below.
+      # statuses: C/P are currently checked in (P = pending demob,
+      # usually within 48h, treated same as C). D/R both mean off the
+      # incident on this request number and go through the branch below.
       if row[:status] == "F" then plan.filled_skipped += 1; next; end
 
       existing = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
 
-      if row[:status] == "D"
+      if %w[D R].include?(row[:status])
         if existing.nil? || existing.release_date.present?
           plan.demobed_skipped += 1
         else
-          # Active in our DB but iSuite marks demobed → propose a demob.
-          # Prefer the CSV's Actual Release Date when provided; fall
-          # back to today for older exports that omit it.
+          # Active in our DB but iSuite marks demobed/reassigned →
+          # propose a demob. Prefer the CSV's Actual Release Date when
+          # provided; fall back to today for older exports that omit it.
           release_date = row[:actual_release_date] || Date.current
           plan.resource_changes << {
             resource_id:  existing.id,
@@ -170,15 +171,15 @@ class IsuiteImporter
     children.each do |row|
       if row[:category].nil? then plan.service_skipped += 1; next; end
       # F = Filled requisition (filled from elsewhere) → ignore. Other
-      # statuses pass through: C/R/P are all currently checked in
-      # (P = pending demob, usually within 48h, treated same as C), and
-      # D gets its own branch below.
+      # statuses: C/P are currently checked in (P = pending demob,
+      # usually within 48h, treated same as C). D/R both mean off the
+      # incident on this request number and go through the branch below.
       if row[:status] == "F" then plan.filled_skipped += 1; next; end
 
       parent          = resource_by_key["#{row[:category]}-#{row[:parent_num]}"]
       existing_roster = parent&.rosters&.find_by(order_number: row[:child_num])
 
-      if row[:status] == "D"
+      if %w[D R].include?(row[:status])
         if existing_roster.nil? || existing_roster.released_at.present?
           plan.demobed_skipped += 1
         else
@@ -239,8 +240,7 @@ class IsuiteImporter
     incoming = {
       name:     row[:name].presence,
       position: row[:item_code].presence,
-      agency:   row[:agency].presence,
-      released: row[:status] == "R"
+      agency:   row[:agency].presence
     }
     incoming.each_with_object({}) do |(field, new_val), diffs|
       # `released` is a boolean derived from status; only diff when the
@@ -272,7 +272,6 @@ class IsuiteImporter
       assignment_length: length,
       checkin_date:      row[:checkin_date],
       fwd:               row[:fwd],
-      r_and_r:           row[:status] == "R",
       # Newer-export fields — only diff when the CSV actually provided
       # a non-blank value so sparse exports don't wipe existing data.
       leader:            row[:leader_name].presence,
@@ -330,7 +329,6 @@ class IsuiteImporter
         assignment_length: length,
         checkin_date:      row[:checkin_date],
         fwd:               row[:fwd],
-        r_and_r:           row[:status] == "R",
         leader:            row[:leader_name].presence,
         phone:             row[:cell_phone].presence,
         return_city:       row[:demob_city].presence
@@ -389,8 +387,7 @@ class IsuiteImporter
         name:         row[:name],
         position:     row[:item_code],
         order_number: row[:child_num],
-        agency:       row[:agency],
-        released_at:  (row[:status] == "R" ? Time.current : nil)
+        agency:       row[:agency]
       )
       if roster.save
         result.rosters_created += 1
