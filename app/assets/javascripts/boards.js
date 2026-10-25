@@ -877,10 +877,12 @@
     // cleanly. Prompt so the user acknowledges the choice.
     //
     // best_in_place fires `best_in_place:before-update` synchronously
-    // right before capturing the input value for save. If the user
-    // cancels, we reset the input to the old value — update() then sees
-    // no change (compare at best_in_place.js:103) and aborts without
-    // sending an AJAX request.
+    // right before capturing the input value for save. We abort by
+    // resetting the input to the old value (triggers best_in_place's
+    // "no change" early-return at line 103), then show sweetAlert2
+    // async. On confirm we re-send the save directly via jQuery.ajax
+    // using the same URL + payload shape best_in_place would have used,
+    // and patch the display span + card data attrs + LWD in place.
     $(page).on('best_in_place:before-update', '[data-field="assignment_length"] .best_in_place', function () {
       var $el    = $(this);
       var $input = $el.find('input').first();
@@ -888,11 +890,64 @@
       var oldVal = String($el.data('bipValue') || $el.attr('data-bip-value') || '').trim();
       var newVal = String($input.val() || '').trim();
       if (!oldVal || newVal === oldVal) return;
-      var msg = 'Change assignment length from ' + oldVal + ' to ' + newVal + ' days?\n\n' +
-                'If a new operator is coming in, use Schedule Swap instead so the ' +
-                'previous operator stays in the shift log.';
-      if (!window.confirm(msg)) {
-        $input.val(oldVal);   // triggers best_in_place's "no change" abort
+
+      // Allow a save initiated by our own confirm flow (flag set below).
+      if ($el.data('shift-length-confirmed') === newVal) {
+        $el.removeData('shift-length-confirmed');
+        return;
+      }
+
+      // Abort best_in_place's save by resetting the input to the old value.
+      $input.val(oldVal);
+
+      var title = 'Change assignment length from ' + oldVal + ' to ' + newVal + ' days?';
+      var text  = 'If a new operator is coming in, use Schedule Swap instead ' +
+                  'so the previous operator stays in the shift log.';
+
+      function sendManualSave() {
+        var url    = $el.data('bipUrl')    || $el.attr('data-bip-url')    || document.location.pathname;
+        var object = $el.data('bipObject') || $el.attr('data-bip-object') || 'resource';
+        var attr   = $el.data('bipAttribute') || $el.attr('data-bip-attribute') || 'assignment_length';
+        var method = $el.data('bipMethod')    || $el.attr('data-bip-method')    || 'PATCH';
+        var data   = { _method: method };
+        data[object] = {};
+        data[object][attr] = newVal;
+        data['authenticity_token'] = csrf();
+        $.ajax({
+          url:     url,
+          method:  'POST',   // _method param overrides for Rails routing
+          data:    data,
+          headers: { 'Accept': 'application/json' }
+        }).done(function () {
+          $el.text(newVal);
+          $el.data('bipValue', newVal);
+          $el.attr('data-bip-value', newVal);
+          var $card = $el.closest('.board-card');
+          $card.attr('data-assignment-length', newVal);
+          recalcLwd($card);
+        }).fail(function (xhr) {
+          var msg = (xhr.responseJSON && xhr.responseJSON.errors || ['Length change failed']).join(', ');
+          if (typeof sweetAlert === 'function') {
+            sweetAlert({ title: msg, type: 'error' });
+          } else {
+            alert(msg);
+          }
+        });
+      }
+
+      if (typeof sweetAlert === 'function') {
+        sweetAlert({
+          title: title,
+          text:  text,
+          type:  'warning',
+          showCancelButton:   true,
+          confirmButtonText:  'Change length',
+          confirmButtonColor: '#d9534f',
+          allowEnterKey:      false
+        }).then(function () { sendManualSave(); },
+                function () { /* user dismissed */ });
+      } else {
+        if (window.confirm(title + '\n\n' + text)) sendManualSave();
       }
     });
 
