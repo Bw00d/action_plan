@@ -62,7 +62,14 @@
     var type = (el.type || '').toLowerCase();
     if (type && type !== 'text' && type !== 'tel') return false;
     var name = el.getAttribute('name') || '';
-    if (!/phone/i.test(name)) return false;
+    // Only match "phone" inside the ATTRIBUTE portion of the name, not
+    // the model prefix. Rails nests form field names as
+    // `model[attr]`, and the 205A model is `phone205a_entry[...]` —
+    // without this scoping, every field on that form (position, name,
+    // etc.) matched /phone/i and the formatter wiped non-digit input.
+    var attrMatch = name.match(/\[([^\]]+)\]\s*$/);
+    var attr = attrMatch ? attrMatch[1] : name;
+    if (!/phone/i.test(attr)) return false;
     // Opt-out: any ancestor marked data-no-phone-format escapes the
     // auto-formatter. Used by fields where "phone" appears in the
     // column name but the value is really free text (e.g. the 206
