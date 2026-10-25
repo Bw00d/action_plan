@@ -126,7 +126,19 @@
           <dd><%= best_in_place resource, :position, as: :input %></dd>
 
           <dt>Leader</dt>
-          <dd class="wide"><%= best_in_place resource, :leader, as: :input %></dd>
+          <dd class="wide">
+            <%= best_in_place resource, :leader, as: :input %>
+            <%# Current operator's work period: actual_fwd (when they
+                arrived) → planned lwd (what they're committed through).
+                Only shown when there's a current :work entry with both
+                dates — new resources mid-fill won't flash the span. %>
+            <% cwe = resource.current_work_entry %>
+            <% if cwe && cwe.actual_fwd && cwe.lwd %>
+              <span class="muted board-card-leader-period">
+                (<%= cwe.actual_fwd.strftime('%-m/%-d/%y') %>&nbsp;&ndash;&nbsp;<%= cwe.lwd.strftime('%-m/%-d/%y') %>)
+              </span>
+            <% end %>
+          </dd>
 
           <dt>Agency</dt>
           <dd><%= best_in_place resource, :agency, as: :input %></dd>

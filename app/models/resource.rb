@@ -398,6 +398,12 @@ class Resource < ApplicationRecord
     end
   end
 
+  # The currently-active :work entry (actual_fwd set, actual_lwd nil).
+  # Nil when there's no current operator. Prefers the loaded collection.
+  def current_work_entry
+    work_entries.detect { |e| e.actual_fwd.present? && e.actual_lwd.nil? }
+  end
+
   def formatted_fwd
     if self.fwd
      return self.fwd.strftime("%m/%d")
