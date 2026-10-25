@@ -17,7 +17,7 @@ $(document).on("turbolinks:load", function() {
     if (!$search.length || !$tbody.length) return;
 
     function normalize(s) { return (s || '').toString().toLowerCase(); }
-    function isHeaderRow($tr) { return $tr.find('td.grayed strong').length > 0; }
+    function isHeaderRow($tr) { return $tr.hasClass('ics-211-section-header'); }
 
     function applySearch() {
       var q = normalize($search.val()).trim();
@@ -59,6 +59,55 @@ $(document).on("turbolinks:load", function() {
       $search.val('').focus();
       applySearch();
     });
+  })();
+
+  // ICS-211 collapsible sections — click CHECKED IN / RELEASED / ON R&R
+  // headers to collapse their row group. State persists per-incident in
+  // localStorage so a collapsed section stays collapsed across reloads.
+  (function () {
+    var $panel = $('#ics-211-info');
+    if (!$panel.length) return;
+    var $tbody = $panel.find('#incident-resources');
+    if (!$tbody.length) return;
+
+    // Per-incident storage key so each incident has its own state.
+    var m = window.location.pathname.match(/\/incidents\/(\d+)/);
+    var incidentId = m ? m[1] : 'default';
+    var storageKey = 'ics211.collapsed.' + incidentId;
+
+    function readState() {
+      try { return JSON.parse(localStorage.getItem(storageKey) || '[]'); }
+      catch (e) { return []; }
+    }
+    function writeState(arr) {
+      try { localStorage.setItem(storageKey, JSON.stringify(arr)); }
+      catch (e) { /* storage disabled — collapse state is per-session only */ }
+    }
+    function applyState() {
+      var collapsed = readState();
+      $panel.find('.ics-211-section-header').each(function () {
+        var $hdr = $(this);
+        var name = $hdr.data('section-target');
+        var isCollapsed = collapsed.indexOf(name) !== -1;
+        $hdr.toggleClass('is-collapsed', isCollapsed);
+        // Hide section rows but leave the roster-toggle (.is-hidden)
+        // state on individual rosters alone so expanding the section
+        // doesn't undo an earlier roster-collapse.
+        $tbody.find('tr[data-section="' + name + '"]').toggle(!isCollapsed);
+      });
+    }
+
+    $panel.on('click', '.ics-211-section-header', function () {
+      var name = $(this).data('section-target');
+      if (!name) return;
+      var collapsed = readState();
+      var idx = collapsed.indexOf(name);
+      if (idx === -1) collapsed.push(name); else collapsed.splice(idx, 1);
+      writeState(collapsed);
+      applyState();
+    });
+
+    applyState();
   })();
 
   // Auto-size best_in_place inputs to fit their content. Modern browsers

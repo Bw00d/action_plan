@@ -422,6 +422,47 @@ a.delete-resource:hover {
 #ics-211-info {
 }
 
+// Collapsible section headers for the 211 (CHECKED IN / RELEASED / ON R&R).
+// Click the row to toggle; caret rotates and the rows below the header
+// slide out. State persists per-incident via localStorage (see resources.js).
+.ics-211-section-header {
+  cursor: pointer;
+  user-select: none;
+
+  td {
+    background: #eef1f5;
+    padding: 6px 10px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-top: 1px solid #c1c7d0;
+    border-bottom: 1px solid #c1c7d0;
+  }
+  &:hover td { background: #e1e6ec; }
+  &.grayed td { background: #d7dde4; }
+  &.grayed:hover td { background: #c8ced6; }
+
+  .ics-211-section-caret {
+    display: inline-block;
+    width: 14px;
+    margin-right: 6px;
+    color: #6b778c;
+    transition: transform 0.12s ease-in-out;
+    transform-origin: center;
+  }
+  &.is-collapsed .ics-211-section-caret {
+    transform: rotate(-90deg);
+  }
+
+  .ics-211-section-count {
+    color: #6b778c;
+    font-weight: normal;
+    margin-left: 6px;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+}
+
 .ics-211-search {
   display: flex;
   align-items: center;

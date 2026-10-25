@@ -33,11 +33,21 @@
         </tr>
       </thead>
       <tbody id="incident-resources">
-        <% natural_order_sort(@tally_resources.assigned).each do |r|  %>
+        <%# ───── CHECKED IN ───── %>
+        <% checked_in_resources = natural_order_sort(@tally_resources.assigned).to_a %>
+        <tr class="ics-211-section-header" data-section-target="checked-in">
+          <td colspan="12">
+            <span class="ics-211-section-caret" aria-hidden="true">▼</span>
+            <strong>CHECKED IN</strong>
+            <span class="ics-211-section-count">(<%= checked_in_resources.size %>)</span>
+          </td>
+        </tr>
+        <% checked_in_resources.each do |r|  %>
 
 
 
-        <tr id="resource-<%= r.id %>" class="incident-resource<%= ' has-roster' if r.rosters.any? %>">
+        <tr id="resource-<%= r.id %>" class="incident-resource<%= ' has-roster' if r.rosters.any? %>"
+            data-section="checked-in">
             <td class="sm-padding-left sm-bip-input">
               <span class="roster-toggle-slot"><% if r.rosters.any? %><span class="resource-roster-toggle"
                     role="button"
@@ -103,7 +113,8 @@
             <% depth    = ros.full_order_number.count('.') %>
             <% demobed  = ros.demobed? %>
             <tr class="resource-roster-row is-hidden depth-<%= depth %> roster-status-<%= ros.status %>"
-                data-resource-id="<%= r.id %>">
+                data-resource-id="<%= r.id %>"
+                data-section="checked-in">
               <td class="roster-order-cell" style="padding-left: <%= 20 + depth * 20 %>px">
                 <%# Primary toggle — click to mark this subordinate as the
                     parent resource's Leader. Model clears the flag on
@@ -183,23 +194,19 @@
         <% end %>
 
 
-        <!-- Released Resoruces -->
-        <tr>
-          <td class="grayed"><strong>RELEASED</strong></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
+        <%# ───── RELEASED ───── %>
+        <% released_resources = natural_order_sort(@tally_resources).select(&:released?).to_a %>
+        <% released_rosters_preview = @tally_resources.flat_map(&:rosters).select(&:released?) %>
+        <tr class="ics-211-section-header grayed" data-section-target="released">
+          <td colspan="12">
+            <span class="ics-211-section-caret" aria-hidden="true">▼</span>
+            <strong>RELEASED</strong>
+            <span class="ics-211-section-count">(<%= released_resources.size + released_rosters_preview.size %>)</span>
+          </td>
         </tr>
         <% natural_order_sort(@tally_resources).each do |r|  %>
           <% if r.released? %>
+            <tr data-section="released">
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input %></td>
             <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input %></td>
@@ -252,7 +259,7 @@
                                }
         %>
         <% released_rosters.each do |ros| %>
-          <tr class="incident-resource released-roster">
+          <tr class="incident-resource released-roster" data-section="released">
             <td class="sm-padding-left sm-bip-input"><%= ros.full_order_number %></td>
             <td class="md-bip-input"><%= ros.position %></td>
             <td class="lg-bip-input"><%= ros.name %></td>
@@ -279,22 +286,17 @@
 
 
 
-        <!-- R&R Resoruces -->
-        <tr>
-          <td class="grayed"><strong>On R&R</strong></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
-          <td class="grayed"></td>
+        <%# ───── ON R&R ───── %>
+        <% rnr_resources = natural_order_sort(@tally_resources.on_rnr).to_a %>
+        <tr class="ics-211-section-header grayed" data-section-target="rnr">
+          <td colspan="12">
+            <span class="ics-211-section-caret" aria-hidden="true">▼</span>
+            <strong>On R&amp;R</strong>
+            <span class="ics-211-section-count">(<%= rnr_resources.size %>)</span>
+          </td>
         </tr>
-        <% natural_order_sort(@tally_resources.on_rnr).each do |r|  %>
+        <% rnr_resources.each do |r|  %>
+            <tr data-section="rnr">
             <td class="sm-padding-left sm-bip-input"><%= r.cat %><%= best_in_place r, :order_number, :as => :input %></td>
             <td class="md-bip-input"><%= best_in_place r, :position, :as => :input, place_holder: "------" %></td>
             <td class="lg-bip-input"><%= best_in_place r, :name, :as => :input, place_holder: "------" %></td>
