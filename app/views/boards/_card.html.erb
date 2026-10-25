@@ -197,6 +197,9 @@
               <button type="button" class="btn btn-default btn-xs board-card-schedule-swap-toggle">
                 + Schedule Swap
               </button>
+              <button type="button" class="btn btn-default btn-xs board-card-schedule-rnr-toggle">
+                + Schedule R&amp;R
+              </button>
             </div>
           </form>
 
@@ -264,6 +267,70 @@
             <div class="board-card-compose-actions">
               <button type="submit" class="btn btn-primary btn-xs">Schedule</button>
               <button type="button" class="btn btn-default btn-xs board-card-schedule-swap-cancel">Cancel</button>
+            </div>
+          </form>
+
+          <%# Hidden inline R&R-schedule form. Posts kind=rnr with fwd + lwd
+              (lwd derived from days by the JS). When "Returning after R&R"
+              is checked, the server also creates a follow-on :work entry
+              with the current operator's leader + the specified assignment
+              length so the resource stays on the glide path past R&R. %>
+          <% current_work_entry = resource.resource_events
+                                           .where(kind: ResourceEvent.kinds[:work])
+                                           .where.not(actual_fwd: nil)
+                                           .where(actual_lwd: nil)
+                                           .first
+             default_follow_on_days = if current_work_entry&.fwd && current_work_entry&.lwd
+                                        [(current_work_entry.lwd - current_work_entry.fwd).to_i + 1, 1].max
+                                      else
+                                        14
+                                      end %>
+          <form class="board-card-rnr-form" style="display:none;"
+                data-url="<%= resource_events_path(resource) %>">
+            <input type="hidden" name="resource_event[kind]" value="rnr">
+            <input type="hidden" name="resource_event[lwd]" value="">
+            <div class="board-card-swap-row board-card-swap-row-dates">
+              <div>
+                <label>R&amp;R start</label>
+                <input type="date" name="resource_event[fwd]"
+                       class="form-control input-sm board-card-rnr-fwd" required>
+              </div>
+              <div>
+                <label>R&amp;R days</label>
+                <input type="number" min="1" step="1" value="2"
+                       class="form-control input-sm board-card-rnr-length" required>
+              </div>
+            </div>
+            <div class="board-card-swap-row board-card-swap-preview">
+              <span class="muted">Ends:</span>
+              <strong class="board-card-rnr-lwd-preview">—</strong>
+            </div>
+            <div class="board-card-swap-row">
+              <label>
+                <input type="checkbox" name="with_follow_on" value="1"
+                       class="board-card-rnr-follow-on" checked>
+                Returning after R&amp;R
+              </label>
+            </div>
+            <div class="board-card-swap-row board-card-rnr-follow-on-fields">
+              <label>Assignment days after R&amp;R</label>
+              <input type="number" min="1" step="1"
+                     name="follow_on_days" value="<%= default_follow_on_days %>"
+                     class="form-control input-sm board-card-rnr-follow-on-days">
+              <div class="muted" style="margin-top:4px;">
+                Will schedule <%= (resource.leader.presence || resource.name).to_s %>
+                starting the day after R&amp;R.
+              </div>
+            </div>
+            <div class="board-card-swap-row">
+              <label>Notes</label>
+              <textarea name="resource_event[body]" rows="1"
+                        class="form-control input-sm"
+                        placeholder="Optional"></textarea>
+            </div>
+            <div class="board-card-compose-actions">
+              <button type="submit" class="btn btn-primary btn-xs">Schedule R&amp;R</button>
+              <button type="button" class="btn btn-default btn-xs board-card-schedule-rnr-cancel">Cancel</button>
             </div>
           </form>
         </div>

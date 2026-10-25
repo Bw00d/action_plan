@@ -35,7 +35,7 @@ class BoardsController < ApplicationController
       .group_by(&:org_unit_id)
 
     @resources_by_unit = assignments_by_unit.transform_values do |asgs|
-      asgs.map(&:resource).select { |r| r && r.release_date.nil? && !r.r_and_r }
+      asgs.map(&:resource).select { |r| r && r.release_date.nil? && !r.rnr? }
     end
     @resources_by_unit.default = []
   end

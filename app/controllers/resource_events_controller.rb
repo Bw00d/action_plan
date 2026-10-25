@@ -16,22 +16,46 @@ class ResourceEventsController < ApplicationController
   end
 
   # POST /resources/:resource_id/events
-  # Body: resource_event[kind], plus body OR (leader/fwd/lwd/phone)
+  # Body: resource_event[kind], plus body OR (leader/fwd/lwd/phone).
+  # For kind=rnr: optional with_follow_on=1 + follow_on_days creates a
+  # second :work entry starting the day after R&R ends with the resource's
+  # current leader + phone.
   #
   # The legacy T-card compose form posts kind=scheduled_swap for new
   # upcoming operators. Shift-refactor: those are :work entries with
   # actual_fwd=nil (unpromoted). Translate on the way in so new rows
-  # land as :work and the DB stays single-kind. The view keeps posting
-  # scheduled_swap until #95 updates the form.
+  # land as :work.
   def create
     attrs = event_params.to_h
     attrs['kind'] = 'work' if attrs['kind'].to_s == 'scheduled_swap'
-    @event = @resource.resource_events.new(attrs)
-    @event.user = current_user
-    if @event.save
+
+    ActiveRecord::Base.transaction do
+      @event = @resource.resource_events.new(attrs)
+      @event.user = current_user
+      raise ActiveRecord::Rollback unless @event.save
+
+      if @event.rnr? && params[:with_follow_on].to_s == '1' && @event.lwd
+        follow_days = params[:follow_on_days].to_i
+        follow_days = 14 if follow_days < 1
+        follow_fwd  = @event.lwd + 1.day
+        follow_lwd  = follow_fwd + follow_days - 1
+        follow_leader = @resource.leader.presence || @resource.name
+        @resource.resource_events.create!(
+          kind:   :work,
+          user:   current_user,
+          leader: follow_leader,
+          phone:  @resource.phone,
+          fwd:    follow_fwd,
+          lwd:    follow_lwd
+        )
+      end
+    end
+
+    if @event&.persisted?
       render_feed
     else
-      render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity
+      errors = @event&.errors&.full_messages.presence || ['Save failed']
+      render json: { errors: errors }, status: :unprocessable_entity
     end
   end
 

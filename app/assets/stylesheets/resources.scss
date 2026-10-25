@@ -149,6 +149,19 @@ a.delete-resource:hover {
   letter-spacing: 0.5px;
 }
 
+// Calendar cell that falls inside a scheduled R&R window. Muted
+// gray-purple fill so it reads clearly as "not working" without
+// competing with the blue SWAP day or the LWD gradient. Styled only
+// when the cell is NOT also a swap-day — the view suppresses the
+// R&R label on swap-days to prefer SWAP.
+.glide-row.glide-rnr-day:not(.glide-swap-day) {
+  background-color: #a594c8 !important;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
 // Pin the three thead rows to the top of the viewport while the user
 // scrolls through the resource list. Hardcoded line-height + top
 // offsets keep the rows aligned predictably without a JS resize dance.

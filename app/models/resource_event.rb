@@ -33,6 +33,25 @@ class ResourceEvent < ApplicationRecord
 
   validate :body_or_swap_fields_present
 
+  # Keep the Resource's legacy r_and_r boolean in sync whenever an
+  # :rnr event is written or its actual_lwd changes. Uses update_column
+  # to skip the Resource's own sync_rnr_timeline_from_boolean callback
+  # — otherwise flipping the boolean here would re-create an event.
+  # Dropped in #96 along with the r_and_r column.
+  after_commit :sync_resource_rnr_boolean,
+               if: -> { rnr? || (saved_changes.key?('actual_lwd') && kind_was_rnr_or_rnr_now?) }
+
+  def sync_resource_rnr_boolean
+    return unless resource
+    desired = resource.rnr?
+    resource.update_column(:r_and_r, desired) if resource.r_and_r != desired
+  end
+
+  def kind_was_rnr_or_rnr_now?
+    rnr? || (saved_changes['kind'].is_a?(Array) &&
+             saved_changes['kind'].include?(ResourceEvent.kinds[:rnr]))
+  end
+
   # Feed ordering: unpromoted shift entries (`:work` with no actual_fwd
   # yet — the "next thing to action") float to the top, sorted by
   # planned fwd ASC. Everything else falls below in created_at DESC.

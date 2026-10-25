@@ -68,9 +68,26 @@ class Resource < ApplicationRecord
   # only as visual gaps on the ICS 204 board and must be filtered out of
   # every user-facing resource list (ICS 211, demob, plan roster, etc.);
   # the board itself uses `.active` so spacers still render on columns.
-  scope :active,   -> { where(release_date: nil, r_and_r: false) }
+  # Shift-timeline: "on R&R" and "active" are derived from :rnr events
+  # whose planned window covers today. r_and_r boolean is dual-written
+  # from these via sync_rnr_timeline_from_boolean so legacy readers and
+  # form submissions still work during the transition. The boolean will
+  # be dropped once all callers are migrated.
+  scope :on_rnr, -> {
+    today = Date.current
+    where(spacer: false).where(id: ResourceEvent
+      .where(kind: ResourceEvent.kinds[:rnr])
+      .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+      .select(:resource_id).distinct)
+  }
+  scope :active, -> {
+    today = Date.current
+    where(release_date: nil).where.not(id: ResourceEvent
+      .where(kind: ResourceEvent.kinds[:rnr])
+      .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+      .select(:resource_id))
+  }
   scope :assigned, -> { active.where(spacer: false) }
-  scope :on_rnr,   -> { where(r_and_r: true, spacer: false) }
    with_options unless: :spacer? do
      validates :name, presence: true
      validates :position, presence: true
@@ -164,10 +181,51 @@ class Resource < ApplicationRecord
   # set on this save (nil → date), so clearing release_date to bring
   # someone back doesn't do anything weird.
   after_save :remove_from_board_on_demob, if: :saved_change_to_release_date?
+  after_save :close_current_work_on_demob,  if: :saved_change_to_release_date?
+  after_save :sync_rnr_timeline_from_boolean, if: :saved_change_to_r_and_r?
 
   def remove_from_board_on_demob
     return if release_date.nil?
     org_unit_assignment&.destroy
+  end
+
+  # When a resource is demobbed (release_date set), close out the
+  # currently-active :work entry so the shift timeline agrees with the
+  # resource row. If release_date is cleared (resource brought back),
+  # reopen the most recently-closed entry whose actual_lwd matches the
+  # previous release_date.
+  def close_current_work_on_demob
+    before, after = saved_change_to_release_date
+    if after.present?
+      resource_events.where(kind: ResourceEvent.kinds[:work])
+                     .where.not(actual_fwd: nil)
+                     .where(actual_lwd: nil)
+                     .update_all(actual_lwd: after, updated_at: Time.current)
+    elsif before.present?
+      resource_events.where(kind: ResourceEvent.kinds[:work], actual_lwd: before)
+                     .order(updated_at: :desc).limit(1)
+                     .update_all(actual_lwd: nil, updated_at: Time.current)
+    end
+  end
+
+  # Dual-write: the legacy R&R checkbox (on _non_209 / _ics_211) still
+  # saves the r_and_r boolean. Mirror the flip to the :rnr timeline so
+  # the new scopes (active / on_rnr) and anything else reading from the
+  # events stays in sync. Dropping r_and_r in #96 drops this callback.
+  def sync_rnr_timeline_from_boolean
+    today = Date.current
+    if r_and_r
+      has_active = resource_events.where(kind: ResourceEvent.kinds[:rnr])
+                                  .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL',
+                                         today, today).exists?
+      resource_events.create!(
+        kind: :rnr, fwd: today, lwd: today + 1.day, actual_fwd: today
+      ) unless has_active
+    else
+      resource_events.where(kind: ResourceEvent.kinds[:rnr])
+                     .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+                     .update_all(actual_lwd: today, updated_at: Time.current)
+    end
   end
 
   # Drop a newly-created resource onto the appropriate section org unit
@@ -345,8 +403,18 @@ class Resource < ApplicationRecord
     personnel_by_agency.values.sum
   end
 
+  # True iff a scheduled :rnr entry's planned window covers today and
+  # it hasn't been closed out. Uses in-memory :rnr entries when the
+  # association is preloaded (board / ICS 211 both eager-load) to
+  # avoid a per-row SQL query.
   def rnr?
-    return true if self.r_and_r
+    today = Date.current
+    rnrs = if resource_events.loaded?
+             resource_events.select { |e| e.kind.to_s == 'rnr' }
+           else
+             resource_events.where(kind: ResourceEvent.kinds[:rnr])
+           end
+    rnrs.any? { |e| e.fwd && e.lwd && e.fwd <= today && e.lwd >= today && e.actual_lwd.nil? }
   end
 
   def create_demob

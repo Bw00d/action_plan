@@ -498,13 +498,60 @@
       '.board-card-swap-fwd, .board-card-swap-length',
       function () { computeSwapLwd($(this).closest('.board-card-swap-form')); });
 
-    // Submit either compose form (comment OR scheduled swap).
-    $(page).on('submit', '.board-card-comment-form, .board-card-swap-form', function (e) {
+    // --- R&R compose form ---------------------------------------------
+    // Open the R&R form fresh — hide comment + swap compose, show R&R.
+    $(page).on('click', '.board-card-schedule-rnr-toggle', function () {
+      var $side = $(this).closest('.board-card-details-side');
+      var $form = $side.find('.board-card-rnr-form');
+      $form[0].reset();
+      // Reset puts the follow-on checkbox back to its HTML default
+      // (checked), so show the follow-on fields to match.
+      $form.find('.board-card-rnr-follow-on-fields').show();
+      $form.find('.board-card-rnr-lwd-preview').text('—');
+      $side.find('.board-card-comment-form, .board-card-swap-form').hide();
+      $form.show().find('.board-card-rnr-fwd').focus();
+    });
+    $(page).on('click', '.board-card-schedule-rnr-cancel', function () {
+      var $side = $(this).closest('.board-card-details-side');
+      $side.find('.board-card-rnr-form').hide();
+      $side.find('.board-card-comment-form').show();
+    });
+
+    // Hide/show the follow-on operator fields with the checkbox.
+    $(page).on('change', '.board-card-rnr-follow-on', function () {
+      var $form = $(this).closest('.board-card-rnr-form');
+      $form.find('.board-card-rnr-follow-on-fields').toggle(this.checked);
+    });
+
+    // Live R&R end-date preview.
+    function computeRnrLwd($form) {
+      var fwdStr   = $form.find('.board-card-rnr-fwd').val();
+      var lengthN  = parseInt($form.find('.board-card-rnr-length').val(), 10);
+      var $hidden  = $form.find('input[name="resource_event[lwd]"]');
+      var $preview = $form.find('.board-card-rnr-lwd-preview');
+      if (!fwdStr || isNaN(lengthN) || lengthN < 1) {
+        $hidden.val('');
+        $preview.text('—');
+        return;
+      }
+      var parts = fwdStr.split('-');
+      var fwd   = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      var lwd   = new Date(fwd.getFullYear(), fwd.getMonth(), fwd.getDate() + lengthN - 1);
+      $hidden.val(fmtIsoFull(lwd));
+      $preview.text(fmtIsoShort(lwd));
+    }
+    $(page).on('input change',
+      '.board-card-rnr-fwd, .board-card-rnr-length',
+      function () { computeRnrLwd($(this).closest('.board-card-rnr-form')); });
+
+    // Submit any compose form (comment / scheduled swap / R&R).
+    $(page).on('submit', '.board-card-comment-form, .board-card-swap-form, .board-card-rnr-form', function (e) {
       e.preventDefault();
       var $form = $(this);
       var $side = $form.closest('.board-card-details-side');
-      // Make sure LWD is up to date before serializing on the swap form.
+      // Make sure LWD is up to date before serializing on the date forms.
       if ($form.hasClass('board-card-swap-form')) computeSwapLwd($form);
+      if ($form.hasClass('board-card-rnr-form'))  computeRnrLwd($form);
       // Edit mode (pencil-populated swap form) PATCHes the existing
       // event instead of POSTing a new one. data-editing-url is set
       // by the pencil click handler and cleared by resetSwapForm.
@@ -520,6 +567,11 @@
         replaceFeed($side, html);
         if ($form.hasClass('board-card-swap-form')) {
           resetSwapForm($form);
+          $form.hide();
+          $side.find('.board-card-comment-form').show();
+        } else if ($form.hasClass('board-card-rnr-form')) {
+          $form[0].reset();
+          $form.find('.board-card-rnr-lwd-preview').text('—');
           $form.hide();
           $side.find('.board-card-comment-form').show();
         } else {
