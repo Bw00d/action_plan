@@ -131,8 +131,14 @@ class ResourceEventsController < ApplicationController
         current_entry.update!(actual_lwd: safe_lwd)
       end
 
-      # 2. Promote the incoming :work entry.
-      @event.update!(actual_fwd: swap_date)
+      # 2. Promote the incoming entry. Also normalize kind → :work in
+      #    case this row was created with the legacy :scheduled_swap
+      #    kind (controller translation is per-request; a row written
+      #    before the Rails process picked up the translation stays
+      #    with the old kind until something touches it).
+      promote_attrs = { actual_fwd: swap_date }
+      promote_attrs[:kind] = :work unless @event.work?
+      @event.update!(promote_attrs)
 
       # 3. Mirror onto the Resource row for views that still read it.
       new_length = if @event.lwd && @resource.fwd
