@@ -422,6 +422,11 @@ a.delete-resource:hover {
 #ics-211-info {
 }
 
+// Section-collapsed hide — applied by resources.js when a 211 section
+// (CHECKED IN / RELEASED / ON R&R) is collapsed. Separate from the
+// roster-toggle's .is-hidden so the two don't fight.
+tr.ics-211-section-hidden { display: none; }
+
 // Collapsible section headers for the 211 (CHECKED IN / RELEASED / ON R&R).
 // Click the row to toggle; caret rotates and the rows below the header
 // slide out. State persists per-incident via localStorage (see resources.js).

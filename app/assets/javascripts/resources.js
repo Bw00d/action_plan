@@ -85,15 +85,20 @@ $(document).on("turbolinks:load", function() {
     }
     function applyState() {
       var collapsed = readState();
+      // Clear any inline display left over from an earlier .toggle()
+      // call (previous rev of this handler) so the CSS classes below
+      // and the roster-toggle's .is-hidden class aren't overridden.
+      $tbody.find('tr[data-section]').css('display', '');
       $panel.find('.ics-211-section-header').each(function () {
         var $hdr = $(this);
         var name = $hdr.data('section-target');
         var isCollapsed = collapsed.indexOf(name) !== -1;
         $hdr.toggleClass('is-collapsed', isCollapsed);
-        // Hide section rows but leave the roster-toggle (.is-hidden)
-        // state on individual rosters alone so expanding the section
-        // doesn't undo an earlier roster-collapse.
-        $tbody.find('tr[data-section="' + name + '"]').toggle(!isCollapsed);
+        // Add/remove a dedicated class rather than .toggle() so section
+        // state doesn't fight with the roster-toggle's .is-hidden class
+        // on individual roster rows. CSS hides either class.
+        $tbody.find('tr[data-section="' + name + '"]')
+              .toggleClass('ics-211-section-hidden', isCollapsed);
       });
     }
 
