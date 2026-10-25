@@ -17,8 +17,16 @@ class ResourceEventsController < ApplicationController
 
   # POST /resources/:resource_id/events
   # Body: resource_event[kind], plus body OR (leader/fwd/lwd/phone)
+  #
+  # The legacy T-card compose form posts kind=scheduled_swap for new
+  # upcoming operators. Shift-refactor: those are :work entries with
+  # actual_fwd=nil (unpromoted). Translate on the way in so new rows
+  # land as :work and the DB stays single-kind. The view keeps posting
+  # scheduled_swap until #95 updates the form.
   def create
-    @event = @resource.resource_events.new(event_params)
+    attrs = event_params.to_h
+    attrs['kind'] = 'work' if attrs['kind'].to_s == 'scheduled_swap'
+    @event = @resource.resource_events.new(attrs)
     @event.user = current_user
     if @event.save
       render_feed
@@ -61,78 +69,69 @@ class ResourceEventsController < ApplicationController
   end
 
   # POST /resources/:resource_id/events/:id/swap_now
-  # Executes a scheduled_swap:
-  #   1. Capture the OUTGOING operator's data from the Resource.
-  #   2. Create a completed_swap event documenting that former operator.
-  #   3. Update the Resource with the new operator's leader/fwd/phone,
-  #      and back-calculate assignment_length so Resource#last_work_day
-  #      returns the user-entered swap LWD.
-  #   4. Delete the scheduled_swap row — its contents now live on the
-  #      Resource itself + any future completed_swap entries.
+  # Promotes an unpromoted :work entry to current operator:
+  #   1. Close out the previously-current :work entry — set its
+  #      actual_lwd to yesterday so it ends the day before the swap.
+  #   2. Promote THIS :work entry — set actual_fwd to today. Its
+  #      planned lwd stays as the user-entered end date, so
+  #      Resource#last_work_day (now max lwd across :work entries)
+  #      continues to return the right planned end.
+  #   3. Mirror the new operator's leader/phone/assignment_length onto
+  #      the Resource row. During the shift-refactor transition some
+  #      views still read these columns rather than the timeline, so
+  #      updating them keeps the UI consistent until #95 switches the
+  #      views over.
+  #   4. Move the primary-roster star to the incoming leader.
   def swap_now
+    # scheduled_swap? is a shim that matches unpromoted :work entries,
+    # so this gate works for both legacy and new rows.
     unless @event.scheduled_swap?
-      render json: { errors: ['Only scheduled swaps can be executed.'] }, status: :unprocessable_entity
+      render json: { errors: ['Only upcoming shift entries can be promoted.'] }, status: :unprocessable_entity
       return
     end
 
-    ResourceEvent.transaction do
-      # 1 + 2: snapshot the outgoing operator. If the outgoing
-      # operator had notes attached (saved on resource.notes when the
-      # previous swap executed), append them to the completed_swap
-      # body so the log preserves the full context — the T-card itself
-      # will immediately be rewritten with the incoming operator's
-      # notes below, so this is the last chance to capture the old
-      # ones for history.
-      outgoing_lwd    = (@resource.last_work_day if @resource.last_work_day.is_a?(Date))
-      outgoing_notes  = @resource.notes.to_s.strip
-      log_body = if outgoing_notes.present?
-                   "Rotated off\n\nNotes: #{outgoing_notes}"
-                 else
-                   "Rotated off"
-                 end
-      @resource.resource_events.create!(
-        kind:   :completed_swap,
-        user:   current_user,
-        leader: @resource.leader,
-        fwd:    @resource.fwd,
-        lwd:    outgoing_lwd,
-        phone:  @resource.phone,
-        body:   log_body
-      )
+    today = Date.current
 
-      # 3: update the Resource. Leader + phone switch to the new
-      # operator. The equipment's own FWD is left alone (it's been on
-      # the incident since its original check-in). assignment_length
-      # is EXTENDED by the new operator's commitment length so
-      # Resource#last_work_day (fwd + length - 1) rolls forward to the
-      # new LWD without rewriting history. The incoming swap's notes
-      # become the resource's current notes.
-      added_days = if @event.fwd && @event.lwd
-                     ((@event.lwd - @event.fwd).to_i + 1)
+    ResourceEvent.transaction do
+      # 1. Close out the currently-active :work entry (if any). We
+      #    want the previous operator to show as having stopped the
+      #    day before this swap. Scope: :work entries that have been
+      #    promoted (actual_fwd set) but not yet closed (actual_lwd
+      #    nil).
+      @resource.resource_events
+               .where(kind: ResourceEvent.kinds[:work])
+               .where.not(actual_fwd: nil)
+               .where(actual_lwd: nil)
+               .update_all(actual_lwd: today - 1.day,
+                           updated_at: Time.current)
+
+      # 2. Promote the incoming :work entry.
+      @event.update!(actual_fwd: today)
+
+      # 3. Mirror onto the Resource row for views that still read it.
+      #    assignment_length is back-calculated from the event's
+      #    planned window so Resource#last_work_day (which also looks
+      #    at timeline entries) stays consistent for the legacy
+      #    callers that compute `fwd + length - 1` themselves.
+      new_length = if @event.lwd && @resource.fwd
+                     [(@event.lwd - @resource.fwd).to_i + 1, 1].max
                    else
-                     0
+                     @resource.assignment_length.to_i
                    end
       @resource.update!(
         leader:            @event.leader,
         phone:             @event.phone.presence || @resource.phone,
-        assignment_length: @resource.assignment_length.to_i + added_days,
-        notes:             @event.body       # may be nil — that's fine, clears old notes
+        assignment_length: new_length,
+        notes:             @event.body       # may be nil — clears old notes
       )
 
-      # Move the primary-star to the incoming leader. If the new leader
-      # name matches an active roster entry, mark that entry primary
-      # (model clears siblings via enforce_single_primary). Otherwise
-      # the leader came in off-roster — just clear every star so the
-      # UI doesn't still point at the former operator.
+      # 4. Move the primary-star to the incoming leader.
       incoming = @resource.rosters.active.unpromoted.find { |r| r.name == @event.leader }
       if incoming
         incoming.update!(primary: true)
       else
         @resource.rosters.where(primary: true).update_all(primary: false)
       end
-
-      # 4: scheduled event is consumed by the swap.
-      @event.destroy!
     end
 
     # JSON instead of plain feed HTML: client needs to patch the modal
