@@ -100,6 +100,28 @@ module AdminChat
             required: ['roster_id'],
             additionalProperties: false
           }
+        },
+        {
+          name: 'propose_bulk_transmit_notifications',
+          description: <<~DESC.strip,
+            Prepare a bulk "mark pending demob notifications as transmitted"
+            proposal. DOES NOT execute — returns a count of pending
+            notifications that would flip, scoped to the given incident
+            and (optionally) a resource category (AIRCRAFT / CREW /
+            EQUIPMENT / OVERHEAD). The admin reviews and clicks Approve
+            to commit. Use when the user says things like "mark all
+            crew demob notifications as transmitted on the Pine Fire".
+          DESC
+          input_schema: {
+            type: 'object',
+            properties: {
+              incident_id: { type: 'integer', description: 'The Incident.id to scope to.' },
+              category:    { type: 'string',  enum: %w[AIRCRAFT CREW EQUIPMENT OVERHEAD],
+                             description: 'Optional. Limit to this one dispatcher-facing bucket.' }
+            },
+            required: ['incident_id'],
+            additionalProperties: false
+          }
         }
       ]
     end
@@ -114,6 +136,8 @@ module AdminChat
       when 'run_sql_query'    then run_sql_query(input['sql'])
       when 'count_resources'  then count_resources(input)
       when 'propose_demob'    then propose_demob(input, user: user)
+      when 'propose_bulk_transmit_notifications'
+        propose_bulk_transmit_notifications(input, user: user)
       else                         { error: "unknown tool: #{name}" }
       end
     rescue StandardError => e
@@ -206,6 +230,38 @@ module AdminChat
                       release_date: release_date.iso8601,
                       user_id:      user.id,
                       exp:          1.hour.from_now.to_i
+                    })
+      }
+    end
+
+    # ── propose_bulk_transmit_notifications ────────────────────────
+    # Returns a proposal that, when approved, marks every pending
+    # demob notification on the given incident (optionally scoped to
+    # one resource category) as transmitted.
+    def propose_bulk_transmit_notifications(input, user:)
+      incident = Incident.find_by(id: input['incident_id'])
+      return { error: "no incident found with id #{input['incident_id']}" } unless incident
+      cat = input['category'].to_s.upcase.presence
+      if cat && !%w[AIRCRAFT CREW EQUIPMENT OVERHEAD].include?(cat)
+        return { error: "category must be one of AIRCRAFT, CREW, EQUIPMENT, OVERHEAD (got #{input['category'].inspect})" }
+      end
+
+      pending = incident.demob_notifications.pending.includes(:resource).to_a
+      pending = pending.select { |n| (n.resource&.category.to_s.upcase.presence || 'OTHER') == cat } if cat
+
+      {
+        proposal_type:   'bulk_transmit_notifications',
+        incident_id:     incident.id,
+        incident_name:   incident.name,
+        category:        cat,                 # nil means "all categories"
+        pending_count:   pending.size,
+        sample_names:    pending.first(5).map(&:name),
+        token: Rails.application.message_verifier(:admin_chat_bulk_transmit)
+                    .generate({
+                      incident_id: incident.id,
+                      category:    cat,
+                      user_id:     user.id,
+                      exp:         1.hour.from_now.to_i
                     })
       }
     end

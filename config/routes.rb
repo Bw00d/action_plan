@@ -116,7 +116,8 @@ Rails.application.routes.draw do
     resources :dump_imports, only: [:new, :create]
     resources :schedules, only: [:index, :create, :update, :destroy]
     resources :demob_notifications, only: [:index, :update, :destroy] do
-      member { patch :transmit }
+      member     { patch :transmit }
+      collection { patch :bulk_transmit }
     end
     resources :plans do
       member do

@@ -105,7 +105,8 @@ module Admin
       kind  = params.require(:kind)
       token = params.require(:token)
       case kind
-      when 'demob' then approve_demob(token)
+      when 'demob'                        then approve_demob(token)
+      when 'bulk_transmit_notifications'  then approve_bulk_transmit_notifications(token)
       else render json: { error: "unknown proposal kind: #{kind}" }, status: :unprocessable_entity
       end
     end
@@ -137,6 +138,37 @@ module Admin
       render json: { error: 'roster no longer exists' }, status: :not_found
     rescue StandardError => e
       Rails.logger.error("Admin chat demob approval failed: #{e.class}: #{e.message}")
+      render json: { error: "approval failed: #{e.message}" }, status: :unprocessable_entity
+    end
+
+    def approve_bulk_transmit_notifications(token)
+      payload = Rails.application.message_verifier(:admin_chat_bulk_transmit).verify(token)
+      if payload[:exp].to_i < Time.current.to_i
+        return render json: { error: 'proposal token expired — ask the chat to re-propose' },
+                      status: :unprocessable_entity
+      end
+
+      incident = Incident.find(payload[:incident_id])
+      cat      = payload[:category]
+      scope    = incident.demob_notifications.pending.includes(:resource).to_a
+      scope    = scope.select { |n| (n.resource&.category.to_s.upcase.presence || 'OTHER') == cat } if cat
+
+      count = 0
+      DemobNotification.transaction do
+        scope.each { |n| n.mark_transmitted!; count += 1 }
+      end
+
+      label = cat ? "#{cat.titleize} " : ''
+      render json: {
+        ok: true,
+        summary: "Marked #{count} pending #{label}notification#{'s' unless count == 1} on #{incident.name} as transmitted."
+      }
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      render json: { error: 'invalid proposal token' }, status: :unprocessable_entity
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: 'incident no longer exists' }, status: :not_found
+    rescue StandardError => e
+      Rails.logger.error("Admin chat bulk_transmit approval failed: #{e.class}: #{e.message}")
       render json: { error: "approval failed: #{e.message}" }, status: :unprocessable_entity
     end
 

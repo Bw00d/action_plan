@@ -62,6 +62,27 @@ class DemobNotificationsController < ApplicationController
                 notice: "Marked #{@notification.request_number} #{@notification.name} as transmitted."
   end
 
+  # PATCH /incidents/:incident_id/demob_notifications/bulk_transmit
+  #
+  # Marks every pending notification as transmitted. Pass ?category=CREW
+  # (etc.) to scope to one dispatcher-facing bucket, matching the
+  # per-category Print / CSV groupings on the index. The admin-chat
+  # bulk_transmit tool posts here with a signed-token proposal flow.
+  def bulk_transmit
+    scope = @incident.demob_notifications.pending.includes(:resource)
+    cat   = params[:category].to_s.upcase.presence
+    if cat
+      scope = scope.to_a.select { |n| (n.resource&.category.to_s.upcase.presence || 'OTHER') == cat }
+    end
+    count = 0
+    DemobNotification.transaction do
+      scope.each { |n| n.mark_transmitted!; count += 1 }
+    end
+    label = cat ? "#{cat.titleize} " : ''
+    redirect_to incident_demob_notifications_path(@incident),
+                notice: "Marked #{count} pending #{label}notification#{'s' unless count == 1} as transmitted."
+  end
+
   def destroy
     @notification.destroy
     redirect_to incident_demob_notifications_path(@incident),

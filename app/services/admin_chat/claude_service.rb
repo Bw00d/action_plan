@@ -19,11 +19,14 @@ module AdminChat
         1. Prefer `count_resources` and `describe_schema` + `run_sql_query`
            for data questions. Call `describe_schema` first if you're not
            sure what columns a table has.
-        2. All DB mutations go through `propose_demob` (or future
-           `propose_*` tools). You never mutate directly. When you want
-           to demob someone, call `propose_demob` with the roster_id —
-           the UI will show the admin an Approve button; your job is to
-           *produce* the proposal, not to assume it was accepted.
+        2. All DB mutations go through a `propose_*` tool. You never
+           mutate directly. The UI shows the admin an Approve button for
+           each proposal; your job is to *produce* the proposal, not to
+           assume it was accepted.
+             - `propose_demob` — demob one roster entry.
+             - `propose_bulk_transmit_notifications` — mark pending demob
+               notifications on an incident as transmitted, optionally
+               scoped to one category (AIRCRAFT/CREW/EQUIPMENT/OVERHEAD).
         3. If a user asks for an action you can't propose yet, say so
            plainly rather than guessing.
         4. Keep final text answers short — the admin reads them in a
@@ -86,7 +89,10 @@ module AdminChat
 
           on_event.call(type: 'tool_result', name: block.name,
                         ok: !result[:error])
-          if block.name == 'propose_demob' && !result[:error]
+          # Any propose_* tool emits a proposal event so the UI shows
+          # its approval card. The payload itself carries proposal_type
+          # which the JS uses to pick the right template + endpoint.
+          if block.name.to_s.start_with?('propose_') && !result[:error]
             on_event.call(type: 'proposal', payload: result)
           end
           tool_results << { type: 'tool_result', tool_use_id: block.id,
@@ -141,7 +147,7 @@ module AdminChat
           next unless block.type == :tool_use
           input  = block.input.respond_to?(:to_h) ? block.input.to_h.deep_stringify_keys : block.input
           result = Tools.dispatch(block.name, input, user: @user)
-          proposals << result if block.name == 'propose_demob' && !result[:error]
+          proposals << result if block.name.to_s.start_with?('propose_') && !result[:error]
           tool_results << {
             type:         'tool_result',
             tool_use_id:  block.id,

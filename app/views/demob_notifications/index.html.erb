@@ -32,6 +32,12 @@
                         incident_demob_notifications_path(@incident, format: :csv, category: category),
                         class: 'btn btn-default btn-sm',
                         title: "CSV of just the #{category.titleize} notifications" %>
+            <%= button_to "Mark all transmitted",
+                        bulk_transmit_incident_demob_notifications_path(@incident, category: category),
+                        method: :patch,
+                        class: 'btn btn-success btn-sm',
+                        form: { class: 'inline-form' },
+                        data: { confirm: "Mark all #{rows.size} pending #{category.titleize} notification#{'s' unless rows.size == 1} as transmitted?" } %>
           </div>
         </div>
 

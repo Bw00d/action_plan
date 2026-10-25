@@ -174,20 +174,45 @@
     }
 
     function appendProposal(prop) {
+      // Branch on proposal_type so each propose_* tool renders its own
+      // card body + submits with the right `kind` to /admin/chat/approvals.
+      var type = prop.proposal_type || 'demob';
       var card = document.createElement('div');
       card.className = 'admin-chat-proposal';
-      card.innerHTML =
-        '<h5>Proposed demob — needs your approval</h5>' +
-        '<dl>' +
-          field('Roster',       prop.name + ' (id ' + prop.roster_id + ')') +
-          field('Parent',       prop.parent_resource) +
-          field('Incident',     prop.incident_name) +
-          field('Release date', prop.proposed_release_date) +
-          field('Status',       prop.current_status + ' → ' + prop.proposed_status) +
-          (prop.reason ? field('Reason', prop.reason) : '') +
-        '</dl>' +
+
+      var innerHtml;
+      var approveLabel;
+      if (type === 'bulk_transmit_notifications') {
+        approveLabel = 'Approve bulk mark';
+        var catLabel = prop.category || 'all categories';
+        var sample = (prop.sample_names || []).slice(0, 3).join(', ');
+        var sampleRow = sample ? field('First few',
+          sample + (prop.pending_count > 3 ? ' …' : '')) : '';
+        innerHtml =
+          '<h5>Bulk mark transmitted &mdash; needs your approval</h5>' +
+          '<dl>' +
+            field('Incident',  prop.incident_name + ' (id ' + prop.incident_id + ')') +
+            field('Category',  catLabel) +
+            field('Pending',   prop.pending_count + ' notification' + (prop.pending_count === 1 ? '' : 's')) +
+            sampleRow +
+          '</dl>';
+      } else {
+        approveLabel = 'Approve demob';
+        innerHtml =
+          '<h5>Proposed demob &mdash; needs your approval</h5>' +
+          '<dl>' +
+            field('Roster',       prop.name + ' (id ' + prop.roster_id + ')') +
+            field('Parent',       prop.parent_resource) +
+            field('Incident',     prop.incident_name) +
+            field('Release date', prop.proposed_release_date) +
+            field('Status',       prop.current_status + ' → ' + prop.proposed_status) +
+            (prop.reason ? field('Reason', prop.reason) : '') +
+          '</dl>';
+      }
+
+      card.innerHTML = innerHtml +
         '<div class="admin-chat-proposal-actions">' +
-          '<button type="button" class="btn btn-success btn-xs" data-approve>Approve demob</button>' +
+          '<button type="button" class="btn btn-success btn-xs" data-approve>' + approveLabel + '</button>' +
           '<button type="button" class="btn btn-default btn-xs" data-dismiss>Dismiss</button>' +
         '</div>' +
         '<div class="admin-chat-proposal-result"></div>';
@@ -195,7 +220,7 @@
 
       var result = card.querySelector('.admin-chat-proposal-result');
       card.querySelector('[data-approve]').addEventListener('click', function () {
-        submitApproval('demob', prop.token, card, result);
+        submitApproval(type, prop.token, card, result);
       });
       card.querySelector('[data-dismiss]').addEventListener('click', function () {
         card.remove();
