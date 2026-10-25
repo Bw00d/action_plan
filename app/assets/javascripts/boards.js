@@ -867,6 +867,35 @@
       recalcLwd($card);
     });
 
+    // Confirm before accepting a change to Assignment days.
+    //
+    // It's common for an OVERHEAD resource to extend from 14 to 21 days,
+    // but EQUIPMENT / CREW usually get a new operator via Schedule Swap
+    // rather than length-extending the current one. A length change here
+    // adjusts last_work_day and the current :work entry's planned end
+    // without logging the swap — easy to do by accident, hard to undo
+    // cleanly. Prompt so the user acknowledges the choice.
+    //
+    // best_in_place fires `best_in_place:before-update` synchronously
+    // right before capturing the input value for save. If the user
+    // cancels, we reset the input to the old value — update() then sees
+    // no change (compare at best_in_place.js:103) and aborts without
+    // sending an AJAX request.
+    $(page).on('best_in_place:before-update', '[data-field="assignment_length"] .best_in_place', function () {
+      var $el    = $(this);
+      var $input = $el.find('input').first();
+      if (!$input.length) return;
+      var oldVal = String($el.data('bipValue') || $el.attr('data-bip-value') || '').trim();
+      var newVal = String($input.val() || '').trim();
+      if (!oldVal || newVal === oldVal) return;
+      var msg = 'Change assignment length from ' + oldVal + ' to ' + newVal + ' days?\n\n' +
+                'If a new operator is coming in, use Schedule Swap instead so the ' +
+                'previous operator stays in the shift log.';
+      if (!window.confirm(msg)) {
+        $input.val(oldVal);   // triggers best_in_place's "no change" abort
+      }
+    });
+
     // --- Hover move affordance --------------------------------------------
     // Build the target list from the DOM at click time so it reflects any
     // columns that were just added/deleted without a page reload.
