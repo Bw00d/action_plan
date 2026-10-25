@@ -15,12 +15,12 @@
             on the data cells still activate best_in_place. %>
         <td class="col-drag" title="Drag to reorder">⠿</td>
         <td class="col-position"><%= best_in_place entry, :position, as: :input,
-                                       path: path,
+                                       url: path,
                                        place_holder: '(position)' %></td>
         <td class="col-name"><%=     best_in_place entry, :name,     as: :input,
-                                       path: path %></td>
+                                       url: path %></td>
         <td class="col-phone"><%=    best_in_place entry, :phone_number, as: :input,
-                                       path: path,
+                                       url: path,
                                        place_holder: '(add later)' %></td>
         <%# Section column intentionally removed — the card header
             already shows the section name, so echoing it on every row
