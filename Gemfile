@@ -110,9 +110,10 @@ gem 'rack-timeout'
 gem 'anthropic', '~> 1.0', require: false   # loaded explicitly in config/application.rb
 # Redis-backed Rails.cache store on production — holds admin chat
 # history (session cookie is too small). Heroku Redis provides
-# REDIS_URL / REDIS_TLS_URL env vars via the addon.
+# REDIS_URL / REDIS_TLS_URL env vars via the addon. Pure-Ruby driver
+# (no hiredis) — hiredis 0.x does not support TLS, and Heroku Redis
+# mini uses rediss://.
 gem 'redis', '~> 4.8'
-gem 'hiredis', '~> 0.6'
 
 group :test do
   gem 'database_cleaner'

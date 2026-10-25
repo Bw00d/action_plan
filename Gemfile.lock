@@ -193,7 +193,6 @@ GEM
     grover (1.1.11)
       combine_pdf (~> 1.0)
       nokogiri (~> 1.0)
-    hiredis (0.6.3)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -485,7 +484,6 @@ DEPENDENCIES
   friendly_id
   good_job (~> 3.99)
   grover (~> 1.1.2)
-  hiredis (~> 0.6)
   image_processing (>= 1.2)
   jbuilder (~> 2.7)
   jmespath (~> 1.6, >= 1.6.2)
