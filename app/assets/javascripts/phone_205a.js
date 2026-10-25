@@ -41,6 +41,11 @@ $(document).on('turbolinks:load', function () {
           headers: { 'X-CSRF-Token': csrfToken }
         });
       }
-    }).disableSelection();
+    });
+
+    // Only disable text selection on the drag handle cells — applying
+    // it to the whole tbody blocks mousedown + typing on every child
+    // input, breaking the best_in_place inline-edit fields in each row.
+    $tbody.find('.col-drag').disableSelection();
   });
 });
