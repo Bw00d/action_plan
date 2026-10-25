@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_17_130000) do
+ActiveRecord::Schema.define(version: 2026_10_25_045705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -879,6 +879,8 @@ ActiveRecord::Schema.define(version: 2026_10_17_130000) do
     t.string "phone"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "actual_fwd"
+    t.date "actual_lwd"
     t.index ["resource_id", "created_at"], name: "index_resource_events_on_resource_id_and_created_at"
     t.index ["resource_id", "kind"], name: "index_resource_events_on_resource_id_and_kind"
     t.index ["resource_id"], name: "index_resource_events_on_resource_id"

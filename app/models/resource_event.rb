@@ -1,15 +1,22 @@
-# Activity-feed entry for a Resource. Three kinds share the table:
+# Activity-feed entry for a Resource. Five kinds share the table:
 #
 #   comment         — plain-text note (body)
-#   scheduled_swap  — upcoming crew swap, carries leader/fwd/lwd/phone
-#                     for the INCOMING operator. Shows a SWAP NOW button
-#                     on the T-card modal. Editable/deletable until the
-#                     user clicks SWAP NOW.
-#   completed_swap  — immutable record of a past operator (leader + the
-#                     fwd/lwd dates they covered). Automatically created
-#                     by ResourceEventsController#swap_now when a
-#                     scheduled_swap is executed, capturing the OUTGOING
-#                     operator's values from the Resource.
+#
+#   work            — one operator's shift on this resource. Carries
+#                     leader/phone + fwd (planned start) + lwd (planned
+#                     end) + actual_fwd/actual_lwd. Order chronologically
+#                     by fwd ASC; gaps are legal and represent R&R or
+#                     any other scheduled break. See SHIFT_REFACTOR_PLAN.md.
+#   rnr             — a scheduled R&R break. leader/phone are inherited
+#                     for display; fwd/lwd are the planned R&R interval.
+#                     An :rnr entry explicitly excludes the resource
+#                     from "present on day" during that interval.
+#
+#   scheduled_swap  — LEGACY. Will be rewritten to :work by the shift
+#                     refactor backfill. Keep the enum value so partially
+#                     migrated environments stay readable.
+#   completed_swap  — LEGACY. Will be rewritten to :work by the shift
+#                     refactor backfill.
 class ResourceEvent < ApplicationRecord
   belongs_to :resource
   belongs_to :user, optional: true
@@ -17,7 +24,9 @@ class ResourceEvent < ApplicationRecord
   enum kind: {
     comment:        0,
     scheduled_swap: 1,
-    completed_swap: 2
+    completed_swap: 2,
+    work:           3,
+    rnr:            4
   }
 
   validates :kind, presence: true
