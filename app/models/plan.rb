@@ -126,6 +126,14 @@ class Plan < ApplicationRecord
         # Reset prepared_date to the new plan's date so each 204
         # starts labelled for the new op period. User can override.
         assignment.prepared_date = self.date if self.date
+        # Clear assignment-level op-period overrides so the 204 header
+        # falls through to the new plan's ops_period_from / _to
+        # (view at assignments/_ics_204_wf.html.erb line 47 does the
+        # fallback). Without this reset, each 204 keeps the previous
+        # plan's dates because the assignment value wins.
+        assignment.ops_period_from = nil
+        assignment.ops_period_to   = nil
+        assignment.ops_period      = nil
         assignment.update_attributes(plan_id: self.id)
       end
     end
