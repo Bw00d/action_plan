@@ -130,7 +130,15 @@ module AdminChat
     # Dispatch — called by ClaudeService once per tool_use block.
     # Returns a Hash (will be JSON-serialized into the tool_result).
     # ────────────────────────────────────────────────────────────────
-    def dispatch(name, input, user:)
+    def dispatch(name, input, user:, default_incident: nil)
+      # Inject the chat's current incident_id into tools that take one
+      # unless the caller explicitly supplied a different one. Lets the
+      # admin say "mark all crew notifications as transmitted" without
+      # having to remember or type the id.
+      if default_incident && %w[count_resources propose_bulk_transmit_notifications].include?(name)
+        input = input.merge('incident_id' => default_incident.id) unless input['incident_id'].present?
+      end
+
       case name
       when 'describe_schema'  then describe_schema(input['table'])
       when 'run_sql_query'    then run_sql_query(input['sql'])

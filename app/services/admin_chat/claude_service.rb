@@ -8,7 +8,7 @@ module AdminChat
     MODEL = :"claude-sonnet-5-5"
     MAX_ITERATIONS = 8   # hard cap on tool-use round-trips per user turn
 
-    SYSTEM_PROMPT = <<~PROMPT
+    SYSTEM_PROMPT_BASE = <<~PROMPT
       You are an admin assistant for a Rails 6 wildland-fire Incident Action
       Plan (IAP) app. The user is an admin of this app and can inspect and
       act on its production data. Help them answer questions and take
@@ -33,9 +33,26 @@ module AdminChat
            chat panel, not a report. Numbers, lists, and short sentences.
     PROMPT
 
-    def initialize(user:)
-      @user   = user
-      @client = Anthropic::Client.new  # reads ENV['ANTHROPIC_API_KEY']
+    def initialize(user:, incident: nil)
+      @user     = user
+      @incident = incident
+      @client   = Anthropic::Client.new  # reads ENV['ANTHROPIC_API_KEY']
+    end
+
+    # Compose the system prompt with incident context when the chat is
+    # scoped to one. Appends a short "Current incident:" block so Claude
+    # knows which incident to default to and the user doesn't have to
+    # repeat it in every message.
+    def system_prompt
+      return SYSTEM_PROMPT_BASE unless @incident
+      <<~PROMPT
+        #{SYSTEM_PROMPT_BASE}
+
+        Current incident: #{@incident.name.inspect} (id #{@incident.id}).
+        Default every incident-scoped tool call to this incident unless
+        the user explicitly asks about another one. When referring to it
+        in text, use the name — the admin already knows which one it is.
+      PROMPT
     end
 
     # Streaming agent loop. Yields SSE-ready events as it goes:
@@ -58,7 +75,7 @@ module AdminChat
         api_stream = @client.messages.stream(
           model:      MODEL,
           max_tokens: 4096,
-          system:     SYSTEM_PROMPT,
+          system:     system_prompt,
           tools:      Tools.schemas,
           messages:   messages
         )
@@ -85,7 +102,7 @@ module AdminChat
           on_event.call(type: 'tool_start', name: block.name,
                         input_summary: summarize_tool_input(block.name, input))
 
-          result = Tools.dispatch(block.name, input, user: @user)
+          result = Tools.dispatch(block.name, input, user: @user, default_incident: @incident)
 
           on_event.call(type: 'tool_result', name: block.name,
                         ok: !result[:error])
@@ -130,7 +147,7 @@ module AdminChat
         response = @client.messages.create(
           model: MODEL,
           max_tokens: 4096,
-          system: SYSTEM_PROMPT,
+          system: system_prompt,
           tools: Tools.schemas,
           messages: messages
         )
@@ -146,7 +163,7 @@ module AdminChat
         response.content.each do |block|
           next unless block.type == :tool_use
           input  = block.input.respond_to?(:to_h) ? block.input.to_h.deep_stringify_keys : block.input
-          result = Tools.dispatch(block.name, input, user: @user)
+          result = Tools.dispatch(block.name, input, user: @user, default_incident: @incident)
           proposals << result if block.name.to_s.start_with?('propose_') && !result[:error]
           tool_results << {
             type:         'tool_result',

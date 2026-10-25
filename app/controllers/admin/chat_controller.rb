@@ -7,23 +7,25 @@ module Admin
     include ActionController::Live
     before_action :authenticate_user!
     before_action :require_admin
+    before_action :set_incident
     # best_in_place / normal admin forms already use CSRF; our AJAX
     # posts send the Rails CSRF token header, so skip_forgery_protection
     # is NOT needed.
 
     # Session cookie is only ~4KB total — way too small for a chat
     # transcript with tool-use blocks. Store a short UUID in the cookie
+    # keyed per-incident so switching incidents gives a fresh conversation,
     # and keep the actual message array in Rails.cache under that id.
     # Expires after 2 hours of inactivity.
-    SESSION_CHAT_ID_KEY = :admin_chat_id
-    HISTORY_TTL         = 2.hours
+    SESSION_CHAT_ID_KEY_PREFIX = :admin_chat_id   # suffixed with incident id
+    HISTORY_TTL                = 2.hours
 
-    # GET /admin/chat
+    # GET /admin/incidents/:incident_id/chat
     def show
       # Seed the session chat_id up front so the streaming #create
       # action never has to mutate the session (ActionController::Live
       # + session writes can race).
-      session[SESSION_CHAT_ID_KEY] ||= SecureRandom.uuid
+      session[session_key] ||= SecureRandom.uuid
       @messages = load_history
     end
 
@@ -64,7 +66,7 @@ module Admin
       response.stream.write(":ok\n\n")
 
       history = load_history.map(&:deep_symbolize_keys)
-      service = AdminChat::ClaudeService.new(user: current_user)
+      service = AdminChat::ClaudeService.new(user: current_user, incident: @incident)
 
       begin
         final_messages = service.stream(messages: history, user_text: user_text) do |event|
@@ -89,13 +91,13 @@ module Admin
       end
     end
 
-    # DELETE /admin/chat — clear the conversation history (New chat button).
+    # DELETE /admin/incidents/:incident_id/chat — clear history (New chat).
     def destroy
-      if (id = session[SESSION_CHAT_ID_KEY])
+      if (id = session[session_key])
         Rails.cache.delete(cache_key(id))
       end
-      session.delete(SESSION_CHAT_ID_KEY)
-      redirect_to admin_chat_path
+      session.delete(session_key)
+      redirect_to admin_incident_chat_path(@incident)
     end
 
     # POST /admin/chat/approvals — admin clicks Approve on a proposal
@@ -115,6 +117,16 @@ module Admin
 
     def require_admin
       head :forbidden unless current_user&.admin?
+    end
+
+    def set_incident
+      @incident = Incident.find(params[:incident_id])
+    end
+
+    # Per-user AND per-incident so an admin can hop between incidents
+    # without stale context from the previous one bleeding in.
+    def session_key
+      "#{SESSION_CHAT_ID_KEY_PREFIX}_#{@incident.id}".to_sym
     end
 
     def approve_demob(token)
@@ -179,18 +191,18 @@ module Admin
     end
 
     def load_history
-      id = session[SESSION_CHAT_ID_KEY]
+      id = session[session_key]
       return [] unless id
       Rails.cache.read(cache_key(id)) || []
     end
 
     def save_history(messages)
-      id = session[SESSION_CHAT_ID_KEY] ||= SecureRandom.uuid
+      id = session[session_key] ||= SecureRandom.uuid
       Rails.cache.write(cache_key(id), messages, expires_in: HISTORY_TTL)
     end
 
     def cache_key(id)
-      "admin_chat:#{id}"
+      "admin_chat:#{@incident.id}:#{id}"
     end
 
     # Write one Server-Sent Event: a `data: <json>` line followed by a

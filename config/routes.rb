@@ -78,11 +78,16 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     # Admin-only chat with Claude — read-only data exploration plus
-    # propose-then-approve demobs. See AdminChat::ClaudeService.
-    get    'chat',             to: 'chat#show',    as: :chat
-    post   'chat/messages',    to: 'chat#create',  as: :chat_messages
-    delete 'chat',             to: 'chat#destroy', as: :reset_chat
-    post   'chat/approvals',   to: 'chat#approve', as: :chat_approvals
+    # propose-then-approve mutations. Scoped to one incident so tool
+    # calls default to that incident and the session cache is per-
+    # incident (switching incidents = fresh conversation). See
+    # AdminChat::ClaudeService.
+    resources :incidents, only: [] do
+      get    'chat',           to: 'chat#show',    as: :chat
+      post   'chat/messages',  to: 'chat#create',  as: :chat_messages
+      delete 'chat',           to: 'chat#destroy', as: :reset_chat
+      post   'chat/approvals', to: 'chat#approve', as: :chat_approvals
+    end
   end
 
   resources :incidents do

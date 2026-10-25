@@ -1,11 +1,11 @@
-<% content_for :title, 'Admin Chat' %>
+<% content_for :title, "Admin Chat — #{@incident.name}" %>
 
 <div class="container admin-chat">
   <div class="col-xs-12 col-lg-8 center-block">
 
     <div class="admin-chat-header">
-      <h3>Admin Chat <small>(Claude Sonnet 5.5)</small></h3>
-      <%= button_to 'New chat', admin_reset_chat_path,
+      <h3>Admin Chat <small>&mdash; <%= @incident.name %> (Claude Sonnet 5.5)</small></h3>
+      <%= button_to 'New chat', admin_incident_reset_chat_path(@incident),
                     method: :delete,
                     data: { confirm: 'Clear this conversation?' },
                     class: 'btn btn-default btn-xs admin-chat-reset' %>
@@ -13,7 +13,7 @@
 
     <div class="admin-chat-panel panel panel-default">
       <div class="admin-chat-log" id="admin-chat-log"
-           data-approvals-url="<%= admin_chat_approvals_path %>">
+           data-approvals-url="<%= admin_incident_chat_approvals_path(@incident) %>">
         <%# Replay prior turns. Only text blocks surface in the UI;
             tool_use/tool_result turns stay in the model's history
             but aren't shown to the admin to keep the log readable. %>
@@ -35,7 +35,7 @@
       </div>
 
       <form class="admin-chat-form" id="admin-chat-form"
-            data-url="<%= admin_chat_messages_path %>">
+            data-url="<%= admin_incident_chat_messages_path(@incident) %>">
         <textarea name="message" rows="2" placeholder="Ask about resources, incidents, demobs… (Shift+Enter for newline)" required></textarea>
         <button type="submit" class="btn btn-primary">Send</button>
       </form>
