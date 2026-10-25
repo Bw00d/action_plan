@@ -180,6 +180,7 @@ class Resource < ApplicationRecord
   # against the same org_unit. Only fires when release_date was actually
   # set on this save (nil → date), so clearing release_date to bring
   # someone back doesn't do anything weird.
+  after_save :sync_current_work_entry
   after_save :remove_from_board_on_demob, if: :saved_change_to_release_date?
   after_save :close_current_work_on_demob,  if: :saved_change_to_release_date?
   after_save :sync_rnr_timeline_from_boolean, if: :saved_change_to_r_and_r?
@@ -205,6 +206,53 @@ class Resource < ApplicationRecord
       resource_events.where(kind: ResourceEvent.kinds[:work], actual_lwd: before)
                      .order(updated_at: :desc).limit(1)
                      .update_all(actual_lwd: nil, updated_at: Time.current)
+    end
+  end
+
+  # Keep the current :work entry (if any) in sync with the Resource
+  # row, and create the FIRST :work entry for a resource that doesn't
+  # have one yet. Without this, a freshly-filled resource lives only
+  # on the Resource row until a swap happens — swap_now then has no
+  # entry to close out and the first operator never appears in the
+  # activity feed (reported bug on E-175).
+  def sync_current_work_entry
+    return if spacer?
+    return unless fwd.present?
+    effective_leader = leader.presence || name
+    return if effective_leader.blank?
+
+    planned_end = (fwd + assignment_length.to_i - 1.day) if assignment_length.to_i.positive?
+
+    current = resource_events.where(kind: ResourceEvent.kinds[:work])
+                             .where.not(actual_fwd: nil)
+                             .where(actual_lwd: nil)
+                             .first
+
+    if current
+      # Mirror leader / phone / planned-end onto the entry so the feed
+      # stays consistent with inline edits to the Resource row. fwd
+      # stays as the operator's actual start date — resource.fwd is the
+      # equipment's original check-in and shouldn't drag the operator's
+      # start back.
+      attrs = {}
+      attrs[:leader] = effective_leader if current.leader != effective_leader
+      attrs[:phone]  = phone             if current.phone  != phone
+      attrs[:lwd]    = planned_end       if planned_end && current.lwd != planned_end
+      current.update_columns(attrs.merge(updated_at: Time.current)) if attrs.any?
+    elsif release_date.blank? &&
+          !resource_events.where(kind: ResourceEvent.kinds[:work]).exists?
+      # First :work entry for this resource. Only when there are NO
+      # :work entries at all — if the chain closed out and the resource
+      # is between operators we don't want to invent one.
+      resource_events.create!(
+        kind:       :work,
+        leader:     effective_leader,
+        phone:      phone,
+        fwd:        fwd,
+        lwd:        planned_end,
+        actual_fwd: fwd,
+        actual_lwd: nil
+      )
     end
   end
 
