@@ -16,6 +16,7 @@
 <% else %>
 <li class="board-card"
     data-resource-id="<%= resource.id %>"
+    data-category="<%= resource.category %>"
     data-personnel="<%= resource.effective_personnel.to_i %>"
     data-fwd="<%= resource.fwd&.iso8601 %>"
     data-assignment-length="<%= resource.assignment_length %>"

@@ -901,8 +901,17 @@
       $input.val(oldVal);
 
       var title = 'Change assignment length from ' + oldVal + ' to ' + newVal + ' days?';
-      var text  = 'If a new operator is coming in, use Schedule Swap instead ' +
-                  'so the previous operator stays in the shift log.';
+      // CREW and OVERHEAD legitimately extend their current assignment
+      // (14 → 21 is a common ask); other categories almost always want
+      // a new operator via Schedule Swap instead, so flag that only for
+      // them. Category comes from data-category on the card root.
+      var $card    = $el.closest('.board-card');
+      var category = String($card.attr('data-category') || '').toUpperCase();
+      var extendable = (category === 'CREW' || category === 'OVERHEAD');
+      var text = extendable
+        ? 'Just confirming — are you sure?'
+        : 'If a new operator is coming in, use Schedule Swap instead ' +
+          'so the previous operator stays in the shift log.';
 
       function sendManualSave() {
         var url    = $el.data('bipUrl')    || $el.attr('data-bip-url')    || document.location.pathname;
