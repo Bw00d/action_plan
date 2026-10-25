@@ -222,23 +222,28 @@
     width: 100%;
   }
   .phone-205a-table tbody td {
-    padding: 2px 4px;
+    padding: 2px 3px;
     line-height: 1.2;
   }
-  // Give the three visible columns a sane split on paper.
-  // Position gets more room and is allowed to wrap (long titles like
-  // "Incident Commander (t)" otherwise force the table past the card
-  // edge and the phone number gets clipped).
+  // Give the three visible columns a sane split on paper. Phone needs
+  // enough room for "(555) 555-5555" (14 chars) at 8.5pt without
+  // clipping; Position wraps so long titles don't force the table
+  // wider than the card.
   .phone-205a-table .col-position {
+    width: 30%;
+    white-space: normal;
+    word-break: break-word;
+    padding-left: 4px;
+  }
+  .phone-205a-table .col-name  {
     width: 35%;
     white-space: normal;
     word-break: break-word;
   }
-  .phone-205a-table .col-name  { width: 35%; }
   .phone-205a-table .col-phone {
-    width: 30%;
+    width: 35%;
     white-space: nowrap;
-    padding-right: 6px;         // small gutter so the last digit never kisses the border
+    padding-right: 4px;         // small gutter so the last digit never kisses the border
     text-align: right;
   }
 
