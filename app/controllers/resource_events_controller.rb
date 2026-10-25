@@ -161,6 +161,7 @@ class ResourceEventsController < ApplicationController
     # without a page reload — so the user keeps looking at the open card
     # and sees the swap take effect.
     @resource.reload
+    @resource.resource_events.reload   # drop any association cache from the transaction
     lwd = @resource.last_work_day
     render json: {
       # formats: [:html] is required — this action responds as JSON, so
