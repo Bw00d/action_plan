@@ -251,34 +251,45 @@ class Resource < ApplicationRecord
 
   # Projected end-of-assignment date.
   #
-  # Baseline is `fwd + assignment_length - 1 day` — the on-paper LWD
-  # from the original check-in. If any scheduled crew swaps are on the
-  # books, we extend to the latest scheduled swap's LWD so the planning
-  # view reflects reality (incoming operators keep the resource at the
-  # incident past its original LWD). Taking the MAX means a shorter
-  # pre-scheduled swap can't accidentally shrink the end date below
-  # what the resource was already committed to.
+  # Shift-timeline model: each :work entry carries its own planned
+  # start (fwd) and planned end (lwd). last_work_day = max lwd across
+  # all :work entries — captures both the current operator's planned
+  # end and any future (unpromoted) scheduled operators. Taking the
+  # MAX across the whole timeline means a shorter future entry can't
+  # shrink the committed end date.
   #
-  # Preserves the historical " " return value when fwd/assignment_length
-  # are both missing AND no swap exists, so legacy callers that
-  # pattern-match on `is_a?(String)` keep working.
+  # Fallback for resources that haven't been through the shift
+  # backfill (shouldn't happen in production after the one-time
+  # backfill, but keeps the method honest for freshly-created rows):
+  # fwd + assignment_length - 1 day.
+  #
+  # Preserves the historical " " return value when nothing is on the
+  # timeline AND fwd/assignment_length are both missing, so legacy
+  # callers that pattern-match on `is_a?(String)` keep working.
   def last_work_day
-    base = (fwd + assignment_length - 1.days if fwd && assignment_length)
-    swap = latest_scheduled_swap_lwd
-    [base, swap].compact.max || " "
+    work_lwds = work_entries.map(&:lwd).compact
+    return work_lwds.max if work_lwds.any?
+    return fwd + assignment_length - 1.days if fwd && assignment_length
+    " "
   end
 
-  # Max LWD across all scheduled (not yet executed) crew swaps on this
-  # resource. Nil when none exist. Uses the in-memory association when
-  # it's been eager-loaded (common on the board + 211 pages) to avoid
-  # a per-row SQL query.
+  # Max LWD across future (unpromoted) :work entries. "Unpromoted" =
+  # actual_fwd IS NULL — the entry hasn't been made current by a
+  # SWAP NOW yet. Nil when none exist. Kept for callers that still
+  # reference the pre-refactor name.
   def latest_scheduled_swap_lwd
-    swaps = if resource_events.loaded?
-              resource_events.select { |e| e.kind.to_s == 'scheduled_swap' }
-            else
-              resource_events.where(kind: ResourceEvent.kinds[:scheduled_swap])
-            end
-    swaps.map(&:lwd).compact.max
+    work_entries.select { |e| e.actual_fwd.nil? }.map(&:lwd).compact.max
+  end
+
+  # :work entries for this resource. Uses the in-memory association
+  # when it's been eager-loaded (common on the board + 211 pages) to
+  # avoid a per-row SQL query.
+  def work_entries
+    if resource_events.loaded?
+      resource_events.select { |e| e.kind.to_s == 'work' }
+    else
+      resource_events.where(kind: ResourceEvent.kinds[:work])
+    end
   end
 
   def formatted_fwd
