@@ -691,6 +691,16 @@
   position: relative; // anchor for the floating calendar-toggle icon
 }
 
+// Current operator's work period shown inline after the Leader name
+// as muted "(start – end)". Small, non-wrapping so it rides along
+// with the leader on the same line but doesn't steal visual weight.
+.board-card-leader-period {
+  margin-left: 0.4em;
+  font-size: 0.85em;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
 // Calendar icon pinned to the top-right corner of the resource info
 // section. Click toggles the hidden .board-card-calendar-panel below.
 .board-card-cal-toggle {

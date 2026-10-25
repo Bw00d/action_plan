@@ -4,22 +4,37 @@
   modal, and also returned raw from ResourceEventsController after any
   create/update/destroy/swap_now to re-paint the panel inline.
 %>
-<% if events.empty? %>
+<%# Hide the current operator's :work entry — their info already lives
+    in the T-card header, so showing it again in the feed is redundant.
+    Everything else (upcoming shifts, R&R, past operators, comments)
+    renders. %>
+<% feed_events = events.reject(&:current_work?) %>
+<% if feed_events.empty? %>
   <p class="board-card-activity-empty muted">
     No activity yet. Add a comment or schedule a crew swap above.
   </p>
 <% else %>
   <ul class="board-card-activity-list">
-    <% events.each do |ev| %>
-      <li class="board-card-activity-item board-card-activity-item--<%= ev.kind %>"
+    <% feed_events.each do |ev| %>
+      <%# CSS class mirrors the pre-refactor kind names so existing
+          selectors (boards.js finds `.board-card-activity-item--scheduled_swap`
+          for the countdown badge, etc.) and `_item--completed_swap` theming
+          keep working. Predicates below use the model shim so a :work
+          entry with actual_fwd=nil behaves exactly like the old
+          scheduled_swap in the UI. %>
+      <% display_kind = if ev.comment?        then 'comment'
+                       elsif ev.rnr?           then 'rnr'
+                       elsif ev.scheduled_swap? then 'scheduled_swap'
+                       elsif ev.completed_swap? then 'completed_swap'
+                       else ev.kind end %>
+      <li class="board-card-activity-item board-card-activity-item--<%= display_kind %>"
           data-event-id="<%= ev.id %>">
         <div class="board-card-activity-meta">
           <strong><%= ev.user&.full_name.presence || ev.user&.email&.split('@')&.first || 'System' %></strong>
           <span class="muted"><%= ev.created_at.strftime('%b %-d, %-l:%M %p') %></span>
         </div>
 
-        <% case ev.kind.to_sym %>
-        <% when :comment %>
+        <% if ev.comment? %>
           <%# Raw body stashed on a data attr so the JS edit flow can
               populate the textarea without extracting plain text from
               simple_format's <p>/<br> output. %>
@@ -35,7 +50,29 @@
             </div>
           <% end %>
 
-        <% when :scheduled_swap %>
+        <% elsif ev.rnr? %>
+          <%# R&R entry — resource is scheduled off the incident for
+              the planned window. No SWAP NOW; delete allowed while
+              unpromoted. %>
+          <div class="board-card-activity-tag board-card-activity-tag--rnr">R&amp;R</div>
+          <div class="board-card-activity-body">
+            <div class="muted">
+              <%= ev.fwd&.strftime('%m/%d/%y') || '—' %>
+              → <%= ev.lwd&.strftime('%m/%d/%y') || '—' %>
+            </div>
+            <% if ev.body.present? %>
+              <div class="board-card-activity-note"><%= simple_format(ev.body) %></div>
+            <% end %>
+          </div>
+          <% if ev.editable? %>
+            <div class="board-card-activity-actions">
+              <button type="button" class="btn btn-default btn-xs board-card-event-delete"
+                      data-url="<%= resource_event_path(resource, ev) %>"
+                      data-message="Delete this scheduled R&R?">Delete</button>
+            </div>
+          <% end %>
+
+        <% elsif ev.scheduled_swap? %>
           <%# Values stashed as data attrs so the pencil button can
               repopulate the compose form without a server round-trip. %>
           <% swap_imminent = ev.fwd && ev.fwd <= Date.current + 1.day %>
@@ -81,13 +118,18 @@
             </button>
           </div>
 
-        <% when :completed_swap %>
+        <% elsif ev.completed_swap? %>
           <div class="board-card-activity-tag board-card-activity-tag--past">FORMER OPERATOR</div>
           <div class="board-card-activity-body">
             <div><strong><%= ev.leader || '—' %></strong></div>
             <div class="muted">
-              <%= ev.fwd&.strftime('%m/%d/%y') || '—' %>
-              – <%= ev.lwd&.strftime('%m/%d/%y') || '—' %>
+              <%# Prefer actual window when the entry was promoted;
+                  fall back to planned for pre-shift-refactor legacy
+                  rows. %>
+              <% start_d = ev.actual_fwd || ev.fwd %>
+              <% end_d   = ev.actual_lwd || ev.lwd %>
+              <%= start_d&.strftime('%m/%d/%y') || '—' %>
+              – <%= end_d&.strftime('%m/%d/%y') || '—' %>
             </div>
           </div>
         <% end %>

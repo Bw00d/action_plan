@@ -68,9 +68,26 @@ class Resource < ApplicationRecord
   # only as visual gaps on the ICS 204 board and must be filtered out of
   # every user-facing resource list (ICS 211, demob, plan roster, etc.);
   # the board itself uses `.active` so spacers still render on columns.
-  scope :active,   -> { where(release_date: nil, r_and_r: false) }
+  # Shift-timeline: "on R&R" and "active" are derived from :rnr events
+  # whose planned window covers today. r_and_r boolean is dual-written
+  # from these via sync_rnr_timeline_from_boolean so legacy readers and
+  # form submissions still work during the transition. The boolean will
+  # be dropped once all callers are migrated.
+  scope :on_rnr, -> {
+    today = Date.current
+    where(spacer: false).where(id: ResourceEvent
+      .where(kind: ResourceEvent.kinds[:rnr])
+      .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+      .select(:resource_id).distinct)
+  }
+  scope :active, -> {
+    today = Date.current
+    where(release_date: nil).where.not(id: ResourceEvent
+      .where(kind: ResourceEvent.kinds[:rnr])
+      .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+      .select(:resource_id))
+  }
   scope :assigned, -> { active.where(spacer: false) }
-  scope :on_rnr,   -> { where(r_and_r: true, spacer: false) }
    with_options unless: :spacer? do
      validates :name, presence: true
      validates :position, presence: true
@@ -163,11 +180,100 @@ class Resource < ApplicationRecord
   # against the same org_unit. Only fires when release_date was actually
   # set on this save (nil → date), so clearing release_date to bring
   # someone back doesn't do anything weird.
+  after_save :sync_current_work_entry
   after_save :remove_from_board_on_demob, if: :saved_change_to_release_date?
+  after_save :close_current_work_on_demob,  if: :saved_change_to_release_date?
+  after_save :sync_rnr_timeline_from_boolean, if: :saved_change_to_r_and_r?
 
   def remove_from_board_on_demob
     return if release_date.nil?
     org_unit_assignment&.destroy
+  end
+
+  # When a resource is demobbed (release_date set), close out the
+  # currently-active :work entry so the shift timeline agrees with the
+  # resource row. If release_date is cleared (resource brought back),
+  # reopen the most recently-closed entry whose actual_lwd matches the
+  # previous release_date.
+  def close_current_work_on_demob
+    before, after = saved_change_to_release_date
+    if after.present?
+      resource_events.where(kind: ResourceEvent.kinds[:work])
+                     .where.not(actual_fwd: nil)
+                     .where(actual_lwd: nil)
+                     .update_all(actual_lwd: after, updated_at: Time.current)
+    elsif before.present?
+      resource_events.where(kind: ResourceEvent.kinds[:work], actual_lwd: before)
+                     .order(updated_at: :desc).limit(1)
+                     .update_all(actual_lwd: nil, updated_at: Time.current)
+    end
+  end
+
+  # Keep the current :work entry (if any) in sync with the Resource
+  # row, and create the FIRST :work entry for a resource that doesn't
+  # have one yet. Without this, a freshly-filled resource lives only
+  # on the Resource row until a swap happens — swap_now then has no
+  # entry to close out and the first operator never appears in the
+  # activity feed (reported bug on E-175).
+  def sync_current_work_entry
+    return if spacer?
+    return unless fwd.present?
+    effective_leader = leader.presence || name
+    return if effective_leader.blank?
+
+    planned_end = (fwd + assignment_length.to_i - 1.day) if assignment_length.to_i.positive?
+
+    current = resource_events.where(kind: ResourceEvent.kinds[:work])
+                             .where.not(actual_fwd: nil)
+                             .where(actual_lwd: nil)
+                             .first
+
+    if current
+      # Mirror leader / phone / planned-end onto the entry so the feed
+      # stays consistent with inline edits to the Resource row. fwd
+      # stays as the operator's actual start date — resource.fwd is the
+      # equipment's original check-in and shouldn't drag the operator's
+      # start back.
+      attrs = {}
+      attrs[:leader] = effective_leader if current.leader != effective_leader
+      attrs[:phone]  = phone             if current.phone  != phone
+      attrs[:lwd]    = planned_end       if planned_end && current.lwd != planned_end
+      current.update_columns(attrs.merge(updated_at: Time.current)) if attrs.any?
+    elsif release_date.blank? &&
+          !resource_events.where(kind: ResourceEvent.kinds[:work]).exists?
+      # First :work entry for this resource. Only when there are NO
+      # :work entries at all — if the chain closed out and the resource
+      # is between operators we don't want to invent one.
+      resource_events.create!(
+        kind:       :work,
+        leader:     effective_leader,
+        phone:      phone,
+        fwd:        fwd,
+        lwd:        planned_end,
+        actual_fwd: fwd,
+        actual_lwd: nil
+      )
+    end
+  end
+
+  # Dual-write: the legacy R&R checkbox (on _non_209 / _ics_211) still
+  # saves the r_and_r boolean. Mirror the flip to the :rnr timeline so
+  # the new scopes (active / on_rnr) and anything else reading from the
+  # events stays in sync. Dropping r_and_r in #96 drops this callback.
+  def sync_rnr_timeline_from_boolean
+    today = Date.current
+    if r_and_r
+      has_active = resource_events.where(kind: ResourceEvent.kinds[:rnr])
+                                  .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL',
+                                         today, today).exists?
+      resource_events.create!(
+        kind: :rnr, fwd: today, lwd: today + 1.day, actual_fwd: today
+      ) unless has_active
+    else
+      resource_events.where(kind: ResourceEvent.kinds[:rnr])
+                     .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+                     .update_all(actual_lwd: today, updated_at: Time.current)
+    end
   end
 
   # Drop a newly-created resource onto the appropriate section org unit
@@ -251,34 +357,51 @@ class Resource < ApplicationRecord
 
   # Projected end-of-assignment date.
   #
-  # Baseline is `fwd + assignment_length - 1 day` — the on-paper LWD
-  # from the original check-in. If any scheduled crew swaps are on the
-  # books, we extend to the latest scheduled swap's LWD so the planning
-  # view reflects reality (incoming operators keep the resource at the
-  # incident past its original LWD). Taking the MAX means a shorter
-  # pre-scheduled swap can't accidentally shrink the end date below
-  # what the resource was already committed to.
+  # Shift-timeline model: each :work entry carries its own planned
+  # start (fwd) and planned end (lwd). last_work_day = max lwd across
+  # all :work entries — captures both the current operator's planned
+  # end and any future (unpromoted) scheduled operators. Taking the
+  # MAX across the whole timeline means a shorter future entry can't
+  # shrink the committed end date.
   #
-  # Preserves the historical " " return value when fwd/assignment_length
-  # are both missing AND no swap exists, so legacy callers that
-  # pattern-match on `is_a?(String)` keep working.
+  # Fallback for resources that haven't been through the shift
+  # backfill (shouldn't happen in production after the one-time
+  # backfill, but keeps the method honest for freshly-created rows):
+  # fwd + assignment_length - 1 day.
+  #
+  # Preserves the historical " " return value when nothing is on the
+  # timeline AND fwd/assignment_length are both missing, so legacy
+  # callers that pattern-match on `is_a?(String)` keep working.
   def last_work_day
-    base = (fwd + assignment_length - 1.days if fwd && assignment_length)
-    swap = latest_scheduled_swap_lwd
-    [base, swap].compact.max || " "
+    work_lwds = work_entries.map(&:lwd).compact
+    return work_lwds.max if work_lwds.any?
+    return fwd + assignment_length - 1.days if fwd && assignment_length
+    " "
   end
 
-  # Max LWD across all scheduled (not yet executed) crew swaps on this
-  # resource. Nil when none exist. Uses the in-memory association when
-  # it's been eager-loaded (common on the board + 211 pages) to avoid
-  # a per-row SQL query.
+  # Max LWD across future (unpromoted) :work entries. "Unpromoted" =
+  # actual_fwd IS NULL — the entry hasn't been made current by a
+  # SWAP NOW yet. Nil when none exist. Kept for callers that still
+  # reference the pre-refactor name.
   def latest_scheduled_swap_lwd
-    swaps = if resource_events.loaded?
-              resource_events.select { |e| e.kind.to_s == 'scheduled_swap' }
-            else
-              resource_events.where(kind: ResourceEvent.kinds[:scheduled_swap])
-            end
-    swaps.map(&:lwd).compact.max
+    work_entries.select { |e| e.actual_fwd.nil? }.map(&:lwd).compact.max
+  end
+
+  # :work entries for this resource. Uses the in-memory association
+  # when it's been eager-loaded (common on the board + 211 pages) to
+  # avoid a per-row SQL query.
+  def work_entries
+    if resource_events.loaded?
+      resource_events.select { |e| e.kind.to_s == 'work' }
+    else
+      resource_events.where(kind: ResourceEvent.kinds[:work])
+    end
+  end
+
+  # The currently-active :work entry (actual_fwd set, actual_lwd nil).
+  # Nil when there's no current operator. Prefers the loaded collection.
+  def current_work_entry
+    work_entries.detect { |e| e.actual_fwd.present? && e.actual_lwd.nil? }
   end
 
   def formatted_fwd
@@ -334,8 +457,18 @@ class Resource < ApplicationRecord
     personnel_by_agency.values.sum
   end
 
+  # True iff a scheduled :rnr entry's planned window covers today and
+  # it hasn't been closed out. Uses in-memory :rnr entries when the
+  # association is preloaded (board / ICS 211 both eager-load) to
+  # avoid a per-row SQL query.
   def rnr?
-    return true if self.r_and_r
+    today = Date.current
+    rnrs = if resource_events.loaded?
+             resource_events.select { |e| e.kind.to_s == 'rnr' }
+           else
+             resource_events.where(kind: ResourceEvent.kinds[:rnr])
+           end
+    rnrs.any? { |e| e.fwd && e.lwd && e.fwd <= today && e.lwd >= today && e.actual_lwd.nil? }
   end
 
   def create_demob

@@ -195,7 +195,7 @@ class OpsController < ApplicationController
   # LWD means we treat the resource as open-ended (still present).
   def resource_present_on?(resource, day)
     return false if resource.release_date.present?
-    return false if resource.r_and_r
+    return false if resource.rnr?
     lwd = resource.last_work_day
     return true if lwd.is_a?(String)   # fallback: no fwd/length set
     lwd >= day

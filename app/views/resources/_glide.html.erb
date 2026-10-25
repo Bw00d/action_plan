@@ -76,16 +76,25 @@
           <% end %>
 
           <%# Days where a scheduled crew swap kicks in (FWD of the
-              incoming operator). Precomputed per resource so the 14-day
-              cell loop is just a Set include? check. %>
+              incoming operator) and days covered by a scheduled R&R.
+              Precomputed per resource so the 14-day cell loop is just
+              a few include?/cover? checks instead of a nested query. %>
           <% swap_fwds = r.resource_events.select(&:scheduled_swap?)
                                            .map(&:fwd).compact.to_set %>
+          <% rnr_ranges = r.resource_events.select { |e| e.kind.to_s == 'rnr' && e.fwd && e.lwd }
+                                            .map { |e| e.fwd..e.lwd } %>
           <% 14.times do |d| %>
             <% cell_day = Time.zone.today + d.days %>
             <% is_swap  = swap_fwds.include?(cell_day) %>
-            <td class="glide-calendar glide-row<%= ' glide-swap-day' if is_swap %>"
+            <% is_rnr   = rnr_ranges.any? { |rng| rng.cover?(cell_day) } %>
+            <% css = ['glide-calendar', 'glide-row']
+                css << 'glide-swap-day' if is_swap
+                css << 'glide-rnr-day'  if is_rnr %>
+            <td class="<%= css.join(' ') %>"
                 data-day="<%= cell_day %>"
-                data-lwd="<%= r.last_work_day %>"><%= 'SWAP' if is_swap %></td>
+                data-lwd="<%= r.last_work_day %>">
+              <%= 'SWAP' if is_swap %><%= 'R&R'.html_safe if is_rnr && !is_swap %>
+            </td>
           <% end %>
         </tr>
         <% end %>
