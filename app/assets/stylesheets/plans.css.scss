@@ -1126,7 +1126,13 @@ img#add-freqs-button {
   // ── 1. Incident Name + 2. Operational Period + Date/Time From/To ──
   > .sheet-header {
     flex: none;
-    height: 60px;   // 30px op-period + 30px date-cell (label + value)
+    // 24px op-period band + ~24px label + ~28px date-value, rounded up
+    // with a few pixels of slack. The old 60px was tight enough that
+    // Chrome's print rendering (which uses slightly larger line-boxes
+    // than the on-screen view) pushed the date values below the row
+    // border — visible as "10/27/2026 07:00" leaking out of the ICS 202
+    // header into the Objectives section.
+    height: 78px;
     display: flex;
     padding: 0;
 
