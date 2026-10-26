@@ -42,8 +42,20 @@
   @left_pad_rows  = column_target - left_used
   @right_pad_rows = column_target - right_used
 
-  op_from, op_to = @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).map(&:presence)
-  date_str = @plan.date&.strftime('%m/%d/%Y')
+  # Prefer the datetime columns (used by the on-screen 202/203 flatpickr
+  # fields) so the PDF shows "MM/DD/YYYY HH:MM" exactly like the screen.
+  # Fall back to the legacy @plan.ops_period string + @plan.date so very
+  # old plans that never had the datetimes populated still render.
+  op_from_str =
+    @plan.ops_period_from&.strftime('%m/%d/%Y %H:%M') ||
+    [@plan.date&.strftime('%m/%d/%Y'),
+     @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).first.to_s.strip.presence
+    ].compact.join(' ')
+  op_to_str =
+    @plan.ops_period_to&.strftime('%m/%d/%Y %H:%M') ||
+    [@plan.date&.strftime('%m/%d/%Y'),
+     @plan.ops_period.to_s.split(/\s*[-–—]\s*/, 2).last.to_s.strip.presence
+    ].compact.join(' ')
 %>
 <div id="organization-assignments">
   <div class="container">
@@ -72,11 +84,11 @@
           <div class="row">
             <div class="col-xs-6 content-box org-header-cell">
               <div class="org-header-label"><span class="small">Date/Time From:</span></div>
-              <div class="org-header-value"><%= [date_str, op_from].compact.join(' ') %></div>
+              <div class="org-header-value"><%= op_from_str %></div>
             </div>
             <div class="col-xs-6 content-box org-header-cell">
               <div class="org-header-label"><span class="small">Date/Time To:</span></div>
-              <div class="org-header-value"><%= [date_str, op_to].compact.join(' ') %></div>
+              <div class="org-header-value"><%= op_to_str %></div>
             </div>
           </div>
         </div>
