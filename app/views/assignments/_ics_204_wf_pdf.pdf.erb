@@ -139,14 +139,23 @@
 
       <% if page[:include_6_7] %>
         <!-- ===== Blocks 6 & 7 (only on page 1) ===== -->
+        <%# Match the on-screen 204's `preserve_blanks` helper — convert
+            every \n (including trailing padding lines operators add to
+            grow blank sections) to <br>, so the printed boxes grow the
+            same way the web view does. simple_format trimmed trailing
+            whitespace, so padding lines disappeared on print. %>
+        <% preserve_blanks = ->(text) {
+             next "" if text.nil? || text == ""
+             ERB::Util.h(text.to_s).gsub("\n", "<br>").html_safe
+           } %>
         <div class="narrative-print">
           <div class="box-6">
             <span class="num">6.</span> Control Operations/Work Assignments:<br>
-            <%= simple_format(@assignment.control_operations.to_s) %>
+            <%= preserve_blanks.call(@assignment.control_operations) %>
           </div>
           <div class="box-7">
             <span class="num">7.</span> Special Instructions:<br>
-            <%= simple_format(@assignment.special_instructions.to_s) %>
+            <%= preserve_blanks.call(@assignment.special_instructions) %>
           </div>
         </div>
       <% end %>
