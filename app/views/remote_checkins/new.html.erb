@@ -18,10 +18,16 @@
       <div class="remote-checkin-alert"><%= flash[:alert] %></div>
     <% end %>
 
+    <%# Nesting a button_to (which renders its own <form>) inside this
+        form breaks the Back button — browsers silently drop nested
+        forms, so clicks fall through to the outer form's submit. Keep
+        the Back form OUTSIDE this one, and use the HTML5 form="rc-
+        main-form" attribute on the Next button so it submits this
+        form from outside .remote-checkin-actions. %>
     <%= form_with url: remote_checkin_path(@incident.remote_checkin_token),
                   method: :post,
                   local: true,
-                  html: { class: 'remote-checkin-form', autocomplete: 'off' } do |f| %>
+                  html: { id: 'rc-main-form', class: 'remote-checkin-form', autocomplete: 'off' } do |f| %>
 
       <div class="remote-checkin-question">
         <% if @step.key == 'confirm_match' %>
@@ -84,17 +90,17 @@
           <% end %>
         </div>
       </div>
-
-      <div class="remote-checkin-actions">
-        <% if @index.positive? %>
-          <%= button_to 'Back', remote_checkin_back_path(@incident.remote_checkin_token),
-                        method: :post, class: 'rc-btn rc-btn-ghost', form: { class: 'rc-inline-form' } %>
-        <% end %>
-        <button type="submit" class="rc-btn rc-btn-primary">
-          <%= @index + 1 == @total ? 'Review' : 'Next' %>
-        </button>
-      </div>
     <% end %>
+
+    <div class="remote-checkin-actions">
+      <% if @index.positive? %>
+        <%= button_to 'Back', remote_checkin_back_path(@incident.remote_checkin_token),
+                      method: :post, class: 'rc-btn rc-btn-ghost', form: { class: 'rc-inline-form' } %>
+      <% end %>
+      <button type="submit" form="rc-main-form" class="rc-btn rc-btn-primary">
+        <%= @index + 1 == @total ? 'Review' : 'Next' %>
+      </button>
+    </div>
 
     <footer class="remote-checkin-footer">
       <%= button_to 'Start over', remote_checkin_restart_path(@incident.remote_checkin_token),

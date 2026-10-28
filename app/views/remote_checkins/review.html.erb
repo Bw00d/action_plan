@@ -27,16 +27,19 @@
       <% end %>
     </dl>
 
+    <%# Submit form on its own — see new.html.erb for why Back is a
+        sibling form instead of nested inside this one. %>
     <%= form_with url: remote_checkin_path(@incident.remote_checkin_token),
                   method: :post, local: true,
-                  html: { class: 'remote-checkin-form' } do |f| %>
+                  html: { id: 'rc-main-form', class: 'remote-checkin-form' } do |f| %>
       <%= hidden_field_tag :commit_submission, '1' %>
-      <div class="remote-checkin-actions">
-        <%= button_to 'Back', remote_checkin_back_path(@incident.remote_checkin_token),
-                      method: :post, class: 'rc-btn rc-btn-ghost' %>
-        <button type="submit" class="rc-btn rc-btn-primary">Submit check-in</button>
-      </div>
     <% end %>
+
+    <div class="remote-checkin-actions">
+      <%= button_to 'Back', remote_checkin_back_path(@incident.remote_checkin_token),
+                    method: :post, class: 'rc-btn rc-btn-ghost' %>
+      <button type="submit" form="rc-main-form" class="rc-btn rc-btn-primary">Submit check-in</button>
+    </div>
 
     <footer class="remote-checkin-footer">
       <%= button_to 'Start over', remote_checkin_restart_path(@incident.remote_checkin_token),
