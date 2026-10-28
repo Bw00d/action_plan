@@ -117,6 +117,23 @@
   </section>
 
   <section class="planning-tool">
+    <h3>
+      Resource Check-Ins
+      <% if @pending_remote_checkin_count.to_i > 0 %>
+        <span class="badge badge-primary planning-tool-badge"><%= @pending_remote_checkin_count %> pending</span>
+      <% end %>
+    </h3>
+    <p class="muted">
+      Review self-reported check-ins submitted by arriving resources via
+      the public link, then promote them to the incident board. Rotate
+      or copy the public URL from the review page.
+    </p>
+    <%= link_to 'Open check-in queue →',
+                incident_remote_checkins_path(@incident),
+                class: 'btn btn-primary' %>
+  </section>
+
+  <section class="planning-tool">
     <h3>Crew Swaps Log</h3>
     <p class="muted">
       Spreadsheet view of every scheduled + completed crew swap on this
