@@ -101,6 +101,17 @@
     }
   }
 
+  // Native select — keep the browser's chrome (down-arrow + value
+  // display) explicitly so iOS Safari doesn't strip it when the parent
+  // rules set background/padding/border. Without this, the selected
+  // option can render invisibly after the picker closes.
+  .rc-select {
+    appearance: menulist;
+    -webkit-appearance: menulist;
+    padding: 12px 14px; // slightly less than text inputs — the native
+                        // arrow eats some right-hand space
+  }
+
   .rc-textarea { resize: vertical; min-height: 120px; }
 
   .rc-yesno {
@@ -191,29 +202,36 @@
 }
 
 .rc-review {
-  margin: 16px 0 8px;
+  margin: 12px 0 4px;
   display: grid;
-  grid-template-columns: minmax(120px, 36%) 1fr;
-  column-gap: 14px;
-  row-gap: 2px;
+  grid-template-columns: minmax(110px, 32%) 1fr;
+  column-gap: 12px;
+  row-gap: 0;
+
+  // Faint divider between rows so a dense list stays scannable.
+  dt, dd {
+    border-top: 1px solid #eef0f4;
+  }
+  // No border on the first row (first dt + its dd).
+  dt:first-of-type, dt:first-of-type + dd { border-top: 0; }
 
   dt {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: .4px;
     color: #8a97ad;
     margin: 0;
-    padding: 6px 0;
+    padding: 4px 0;
     align-self: center;
+    line-height: 1.1;
   }
   dd {
-    font-size: 15px;
+    font-size: 14px;
     color: #1a2b4a;
     margin: 0;
     padding: 4px 0;
     white-space: pre-wrap;
-    min-height: 24px;
-    border-bottom: 1px dashed transparent;
+    line-height: 1.25;
   }
 
   .rc-review-static {
@@ -222,11 +240,12 @@
   }
 
   // best_in_place elements — subtle hover affordance so the resource
-  // notices every value is editable without us screaming it.
+  // notices every value is editable without us screaming it. Zero
+  // vertical padding so the row isn't inflated by the hitbox.
   .best_in_place {
     display: inline-block;
     min-width: 60px;
-    padding: 2px 6px;
+    padding: 0 4px;
     border-radius: 3px;
     border: 1px dashed transparent;
     cursor: text;
@@ -237,8 +256,8 @@
     }
 
     input, textarea, select {
-      font-size: 15px;
-      padding: 4px 6px;
+      font-size: 14px;
+      padding: 2px 4px;
       border: 1px solid #3b82f6;
       border-radius: 3px;
       min-width: 160px;

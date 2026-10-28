@@ -70,7 +70,12 @@
             <textarea name="answer" class="rc-input rc-textarea" rows="5" autofocus
                       <%= 'required' if @step.required? %>><%= @state[@step.key] %></textarea>
           <% when :select %>
-            <select name="answer" class="rc-input" autofocus
+            <%# No autofocus — iOS Safari auto-opens the native picker on
+                autofocus-ed selects, and on close the chosen value can
+                fail to redisplay in the control. User must tap to open
+                here, which keeps the native picker commit-and-display
+                behaviour predictable. %>
+            <select name="answer" class="rc-input rc-select"
                     <%= 'required' if @step.required? %>>
               <option value="">— Choose one —</option>
               <% @step.options.each do |opt| %>
