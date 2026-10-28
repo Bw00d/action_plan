@@ -119,6 +119,14 @@ Rails.application.routes.draw do
       resource :checkin, only: [:new, :create], controller: 'request_checkins'
     end
     resources :dump_imports, only: [:new, :create]
+    # Admin review queue for public remote-checkin submissions.
+    # Does NOT create resources itself — the "Check In" button on each
+    # row routes through the normal RequestCheckinsController flow with
+    # the submission pre-filled.
+    resources :remote_checkins, only: [:index, :destroy], controller: 'admin/remote_checkins' do
+      member { post :dismiss }
+      collection { post :rotate_token }
+    end
     resources :schedules, only: [:index, :create, :update, :destroy]
     resources :demob_notifications, only: [:index, :update, :destroy] do
       member     { patch :transmit }
@@ -217,5 +225,14 @@ Rails.application.routes.draw do
   patch '/invitations/:invitation_token/accept',
         to: 'invitations#update',
         as: :invitation
+
+  # Public remote check-in — conversational form keyed by an opaque
+  # per-incident token. No authentication; the token itself is the
+  # access control and can be rotated from the incident settings.
+  get   '/remote_checkin/:token',          to: 'remote_checkins#new',    as: :remote_checkin
+  post  '/remote_checkin/:token',          to: 'remote_checkins#update'
+  post  '/remote_checkin/:token/back',     to: 'remote_checkins#back',   as: :remote_checkin_back
+  post  '/remote_checkin/:token/restart',  to: 'remote_checkins#restart',as: :remote_checkin_restart
+  get   '/remote_checkin/:token/thanks',   to: 'remote_checkins#thanks', as: :remote_checkin_thanks
 
 end

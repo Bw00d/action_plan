@@ -15,6 +15,15 @@
     </p>
   </div>
 
+  <% if @remote_checkin %>
+    <div class="alert alert-info rc-promote-banner">
+      <strong>Promoting self-reported check-in from
+        <%= @remote_checkin.name.presence || 'unknown resource' %></strong>
+      submitted <%= time_ago_in_words(@remote_checkin.submitted_at) %> ago.
+      Fields are pre-filled from the submission — edit as needed, then Check In.
+    </div>
+  <% end %>
+
   <div id="glide-info" class="panel panel-default">
     <div id="resource-form">
       <h4><strong>New Resource</strong></h4>
@@ -34,6 +43,9 @@
         <% end %>
 
         <%= f.hidden_field :incident_id, value: @incident.id %>
+        <% if @remote_checkin %>
+          <%= hidden_field_tag 'remote_checkin_id', @remote_checkin.id %>
+        <% end %>
 
         <div class="form-group">
           <%= f.text_field :name, placeholder: "RESOURCE NAME", class: 'form-control', required: true %>

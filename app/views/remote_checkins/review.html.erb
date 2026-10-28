@@ -1,0 +1,48 @@
+<% content_for :title, "Review — #{@incident.name}" %>
+
+<div class="remote-checkin-page">
+  <div class="remote-checkin-card">
+    <header class="remote-checkin-header">
+      <h1><%= @incident.name %></h1>
+      <p class="remote-checkin-sub">Review your answers</p>
+    </header>
+
+    <% if flash[:alert].present? %>
+      <div class="remote-checkin-alert"><%= flash[:alert] %></div>
+    <% end %>
+
+    <p class="rc-help">
+      Please check the answers below. Click <strong>Back</strong> to change anything,
+      or <strong>Submit</strong> to send your check-in to the Plans section.
+    </p>
+
+    <dl class="rc-review">
+      <% @summary.each do |field, value| %>
+        <dt><%= field.to_s.humanize %></dt>
+        <dd>
+          <% if value == true %>Yes<% elsif value == false %>No<%
+             elsif value.is_a?(Date) %><%= value.strftime('%m/%d/%Y') %><%
+             else %><%= value %><% end %>
+        </dd>
+      <% end %>
+    </dl>
+
+    <%= form_with url: remote_checkin_path(@incident.remote_checkin_token),
+                  method: :post, local: true,
+                  html: { class: 'remote-checkin-form' } do |f| %>
+      <%= hidden_field_tag :commit_submission, '1' %>
+      <div class="remote-checkin-actions">
+        <%= button_to 'Back', remote_checkin_back_path(@incident.remote_checkin_token),
+                      method: :post, class: 'rc-btn rc-btn-ghost' %>
+        <button type="submit" class="rc-btn rc-btn-primary">Submit check-in</button>
+      </div>
+    <% end %>
+
+    <footer class="remote-checkin-footer">
+      <%= button_to 'Start over', remote_checkin_restart_path(@incident.remote_checkin_token),
+                    method: :post,
+                    data: { confirm: 'Clear everything you have entered and start the form over?' },
+                    class: 'rc-link' %>
+    </footer>
+  </div>
+</div>

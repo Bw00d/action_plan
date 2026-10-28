@@ -1,0 +1,28 @@
+<% content_for :title, "Check-in received — #{@incident.name}" %>
+
+<div class="remote-checkin-page">
+  <div class="remote-checkin-card">
+    <header class="remote-checkin-header">
+      <h1><%= @incident.name %></h1>
+      <p class="remote-checkin-sub">Check-in received</p>
+    </header>
+
+    <div class="rc-thanks">
+      <p class="rc-thanks-big">Thanks<% if @submission_name.present? %>, <%= @submission_name %><% end %>!</p>
+      <p class="rc-help">
+        Your check-in has been sent to the Plans section. They will finalize
+        your check-in and your resource will show up on the incident board.
+      </p>
+      <p class="rc-help">
+        If someone else arrived with you and still needs to check in, they can
+        use the same link.
+      </p>
+    </div>
+
+    <div class="remote-checkin-actions">
+      <%= link_to 'Submit another check-in',
+                  remote_checkin_path(@incident.remote_checkin_token),
+                  class: 'rc-btn rc-btn-primary' %>
+    </div>
+  </div>
+</div>

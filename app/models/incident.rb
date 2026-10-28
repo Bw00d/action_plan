@@ -16,10 +16,19 @@ class Incident < ApplicationRecord
                     class_name: 'IncidentEvent', dependent: :destroy
   has_many :posts, class_name: 'IncidentPost', dependent: :destroy
   has_many :phone_205a_entries, dependent: :destroy
+  has_many :remote_checkins, dependent: :destroy
 
   after_create :seed_default_schedule
   after_create :seed_non_209_bucket
   after_create :seed_default_sections
+  after_create :ensure_remote_checkin_token
+
+  # Rotate the opaque token in the public /remote_checkin/:token URL.
+  # Use when an incident wraps, when a leaked link needs invalidating,
+  # or when an admin just wants a fresh share-link.
+  def rotate_remote_checkin_token!
+    update!(remote_checkin_token: SecureRandom.urlsafe_base64(16))
+  end
 
   # Section org_units (kind=section) auto-seeded on incident creation so
   # the Resource position auto-router has somewhere to drop plans /
@@ -190,5 +199,10 @@ class Incident < ApplicationRecord
     end
   rescue => e
     Rails.logger.warn "Incident##{id} seed_default_sections failed: #{e.class}: #{e.message}"
+  end
+
+  def ensure_remote_checkin_token
+    return if remote_checkin_token.present?
+    update_columns(remote_checkin_token: SecureRandom.urlsafe_base64(16))
   end
 end

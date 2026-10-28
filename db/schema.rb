@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_25_045705) do
+ActiveRecord::Schema.define(version: 2026_10_27_120000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -573,7 +573,9 @@ ActiveRecord::Schema.define(version: 2026_10_25_045705) do
     t.string "time_zone"
     t.decimal "cost", precision: 14, scale: 2
     t.string "assignment_style", default: "ics_204_wf", null: false
+    t.string "remote_checkin_token"
     t.index ["iroc_inc_id"], name: "index_incidents_on_iroc_inc_id", unique: true
+    t.index ["remote_checkin_token"], name: "index_incidents_on_remote_checkin_token", unique: true
   end
 
   create_table "incidents_users", id: false, force: :cascade do |t|
@@ -836,6 +838,43 @@ ActiveRecord::Schema.define(version: 2026_10_25_045705) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "remote_checkins", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "request_id"
+    t.bigint "promoted_resource_id"
+    t.integer "status", default: 0, null: false
+    t.string "req_number_raw"
+    t.string "category"
+    t.string "name"
+    t.string "position"
+    t.string "agency"
+    t.string "agency_address"
+    t.string "email"
+    t.string "leader"
+    t.string "phone"
+    t.string "emergency_contact"
+    t.date "mobilization_date"
+    t.boolean "from_other_incident", default: false, null: false
+    t.string "other_incident_name"
+    t.string "other_incident_req_number"
+    t.date "first_day_worked"
+    t.date "first_work_day"
+    t.string "demob_city"
+    t.string "demob_state"
+    t.string "transportation_method"
+    t.integer "number_personnel"
+    t.boolean "overhead_single_resource"
+    t.text "other_crew_members"
+    t.datetime "submitted_at"
+    t.datetime "promoted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id"], name: "index_remote_checkins_on_incident_id"
+    t.index ["promoted_resource_id"], name: "index_remote_checkins_on_promoted_resource_id"
+    t.index ["request_id"], name: "index_remote_checkins_on_request_id"
+    t.index ["status"], name: "index_remote_checkins_on_status"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.bigint "incident_id", null: false
     t.string "iroc_req_id", null: false
@@ -1051,6 +1090,8 @@ ActiveRecord::Schema.define(version: 2026_10_25_045705) do
   add_foreign_key "plan_assignment_snapshots", "org_units"
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
+  add_foreign_key "remote_checkins", "incidents"
+  add_foreign_key "remote_checkins", "requests"
   add_foreign_key "requests", "incidents"
   add_foreign_key "resource_events", "resources"
   add_foreign_key "resource_events", "users"

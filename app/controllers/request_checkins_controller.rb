@@ -49,15 +49,25 @@ class RequestCheckinsController < ApplicationController
       jetport:           @request.jet_port,
       assignment_length: 14
     )
+
+    # If the admin arrived from the remote-checkin review queue, overlay
+    # the self-reported fields on top of the request-derived defaults.
+    # Submitted values take precedence — if the resource corrected a
+    # position/leader/personnel count, trust what they wrote. The
+    # @remote_checkin ivar also surfaces to the view so it can show a
+    # "promoting submission from X" banner and carries into #create.
+    apply_remote_checkin_overlay(@resource)
   end
 
   def create
     @resource = @incident.resources.new(resource_params)
     if @resource.save
       populate_roster_from_subordinates(@resource, @request)
+      promote_remote_checkin_if_any(@resource)
       redirect_to incident_requests_path(@incident),
                   notice: "Checked in #{@resource.name} (#{@resource.full_order_number})."
     else
+      load_remote_checkin
       render :new
     end
   end
@@ -87,6 +97,55 @@ class RequestCheckinsController < ApplicationController
   def set_context
     @incident = Incident.find(params[:incident_id])
     @request  = @incident.requests.find(params[:request_id])
+    load_remote_checkin
+  end
+
+  # Look up a remote-checkin submission the admin is promoting. The id
+  # comes either as a query param (new) or hidden field (create). We
+  # scope to this incident so stale ids from other incidents don't
+  # leak overlays.
+  def load_remote_checkin
+    id = params[:remote_checkin_id].presence || params.dig(:resource, :remote_checkin_id).presence
+    return unless id
+    @remote_checkin = @incident.remote_checkins.find_by(id: id)
+  end
+
+  def apply_remote_checkin_overlay(resource)
+    return unless @remote_checkin
+    rc = @remote_checkin
+    # Overlay precedence: self-reported wins over request-derived,
+    # because the resource knows better. Leave values the resource
+    # didn't fill in untouched.
+    resource.name              = rc.name             if rc.name.present?
+    resource.position          = rc.position         if rc.position.present?
+    resource.agency            = rc.agency           if rc.agency.present?
+    resource.leader            = rc.effective_leader if rc.effective_leader.present?
+    resource.phone             = rc.phone            if rc.phone.present?
+    resource.email             = rc.email            if rc.email.present?
+    resource.number_personnel  = rc.number_personnel if rc.number_personnel.present?
+    resource.fwd               = rc.first_work_day   if rc.first_work_day.present?
+    resource.checkin_date      = Date.current
+    resource.return_city       = rc.demob_city       if rc.demob_city.present?
+    resource.return_state      = rc.demob_state      if rc.demob_state.present?
+    # Leave a note in the resource's comment so the planner sees what
+    # the resource reported about transport / other-incident history.
+    bits = []
+    bits << "Mob: #{rc.mobilization_date.strftime('%m/%d/%Y')}" if rc.mobilization_date
+    bits << "From: #{rc.other_incident_name} (#{rc.other_incident_req_number}) last worked #{rc.first_day_worked&.strftime('%m/%d/%Y')}" if rc.from_other_incident
+    bits << "Transport: #{rc.transportation_method}"            if rc.transportation_method.present?
+    bits << "Emerg contact: #{rc.emergency_contact}"            if rc.emergency_contact.present?
+    bits << "Agency addr: #{rc.agency_address}"                 if rc.agency_address.present?
+    resource.comment = [resource.comment.presence, bits.join(' • ')].compact.join("\n") if bits.any?
+  end
+
+  # After the resource saves, mark the submission promoted so it
+  # falls off the pending queue, and link to the resource we just
+  # created so the audit trail is intact.
+  def promote_remote_checkin_if_any(resource)
+    return unless @remote_checkin
+    @remote_checkin.update!(status: :promoted,
+                            promoted_at: Time.current,
+                            promoted_resource_id: resource.id)
   end
 
   def resource_params

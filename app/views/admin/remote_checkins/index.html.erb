@@ -1,0 +1,153 @@
+<% content_for :title, "Check-Ins — #{@incident.name}" %>
+
+<div class="container admin-remote-checkins">
+  <div class="col-xs-12 col-lg-10 center-block">
+
+    <h2>Remote Check-Ins — <%= @incident.name %></h2>
+
+    <section class="rc-admin-link-panel panel panel-default">
+      <div class="panel-heading"><strong>Public check-in link</strong></div>
+      <div class="panel-body">
+        <p>Share this URL with arriving resources. They can fill the form on a
+          phone before you have a chance to walk them through check-in.</p>
+        <div class="rc-admin-url">
+          <input type="text" readonly value="<%= @public_url %>"
+                 onclick="this.select();" class="form-control rc-admin-url-input">
+        </div>
+        <%= button_to 'Rotate link (invalidate the old one)',
+                      rotate_token_incident_remote_checkins_path(@incident),
+                      method: :post,
+                      data: { confirm: "This will break any already-shared links. Continue?" },
+                      class: 'btn btn-default btn-sm' %>
+      </div>
+    </section>
+
+    <section class="rc-admin-section">
+      <h3>Pending <small>(<%= @pending.size %>)</small></h3>
+      <% if @pending.empty? %>
+        <p class="muted">No pending check-ins. New submissions will appear here.</p>
+      <% else %>
+        <table class="table rc-admin-table">
+          <thead>
+            <tr>
+              <th>Submitted</th>
+              <th>Req #</th>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Agency</th>
+              <th>Leader</th>
+              <th>Personnel</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pending.each do |rc| %>
+              <tr class="rc-pending-row">
+                <td><%= rc.submitted_at.in_time_zone.strftime('%-m/%-d %H:%M') %></td>
+                <td>
+                  <%= rc.display_req_number %>
+                  <% unless rc.matched_request? %>
+                    <span class="label label-warning" title="No matching Request on this incident">unmatched</span>
+                  <% end %>
+                </td>
+                <td><strong><%= rc.name %></strong></td>
+                <td><%= rc.position %></td>
+                <td><%= rc.agency %></td>
+                <td><%= rc.effective_leader %></td>
+                <td><%= rc.number_personnel %></td>
+                <td class="text-right rc-actions">
+                  <% if rc.request_id %>
+                    <%= link_to 'Check In',
+                                new_incident_request_checkin_path(@incident, rc.request_id, remote_checkin_id: rc.id),
+                                class: 'btn btn-primary btn-sm' %>
+                  <% else %>
+                    <span class="muted" title="No matching Request — can't launch check-in. Edit the request number first.">—</span>
+                  <% end %>
+                  <%= button_to 'Dismiss',
+                                dismiss_incident_remote_checkin_path(@incident, rc),
+                                method: :post,
+                                data: { confirm: "Dismiss #{rc.name}'s submission?" },
+                                class: 'btn btn-default btn-sm' %>
+                </td>
+              </tr>
+              <tr class="rc-detail-row">
+                <td colspan="8">
+                  <div class="rc-detail-grid">
+                    <div><strong>Email:</strong> <%= rc.email %></div>
+                    <div><strong>Cell:</strong> <%= rc.phone %></div>
+                    <div><strong>Emergency contact:</strong> <%= rc.emergency_contact %></div>
+                    <div><strong>Mobilization:</strong> <%= rc.mobilization_date&.strftime('%m/%d/%Y') %></div>
+                    <% if rc.from_other_incident %>
+                      <div><strong>From incident:</strong> <%= rc.other_incident_name %> (<%= rc.other_incident_req_number %>) — first worked <%= rc.first_day_worked&.strftime('%m/%d/%Y') %></div>
+                    <% else %>
+                      <div><strong>First work day:</strong> <%= rc.first_work_day&.strftime('%m/%d/%Y') %></div>
+                    <% end %>
+                    <div><strong>Demob:</strong> <%= [rc.demob_city, rc.demob_state].compact.join(', ') %></div>
+                    <div><strong>Transport:</strong> <%= rc.transportation_method %></div>
+                    <div><strong>Agency address:</strong> <%= rc.agency_address %></div>
+                    <% if rc.other_crew_members.present? %>
+                      <div class="rc-detail-wide">
+                        <strong>Other crew members:</strong>
+                        <pre class="rc-crew-list"><%= rc.other_crew_members %></pre>
+                      </div>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </section>
+
+    <% if @promoted.any? %>
+      <section class="rc-admin-section">
+        <h3>Recently promoted <small>(<%= @promoted.size %>)</small></h3>
+        <table class="table rc-admin-table rc-admin-table-slim">
+          <thead>
+            <tr><th>Promoted</th><th>Req #</th><th>Name</th><th>Resource</th></tr>
+          </thead>
+          <tbody>
+            <% @promoted.each do |rc| %>
+              <tr>
+                <td><%= rc.promoted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
+                <td><%= rc.display_req_number %></td>
+                <td><%= rc.name %></td>
+                <td>
+                  <% if rc.promoted_resource %>
+                    <%= link_to rc.promoted_resource.name, incident_board_path(@incident) %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+
+    <% if @dismissed.any? %>
+      <section class="rc-admin-section">
+        <h3>Dismissed <small>(<%= @dismissed.size %>)</small></h3>
+        <table class="table rc-admin-table rc-admin-table-slim">
+          <thead><tr><th>Submitted</th><th>Req #</th><th>Name</th><th></th></tr></thead>
+          <tbody>
+            <% @dismissed.each do |rc| %>
+              <tr>
+                <td><%= rc.submitted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
+                <td><%= rc.display_req_number %></td>
+                <td><%= rc.name %></td>
+                <td class="text-right">
+                  <%= button_to 'Delete',
+                                incident_remote_checkin_path(@incident, rc),
+                                method: :delete,
+                                data: { confirm: "Permanently delete #{rc.name}'s submission?" },
+                                class: 'btn btn-danger btn-xs' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+  </div>
+</div>
