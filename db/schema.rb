@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_27_120000) do
+ActiveRecord::Schema.define(version: 2026_10_28_120000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -952,6 +952,14 @@ ActiveRecord::Schema.define(version: 2026_10_27_120000) do
     t.string "pick_up_pt_time"
     t.boolean "spacer", default: false, null: false
     t.text "notes"
+    t.string "agency_address"
+    t.string "emergency_contact"
+    t.date "mobilization_date"
+    t.string "transportation_method"
+    t.boolean "from_other_incident", default: false, null: false
+    t.string "other_incident_name"
+    t.string "other_incident_req_number"
+    t.date "prev_incident_first_day_worked"
     t.index ["spacer"], name: "index_resources_on_spacer"
   end
 

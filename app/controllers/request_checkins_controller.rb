@@ -127,15 +127,18 @@ class RequestCheckinsController < ApplicationController
     resource.checkin_date      = Date.current
     resource.return_city       = rc.demob_city       if rc.demob_city.present?
     resource.return_state      = rc.demob_state      if rc.demob_state.present?
-    # Leave a note in the resource's comment so the planner sees what
-    # the resource reported about transport / other-incident history.
-    bits = []
-    bits << "Mob: #{rc.mobilization_date.strftime('%m/%d/%Y')}" if rc.mobilization_date
-    bits << "From: #{rc.other_incident_name} (#{rc.other_incident_req_number}) last worked #{rc.first_day_worked&.strftime('%m/%d/%Y')}" if rc.from_other_incident
-    bits << "Transport: #{rc.transportation_method}"            if rc.transportation_method.present?
-    bits << "Emerg contact: #{rc.emergency_contact}"            if rc.emergency_contact.present?
-    bits << "Agency addr: #{rc.agency_address}"                 if rc.agency_address.present?
-    resource.comment = [resource.comment.presence, bits.join(' • ')].compact.join("\n") if bits.any?
+
+    # Native columns for the previously-free-text fields — stored on
+    # the Resource now so they survive beyond the remote_checkin row
+    # and show up on tally/CSV exports.
+    resource.agency_address              = rc.agency_address              if rc.agency_address.present?
+    resource.emergency_contact           = rc.emergency_contact           if rc.emergency_contact.present?
+    resource.mobilization_date           = rc.mobilization_date           if rc.mobilization_date.present?
+    resource.transportation_method       = rc.transportation_method       if rc.transportation_method.present?
+    resource.from_other_incident         = rc.from_other_incident         unless rc.from_other_incident.nil?
+    resource.other_incident_name         = rc.other_incident_name         if rc.other_incident_name.present?
+    resource.other_incident_req_number   = rc.other_incident_req_number   if rc.other_incident_req_number.present?
+    resource.prev_incident_first_day_worked = rc.first_day_worked         if rc.first_day_worked.present?
   end
 
   # After the resource saves, mark the submission promoted so it
@@ -153,7 +156,14 @@ class RequestCheckinsController < ApplicationController
       :name, :leader, :number_personnel, :position, :agency,
       :order_number, :category, :phone, :email, :comment,
       :fwd, :checkin_date, :assignment_length,
-      :jetport, :return_city, :return_state
+      :jetport, :return_city, :return_state,
+      # Fields added for the remote-checkin flow — dispatchers can
+      # fill them in the manual form too (see the "Additional details"
+      # fieldset in request_checkins/new).
+      :agency_address, :emergency_contact, :mobilization_date,
+      :transportation_method, :from_other_incident,
+      :other_incident_name, :other_incident_req_number,
+      :prev_incident_first_day_worked
     )
   end
 end

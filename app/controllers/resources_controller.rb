@@ -359,7 +359,15 @@ class ResourcesController < ApplicationController
                                        :order_number, :lwd, :checkin_date, :incident_id, :category,
                                        :phone, :email, :comment, :notes, :fwd, :assignment_length, :release_date,
                                        :r_and_r, :jetport, :return_city, :return_state,
-                                       :drop_off_pt_time, :pick_up_pt_time)
+                                       :drop_off_pt_time, :pick_up_pt_time,
+                                       # Added for the remote-checkin flow — editable
+                                       # on Resource directly so the data survives
+                                       # beyond the originating remote_checkin row.
+                                       :agency_address, :emergency_contact,
+                                       :mobilization_date, :transportation_method,
+                                       :from_other_incident, :other_incident_name,
+                                       :other_incident_req_number,
+                                       :prev_incident_first_day_worked)
     end
 
 end

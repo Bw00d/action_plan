@@ -107,6 +107,56 @@
           </div>
         </div>
 
+        <%# Additional details — collected by the public remote-checkin
+            form; exposed here so dispatchers can fill them in for
+            walk-ups too. All optional; blank values stay nil. %>
+        <fieldset class="form-group">
+          <legend class="small text-muted">Additional details (optional)</legend>
+
+          <div class="form-group">
+            <%= f.text_field :agency_address, placeholder: "AGENCY ADDRESS", class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :emergency_contact, placeholder: "EMERGENCY CONTACT (name + phone)", class: 'form-control' %>
+          </div>
+          <div class="row">
+            <div class="col-md-4 form-group">
+              <%= f.text_field :mobilization_date, id: :resource_mobilization_date,
+                               data: { provide: 'datepicker' },
+                               class: 'datepicker form-control',
+                               placeholder: 'MOBILIZATION DATE' %>
+            </div>
+            <div class="col-md-8 form-group">
+              <%= f.select :transportation_method,
+                           options_for_select(RemoteCheckin::TRANSPORTATION_METHODS, @resource.transportation_method),
+                           { prompt: 'TRANSPORTATION METHOD' },
+                           class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-inline">
+              <%= f.check_box :from_other_incident %>
+              Came from another incident immediately before this one
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-md-5 form-group">
+              <%= f.text_field :other_incident_name, placeholder: "PREVIOUS INCIDENT NAME", class: 'form-control' %>
+            </div>
+            <div class="col-md-3 form-group">
+              <%= f.text_field :other_incident_req_number, placeholder: "PREVIOUS REQ #", class: 'form-control' %>
+            </div>
+            <div class="col-md-4 form-group">
+              <%= f.text_field :prev_incident_first_day_worked,
+                               id: :resource_prev_first_day,
+                               data: { provide: 'datepicker' },
+                               class: 'datepicker form-control',
+                               placeholder: 'FIRST DAY WORKED (PREV)' %>
+            </div>
+          </div>
+        </fieldset>
+
         <div class="row">
           <div class="form-group col-md-6">
             <%= f.submit "Check In", class: 'btn btn-primary', id: "submit-resource-button" %>
