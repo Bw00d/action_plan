@@ -45,7 +45,11 @@
 
   function reformat(input) {
     var oldVal      = input.value || '';
-    var caret       = input.selectionStart || oldVal.length;
+    // selectionStart may be null on some mobile browsers, or 0 (which
+    // is a legit "cursor at the very start"). Avoid the || fallback
+    // that collapses 0 into oldVal.length.
+    var caretRaw    = input.selectionStart;
+    var caret       = (caretRaw == null) ? oldVal.length : caretRaw;
     var digitsIndex = digitsBefore(oldVal, caret);
     var digitsOnly  = oldVal.replace(/\D/g, '');
     var newVal      = formatDigits(digitsOnly);
@@ -61,6 +65,12 @@
     if (!el || el.tagName !== 'INPUT') return false;
     var type = (el.type || '').toLowerCase();
     if (type && type !== 'text' && type !== 'tel') return false;
+    // type="tel" is self-identifying — a browser only brings up the
+    // phone keypad for inputs the author declared as phone numbers,
+    // so treat every tel input as formattable. This covers mobile
+    // devices where the user has no way to type separators (dashes
+    // / parens / spaces) manually.
+    if (type === 'tel') return true;
     // Explicit opt-in via data-phone-format="true" wins. Used by forms
     // that don't follow the model[attr] naming convention (e.g. the
     // public remote-checkin form, which posts single-field answers
@@ -84,6 +94,15 @@
   }
 
   document.addEventListener('input', function (e) {
+    if (!isPhoneInput(e.target)) return;
+    reformat(e.target);
+  });
+
+  // keyup is a mobile-safety belt-and-braces: some mobile IME paths
+  // (iOS phone keypad, Chinese pinyin, autocomplete) have historically
+  // been inconsistent about firing the `input` event for every
+  // keystroke. keyup catches whatever `input` misses.
+  document.addEventListener('keyup', function (e) {
     if (!isPhoneInput(e.target)) return;
     reformat(e.target);
   });
