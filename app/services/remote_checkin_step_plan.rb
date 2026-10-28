@@ -119,11 +119,15 @@ class RemoteCheckinStepPlan
              required: false),
 
     # Names of other crew members — crews, equipment, overhead groups.
+    # Hidden when the resource reported a crew of 1 (there are no
+    # "other" crew members to name).
     Step.new(key: 'other_crew_members',
              question: 'Names of other crew members',
              help: 'One per line. We use this to seed the roster — a reviewer finalizes it.',
              kind: :textarea,
-             when_predicate: ->(s) { !OVERHEAD_SINGLE.call(s) && !AIRCRAFT.call(s) },
+             when_predicate: ->(s) {
+               !OVERHEAD_SINGLE.call(s) && !AIRCRAFT.call(s) && s['number_personnel'] != 1
+             },
              required: false),
 
     Step.new(key: 'from_other_incident',
