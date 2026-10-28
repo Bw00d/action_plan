@@ -58,10 +58,13 @@ class RemoteCheckinsController < ApplicationController
     # auto-fill have something to show.
     resolve_request_match if step.key == 'req_number_raw'
 
-    # Confirmation step: "YES" means pre-fill name from the matched
-    # request and skip the plain name question later.
-    if step.key == 'confirm_match' && answer == 'true' && @state['matched_request_name'].present?
-      @state['name'] = @state['matched_request_name']
+    # Confirmation step: "YES" means pre-fill every field we can derive
+    # from the matched request — name, position, agency, personnel
+    # count, suggested leader — so the resource only has to confirm or
+    # correct what we already know, rather than retype it. The resource
+    # can still edit any of these on the subsequent steps.
+    if step.key == 'confirm_match' && answer == 'true' && @state['matched_request_id'].present?
+      prefill_from_matched_request
     end
 
     advance_step
@@ -178,6 +181,41 @@ class RemoteCheckinsController < ApplicationController
       # Fall back to prefix-derived category so the form can still
       # branch (crew vs overhead questions etc).
       @state['category'] = RemoteCheckin.category_for(normalized)
+    end
+  end
+
+  # Called when the resource confirms "Is this you?" with YES on the
+  # matched-request step. Pulls every field the Request already knows
+  # about into state so later steps show pre-populated with the known
+  # value — the resource confirms by hitting Next, or edits if wrong.
+  # Mirrors the derivations in RequestCheckinsController#new.
+  def prefill_from_matched_request
+    req = @incident.requests.find_by(id: @state['matched_request_id'])
+    return unless req
+
+    @state['name']     = req.suggested_resource_name.presence || @state['matched_request_name']
+    @state['position'] = req.filled_catalog_item_code if @state['position'].blank?
+    @state['agency']   = req.res_prov_agency_abbrev   if @state['agency'].blank?
+
+    # Personnel count + leader are derived from subordinate requests the
+    # same way RequestCheckinsController does it — a crew/strike-team
+    # parent's descendants are the personnel; the first direct sub is
+    # the leader. A lone overhead has itself as leader.
+    children_map = Request.build_children_map(@incident.requests)
+    descendants  = Request.descendants_of(req.req_number, children_map)
+    direct_subs  = Request.direct_children_of(req.req_number, children_map)
+
+    if @state['number_personnel'].blank? && descendants.any?
+      @state['number_personnel'] = descendants.size
+    end
+
+    if @state['leader'].blank?
+      @state['leader'] =
+        if direct_subs.any?
+          direct_subs.first&.suggested_resource_name
+        elsif req.resource_category == 'OVERHEAD'
+          Resource.format_leader_name(req.suggested_resource_name)
+        end
     end
   end
 
