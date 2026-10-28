@@ -61,6 +61,11 @@
     if (!el || el.tagName !== 'INPUT') return false;
     var type = (el.type || '').toLowerCase();
     if (type && type !== 'text' && type !== 'tel') return false;
+    // Explicit opt-in via data-phone-format="true" wins. Used by forms
+    // that don't follow the model[attr] naming convention (e.g. the
+    // public remote-checkin form, which posts single-field answers
+    // under name="answer").
+    if (el.hasAttribute('data-phone-format')) return true;
     var name = el.getAttribute('name') || '';
     // Only match "phone" inside the ATTRIBUTE portion of the name, not
     // the model prefix. Rails nests form field names as

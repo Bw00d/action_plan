@@ -14,8 +14,11 @@ class RemoteCheckinsController < ApplicationController
     load_state
     step = RemoteCheckinStepPlan.current_step(@state)
     if step.nil?
-      # Walked off the end — final review page.
-      @summary = state_summary(@state)
+      # Walked off the end — final review page. Persist a draft
+      # RemoteCheckin so best_in_place has a real record to PATCH. The
+      # draft is identified by submitted_at IS NULL and excluded from
+      # the admin queue; it's finalized when the user clicks Submit.
+      @draft = find_or_create_draft
       render :review
     else
       @step  = step
@@ -77,6 +80,29 @@ class RemoteCheckinsController < ApplicationController
     @state['step_index'] = [@state['step_index'].to_i - 1, 0].max
     save_state
     redirect_to remote_checkin_path(@incident.remote_checkin_token)
+  end
+
+  # best_in_place inline edit on the review page. Scoped by the token
+  # (so a draft from another incident can't be addressed), and only
+  # permits updates while the row is still a draft (submitted_at nil)
+  # — once the resource clicks Submit, the row is frozen for them and
+  # the admin queue owns it.
+  def update_draft
+    load_state
+    draft = @incident.remote_checkins.where(submitted_at: nil).find_by(id: params[:id])
+    unless draft && @state['draft_id'] == draft.id
+      head :not_found and return
+    end
+    field = params[:field]&.to_sym || detect_field_from_params
+    value = params.dig(:remote_checkin, field) || params[field]
+    unless RemoteCheckin::EDITABLE_DRAFT_FIELDS.include?(field.to_s)
+      head :unprocessable_entity and return
+    end
+    draft.update!(field => coerce_draft_value(field, value))
+    # best_in_place expects the server to echo the new value back as
+    # plain text (or JSON). Plain text keeps us compatible with the
+    # library's default display_as behavior.
+    render plain: draft.public_send(field).to_s
   end
 
   def restart
@@ -219,20 +245,57 @@ class RemoteCheckinsController < ApplicationController
     end
   end
 
-  # Build a user-facing review summary from the collected state.
-  def state_summary(state)
-    fields = %w[
-      req_number_raw category name position agency agency_address email
-      overhead_single_resource leader phone emergency_contact mobilization_date
-      number_personnel other_crew_members from_other_incident
-      other_incident_name other_incident_req_number first_day_worked
-      first_work_day demob_city demob_state transportation_method
-    ]
-    fields.map { |f| [f, state[f]] }.reject { |_, v| v.nil? || v == '' }
+
+  # Finalize = flip the draft that review's best_in_place has been
+  # patching to a submitted row. The draft already holds the right
+  # values; we just stamp submitted_at and clean up session state.
+  def finalize_submission
+    draft = @incident.remote_checkins.where(submitted_at: nil).find_by(id: @state['draft_id'])
+    unless draft
+      # Session must have been nuked between hitting Review and
+      # clicking Submit — start the user over.
+      reset_state
+      redirect_to remote_checkin_path(@incident.remote_checkin_token),
+                  alert: 'Your session expired. Please re-enter your check-in.'
+      return
+    end
+
+    # Overhead single resources: enforce invariants a form user can't
+    # see — personnel=1, leader=self.
+    if draft.overhead_single_resource
+      draft.number_personnel = 1
+      draft.leader = draft.name if draft.leader.blank?
+    end
+    draft.submitted_at = Time.current
+
+    if draft.save
+      session[:remote_checkin_last_name] = draft.name
+      reset_state
+      redirect_to remote_checkin_thanks_path(@incident.remote_checkin_token)
+    else
+      flash.now[:alert] = "Could not submit: #{draft.errors.full_messages.to_sentence}"
+      @draft = draft
+      render :review, status: :unprocessable_entity
+    end
   end
 
-  def finalize_submission
-    rc = @incident.remote_checkins.new(
+  # Build (or re-use) the draft row that mirrors session state. Called
+  # on first entry to the review page; later edits via best_in_place
+  # update this row directly, so state_summary is no longer the source
+  # of truth once the user has reached review.
+  def find_or_create_draft
+    if @state['draft_id']
+      existing = @incident.remote_checkins.where(submitted_at: nil).find_by(id: @state['draft_id'])
+      return existing if existing
+    end
+    draft = @incident.remote_checkins.create!(draft_attributes_from_state)
+    @state['draft_id'] = draft.id
+    save_state
+    draft
+  end
+
+  def draft_attributes_from_state
+    {
       req_number_raw:          @state['req_number_raw'],
       request_id:              @state['matched_request_id'],
       category:                @state['category'],
@@ -256,26 +319,32 @@ class RemoteCheckinsController < ApplicationController
       number_personnel:        overhead_single? ? 1 : @state['number_personnel'],
       overhead_single_resource: @state['overhead_single_resource'],
       other_crew_members:      overhead_single? ? nil : @state['other_crew_members'],
-      submitted_at:            Time.current
-    )
-
-    # Overhead single resources: leader is self.
-    if overhead_single? && rc.leader.blank?
-      rc.leader = rc.name
-    end
-
-    if rc.save
-      session[:remote_checkin_last_name] = rc.name
-      reset_state
-      redirect_to remote_checkin_thanks_path(@incident.remote_checkin_token)
-    else
-      flash.now[:alert] = "Could not submit: #{rc.errors.full_messages.to_sentence}"
-      @summary = state_summary(@state)
-      render :review, status: :unprocessable_entity
-    end
+      submitted_at:            nil
+    }
   end
 
   def overhead_single?
     @state['overhead_single_resource'] == true
+  end
+
+  # best_in_place sends the field key as part of the params hash shape
+  # `{ remote_checkin: { phone: '...' } }`. If the field isn't passed
+  # explicitly in :field, pick it from whatever single key is nested.
+  def detect_field_from_params
+    nested = params[:remote_checkin]&.to_unsafe_h || {}
+    nested.keys.first&.to_sym
+  end
+
+  def coerce_draft_value(field, value)
+    case field.to_sym
+    when :mobilization_date, :first_day_worked, :first_work_day
+      Date.parse(value.to_s) rescue nil
+    when :from_other_incident, :overhead_single_resource
+      ActiveModel::Type::Boolean.new.cast(value)
+    when :number_personnel
+      value.to_s.strip.presence&.to_i
+    else
+      value.to_s
+    end
   end
 end

@@ -22,6 +22,18 @@ class RemoteCheckin < ApplicationRecord
   CATEGORY_PREFIXES = { 'C' => 'CREW', 'E' => 'EQUIPMENT',
                         'O' => 'OVERHEAD', 'A' => 'AIRCRAFT' }.freeze
 
+  # Fields the public best_in_place form on the review page may update
+  # on a draft. Omits identifiers (incident_id, request_id, status),
+  # audit timestamps, and the derived overhead-single flag — those are
+  # set by the controller based on the step flow, not editable text.
+  EDITABLE_DRAFT_FIELDS = %w[
+    name position agency agency_address email leader phone
+    emergency_contact mobilization_date number_personnel
+    other_crew_members other_incident_name other_incident_req_number
+    first_day_worked first_work_day demob_city demob_state
+    transportation_method
+  ].freeze
+
   validates :incident, presence: true
   # Submissions without a submitted_at are drafts in session — only
   # persisted records are fully committed to the queue.
@@ -31,6 +43,10 @@ class RemoteCheckin < ApplicationRecord
   before_validation :normalize_req_number
 
   scope :pending_first, -> { order(status: :asc, submitted_at: :desc) }
+  # A row with no submitted_at is still a draft in the resource's
+  # browser — the admin queue should only see rows the resource
+  # finished and clicked Submit on.
+  scope :submitted, -> { where.not(submitted_at: nil) }
 
   # Derive OVERHEAD/CREW/EQUIPMENT/AIRCRAFT from whatever the resource
   # typed, even if the request number doesn't exist on this incident.

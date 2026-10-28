@@ -233,6 +233,11 @@ Rails.application.routes.draw do
   post  '/remote_checkin/:token',          to: 'remote_checkins#update'
   post  '/remote_checkin/:token/back',     to: 'remote_checkins#back',   as: :remote_checkin_back
   post  '/remote_checkin/:token/restart',  to: 'remote_checkins#restart',as: :remote_checkin_restart
+  # Inline edit via best_in_place on the review page — PATCHes one
+  # field at a time on the current draft RemoteCheckin row. Scoped by
+  # the public token so there's no admin/session leakage.
+  patch '/remote_checkin/:token/drafts/:id', to: 'remote_checkins#update_draft',
+                                             as: :remote_checkin_draft
   get   '/remote_checkin/:token/thanks',   to: 'remote_checkins#thanks', as: :remote_checkin_thanks
 
 end

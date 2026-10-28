@@ -191,19 +191,58 @@
 }
 
 .rc-review {
-  margin: 20px 0 10px;
+  margin: 16px 0 8px;
+  display: grid;
+  grid-template-columns: minmax(120px, 36%) 1fr;
+  column-gap: 14px;
+  row-gap: 2px;
+
   dt {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: .4px;
     color: #8a97ad;
-    margin-top: 12px;
+    margin: 0;
+    padding: 6px 0;
+    align-self: center;
   }
   dd {
-    font-size: 16px;
+    font-size: 15px;
     color: #1a2b4a;
-    margin: 2px 0 0;
+    margin: 0;
+    padding: 4px 0;
     white-space: pre-wrap;
+    min-height: 24px;
+    border-bottom: 1px dashed transparent;
+  }
+
+  .rc-review-static {
+    color: #1a2b4a;
+    font-weight: 500;
+  }
+
+  // best_in_place elements — subtle hover affordance so the resource
+  // notices every value is editable without us screaming it.
+  .best_in_place {
+    display: inline-block;
+    min-width: 60px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px dashed transparent;
+    cursor: text;
+
+    &:hover {
+      background: #eef4ff;
+      border-color: #b3c7ff;
+    }
+
+    input, textarea, select {
+      font-size: 15px;
+      padding: 4px 6px;
+      border: 1px solid #3b82f6;
+      border-radius: 3px;
+      min-width: 160px;
+    }
   }
 }
 

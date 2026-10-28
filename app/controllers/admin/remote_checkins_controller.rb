@@ -11,9 +11,9 @@ module Admin
     before_action :set_remote_checkin, only: [:dismiss, :destroy]
 
     def index
-      @pending   = @incident.remote_checkins.pending.pending_first
+      @pending   = @incident.remote_checkins.pending.submitted.pending_first
       @promoted  = @incident.remote_checkins.promoted.order(promoted_at: :desc).limit(25)
-      @dismissed = @incident.remote_checkins.dismissed.order(updated_at: :desc).limit(25)
+      @dismissed = @incident.remote_checkins.dismissed.submitted.order(updated_at: :desc).limit(25)
       @public_url = remote_checkin_url(@incident.remote_checkin_token)
     end
 

@@ -1,5 +1,9 @@
 <% content_for :title, "Review — #{@incident.name}" %>
 
+<%# All inline edits POST to the same per-token draft URL; best_in_place
+    sends the field name as part of the nested params hash. %>
+<% draft_url = remote_checkin_draft_path(@incident.remote_checkin_token, @draft) %>
+
 <div class="remote-checkin-page">
   <div class="remote-checkin-card">
     <header class="remote-checkin-header">
@@ -12,19 +16,58 @@
     <% end %>
 
     <p class="rc-help">
-      Please check the answers below. Click <strong>Back</strong> to change anything,
-      or <strong>Submit</strong> to send your check-in to the Plans section.
+      Click any answer to edit it. When everything looks right, tap
+      <strong>Submit check-in</strong>.
     </p>
 
+    <%# Row helper — keeps the DL markup tight. Edit kinds: :input,
+        :textarea, :select, :date. Skipped automatically when the
+        underlying attribute is blank (we don't want empty rows
+        advertising fields the resource didn't fill in). %>
+    <% rc_row = ->(label, field, kind: :input, opts: {}) {
+         raw_val = @draft.public_send(field)
+         next if raw_val.blank? && kind != :select && opts[:always] != true
+         %>
+       <dt><%= label %></dt>
+       <dd>
+         <%= best_in_place @draft, field,
+                           url: draft_url,
+                           as: kind,
+                           place_holder: '—',
+                           **(opts[:bip] || {}) %>
+       </dd>
+    <% } %>
+
     <dl class="rc-review">
-      <% @summary.each do |field, value| %>
-        <dt><%= field.to_s.humanize %></dt>
-        <dd>
-          <% if value == true %>Yes<% elsif value == false %>No<%
-             elsif value.is_a?(Date) %><%= value.strftime('%m/%d/%Y') %><%
-             else %><%= value %><% end %>
-        </dd>
+      <dt>Request #</dt>
+      <dd class="rc-review-static"><%= @draft.display_req_number %></dd>
+
+      <% rc_row.call('Name',               :name) %>
+      <% rc_row.call('Position',           :position) %>
+      <% rc_row.call('Agency',             :agency) %>
+      <% rc_row.call('Agency address',     :agency_address) %>
+      <% rc_row.call('Email',              :email) %>
+      <% rc_row.call('Leader',             :leader) %>
+      <% rc_row.call('Cell',               :phone) %>
+      <% rc_row.call('Emergency contact',  :emergency_contact) %>
+      <% rc_row.call('Mobilization date',  :mobilization_date, kind: :date) %>
+      <% rc_row.call('Number of personnel', :number_personnel) %>
+      <% rc_row.call('Other crew members', :other_crew_members, kind: :textarea) %>
+
+      <% if @draft.from_other_incident %>
+        <% rc_row.call('Previous incident',       :other_incident_name) %>
+        <% rc_row.call('Previous request #',      :other_incident_req_number) %>
+        <% rc_row.call('First day worked (prev)', :first_day_worked, kind: :date) %>
+      <% else %>
+        <% rc_row.call('First work day', :first_work_day, kind: :date) %>
       <% end %>
+
+      <% rc_row.call('Demob city',  :demob_city) %>
+      <% rc_row.call('Demob state', :demob_state) %>
+      <% rc_row.call('Transport',   :transportation_method,
+                     kind: :select,
+                     opts: { always: true,
+                             bip: { collection: RemoteCheckin::TRANSPORTATION_METHODS.map { |m| [m, m] } } }) %>
     </dl>
 
     <%# Submit form on its own — see new.html.erb for why Back is a

@@ -54,7 +54,8 @@
                    <%= 'required' if @step.required? %>>
           <% when :phone %>
             <input type="tel" name="answer" class="rc-input" autofocus
-                   inputmode="tel" value="<%= @state[@step.key] %>"
+                   inputmode="tel" data-phone-format="true"
+                   value="<%= @state[@step.key] %>"
                    <%= 'required' if @step.required? %>>
           <% when :integer %>
             <input type="number" name="answer" class="rc-input" autofocus
