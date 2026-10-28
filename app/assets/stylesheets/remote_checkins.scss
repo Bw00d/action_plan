@@ -105,11 +105,17 @@
   // display) explicitly so iOS Safari doesn't strip it when the parent
   // rules set background/padding/border. Without this, the selected
   // option can render invisibly after the picker closes.
+  //
+  // Padding must stay small: with appearance:menulist the browser
+  // renders the selected value as a native text block that doesn't
+  // vertically re-center around our padding, so heavy top/bottom
+  // padding clips the descenders of the chosen option.
   .rc-select {
     appearance: menulist;
     -webkit-appearance: menulist;
-    padding: 12px 14px; // slightly less than text inputs — the native
-                        // arrow eats some right-hand space
+    padding: 6px 10px;
+    line-height: 1.4;
+    min-height: 48px; // keep the tap target big even with low padding
   }
 
   .rc-textarea { resize: vertical; min-height: 120px; }
