@@ -77,22 +77,21 @@
     border-bottom: 1px solid black !important;
   }
 }
-#finance-table {
-  tbody tr:last-child {
-      border-bottom: 1px solid black !important;
-    }
+// Section 7 sign-off rows: checkbox, unit name, signature line.
+.signoff-table {
+  td {
+    border-top: none !important;
+    padding-top: 10px !important;
+  }
+  td.signoff-line {
+    border-bottom: 1px solid black !important;
+  }
 }
-#logs-table {
-  tbody tr:last-child {
-      border-bottom: 1px solid black !important;
-    }
+// Breathing room after the last sign-off row (Demob Unit). Selector
+// outranks the compact print rule's .custom-table margin.
+table#plans-table.signoff-table {
+  margin-bottom: 12px !important;
 }
-#other-table {
-  tbody tr:last-child {
-      border-bottom: 1px solid black !important;
-    }
-}
-
 #demob-remarks {
   height: 100px;
   overflow: hidden;

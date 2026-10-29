@@ -1,0 +1,14 @@
+<div>
+  <table id="<%= table_id %>" class="table custom-table signoff-table">
+    <tbody>
+      <% units.each do |u| %>
+        <tr>
+          <td width="4%"><span class="sm-padding-left"><%= check_box_tag 'selected' %></span></td>
+          <td width="40%"><strong><%= best_in_place u, :manager, :as => :input %></strong></td>
+          <td width="6%"></td>
+          <td class="signoff-line"></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

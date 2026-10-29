@@ -41,7 +41,7 @@ class DemobNotification < ApplicationRecord
       return_travel_method:  demob.travel_method,
       demob_city_state:      demob.destination,
       ron:                   !!demob.ron,
-      ron_location:          demob.new_location,
+      ron_location:          demob.ron_location,
       est_arrival_date:      demob.estimated_arrival_date,
       est_arrival_time:      demob.eta,
       remarks:               demob.remarks
