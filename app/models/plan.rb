@@ -36,6 +36,8 @@ class Plan < ApplicationRecord
       self.duplicate_teams
       self.duplicate_assignments
       self.duplicate_commo_plan
+      self.duplicate_medical_plan
+      self.duplicate_air_operation
       self.duplicate_safety_message
       self.duplicate_cover
     end
@@ -163,6 +165,54 @@ class Plan < ApplicationRecord
     end
   end
 
+  # Clone the previous plan's ICS 206 with all its rows (divisions/camps,
+  # hospitals, ground + air ambulances). The 206 header's op period
+  # reads straight off the plan, so it picks up the new dates for free.
+  # Prepared/Reviewed Date/Time (§9 / §11) are free-text
+  # "MM/DD/YYYY HH:MM" — keep the time of day but move the date to the
+  # new plan's date.
+  def duplicate_medical_plan
+    prev = self.incident.plans.last(2).first
+    return unless prev&.medical_plan
+
+    new_mp = prev.medical_plan.dup
+    new_mp.plan_id     = self.id
+    new_mp.prepared_at = roll_date_time(prev.medical_plan.prepared_at)
+    new_mp.reviewed_at = roll_date_time(prev.medical_plan.reviewed_at)
+    new_mp.save!
+
+    %i[medical_zones medical_hospitals medical_ambulances medical_air_ambulances].each do |rows|
+      prev.medical_plan.public_send(rows).each do |row|
+        copied = row.dup
+        copied.medical_plan_id = new_mp.id
+        copied.save!
+      end
+    end
+  end
+
+  # Clone the previous plan's ICS 220 (all the fixed-grid columns: freqs,
+  # positions, extraction, TFR, helibase…) plus its helicopter,
+  # supervision and UAS rows. date_prepared is free text — MM/DD/YY to
+  # match the 205/208 copies. Everything else (sunrise/sunset, times)
+  # carries over for the user to adjust.
+  def duplicate_air_operation
+    prev = self.incident.plans.last(2).first
+    return unless prev&.air_operation
+
+    new_ao = prev.air_operation.dup
+    new_ao.plan_id       = self.id
+    new_ao.date_prepared = self.date.strftime('%m/%d/%y') if self.date
+    new_ao.save!
+
+    %i[helicopters supervisions uas_entries].each do |rows|
+      prev.air_operation.public_send(rows).each do |row|
+        copied = row.dup
+        copied.air_operation_id = new_ao.id
+        copied.save!
+      end
+    end
+  end
+
   def duplicate_safety_message
     prev = self.incident.plans.last(2).first
     return unless prev.safety_message
@@ -278,5 +328,13 @@ class Plan < ApplicationRecord
     end
   rescue ArgumentError
     nil
+  end
+
+  # "10/17/2026 12:00" → "<this plan's date> 12:00". Blank stays blank;
+  # a value with no recognizable time gets just the new date.
+  def roll_date_time(value)
+    return value if value.blank? || self.date.nil?
+    time = value[/\s(\d{1,2}:?\d{2})\s*\z/, 1]
+    [self.date.strftime('%m/%d/%Y'), time].compact.join(' ')
   end
 end
