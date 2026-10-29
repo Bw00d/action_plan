@@ -68,6 +68,67 @@
             <label>Return State</label>
             <%= best_in_place r, :return_state, as: :input, place_holder: "---" %>
           </div>
+          <div class="resource-panel-field">
+            <label>Check-In Date</label>
+            <%= best_in_place r, :checkin_date, as: :input, place_holder: "---",
+                              display_with: ->(v) { v&.strftime('%m/%d/%Y') } %>
+          </div>
+          <div class="resource-panel-field">
+            <label>Drop Off Pt / Time</label>
+            <%= best_in_place r, :drop_off_pt_time, as: :input, place_holder: "---" %>
+          </div>
+          <div class="resource-panel-field">
+            <label>Pick Up Pt / Time</label>
+            <%= best_in_place r, :pick_up_pt_time, as: :input, place_holder: "---" %>
+          </div>
+
+          <%# Check-in details — captured by the remote check-in form (or
+              the manual check-in form for walk-ups). %>
+          <h4 class="resource-panel-section resource-panel-field-wide">Check-In Details</h4>
+          <div class="resource-panel-field resource-panel-field-wide">
+            <label>Agency Address</label>
+            <%= best_in_place r, :agency_address, as: :input, place_holder: "---" %>
+          </div>
+          <div class="resource-panel-field">
+            <label>Emergency Contact</label>
+            <%= best_in_place r, :emergency_contact, as: :input, place_holder: "---" %>
+          </div>
+          <div class="resource-panel-field">
+            <label>Mobilization Date</label>
+            <%= best_in_place r, :mobilization_date, as: :input, place_holder: "---",
+                              display_with: ->(v) { v&.strftime('%m/%d/%Y') } %>
+          </div>
+          <div class="resource-panel-field">
+            <label>Transportation</label>
+            <%= best_in_place r, :transportation_method, as: :select, place_holder: "---",
+                              collection: ([['', '---']] + RemoteCheckin::TRANSPORTATION_METHODS.map { |m| [m, m] }) %>
+          </div>
+
+          <h4 class="resource-panel-section resource-panel-field-wide">Previous Incident</h4>
+          <div class="resource-panel-field">
+            <label>From Another Incident</label>
+            <%= best_in_place r, :from_other_incident, as: :checkbox, collection: { false => 'No', true => 'Yes' } %>
+          </div>
+          <div class="resource-panel-field">
+            <label>Incident Name</label>
+            <%= best_in_place r, :other_incident_name, as: :input, place_holder: "---" %>
+          </div>
+          <div class="resource-panel-field">
+            <label>Request #</label>
+            <%= best_in_place r, :other_incident_req_number, as: :input, place_holder: "---" %>
+          </div>
+          <div class="resource-panel-field">
+            <label>First Day Worked There</label>
+            <%= best_in_place r, :prev_incident_first_day_worked, as: :input, place_holder: "---",
+                              display_with: ->(v) { v&.strftime('%m/%d/%Y') } %>
+          </div>
+
+          <div class="resource-panel-field resource-panel-field-wide">
+            <label>Notes</label>
+            <%= best_in_place r, :notes, as: :textarea, place_holder: "Click to add notes…",
+                                         display_with: :simple_format,
+                                         html_attrs: { style: 'width:100%; min-height:60px;' } %>
+          </div>
           <div class="resource-panel-field resource-panel-field-wide">
             <label>Comment</label>
             <%= best_in_place r, :comment, as: :textarea, place_holder: "Click to add comment…",

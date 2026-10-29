@@ -840,6 +840,17 @@ button.resource-panel-close {
 .resource-panel-field-wide {
   grid-column: 1 / -1;
 }
+// Sub-heading row inside the detail panel grid (Check-In Details, etc.).
+.resource-panel-section {
+  margin: 8px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #ebecf0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #172b4d;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
 input.fwd-datepicker {
   border: none !important;
   width: 36px;
