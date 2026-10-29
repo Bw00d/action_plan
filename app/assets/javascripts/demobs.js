@@ -1,53 +1,42 @@
+// Demob checkout form: PRINT is always visible; SUBMIT only shows once
+// the Actual Release Date field has a value. Applies to both regular
+// resource demobs and roster (subordinate) demobs. show.html.erb sets
+// the initial .rd-hidden state server-side so there's no flicker.
+var demobReleasePoll = null;
+
 $(document).on("turbolinks:load", function () {
-  var $printBtn  = $('#print-demob-button');
+  // Turbolinks keeps window state across visits — stop the previous
+  // page's poll before (maybe) starting a new one.
+  if (demobReleasePoll) {
+    clearInterval(demobReleasePoll);
+    demobReleasePoll = null;
+  }
+
   var $submitBtn = $('#demob-form-button');
-  var $rosterButtons = $('.roster-demob-buttons');
-  var isRosterDemob = $rosterButtons.length && $printBtn.length && $submitBtn.length;
+  if (!$submitBtn.length) return;
 
-  if (isRosterDemob) {
-    // Roster (subordinate) demob: PRINT shows until the actual release
-    // date field has a value, then SUBMIT takes over. Toggle a class
-    // on the buttons themselves (not wrapper divs) so there's no
-    // float-collapse or layout-context weirdness.
-    var $releaseField = $('#demob_actual_release_date');
-    if (!$releaseField.length) $releaseField = $('input[name="demob[actual_release_date]"]');
+  var $releaseField = $('input[name="demob[actual_release_date]"]');
 
-    function toggleRosterButtons() {
-      var val = $releaseField.length ? ($releaseField.val() || '') : '';
-      var hasDate = val.toString().trim().length > 0;
-      $printBtn.css('display',  '').toggleClass('rd-hidden',  hasDate);
-      $submitBtn.css('display', '').toggleClass('rd-hidden', !hasDate);
-    }
-
-    // Safety net: field missing → show both buttons.
-    if (!$releaseField.length) {
-      $printBtn.removeClass('rd-hidden');
-      $submitBtn.removeClass('rd-hidden');
-      return;
-    }
-
-    $releaseField.on('change input keyup blur changeDate paste', toggleRosterButtons);
-    $(document).on('change input keyup blur changeDate paste',
-                   'input[name="demob[actual_release_date]"]',
-                   toggleRosterButtons);
-
-    // Continuous poll (200ms) catches silent value changes from the
-    // datepicker popup that don't bubble a normal event.
-    var lastVal = $releaseField.val() || '';
-    setInterval(function () {
-      var now = ($('input[name="demob[actual_release_date]"]').val() || '');
-      if (now !== lastVal) { lastVal = now; toggleRosterButtons(); }
-    }, 200);
-
-    toggleRosterButtons();
+  // Safety net: field missing → never strand the user without SUBMIT.
+  if (!$releaseField.length) {
+    $submitBtn.removeClass('rd-hidden');
     return;
   }
 
-  // Regular resource demob: any input change hides PRINT and reveals
-  // the always-in-DOM SUBMIT button. Unchanged legacy behavior.
-  $("#demob-form :input").change(function () {
-    $('#print-demob-button').hide();
-    $('#demob-form-button').show();
-  });
-});
+  function toggleSubmit() {
+    var hasDate = ($releaseField.val() || '').toString().trim().length > 0;
+    $submitBtn.toggleClass('rd-hidden', !hasDate);
+  }
 
+  $releaseField.on('change input keyup blur changeDate paste', toggleSubmit);
+
+  // Poll (200ms) catches silent value changes from the datepicker popup
+  // that don't fire a normal event.
+  var lastVal = $releaseField.val() || '';
+  demobReleasePoll = setInterval(function () {
+    var now = $releaseField.val() || '';
+    if (now !== lastVal) { lastVal = now; toggleSubmit(); }
+  }, 200);
+
+  toggleSubmit();
+});

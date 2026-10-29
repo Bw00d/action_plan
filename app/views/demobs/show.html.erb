@@ -189,15 +189,12 @@
           </div>
         </div>
       </div>
-      <%# For a subordinate demob, the same button acts as PRINT until the
-          Actual Release Date is filled, then flips to SUBMIT (which fires
-          the demob's after_update callbacks: release the roster + create
-          the demob notification). Both buttons live in the DOM so the
-          JS toggle in demobs.js has something to show/hide; server-set
-          inline display picks the correct initial one.
-
-          Regular resource demobs keep both buttons visible together
-          (unchanged behavior). %>
+      <%# PRINT is always available. SUBMIT (which fires the demob's
+          after_update callbacks: release the roster + create the demob
+          notification) only appears once Actual Release Date is filled.
+          Server-side .rd-hidden picks the initial state; demobs.js
+          toggles it as the date field changes. %>
+      <% submit_hidden = @demob.actual_release_date.blank? ? ' rd-hidden' : '' %>
       <% if is_roster_demob %>
         <%# Roster demob: two buttons in a single row wrapper. Both are
             .roster-demob-btn so demobs.js can toggle them individually
@@ -209,21 +206,23 @@
                          class:   "btn btn-success roster-demob-btn",
                          id:      "print-demob-button",
                          onclick: "printDemobCheckout()",
-                         title:   "Print the checkout sheet. Enter an Actual Release Date to enable Submit." %>
+                         title:   "Print the checkout sheet. Enter an Actual Release Date to show Submit." %>
           <%= f.submit "SUBMIT",
-                       class: "btn btn-danger roster-demob-btn",
+                       class: "btn btn-danger roster-demob-btn#{submit_hidden}",
                        id:    "demob-form-button",
                        title: "Finalize demob for #{display_ordno} — release roster and create notification" %>
         </div>
       <% else %>
-        <div class="print-button no-print">
+        <%# Same single-row wrapper as the roster demob so PRINT and
+            Submit sit side by side. %>
+        <div class="no-print roster-demob-buttons">
           <%= button_tag "PRINT",
                          type: "button",
-                         class: "btn btn-success float-left tiny",
+                         class: "btn btn-success tiny roster-demob-btn",
                          id: "print-demob-button",
                          onclick: "printDemobCheckout()" %>
+          <%= f.submit "Submit", class: "btn btn-success tiny roster-demob-btn#{submit_hidden}", id: "demob-form-button" %>
         </div>
-        <div class="no-print"><%= f.submit "Submit", class: "btn btn-success float-left tiny", id: "demob-form-button" %></div>
       <% end %>
         <% end %>
     </div>
