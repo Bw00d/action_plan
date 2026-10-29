@@ -1,66 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <meta charset="utf-8">
+  <title>500 — Ops Section Hit a Snag</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
-
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    :root {
+      --bg: #F6F3EC;
+      --card: #FFFFFF;
+      --ink: #1F2A33;
+      --muted: #6B7684;
+      --accent: #C94A2E;
+      --rule: #E6E1D7;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .wrap {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(31,42,51,.06);
+      padding: 36px 32px 28px;
+      text-align: center;
+    }
+    .code {
+      display: inline-block;
+      font-size: 13px;
+      letter-spacing: .14em;
+      font-weight: 700;
+      color: var(--accent);
+      background: #FBE7E0;
+      border: 1px solid #F0C8BB;
+      border-radius: 999px;
+      padding: 4px 12px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .illo { margin: 4px auto 18px; width: 130px; height: 120px; display: block; }
+    .wave { animation: pulse 2.4s ease-in-out infinite; transform-origin: 20px 60px; }
+    .wave.w2 { animation-delay: .4s; }
+    .wave.w3 { animation-delay: .8s; }
+    @keyframes pulse {
+      0%, 100% { opacity: .25; transform: scale(.9); }
+      50%      { opacity: .9;  transform: scale(1.05); }
+    }
+    h1 { font-size: 26px; margin: 0 0 10px; letter-spacing: -0.01em; }
+    p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
+    ul.tips {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 24px;
+      text-align: left;
+      font-size: 14px;
+      color: var(--ink);
+    }
+    ul.tips li { padding: 8px 0; border-top: 1px solid var(--rule); }
+    ul.tips li:first-child { border-top: 0; }
+    ul.tips li::before { content: "•"; color: var(--accent); font-weight: 700; margin-right: 10px; }
+    .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #A83D25; }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+    .btn-ghost:hover { background: #F0ECE2; }
+    .footer { font-size: 12px; color: var(--muted); margin-top: 20px; text-align: center; }
   </style>
 </head>
-
-<body class="rails-default-error-page">
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <div>
-      <h1>We're sorry, but something went wrong.</h1>
+<body>
+  <div class="wrap">
+    <span class="code">500 · Server Error</span>
+    <svg class="illo" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Handheld radio with static waves -->
+      <rect x="42" y="30" width="36" height="78" rx="4" fill="#2E3942" stroke="#1F2A33" stroke-width="1.5"/>
+      <rect x="48" y="38" width="24" height="14" rx="2" fill="#9DC9D8"/>
+      <circle cx="54" cy="62" r="2.4" fill="#5A6974"/>
+      <circle cx="66" cy="62" r="2.4" fill="#5A6974"/>
+      <circle cx="54" cy="72" r="2.4" fill="#5A6974"/>
+      <circle cx="66" cy="72" r="2.4" fill="#5A6974"/>
+      <circle cx="54" cy="82" r="2.4" fill="#5A6974"/>
+      <circle cx="66" cy="82" r="2.4" fill="#5A6974"/>
+      <rect x="56" y="94" width="8" height="8" rx="1.5" fill="#E8582C"/>
+      <!-- antenna -->
+      <rect x="68" y="18" width="4" height="14" rx="1.5" fill="#1F2A33"/>
+      <!-- signal arcs -->
+      <g class="wave" stroke="#C94A2E" stroke-width="2.4" fill="none" stroke-linecap="round">
+        <path d="M86 42 Q98 48 98 62 Q98 76 86 82"/>
+      </g>
+      <g class="wave w2" stroke="#C94A2E" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".7">
+        <path d="M94 32 Q112 44 112 62 Q112 80 94 92"/>
+      </g>
+      <g class="wave w3" stroke="#C94A2E" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".4">
+        <path d="M102 22 Q124 40 124 62 Q124 84 102 102"/>
+      </g>
+    </svg>
+    <h1>Something broke in the ops section.</h1>
+    <p>Comms crackled — the server hit an error handling that request. The glitch is logged on our end and we'll take a look.</p>
+    <ul class="tips">
+      <li>Give it a minute and try again — intermittent hiccups usually clear on a retry.</li>
+      <li>If it keeps happening on the same page, drop us a note with what you were doing.</li>
+      <li>Your data is safe; nothing you've already saved is affected by this error.</li>
+    </ul>
+    <div class="actions">
+      <a class="btn btn-primary" href="/">Back to the IAP</a>
+      <a class="btn btn-ghost" href="javascript:location.reload()">Try Again</a>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
   </div>
+  <div class="footer">Incident Action Plan · The server tripped on that request</div>
 </body>
 </html>
