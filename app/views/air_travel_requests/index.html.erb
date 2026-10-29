@@ -1,0 +1,64 @@
+<% content_for :title, "Air Travel Requests" %>
+
+<div class="air-travel-page">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <div class="atr-header">
+    <div>
+      <h2>Air Travel Requests</h2>
+      <p class="muted">
+        Commercial air travel requests to send to dispatch. Open the PDF
+        to print or attach it to an email.
+      </p>
+    </div>
+    <div class="atr-header-actions">
+      <%= link_to '← Plans', incident_planning_path(@incident), class: 'btn btn-default' %>
+      <%= link_to 'New Request', new_incident_air_travel_request_path(@incident), class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+  <% if @requests.empty? %>
+    <p class="muted"><em>No air travel requests yet.</em></p>
+  <% else %>
+    <table class="table atr-table">
+      <thead>
+        <tr>
+          <th>Request #</th>
+          <th>Name</th>
+          <th>Unit ID</th>
+          <th>Type</th>
+          <th>Release To</th>
+          <th>Leave ICP</th>
+          <th>Depart → Return</th>
+          <th>Created</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @requests.each do |r| %>
+          <tr>
+            <td class="col-order"><%= r.request_number %></td>
+            <td><%= r.resource_name %></td>
+            <td><%= r.unit_id %></td>
+            <td><%= r.travel_type %></td>
+            <td><%= r.release_to %></td>
+            <td><%= r.available_date&.strftime('%m/%d/%Y') %> <%= r.available_time %></td>
+            <td><%= [r.depart_from, r.return_to].reject(&:blank?).join(' → ') %></td>
+            <td class="muted"><%= r.created_at.strftime('%m/%d %H:%M') %></td>
+            <td class="atr-row-actions">
+              <%= link_to 'PDF', to_pdf_incident_air_travel_request_path(@incident, r),
+                          class: 'btn btn-primary btn-xs', target: '_blank' %>
+              <%= link_to 'Edit', edit_incident_air_travel_request_path(@incident, r),
+                          class: 'btn btn-default btn-xs' %>
+              <%= link_to 'Delete', incident_air_travel_request_path(@incident, r),
+                          method: :delete, class: 'btn btn-danger btn-xs',
+                          data: { confirm: "Delete the air travel request for #{r.resource_name}?" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

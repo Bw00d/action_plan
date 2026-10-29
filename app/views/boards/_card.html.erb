@@ -111,6 +111,17 @@
                 aria-label="Show assignment calendar">
           <i class="fa fa-calendar" aria-hidden="true"></i>
         </button>
+        <%# Air travel request pre-filled from this resource. Opens in a
+            new tab so the board stays where the user left it. %>
+        <% if %w[OVERHEAD CREW].include?(resource.category) %>
+          <%= link_to new_incident_air_travel_request_path(resource.incident_id, resource_id: resource.id),
+                      class: 'board-card-air-travel-link',
+                      target: '_blank',
+                      title: 'New air travel request',
+                      'aria-label': 'New air travel request' do %>
+            <span class="board-card-plane-icon" aria-hidden="true"></span>
+          <% end %>
+        <% end %>
         <div class="board-card-calendar-panel"
              style="display:none;"
              data-url="<%= calendar_resource_path(resource) %>"

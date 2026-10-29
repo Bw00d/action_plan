@@ -1,0 +1,11 @@
+<% content_for :title, "Edit Air Travel Request" %>
+
+<div class="air-travel-page">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <h2>Edit Air Travel Request</h2>
+
+  <%= render 'form' %>
+</div>

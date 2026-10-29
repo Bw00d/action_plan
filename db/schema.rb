@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_29_120000) do
+ActiveRecord::Schema.define(version: 2026_10_29_130000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,6 +196,36 @@ ActiveRecord::Schema.define(version: 2026_10_29_120000) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["air_operation_id"], name: "index_air_ops_uas_entries_on_air_operation_id"
+  end
+
+  create_table "air_travel_requests", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "resource_id"
+    t.string "travel_type", default: "DEMOB", null: false
+    t.string "request_number"
+    t.string "resource_name"
+    t.string "unit_id"
+    t.string "release_city"
+    t.string "release_state"
+    t.date "available_date"
+    t.string "available_time"
+    t.integer "travel_hours"
+    t.integer "travel_minutes"
+    t.string "depart_from"
+    t.string "return_to"
+    t.boolean "ground_support_needed"
+    t.boolean "drive_home_from_jetport"
+    t.boolean "rental_car_to_return"
+    t.boolean "picture_id"
+    t.boolean "hotel_needed"
+    t.boolean "agency_credit_card"
+    t.text "special_instructions"
+    t.date "last_date_available"
+    t.string "reassignment_quals"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["incident_id"], name: "index_air_travel_requests_on_incident_id"
+    t.index ["resource_id"], name: "index_air_travel_requests_on_resource_id"
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -1075,6 +1105,8 @@ ActiveRecord::Schema.define(version: 2026_10_29_120000) do
   add_foreign_key "air_ops_helicopters", "air_operations"
   add_foreign_key "air_ops_supervisions", "air_operations"
   add_foreign_key "air_ops_uas_entries", "air_operations"
+  add_foreign_key "air_travel_requests", "incidents"
+  add_foreign_key "air_travel_requests", "resources"
   add_foreign_key "assignments", "org_units"
   add_foreign_key "demob_notifications", "demobs"
   add_foreign_key "demob_notifications", "incidents"

@@ -1,0 +1,111 @@
+<%= form_with model: [@incident, @travel_request], local: true, html: { class: 'atr-form' } do |f| %>
+  <% if @travel_request.errors.any? %>
+    <div class="alert alert-danger">
+      <%= @travel_request.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :resource_id %>
+
+  <fieldset>
+    <legend>Resource</legend>
+    <div class="atr-grid">
+      <div class="atr-field">
+        <%= f.label :travel_type, 'Request Type' %>
+        <%= f.select :travel_type, AirTravelRequest::TRAVEL_TYPES, {}, class: 'form-control' %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :request_number, 'Request #' %>
+        <%= f.text_field :request_number, class: 'form-control' %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :resource_name, 'Resource Name' %>
+        <%= f.text_field :resource_name, class: 'form-control' %>
+        <small class="muted">Must be the name on their picture ID</small>
+      </div>
+      <div class="atr-field">
+        <%= f.label :unit_id, 'Unit ID' %>
+        <%= f.text_field :unit_id, class: 'form-control', placeholder: 'ID-BOD' %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :release_city, 'Release To — City' %>
+        <%= f.text_field :release_city, class: 'form-control' %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :release_state, 'Release To — State' %>
+        <%= f.text_field :release_state, class: 'form-control', maxlength: 2 %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Travel</legend>
+    <div class="atr-grid">
+      <div class="atr-field">
+        <%= f.label :available_date, 'Date Available to Leave ICP' %>
+        <%= f.date_field :available_date, class: 'form-control' %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :available_time, 'Time' %>
+        <%= f.text_field :available_time, class: 'form-control', placeholder: '0800' %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :travel_hours, 'Travel Time ICP → Airport (hours)' %>
+        <%= f.number_field :travel_hours, class: 'form-control', min: 0 %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :travel_minutes, 'Minutes' %>
+        <%= f.number_field :travel_minutes, class: 'form-control', min: 0, max: 59 %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :depart_from, 'Depart From (local airport)' %>
+        <%= f.text_field :depart_from, class: 'form-control' %>
+      </div>
+      <div class="atr-field">
+        <%= f.label :return_to, 'Return To (destination airport)' %>
+        <%= f.text_field :return_to, class: 'form-control' %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Travel Questions</legend>
+    <table class="atr-questions">
+      <% AirTravelRequest::TRAVEL_QUESTIONS.each_with_index do |(attr, question), i| %>
+        <tr>
+          <td class="atr-q-num"><%= i + 1 %>.</td>
+          <td><%= question %></td>
+          <td class="atr-q-answer">
+            <label><%= f.radio_button attr, true %> Yes</label>
+            <label><%= f.radio_button attr, false %> No</label>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </fieldset>
+
+  <fieldset>
+    <legend>Special Instructions</legend>
+    <%= f.text_area :special_instructions, rows: 7, class: 'form-control',
+                    placeholder: "Name/gender/DOB as on ID, email, phone, hotel, rental car return, preferred flight times…" %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Reassignment Information</legend>
+    <div class="atr-grid">
+      <div class="atr-field">
+        <%= f.label :last_date_available, 'Last Date Available to Work' %>
+        <%= f.date_field :last_date_available, class: 'form-control' %>
+      </div>
+      <div class="atr-field atr-field-wide">
+        <%= f.label :reassignment_quals, 'Reassignment Quals' %>
+        <%= f.text_field :reassignment_quals, class: 'form-control' %>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="atr-actions">
+    <%= link_to 'Cancel', incident_air_travel_requests_path(@incident), class: 'btn btn-default' %>
+    <%= f.submit 'Save Request', class: 'btn btn-primary' %>
+  </div>
+<% end %>

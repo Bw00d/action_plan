@@ -1,0 +1,23 @@
+<% content_for :title, "New Air Travel Request" %>
+
+<div class="air-travel-page">
+  <div class="incident-name">
+    <h1><%= link_to @incident.display_incident_name, @incident %></h1>
+  </div>
+
+  <h2>New Air Travel Request</h2>
+
+  <%# Picking a resource reloads the page with ?resource_id= so the
+      form below comes back pre-filled from that resource. %>
+  <%= form_with url: new_incident_air_travel_request_path(@incident), method: :get,
+                local: true, html: { class: 'atr-resource-picker' } do %>
+    <label for="resource_id">Resource</label>
+    <%= select_tag :resource_id,
+                   options_for_select(@resource_options, @travel_request.resource_id),
+                   include_blank: '— Pick a resource to pre-fill —',
+                   class: 'form-control',
+                   onchange: 'this.form.submit()' %>
+  <% end %>
+
+  <%= render 'form' %>
+</div>

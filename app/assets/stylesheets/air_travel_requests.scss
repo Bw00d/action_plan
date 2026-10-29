@@ -1,0 +1,86 @@
+// Commercial Air Travel Requests — list + form pages. The printable
+// PDF is self-contained (air_travel_requests/to_pdf.html.erb).
+
+.air-travel-page {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 0 20px;
+
+  h2 { margin: 20px 0 12px; font-size: 18px; color: #172b4d; }
+  .muted { color: #6b778c; font-size: 12px; }
+}
+
+.atr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.atr-header-actions { display: flex; gap: 8px; margin-top: 20px; }
+
+.atr-table {
+  font-size: 12px;
+  background: #fff;
+  th { background: #f6f8fa; color: #42526e; font-size: 11px;
+       text-transform: uppercase; letter-spacing: 0.3px; }
+  td.col-order { font-weight: 700; white-space: nowrap; }
+  .atr-row-actions { white-space: nowrap; text-align: right; }
+}
+
+.atr-resource-picker {
+  max-width: 480px;
+  margin-bottom: 16px;
+  label { font-size: 12px; color: #42526e; }
+}
+
+.atr-form {
+  fieldset {
+    background: #fff;
+    border: 1px solid #dde3ea;
+    border-radius: 4px;
+    padding: 12px 20px 16px;
+    margin-bottom: 16px;
+  }
+  legend {
+    width: auto;
+    border: 0;
+    margin: 0;
+    padding: 0 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #172b4d;
+  }
+  label { font-size: 12px; color: #42526e; margin-bottom: 2px; }
+}
+
+.atr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px 20px;
+}
+.atr-field-wide { grid-column: span 2; }
+
+@media (max-width: 600px) {
+  .atr-field-wide { grid-column: auto; }
+}
+
+.atr-questions {
+  width: 100%;
+  font-size: 13px;
+  td { padding: 6px 4px; border-bottom: 1px solid #ebecf0; }
+  tr:last-child td { border-bottom: 0; }
+  .atr-q-num { width: 28px; color: #6b778c; }
+  .atr-q-answer {
+    white-space: nowrap;
+    text-align: right;
+    label { margin-left: 14px; font-weight: normal; color: inherit; }
+  }
+}
+
+.atr-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 40px;
+}

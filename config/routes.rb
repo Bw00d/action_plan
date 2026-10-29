@@ -185,6 +185,12 @@ Rails.application.routes.draw do
       get  :crew_swaps
     end
 
+    # Commercial Air Travel Requests sent to dispatch. #to_pdf renders
+    # the printable PDF.
+    resources :air_travel_requests, except: [:show] do
+      member { get :to_pdf }
+    end
+
     resources :org_units, only: [:create, :destroy]
 
     # ICS "205A" Communications List (phone list) — one list per

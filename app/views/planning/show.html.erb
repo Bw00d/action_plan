@@ -144,6 +144,21 @@
                 crew_swaps_incident_planning_path(@incident),
                 class: 'btn btn-primary' %>
   </section>
+
+  <section class="planning-tool">
+    <h3>Air Travel Requests</h3>
+    <p class="muted">
+      Build a Commercial Air Travel Request for a resource and print it
+      as a PDF for dispatch. Request #, name, unit ID and demob city/state
+      fill in from the resource.
+    </p>
+    <%= link_to 'New request',
+                new_incident_air_travel_request_path(@incident),
+                class: 'btn btn-primary' %>
+    <%= link_to 'View all requests →',
+                incident_air_travel_requests_path(@incident),
+                class: 'btn btn-default' %>
+  </section>
 </div>
 
 <script>

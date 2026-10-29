@@ -46,6 +46,8 @@ class Resource < ApplicationRecord
   # fails with ForeignKeyViolation. Owning them here cleans them up as
   # part of the resource's own destroy cascade.
   has_many :demob_notifications, dependent: :destroy
+  # Requests keep their copied identity fields if the resource goes away.
+  has_many :air_travel_requests, dependent: :nullify
   # Same shape as demob_notifications: PlanAssignmentSnapshot has a
   # DB-level FK to resources, Plan owns the collection, but Resource
   # didn't — so deleting a resource (even a blank spacer) would fail

@@ -723,6 +723,30 @@
   &:active { color: #0052cc; outline: 0 !important; box-shadow: none !important; }
 }
 
+// Air travel request link, just left of the calendar icon (Overhead and
+// Crew cards only). plane.svg is drawn through a mask so it takes the
+// same gray/blue as the calendar icon via currentColor.
+.board-card-air-travel-link {
+  position: absolute;
+  top: 2px;
+  right: 30px;
+  z-index: 5;
+  padding: 4px 6px;
+  color: #6b778c;
+  line-height: 1;
+  border-radius: 3px;
+  &:hover,
+  &:focus  { color: #0052cc; background: #eef4ff; text-decoration: none; }
+}
+.board-card-plane-icon {
+  display: block;
+  width: 17px;
+  height: 15px;
+  background-color: currentColor;
+  -webkit-mask: image-url('plane.svg') no-repeat center / contain;
+          mask: image-url('plane.svg') no-repeat center / contain;
+}
+
 // Calendar panel — renders one month grid per month spanned. Hidden
 // by default; the JS toggle shows/hides it.
 .board-card-calendar-panel {

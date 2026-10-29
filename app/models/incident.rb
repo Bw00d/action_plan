@@ -10,6 +10,7 @@ class Incident < ApplicationRecord
   has_many :personnel_requests, -> { personnel }, class_name: 'Request'
   has_many :schedules, dependent: :destroy
   has_many :demob_notifications, dependent: :destroy
+  has_many :air_travel_requests, dependent: :destroy
   has_many :financial_codes, dependent: :destroy
   has_many :ops_215_lines, dependent: :destroy
   has_many :events, -> { order(created_at: :desc) },
