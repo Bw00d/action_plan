@@ -186,6 +186,20 @@ class Resource < ApplicationRecord
   after_save :remove_from_board_on_demob, if: :saved_change_to_release_date?
   after_save :close_current_work_on_demob,  if: :saved_change_to_release_date?
   after_save :sync_rnr_timeline_from_boolean, if: :saved_change_to_r_and_r?
+  after_update :cascade_agency_to_rosters, if: :saved_change_to_agency?
+
+  # The tally counts roster rows by their OWN agency (personnel_by_agency),
+  # while the 211 shows the parent's. Equipment is often dispatched as
+  # USFS and corrected to PVT at check-in — without this, the operators
+  # stay counted under USFS. Only rows still on the old agency (or blank)
+  # follow; rows deliberately set to something else (MULTI modules,
+  # agency staff on a contract aircraft) are left alone.
+  def cascade_agency_to_rosters
+    old_agency, new_agency = saved_change_to_agency
+    rosters.unscope(:order)
+           .where(agency: [old_agency, nil, ''].uniq)
+           .update_all(agency: new_agency, updated_at: Time.current)
+  end
 
   def remove_from_board_on_demob
     return if release_date.nil?
