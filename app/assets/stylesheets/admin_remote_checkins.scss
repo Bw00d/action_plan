@@ -21,6 +21,9 @@
     th { color: #5e6c84; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; }
     .rc-actions { white-space: nowrap; }
     .rc-actions .btn { margin-left: 4px; }
+    // Dismiss is a button_to (its own <form>), so it stacks under
+    // Check In — give it some breathing room.
+    .rc-actions form { margin-top: 6px; }
 
     .rc-pending-row td { border-top: 1px solid #e6e8ec; border-bottom: 0; padding-bottom: 4px; }
     .rc-detail-row td {
