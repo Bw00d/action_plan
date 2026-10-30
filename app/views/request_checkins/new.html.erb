@@ -80,6 +80,15 @@
         </div>
 
         <div class="row">
+          <div class="col-md-6 form-group">
+            <%= f.telephone_field :phone, placeholder: "CELL PHONE", class: 'form-control' %>
+          </div>
+          <div class="col-md-6 form-group">
+            <%= f.email_field :email, placeholder: "EMAIL", class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="row">
           <div class="col-md-5">
             <%= f.text_field :checkin_date, id: :incident_checkin_date, :data => {:provide => "datepicker"},
                                              class: "datepicker form-control", placeholder: "CHECKIN DATE", required: true %>
