@@ -1,4 +1,5 @@
 class Resource < ApplicationRecord
+  broadcasts_incident_changes 'resources'
   belongs_to :incident
   has_one :demob
 

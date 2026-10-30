@@ -24,7 +24,12 @@
 
 <%# Giving the body tag classes with names corresponding to the current
 controller and action allows the implementation of page-specific CSS and JS %>
-<body class="<%= "#{controller_name}-controller #{action_name}-action #{layout_name}-layout" %>">
+<%# data-live-* tells channels/incident_changes.js which incident to
+    listen to for "someone else changed this" notices. On <body> (not
+    <head>) so Turbolinks swaps it on every visit. %>
+<% live_incident = @incident if user_signed_in? && @incident.is_a?(Incident) && @incident.persisted? %>
+<body class="<%= "#{controller_name}-controller #{action_name}-action #{layout_name}-layout" %>"
+      <% if live_incident %>data-live-incident-id="<%= live_incident.id %>" data-live-user-id="<%= current_user.id %>"<% end %>>
   <header>
     <%# navigation styled for Bootstrap 3.0 %>
     <nav id="header" class="navbar-default navbar-fixed-top navbar-custom">

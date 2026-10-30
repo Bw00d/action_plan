@@ -18,6 +18,7 @@
 #   completed_swap  — LEGACY. Will be rewritten to :work by the shift
 #                     refactor backfill.
 class ResourceEvent < ApplicationRecord
+  broadcasts_incident_changes 'resources', incident: -> { resource&.incident_id }
   belongs_to :resource
   belongs_to :user, optional: true
 

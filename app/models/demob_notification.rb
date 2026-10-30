@@ -1,4 +1,5 @@
 class DemobNotification < ApplicationRecord
+  broadcasts_incident_changes 'resources'
   belongs_to :incident
   belongs_to :resource
   belongs_to :demob, optional: true

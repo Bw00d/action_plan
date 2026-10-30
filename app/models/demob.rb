@@ -1,4 +1,5 @@
 class Demob < ApplicationRecord
+  broadcasts_incident_changes 'resources', incident: -> { resource&.incident_id }
   belongs_to :resource
   # Present when this demob sheet is for a single subordinate roster
   # entry rather than the parent resource itself. Both cases live in the

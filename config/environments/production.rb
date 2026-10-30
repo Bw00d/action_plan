@@ -51,6 +51,14 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+  # Same-origin sockets are allowed by default (allow_same_origin_as_host),
+  # so no origin list is needed while Cable is served from the app's host.
+  #
+  # Cable only does a couple of quick lookups per page connect (current
+  # user + incident) and shares the DB pool with Puma's threads. Two
+  # workers is plenty and keeps us from starving web requests or growing
+  # the pool past the Heroku Postgres connection limit.
+  config.action_cable.worker_pool_size = 2
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true

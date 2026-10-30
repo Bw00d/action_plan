@@ -1,4 +1,5 @@
 class OrgUnitAssignment < ApplicationRecord
+  broadcasts_incident_changes 'the board', incident: -> { org_unit&.incident_id }
   belongs_to :org_unit
   belongs_to :resource
 

@@ -1,4 +1,5 @@
 class Request < ApplicationRecord
+  broadcasts_incident_changes 'requests'
   belongs_to :incident
 
   validates :iroc_req_id, presence: true, uniqueness: true

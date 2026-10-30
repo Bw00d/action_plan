@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
   # require authentication.
   before_action :authenticate_user!, unless: :devise_controller?
 
+  # Lets model callbacks attribute live-update notices to the person
+  # making the change (see IncidentChangeNotifier).
+  before_action { Current.user = current_user if user_signed_in? }
+
   # Wrap every request in the current user's timezone so Time.zone.today
   # and Time.zone.now reflect their local day/time. Falls back to the
   # global config.time_zone when no user is signed in or the user hasn't

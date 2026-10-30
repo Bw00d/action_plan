@@ -1,4 +1,5 @@
 class Roster < ApplicationRecord
+  broadcasts_incident_changes 'resources', incident: -> { resource&.incident_id }
   belongs_to :resource
   belongs_to :request, optional: true
   belongs_to :promoted_resource, class_name: 'Resource', optional: true

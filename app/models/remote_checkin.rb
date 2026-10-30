@@ -5,6 +5,7 @@
 # existing RequestCheckinsController flow — that's when the official
 # roster + state changes happen.
 class RemoteCheckin < ApplicationRecord
+  broadcasts_incident_changes 'check-ins'
   belongs_to :incident
   # Matched by req_number at submit time; nullable because the resource
   # may have arrived before the request landed in the incident.

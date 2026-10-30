@@ -4,6 +4,18 @@ class ApplicationRecord < ActiveRecord::Base
   # inheriting "ApplicationRecord" (STI).
   self.abstract_class = true
 
+  # Announce committed changes to everyone else viewing the incident
+  # (IncidentChangeNotifier → IncidentChannel → "Refresh" banner).
+  #   area     — shown to the user: "Jane Smith updated <area>".
+  #   incident — how to find the incident id from the record.
+  #
+  #   broadcasts_incident_changes 'resources', incident: -> { resource&.incident_id }
+  def self.broadcasts_incident_changes(area, incident: -> { incident_id })
+    after_commit if: -> { destroyed? || saved_changes.any? } do
+      IncidentChangeNotifier.notify(instance_exec(&incident), area)
+    end
+  end
+
   # Generates options for select boxes corresponding to enum
   # attributes. Translates enum keys to their corresponding i18n strings.
   #
