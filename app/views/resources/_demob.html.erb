@@ -44,7 +44,17 @@
               <span class="demob-date-text"><%= demob_date.strftime('%A, %B %-d, %Y') %></span>
             </h3>
             <% resources.each do |r| %>
-              <div><%= r.full_order_number %> <%= r.position %> <%= r.name %></div>
+              <%# Earliest scheduled crew swap, same lookup as the T-card's
+                  swap flag. resource_events is eager-loaded by
+                  ResourcesController#index, so this stays in memory. %>
+              <% swap = r.resource_events.select(&:scheduled_swap?)
+                                         .min_by { |e| e.fwd || Date.new(9999, 12, 31) } %>
+              <div>
+                <%= r.full_order_number %> <%= r.position %> <%= r.name %>
+                <% if swap %>
+                  <span class="demob-swap-note">(Crew Swap scheduled<%= " #{swap.fwd.strftime('%-m/%-d')}" if swap.fwd %>)</span>
+                <% end %>
+              </div>
             <% end %>
           </div>
         <% end %>

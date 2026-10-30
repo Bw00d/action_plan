@@ -295,6 +295,12 @@ a.delete-resource:hover {
 
 .demob-group-excluded { display: none !important; }
 
+// "(Crew Swap scheduled 10/31)" after a resource on the demob list.
+.demob-swap-note {
+  font-style: italic;
+  color: #b25e00;
+}
+
 .print-only {
   display: none;
 }
