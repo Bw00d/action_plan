@@ -208,6 +208,10 @@ table#plans-table.signoff-table {
     .custom-table td   { font-size: 7pt !important; padding: 1px 3px !important; }
     .custom-table th   { font-size: 8pt !important; padding: 1px 3px !important; }
     .custom-table       { margin-bottom: 2px !important; }
+    // Sign-off rows used to get their height from Bootstrap's checkbox
+    // top margin; with that removed for alignment, pad the cells instead
+    // so the signature lines keep their spacing.
+    .signoff-table td   { padding-top: 9px !important; }
 
     // Compact remarks and form inputs so they don't inflate rows.
     #demob-remarks     { height: 150px !important; }
