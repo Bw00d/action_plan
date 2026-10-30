@@ -86,6 +86,10 @@
   td.signoff-line {
     border-bottom: 1px solid black !important;
   }
+  // Gap between the checkbox and the unit name.
+  input[type="checkbox"] {
+    margin-right: 8px;
+  }
 }
 // Breathing room after the last sign-off row (Demob Unit). Selector
 // outranks the compact print rule's .custom-table margin.

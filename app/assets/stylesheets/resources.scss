@@ -257,9 +257,17 @@ a.delete-resource:hover {
 // (defined elsewhere) also hides them at print time as a belt-and-
 // suspenders measure.
 .planned-release-fields {
+  white-space: nowrap;
+
+  // Sized in `ch` so "10/30/2026" and "0800" fit at whatever font size
+  // the form renders with, instead of a fixed pixel width that clipped.
   input {
-    width: 65px;
-    padding-right: 0;
+    width: calc(10ch + 10px);
+    padding: 0 4px;
+  }
+
+  input[name="demob[edt]"] {
+    width: calc(4ch + 10px);
   }
 }
 
