@@ -256,6 +256,16 @@ a.delete-resource:hover {
 // "Select all" widget won't appear in the pasted text. `.no-print`
 // (defined elsewhere) also hides them at print time as a belt-and-
 // suspenders measure.
+.planned-release-fields {
+  input {
+    width: 65px;
+    padding-right: 0;
+  }
+}
+
+.section-signatures{
+  padding: 5px 35px 20px 30px;
+}
 .no-select {
   -webkit-user-select: none;
   -moz-user-select: none;
