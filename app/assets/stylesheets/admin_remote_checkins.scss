@@ -54,5 +54,11 @@
 
   .rc-admin-table-slim .rc-pending-row td { border-top: 1px solid #e6e8ec; }
 
+  // Promoted/dismissed rows expand to the form response on double-click.
+  .rc-expandable-row { cursor: pointer; user-select: none; }
+  .rc-expandable-row:hover td { background: #f7f9fc; }
+  .rc-expandable-row.rc-expanded td { background: #eef3fa; border-bottom: 0; }
+  .rc-detail-row.rc-collapsed { display: none; }
+
   .label-warning { background: #f0ad4e; color: #fff; padding: 1px 6px; border-radius: 3px; font-size: 11px; margin-left: 4px; }
 }

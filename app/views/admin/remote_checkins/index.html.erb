@@ -72,26 +72,7 @@
               </tr>
               <tr class="rc-detail-row">
                 <td colspan="8">
-                  <div class="rc-detail-grid">
-                    <div><strong>Email:</strong> <%= rc.email %></div>
-                    <div><strong>Cell:</strong> <%= rc.phone %></div>
-                    <div><strong>Emergency contact:</strong> <%= rc.emergency_contact %></div>
-                    <div><strong>Mobilization:</strong> <%= rc.mobilization_date&.strftime('%m/%d/%Y') %></div>
-                    <% if rc.from_other_incident %>
-                      <div><strong>From incident:</strong> <%= rc.other_incident_name %> (<%= rc.other_incident_req_number %>) — first worked <%= rc.first_day_worked&.strftime('%m/%d/%Y') %></div>
-                    <% else %>
-                      <div><strong>First work day:</strong> <%= rc.first_work_day&.strftime('%m/%d/%Y') %></div>
-                    <% end %>
-                    <div><strong>Demob:</strong> <%= [rc.demob_city, rc.demob_state].compact.join(', ') %></div>
-                    <div><strong>Transport:</strong> <%= rc.transportation_method %></div>
-                    <div><strong>Agency address:</strong> <%= rc.agency_address %></div>
-                    <% if rc.other_crew_members.present? %>
-                      <div class="rc-detail-wide">
-                        <strong>Other crew members:</strong>
-                        <pre class="rc-crew-list"><%= rc.other_crew_members %></pre>
-                      </div>
-                    <% end %>
-                  </div>
+                  <%= render "admin/remote_checkins/detail", rc: rc %>
                 </td>
               </tr>
             <% end %>
@@ -109,7 +90,7 @@
           </thead>
           <tbody>
             <% @promoted.each do |rc| %>
-              <tr>
+              <tr class="rc-expandable-row" title="Double-click to show the form response">
                 <td><%= rc.promoted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
                 <td><%= rc.display_req_number %></td>
                 <td><%= rc.name %></td>
@@ -118,6 +99,9 @@
                     <%= link_to rc.promoted_resource.name, incident_board_path(@incident) %>
                   <% end %>
                 </td>
+              </tr>
+              <tr class="rc-detail-row rc-collapsed">
+                <td colspan="4"><%= render "admin/remote_checkins/detail", rc: rc, summary: true %></td>
               </tr>
             <% end %>
           </tbody>
@@ -132,7 +116,7 @@
           <thead><tr><th>Submitted</th><th>Req #</th><th>Name</th><th></th></tr></thead>
           <tbody>
             <% @dismissed.each do |rc| %>
-              <tr>
+              <tr class="rc-expandable-row" title="Double-click to show the form response">
                 <td><%= rc.submitted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
                 <td><%= rc.display_req_number %></td>
                 <td><%= rc.name %></td>
@@ -144,6 +128,9 @@
                                 class: 'btn btn-danger btn-xs' %>
                 </td>
               </tr>
+              <tr class="rc-detail-row rc-collapsed">
+                <td colspan="4"><%= render "admin/remote_checkins/detail", rc: rc, summary: true %></td>
+              </tr>
             <% end %>
           </tbody>
         </table>
@@ -151,3 +138,21 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  // Double-click a promoted/dismissed row to show or hide its form
+  // response (the detail row right after it). Delegated on document so
+  // it survives Turbolinks visits without rebinding.
+  if (!window.rcExpandBound) {
+    window.rcExpandBound = true;
+    document.addEventListener('dblclick', function (e) {
+      var row = e.target.closest('.rc-expandable-row');
+      if (!row || e.target.closest('form, a, button')) return;
+      var detail = row.nextElementSibling;
+      if (!detail || !detail.classList.contains('rc-detail-row')) return;
+      var open = detail.classList.toggle('rc-collapsed') === false;
+      row.classList.toggle('rc-expanded', open);
+      if (window.getSelection) window.getSelection().removeAllRanges();
+    });
+  }
+</script>

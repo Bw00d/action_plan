@@ -1,0 +1,32 @@
+<%# The submitted form response. The pending table shows Position,
+    Agency, Leader and Personnel as columns; the slim promoted/dismissed
+    tables don't, so they pass summary: true to include them here. %>
+<div class="rc-detail-grid">
+  <% if local_assigns[:summary] %>
+    <div><strong>Position:</strong> <%= rc.position %></div>
+    <div><strong>Agency:</strong> <%= rc.agency %></div>
+    <div><strong>Leader:</strong> <%= rc.effective_leader %></div>
+    <div><strong>Personnel:</strong> <%= rc.number_personnel %></div>
+  <% end %>
+  <div><strong>Email:</strong> <%= rc.email %></div>
+  <div><strong>Cell:</strong> <%= rc.phone %></div>
+  <div><strong>Emergency contact:</strong> <%= rc.emergency_contact %></div>
+  <div><strong>Mobilization:</strong> <%= rc.mobilization_date&.strftime('%m/%d/%Y') %></div>
+  <% if rc.from_other_incident %>
+    <div><strong>From incident:</strong> <%= rc.other_incident_name %> (<%= rc.other_incident_req_number %>) — first worked <%= rc.first_day_worked&.strftime('%m/%d/%Y') %></div>
+  <% else %>
+    <div><strong>First work day:</strong> <%= rc.first_work_day&.strftime('%m/%d/%Y') %></div>
+  <% end %>
+  <div><strong>Demob:</strong> <%= [rc.demob_city, rc.demob_state].compact.join(', ') %></div>
+  <div><strong>Transport:</strong> <%= rc.transportation_method %></div>
+  <div><strong>Agency address:</strong> <%= rc.agency_address %></div>
+  <% if local_assigns[:summary] %>
+    <div><strong>Submitted:</strong> <%= rc.submitted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></div>
+  <% end %>
+  <% if rc.other_crew_members.present? %>
+    <div class="rc-detail-wide">
+      <strong>Other crew members:</strong>
+      <pre class="rc-crew-list"><%= rc.other_crew_members %></pre>
+    </div>
+  <% end %>
+</div>
