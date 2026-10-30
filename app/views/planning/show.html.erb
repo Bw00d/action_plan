@@ -159,6 +159,23 @@
                 incident_air_travel_requests_path(@incident),
                 class: 'btn btn-default' %>
   </section>
+
+  <%# Blank printable forms served straight from public/forms/. Add a
+      new PDF there and a row here to offer another one. %>
+  <section class="planning-tool">
+    <h3>Forms</h3>
+    <p class="muted">
+      Blank forms to print or download. Each opens in a new tab.
+    </p>
+    <% [
+         ['Crew Swap Request Form',          '/forms/crew_swap_request_form.pdf'],
+         ['Resource Extension Request Form', '/forms/resource_extension_request_form.pdf']
+       ].each do |label, path| %>
+      <%= link_to path, target: '_blank', rel: 'noopener', class: 'btn btn-default' do %>
+        <%= fa_icon 'file-pdf-o' %> <%= label %>
+      <% end %>
+    <% end %>
+  </section>
 </div>
 
 <script>
