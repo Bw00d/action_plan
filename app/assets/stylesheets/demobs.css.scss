@@ -82,13 +82,18 @@
   td {
     border-top: none !important;
     padding-top: 10px !important;
+    // Bottom-align every cell so the checkbox, unit name and signature
+    // line share one baseline (Bootstrap tables default to top).
+    vertical-align: bottom !important;
   }
   td.signoff-line {
     border-bottom: 1px solid black !important;
   }
-  // Gap between the checkbox and the unit name.
+  // Gap between the checkbox and the unit name. Bootstrap's 4px top
+  // margin on checkboxes is dropped so it doesn't sit low.
   input[type="checkbox"] {
-    margin-right: 8px;
+    margin: 0 8px 0 0;
+    vertical-align: middle;
   }
 }
 // Breathing room after the last sign-off row (Demob Unit). Selector
