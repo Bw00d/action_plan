@@ -128,18 +128,13 @@ $(document).on('change', '.res-note-input', function () {
     return $(this).find('.res-note-input').val();
   }).get();
 
-  // A row with text spans the full width; an empty row gets its
-  // column lines back.
   var $row = $(this).closest('.res-note-row');
   var hasNote = $.trim($(this).val()) !== '';
-  $row.toggleClass('has-note', hasNote);
-  $row.find('td:first').attr('colspan', hasNote ? 6 : 1);
 
   // Typed into the last row: add another empty one so there's always
   // a place for the next note.
   if (hasNote && $row.is($rows.last())) {
-    var $blank = $row.clone().removeClass('has-note res-note-error');
-    $blank.find('td:first').attr('colspan', 1);
+    var $blank = $row.clone().removeClass('res-note-error');
     $blank.find('.res-note-input').val('');
     $row.after($blank);
   }
@@ -159,24 +154,4 @@ $(document).on('change', '.res-note-input', function () {
 // Enter saves (blurs) instead of submitting anything.
 $(document).on('keydown', '.res-note-input', function (e) {
   if (e.key === 'Enter') { e.preventDefault(); $(this).blur(); }
-});
-
-// ICS 204 WF board spacer rows: widen across the four left columns
-// while editing and whenever the spacer has text; collapse back to
-// separate cells (with their column lines) when it's empty.
-function setSpacerRowSpan($cell, wide) {
-  $cell.attr('colspan', wide ? 4 : 1);
-  $cell.closest('.spacer-row').toggleClass('has-note', wide);
-}
-$(document).on('best_in_place:activate', '.r-spacer-note .best_in_place', function () {
-  setSpacerRowSpan($(this).closest('.r-spacer-note'), true);
-});
-$(document).on('best_in_place:deactivate', '.r-spacer-note .best_in_place', function () {
-  var $el = $(this);
-  // Deactivate fires before the display text is swapped back in on
-  // some paths; wait a tick so we read the saved value.
-  setTimeout(function () {
-    var text = $.trim($el.text().replace(/ /g, ' '));
-    setSpacerRowSpan($el.closest('.r-spacer-note'), text !== '');
-  }, 0);
 });

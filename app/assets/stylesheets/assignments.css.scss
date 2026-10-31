@@ -464,9 +464,19 @@ ul#action-buttons {
 
   // Free-text note rows in the blank part of the resource table. The
   // input is invisible until hovered/focused so the form still reads
-  // like the paper 204; a row with text spans all six columns.
+  // like the paper 204. Text is wider than its cell so it runs across
+  // the column lines, which stay in place.
+  .res-row td.res-note-cell,
+  .res-row td.r-spacer-note { overflow: visible; }
+  .res-note-input,
+  .res-note-text {
+    position: relative;
+    z-index: 1;
+    width: 280%;
+  }
+  .res-note-text { overflow: hidden; text-overflow: ellipsis; }
+  .r-spacer-note .res-note-text { width: 190%; }
   .res-note-input {
-    width: 100%;
     min-width: 0;
     box-sizing: border-box;
     // !important beats pdf.scss's app-wide black border on text inputs.
@@ -477,12 +487,19 @@ ul#action-buttons {
     outline: none;
   }
   .res-note-row:hover .res-note-input,
-  .res-note-input:focus { background: #fffbe6; }
-  .res-note-row.has-note td:not(:first-child) { display: none; }
+  .res-note-input:focus { background: rgba(255, 251, 230, 0.6); }
   // Board spacer rows: make the whole cell the click target and give
   // the inline editor the same flush look as the note inputs.
-  .spacer-row.has-note .r-spacer-filler { display: none; }
-  .r-spacer-note .best_in_place { display: block; width: 100%; min-height: 1em; cursor: text; }
+  .r-spacer-note .best_in_place {
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: 190%;
+    min-height: 1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: text;
+  }
   .r-spacer-note:hover { background: #fffbe6; }
   .r-spacer-note input {
     width: 100%;

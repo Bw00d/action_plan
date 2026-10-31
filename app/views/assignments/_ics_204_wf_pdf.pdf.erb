@@ -128,14 +128,12 @@ all_resources  = @assignment.assigned_resources.to_a + @assignment.printed_resou
           </tr>
           <% page[:resources].each do |r| %>
             <% if r.is_a?(String) %>
-              <tr class="res-row"><td class="r-desig" colspan="6"><%= r %></td></tr>
+              <tr class="res-row"><td class="r-desig res-note-cell"><div class="res-note-text"><%= r %></div></td><td class="r-lwd"></td><td class="r-lead"></td><td class="r-pers"></td><td class="r-drop"></td><td class="r-pick"></td></tr>
               <% next %>
             <% end %>
             <tr class="res-row">
-              <% if r.spacer? && r.comment.present? %>
-                <td class="r-desig" colspan="4"><%= r.comment %></td>
-              <% elsif r.spacer? %>
-                <td class="r-desig"></td><td class="r-lwd"></td><td class="r-lead"></td><td class="r-pers"></td>
+              <% if r.spacer? %>
+                <td class="r-desig r-spacer-note"><div class="res-note-text"><%= r.comment %></div></td><td class="r-lwd"></td><td class="r-lead"></td><td class="r-pers"></td>
               <% else %>
                 <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
                 <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>

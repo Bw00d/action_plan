@@ -116,17 +116,16 @@ note_rows = [blank_resource_rows, resource_notes.length + (resource_notes.length
       <td class="r-pick">Pick Up PT./Time</td>
     </tr>
     <% resource_rows.each do |r| %>
-      <tr class="res-row<%= ' spacer-row' if r.spacer? %><%= ' has-note' if r.spacer? && r.comment.present? %>">
+      <tr class="res-row">
         <% if r.spacer? %>
           <%# Board "blank row": its text lives on the spacer's comment so
-              it moves with the spacer. With text it spans the four left
-              columns; empty, it keeps the normal column lines.
-              assignments.js toggles this after each save. Drop Off /
-              Pick Up stay editable as before. %>
-          <td class="r-desig r-spacer-note"<%= ' colspan=4'.html_safe if r.comment.present? %>><%= best_in_place r, :comment, as: :input, place_holder: "&nbsp;".html_safe %></td>
-          <td class="r-lwd r-spacer-filler"></td>
-          <td class="r-lead r-spacer-filler"></td>
-          <td class="r-pers r-spacer-filler"></td>
+              it moves with the spacer. Text runs across the left four
+              columns without removing their lines. Drop Off / Pick Up
+              stay editable as before. %>
+          <td class="r-desig r-spacer-note"><%= best_in_place r, :comment, as: :input, place_holder: "&nbsp;".html_safe %></td>
+          <td class="r-lwd"></td>
+          <td class="r-lead"></td>
+          <td class="r-pers"></td>
         <% else %>
           <%# Join everything with " " EXCEPT the cat prefix — "O-" + "321"
               needs to come out as "O-321" (no gap after the dash). %>
@@ -139,13 +138,13 @@ note_rows = [blank_resource_rows, resource_notes.length + (resource_notes.length
         <td class="r-pick"><%= best_in_place r, :pick_up_pt_time,  as: :input, place_holder: "&mdash;".html_safe %></td>
       </tr>
     <% end %>
-    <%# Click a blank row to type a note. A row with text spans the full
-        table width; empty rows keep the normal column lines.
-        assignments.js saves every note on change and toggles the span. %>
+    <%# Click a blank row to type a note. Text runs across the column
+        lines without removing them. assignments.js saves every note on
+        change. %>
     <% note_rows.times do |i| %>
       <% note = resource_notes[i].to_s %>
-      <tr class="res-row res-note-row<%= " has-note" if note.present? %>">
-        <td class="r-desig"<%= " colspan=6".html_safe if note.present? %>>
+      <tr class="res-row res-note-row">
+        <td class="r-desig res-note-cell">
           <input type="text" class="res-note-input" value="<%= note %>" aria-label="Resource note row <%= i + 1 %>">
         </td>
         <td class="r-lwd"></td>
