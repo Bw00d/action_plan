@@ -117,12 +117,19 @@ note_rows = [blank_resource_rows, resource_notes.length + (resource_notes.length
     </tr>
     <% resource_rows.each do |r| %>
       <tr class="res-row">
-        <%# Join everything with " " EXCEPT the cat prefix — "O-" + "321"
-            needs to come out as "O-321" (no gap after the dash). %>
-        <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
-        <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
-        <td class="r-lead"><%= r.leader %></td>
-        <td class="r-pers ctr"><%= r.number_personnel %></td>
+        <% if r.spacer? %>
+          <%# Board "blank row": its text lives on the spacer's comment so
+              it moves with the spacer. Spans the four left columns;
+              Drop Off / Pick Up stay editable as before. %>
+          <td class="r-desig r-spacer-note" colspan="4"><%= best_in_place r, :comment, as: :input, place_holder: "&nbsp;".html_safe %></td>
+        <% else %>
+          <%# Join everything with " " EXCEPT the cat prefix — "O-" + "321"
+              needs to come out as "O-321" (no gap after the dash). %>
+          <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
+          <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
+          <td class="r-lead"><%= r.leader %></td>
+          <td class="r-pers ctr"><%= r.number_personnel %></td>
+        <% end %>
         <td class="r-drop"><%= best_in_place r, :drop_off_pt_time, as: :input, place_holder: "&mdash;".html_safe, class: "r-drop" %></td>
         <td class="r-pick"><%= best_in_place r, :pick_up_pt_time,  as: :input, place_holder: "&mdash;".html_safe %></td>
       </tr>

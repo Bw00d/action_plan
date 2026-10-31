@@ -132,10 +132,14 @@ all_resources  = @assignment.assigned_resources.to_a + @assignment.printed_resou
               <% next %>
             <% end %>
             <tr class="res-row">
-              <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
-              <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
-              <td class="r-lead"><%= r.leader %></td>
-              <td class="r-pers ctr"><%= r.number_personnel %></td>
+              <% if r.spacer? %>
+                <td class="r-desig" colspan="4"><%= r.comment %></td>
+              <% else %>
+                <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
+                <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>
+                <td class="r-lead"><%= r.leader %></td>
+                <td class="r-pers ctr"><%= r.number_personnel %></td>
+              <% end %>
               <td class="r-drop"><%= r.drop_off_pt_time %></td>
               <td class="r-pick"><%= r.pick_up_pt_time %></td>
             </tr>

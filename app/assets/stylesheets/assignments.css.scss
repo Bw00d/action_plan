@@ -479,6 +479,19 @@ ul#action-buttons {
   .res-note-row:hover .res-note-input,
   .res-note-input:focus { background: #fffbe6; }
   .res-note-row.has-note td:not(:first-child) { display: none; }
+  // Board spacer rows: make the whole cell the click target and give
+  // the inline editor the same flush look as the note inputs.
+  .r-spacer-note .best_in_place { display: block; width: 100%; min-height: 1em; cursor: text; }
+  .r-spacer-note:hover { background: #fffbe6; }
+  .r-spacer-note input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 0 !important;
+    background: #fffbe6;
+    font: inherit;
+    padding: 0 2px;
+    outline: none;
+  }
   .res-note-row.res-note-error .res-note-input { background: #fde8e8; }
 
   .narrative { display: flex; flex-direction: column; }
