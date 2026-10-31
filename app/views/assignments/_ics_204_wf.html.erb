@@ -1,7 +1,12 @@
 <%
   dt_display = ->(dt) { dt&.strftime("%m/%d/%Y %H%M %a").to_s.upcase }
   resource_rows = @assignment.assigned_resources.to_a
-  blank_resource_rows = [14 - resource_rows.count, 0].max
+blank_resource_rows = [14 - resource_rows.count, 0].max
+# Blank rows double as free-text note rows. Show enough to hold every
+# saved note, plus one empty row when the notes fill the blank space
+# (or there is none) so another can always be added.
+resource_notes = @assignment.resource_notes
+note_rows = [blank_resource_rows, resource_notes.length + (resource_notes.length >= blank_resource_rows ? 1 : 0)].max
   assigned_freqs = @assignment.freqs
   comm_row_count = [5, assigned_freqs.count].max
 
@@ -101,7 +106,7 @@
     </tr>
   </table>
 
-  <table>
+  <table class="res-table" data-notes-url="<%= assignment_path(@assignment, format: :json) %>">
     <tr class="res-head">
       <td class="r-desig">Strike Team / Task Force / Resource Designator</td>
       <td class="r-lwd">LWD</td>
@@ -122,9 +127,15 @@
         <td class="r-pick"><%= best_in_place r, :pick_up_pt_time,  as: :input, place_holder: "&mdash;".html_safe %></td>
       </tr>
     <% end %>
-    <% blank_resource_rows.times do %>
-      <tr class="res-row">
-        <td class="r-desig"></td>
+    <%# Click a blank row to type a note. A row with text spans the full
+        table width; empty rows keep the normal column lines.
+        assignments.js saves every note on change and toggles the span. %>
+    <% note_rows.times do |i| %>
+      <% note = resource_notes[i].to_s %>
+      <tr class="res-row res-note-row<%= " has-note" if note.present? %>">
+        <td class="r-desig"<%= " colspan=6".html_safe if note.present? %>>
+          <input type="text" class="res-note-input" value="<%= note %>" aria-label="Resource note row <%= i + 1 %>">
+        </td>
         <td class="r-lwd"></td>
         <td class="r-lead"></td>
         <td class="r-pers"></td>

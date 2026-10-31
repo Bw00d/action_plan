@@ -462,6 +462,25 @@ ul#action-buttons {
     padding: 0 2px;
   }
 
+  // Free-text note rows in the blank part of the resource table. The
+  // input is invisible until hovered/focused so the form still reads
+  // like the paper 204; a row with text spans all six columns.
+  .res-note-input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    // !important beats pdf.scss's app-wide black border on text inputs.
+    border: 0 !important;
+    background: transparent;
+    font: inherit;
+    padding: 0 2px;
+    outline: none;
+  }
+  .res-note-row:hover .res-note-input,
+  .res-note-input:focus { background: #fffbe6; }
+  .res-note-row.has-note td:not(:first-child) { display: none; }
+  .res-note-row.res-note-error .res-note-input { background: #fde8e8; }
+
   .narrative { display: flex; flex-direction: column; }
   .box-6 { height: 0.75in; }
   .box-7 { height: 0.75in; }

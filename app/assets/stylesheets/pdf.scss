@@ -70,7 +70,10 @@
   }
   
   // Hide interactive elements
-  .btn, button, .form-control, input[type="text"], textarea {
+  // Scoped to the PDF layout — unscoped, this put a black border on
+  // every button and text field in the app.
+  body.pdf-layout .btn, body.pdf-layout button, body.pdf-layout .form-control,
+  body.pdf-layout input[type="text"], body.pdf-layout textarea {
     border: 1px solid #000 !important;
     /*background: white !important;*/
   }

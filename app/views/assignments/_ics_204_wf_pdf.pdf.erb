@@ -13,7 +13,9 @@
   #     15..36  → 2 pages (up to 22 on pg.1, remainder + 6+7 on pg.2)
   #     37..58  → 3 pages, etc.
   # ------------------------------------------------------------------
-  all_resources  = @assignment.assigned_resources.to_a
+# Free-text note rows (strings) print after the resources and take a
+# row each, so they count toward the per-page caps below.
+all_resources  = @assignment.assigned_resources.to_a + @assignment.printed_resource_notes
   assigned_freqs = @assignment.freqs
   comm_row_count = [5, assigned_freqs.count].max
 
@@ -125,6 +127,10 @@
             <td class="r-pick">Pick Up PT./Time</td>
           </tr>
           <% page[:resources].each do |r| %>
+            <% if r.is_a?(String) %>
+              <tr class="res-row"><td class="r-desig" colspan="6"><%= r %></td></tr>
+              <% next %>
+            <% end %>
             <tr class="res-row">
               <td class="r-desig"><%= ["#{r.cat}#{r.order_number}", r.position, r.name].compact.join(" ") %></td>
               <td class="r-lwd ctr"><%= r.last_work_day.try(:strftime, "%-m/%d") %></td>

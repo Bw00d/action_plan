@@ -117,3 +117,46 @@ $(document).on("turbolinks:load", function() {
                  function () { reapplyNarrativeFormat($(this)); });
 
 });
+// ICS 204 WF resource note rows. Bound once on document (outside
+// turbolinks:load) so Turbolinks visits don't stack handlers. Every
+// change sends the full list of notes in row order; blank rows hold
+// their place so a note stays on the row it was typed in.
+$(document).on('change', '.res-note-input', function () {
+  var $table = $(this).closest('.res-table');
+  var $rows  = $table.find('.res-note-row');
+  var notes  = $rows.map(function () {
+    return $(this).find('.res-note-input').val();
+  }).get();
+
+  // A row with text spans the full width; an empty row gets its
+  // column lines back.
+  var $row = $(this).closest('.res-note-row');
+  var hasNote = $.trim($(this).val()) !== '';
+  $row.toggleClass('has-note', hasNote);
+  $row.find('td:first').attr('colspan', hasNote ? 6 : 1);
+
+  // Typed into the last row: add another empty one so there's always
+  // a place for the next note.
+  if (hasNote && $row.is($rows.last())) {
+    var $blank = $row.clone().removeClass('has-note res-note-error');
+    $blank.find('td:first').attr('colspan', 1);
+    $blank.find('.res-note-input').val('');
+    $row.after($blank);
+  }
+
+  $.ajax({
+    url: $table.data('notes-url'),
+    type: 'PATCH',
+    dataType: 'json',
+    data: { assignment: { resource_notes: notes } }
+  }).done(function () {
+    $row.removeClass('res-note-error');
+  }).fail(function () {
+    $row.addClass('res-note-error');
+  });
+});
+
+// Enter saves (blurs) instead of submitting anything.
+$(document).on('keydown', '.res-note-input', function (e) {
+  if (e.key === 'Enter') { e.preventDefault(); $(this).blur(); }
+});

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_29_130000) do
+ActiveRecord::Schema.define(version: 2026_10_30_120000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(version: 2026_10_29_130000) do
     t.string "slot_3_person"
     t.string "slot_4_role", default: "Air Attack Supervisor"
     t.string "slot_4_person"
+    t.string "resource_notes", default: [], null: false, array: true
     t.index ["org_unit_id"], name: "index_assignments_on_org_unit_id"
   end
 

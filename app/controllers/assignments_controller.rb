@@ -156,6 +156,6 @@ class AssignmentsController < ApplicationController
                                          :slot_3_role, :slot_3_person, :slot_4_role, :slot_4_person,
                                          :prepared_date, :prepared_time,
                                          commo_item_ids: [], resource_ids: [],
-                                         ops_personnel_ids: [])
+                                         ops_personnel_ids: [], resource_notes: [])
     end
 end

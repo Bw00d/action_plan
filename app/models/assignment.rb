@@ -7,6 +7,7 @@ class Assignment < ApplicationRecord
   # assignments index link isn't an empty <li>. Runs on every save so an
   # explicit clear still refalls back to the org unit's value.
   before_validation :default_designator_from_org_unit
+  before_validation :normalize_resource_notes
 
   OPS_ROLE_OPTIONS = [
     'Operations Chief',
@@ -94,7 +95,20 @@ class Assignment < ApplicationRecord
       org_unit&.name
   end
 
+  # Notes that print in the Resource Designator table, blanks dropped.
+  def printed_resource_notes
+    resource_notes.reject(&:blank?)
+  end
+
   private
+
+  # Keep row positions (blank entries hold a row's place) but trim
+  # trailing blanks so the array doesn't grow with empty rows.
+  def normalize_resource_notes
+    notes = Array(resource_notes).map { |n| n.to_s.strip }
+    notes.pop while notes.last == ""
+    self.resource_notes = notes
+  end
 
   def default_designator_from_org_unit
     return if designator.present?

@@ -311,7 +311,9 @@
 
     </style>
   </head>
-  <body>
+  <%# pdf-layout scopes PDF-only rules in pdf.scss, which otherwise
+      ships to every page through application.css. %>
+  <body class="pdf-layout">
     <div class="page-wrapper">
       <%= yield %>
     </div>
