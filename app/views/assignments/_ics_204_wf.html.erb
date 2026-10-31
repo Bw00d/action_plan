@@ -116,12 +116,17 @@ note_rows = [blank_resource_rows, resource_notes.length + (resource_notes.length
       <td class="r-pick">Pick Up PT./Time</td>
     </tr>
     <% resource_rows.each do |r| %>
-      <tr class="res-row">
+      <tr class="res-row<%= ' spacer-row' if r.spacer? %><%= ' has-note' if r.spacer? && r.comment.present? %>">
         <% if r.spacer? %>
           <%# Board "blank row": its text lives on the spacer's comment so
-              it moves with the spacer. Spans the four left columns;
-              Drop Off / Pick Up stay editable as before. %>
-          <td class="r-desig r-spacer-note" colspan="4"><%= best_in_place r, :comment, as: :input, place_holder: "&nbsp;".html_safe %></td>
+              it moves with the spacer. With text it spans the four left
+              columns; empty, it keeps the normal column lines.
+              assignments.js toggles this after each save. Drop Off /
+              Pick Up stay editable as before. %>
+          <td class="r-desig r-spacer-note"<%= ' colspan=4'.html_safe if r.comment.present? %>><%= best_in_place r, :comment, as: :input, place_holder: "&nbsp;".html_safe %></td>
+          <td class="r-lwd r-spacer-filler"></td>
+          <td class="r-lead r-spacer-filler"></td>
+          <td class="r-pers r-spacer-filler"></td>
         <% else %>
           <%# Join everything with " " EXCEPT the cat prefix — "O-" + "321"
               needs to come out as "O-321" (no gap after the dash). %>

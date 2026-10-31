@@ -160,3 +160,23 @@ $(document).on('change', '.res-note-input', function () {
 $(document).on('keydown', '.res-note-input', function (e) {
   if (e.key === 'Enter') { e.preventDefault(); $(this).blur(); }
 });
+
+// ICS 204 WF board spacer rows: widen across the four left columns
+// while editing and whenever the spacer has text; collapse back to
+// separate cells (with their column lines) when it's empty.
+function setSpacerRowSpan($cell, wide) {
+  $cell.attr('colspan', wide ? 4 : 1);
+  $cell.closest('.spacer-row').toggleClass('has-note', wide);
+}
+$(document).on('best_in_place:activate', '.r-spacer-note .best_in_place', function () {
+  setSpacerRowSpan($(this).closest('.r-spacer-note'), true);
+});
+$(document).on('best_in_place:deactivate', '.r-spacer-note .best_in_place', function () {
+  var $el = $(this);
+  // Deactivate fires before the display text is swapped back in on
+  // some paths; wait a tick so we read the saved value.
+  setTimeout(function () {
+    var text = $.trim($el.text().replace(/ /g, ' '));
+    setSpacerRowSpan($el.closest('.r-spacer-note'), text !== '');
+  }, 0);
+});
