@@ -404,6 +404,16 @@ class Resource < ApplicationRecord
     work_entries.select { |e| e.actual_fwd.nil? }.map(&:lwd).compact.max
   end
 
+  # Dates a crew swap actually happened: each promoted :work entry whose
+  # leader differs from the entry before it. The first entry is the
+  # original operator, and a same-leader entry is a return from R&R, so
+  # neither counts.
+  def completed_swap_dates
+    work_entries.select(&:actual_fwd).sort_by(&:actual_fwd).each_cons(2)
+                .reject { |prev, entry| prev.leader == entry.leader }
+                .map { |_prev, entry| entry.actual_fwd }
+  end
+
   # :work entries for this resource. Uses the in-memory association
   # when it's been eager-loaded (common on the board + 211 pages) to
   # avoid a per-row SQL query.

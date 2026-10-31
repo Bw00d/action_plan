@@ -12,6 +12,7 @@
 <% lwd = resource.last_work_day.is_a?(Date) ? resource.last_work_day : nil %>
 <% swap_days = resource.resource_events.select(&:scheduled_swap?)
                                         .map(&:fwd).compact.to_set %>
+<% swapped_days = resource.completed_swap_dates.to_set %>
 
 <% if fwd.nil? || lwd.nil? %>
   <p class="muted small">
@@ -51,14 +52,18 @@
                      in_range = fwd <= day && day <= lwd
                      is_fwd   = day == fwd
                      is_lwd   = day == lwd
-                     is_swap  = swap_days.include?(day) %>
+                     is_swap  = swap_days.include?(day)
+                     is_swapped = swapped_days.include?(day) %>
                   <td class="<%= 'cal-out-of-month' unless in_month %>
                              <%= 'cal-in-range'    if in_range %>
                              <%= 'cal-fwd'         if is_fwd %>
                              <%= 'cal-lwd'         if is_lwd %>
-                             <%= 'cal-swap'        if is_swap && in_range %>">
+                             <%= 'cal-swap'        if is_swap && in_range %>
+                             <%= 'cal-swapped'     if is_swapped %>">
                     <span class="cal-day"><%= day.day %></span>
-                    <% if is_swap && in_range %>
+                    <% if is_swapped %>
+                      <span class="cal-tag">SWPD</span>
+                    <% elsif is_swap && in_range %>
                       <span class="cal-tag">SWAP</span>
                     <% elsif is_fwd %>
                       <span class="cal-tag">FWD</span>
@@ -78,6 +83,7 @@
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--fwd"></span> FWD</span>
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--range"></span> On assignment</span>
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--swap"></span> Scheduled swap</span>
+    <span class="cal-legend-item"><span class="cal-swatch cal-swatch--swapped"></span> Swap completed</span>
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--lwd"></span> LWD</span>
   </div>
 <% end %>

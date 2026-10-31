@@ -805,6 +805,7 @@
   td.cal-fwd  { background: #36b37e; .cal-day, .cal-tag { color: #fff; } }
   td.cal-lwd  { background: #d0021b; .cal-day, .cal-tag { color: #fff; } }
   td.cal-swap { background: #1976d2; .cal-day, .cal-tag { color: #fff; } }
+  td.cal-swapped { background: #6554c0; .cal-day, .cal-tag { color: #fff; } }
 }
 .board-card-calendar-legend {
   display: flex;
@@ -823,6 +824,7 @@
   .cal-swatch--fwd   { background: #36b37e; }
   .cal-swatch--range { background: #d4e9ff; }
   .cal-swatch--swap  { background: #1976d2; }
+  .cal-swatch--swapped { background: #6554c0; }
   .cal-swatch--lwd   { background: #d0021b; }
 }
 .board-card-details-side {

@@ -708,6 +708,8 @@
         headers: { 'X-CSRF-Token': csrf(), 'Accept': 'application/json' }
       }).done(function (data) {
         if (data.feed_html) replaceFeed($side, data.feed_html);
+        // Drop the lazy-loaded calendar so the next open shows this swap.
+        $card.find('.board-card-calendar-panel').attr('data-loaded', 'false').empty().hide();
         // Swap the roster block in place so the primary star jumps to
         // whichever subordinate matches the new leader (server already
         // moved the primary flag; this re-renders the stars to match).
