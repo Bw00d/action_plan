@@ -62,4 +62,94 @@ RSpec.describe 'Boards', type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
+
+  describe 'R&R board' do
+    let(:rnr_board) { incident.org_units.kind_rnr.first }
+    let(:today) { Date.current }
+
+    before { create(:org_unit_assignment, org_unit: division_a, resource: resource) }
+
+    def schedule_rnr(from, to)
+      resource.resource_events.create!(kind: :rnr, fwd: from, lwd: to)
+    end
+
+    def drag_to(unit)
+      patch move_incident_board_path(incident),
+            params: { resource_id: resource.id, org_unit_id: unit.id, position: 1 }
+    end
+
+    it 'is created with the incident' do
+      expect(incident.org_units.kind_rnr.pluck(:name)).to eq(['R&R'])
+    end
+
+    it 'shows the card on the R&R board once R&R starts, off the tally' do
+      schedule_rnr(today, today + 2)
+      get incident_board_path(incident)
+
+      expect(response.body).to include(%(data-resource-id="#{resource.id}"))
+      expect(incident.tally_resources).not_to include(resource)
+      expect(resource.reload.org_unit).to eq(division_a)
+    end
+
+    it 'leaves a card in its column until R&R starts' do
+      schedule_rnr(today + 3, today + 5)
+
+      expect(resource.rnr?).to be(false)
+      expect(incident.tally_resources).to include(resource)
+    end
+
+    it 'returns the card to its column after R&R ends' do
+      schedule_rnr(today - 3, today - 1)
+
+      expect(resource.rnr?).to be(false)
+      expect(division_a.resources.active).to include(resource)
+    end
+
+    it 'starts a scheduled R&R early when dragged to the board, keeping the planned dates' do
+      event = schedule_rnr(today + 3, today + 5)
+      drag_to(rnr_board)
+
+      expect(response).to have_http_status(:no_content)
+      expect(resource.reload.rnr?).to be(true)
+      expect(incident.tally_resources).not_to include(resource)
+      expect(event.reload).to have_attributes(fwd: today + 3, lwd: today + 5, actual_fwd: today)
+      expect(resource.org_unit).to eq(division_a)
+    end
+
+    it 'refuses a drag to the board with no scheduled R&R' do
+      drag_to(rnr_board)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include('Schedule R&R')
+      expect(resource.reload.rnr?).to be(false)
+    end
+
+    it 'puts an early start back on schedule when dragged off the board' do
+      event = schedule_rnr(today + 3, today + 5)
+      drag_to(rnr_board)
+      drag_to(division_b)
+
+      expect(resource.reload.rnr?).to be(false)
+      expect(event.reload.actual_fwd).to be_nil
+      expect(event.actual_lwd).to be_nil
+      expect(resource.org_unit).to eq(division_b)
+    end
+
+    it 'ends an R&R under way when dragged off the board' do
+      event = schedule_rnr(today - 1, today + 2)
+      drag_to(division_a)
+
+      expect(resource.reload.rnr?).to be(false)
+      expect(event.reload.actual_lwd).to eq(today)
+    end
+
+    it 'closes an early start when the 211 R&R box is unchecked' do
+      schedule_rnr(today + 3, today + 5)
+      drag_to(rnr_board)
+      resource.reload.update!(r_and_r: true)
+      resource.update!(r_and_r: false)
+
+      expect(resource.reload.rnr?).to be(false)
+    end
+  end
 end

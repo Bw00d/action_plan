@@ -15,7 +15,8 @@ class OrgUnit < ApplicationRecord
     branch: 2,
     division: 3,
     group: 4,
-    non_209: 5
+    non_209: 5,
+    rnr: 6
   }, _prefix: :kind
 
   acts_as_list scope: :parent_id, top_of_list: 1, add_new_at: :bottom
@@ -51,7 +52,11 @@ class OrgUnit < ApplicationRecord
     # Flat bucket at the root of the board — no children allowed. Resources
     # assigned here are excluded from the Resource Tally, Glide Path, and
     # ICS-211 by the Incident#tally_resources scope.
-    'non_209'  => [nil]
+    'non_209'  => [nil],
+    # Flat bucket at the root of the board. Holds no OrgUnitAssignments:
+    # BoardsController fills it with resources on R&R, who keep their
+    # home column and return to it when the R&R ends.
+    'rnr'      => [nil]
   }.freeze
 
   def self.allowed_child_kinds_for(parent_kind)

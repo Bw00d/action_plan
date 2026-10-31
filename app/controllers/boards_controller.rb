@@ -38,6 +38,11 @@ class BoardsController < ApplicationController
       asgs.map(&:resource).select { |r| r && r.release_date.nil? && !r.rnr? }
     end
     @resources_by_unit.default = []
+
+    # Cards on R&R keep their home assignment, so the R&R column is
+    # filled by status rather than by OrgUnitAssignment.
+    rnr_unit = @incident.org_units.kind_rnr.first
+    @resources_by_unit[rnr_unit.id] = rnr_resources.includes(@board_includes).to_a if rnr_unit
   end
 
   def move
@@ -49,6 +54,15 @@ class BoardsController < ApplicationController
                      end
     return head :unprocessable_entity if params[:org_unit_id].present? && target_org_unit.nil?
 
+    if target_org_unit&.kind_rnr?
+      unless resource.rnr? || resource.start_rnr_early!
+        return render plain: 'Schedule R&R on the card first so it has an end date.',
+                      status: :unprocessable_entity
+      end
+      return head :no_content
+    end
+
+    resource.end_rnr! if resource.rnr?
     apply_move(resource, target_org_unit, params[:position].to_i)
     head :no_content
   end
@@ -115,9 +129,13 @@ class BoardsController < ApplicationController
   end
 
   def walk_with_resources(node, groups)
-    groups << { unit: node,
-                resources: node.resources.active.where(spacer: false).order(:position) }
+    resources = node.kind_rnr? ? rnr_resources : node.resources.active.where(spacer: false).order(:position)
+    groups << { unit: node, resources: resources }
     node.children.order(:position).each { |child| walk_with_resources(child, groups) }
+  end
+
+  def rnr_resources
+    @incident.resources.on_rnr.where(release_date: nil).order(:category, :order_number)
   end
 
   def apply_move(resource, target_org_unit, position)

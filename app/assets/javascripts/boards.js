@@ -20,6 +20,12 @@
       });
     }
 
+    // The server explains a refused move in the body, e.g. a card with
+    // no scheduled R&R dropped on the R&R board.
+    function moveErrorMessage(xhr) {
+      return (xhr.status === 422 && xhr.responseText) || 'Move failed. Refresh the page.';
+    }
+
     $('.board-cards').sortable({
       connectWith: '.board-cards',
       placeholder: 'board-card-placeholder',
@@ -50,10 +56,10 @@
           },
           headers: { 'X-CSRF-Token': csrfToken }
         })
-          .fail(function () {
+          .fail(function (xhr) {
             $(event.target).sortable('cancel');
             recomputePersonnel();
-            alert('Move failed. Refresh the page.');
+            alert(moveErrorMessage(xhr));
           })
           .always(function () {
             $sortable.sortable('enable');
@@ -1047,7 +1053,7 @@
           $card.appendTo($target);
           recomputePersonnel();
         })
-        .fail(function () { alert('Move failed. Refresh the page.'); });
+        .fail(function (xhr) { alert(moveErrorMessage(xhr)); });
     });
 
     // Click outside closes the shared menu.

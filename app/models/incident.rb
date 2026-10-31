@@ -21,6 +21,7 @@ class Incident < ApplicationRecord
 
   after_create :seed_default_schedule
   after_create :seed_non_209_bucket
+  after_create :seed_rnr_bucket
   after_create :seed_default_sections
   after_create :ensure_remote_checkin_token
 
@@ -184,6 +185,11 @@ class Incident < ApplicationRecord
   def seed_non_209_bucket
     return if org_units.where(kind: OrgUnit.kinds[:non_209]).exists?
     org_units.create!(kind: :non_209, name: 'Non-209', parent_id: nil)
+  end
+
+  def seed_rnr_bucket
+    return if org_units.kind_rnr.exists?
+    org_units.create!(kind: :rnr, name: 'R&R', parent_id: nil)
   end
 
   # Create the standard section org units (Plans / Logistics / Finance /

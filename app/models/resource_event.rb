@@ -69,6 +69,17 @@ class ResourceEvent < ApplicationRecord
     )
   }
 
+  # R&R covering the given day. Starts on the planned fwd, or sooner
+  # when actual_fwd is set by dragging the card to the R&R board.
+  scope :rnr_in_effect, ->(day = Date.current) {
+    rnr.where('COALESCE(actual_fwd, fwd) <= ? AND lwd >= ? AND actual_lwd IS NULL', day, day)
+  }
+
+  def rnr_in_effect?(day = Date.current)
+    start = actual_fwd || fwd
+    rnr? && start.present? && lwd.present? && start <= day && lwd >= day && actual_lwd.nil?
+  end
+
   # Shim: in the pre-shift-refactor model, swap-related UI gated on
   # `scheduled_swap?` (upcoming — editable, offers SWAP NOW) and
   # `completed_swap?` (immutable past). Post-refactor those are both

@@ -77,17 +77,11 @@ class Resource < ApplicationRecord
   # form submissions still work during the transition. The boolean will
   # be dropped once all callers are migrated.
   scope :on_rnr, -> {
-    today = Date.current
-    where(spacer: false).where(id: ResourceEvent
-      .where(kind: ResourceEvent.kinds[:rnr])
-      .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+    where(spacer: false).where(id: ResourceEvent.rnr_in_effect
       .select(:resource_id).distinct)
   }
   scope :active, -> {
-    today = Date.current
-    where(release_date: nil).where.not(id: ResourceEvent
-      .where(kind: ResourceEvent.kinds[:rnr])
-      .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+    where(release_date: nil).where.not(id: ResourceEvent.rnr_in_effect
       .select(:resource_id))
   }
   scope :assigned, -> { active.where(spacer: false) }
@@ -280,15 +274,12 @@ class Resource < ApplicationRecord
   def sync_rnr_timeline_from_boolean
     today = Date.current
     if r_and_r
-      has_active = resource_events.where(kind: ResourceEvent.kinds[:rnr])
-                                  .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL',
-                                         today, today).exists?
+      has_active = resource_events.rnr_in_effect(today).exists?
       resource_events.create!(
         kind: :rnr, fwd: today, lwd: today + 1.day, actual_fwd: today
       ) unless has_active
     else
-      resource_events.where(kind: ResourceEvent.kinds[:rnr])
-                     .where('fwd <= ? AND lwd >= ? AND actual_lwd IS NULL', today, today)
+      resource_events.rnr_in_effect(today)
                      .update_all(actual_lwd: today, updated_at: Time.current)
     end
   end
@@ -425,6 +416,16 @@ class Resource < ApplicationRecord
     end
   end
 
+  # :rnr entries for this resource, using the loaded collection when
+  # there is one.
+  def rnr_entries
+    if resource_events.loaded?
+      resource_events.select { |e| e.kind.to_s == 'rnr' }
+    else
+      resource_events.where(kind: ResourceEvent.kinds[:rnr])
+    end
+  end
+
   # The currently-active :work entry (actual_fwd set, actual_lwd nil).
   # Nil when there's no current operator. Prefers the loaded collection.
   def current_work_entry
@@ -489,13 +490,30 @@ class Resource < ApplicationRecord
   # association is preloaded (board / ICS 211 both eager-load) to
   # avoid a per-row SQL query.
   def rnr?
-    today = Date.current
-    rnrs = if resource_events.loaded?
-             resource_events.select { |e| e.kind.to_s == 'rnr' }
-           else
-             resource_events.where(kind: ResourceEvent.kinds[:rnr])
-           end
-    rnrs.any? { |e| e.fwd && e.lwd && e.fwd <= today && e.lwd >= today && e.actual_lwd.nil? }
+    rnr_entries.any?(&:rnr_in_effect?)
+  end
+
+  # Card dragged to the R&R board ahead of its scheduled start, usually
+  # while building the next shift's IAP. Keeps the planned dates. Returns
+  # nil when there's no upcoming R&R, since the end date is what brings
+  # the card back.
+  def start_rnr_early!
+    upcoming = rnr_entries.select { |e| e.actual_fwd.nil? && e.actual_lwd.nil? && e.lwd && e.lwd >= Date.current }
+                          .min_by(&:fwd)
+    upcoming&.update!(actual_fwd: Date.current)
+    upcoming
+  end
+
+  # Card dragged off the R&R board. An early start is undone so the
+  # scheduled R&R still happens; one already under way ends today.
+  def end_rnr!
+    rnr_entries.select(&:rnr_in_effect?).each do |entry|
+      if entry.fwd > Date.current
+        entry.update!(actual_fwd: nil)
+      else
+        entry.update!(actual_lwd: Date.current)
+      end
+    end
   end
 
   def create_demob
