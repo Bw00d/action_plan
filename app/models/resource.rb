@@ -405,6 +405,17 @@ class Resource < ApplicationRecord
                 .map { |_prev, entry| entry.actual_fwd }
   end
 
+  # R&R days already taken: anything before today, plus every day of an
+  # R&R that was ended by dragging the card off the R&R board.
+  def completed_rnr_dates
+    rnr_entries.flat_map { |e| e.rnr_dates.select { |day| e.actual_lwd || day < Date.current } }.uniq
+  end
+
+  # R&R days still to come, including today for an R&R under way.
+  def scheduled_rnr_dates
+    rnr_entries.reject(&:actual_lwd).flat_map(&:rnr_dates).select { |day| day >= Date.current }.uniq
+  end
+
   # :work entries for this resource. Uses the in-memory association
   # when it's been eager-loaded (common on the board + 211 pages) to
   # avoid a per-row SQL query.

@@ -13,6 +13,8 @@
 <% swap_days = resource.resource_events.select(&:scheduled_swap?)
                                         .map(&:fwd).compact.to_set %>
 <% swapped_days = resource.completed_swap_dates.to_set %>
+<% rnr_days = resource.scheduled_rnr_dates.to_set %>
+<% rnr_taken_days = resource.completed_rnr_dates.to_set %>
 
 <% if fwd.nil? || lwd.nil? %>
   <p class="muted small">
@@ -53,18 +55,24 @@
                      is_fwd   = day == fwd
                      is_lwd   = day == lwd
                      is_swap  = swap_days.include?(day)
-                     is_swapped = swapped_days.include?(day) %>
+                     is_swapped = swapped_days.include?(day)
+                     is_rnr   = rnr_days.include?(day)
+                     is_rnr_taken = rnr_taken_days.include?(day) %>
                   <td class="<%= 'cal-out-of-month' unless in_month %>
                              <%= 'cal-in-range'    if in_range %>
                              <%= 'cal-fwd'         if is_fwd %>
                              <%= 'cal-lwd'         if is_lwd %>
                              <%= 'cal-swap'        if is_swap && in_range %>
-                             <%= 'cal-swapped'     if is_swapped %>">
+                             <%= 'cal-swapped'     if is_swapped %>
+                             <%= 'cal-rnr'         if is_rnr %>
+                             <%= 'cal-rnr-taken'   if is_rnr_taken %>">
                     <span class="cal-day"><%= day.day %></span>
                     <% if is_swapped %>
                       <span class="cal-tag">SWPD</span>
                     <% elsif is_swap && in_range %>
                       <span class="cal-tag">SWAP</span>
+                    <% elsif is_rnr || is_rnr_taken %>
+                      <span class="cal-tag">R&amp;R</span>
                     <% elsif is_fwd %>
                       <span class="cal-tag">FWD</span>
                     <% elsif is_lwd %>
@@ -84,6 +92,8 @@
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--range"></span> On assignment</span>
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--swap"></span> Scheduled swap</span>
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--swapped"></span> Swap completed</span>
+    <span class="cal-legend-item"><span class="cal-swatch cal-swatch--rnr"></span> Scheduled R&amp;R</span>
+    <span class="cal-legend-item"><span class="cal-swatch cal-swatch--rnr-taken"></span> R&amp;R completed</span>
     <span class="cal-legend-item"><span class="cal-swatch cal-swatch--lwd"></span> LWD</span>
   </div>
 <% end %>

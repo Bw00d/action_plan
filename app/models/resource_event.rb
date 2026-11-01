@@ -80,6 +80,13 @@ class ResourceEvent < ApplicationRecord
     rnr? && start.present? && lwd.present? && start <= day && lwd >= day && actual_lwd.nil?
   end
 
+  # Days this R&R covers, allowing for an early start or end.
+  def rnr_dates
+    start  = actual_fwd || fwd
+    finish = actual_lwd || lwd
+    start && finish ? (start..finish).to_a : []
+  end
+
   # Shim: in the pre-shift-refactor model, swap-related UI gated on
   # `scheduled_swap?` (upcoming — editable, offers SWAP NOW) and
   # `completed_swap?` (immutable past). Post-refactor those are both

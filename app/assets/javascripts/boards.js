@@ -221,7 +221,10 @@
 
     function replaceFeed($side, html) {
       var $feed = $side.find('.board-card-activity-feed').html(html);
-      syncSwapLwdAttr($side.closest('.board-card'), $feed);
+      var $card = $side.closest('.board-card');
+      syncSwapLwdAttr($card, $feed);
+      // Drop the lazy-loaded calendar so the next open shows the change.
+      $card.find('.board-card-calendar-panel').attr('data-loaded', 'false').empty().hide();
     }
 
     // Walk the activity feed for scheduled_swap items, grab each item's
@@ -714,8 +717,6 @@
         headers: { 'X-CSRF-Token': csrf(), 'Accept': 'application/json' }
       }).done(function (data) {
         if (data.feed_html) replaceFeed($side, data.feed_html);
-        // Drop the lazy-loaded calendar so the next open shows this swap.
-        $card.find('.board-card-calendar-panel').attr('data-loaded', 'false').empty().hide();
         // Swap the roster block in place so the primary star jumps to
         // whichever subordinate matches the new leader (server already
         // moved the primary flag; this re-renders the stars to match).

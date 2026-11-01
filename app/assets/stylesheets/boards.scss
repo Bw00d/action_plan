@@ -822,6 +822,8 @@
   td.cal-in-range     { background: #d4e9ff; .cal-day { color: #0b3d8f; } }
   td.cal-fwd  { background: #36b37e; .cal-day, .cal-tag { color: #fff; } }
   td.cal-lwd  { background: #d0021b; .cal-day, .cal-tag { color: #fff; } }
+  td.cal-rnr  { background: #00a3bf; .cal-day, .cal-tag { color: #fff; } }
+  td.cal-rnr-taken { background: #006b7d; .cal-day, .cal-tag { color: #fff; } }
   td.cal-swap { background: #1976d2; .cal-day, .cal-tag { color: #fff; } }
   td.cal-swapped { background: #6554c0; .cal-day, .cal-tag { color: #fff; } }
 }
@@ -843,6 +845,8 @@
   .cal-swatch--range { background: #d4e9ff; }
   .cal-swatch--swap  { background: #1976d2; }
   .cal-swatch--swapped { background: #6554c0; }
+  .cal-swatch--rnr { background: #00a3bf; }
+  .cal-swatch--rnr-taken { background: #006b7d; }
   .cal-swatch--lwd   { background: #d0021b; }
 }
 .board-card-details-side {
