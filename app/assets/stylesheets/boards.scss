@@ -275,6 +275,24 @@
   min-width: 0;
 }
 
+// Phones: a pinned Unassigned column leaves almost no room for the rest,
+// so scroll the whole row and let it move off screen with the others.
+// Phones are view-only, so the Print Roster and New Column controls go too.
+@media (max-width: 767px) {
+  .board-header .board-new-column { display: none; }
+
+  .board-layout {
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+
+  .board-columns {
+    flex: 0 0 auto;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+}
+
 .board-column {
   flex: 0 0 260px;
   background: #f4f5f7;
