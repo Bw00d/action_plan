@@ -1,0 +1,60 @@
+// Signed-in Welcome guide on the home page.
+.welcome {
+  max-width: 800px;
+  padding-top: 24px;
+  padding-bottom: 40px;
+
+  section {
+    margin-top: 32px;
+    // Keeps jump-link targets clear of the fixed navbar.
+    scroll-margin-top: 70px;
+  }
+
+  h2 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+  }
+
+  h4 {
+    margin-top: 18px;
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  .welcome-callout {
+    background: #f5f5f5;
+    border-left: 4px solid #5cb85c;
+    padding: 12px 16px;
+  }
+
+  .welcome-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+
+    a {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 4px 10px;
+    }
+  }
+
+  .welcome-page {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+  }
+
+  .welcome-planning-p {
+    margin-top: 32px;
+    // The diagram is a fixed 500px wide.
+    overflow-x: auto;
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+  }
+}

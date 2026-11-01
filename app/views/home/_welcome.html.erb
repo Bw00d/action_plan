@@ -1,0 +1,252 @@
+<%# Signed-in landing page: a guide to each navbar destination. Keep this
+    in step with layouts/_base_menu_items. Describe what the page does
+    today, and leave out anything unfinished. %>
+<div class="container welcome">
+  <header class="welcome-header">
+    <h1><strong>Welcome to Action Plan</strong></h1>
+    <p class="lead">
+      Action Plan is where an incident management team builds its Incident
+      Action Plan, tracks resources from check-in to demob, and keeps everyone
+      working from the same information.
+    </p>
+    <%= link_to 'Go to Incidents', incidents_path, class: 'btn btn-success' %>
+  </header>
+
+  <section class="welcome-callout">
+    <strong>Where are the rest of the menu links?</strong>
+    Everything in Action Plan belongs to an incident, so most links appear in
+    the menu bar only after you open one. Until then, you'll just see
+    <strong>Incidents</strong> and your name.
+  </section>
+
+  <section id="getting-started">
+    <h2>Getting started</h2>
+    <ol class="welcome-steps">
+      <li>
+        <strong>Open an incident.</strong>
+        Choose one from <strong>Incidents</strong>, or click
+        <strong>New Incident</strong> to create one. If you create it, you're
+        its Owner.
+      </li>
+      <li>
+        <strong>Bring in your team.</strong>
+        On the incident's page, enter an email address under
+        <strong>Collaborators</strong> and click <strong>Invite</strong>.
+      </li>
+      <li>
+        <strong>Add your resources.</strong>
+        Import IROC requests on <strong>Requests</strong> and check resources
+        in from there, or add them directly on <strong>Resources</strong>.
+      </li>
+      <li>
+        <strong>Organize them.</strong>
+        On <strong>T Cards</strong>, drag each resource into its division or
+        group.
+      </li>
+      <li>
+        <strong>Build the plan.</strong>
+        Under <strong>IAP</strong>, create a plan for the operational period
+        and work through the forms. Each 204 picks up its resources from the
+        T Cards board.
+      </li>
+    </ol>
+  </section>
+
+  <section id="good-to-know">
+    <h2>Good to know</h2>
+    <ul>
+      <li>
+        <strong>Click to edit.</strong> Most fields on the IAP forms and
+        resource tables can be edited by clicking them, and they save
+        automatically.
+      </li>
+      <li>
+        <strong>Double-click for detail.</strong> Double-click a T-card or a
+        checked-in row on the ICS-211 to see everything about that resource.
+      </li>
+      <li>
+        <strong>Work side by side.</strong> When a teammate changes something
+        on your incident, a notice appears with a <strong>Refresh</strong>
+        button. Browser tabs are titled by page, so several tabs are easy to
+        tell apart.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Guide to the menu</h2>
+    <nav class="welcome-toc" aria-label="Guide contents">
+      <a href="#guide-incidents">Incidents</a>
+      <a href="#guide-iap">IAP</a>
+      <a href="#guide-resources">Resources</a>
+      <a href="#guide-ops">Ops</a>
+      <a href="#guide-plans">Plans</a>
+      <a href="#guide-requests">Requests</a>
+      <a href="#guide-tcards">T Cards</a>
+      <a href="#guide-schedule">Schedule</a>
+      <a href="#guide-demobs">Demobs</a>
+      <a href="#guide-feed">Feed</a>
+      <a href="#guide-help">Help &amp; profile</a>
+      <% if current_user.admin? %>
+        <a href="#guide-admin">Admin</a>
+      <% end %>
+    </nav>
+  </section>
+
+  <section id="guide-incidents" class="welcome-page">
+    <h3>Incidents</h3>
+    <p>Lists the incidents you own or collaborate on. Older incidents are under <strong>Previous years</strong>.</p>
+    <ul>
+      <li><strong>New Incident</strong> starts an incident with its name, type, complexity, location and start date.</li>
+      <li>The incident's page holds its information and map, financial codes, and <strong>Collaborators</strong>. You can also pull in details with <strong>Update from IRWIN</strong>.</li>
+      <li>Only the incident's Owner or a site admin can delete it.</li>
+    </ul>
+  </section>
+
+  <section id="guide-iap" class="welcome-page">
+    <h3>IAP</h3>
+    <p>Build the Incident Action Plan for each operational period. The link opens your most recent plan.</p>
+    <ul>
+      <li>Date tabs switch between plans, and <strong>New</strong> starts the next one. A new plan carries over the previous plan's forms, so you only update what changed. Safety Message hazards carry over, but the message text doesn't.</li>
+      <li>
+        The form tabs are:
+        <strong>Cover</strong>, <strong>202</strong> objectives,
+        <strong>203</strong> organization, <strong>204</strong> assignments,
+        <strong>205</strong> radio plan, <strong>205A</strong> contact list,
+        <strong>206</strong> medical plan, <strong>220</strong> air operations
+        and <strong>Safety Message</strong>.
+      </li>
+      <li>To add a 204, click <strong>+</strong> on the 204 tab and pick a division or group. Use <strong>SELECT CHANNELS</strong> to bring in frequencies from the 205.</li>
+      <li>The 205A is shared across the whole incident rather than kept per plan.</li>
+      <li>Each form prints on its own with its Print button.</li>
+      <li><strong>Publish IAP</strong> locks in the resource list on every 204. Until then, 204s follow the T Cards board. Other form fields stay editable after publishing, and <strong>Unpublish</strong> returns the 204s to the live board.</li>
+    </ul>
+  </section>
+
+  <section id="guide-resources" class="welcome-page">
+    <h3>Resources</h3>
+    <p>The master list of everything on the incident.</p>
+    <ul>
+      <li><strong>ICS-211</strong>: the check-in list, split into Checked In, Released and On R&amp;R. A red LWD means the resource is past its last work day. Click a caret to see a roster, and click <strong>DMB</strong> to start a demob.</li>
+      <li><strong>Glide Path</strong>: a 14-day view of when resources time out, printable and filterable by <strong>Sections</strong>. Colors move from green through yellow and orange to a red LWD. Blue marks a swap and purple marks R&amp;R.</li>
+      <li><strong>Demob List</strong>: upcoming releases grouped by date, ready to print.</li>
+      <li><strong>Resource Tally</strong>: counts by agency, with PDF and CSV downloads.</li>
+      <li><strong>Non-209</strong>: resources that shouldn't count on the 209, placed there by dragging them to the Non-209 column on T Cards.</li>
+      <li>The person-plus icon adds a resource by hand, and <strong>Import iSuite</strong> loads them from a CSV with a preview first.</li>
+    </ul>
+  </section>
+
+  <section id="guide-ops" class="welcome-page">
+    <h3>Ops</h3>
+    <p>Compare what you have with what you need. Choose a section, branch, division or group, and look ahead 3 to 14 days.</p>
+    <ul>
+      <li><strong>ICS-215</strong>: Have, Req and Need for each kind and type. Enter a number in Req and it saves on its own. Need is Req minus Have, so a negative number is a surplus.</li>
+      <li><strong>Projections</strong>: resource counts and total personnel for each day.</li>
+      <li>Both tabs offer <strong>Download PDF</strong> and <strong>Print</strong>.</li>
+    </ul>
+  </section>
+
+  <section id="guide-plans" class="welcome-page">
+    <h3>Plans</h3>
+    <p>Tools for the Planning Section, all on one page.</p>
+    <ul>
+      <li><strong>Reconcile IROC</strong>: upload an IROC CSV to see what matches and what's on IROC but not here.</li>
+      <li><strong>Resource Check-Ins</strong>: <strong>Open check-in queue</strong> gives you a link arrivals can use on their phones with no account. Their submissions wait in the queue for you to <strong>Check In</strong> or <strong>Dismiss</strong>.</li>
+      <li><strong>Crew Swaps Log</strong>: every scheduled and past swap, with a CSV download.</li>
+      <li><strong>Air Travel Requests</strong>: create, edit and export requests as PDFs.</li>
+      <li><strong>Forms</strong>: blank Crew Swap Request and Resource Extension Request PDFs.</li>
+    </ul>
+  </section>
+
+  <section id="guide-requests" class="welcome-page">
+    <h3>Requests</h3>
+    <p>Your imported IROC requests, and the main place to check resources in.</p>
+    <ul>
+      <li>Import an IROC or e-ISuite XML file. Its incident ID must match this incident.</li>
+      <li>Search, or filter by Filled, Checked In or Demobed.</li>
+      <li>Click a request number, then <strong>Check In</strong>. The form is filled in from the request, and subordinates are added to the roster. Use the caret to see subordinates.</li>
+    </ul>
+  </section>
+
+  <section id="guide-tcards" class="welcome-page">
+    <h3>T Cards</h3>
+    <p>A live board of the incident's organization, with one card per resource.</p>
+    <ul>
+      <li>Drag cards between columns, or use <strong>Move</strong>. <strong>+ New Column</strong> and <strong>+ Add child</strong> build out your organization. This board is what fills in your 204s.</li>
+      <li>Search highlights matching cards. Press Enter to step through them.</li>
+      <li>Double-click a card to edit it, add comments, see its calendar and manage its roster.</li>
+      <li>A card's LWD turns orange within 2 days, red on the day, and black once past.</li>
+      <li><strong>+ Add blank row</strong> leaves a gap on the 204.</li>
+      <li><strong>Print Roster</strong> prints the sections you choose.</li>
+    </ul>
+    <h4>Crew swaps</h4>
+    <p>
+      Use <strong>+ Schedule Swap</strong> on the card. A swap never happens on
+      its own: when the new operator arrives, click <strong>SWAP NOW</strong>.
+      The handover is dated to the planned start date, and the previous
+      operator moves into the card's history.
+    </p>
+    <h4>R&amp;R</h4>
+    <p>
+      Use <strong>+ Schedule R&amp;R</strong> on the card. The card moves to the
+      R&amp;R board on the start date, or you can drag it there early. Dragging
+      it off during R&amp;R ends the R&amp;R that day. If
+      <strong>Returning after R&amp;R</strong> is checked, the return shows as an
+      upcoming swap, so click <strong>SWAP NOW</strong> when they're back.
+    </p>
+  </section>
+
+  <section id="guide-schedule" class="welcome-page">
+    <h3>Schedule</h3>
+    <p>Meeting times for the incident.</p>
+    <ul>
+      <li><strong>Meeting Schedule</strong> is shared with everyone, and <strong>My Schedule</strong> is private to you.</li>
+      <li>Click a time or location to change it, and use <strong>Add a meeting</strong> for new ones.</li>
+      <li>Each list can be printed. Unchecked rows are left off the printout.</li>
+    </ul>
+  </section>
+
+  <section id="guide-demobs" class="welcome-page">
+    <h3>Demobs</h3>
+    <p>Track released resources and notify dispatch.</p>
+    <ul>
+      <li>A demob starts from the <strong>DMB</strong> button on Resources or T Cards, which opens the ICS-221 check-out. Enter the Actual Release Date and click <strong>Submit</strong> to release the resource and create a notification. <strong>UNDO DEMOB</strong> reverses it, but you'll need to drag the card back on the board.</li>
+      <li>The Demobs page groups notifications by category, with <strong>Print</strong> and <strong>Download CSV</strong> for each.</li>
+      <li>Click <strong>Transmitted</strong> or <strong>Mark all transmitted</strong> once dispatch has them.</li>
+      <li>The check-out's sign-off checkboxes aren't saved, so use them on the printed form.</li>
+    </ul>
+  </section>
+
+  <section id="guide-feed" class="welcome-page">
+    <h3>Feed</h3>
+    <p>
+      The incident's message board. The badge counts posts from others since
+      you last opened it. You can post, reply, and like, and plan activity shows
+      up here too. You can edit or delete your own posts.
+    </p>
+  </section>
+
+  <section id="guide-help" class="welcome-page">
+    <h3>Help &amp; profile</h3>
+    <ul>
+      <li>The <strong>bug icon</strong> at the bottom right of incident pages sends a bug report, question or feature request. From there, <strong>Browse all feature requests</strong> lets you upvote and comment on ideas.</li>
+      <li>Click your name at the top right to edit your profile, set your time zone or sign out.</li>
+    </ul>
+  </section>
+
+  <% if current_user.admin? %>
+    <section id="guide-admin" class="welcome-page">
+      <h3>Admin</h3>
+      <p>Only site admins see these links.</p>
+      <ul>
+        <li><strong>Users</strong> manages user accounts.</li>
+        <li><strong>Chat</strong> lets you ask a Claude assistant questions about the current incident's data. It can look things up on its own, but any change waits for you to approve it.</li>
+      </ul>
+    </section>
+  <% end %>
+
+  <details class="welcome-planning-p">
+    <summary>The Planning P</summary>
+    <%= render 'planning_p' %>
+  </details>
+</div>
