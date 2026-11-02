@@ -193,10 +193,12 @@ a.delete-resource:hover {
   box-shadow: 0 -1px 0 #d9d9d9, 0 1px 0 #d9d9d9;
 }
 
-// position:sticky doesn't apply in print anyway, but reset the border
-// so printed output doesn't carry the viewport-mode seam.
+// Browsers honor position:sticky in print, which drags the repeated
+// header down the page over the rows. !important beats the more
+// specific tr:nth-child rules above. Rows stay whole across page breaks.
 @media print {
-  #glide-info .table thead th { position: static; border-bottom: inherit; }
+  #glide-info .table thead th { position: static !important; border-bottom: inherit; }
+  #glide-info .table tbody tr { break-inside: avoid; }
 }
 .glide-row {
  
