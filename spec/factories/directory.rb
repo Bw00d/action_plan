@@ -8,12 +8,6 @@ FactoryBot.define do
     user
     position
     status { :qualified }
-    source { :self_reported }
-
-    trait :certified do
-      source { :certified }
-      certified_at { Time.current }
-    end
   end
 
   factory :contact_method do

@@ -1,6 +1,6 @@
 # The signed-in user's own directory profile: status, availability, home
 # unit and dispatch center, emergency contact, which contacts are shared,
-# and self-reported qualifications.
+# and qualifications.
 class ProfilesController < ApplicationController
   before_action :set_user
 

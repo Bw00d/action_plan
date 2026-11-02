@@ -1,7 +1,5 @@
 <%= content_for :title, @user.full_name %>
 <% status = @user.directory_status %>
-<% primary_phone = @shared_phones.first %>
-<% primary_email = @shared_emails.first %>
 <div class="container dir-page">
   <p><%= link_to '← Directory', directory_index_path %></p>
 
@@ -15,33 +13,29 @@
         </p>
       </div>
 
-      <%# Contact buttons render only for what this person chose to share. %>
-      <% if primary_phone || primary_email %>
+      <%# Buttons render only for what this person chose to share. Each one
+          reveals the numbers or addresses below instead of opening an app
+          (see directory.js). %>
+      <% contact_groups = { 'phone' => @shared_phones, 'email' => @shared_emails }.reject { |_, list| list.empty? } %>
+      <% if contact_groups.any? %>
         <div class="dir-contact">
-          <% if primary_phone %>
-            <%= link_to "tel:#{primary_phone.dial_string}", class: 'btn btn-default dir-contact-btn' do %>
-              <i class="fa fa-phone" aria-hidden="true"></i> Call
-            <% end %>
-            <%= link_to "sms:#{primary_phone.dial_string}", class: 'btn btn-default dir-contact-btn' do %>
-              <i class="fa fa-comment-o" aria-hidden="true"></i> Text
-            <% end %>
-          <% end %>
-          <% if primary_email %>
-            <%= mail_to primary_email.value, class: 'btn btn-default dir-contact-btn' do %>
-              <i class="fa fa-envelope-o" aria-hidden="true"></i> Email
-            <% end %>
+          <% contact_groups.each_key do |kind| %>
+            <button type="button" class="btn btn-default dir-contact-btn" aria-expanded="false"
+                    aria-controls="dir-contact-<%= kind %>" data-contact-toggle="<%= kind %>">
+              <i class="fa <%= kind == 'phone' ? 'fa-phone' : 'fa-envelope-o' %>" aria-hidden="true"></i>
+              <%= kind == 'phone' ? 'Phone' : 'Email' %>
+            </button>
           <% end %>
         </div>
       <% end %>
     </div>
 
-    <%# More than one shared contact: list them all with labels. %>
-    <% if (@shared_phones + @shared_emails).size > 1 %>
-      <ul class="dir-more-contacts">
-        <% (@shared_phones + @shared_emails).each do |c| %>
+    <% contact_groups.each do |kind, list| %>
+      <ul class="dir-contact-panel" id="dir-contact-<%= kind %>" hidden>
+        <% list.each do |c| %>
           <li>
-            <span class="text-muted"><%= c.label.presence || c.kind.capitalize %>:</span>
-            <%= c.phone? ? link_to(c.value, "tel:#{c.dial_string}") : mail_to(c.value) %>
+            <span class="dir-contact-label"><%= c.label.presence || kind.capitalize %></span>
+            <span class="dir-contact-value"><%= c.value %></span>
           </li>
         <% end %>
       </ul>
@@ -76,16 +70,9 @@
     <% else %>
       <ul class="dir-quals">
         <% @qualifications.each do |q| %>
-          <li class="dir-qual-row<%= ' dir-qual-row--self' if q.self_reported? %>">
+          <li class="dir-qual-row">
             <span class="dir-qual-name"><%= q.position.label %></span>
-            <span class="dir-qual-meta">
-              <% if q.self_reported? %>
-                <span class="dir-source dir-source--self" title="Entered by <%= @user.first_name %>, not verified by an admin">Self-reported</span>
-              <% else %>
-                <span class="dir-source dir-source--certified" title="Verified by an admin"><i class="fa fa-check-circle" aria-hidden="true"></i> Certified</span>
-              <% end %>
-              <span class="dir-qual-status dir-qual-status--<%= q.status %>"><%= q.status_label %></span>
-            </span>
+            <span class="dir-qual-status dir-qual-status--<%= q.status %>"><%= q.status_label %></span>
           </li>
         <% end %>
       </ul>
@@ -124,13 +111,10 @@
       <p class="dir-footnote"><i class="fa fa-lock" aria-hidden="true"></i> Emergency contact visible to admins only</p>
     <% end %>
 
-    <div class="dir-profile-actions">
-      <% if policy_for(@user).update? %>
+    <% if policy_for(@user).update? %>
+      <div class="dir-profile-actions">
         <%= link_to 'Edit my profile', edit_profile_path, class: 'btn btn-default btn-sm' %>
-      <% end %>
-      <% if policy_for(@user).manage_qualifications? %>
-        <%= link_to 'Manage qualifications', admin_user_qualifications_path(@user), class: 'btn btn-default btn-sm' %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>

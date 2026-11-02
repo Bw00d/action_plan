@@ -64,9 +64,8 @@ $dir-blue-fg: #1d4f91;
   font-weight: 600;
   border: 1px solid transparent;
 }
-// Self-reported: outlined and dashed, so it doesn't read as verified.
-.dir-qual--self { background: #fff; border: 1px dashed #8aa4c8; }
-.dir-qual--trainee { opacity: 0.8; }
+// Trainee: outlined, so it doesn't read as fully qualified.
+.dir-qual--trainee { background: #fff; border: 1px dashed #8aa4c8; }
 
 .dir-status {
   display: inline-block;
@@ -148,7 +147,7 @@ $dir-blue-fg: #1d4f91;
   min-height: 44px;
   min-width: 44px;
 }
-.dir-contact-btn {
+.btn.dir-contact-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -166,13 +165,32 @@ $dir-blue-fg: #1d4f91;
   .dir-contact-btn { flex: 1 1 0; justify-content: center; }
 }
 
-.dir-more-contacts {
+// Revealed by the Phone / Email buttons. Large text so a number can be
+// read off and dialed from another phone; selectable for copying.
+.dir-contact-panel {
   list-style: none;
-  padding: 0;
   margin: 12px 0 0;
-  li { padding: 0; margin: 0; }
-  a { display: inline-block; padding: 4px 0; }
+  padding: 10px 14px;
+  background: #f6f7f9;
+  border-radius: 8px;
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    padding: 4px 0;
+  }
 }
+.dir-contact-label { color: $dir-muted; font-size: 13px; min-width: 70px; }
+.dir-contact-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: $dir-text;
+  user-select: all;
+  word-break: break-all;
+}
+.btn.dir-contact-btn.active { background: #eef3fb; border-color: #8aa4c8; }
 
 .dir-status-cards {
   display: grid;
@@ -210,20 +228,8 @@ $dir-blue-fg: #1d4f91;
   gap: 6px 12px;
   padding: 10px 14px;
 }
-// Self-reported rows: lighter background and a dashed left rule.
-.dir-qual-row--self { background: #fbfbfc; box-shadow: inset 3px 0 0 #c3cfdf; }
-.dir-qual-meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .dir-qual-status--qualified { color: #1e6b3a; }
 .dir-qual-status--trainee { color: #8a4b08; }
-
-.dir-source { font-size: 12px; }
-.dir-source--certified { color: #1d4f91; }
-.dir-source--self {
-  color: $dir-muted;
-  border: 1px dashed #b3bac5;
-  border-radius: 4px;
-  padding: 0 6px;
-}
 
 .dir-assignments {
   list-style: none;

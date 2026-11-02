@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_11_02_130000) do
+ActiveRecord::Schema.define(version: 2026_11_03_120000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -909,12 +909,8 @@ ActiveRecord::Schema.define(version: 2026_11_02_130000) do
     t.bigint "user_id", null: false
     t.bigint "position_id", null: false
     t.integer "status", default: 0, null: false
-    t.integer "source", default: 0, null: false
-    t.bigint "certified_by_id"
-    t.datetime "certified_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["certified_by_id"], name: "index_qualifications_on_certified_by_id"
     t.index ["position_id"], name: "index_qualifications_on_position_id"
     t.index ["user_id", "position_id"], name: "index_qualifications_on_user_id_and_position_id", unique: true
     t.index ["user_id"], name: "index_qualifications_on_user_id"
@@ -1194,7 +1190,6 @@ ActiveRecord::Schema.define(version: 2026_11_02_130000) do
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
   add_foreign_key "qualifications", "positions"
-  add_foreign_key "qualifications", "users", column: "certified_by_id", on_delete: :nullify
   add_foreign_key "qualifications", "users", on_delete: :cascade
   add_foreign_key "remote_checkins", "incidents"
   add_foreign_key "remote_checkins", "requests"

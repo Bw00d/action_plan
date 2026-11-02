@@ -86,9 +86,7 @@ Rails.application.routes.draw do
                                    as: :detect_user_timezone
 
   namespace :admin do
-    resources :users do
-      resources :qualifications, only: [:index, :create, :update, :destroy]
-    end
+    resources :users
     resources :access_requests, only: [:index] do
       member do
         post :approve

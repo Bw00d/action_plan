@@ -15,17 +15,13 @@ class ProfilePolicy < ApplicationPolicy
     user.present?
   end
 
-  # Your own status, availability, contact sharing and self-reported quals.
+  # Your own status, availability, contact sharing and quals.
   def update?
     user.present? && user == record
   end
 
   # Emergency contacts are admin-only on profiles, including your own.
   def view_emergency_contact?
-    user.present? && user.admin?
-  end
-
-  def manage_qualifications?
     user.present? && user.admin?
   end
 end

@@ -26,8 +26,8 @@ people = [
     emergency: ['Sam Reyes', 'Spouse', '541-555-0144'],
     contacts: [[:phone, 'Cell', '541-555-0123', true], [:email, 'Work', 'jordan.reyes@example.com', true],
                [:phone, 'Home', '541-555-0199', false]],
-    quals: [['OSC2', :qualified, :certified], ['DIVS', :qualified, :certified],
-            ['TFLD', :qualified, :certified], ['OSC1', :trainee, :certified]],
+    quals: [['OSC2', :qualified], ['DIVS', :qualified],
+            ['TFLD', :qualified], ['OSC1', :trainee]],
     assignments: [[cedar, 'OSC2', today - 6, nil], [bear, 'DIVS', today - 60, today - 47],
                   [pine, 'DIVS', today - 120, today - 106]]
   },
@@ -37,8 +37,8 @@ people = [
     availability: :available,
     emergency: ['Luis Delgado', 'Brother', '406-555-0110'],
     contacts: [[:email, 'Personal', 'maria.delgado@example.com', true], [:phone, 'Cell', '406-555-0187', false]],
-    quals: [['RESL', :qualified, :certified], ['SCKN', :qualified, :certified],
-            ['PSC2', :trainee, :self_reported], ['SITL', :qualified, :self_reported]],
+    quals: [['RESL', :qualified], ['SCKN', :qualified],
+            ['PSC2', :trainee], ['SITL', :qualified]],
     assignments: [[juniper, 'RESL', today - 40, today - 27]]
   },
   {
@@ -47,7 +47,7 @@ people = [
     availability: :unavailable, available_on: today + 10,
     emergency: ['Ana Whitehorse', 'Mother', '928-555-0131'],
     contacts: [[:phone, 'Cell', '928-555-0156', true]],
-    quals: [['DIVS', :qualified, :certified], ['STEN', :qualified, :certified], ['ENGB', :qualified, :certified]],
+    quals: [['DIVS', :qualified], ['STEN', :qualified], ['ENGB', :qualified]],
     assignments: [[bear, 'STEN', today - 75, today - 62]]
   },
   {
@@ -56,8 +56,8 @@ people = [
     availability: :available,
     emergency: ['Chris Okafor', 'Spouse', '208-555-0172'],
     contacts: [[:phone, 'Cell', '208-555-0164', true], [:email, 'Work', 'kelly.okafor@example.com', true]],
-    quals: [['LSC2', :qualified, :certified], ['SPUL', :qualified, :self_reported],
-            ['ORDM', :qualified, :self_reported]],
+    quals: [['LSC2', :qualified], ['SPUL', :qualified],
+            ['ORDM', :qualified]],
     assignments: []
   },
   {
@@ -67,7 +67,7 @@ people = [
     emergency: ['Emi Nakamura', 'Partner', '509-555-0118'],
     # Nothing shared, to show a profile with no contact buttons.
     contacts: [[:phone, 'Cell', '509-555-0140', false], [:email, 'Work', 'chris.nakamura@example.com', false]],
-    quals: [['HEB1', :qualified, :certified], ['HLCO', :trainee, :certified], ['HMGB', :qualified, :self_reported]],
+    quals: [['HEB1', :qualified], ['HLCO', :trainee], ['HMGB', :qualified]],
     assignments: [[pine, 'HEB1', today - 110, today - 97]]
   },
   {
@@ -76,7 +76,7 @@ people = [
     availability: :available,
     emergency: ['Pat Fitzgerald', 'Father', '970-555-0103'],
     contacts: [[:phone, 'Cell', '970-555-0125', true]],
-    quals: [['FSC2', :qualified, :certified], ['TIME', :qualified, :certified], ['COST', :trainee, :self_reported]],
+    quals: [['FSC2', :qualified], ['TIME', :qualified], ['COST', :trainee]],
     assignments: [[bear, 'TIME', today - 3, nil]]
   }
 ]
@@ -99,11 +99,8 @@ people.each do |p|
     user.contact_methods.create!(kind: kind, label: label, value: value, shared: shared, position: i)
   end
 
-  p[:quals].each do |code, status, source|
-    qual = user.qualifications.find_or_initialize_by(position: Position.find_by!(code: code))
-    qual.update!(status: status, source: source,
-                 certified_by: source == :certified ? admin : nil,
-                 certified_at: source == :certified ? Time.current : nil)
+  p[:quals].each do |code, status|
+    user.qualifications.find_or_initialize_by(position: Position.find_by!(code: code)).update!(status: status)
   end
 
   # Overhead resources with the user's email link to the account on save

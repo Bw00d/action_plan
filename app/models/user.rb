@@ -135,7 +135,7 @@ class User < ApplicationRecord
   # Up to `limit` quals for directory badges, best first. Sorts in Ruby so
   # the directory can preload qualifications: :position for every row.
   def badge_qualifications(limit = 3)
-    qualifications.sort_by { |q| [q.trainee? ? 1 : 0, q.certified? ? 0 : 1, q.position.code] }.first(limit)
+    qualifications.sort_by { |q| [q.trainee? ? 1 : 0, q.position.code] }.first(limit)
   end
 
   # Creates a placeholder account for someone who'll finish setting it up

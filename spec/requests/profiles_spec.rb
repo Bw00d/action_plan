@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Profile settings and qualification rules', type: :request do
   let(:position) { create(:position, code: 'DIVS') }
-  let(:other_position) { create(:position, code: 'TFLD') }
   let(:owner) { create(:user) }
   let(:someone_else) { create(:user) }
 
@@ -11,10 +10,10 @@ RSpec.describe 'Profile settings and qualification rules', type: :request do
   describe 'profile' do
     it 'renders the edit page with your contacts and quals' do
       create(:contact_method, user: owner, value: '541-555-0123')
-      create(:qualification, :certified, user: owner, position: position)
+      create(:qualification, user: owner, position: position)
       get edit_profile_path
       expect(response).to have_http_status(200)
-      expect(response.body).to include('541-555-0123', 'DIVS', 'Certified', 'Emergency contact')
+      expect(response.body).to include('541-555-0123', 'DIVS', 'Emergency contact')
     end
 
     it 'updates your own status, availability and units' do
@@ -48,13 +47,19 @@ RSpec.describe 'Profile settings and qualification rules', type: :request do
     end
   end
 
-  describe 'self-reported qualifications' do
-    it 'are always created as self-reported, even if certified is posted' do
+  describe 'qualifications' do
+    it 'are added to your own profile' do
       post profile_qualifications_path,
-           params: { qualification: { position_id: position.id, status: 'qualified', source: 'certified' } }
-      qual = owner.qualifications.last
-      expect(qual).to be_self_reported
-      expect(qual.certified_by).to be_nil
+           params: { qualification: { position_id: position.id, status: 'trainee', user_id: someone_else.id } }
+      expect(owner.qualifications.last.position).to eq(position)
+      expect(owner.qualifications.last).to be_trainee
+      expect(someone_else.qualifications).to be_empty
+    end
+
+    it "can't be added twice for the same position" do
+      create(:qualification, user: owner, position: position)
+      post profile_qualifications_path, params: { qualification: { position_id: position.id, status: 'qualified' } }
+      expect(owner.qualifications.count).to eq(1)
     end
 
     it 'can be edited and removed by their owner' do
@@ -68,53 +73,6 @@ RSpec.describe 'Profile settings and qualification rules', type: :request do
       theirs = create(:qualification, user: someone_else, position: position)
       expect { delete profile_qualification_path(theirs) }.to raise_error(ActiveRecord::RecordNotFound)
       expect(Qualification.exists?(theirs.id)).to be(true)
-    end
-  end
-
-  describe 'certified qualifications' do
-    let!(:certified) { create(:qualification, :certified, user: owner, position: position) }
-
-    it "can't be changed or removed by their owner" do
-      patch profile_qualification_path(certified), params: { qualification: { status: 'trainee' } }
-      expect(certified.reload).to be_qualified
-      expect { delete profile_qualification_path(certified) }.not_to change(Qualification, :count)
-    end
-
-    it "can't be managed through the admin pages by non-admins" do
-      get admin_user_qualifications_path(owner)
-      expect(response).not_to have_http_status(200)
-      post admin_user_qualifications_path(owner),
-           params: { qualification: { position_id: other_position.id, status: 'qualified' } }
-      expect(owner.qualifications.count).to eq(1)
-      self_rep = create(:qualification, user: owner, position: other_position)
-      patch admin_user_qualification_path(owner, self_rep), params: { qualification: { source: 'certified' } }
-      expect(self_rep.reload).to be_self_reported
-    end
-  end
-
-  describe 'admins' do
-    let(:admin) { create(:admin_user) }
-    before { login_as(admin, scope: :user) }
-
-    it 'see the qualifications page' do
-      create(:qualification, user: owner, position: position)
-      get admin_user_qualifications_path(owner)
-      expect(response).to have_http_status(200)
-      expect(response.body).to include('DIVS', 'Certify')
-    end
-
-    it 'add quals as certified and record who certified them' do
-      post admin_user_qualifications_path(owner), params: { qualification: { position_id: position.id, status: 'qualified' } }
-      qual = owner.qualifications.last
-      expect(qual).to be_certified
-      expect(qual.certified_by).to eq(admin)
-    end
-
-    it 'certify a self-reported qual' do
-      qual = create(:qualification, user: owner, position: position)
-      patch admin_user_qualification_path(owner, qual), params: { qualification: { source: 'certified' } }
-      expect(qual.reload).to be_certified
-      expect(qual.certified_by).to eq(admin)
     end
   end
 end

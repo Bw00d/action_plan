@@ -22,7 +22,6 @@ module FakeUsers
     %w[access_requests reviewed_by_id],
     %w[resources user_id],
     %w[qualifications user_id],
-    %w[qualifications certified_by_id],
     %w[contact_methods user_id]
   ].freeze
 

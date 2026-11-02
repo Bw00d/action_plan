@@ -16,11 +16,6 @@ class ContactMethod < ApplicationRecord
   scope :shared, -> { where(shared: true) }
   scope :ordered, -> { order(:position, :id) }
 
-  # Digits (and a leading +) for tel: and sms: links.
-  def dial_string
-    value.gsub(/[^\d+]/, '')
-  end
-
   private
 
   def phone_has_enough_digits

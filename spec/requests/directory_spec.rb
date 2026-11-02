@@ -58,22 +58,29 @@ RSpec.describe 'Directory', type: :request do
       login_user
     end
 
-    it 'renders call and text for a shared phone, and nothing for hidden ones' do
+    it 'shows a Phone button that reveals shared numbers, and nothing hidden' do
       get directory_path(jordan)
-      expect(response.body).to include('tel:5415550123', 'sms:5415550123')
-      expect(response.body).not_to include('541-555-0199', '5415550199', 'hidden@example.com')
-      expect(response.body).not_to include('mailto:')
+      expect(response.body).to include('data-contact-toggle="phone"', '541-555-0123')
+      expect(response.body).not_to include('data-contact-toggle="email"')
+      expect(response.body).not_to include('541-555-0199', 'hidden@example.com')
+    end
+
+    it 'never links to the phone, text or mail apps' do
+      create(:contact_method, user: jordan, kind: :email, value: 'jordan@example.com', shared: true)
+      get directory_path(jordan)
+      expect(response.body).to include('data-contact-toggle="email"', 'jordan@example.com')
+      expect(response.body).not_to include('tel:', 'sms:', 'mailto:')
     end
 
     it 'renders no contact buttons when nothing is shared' do
       get directory_path(maria)
-      expect(response.body).not_to include('tel:', 'sms:', 'mailto:')
+      expect(response.body).not_to include('data-contact-toggle')
     end
   end
 
   describe 'search and filters' do
     before do
-      create(:qualification, user: jordan, position: osc2, source: :certified)
+      create(:qualification, user: jordan, position: osc2)
       create(:qualification, user: maria, position: divs)
       login_user
     end
@@ -128,11 +135,11 @@ RSpec.describe 'Directory', type: :request do
   end
 
   describe 'profile page' do
-    it 'shows the current incident, quals with their source, and recent assignments' do
+    it 'shows the current incident, quals with their status, and recent assignments' do
       incident = create(:incident, name: 'Cedar Ridge Fire', state: 'OR')
       create(:resource, incident: incident, category: 'OVERHEAD', position: 'OSC2', email: jordan.email,
                         fwd: Date.current - 3, assignment_length: 14)
-      create(:qualification, user: jordan, position: osc2, source: :certified)
+      create(:qualification, user: jordan, position: osc2)
       create(:qualification, user: jordan, position: divs, status: :trainee)
       login_user
 
@@ -140,9 +147,9 @@ RSpec.describe 'Directory', type: :request do
       body = response.body
       expect(body).to include('On assignment', 'Cedar Ridge Fire, OR')
       expect(body).to include((Date.current + 11).strftime('%b %-d')) # day after LWD
-      expect(body).to include('OSC2 · Operations Section Chief Type 2', 'Certified')
-      expect(body).to include('Trainee · PTB open', 'Self-reported')
-      expect(body).to include('dir-qual-row--self')
+      expect(body).to include('OSC2 · Operations Section Chief Type 2', 'Qualified')
+      expect(body).to include('DIVS · Division/Group Supervisor', 'Trainee · PTB open')
+      expect(body).not_to include('Certified', 'Self-reported')
     end
   end
 end

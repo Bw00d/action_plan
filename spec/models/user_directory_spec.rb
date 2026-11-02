@@ -50,30 +50,19 @@ RSpec.describe 'User directory rules' do
       described_class.new(actor, qual).public_send(action)
     end
 
-    it 'lets users manage only their own self-reported quals' do
+    it 'lets users manage only their own quals' do
       own = create(:qualification, user: user, position: position)
       theirs = create(:qualification, position: position)
-      %i[update? destroy?].each do |action|
+      %i[create? update? destroy?].each do |action|
         expect(allowed?(user, own, action)).to be(true)
         expect(allowed?(user, theirs, action)).to be(false)
       end
     end
 
-    it "doesn't let users change certified quals or certify their own" do
-      certified = create(:qualification, :certified, user: user, position: position)
-      expect(allowed?(user, certified, :update?)).to be(false)
-      expect(allowed?(user, certified, :destroy?)).to be(false)
-
-      self_rep = create(:qualification, user: user, position: create(:position))
-      self_rep.source = :certified
-      expect(allowed?(user, self_rep, :update?)).to be(false)
-      expect(allowed?(user, Qualification.new(user: user, source: :certified), :create?)).to be(false)
-    end
-
     it 'lets admins manage any qualification' do
-      certified = create(:qualification, :certified, user: user, position: position)
-      expect(allowed?(admin, certified, :update?)).to be(true)
-      expect(allowed?(admin, certified, :destroy?)).to be(true)
+      theirs = create(:qualification, user: user, position: position)
+      expect(allowed?(admin, theirs, :update?)).to be(true)
+      expect(allowed?(admin, theirs, :destroy?)).to be(true)
     end
   end
 end

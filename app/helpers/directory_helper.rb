@@ -13,13 +13,10 @@ module DirectoryHelper
     content_tag(:span, STATUS_LABELS.fetch(status), class: "dir-status dir-status--#{status}")
   end
 
-  # Self-reported quals get a dashed outline so they read differently
-  # from certified ones at a glance.
   def qualification_badge(qual)
     classes = ['dir-qual']
-    classes << 'dir-qual--self' if qual.self_reported?
     classes << 'dir-qual--trainee' if qual.trainee?
-    title = "#{qual.position.title} · #{qual.status_label} · #{qual.certified? ? 'Certified' : 'Self-reported'}"
+    title = "#{qual.position.title} · #{qual.status_label}"
     content_tag(:span, qual.position.code + (qual.trainee? ? ' (T)' : ''), class: classes.join(' '), title: title)
   end
 
