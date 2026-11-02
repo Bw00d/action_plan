@@ -181,6 +181,66 @@
 
           <dt>Email</dt>
           <dd><%= best_in_place resource, :email, as: :input %></dd>
+
+          <%# The rest mirrors the ICS-211 detail panel
+              (resources/_resource_panels) so either view shows the
+              full record. %>
+          <dt>Jetport</dt>
+          <dd><%= best_in_place resource, :jetport, as: :input, place_holder: '---' %></dd>
+
+          <dt>Return City</dt>
+          <dd><%= best_in_place resource, :return_city, as: :input, place_holder: '---' %></dd>
+
+          <dt>Return State</dt>
+          <dd><%= best_in_place resource, :return_state, as: :input, place_holder: '---' %></dd>
+
+          <dt>Check-In Date</dt>
+          <dd><%= best_in_place resource, :checkin_date, as: :input, place_holder: '---',
+                                display_with: ->(v) { v&.strftime('%m/%d/%Y') } %></dd>
+
+          <dt>Drop Off Pt / Time</dt>
+          <dd><%= best_in_place resource, :drop_off_pt_time, as: :input, place_holder: '---' %></dd>
+
+          <dt>Pick Up Pt / Time</dt>
+          <dd><%= best_in_place resource, :pick_up_pt_time, as: :input, place_holder: '---' %></dd>
+
+          <dt class="board-card-fields-section">Check-In Details</dt>
+
+          <dt>Agency Address</dt>
+          <dd class="wide"><%= best_in_place resource, :agency_address, as: :input, place_holder: '---' %></dd>
+
+          <dt>Emergency Contact</dt>
+          <dd class="wide"><%= best_in_place resource, :emergency_contact, as: :input, place_holder: '---' %></dd>
+
+          <dt>Mobilization Date</dt>
+          <dd><%= best_in_place resource, :mobilization_date, as: :input, place_holder: '---',
+                                display_with: ->(v) { v&.strftime('%m/%d/%Y') } %></dd>
+
+          <dt>Transportation</dt>
+          <dd><%= best_in_place resource, :transportation_method, as: :select, place_holder: '---',
+                                collection: ([['', '---']] + RemoteCheckin::TRANSPORTATION_METHODS.map { |m| [m, m] }) %></dd>
+
+          <dt class="board-card-fields-section">Previous Incident</dt>
+
+          <dt>From Another Incident</dt>
+          <dd><%= best_in_place resource, :from_other_incident, as: :checkbox, collection: { false => 'No', true => 'Yes' } %></dd>
+
+          <dt>Incident Name</dt>
+          <dd class="wide"><%= best_in_place resource, :other_incident_name, as: :input, place_holder: '---' %></dd>
+
+          <dt>Request #</dt>
+          <dd><%= best_in_place resource, :other_incident_req_number, as: :input, place_holder: '---' %></dd>
+
+          <dt>First Day Worked There</dt>
+          <dd><%= best_in_place resource, :prev_incident_first_day_worked, as: :input, place_holder: '---',
+                                display_with: ->(v) { v&.strftime('%m/%d/%Y') } %></dd>
+
+          <dt class="board-card-fields-section">Comment</dt>
+          <dd class="full-width">
+            <%= best_in_place resource, :comment, as: :textarea, place_holder: 'Click to add comment…',
+                                        ok_button: 'Save', ok_button_class: 'btn btn-info tiny',
+                                        cancel_button: 'Cancel', cancel_button_class: 'btn btn-default sm-margin-left tiny' %>
+          </dd>
         </dl>
 
         <%# Notes about the CURRENT operator. Lives on resource.notes

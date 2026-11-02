@@ -1377,6 +1377,16 @@
     word-break: break-word;
   }
 
+  // Group heading spanning both columns (Check-In Details, etc.).
+  dt.board-card-fields-section {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #ebecf0;
+    font-weight: 700;
+    color: #172b4d;
+  }
+
   dd.full-width {
     grid-column: 1 / -1;
 
