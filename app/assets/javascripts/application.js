@@ -18,7 +18,7 @@
 // to replace JavaScript confirmation dialogs with application-specific modals.
 //= require jquery_ujs
 // Only load the jQuery UI widgets this app actually uses (sortable for
-// the T-card board, draggable for the cover canvas). The full
+// the T-card board, draggable and resizable for the cover canvas). The full
 // jquery-ui bundle included the Datepicker widget, which carries
 // GHSA-h6gj-6jjq-h8g9 (CVE-2022-31160) — XSS in Datepicker's `*Text`
 // options. We use bootstrap-datepicker (loaded below), not jQuery UI's
@@ -27,6 +27,7 @@
 // browser at all.
 //= require jquery-ui/widgets/sortable
 //= require jquery-ui/widgets/draggable
+//= require jquery-ui/widgets/resizable
 // disable-selection ships separately from the widgets. We chain it on
 // the sortable init (boards.js, phone_205a.js) to stop the browser's
 // text-highlighting while a user drags a card; without this require
