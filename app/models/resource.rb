@@ -3,6 +3,26 @@ class Resource < ApplicationRecord
   belongs_to :incident
   has_one :demob
 
+  # The directory user who filled this assignment (overhead only). Set
+  # automatically when the resource's email matches an account.
+  belongs_to :user, optional: true
+  before_save :link_user, if: -> { user_id.nil? && will_save_change_to_email? }
+
+  def link_user
+    return unless category == 'OVERHEAD' && email.present?
+    self.user = User.find_by('LOWER(email) = ?', email.strip.downcase)
+  end
+
+  # Still on the incident: not released, and either the last work day
+  # hasn't passed or (with no dates) it was checked in recently. The
+  # recency guard keeps a never-demobed old row from showing someone as
+  # on assignment forever.
+  def current_assignment?
+    return false if spacer? || release_date.present?
+    lwd = last_work_day
+    lwd.is_a?(Date) ? lwd >= Date.current : created_at >= 30.days.ago
+  end
+
   # "LAST, FIRST MIDDLE" (how IROC / check-in forms arrive) → "FIRST
   # MIDDLE LAST" for display as a Leader name. Idempotent: strings
   # without a comma pass through unchanged, so re-formatting an already-

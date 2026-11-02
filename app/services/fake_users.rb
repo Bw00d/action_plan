@@ -19,7 +19,11 @@ module FakeUsers
     %w[issue_report_comments user_id],
     %w[issue_report_upvotes user_id],
     %w[isuite_import_stagings user_id],
-    %w[access_requests reviewed_by_id]
+    %w[access_requests reviewed_by_id],
+    %w[resources user_id],
+    %w[qualifications user_id],
+    %w[qualifications certified_by_id],
+    %w[contact_methods user_id]
   ].freeze
 
   module_function

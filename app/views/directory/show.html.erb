@@ -1,0 +1,136 @@
+<%= content_for :title, @user.full_name %>
+<% status = @user.directory_status %>
+<% primary_phone = @shared_phones.first %>
+<% primary_email = @shared_emails.first %>
+<div class="container dir-page">
+  <p><%= link_to '← Directory', directory_index_path %></p>
+
+  <div class="dir-card dir-profile">
+    <div class="dir-profile-head">
+      <%= directory_avatar(@user, size: :lg) %>
+      <div class="dir-profile-id">
+        <h1><%= @user.full_name %></h1>
+        <p class="dir-profile-sub">
+          <%= [unit_and_dispatch(@user, labels: true).presence, friendly_time_zone(@user.time_zone)].compact.join(' · ') %>
+        </p>
+      </div>
+
+      <%# Contact buttons render only for what this person chose to share. %>
+      <% if primary_phone || primary_email %>
+        <div class="dir-contact">
+          <% if primary_phone %>
+            <%= link_to "tel:#{primary_phone.dial_string}", class: 'btn btn-default dir-contact-btn' do %>
+              <i class="fa fa-phone" aria-hidden="true"></i> Call
+            <% end %>
+            <%= link_to "sms:#{primary_phone.dial_string}", class: 'btn btn-default dir-contact-btn' do %>
+              <i class="fa fa-comment-o" aria-hidden="true"></i> Text
+            <% end %>
+          <% end %>
+          <% if primary_email %>
+            <%= mail_to primary_email.value, class: 'btn btn-default dir-contact-btn' do %>
+              <i class="fa fa-envelope-o" aria-hidden="true"></i> Email
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# More than one shared contact: list them all with labels. %>
+    <% if (@shared_phones + @shared_emails).size > 1 %>
+      <ul class="dir-more-contacts">
+        <% (@shared_phones + @shared_emails).each do |c| %>
+          <li>
+            <span class="text-muted"><%= c.label.presence || c.kind.capitalize %>:</span>
+            <%= c.phone? ? link_to(c.value, "tel:#{c.dial_string}") : mail_to(c.value) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <div class="dir-status-cards">
+      <div class="dir-stat">
+        <div class="dir-stat-label">Status</div>
+        <div class="dir-stat-value dir-stat-value--<%= status %>"><%= DirectoryHelper::STATUS_LABELS.fetch(status) %></div>
+      </div>
+      <div class="dir-stat">
+        <div class="dir-stat-label">Current incident</div>
+        <div class="dir-stat-value">
+          <% if @current_assignment %>
+            <%= @current_assignment.incident.name %><%= ", #{@current_assignment.incident.state}" if @current_assignment.incident.state.present? %>
+          <% else %>
+            <span class="text-muted">—</span>
+          <% end %>
+        </div>
+      </div>
+      <div class="dir-stat">
+        <div class="dir-stat-label">Available after</div>
+        <div class="dir-stat-value">
+          <%= @user.available_after ? @user.available_after.strftime('%b %-d') : content_tag(:span, '—', class: 'text-muted') %>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="dir-section-title">Qualifications</h2>
+    <% if @qualifications.empty? %>
+      <p class="text-muted">No qualifications listed.</p>
+    <% else %>
+      <ul class="dir-quals">
+        <% @qualifications.each do |q| %>
+          <li class="dir-qual-row<%= ' dir-qual-row--self' if q.self_reported? %>">
+            <span class="dir-qual-name"><%= q.position.label %></span>
+            <span class="dir-qual-meta">
+              <% if q.self_reported? %>
+                <span class="dir-source dir-source--self" title="Entered by <%= @user.first_name %>, not verified by an admin">Self-reported</span>
+              <% else %>
+                <span class="dir-source dir-source--certified" title="Verified by an admin"><i class="fa fa-check-circle" aria-hidden="true"></i> Certified</span>
+              <% end %>
+              <span class="dir-qual-status dir-qual-status--<%= q.status %>"><%= q.status_label %></span>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <h2 class="dir-section-title">Recent assignments</h2>
+    <% if @recent_assignments.empty? %>
+      <p class="text-muted">No assignments recorded in Action Plan yet.</p>
+    <% else %>
+      <ul class="dir-assignments">
+        <% @recent_assignments.each do |r| %>
+          <li>
+            <%= r.incident.name %><%= ", #{r.incident.state}" if r.incident.state.present? %>
+            · <%= r.position %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if @emergency_contact %>
+      <div class="dir-emergency">
+        <strong><i class="fa fa-lock" aria-hidden="true"></i> Emergency contact (admins only)</strong>
+        <% if @emergency_contact.values.all?(&:blank?) %>
+          <p class="text-muted">None on file.</p>
+        <% else %>
+          <p>
+            <%= @emergency_contact[:name] %>
+            <%= "(#{@emergency_contact[:relation]})" if @emergency_contact[:relation].present? %>
+            <% if @emergency_contact[:phone].present? %>
+              · <%= link_to @emergency_contact[:phone], "tel:#{@emergency_contact[:phone].gsub(/[^\d+]/, '')}" %>
+            <% end %>
+          </p>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="dir-footnote"><i class="fa fa-lock" aria-hidden="true"></i> Emergency contact visible to admins only</p>
+    <% end %>
+
+    <div class="dir-profile-actions">
+      <% if policy_for(@user).update? %>
+        <%= link_to 'Edit my profile', edit_profile_path, class: 'btn btn-default btn-sm' %>
+      <% end %>
+      <% if policy_for(@user).manage_qualifications? %>
+        <%= link_to 'Manage qualifications', admin_user_qualifications_path(@user), class: 'btn btn-default btn-sm' %>
+      <% end %>
+    </div>
+  </div>
+</div>

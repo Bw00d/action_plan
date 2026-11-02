@@ -1,0 +1,54 @@
+<%= content_for :title, 'Directory' %>
+<div class="container dir-page">
+  <div class="dir-head">
+    <h1><strong>Directory</strong></h1>
+    <%= link_to 'Edit my profile', edit_profile_path, class: 'btn btn-default btn-sm' %>
+  </div>
+
+  <%= form_tag directory_index_path, method: :get, class: 'dir-search', role: 'search' do %>
+    <div class="dir-search-row">
+      <%= search_field_tag :q, params[:q], class: 'form-control dir-search-input',
+                           placeholder: 'Name, qualification (OSC2), home unit, dispatch center',
+                           'aria-label': 'Search the directory' %>
+    </div>
+    <div class="dir-search-row dir-search-filters">
+      <%= select_tag :status,
+                     options_for_select([['Any status', '']] + DirectoryHelper::STATUS_LABELS.map { |k, v| [v, k] }, params[:status]),
+                     class: 'form-control', 'aria-label': 'Filter by status' %>
+      <%= select_tag :qual,
+                     options_for_select([['Any qualification', '']] + @position_codes, params[:qual]),
+                     class: 'form-control', 'aria-label': 'Filter by qualification' %>
+      <%= submit_tag 'Search', name: nil, class: 'btn btn-primary' %>
+      <% if params[:q].present? || params[:status].present? || params[:qual].present? %>
+        <%= link_to 'Clear', directory_index_path, class: 'btn btn-link' %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <p class="text-muted dir-count"><%= pluralize(@users.total_count, 'person') %></p>
+
+  <% if @users.empty? %>
+    <p class="dir-empty">No one matches. Try a qualification code like DIVS, or clear the filters.</p>
+  <% else %>
+    <ul class="dir-list">
+      <% @users.each do |user| %>
+        <li>
+          <%= link_to directory_path(user), class: 'dir-row' do %>
+            <%= directory_avatar(user) %>
+            <span class="dir-row-main">
+              <span class="dir-row-name"><%= user.full_name %></span>
+              <span class="dir-row-sub"><%= unit_and_dispatch(user) %></span>
+            </span>
+            <span class="dir-row-badges">
+              <% user.badge_qualifications.each do |q| %>
+                <%= qualification_badge(q) %>
+              <% end %>
+              <%= directory_status_badge(user.directory_status(@on_assignment_ids)) %>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <%= paginate @users %>
+  <% end %>
+</div>

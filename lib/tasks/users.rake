@@ -11,6 +11,21 @@
 #   heroku run rails users:purge_fake
 #   heroku run CONFIRM=1 rails users:purge_fake
 namespace :users do
+  # Links existing overhead resources to the user whose account email
+  # matches the resource's email, so past check-ins show up as recent
+  # assignments in the directory. New check-ins link automatically.
+  desc 'Link past overhead resources to users by email'
+  task link_resources: :environment do
+    linked = 0
+    Resource.where(user_id: nil, category: 'OVERHEAD').where.not(email: [nil, '']).find_each do |r|
+      user = User.find_by('LOWER(email) = ?', r.email.strip.downcase)
+      next unless user
+      r.update_column(:user_id, user.id)
+      linked += 1
+    end
+    puts "Linked #{linked} resources to users."
+  end
+
   desc 'Delete users with random-string names and no data (preview unless CONFIRM=1)'
   task purge_fake: :environment do
     confirm = ENV['CONFIRM'] == '1'

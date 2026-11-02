@@ -7,8 +7,18 @@ class User < ApplicationRecord
   has_many :incidents, dependent: :destroy
   has_and_belongs_to_many :incidents
 
+  # Directory profile. assigned_resources are the incident Resources this
+  # person filled (linked by email at check-in; see Resource#link_user).
+  has_many :contact_methods, -> { ordered }, dependent: :destroy
+  has_many :qualifications, dependent: :destroy
+  has_many :positions, through: :qualifications
+  has_many :assigned_resources, class_name: 'Resource', dependent: :nullify
+
   # Roles used by the authorization setup
   enum role: { user: 0, admin: 1 }
+  # Self-set availability. "On assignment" isn't stored: it's derived from
+  # a current assigned resource (see #directory_status).
+  enum availability: { available: 0, unavailable: 1 }, _prefix: :marked
 
   # **We should NOT validate e-mail uniqueness, e-mail regex or password
   # confirmation here**. Devise's Validatable module is enabled so it already
@@ -17,6 +27,8 @@ class User < ApplicationRecord
   # error messages.
 
   validates :first_name, :last_name, presence: true
+  validates :home_unit, :dispatch_center, length: { maximum: 20 }
+  before_validation :normalize_directory_codes
   # Custom password strength validation
   validate :password_strength
 
@@ -47,6 +59,85 @@ class User < ApplicationRecord
     [first_name, last_name].join(' ')
   end
 
+  def initials
+    [first_name, last_name].map { |n| n.to_s.strip[0] }.join.upcase
+  end
+
+  # ── Directory ────────────────────────────────────────────────────────
+  # Confirmed accounts only, so invite placeholders and unconfirmed
+  # sign-ups never appear.
+  scope :in_directory, -> { where.not(confirmed_at: nil) }
+
+  # Matches name, qualification code, home unit or dispatch center.
+  def self.directory_search(query)
+    q = query.to_s.strip
+    return all if q.empty?
+
+    like = "%#{sanitize_sql_like(q)}%"
+    qual_user_ids = Qualification.joins(:position).where('positions.code ILIKE ?', like).select(:user_id)
+    where("(users.first_name || ' ' || users.last_name) ILIKE :like OR users.home_unit ILIKE :like " \
+          'OR users.dispatch_center ILIKE :like', like: like)
+      .or(where(id: qual_user_ids))
+  end
+
+  def self.with_qualification(code)
+    return all if code.blank?
+    where(id: Qualification.joins(:position).where(positions: { code: code.to_s.upcase }).select(:user_id))
+  end
+
+  # :available, :on_assignment or :unavailable. Uses SQL-friendly id sets so
+  # the directory can filter and still paginate in the database.
+  def self.with_directory_status(status, on_ids = on_assignment_ids)
+    case status.to_s
+    when 'on_assignment' then where(id: on_ids)
+    when 'available'     then marked_available.where.not(id: on_ids)
+    when 'unavailable'   then marked_unavailable.where.not(id: on_ids)
+    else all
+    end
+  end
+
+  # Users with a current assignment. Decided in Ruby because a resource's
+  # last work day comes from its shift timeline, not a column.
+  def self.on_assignment_ids
+    Resource.where.not(user_id: nil).where(release_date: nil, spacer: false)
+            .includes(:resource_events).select(&:current_assignment?).map(&:user_id).uniq
+  end
+
+  def current_assignment
+    return @current_assignment if defined?(@current_assignment)
+    @current_assignment = assigned_resources.where(release_date: nil, spacer: false)
+                                            .includes(:incident, :resource_events)
+                                            .select(&:current_assignment?)
+                                            .max_by { |r| r.fwd || r.created_at.to_date }
+  end
+
+  # Pass on_assignment_ids when listing many users to skip the per-user
+  # assignment lookup.
+  def directory_status(on_ids = nil)
+    on = on_ids ? on_ids.include?(id) : current_assignment.present?
+    return :on_assignment if on
+    marked_unavailable? ? :unavailable : :available
+  end
+
+  # The user's own date wins; otherwise the day after the current
+  # assignment's last work day.
+  def available_after
+    return available_on if available_on
+    lwd = current_assignment&.last_work_day
+    lwd.is_a?(Date) ? lwd + 1 : nil
+  end
+
+  def recent_assignments(limit = 5)
+    assigned_resources.where(spacer: false).includes(:incident)
+                      .order(Arel.sql('resources.fwd DESC NULLS LAST'), created_at: :desc).limit(limit)
+  end
+
+  # Up to `limit` quals for directory badges, best first. Sorts in Ruby so
+  # the directory can preload qualifications: :position for every row.
+  def badge_qualifications(limit = 3)
+    qualifications.sort_by { |q| [q.trainee? ? 1 : 0, q.certified? ? 0 : 1, q.position.code] }.first(limit)
+  end
+
   # Creates a placeholder account for someone who'll finish setting it up
   # from an emailed link (incident invites and approved access requests).
   # A random password satisfies :validatable, and the raw invitation token
@@ -74,6 +165,11 @@ class User < ApplicationRecord
   end
 
   private
+
+  def normalize_directory_codes
+    self.home_unit       = home_unit.to_s.strip.upcase.presence
+    self.dispatch_center = dispatch_center.to_s.strip.upcase.presence
+  end
 
   def set_default_role
     # self.my_enum ||= :default_value does not work as it does not apply

@@ -1,0 +1,57 @@
+<%= content_for :title, "Qualifications · #{@user.full_name}" %>
+<div class="container dir-page">
+  <div class="dir-head">
+    <h1><strong>Qualifications</strong> <small><%= @user.full_name %></small></h1>
+    <%= link_to 'View profile', directory_path(@user), class: 'btn btn-default btn-sm' %>
+  </div>
+
+  <div class="dir-card">
+    <% if @qualifications.empty? %>
+      <p class="text-muted">No qualifications yet.</p>
+    <% else %>
+      <ul class="dir-edit-list">
+        <% @qualifications.each do |q| %>
+          <li class="dir-edit-row">
+            <span class="dir-edit-main">
+              <%= q.position.label %>
+              <% if q.certified? %>
+                <span class="dir-source dir-source--certified"><i class="fa fa-check-circle" aria-hidden="true"></i> Certified</span>
+                <% if q.certified_by %>
+                  <span class="text-muted small">by <%= q.certified_by.full_name %> <%= q.certified_at&.to_date %></span>
+                <% end %>
+              <% else %>
+                <span class="dir-source dir-source--self">Self-reported</span>
+              <% end %>
+            </span>
+            <span class="dir-edit-actions">
+              <%= form_with model: q, url: admin_user_qualification_path(@user, q), method: :patch, local: true, class: 'dir-inline-form' do |f| %>
+                <%= f.select :status, [['Qualified', 'qualified'], ['Trainee · PTB open', 'trainee']], {},
+                             class: 'form-control input-sm', onchange: 'this.form.submit()', 'aria-label': 'Status' %>
+              <% end %>
+              <% if q.self_reported? %>
+                <%= button_to 'Certify', admin_user_qualification_path(@user, q), method: :patch,
+                              params: { qualification: { source: 'certified' } },
+                              class: 'btn btn-success btn-sm', form: { class: 'dir-inline-form' } %>
+              <% else %>
+                <%= button_to 'Uncertify', admin_user_qualification_path(@user, q), method: :patch,
+                              params: { qualification: { source: 'self_reported' } },
+                              class: 'btn btn-default btn-sm', form: { class: 'dir-inline-form' } %>
+              <% end %>
+              <%= button_to 'Remove', admin_user_qualification_path(@user, q), method: :delete,
+                            class: 'btn btn-link btn-sm', form: { class: 'dir-inline-form' },
+                            data: { confirm: "Remove #{q.position.code} from #{@user.full_name}?" } %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <h3 class="dir-subtitle">Add a certified qualification</h3>
+    <%= form_with model: @qualification, url: admin_user_qualifications_path(@user), local: true, class: 'dir-add-form' do |f| %>
+      <%= f.collection_select :position_id, @positions, :id, :label, { prompt: 'Position…' },
+                              class: 'form-control', required: true, 'aria-label': 'Position' %>
+      <%= f.select :status, [['Qualified', 'qualified'], ['Trainee · PTB open', 'trainee']], {}, class: 'form-control', 'aria-label': 'Status' %>
+      <%= f.submit 'Add', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

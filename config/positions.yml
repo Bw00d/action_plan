@@ -1,0 +1,87 @@
+# NWCG position catalog for the user directory: code => full title.
+# Load or refresh with `bin/rails positions:load` (adds and updates, never
+# deletes). Add codes here as needed.
+
+# Command
+ICT1: Incident Commander Type 1
+ICT2: Incident Commander Type 2
+ICT3: Incident Commander Type 3
+ICT4: Incident Commander Type 4
+ICT5: Incident Commander Type 5
+CIMC: Complex Incident Management Commander
+PIO1: Public Information Officer Type 1
+PIO2: Public Information Officer Type 2
+PIOF: Public Information Officer
+LOFR: Liaison Officer
+SOF1: Safety Officer Type 1
+SOF2: Safety Officer Type 2
+SOFR: Safety Officer, Line
+
+# Operations
+OSC1: Operations Section Chief Type 1
+OSC2: Operations Section Chief Type 2
+OPBD: Operations Branch Director
+DIVS: Division/Group Supervisor
+TFLD: Task Force Leader
+STCR: Strike Team Leader Crew
+STEN: Strike Team Leader Engine
+STDZ: Strike Team Leader Dozer
+CRWB: Single Resource Crew Boss
+ENGB: Single Resource Engine Boss
+DOZB: Single Resource Dozer Boss
+FELB: Single Resource Feller Buncher Boss
+HEQB: Heavy Equipment Boss
+FIRB: Firing Boss
+FFT1: Firefighter Type 1
+FFT2: Firefighter Type 2
+STPS: Structure Protection Specialist
+
+# Air Operations
+AOBD: Air Operations Branch Director
+ASGS: Air Support Group Supervisor
+ATGS: Air Tactical Group Supervisor
+HLCO: Helicopter Coordinator
+HMGB: Helibase Manager
+HEB1: Helicopter Boss Type 1
+HEB2: Helicopter Boss Type 2
+HECM: Helicopter Crewmember
+
+# Planning
+PSC1: Planning Section Chief Type 1
+PSC2: Planning Section Chief Type 2
+SITL: Situation Unit Leader
+RESL: Resources Unit Leader
+DMOB: Demobilization Unit Leader
+DOCL: Documentation Unit Leader
+SCKN: Status/Check-In Recorder
+FOBS: Field Observer
+GISS: Geographic Information System Specialist
+FBAN: Fire Behavior Analyst
+LTAN: Long Term Fire Analyst
+IMET: Incident Meteorologist
+
+# Logistics
+LSC1: Logistics Section Chief Type 1
+LSC2: Logistics Section Chief Type 2
+SPUL: Supply Unit Leader
+ORDM: Ordering Manager
+RCDM: Receiving and Distribution Manager
+FACL: Facilities Unit Leader
+BCMG: Base/Camp Manager
+GSUL: Ground Support Unit Leader
+EQPM: Equipment Manager
+COML: Communications Unit Leader
+COMT: Incident Communications Technician
+MEDL: Medical Unit Leader
+FDUL: Food Unit Leader
+SECM: Security Manager
+
+# Finance
+FSC1: Finance/Administration Section Chief Type 1
+FSC2: Finance/Administration Section Chief Type 2
+TIME: Time Unit Leader
+PTRC: Personnel Time Recorder
+EQTR: Equipment Time Recorder
+COST: Cost Unit Leader
+PROC: Procurement Unit Leader
+COMP: Compensation/Claims Unit Leader

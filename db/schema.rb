@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_11_02_120000) do
+ActiveRecord::Schema.define(version: 2026_11_02_130000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -358,6 +358,18 @@ ActiveRecord::Schema.define(version: 2026_11_02_120000) do
     t.string "date_signed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "contact_methods", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "kind", null: false
+    t.string "label"
+    t.string "value", null: false
+    t.boolean "shared", default: false, null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_contact_methods_on_user_id"
   end
 
   create_table "covers", force: :cascade do |t|
@@ -875,6 +887,14 @@ ActiveRecord::Schema.define(version: 2026_11_02_120000) do
     t.index ["published_at"], name: "index_plans_on_published_at"
   end
 
+  create_table "positions", force: :cascade do |t|
+    t.string "code", null: false
+    t.string "title", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_positions_on_code", unique: true
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -883,6 +903,21 @@ ActiveRecord::Schema.define(version: 2026_11_02_120000) do
     t.integer "incident_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "qualifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "position_id", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "source", default: 0, null: false
+    t.bigint "certified_by_id"
+    t.datetime "certified_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["certified_by_id"], name: "index_qualifications_on_certified_by_id"
+    t.index ["position_id"], name: "index_qualifications_on_position_id"
+    t.index ["user_id", "position_id"], name: "index_qualifications_on_user_id_and_position_id", unique: true
+    t.index ["user_id"], name: "index_qualifications_on_user_id"
   end
 
   create_table "remote_checkins", force: :cascade do |t|
@@ -1007,7 +1042,9 @@ ActiveRecord::Schema.define(version: 2026_11_02_120000) do
     t.string "other_incident_name"
     t.string "other_incident_req_number"
     t.date "prev_incident_first_day_worked"
+    t.bigint "user_id"
     t.index ["spacer"], name: "index_resources_on_spacer"
+    t.index ["user_id"], name: "index_resources_on_user_id"
   end
 
   create_table "rosters", force: :cascade do |t|
@@ -1109,6 +1146,13 @@ ActiveRecord::Schema.define(version: 2026_11_02_120000) do
     t.datetime "updated_at", null: false
     t.text "incident_ids", default: [], array: true
     t.string "time_zone"
+    t.string "home_unit"
+    t.string "dispatch_center"
+    t.integer "availability", default: 0, null: false
+    t.date "available_on"
+    t.string "emergency_contact_name"
+    t.string "emergency_contact_phone"
+    t.string "emergency_contact_relation"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -1125,6 +1169,7 @@ ActiveRecord::Schema.define(version: 2026_11_02_120000) do
   add_foreign_key "air_travel_requests", "incidents"
   add_foreign_key "air_travel_requests", "resources"
   add_foreign_key "assignments", "org_units"
+  add_foreign_key "contact_methods", "users", on_delete: :cascade
   add_foreign_key "demob_notifications", "demobs"
   add_foreign_key "demob_notifications", "incidents"
   add_foreign_key "demob_notifications", "resources"
@@ -1148,11 +1193,15 @@ ActiveRecord::Schema.define(version: 2026_11_02_120000) do
   add_foreign_key "plan_assignment_snapshots", "org_units"
   add_foreign_key "plan_assignment_snapshots", "plans"
   add_foreign_key "plan_assignment_snapshots", "resources"
+  add_foreign_key "qualifications", "positions"
+  add_foreign_key "qualifications", "users", column: "certified_by_id", on_delete: :nullify
+  add_foreign_key "qualifications", "users", on_delete: :cascade
   add_foreign_key "remote_checkins", "incidents"
   add_foreign_key "remote_checkins", "requests"
   add_foreign_key "requests", "incidents"
   add_foreign_key "resource_events", "resources"
   add_foreign_key "resource_events", "users"
+  add_foreign_key "resources", "users", on_delete: :nullify
   add_foreign_key "rosters", "requests"
   add_foreign_key "rosters", "resources"
   add_foreign_key "rosters", "resources", column: "promoted_resource_id"

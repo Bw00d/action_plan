@@ -1,0 +1,140 @@
+<%= content_for :title, 'My Profile' %>
+<div class="container dir-page">
+  <div class="dir-head">
+    <h1><strong>My directory profile</strong></h1>
+    <%= link_to 'View my profile', directory_path(@user), class: 'btn btn-default btn-sm' %>
+  </div>
+
+  <%# Status, availability, units, emergency contact. %>
+  <div class="dir-card">
+    <h2 class="dir-section-title">Status and home unit</h2>
+    <%= form_with model: @user, url: profile_path, method: :patch, local: true do |f| %>
+      <% if @user.errors.any? %>
+        <div class="alert alert-danger">
+          <ul><% @user.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+        </div>
+      <% end %>
+
+      <div class="dir-form-grid">
+        <div class="form-group">
+          <%= f.label :availability, 'Status' %>
+          <%= f.select :availability, [['Available', 'available'], ['Unavailable', 'unavailable']], {}, class: 'form-control' %>
+          <p class="help-block">You show as <strong>On assignment</strong> automatically while you're checked in to an incident.</p>
+        </div>
+        <div class="form-group">
+          <%= f.label :available_on, 'Available after' %>
+          <%= f.date_field :available_on, class: 'form-control' %>
+          <p class="help-block">Leave blank to use the day after your current assignment ends.</p>
+        </div>
+        <div class="form-group">
+          <%= f.label :home_unit, 'Home unit' %>
+          <%= f.text_field :home_unit, class: 'form-control', placeholder: 'e.g. ORCAD', autocapitalize: 'characters' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :dispatch_center, 'Dispatch center' %>
+          <%= f.text_field :dispatch_center, class: 'form-control', placeholder: 'e.g. COIDC', autocapitalize: 'characters' %>
+        </div>
+      </div>
+
+      <h3 class="dir-subtitle"><i class="fa fa-lock" aria-hidden="true"></i> Emergency contact</h3>
+      <p class="help-block">Only site admins can see this. It never appears on your public profile.</p>
+      <div class="dir-form-grid">
+        <div class="form-group">
+          <%= f.label :emergency_contact_name, 'Name' %>
+          <%= f.text_field :emergency_contact_name, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :emergency_contact_relation, 'Relationship' %>
+          <%= f.text_field :emergency_contact_relation, class: 'form-control', placeholder: 'e.g. Spouse' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :emergency_contact_phone, 'Phone' %>
+          <%= f.telephone_field :emergency_contact_phone, class: 'form-control' %>
+        </div>
+      </div>
+
+      <%= f.submit 'Save', class: 'btn btn-primary dir-tap' %>
+    <% end %>
+  </div>
+
+  <%# Contact methods. Hidden until the user chooses to share each one. %>
+  <div class="dir-card" id="contacts">
+    <h2 class="dir-section-title">Contact info</h2>
+    <p class="help-block">Only entries marked <strong>Shown</strong> appear on your profile. New entries start hidden.</p>
+
+    <% if @contact_methods.any?(&:persisted?) %>
+      <ul class="dir-edit-list">
+        <% @contact_methods.select(&:persisted?).each do |c| %>
+          <li class="dir-edit-row">
+            <span class="dir-edit-main">
+              <span class="text-muted"><%= c.label.presence || c.kind.capitalize %>:</span> <%= c.value %>
+            </span>
+            <span class="dir-edit-actions">
+              <%= button_to profile_contact_method_path(c), method: :patch,
+                            params: { contact_method: { shared: !c.shared } },
+                            class: "btn btn-sm dir-tap #{c.shared ? 'btn-success' : 'btn-default'}",
+                            form: { class: 'dir-inline-form' } do %>
+                <%= c.shared ? 'Shown' : 'Hidden' %>
+              <% end %>
+              <%= button_to 'Remove', profile_contact_method_path(c), method: :delete,
+                            class: 'btn btn-link btn-sm dir-tap', form: { class: 'dir-inline-form' },
+                            data: { confirm: "Remove #{c.value}?" } %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= form_with model: @contact_method, url: profile_contact_methods_path, local: true, class: 'dir-add-form' do |f| %>
+      <%= f.select :kind, [['Phone', 'phone'], ['Email', 'email']], {}, class: 'form-control', 'aria-label': 'Type' %>
+      <%= f.text_field :label, class: 'form-control', placeholder: 'Label (Cell, Work)', 'aria-label': 'Label' %>
+      <%= f.text_field :value, class: 'form-control', placeholder: 'Number or address', required: true, 'aria-label': 'Number or address' %>
+      <label class="dir-check"><%= f.check_box :shared %> Show on profile</label>
+      <%= f.submit 'Add', class: 'btn btn-primary dir-tap' %>
+    <% end %>
+  </div>
+
+  <%# Qualifications. Certified ones are read-only here. %>
+  <div class="dir-card" id="qualifications">
+    <h2 class="dir-section-title">Qualifications</h2>
+    <p class="help-block">
+      Quals you add are marked <strong>Self-reported</strong>. An admin can certify them; certified quals can only be changed by an admin.
+    </p>
+
+    <% if @qualifications.any? %>
+      <ul class="dir-edit-list">
+        <% @qualifications.each do |q| %>
+          <li class="dir-edit-row">
+            <span class="dir-edit-main">
+              <%= q.position.label %>
+              <% if q.certified? %>
+                <span class="dir-source dir-source--certified"><i class="fa fa-check-circle" aria-hidden="true"></i> Certified</span>
+                · <%= q.status_label %>
+              <% else %>
+                <span class="dir-source dir-source--self">Self-reported</span>
+              <% end %>
+            </span>
+            <% if q.self_reported? %>
+              <span class="dir-edit-actions">
+                <%= form_with model: q, url: profile_qualification_path(q), method: :patch, local: true, class: 'dir-inline-form' do |f| %>
+                  <%= f.select :status, [['Qualified', 'qualified'], ['Trainee · PTB open', 'trainee']], {},
+                               class: 'form-control input-sm', onchange: 'this.form.submit()', 'aria-label': 'Status' %>
+                <% end %>
+                <%= button_to 'Remove', profile_qualification_path(q), method: :delete,
+                              class: 'btn btn-link btn-sm dir-tap', form: { class: 'dir-inline-form' },
+                              data: { confirm: "Remove #{q.position.code}?" } %>
+              </span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= form_with model: @qualification, url: profile_qualifications_path, local: true, class: 'dir-add-form' do |f| %>
+      <%= f.collection_select :position_id, @positions, :id, :label, { prompt: 'Add a position…' },
+                              class: 'form-control', required: true, 'aria-label': 'Position' %>
+      <%= f.select :status, [['Qualified', 'qualified'], ['Trainee · PTB open', 'trainee']], {}, class: 'form-control', 'aria-label': 'Status' %>
+      <%= f.submit 'Add', class: 'btn btn-primary dir-tap' %>
+    <% end %>
+  </div>
+</div>

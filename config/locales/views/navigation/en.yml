@@ -8,5 +8,7 @@ en:
     request-access: Request access
     access-requests: Access Requests
     sign-out: Sign out
-    edit-profile: Edit profile
+    edit-profile: Account settings
+    my-profile: My profile
+    directory: Directory
     incidents: Incidents

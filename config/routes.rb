@@ -73,13 +73,22 @@ Rails.application.routes.draw do
   # Public Request Access form; replaces open sign-up.
   resources :access_requests, only: [:new, :create]
 
+  # User directory and the signed-in user's own profile settings.
+  resources :directory, only: [:index, :show], controller: 'directory'
+  resource :profile, only: [:edit, :update] do
+    resources :contact_methods, only: [:create, :update, :destroy]
+    resources :qualifications,  only: [:create, :update, :destroy]
+  end
+
   # Silent endpoint so JS can push the browser-detected timezone to the
   # current user's record without a page reload.
   patch 'users/detect_timezone' => 'users/preferences#detect_timezone',
                                    as: :detect_user_timezone
 
   namespace :admin do
-    resources :users
+    resources :users do
+      resources :qualifications, only: [:index, :create, :update, :destroy]
+    end
     resources :access_requests, only: [:index] do
       member do
         post :approve
