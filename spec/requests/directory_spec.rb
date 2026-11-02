@@ -33,20 +33,20 @@ RSpec.describe 'Directory', type: :request do
       login_user
       get directory_path(jordan)
       expect(response).to have_http_status(200)
-      expect(response.body).not_to include('Sam Reyes', '541-555-0144', 'Spouse')
+      expect(response.body).not_to include('Sam Reyes', '(541) 555-0144', '5415550144', 'Spouse')
       expect(response.body).to include('Emergency contact visible to admins only')
     end
 
     it 'is hidden on your own public profile too' do
       login_as(jordan, scope: :user)
       get directory_path(jordan)
-      expect(response.body).not_to include('Sam Reyes', '541-555-0144')
+      expect(response.body).not_to include('Sam Reyes', '(541) 555-0144', '5415550144')
     end
 
     it 'is shown to admins' do
       login_admin
       get directory_path(jordan)
-      expect(response.body).to include('Sam Reyes', '541-555-0144', 'Spouse')
+      expect(response.body).to include('Sam Reyes', '(541) 555-0144', 'Spouse')
     end
   end
 
@@ -60,9 +60,9 @@ RSpec.describe 'Directory', type: :request do
 
     it 'shows a Phone button that reveals shared numbers, and nothing hidden' do
       get directory_path(jordan)
-      expect(response.body).to include('data-contact-toggle="phone"', '541-555-0123')
+      expect(response.body).to include('data-contact-toggle="phone"', '(541) 555-0123')
       expect(response.body).not_to include('data-contact-toggle="email"')
-      expect(response.body).not_to include('541-555-0199', 'hidden@example.com')
+      expect(response.body).not_to include('(541) 555-0199', '5415550199', 'hidden@example.com')
     end
 
     it 'never links to the phone, text or mail apps' do

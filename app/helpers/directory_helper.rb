@@ -28,6 +28,12 @@ module DirectoryHelper
     parts.join(' · ')
   end
 
+  # Contact value for display. Phones go through PhoneNumber so numbers
+  # saved before formatting existed still read "(541) 555-0123".
+  def contact_value(contact)
+    contact.phone? ? PhoneNumber.format(contact.value) : contact.value
+  end
+
   # "Mountain Time" for America/Denver; falls back to the stored name.
   def friendly_time_zone(tz)
     return if tz.blank?

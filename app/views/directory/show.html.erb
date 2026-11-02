@@ -35,7 +35,7 @@
         <% list.each do |c| %>
           <li>
             <span class="dir-contact-label"><%= c.label.presence || kind.capitalize %></span>
-            <span class="dir-contact-value"><%= c.value %></span>
+            <span class="dir-contact-value"><%= contact_value(c) %></span>
           </li>
         <% end %>
       </ul>
@@ -102,7 +102,7 @@
             <%= @emergency_contact[:name] %>
             <%= "(#{@emergency_contact[:relation]})" if @emergency_contact[:relation].present? %>
             <% if @emergency_contact[:phone].present? %>
-              · <%= link_to @emergency_contact[:phone], "tel:#{@emergency_contact[:phone].gsub(/[^\d+]/, '')}" %>
+              · <%= link_to PhoneNumber.format(@emergency_contact[:phone]), "tel:#{@emergency_contact[:phone].gsub(/[^\d+]/, '')}" %>
             <% end %>
           </p>
         <% end %>

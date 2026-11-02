@@ -49,7 +49,8 @@
         </div>
         <div class="form-group">
           <%= f.label :emergency_contact_phone, 'Phone' %>
-          <%= f.telephone_field :emergency_contact_phone, class: 'form-control' %>
+          <%= f.telephone_field :emergency_contact_phone, class: 'form-control', data: { phone_format: true },
+                                value: PhoneNumber.format(@user.emergency_contact_phone) %>
         </div>
       </div>
 
@@ -67,7 +68,7 @@
         <% @contact_methods.select(&:persisted?).each do |c| %>
           <li class="dir-edit-row">
             <span class="dir-edit-main">
-              <span class="text-muted"><%= c.label.presence || c.kind.capitalize %>:</span> <%= c.value %>
+              <span class="text-muted"><%= c.label.presence || c.kind.capitalize %>:</span> <%= contact_value(c) %>
             </span>
             <span class="dir-edit-actions">
               <%= button_to profile_contact_method_path(c), method: :patch,
@@ -78,7 +79,7 @@
               <% end %>
               <%= button_to 'Remove', profile_contact_method_path(c), method: :delete,
                             class: 'btn btn-link btn-sm dir-tap', form: { class: 'dir-inline-form' },
-                            data: { confirm: "Remove #{c.value}?" } %>
+                            data: { confirm: "Remove #{contact_value(c)}?" } %>
             </span>
           </li>
         <% end %>
@@ -88,7 +89,8 @@
     <%= form_with model: @contact_method, url: profile_contact_methods_path, local: true, class: 'dir-add-form' do |f| %>
       <%= f.select :kind, [['Phone', 'phone'], ['Email', 'email']], {}, class: 'form-control', 'aria-label': 'Type' %>
       <%= f.text_field :label, class: 'form-control', placeholder: 'Label (Cell, Work)', 'aria-label': 'Label' %>
-      <%= f.text_field :value, class: 'form-control', placeholder: 'Number or address', required: true, 'aria-label': 'Number or address' %>
+      <%= f.text_field :value, class: 'form-control', placeholder: 'Number or address', required: true, 'aria-label': 'Number or address',
+                       data: { phone_format: 'when-phone' } %>
       <label class="dir-check"><%= f.check_box :shared %> Show on profile</label>
       <%= f.submit 'Add', class: 'btn btn-primary dir-tap' %>
     <% end %>

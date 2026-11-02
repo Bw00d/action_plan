@@ -169,6 +169,7 @@ class User < ApplicationRecord
   def normalize_directory_codes
     self.home_unit       = home_unit.to_s.strip.upcase.presence
     self.dispatch_center = dispatch_center.to_s.strip.upcase.presence
+    self.emergency_contact_phone = PhoneNumber.format(emergency_contact_phone).presence
   end
 
   def set_default_role

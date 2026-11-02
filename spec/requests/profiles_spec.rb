@@ -13,7 +13,7 @@ RSpec.describe 'Profile settings and qualification rules', type: :request do
       create(:qualification, user: owner, position: position)
       get edit_profile_path
       expect(response).to have_http_status(200)
-      expect(response.body).to include('541-555-0123', 'DIVS', 'Emergency contact')
+      expect(response.body).to include('(541) 555-0123', 'DIVS', 'Emergency contact')
     end
 
     it 'updates your own status, availability and units' do

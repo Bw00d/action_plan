@@ -5,7 +5,7 @@ class ContactMethod < ApplicationRecord
 
   belongs_to :user
 
-  before_validation { self.value = value.to_s.strip }
+  before_validation { self.value = phone? ? PhoneNumber.format(value) : value.to_s.strip }
 
   validates :kind, presence: true
   validates :value, presence: true, length: { maximum: 120 }
