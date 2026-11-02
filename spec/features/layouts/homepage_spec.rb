@@ -13,7 +13,7 @@ describe 'Home Page', type: :feature, js: true do
     it 'should have the right links' do
       visit '/'
       expect(page).to have_link ('Sign in')
-      expect(page).to have_link ('Request Access')
+      expect(page).to have_link ('Request access')
     end
 
     it 'should not have the signed in links' do

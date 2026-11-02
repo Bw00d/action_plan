@@ -25,6 +25,10 @@ module ActionPlan
     # that's where the fires are being managed from right now.
     config.time_zone = 'Alaska'
 
+    # Rails only loads config/locales/*.yml by default; translations here
+    # are organized in subfolders (views/admin, views/navigation, models).
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
