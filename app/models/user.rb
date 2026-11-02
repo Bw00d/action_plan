@@ -47,6 +47,32 @@ class User < ApplicationRecord
     [first_name, last_name].join(' ')
   end
 
+  # Creates a placeholder account for someone who'll finish setting it up
+  # from an emailed link (incident invites and approved access requests).
+  # A random password satisfies :validatable, and the raw invitation token
+  # piggybacks on Devise's confirmation_token. Returns [user, raw_token];
+  # check user.persisted? for success.
+  def self.create_invited(email:, first_name: 'Pending', last_name: 'Invitee')
+    raw_token, digest = Devise.token_generator.generate(User, :confirmation_token)
+    password = SecureRandom.hex(16) + 'Aa1' # meets password_strength rules
+    user = new(email: email, first_name: first_name, last_name: last_name,
+               password: password, password_confirmation: password)
+    user.skip_confirmation_notification!
+    user.confirmation_token   = digest
+    user.confirmation_sent_at = Time.current
+    user.save
+    [user, raw_token]
+  end
+
+  # Issues a fresh invitation token for an existing, unconfirmed account so
+  # its owner can set the password through the invitation link. Returns the
+  # raw token.
+  def regenerate_invitation_token!
+    raw_token, digest = Devise.token_generator.generate(User, :confirmation_token)
+    update_columns(confirmation_token: digest, confirmation_sent_at: Time.current)
+    raw_token
+  end
+
   private
 
   def set_default_role

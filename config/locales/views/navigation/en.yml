@@ -5,7 +5,8 @@ en:
     plan: Plan
     contact: Contact
     sign-in: Sign in
-    sign-up: Sign up
+    request-access: Request access
+    access-requests: Access Requests
     sign-out: Sign out
     edit-profile: Edit profile
     incidents: Incidents

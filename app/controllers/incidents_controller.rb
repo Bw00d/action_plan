@@ -363,23 +363,10 @@ class IncidentsController < ApplicationController
       end
       redirect_to incident_users_path(@incident), notice: notice
     else
-      # Fresh invite: create a placeholder user with a random password so
-      # Devise's :validatable is satisfied, generate a raw invitation token
-      # (piggybacks on Devise's confirmation_token infrastructure), and send
-      # the accept-invitation email.
-      raw_token, digest = Devise.token_generator.generate(User, :confirmation_token)
-      new_user = User.new(
-        email:                 email,
-        first_name:            "Pending",
-        last_name:             "Invitee",
-        password:              SecureRandom.hex(16) + "Aa1", # meets password_strength rules
-        password_confirmation: nil
-      )
-      new_user.password_confirmation = new_user.password
-      new_user.skip_confirmation_notification! if new_user.respond_to?(:skip_confirmation_notification!)
-      new_user.confirmation_token   = digest
-      new_user.confirmation_sent_at = Time.current
-      if new_user.save
+      # Fresh invite: create a placeholder user and send the
+      # accept-invitation email.
+      new_user, raw_token = User.create_invited(email: email)
+      if new_user.persisted?
         @incident.users << new_user
         InvitationMailer.invite_new_user(new_user, @incident, current_user, raw_token).deliver_later
         @incident.log_event(

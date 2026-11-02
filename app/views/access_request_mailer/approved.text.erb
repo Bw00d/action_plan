@@ -1,0 +1,11 @@
+Hi <%= @access_request.first_name %>,
+
+Your request for access to Action Plan has been approved.
+
+<% if @accept_url %>
+Set your password and finish creating your account:
+<%= @accept_url %>
+<% else %>
+You already have an account, so you can sign in with your existing password:
+<%= @sign_in_url %>
+<% end %>

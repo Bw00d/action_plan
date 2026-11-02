@@ -1,0 +1,67 @@
+<%= content_for :title, 'Access Requests' %>
+<div class="container">
+  <div class="page-header">
+    <h1>Access Requests</h1>
+  </div>
+
+  <h3>Waiting for review <span class="text-muted">(<%= @pending.size %>)</span></h3>
+  <% if @pending.empty? %>
+    <p class="text-muted">No pending requests.</p>
+  <% else %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>ICS function or position</th>
+          <th>Requested</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @pending.each do |req| %>
+          <tr>
+            <td><%= req.full_name %></td>
+            <td><%= req.email %></td>
+            <td><%= req.position %></td>
+            <td><%= l req.created_at, format: :short %></td>
+            <td class="text-right" style="white-space:nowrap;">
+              <%= button_to 'Approve', approve_admin_access_request_path(req),
+                            class: 'btn btn-success btn-sm', form: { style: 'display:inline' },
+                            data: { confirm: "Create an account for #{req.email} and email them a set-password link?" } %>
+              <%= button_to 'Decline', decline_admin_access_request_path(req),
+                            class: 'btn btn-default btn-sm', form: { style: 'display:inline' },
+                            data: { confirm: "Decline #{req.email}? They won't be notified." } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% if @reviewed.any? %>
+    <h3>Recently reviewed</h3>
+    <table class="table table-condensed text-muted">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>ICS function or position</th>
+          <th>Decision</th>
+          <th>By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @reviewed.each do |req| %>
+          <tr>
+            <td><%= req.full_name %></td>
+            <td><%= req.email %></td>
+            <td><%= req.position %></td>
+            <td><%= req.status.capitalize %> <%= l req.reviewed_at, format: :short if req.reviewed_at %></td>
+            <td><%= req.reviewed_by&.full_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

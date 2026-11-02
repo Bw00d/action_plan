@@ -70,6 +70,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  # Public Request Access form; replaces open sign-up.
+  resources :access_requests, only: [:new, :create]
+
   # Silent endpoint so JS can push the browser-detected timezone to the
   # current user's record without a page reload.
   patch 'users/detect_timezone' => 'users/preferences#detect_timezone',
@@ -77,6 +80,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
+    resources :access_requests, only: [:index] do
+      member do
+        post :approve
+        post :decline
+      end
+    end
     # Admin-only chat with Claude — read-only data exploration plus
     # propose-then-approve mutations. Scoped to one incident so tool
     # calls default to that incident and the session cache is per-

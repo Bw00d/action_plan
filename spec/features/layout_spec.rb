@@ -12,8 +12,8 @@ describe 'layout and UI elements', type: :feature, js: true do
       visit '/'
       expect(page).to have_selector 'body.guest-layout'
       within '.navbar-default' do
-        expect(page).to have_link(I18n.t('navigation.sign-up'),
-                                  href: new_user_registration_path)
+        expect(page).to have_link(I18n.t('navigation.request-access'),
+                                  href: new_access_request_path)
         expect(page).to have_link(I18n.t('navigation.sign-in'),
                                   href: new_user_session_path)
       end

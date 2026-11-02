@@ -80,7 +80,7 @@ controller and action allows the implementation of page-specific CSS and JS %>
                   </ul>
                 </li>
             <% else %>
-                <li><%= link_to t('navigation.sign-up'), new_user_registration_path %></li>
+                <li><%= link_to t('navigation.request-access'), new_access_request_path %></li>
                 <li><%= link_to t('navigation.sign-in'), new_user_session_path %></li>
             <% end %>
           </ul>

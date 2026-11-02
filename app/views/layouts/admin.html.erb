@@ -2,6 +2,13 @@
   <%# Menu items that that should only appear in the navbar of users with
   "admin" role %>
   <li><%= link_to t('navigation.users'), admin_users_path %></li>
+  <li>
+    <%= link_to admin_access_requests_path, class: 'nav-feed-link' do %>
+      <%= t('navigation.access-requests') %>
+      <% pending = AccessRequest.pending.count %>
+      <% if pending.positive? %><span class="feed-badge"><%= pending %></span><% end %>
+    <% end %>
+  </li>
 
   <%= render 'layouts/base_menu_items' %>
 <% end %>
