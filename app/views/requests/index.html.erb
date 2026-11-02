@@ -52,7 +52,12 @@
 
       <div class="catalog-section" data-catalog="<%= catalog_key %>">
       <h3 class="catalog-heading">
-        <%= catalog %> <span class="muted">(<%= parents.size %>)</span>
+        <%# Collapses this catalog's table; state persists per incident
+            (see requests.js). %>
+        <button type="button" class="catalog-collapse-toggle" aria-expanded="true">
+          <span class="catalog-collapse-caret" aria-hidden="true">▼</span>
+          <%= catalog %> <span class="muted">(<%= parents.size %>)</span>
+        </button>
         <%# Per-panel sort toggle — flips the parent-row order without
             touching the server-side natural-numeric sort. Children stay
             nested under their parents. %>

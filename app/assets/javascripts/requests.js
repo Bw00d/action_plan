@@ -117,6 +117,8 @@ $(document).on('turbolinks:load', function () {
     var hasAnyFilter = hasQuery || hasStatusFilter;
 
     $searchClear.toggle(hasQuery);
+    // Collapsed catalogs open while filtering so no match is hidden.
+    $index.toggleClass('is-filtering', hasAnyFilter);
 
     if (!hasAnyFilter) {
       // Full reset: no filters, collapse everything, close details.
@@ -193,6 +195,40 @@ $(document).on('turbolinks:load', function () {
     }
     applyFilters();
   });
+
+  // Collapsible catalog sections. State persists per incident in
+  // localStorage so a collapsed catalog stays collapsed across reloads.
+  var incidentMatch = window.location.pathname.match(/\/incidents\/(\d+)/);
+  var collapseKey = 'requests.collapsed.' + (incidentMatch ? incidentMatch[1] : 'default');
+
+  function readCollapsed() {
+    try { return JSON.parse(localStorage.getItem(collapseKey) || '[]'); }
+    catch (e) { return []; }
+  }
+  function writeCollapsed(arr) {
+    try { localStorage.setItem(collapseKey, JSON.stringify(arr)); }
+    catch (e) { /* storage disabled — collapse state is per-session only */ }
+  }
+  function applyCollapsed() {
+    var collapsed = readCollapsed();
+    $('.catalog-section', $index).each(function () {
+      var $section = $(this);
+      var isCollapsed = collapsed.indexOf($section.data('catalog')) !== -1;
+      $section.toggleClass('is-collapsed', isCollapsed);
+      $section.find('.catalog-collapse-toggle').attr('aria-expanded', String(!isCollapsed));
+    });
+  }
+
+  $index.on('click', '.catalog-collapse-toggle', function () {
+    var name = $(this).closest('.catalog-section').data('catalog');
+    var collapsed = readCollapsed();
+    var idx = collapsed.indexOf(name);
+    if (idx === -1) collapsed.push(name); else collapsed.splice(idx, 1);
+    writeCollapsed(collapsed);
+    applyCollapsed();
+  });
+
+  applyCollapsed();
 
   // Per-panel asc / desc sort toggle. The server renders rows in natural
   // numeric order; this just reverses the group of (parent + its detail
