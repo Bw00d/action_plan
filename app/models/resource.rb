@@ -359,7 +359,7 @@ class Resource < ApplicationRecord
   # "8/20/26" (from the datepicker or a form typo) into year 0026.
   # Any parsed date whose year is below 100 gets bumped by 2000 so it
   # lands in the intended 21st century range.
-  %i[fwd checkin_date].each do |attr|
+  %i[fwd checkin_date mobilization_date].each do |attr|
     define_method("#{attr}=") do |value|
       super(value)
       current = self[attr]
@@ -386,11 +386,16 @@ class Resource < ApplicationRecord
   # Projected end-of-assignment date.
   #
   # Shift-timeline model: each :work entry carries its own planned
-  # start (fwd) and planned end (lwd). last_work_day = max lwd across
+  # start (fwd) and planned end (lwd). last_work_day = max end across
   # all :work entries — captures both the current operator's planned
   # end and any future (unpromoted) scheduled operators. Taking the
   # MAX across the whole timeline means a shorter future entry can't
   # shrink the committed end date.
+  #
+  # A finished entry counts by the day it actually ended. Its planned
+  # lwd is never updated after it closes, so an old plan (e.g. the
+  # original 14 days) would otherwise outrank a shortened current shift
+  # (reported bug on E-522).
   #
   # Fallback for resources that haven't been through the shift
   # backfill (shouldn't happen in production after the one-time
@@ -401,7 +406,7 @@ class Resource < ApplicationRecord
   # timeline AND fwd/assignment_length are both missing, so legacy
   # callers that pattern-match on `is_a?(String)` keep working.
   def last_work_day
-    work_lwds = work_entries.map(&:lwd).compact
+    work_lwds = work_entries.map { |e| e.actual_lwd || e.lwd }.compact
     return work_lwds.max if work_lwds.any?
     return fwd + assignment_length - 1.days if fwd && assignment_length
     " "

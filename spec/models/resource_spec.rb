@@ -136,10 +136,43 @@ end
 
     context 'without assignment_length' do
       let(:resource) { build(:resource, fwd: Date.new(2024, 1, 1), assignment_length: nil) }
-      
+
       it 'returns a space' do
         expect(resource.last_work_day).to eq(" ")
       end
+    end
+
+    # E-522: the original 14-day shift closed early, then the current
+    # shift was set to 6 days. The old plan's 11/11 must not win.
+    context 'when an earlier shift ended before its planned end' do
+      let(:resource) do
+        create(:resource, leader: 'May', fwd: Date.new(2026, 10, 29), assignment_length: 14)
+      end
+
+      it 'uses the day it actually ended' do
+        first = resource.current_work_entry
+        expect(first.lwd).to eq(Date.new(2026, 11, 11))
+        first.update!(actual_lwd: Date.new(2026, 10, 31))
+        resource.resource_events.create!(kind: :work, leader: 'Keeney', fwd: Date.new(2026, 11, 1),
+                                         actual_fwd: Date.new(2026, 11, 1), lwd: Date.new(2026, 11, 3))
+
+        expect(resource.reload.last_work_day).to eq(Date.new(2026, 11, 3))
+      end
+
+      it 'still counts a scheduled swap that runs later' do
+        resource.resource_events.create!(kind: :work, leader: 'Keeney', fwd: Date.new(2026, 11, 12),
+                                         lwd: Date.new(2026, 11, 20))
+
+        expect(resource.reload.last_work_day).to eq(Date.new(2026, 11, 20))
+      end
+    end
+  end
+
+  describe 'two-digit years' do
+    it 'moves a year typed as "26" into the 2000s' do
+      resource = build(:resource, mobilization_date: '10/29/26', fwd: '10/29/26')
+      expect(resource.mobilization_date).to eq(Date.new(2026, 10, 29))
+      expect(resource.fwd).to eq(Date.new(2026, 10, 29))
     end
   end
 
