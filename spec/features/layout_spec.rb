@@ -36,8 +36,11 @@ describe 'layout and UI elements', type: :feature, js: true do
       login_as(admin_user)
       visit '/'
       expect(page).to have_selector('body.admin-layout')
+      click_link I18n.t('navigation.admin')
       expect(page).to have_link(I18n.t('navigation.users'),
                                 href: admin_users_path)
+      expect(page).to have_link(I18n.t('navigation.access-requests'),
+                                href: admin_access_requests_path)
     end
   end
 end

@@ -1,6 +1,7 @@
 en:
   navigation:
     home: Home
+    admin: Admin
     users: Users
     plan: Plan
     contact: Contact

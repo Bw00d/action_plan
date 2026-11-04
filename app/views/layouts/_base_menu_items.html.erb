@@ -15,9 +15,6 @@ regardless of their roles %>
     <li><%= link_to "T Cards", incident_board_path(@incident) %></li>
     <li><%= link_to "Schedule", incident_schedules_path(@incident) %></li>
     <li><%= link_to "Demobs", incident_demob_notifications_path(@incident) %></li>
-    <% if current_user&.admin? %>
-      <li><%= link_to "Chat", admin_incident_chat_path(@incident), title: "Admin chat scoped to this incident" %></li>
-    <% end %>
   <% end %>
 <% end %>
 <li><%= link_to t('navigation.directory'), directory_index_path %></li>

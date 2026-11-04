@@ -66,6 +66,7 @@ controller and action allows the implementation of page-specific CSS and JS %>
                 <% end %>
               </li>
             <% end %>
+            <%= yield(:admin_menu) %>
             <%# Devise %>
             <% if user_signed_in? %>
                 <li class="dropdown">

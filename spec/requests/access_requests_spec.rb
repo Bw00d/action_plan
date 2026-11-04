@@ -40,7 +40,8 @@ RSpec.describe 'Access requests', type: :request do
       AccessRequest.create!(first_name: 'Pat', last_name: 'Lee', email: 'pat@example.com', position: 'RESL')
       login_admin
       get root_path
-      expect(response.body).to match(%r{href="/admin/access_requests">.*?<span class="feed-badge">1</span>}m)
+      expect(response.body).to match(%r{dropdown-toggle nav-feed-link.*?<span class="feed-badge">1</span>}m)
+      expect(response.body).to match(%r{href="/admin/access_requests">.*?<span class="badge">1</span>}m)
     end
   end
 
