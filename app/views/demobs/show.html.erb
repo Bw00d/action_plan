@@ -47,6 +47,16 @@
         <% if params[:return_to].present? %>
           <%= hidden_field_tag :return_to, params[:return_to] %>
         <% end %>
+        <%# Opened from a remote-demob submission on the Plans page: its
+            answers are pre-filled below, and saving marks it applied. %>
+        <% if @remote_demob %>
+          <%= hidden_field_tag :remote_demob_id, @remote_demob.id %>
+          <p class="alert alert-info no-print">
+            Travel details filled in from <%= @remote_demob.name %>'s remote demob
+            (submitted <%= @remote_demob.submitted_at.in_time_zone.strftime('%-m/%-d %H:%M') %>).
+            Check them, then submit to save.
+          </p>
+        <% end %>
       <div id="form-container" class="row">
         <div class="row">
           <div class="col-xs-12 bb">

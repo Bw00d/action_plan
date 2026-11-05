@@ -1,0 +1,104 @@
+<% content_for :title, "Demob — #{@incident.name}" %>
+
+<%# Reuses the remote check-in styles (remote_checkins.scss). %>
+<div class="remote-checkin-page">
+  <div class="remote-checkin-card">
+    <header class="remote-checkin-header">
+      <h1><%= @incident.name %></h1>
+      <p class="remote-checkin-sub">Resource Demob</p>
+      <div class="remote-checkin-progress">
+        <div class="rc-progress-fill"
+             style="width: <%= ((@index.to_f / [@total, 1].max) * 100).clamp(2, 100) %>%"></div>
+      </div>
+      <div class="remote-checkin-progress-label">
+        Question <%= @index + 1 %> of <%= @total %>
+      </div>
+    </header>
+
+    <% if flash[:alert].present? %>
+      <div class="remote-checkin-alert"><%= flash[:alert] %></div>
+    <% end %>
+
+    <%# Back lives in its own form outside this one — see
+        remote_checkins/new.html.erb for why. %>
+    <%= form_with url: remote_demob_path(@incident.remote_checkin_token),
+                  method: :post,
+                  local: true,
+                  html: { id: 'rc-main-form', class: 'remote-checkin-form', autocomplete: 'off' } do |f| %>
+
+      <div class="remote-checkin-question">
+        <% if @step.key == 'name' && @state['req_number_raw'].present? %>
+          <% if @state['matched_label'].present? %>
+            <p class="rc-help">We found <strong><%= @state['matched_label'] %></strong> and filled in what we know. Check each answer and change anything that's wrong.</p>
+          <% else %>
+            <p class="rc-help">We couldn't find <strong><%= @state['req_number_raw'] %></strong> on this incident. Go back to fix it, or continue and the Plans section will match it.</p>
+          <% end %>
+        <% end %>
+
+        <h2><%= @step.question %></h2>
+        <% if @step.help.present? %>
+          <p class="rc-help"><%= @step.help %></p>
+        <% end %>
+
+        <div class="remote-checkin-input">
+          <% case @step.kind %>
+          <% when :text, :req_number %>
+            <input type="text" name="answer" class="rc-input" autofocus
+                   value="<%= @state[@step.key] %>"
+                   <%= 'required' if @step.required? %>>
+          <% when :phone %>
+            <input type="tel" name="answer" class="rc-input" autofocus
+                   inputmode="tel" data-phone-format="true"
+                   value="<%= @state[@step.key] %>"
+                   <%= 'required' if @step.required? %>>
+          <% when :datetime %>
+            <% date = @state["#{@step.key}_date"]
+               time = @state["#{@step.key}_time"].to_s %>
+            <input type="datetime-local" name="answer" class="rc-input" autofocus
+                   value="<%= "#{date}T#{time[0, 2]}:#{time[2, 2]}" if date.present? && time =~ /\A\d{4}\z/ %>"
+                   <%= 'required' if @step.required? %>>
+          <% when :select %>
+            <%# No autofocus — see remote_checkins/new.html.erb (iOS
+                Safari picker quirk). %>
+            <select name="answer" class="rc-input rc-select"
+                    <%= 'required' if @step.required? %>>
+              <option value="">— Choose one —</option>
+              <%# options: { label shown => value stored } %>
+              <% @step.options.each do |label, value| %>
+                <option value="<%= value %>" <%= 'selected' if @state[@step.key] == value %>><%= label %></option>
+              <% end %>
+            </select>
+          <% when :yes_no %>
+            <div class="rc-yesno">
+              <label class="rc-yesno-option">
+                <input type="radio" name="answer" value="true"
+                       <%= 'checked' if @state[@step.key] == true %>> Yes
+              </label>
+              <label class="rc-yesno-option">
+                <input type="radio" name="answer" value="false"
+                       <%= 'checked' if @state[@step.key] == false %>> No
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="remote-checkin-actions">
+      <% if @index.positive? %>
+        <%= button_to 'Back', remote_demob_back_path(@incident.remote_checkin_token),
+                      method: :post, class: 'rc-btn rc-btn-ghost', form: { class: 'rc-inline-form' } %>
+      <% end %>
+      <button type="submit" form="rc-main-form" class="rc-btn rc-btn-primary">
+        <%= @index + 1 == @total ? 'Review' : 'Next' %>
+      </button>
+    </div>
+
+    <footer class="remote-checkin-footer">
+      <%= button_to 'Start over', remote_demob_restart_path(@incident.remote_checkin_token),
+                    method: :post,
+                    data: { confirm: 'Clear everything you have entered and start the form over?' },
+                    class: 'rc-link' %>
+    </footer>
+  </div>
+</div>

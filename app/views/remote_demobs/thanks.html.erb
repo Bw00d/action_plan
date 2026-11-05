@@ -1,0 +1,24 @@
+<% content_for :title, "Demob received — #{@incident.name}" %>
+
+<div class="remote-checkin-page">
+  <div class="remote-checkin-card">
+    <header class="remote-checkin-header">
+      <h1><%= @incident.name %></h1>
+      <p class="remote-checkin-sub">Demob received</p>
+    </header>
+
+    <div class="rc-thanks">
+      <p class="rc-thanks-big">Thanks<% if @submission_name.present? %>, <%= @submission_name %><% end %>!</p>
+      <p class="rc-help">
+        Your travel plans have been sent to the Plans section. They will
+        finish your demob paperwork and contact you if anything changes.
+      </p>
+    </div>
+
+    <div class="remote-checkin-actions">
+      <%= link_to 'Submit another demob',
+                  remote_demob_path(@incident.remote_checkin_token),
+                  class: 'rc-btn rc-btn-primary' %>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ class Incident < ApplicationRecord
   has_many :posts, class_name: 'IncidentPost', dependent: :destroy
   has_many :phone_205a_entries, dependent: :destroy
   has_many :remote_checkins, dependent: :destroy
+  has_many :remote_demobs, dependent: :destroy
 
   after_create :seed_default_schedule
   after_create :seed_non_209_bucket

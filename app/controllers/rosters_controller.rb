@@ -90,7 +90,12 @@ class RostersController < ApplicationController
   def demob_checkout
     incident = @roster.resource.incident
     demob    = @roster.demob_or_create
-    redirect_to incident_resource_demob_path(incident, @roster.resource, demob)
+    # remote_demob_id / return_to: DMB from a Plans-page remote demob —
+    # pass them on so the checkout form is pre-filled and saving returns
+    # to the Plans page.
+    redirect_to incident_resource_demob_path(incident, @roster.resource, demob,
+                                             remote_demob_id: params[:remote_demob_id].presence,
+                                             return_to: params[:return_to].presence)
   end
 
   private

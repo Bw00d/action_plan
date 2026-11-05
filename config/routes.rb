@@ -143,6 +143,11 @@ Rails.application.routes.draw do
       member { post :dismiss }
       collection { post :rotate_token }
     end
+    # Review queue for public remote-demob submissions. The DMB button
+    # itself goes through the normal DemobsController.
+    resources :remote_demobs, only: [:index, :destroy], controller: 'admin/remote_demobs' do
+      member { post :dismiss }
+    end
     resources :schedules, only: [:index, :create, :update, :destroy]
     resources :demob_notifications, only: [:index, :update, :destroy] do
       member     { patch :transmit }
@@ -261,5 +266,13 @@ Rails.application.routes.draw do
   patch '/remote_checkin/:token/drafts/:id', to: 'remote_checkins#update_draft',
                                              as: :remote_checkin_draft
   get   '/remote_checkin/:token/thanks',   to: 'remote_checkins#thanks', as: :remote_checkin_thanks
+
+  # Public, no-login demob form (same token as remote check-in).
+  # Submissions show on the Plans page with a DMB button.
+  get   '/remote_demob/:token',            to: 'remote_demobs#new',     as: :remote_demob
+  post  '/remote_demob/:token',            to: 'remote_demobs#update'
+  post  '/remote_demob/:token/back',       to: 'remote_demobs#back',    as: :remote_demob_back
+  post  '/remote_demob/:token/restart',    to: 'remote_demobs#restart', as: :remote_demob_restart
+  get   '/remote_demob/:token/thanks',     to: 'remote_demobs#thanks',  as: :remote_demob_thanks
 
 end

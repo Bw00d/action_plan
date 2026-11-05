@@ -67,6 +67,9 @@ class Resource < ApplicationRecord
   # fails with ForeignKeyViolation. Owning them here cleans them up as
   # part of the resource's own destroy cascade.
   has_many :demob_notifications, dependent: :destroy
+  # remote_demobs.resource_id has a DB-level FK too; keep the submission
+  # (it's the resource's own record of what they sent) but unlink it.
+  has_many :remote_demobs, dependent: :nullify
   # Requests keep their copied identity fields if the resource goes away.
   has_many :air_travel_requests, dependent: :nullify
   # Same shape as demob_notifications: PlanAssignmentSnapshot has a

@@ -12,6 +12,7 @@ class Roster < ApplicationRecord
   # (from incident/resource teardown) would race the Incident's own
   # cleanup and raise ForeignKeyViolation.
   has_many :demob_notifications, dependent: :destroy
+  has_many :remote_demobs, dependent: :nullify
 
   before_validation :default_agency_from_resource, on: :create
   # Only one primary per parent. When this row is marked primary, clear

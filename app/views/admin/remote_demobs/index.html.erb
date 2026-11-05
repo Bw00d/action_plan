@@ -1,0 +1,144 @@
+<% content_for :title, "Demobs — #{@incident.name}" %>
+
+<%# Shares the check-in queue's styles (admin_remote_checkins.scss). DMB
+    opens the resource's (or subordinate's) ICS-221 pre-filled with the
+    answers; saving it marks the row applied and returns here. %>
+<% when_text = ->(date, time) { date && "#{date.strftime('%-m/%-d')} #{time}".strip } %>
+<% back_here = incident_remote_demobs_path(@incident) %>
+
+<div class="container admin-remote-checkins">
+  <div class="col-xs-12 col-lg-10 center-block">
+
+    <h2>Remote Demobs — <%= @incident.name %></h2>
+
+    <section class="rc-admin-link-panel panel panel-default">
+      <div class="panel-heading"><strong>Public demob link</strong></div>
+      <div class="panel-body">
+        <p>Share this URL with resources who are demobilizing. They can send
+          their travel plans from a phone before they check out.</p>
+        <div class="rc-admin-url">
+          <input type="text" readonly value="<%= @public_url %>"
+                 onclick="this.select();" class="form-control rc-admin-url-input">
+        </div>
+        <p class="muted small">
+          Uses the same token as the check-in link — rotating it from the
+          <%= link_to 'check-in queue', incident_remote_checkins_path(@incident) %>
+          changes both.
+        </p>
+      </div>
+    </section>
+
+    <section class="rc-admin-section">
+      <h3>Pending <small>(<%= @pending.size %>)</small></h3>
+      <% if @pending.empty? %>
+        <p class="muted">No pending demobs. New submissions will appear here.</p>
+      <% else %>
+        <div class="table-responsive">
+          <table class="table rc-admin-table rc-admin-table-slim">
+            <thead>
+              <tr>
+                <th>Submitted</th>
+                <th>Req #</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Travel</th>
+                <th>Departs</th>
+                <th>Destination</th>
+                <th>RON</th>
+                <th>Arrives</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @pending.each do |rd| %>
+                <tr class="rc-pending-row">
+                  <td><%= rd.submitted_at.in_time_zone.strftime('%-m/%-d %H:%M') %></td>
+                  <td>
+                    <%= rd.display_req_number %>
+                    <% unless rd.matched? %>
+                      <span class="label label-warning" title="No matching resource on this incident">unmatched</span>
+                    <% end %>
+                  </td>
+                  <td><strong><%= rd.name %></strong></td>
+                  <td><%= rd.phone %></td>
+                  <td><%= rd.travel_method %></td>
+                  <td><%= when_text.call(rd.travel_start_date, rd.travel_start_time) %></td>
+                  <td><%= rd.destination %></td>
+                  <td><%= rd.ron ? rd.ron_location.presence || 'Yes' : 'No' %></td>
+                  <td><%= when_text.call(rd.arrival_date, rd.arrival_time) %></td>
+                  <td class="text-right rc-actions">
+                    <% if rd.roster %>
+                      <%= link_to 'DMB', demob_checkout_roster_path(rd.roster, remote_demob_id: rd.id, return_to: back_here),
+                                  class: 'btn btn-sm btn-dark', title: "Open ICS-221 for #{rd.roster.name}" %>
+                    <% elsif rd.resource&.demob %>
+                      <%= link_to 'DMB', incident_resource_demob_path(@incident, rd.resource, rd.resource.demob,
+                                                                      remote_demob_id: rd.id, return_to: back_here),
+                                  class: 'btn btn-sm btn-dark', title: "Open ICS-221 for #{rd.resource.name}" %>
+                    <% else %>
+                      <span class="muted" title="No matching resource — check the request number">—</span>
+                    <% end %>
+                    <%= button_to 'Dismiss', dismiss_incident_remote_demob_path(@incident, rd),
+                                  method: :post,
+                                  data: { confirm: "Dismiss #{rd.name}'s demob?" },
+                                  class: 'btn btn-default btn-sm' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </section>
+
+    <% if @applied.any? %>
+      <section class="rc-admin-section">
+        <h3>Recently applied <small>(<%= @applied.size %>)</small></h3>
+        <table class="table rc-admin-table rc-admin-table-slim">
+          <thead>
+            <tr><th>Applied</th><th>Req #</th><th>Name</th><th>Destination</th><th></th></tr>
+          </thead>
+          <tbody>
+            <% @applied.each do |rd| %>
+              <tr>
+                <td><%= rd.applied_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
+                <td><%= rd.display_req_number %></td>
+                <td><%= rd.name %></td>
+                <td><%= rd.destination %></td>
+                <td class="text-right">
+                  <% if rd.demob && rd.resource %>
+                    <%= link_to 'Open ICS-221', incident_resource_demob_path(@incident, rd.resource, rd.demob),
+                                class: 'btn btn-default btn-xs' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+
+    <% if @dismissed.any? %>
+      <section class="rc-admin-section">
+        <h3>Dismissed <small>(<%= @dismissed.size %>)</small></h3>
+        <table class="table rc-admin-table rc-admin-table-slim">
+          <thead><tr><th>Submitted</th><th>Req #</th><th>Name</th><th></th></tr></thead>
+          <tbody>
+            <% @dismissed.each do |rd| %>
+              <tr>
+                <td><%= rd.submitted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
+                <td><%= rd.display_req_number %></td>
+                <td><%= rd.name %></td>
+                <td class="text-right">
+                  <%= button_to 'Delete', incident_remote_demob_path(@incident, rd),
+                                method: :delete,
+                                data: { confirm: "Permanently delete #{rd.name}'s demob submission?" },
+                                class: 'btn btn-danger btn-xs' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+  </div>
+</div>

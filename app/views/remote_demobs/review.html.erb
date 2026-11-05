@@ -1,0 +1,55 @@
+<% content_for :title, "Review — #{@incident.name}" %>
+
+<% when_text = ->(prefix) {
+     date = @state["#{prefix}_date"].presence
+     time = @state["#{prefix}_time"].to_s
+     date && "#{Date.iso8601(date).strftime('%a %-m/%-d/%Y')} #{time}".strip
+   } %>
+
+<div class="remote-checkin-page">
+  <div class="remote-checkin-card">
+    <header class="remote-checkin-header">
+      <h1><%= @incident.name %></h1>
+      <p class="remote-checkin-sub">Review your answers</p>
+    </header>
+
+    <% if flash[:alert].present? %>
+      <div class="remote-checkin-alert"><%= flash[:alert] %></div>
+    <% end %>
+
+    <p class="rc-help">
+      Use <strong>Back</strong> to change an answer. When everything looks
+      right, tap <strong>Submit</strong>.
+    </p>
+
+    <dl class="rc-review">
+      <dt>Request #</dt>          <dd class="rc-review-static"><%= @state['req_number_raw'] %></dd>
+      <dt>Name</dt>               <dd class="rc-review-static"><%= @state['name'] %></dd>
+      <dt>Phone</dt>              <dd class="rc-review-static"><%= @state['phone'] %></dd>
+      <dt>Method of travel</dt>   <dd class="rc-review-static"><%= RemoteDemob.travel_method_label(@state['travel_method']) %></dd>
+      <dt>Travel start</dt>       <dd class="rc-review-static"><%= when_text.call('travel_start') %></dd>
+      <dt>Final destination</dt>  <dd class="rc-review-static"><%= @state['destination'] %></dd>
+      <dt>RON enroute</dt>        <dd class="rc-review-static"><%= @state['ron'] ? "Yes — #{@state['ron_location']}" : 'No' %></dd>
+      <dt>Arrival</dt>            <dd class="rc-review-static"><%= when_text.call('arrival') %></dd>
+    </dl>
+
+    <%= form_with url: remote_demob_path(@incident.remote_checkin_token),
+                  method: :post, local: true,
+                  html: { id: 'rc-main-form', class: 'remote-checkin-form' } do |f| %>
+      <%= hidden_field_tag :commit_submission, '1' %>
+    <% end %>
+
+    <div class="remote-checkin-actions">
+      <%= button_to 'Back', remote_demob_back_path(@incident.remote_checkin_token),
+                    method: :post, class: 'rc-btn rc-btn-ghost' %>
+      <button type="submit" form="rc-main-form" class="rc-btn rc-btn-primary">Submit</button>
+    </div>
+
+    <footer class="remote-checkin-footer">
+      <%= button_to 'Start over', remote_demob_restart_path(@incident.remote_checkin_token),
+                    method: :post,
+                    data: { confirm: 'Clear everything you have entered and start the form over?' },
+                    class: 'rc-link' %>
+    </footer>
+  </div>
+</div>

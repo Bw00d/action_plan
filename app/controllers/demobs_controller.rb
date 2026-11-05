@@ -18,6 +18,7 @@ class DemobsController < ApplicationController
     @finance_units = @demob.units[6..8]
     @other_units = @demob.units[9..10]
     @plans_units = @demob.units[11..13]
+    apply_remote_demob
   end
 
   # GET /demobs/new
@@ -48,6 +49,7 @@ class DemobsController < ApplicationController
   def update
     respond_to do |format|
       if @demob.update(demob_params)
+        mark_remote_demob_applied
         format.html { redirect_to post_demob_redirect_url(@demob) }
         format.json { render :show, status: :ok, location: @demob }
       else
@@ -106,6 +108,25 @@ class DemobsController < ApplicationController
   end
 
   private
+    # DMB from a remote-demob submission on the Plans page: fill the
+    # form with its answers (not saved until the user submits).
+    def apply_remote_demob
+      @remote_demob = pending_remote_demob
+      @demob.assign_attributes(@remote_demob.demob_attributes) if @remote_demob
+    end
+
+    def mark_remote_demob_applied
+      pending_remote_demob&.update!(status: :applied, demob: @demob, applied_at: Time.current)
+    end
+
+    # Only a pending submission for this same resource / roster entry.
+    def pending_remote_demob
+      return if params[:remote_demob_id].blank?
+      RemoteDemob.pending.find_by(id: params[:remote_demob_id],
+                                  resource_id: @demob.resource_id,
+                                  roster_id: @demob.roster_id)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_demob
       @demob = Demob.find(params[:id])

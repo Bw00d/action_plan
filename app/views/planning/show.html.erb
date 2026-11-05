@@ -134,6 +134,23 @@
   </section>
 
   <section class="planning-tool">
+    <h3>
+      Resource Demobs
+      <% if @pending_remote_demob_count.to_i > 0 %>
+        <span class="badge badge-primary planning-tool-badge"><%= @pending_remote_demob_count %> pending</span>
+      <% end %>
+    </h3>
+    <p class="muted">
+      Review travel plans sent in by departing resources via the public
+      link, then click DMB to open their ICS-221 with the answers filled
+      in. Copy the public URL from the review page.
+    </p>
+    <%= link_to 'Open demob queue →',
+                incident_remote_demobs_path(@incident),
+                class: 'btn btn-primary' %>
+  </section>
+
+  <section class="planning-tool">
     <h3>Crew Swaps Log</h3>
     <p class="muted">
       Spreadsheet view of every scheduled + completed crew swap on this

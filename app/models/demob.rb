@@ -6,6 +6,7 @@ class Demob < ApplicationRecord
   # same table; resource_id points at the parent either way.
   belongs_to :roster, optional: true
   has_one :demob_notification, dependent: :destroy
+  has_many :remote_demobs, dependent: :nullify
   after_create :set_units
   has_many :units, dependent: :destroy
   after_update :release_resource

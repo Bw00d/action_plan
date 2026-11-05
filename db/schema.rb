@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_11_04_120000) do
+ActiveRecord::Schema.define(version: 2026_11_04_150000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -953,6 +953,34 @@ ActiveRecord::Schema.define(version: 2026_11_04_120000) do
     t.index ["status"], name: "index_remote_checkins_on_status"
   end
 
+  create_table "remote_demobs", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.bigint "resource_id"
+    t.bigint "roster_id"
+    t.bigint "demob_id"
+    t.integer "status", default: 0, null: false
+    t.string "req_number_raw"
+    t.string "name"
+    t.string "phone"
+    t.string "travel_method"
+    t.date "travel_start_date"
+    t.string "travel_start_time"
+    t.string "destination"
+    t.boolean "ron", default: false, null: false
+    t.string "ron_location"
+    t.date "arrival_date"
+    t.string "arrival_time"
+    t.datetime "submitted_at"
+    t.datetime "applied_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["demob_id"], name: "index_remote_demobs_on_demob_id"
+    t.index ["incident_id"], name: "index_remote_demobs_on_incident_id"
+    t.index ["resource_id"], name: "index_remote_demobs_on_resource_id"
+    t.index ["roster_id"], name: "index_remote_demobs_on_roster_id"
+    t.index ["status"], name: "index_remote_demobs_on_status"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.bigint "incident_id", null: false
     t.string "iroc_req_id", null: false
@@ -1193,6 +1221,10 @@ ActiveRecord::Schema.define(version: 2026_11_04_120000) do
   add_foreign_key "qualifications", "users", on_delete: :cascade
   add_foreign_key "remote_checkins", "incidents"
   add_foreign_key "remote_checkins", "requests"
+  add_foreign_key "remote_demobs", "demobs"
+  add_foreign_key "remote_demobs", "incidents"
+  add_foreign_key "remote_demobs", "resources"
+  add_foreign_key "remote_demobs", "rosters"
   add_foreign_key "requests", "incidents"
   add_foreign_key "resource_events", "resources"
   add_foreign_key "resource_events", "users"

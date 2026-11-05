@@ -7,6 +7,7 @@ class PlanningController < ApplicationController
   def show
     @result = nil
     @pending_remote_checkin_count = @incident.remote_checkins.pending.count
+    @pending_remote_demob_count   = @incident.remote_demobs.pending.submitted.count
   end
 
   # POST /incidents/:incident_id/planning/reconcile_iroc
