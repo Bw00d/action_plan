@@ -61,18 +61,33 @@
                 <td><%= rc.effective_leader %></td>
                 <td><%= rc.number_personnel %></td>
                 <td class="text-right rc-actions">
-                  <% if rc.request_id %>
-                    <%= link_to 'Check In',
-                                new_incident_request_checkin_path(@incident, rc.request_id, remote_checkin_id: rc.id),
-                                class: 'btn btn-primary btn-sm' %>
-                  <% else %>
-                    <span class="muted" title="No matching Request — can't launch check-in. Edit the request number first.">—</span>
-                  <% end %>
-                  <%= button_to 'Dismiss',
-                                dismiss_incident_remote_checkin_path(@incident, rc),
-                                method: :post,
-                                data: { confirm: "Dismiss #{rc.name}'s submission?" },
-                                class: 'btn btn-default btn-sm' %>
+                  <% dismiss_button = button_to 'Dismiss',
+                                                dismiss_incident_remote_checkin_path(@incident, rc),
+                                                method: :post,
+                                                data: { confirm: "Dismiss #{rc.name}'s submission?" },
+                                                class: 'btn btn-default btn-sm' %>
+                  <div class="rc-action-stack">
+                    <% if rc.request_id %>
+                      <%= link_to 'Check In',
+                                  new_incident_request_checkin_path(@incident, rc.request_id, remote_checkin_id: rc.id),
+                                  class: 'btn btn-primary btn-sm' %>
+                      <%= dismiss_button %>
+                    <% else %>
+                      <%# Unmatched: try the number again (say after an IROC
+                          import), or check in from the submission and fix
+                          a mistyped number on the form. %>
+                      <%= dismiss_button %>
+                      <%= button_to 'Match again',
+                                    rematch_incident_remote_checkin_path(@incident, rc),
+                                    method: :post,
+                                    class: 'btn btn-default btn-sm',
+                                    title: 'Look the request number up again' %>
+                      <%= link_to 'Check in anyway',
+                                  incident_remote_checkin_checkin_path(@incident, rc),
+                                  class: 'btn btn-primary btn-sm',
+                                  title: 'Open the check-in form with this submission — fix the order number there if needed' %>
+                    <% end %>
+                  </div>
                 </td>
               </tr>
               <tr class="rc-detail-row">

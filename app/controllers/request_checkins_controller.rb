@@ -1,9 +1,22 @@
+# Checks a Request in as a Resource. Also reached without a request, from
+# an unmatched remote-checkin submission ("Check in anyway" on the queue):
+# the form is pre-filled from the submission and the typed request number,
+# and if the (possibly corrected) number matches a request on save, that
+# request is linked and its subordinates fill the roster as usual.
 class RequestCheckinsController < ApplicationController
   include SkipAuthorization
 
   before_action :set_context
 
   def new
+    if @request.nil?
+      @resource = @incident.resources.new(category:          @remote_checkin.category,
+                                          order_number:      @remote_checkin.typed_order_number,
+                                          assignment_length: 14)
+      apply_remote_checkin_overlay(@resource)
+      return
+    end
+
     if !@request.checkinable?
       redirect_to incident_requests_path(@incident), alert: "Supply requests aren't checked in as Resources."
       return
@@ -62,10 +75,11 @@ class RequestCheckinsController < ApplicationController
   def create
     @resource = @incident.resources.new(resource_params)
     if @resource.save
-      populate_roster_from_subordinates(@resource, @request)
-      promote_remote_checkin_if_any(@resource)
-      redirect_to incident_requests_path(@incident),
-                  notice: "Checked in #{@resource.name} (#{@resource.full_order_number})."
+      request = @request || request_matching(@resource)
+      populate_roster_from_subordinates(@resource, request) if request
+      promote_remote_checkin_if_any(@resource, request)
+      redirect_to(@request ? incident_requests_path(@incident) : incident_remote_checkins_path(@incident),
+                  notice: "Checked in #{@resource.name} (#{@resource.full_order_number}).")
     else
       load_remote_checkin
       render :new
@@ -96,8 +110,21 @@ class RequestCheckinsController < ApplicationController
 
   def set_context
     @incident = Incident.find(params[:incident_id])
-    @request  = @incident.requests.find(params[:request_id])
     load_remote_checkin
+    if params[:request_id]
+      @request = @incident.requests.find(params[:request_id])
+    elsif @remote_checkin.nil?
+      # The request-less route only makes sense for a submission.
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+
+  # Checked in without a request: the order number may have been fixed
+  # on the form, so see if it now names a request that can own the
+  # resource (not a subordinate or supply line).
+  def request_matching(resource)
+    req = @incident.requests.find_by(req_number: resource.full_order_number)
+    req if req&.checkinable? && !req.subordinate?
   end
 
   # Look up a remote-checkin submission the admin is promoting. The id
@@ -144,11 +171,12 @@ class RequestCheckinsController < ApplicationController
   # After the resource saves, mark the submission promoted so it
   # falls off the pending queue, and link to the resource we just
   # created so the audit trail is intact.
-  def promote_remote_checkin_if_any(resource)
+  def promote_remote_checkin_if_any(resource, request)
     return unless @remote_checkin
     @remote_checkin.update!(status: :promoted,
                             promoted_at: Time.current,
-                            promoted_resource_id: resource.id)
+                            promoted_resource_id: resource.id,
+                            request_id: request&.id || @remote_checkin.request_id)
   end
 
   def resource_params

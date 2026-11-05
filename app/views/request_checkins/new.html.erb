@@ -6,13 +6,21 @@
   </div>
 
   <div class="checkin-header">
-    <h2>Check In: <%= @request.req_number %></h2>
-    <p class="muted">
-      <%= @request.req_catalog_name %>
-      <% if @request.filled_catalog_item_name.present? %>
-        &nbsp;·&nbsp; <%= @request.filled_catalog_item_name %>
-      <% end %>
-    </p>
+    <% if @request %>
+      <h2>Check In: <%= @request.req_number %></h2>
+      <p class="muted">
+        <%= @request.req_catalog_name %>
+        <% if @request.filled_catalog_item_name.present? %>
+          &nbsp;·&nbsp; <%= @request.filled_catalog_item_name %>
+        <% end %>
+      </p>
+    <% else %>
+      <h2>Check In: <%= @remote_checkin.display_req_number.presence || 'no request number' %></h2>
+      <p class="muted">
+        No matching request on this incident. If the number was mistyped,
+        fix the category and order number below — a match is linked on save.
+      </p>
+    <% end %>
   </div>
 
   <% if @remote_checkin %>
@@ -29,7 +37,8 @@
       <h4><strong>New Resource</strong></h4>
 
       <%= form_for @resource,
-                   url: incident_request_checkin_path(@incident, @request),
+                   url: @request ? incident_request_checkin_path(@incident, @request)
+                                 : incident_remote_checkin_checkin_path(@incident, @remote_checkin),
                    local: true do |f| %>
         <% if @resource.errors.any? %>
           <div id="error_explanation">
@@ -171,7 +180,7 @@
             <%= f.submit "Check In", class: 'btn btn-primary', id: "submit-resource-button" %>
           </div>
           <div class="col-md-6">
-            <%= link_to "Cancel", incident_requests_path(@incident),
+            <%= link_to "Cancel", @request ? incident_requests_path(@incident) : incident_remote_checkins_path(@incident),
                                   class: 'btn btn-default btn-wide' %>
           </div>
         </div>

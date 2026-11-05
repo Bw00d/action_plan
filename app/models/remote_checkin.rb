@@ -66,6 +66,23 @@ class RemoteCheckin < ApplicationRecord
     request_id.present?
   end
 
+  # Look the request number up again — e.g. after an IROC import brought
+  # in the request this resource checked in against. Returns the
+  # matched Request, or nil.
+  def rematch!
+    normalize_req_number
+    req = incident.requests.find_by(req_number: req_number_raw)
+    return nil unless req
+    update!(request: req, category: req.resource_category.presence || category)
+    req
+  end
+
+  # "C-12" → "12": the Resource#order_number half of the typed number,
+  # for checking in without a matched request.
+  def typed_order_number
+    req_number_raw.to_s.sub(/\A[CEOA]-/, '')
+  end
+
   # The crew/overhead-group leader for the final roster. For single
   # overhead resources the form captures that the person is their own
   # leader, so fall through to their own name.

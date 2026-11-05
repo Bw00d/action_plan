@@ -8,7 +8,7 @@ module Admin
     before_action :authenticate_user!
     before_action :set_incident
     before_action :authorize_access
-    before_action :set_remote_checkin, only: [:dismiss, :destroy]
+    before_action :set_remote_checkin, only: [:dismiss, :rematch, :destroy]
 
     def index
       @pending   = @incident.remote_checkins.pending.submitted.pending_first
@@ -24,6 +24,20 @@ module Admin
       @remote_checkin.update!(status: :dismissed)
       redirect_to incident_remote_checkins_path(@incident),
                   notice: "Dismissed submission from #{@remote_checkin.name.presence || 'unknown resource'}."
+    end
+
+    # Look an unmatched submission's request number up again — e.g. after
+    # an IROC import brought the request in. On a match the row gets the
+    # normal Check In button.
+    def rematch
+      if (req = @remote_checkin.rematch!)
+        redirect_to incident_remote_checkins_path(@incident),
+                    notice: "Matched #{@remote_checkin.name.presence || 'submission'} to #{req.req_number}."
+      else
+        redirect_to incident_remote_checkins_path(@incident),
+                    alert: "Still no request #{@remote_checkin.req_number_raw.presence || '(blank)'} on this incident. " \
+                           'Use Check in anyway to fix the number on the check-in form.'
+      end
     end
 
     def destroy

@@ -140,7 +140,10 @@ Rails.application.routes.draw do
     # row routes through the normal RequestCheckinsController flow with
     # the submission pre-filled.
     resources :remote_checkins, only: [:index, :destroy], controller: 'admin/remote_checkins' do
-      member { post :dismiss }
+      member do
+        post :dismiss
+        post :rematch
+      end
       collection do
         post :rotate_token
         get  :qr_code
@@ -148,6 +151,11 @@ Rails.application.routes.draw do
     end
     # Review queue for public remote-demob submissions. The DMB button
     # itself goes through the normal DemobsController.
+    # "Check in anyway" for a submission whose request number didn't
+    # match — the normal check-in form, without a request.
+    get  'remote_checkins/:remote_checkin_id/checkin', to: 'request_checkins#new',
+                                                        as: :remote_checkin_checkin
+    post 'remote_checkins/:remote_checkin_id/checkin', to: 'request_checkins#create'
     resources :remote_demobs, only: [:index, :destroy], controller: 'admin/remote_demobs' do
       member { post :dismiss }
       collection { get :qr_code }
