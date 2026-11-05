@@ -89,6 +89,8 @@ gem "image_processing", ">= 1.2"
 gem 'datejs-rails'
 # for generating pdfs
 gem 'grover', '~> 1.1.2'
+# QR codes for the public check-in / demob links
+gem 'rqrcode', '~> 2.2'
 gem 'jquery-validation-rails'
 gem 'flatpickr'
 # Background job backend — Postgres-backed ActiveJob adapter. Runs on a

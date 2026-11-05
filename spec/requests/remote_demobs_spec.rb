@@ -117,6 +117,15 @@ RSpec.describe 'Remote demobs', type: :request do
       expect(rd.reload).to have_attributes(status: 'applied', demob: demob)
     end
 
+    it 'downloads QR codes for the demob and check-in links' do
+      [qr_code_incident_remote_demobs_path(incident), qr_code_incident_remote_checkins_path(incident)].each do |path|
+        get path
+        expect(response.media_type).to eq('image/png')
+        expect(response.headers['Content-Disposition']).to include('attachment', '-qr.png')
+        expect(response.body.b).to start_with("\x89PNG".b)
+      end
+    end
+
     it 'dismisses a submission' do
       post dismiss_incident_remote_demob_path(incident, rd)
       expect(response).to redirect_to(incident_remote_demobs_path(incident))

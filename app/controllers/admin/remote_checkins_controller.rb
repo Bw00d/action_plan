@@ -40,6 +40,13 @@ module Admin
                   notice: 'Public check-in link rotated. Share the new URL below with arriving resources.'
     end
 
+    # PNG QR code of the current public check-in link, to print or post.
+    def qr_code
+      send_data LinkQrCode.png(remote_checkin_url(@incident.remote_checkin_token)),
+                type: 'image/png', disposition: 'attachment',
+                filename: "#{@incident.name.to_s.parameterize.presence || 'incident'}-check-in-qr.png"
+    end
+
     private
 
     def set_incident

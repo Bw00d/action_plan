@@ -12,6 +12,14 @@
       .rc-admin-url-input { font-family: monospace; font-size: 13px; }
     }
     .muted { color: #8a97ad; }
+    // Rotate (a button_to form) and Download QR code side by side.
+    .rc-admin-link-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      form { margin: 0; }
+    }
   }
 
   .rc-admin-section { margin-top: 28px; }

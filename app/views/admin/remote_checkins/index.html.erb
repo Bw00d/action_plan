@@ -14,11 +14,16 @@
           <input type="text" readonly value="<%= @public_url %>"
                  onclick="this.select();" class="form-control rc-admin-url-input">
         </div>
-        <%= button_to 'Rotate link (invalidate the old one)',
-                      rotate_token_incident_remote_checkins_path(@incident),
-                      method: :post,
-                      data: { confirm: "This will break any already-shared links. Continue?" },
-                      class: 'btn btn-default btn-sm' %>
+        <div class="rc-admin-link-actions">
+          <%= button_to 'Rotate link (invalidate the old one)',
+                        rotate_token_incident_remote_checkins_path(@incident),
+                        method: :post,
+                        data: { confirm: "This will break any already-shared links. Continue?" },
+                        class: 'btn btn-default btn-sm' %>
+          <%= link_to qr_code_incident_remote_checkins_path(@incident), class: 'btn btn-default btn-sm' do %>
+            <%= fa_icon 'qrcode' %> Download QR code
+          <% end %>
+        </div>
       </div>
     </section>
 

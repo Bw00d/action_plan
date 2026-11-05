@@ -20,10 +20,15 @@
           <input type="text" readonly value="<%= @public_url %>"
                  onclick="this.select();" class="form-control rc-admin-url-input">
         </div>
+        <div class="rc-admin-link-actions">
+          <%= link_to qr_code_incident_remote_demobs_path(@incident), class: 'btn btn-default btn-sm' do %>
+            <%= fa_icon 'qrcode' %> Download QR code
+          <% end %>
+        </div>
         <p class="muted small">
           Uses the same token as the check-in link — rotating it from the
           <%= link_to 'check-in queue', incident_remote_checkins_path(@incident) %>
-          changes both.
+          changes both, so download a new QR code after rotating.
         </p>
       </div>
     </section>

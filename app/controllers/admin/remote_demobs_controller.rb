@@ -33,6 +33,13 @@ module Admin
                   notice: 'Demob submission deleted.'
     end
 
+    # PNG QR code of the current public demob link, to print or post.
+    def qr_code
+      send_data LinkQrCode.png(remote_demob_url(@incident.remote_checkin_token)),
+                type: 'image/png', disposition: 'attachment',
+                filename: "#{@incident.name.to_s.parameterize.presence || 'incident'}-demob-qr.png"
+    end
+
     private
 
     def set_incident

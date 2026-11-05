@@ -141,12 +141,16 @@ Rails.application.routes.draw do
     # the submission pre-filled.
     resources :remote_checkins, only: [:index, :destroy], controller: 'admin/remote_checkins' do
       member { post :dismiss }
-      collection { post :rotate_token }
+      collection do
+        post :rotate_token
+        get  :qr_code
+      end
     end
     # Review queue for public remote-demob submissions. The DMB button
     # itself goes through the normal DemobsController.
     resources :remote_demobs, only: [:index, :destroy], controller: 'admin/remote_demobs' do
       member { post :dismiss }
+      collection { get :qr_code }
     end
     resources :schedules, only: [:index, :create, :update, :destroy]
     resources :demob_notifications, only: [:index, :update, :destroy] do
