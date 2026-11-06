@@ -126,6 +126,15 @@ RSpec.describe 'Remote demobs', type: :request do
       end
     end
 
+    it 'builds the public link on APP_HOST when it is set' do
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with('APP_HOST').and_return('incident-action-plan.com')
+      get incident_remote_demobs_path(incident)
+      expect(response.body).to include("https://incident-action-plan.com/remote_demob/#{token}")
+      get incident_remote_checkins_path(incident)
+      expect(response.body).to include("https://incident-action-plan.com/remote_checkin/#{token}")
+    end
+
     it 'dismisses a submission' do
       post dismiss_incident_remote_demob_path(incident, rd)
       expect(response).to redirect_to(incident_remote_demobs_path(incident))

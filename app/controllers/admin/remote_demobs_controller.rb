@@ -16,7 +16,7 @@ module Admin
       @pending    = scope.pending.to_a
       @applied    = scope.applied.reorder(applied_at: :desc).limit(25).to_a
       @dismissed  = scope.dismissed.reorder(updated_at: :desc).limit(25).to_a
-      @public_url = remote_demob_url(@incident.remote_checkin_token)
+      @public_url = remote_demob_url(@incident.remote_checkin_token, **public_link_options)
     end
 
     # Reviewed-but-not-wanted (duplicate, test, wrong incident). Kept
@@ -35,7 +35,7 @@ module Admin
 
     # PNG QR code of the current public demob link, to print or post.
     def qr_code
-      send_data LinkQrCode.png(remote_demob_url(@incident.remote_checkin_token)),
+      send_data LinkQrCode.png(remote_demob_url(@incident.remote_checkin_token, **public_link_options)),
                 type: 'image/png', disposition: 'attachment',
                 filename: "#{@incident.name.to_s.parameterize.presence || 'incident'}-demob-qr.png"
     end

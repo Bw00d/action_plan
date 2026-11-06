@@ -40,6 +40,17 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # URL options for links handed to people outside the app (the public
+  # check-in / demob links and their QR codes). Uses the app's canonical
+  # APP_HOST — incident-action-plan.com in production — so the link
+  # doesn't carry whichever host the Plans user happened to be on (e.g.
+  # the herokuapp.com address). Falls back to the request host when
+  # APP_HOST isn't set, as in development.
+  def public_link_options
+    host = ENV['APP_HOST'].presence
+    host ? { host: host, protocol: 'https' } : {}
+  end
+
   # Choose from 3 types of layouts: guest (not logged-in), user or admin
   def set_layout
     return 'guest' unless user_signed_in?

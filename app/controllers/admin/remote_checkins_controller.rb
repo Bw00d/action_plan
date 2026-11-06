@@ -14,7 +14,7 @@ module Admin
       @pending   = @incident.remote_checkins.pending.submitted.pending_first
       @promoted  = @incident.remote_checkins.promoted.order(promoted_at: :desc).limit(25)
       @dismissed = @incident.remote_checkins.dismissed.submitted.order(updated_at: :desc).limit(25)
-      @public_url = remote_checkin_url(@incident.remote_checkin_token)
+      @public_url = remote_checkin_url(@incident.remote_checkin_token, **public_link_options)
     end
 
     # Mark a submission as reviewed-but-not-wanted (e.g. duplicate,
@@ -56,7 +56,7 @@ module Admin
 
     # PNG QR code of the current public check-in link, to print or post.
     def qr_code
-      send_data LinkQrCode.png(remote_checkin_url(@incident.remote_checkin_token)),
+      send_data LinkQrCode.png(remote_checkin_url(@incident.remote_checkin_token, **public_link_options)),
                 type: 'image/png', disposition: 'attachment',
                 filename: "#{@incident.name.to_s.parameterize.presence || 'incident'}-check-in-qr.png"
     end
