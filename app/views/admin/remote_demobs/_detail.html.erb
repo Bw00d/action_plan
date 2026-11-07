@@ -1,0 +1,18 @@
+<%# Everything the resource entered on the public demob form, for the
+    applied / dismissed rows (double-click to show). Matches the check-in
+    queue's admin/remote_checkins/_detail. %>
+<% when_text = ->(date, time) { date && "#{date.strftime('%m/%d/%Y')} #{time}".strip } %>
+<div class="rc-detail-grid">
+  <div><strong>Request # entered:</strong> <%= rd.req_number_raw %></div>
+  <div><strong>Matched to:</strong> <%= rd.matched? ? "#{rd.display_req_number} — #{(rd.roster || rd.resource).name}" : 'No match' %></div>
+  <div><strong>Name:</strong> <%= rd.name %></div>
+  <div><strong>Phone:</strong> <%= rd.phone %></div>
+  <div><strong>Method of travel:</strong> <%= rd.travel_method %>
+    <% label = RemoteDemob.travel_method_label(rd.travel_method) %>
+    <% if label != rd.travel_method %>(<%= label %>)<% end %></div>
+  <div><strong>Travel start:</strong> <%= when_text.call(rd.travel_start_date, rd.travel_start_time) %></div>
+  <div><strong>Final destination:</strong> <%= rd.destination %></div>
+  <div><strong>RON enroute:</strong> <%= rd.ron ? "Yes — #{rd.ron_location}" : 'No' %></div>
+  <div><strong>Arrival:</strong> <%= when_text.call(rd.arrival_date, rd.arrival_time) %></div>
+  <div><strong>Submitted:</strong> <%= rd.submitted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></div>
+</div>

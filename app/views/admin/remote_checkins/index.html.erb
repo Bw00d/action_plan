@@ -159,20 +159,4 @@
   </div>
 </div>
 
-<script>
-  // Double-click a promoted/dismissed row to show or hide its form
-  // response (the detail row right after it). Delegated on document so
-  // it survives Turbolinks visits without rebinding.
-  if (!window.rcExpandBound) {
-    window.rcExpandBound = true;
-    document.addEventListener('dblclick', function (e) {
-      var row = e.target.closest('.rc-expandable-row');
-      if (!row || e.target.closest('form, a, button')) return;
-      var detail = row.nextElementSibling;
-      if (!detail || !detail.classList.contains('rc-detail-row')) return;
-      var open = detail.classList.toggle('rc-collapsed') === false;
-      row.classList.toggle('rc-expanded', open);
-      if (window.getSelection) window.getSelection().removeAllRanges();
-    });
-  }
-</script>
+<%= render 'admin/remote_checkins/expand_rows_script' %>

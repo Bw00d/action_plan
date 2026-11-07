@@ -104,7 +104,7 @@
           </thead>
           <tbody>
             <% @applied.each do |rd| %>
-              <tr>
+              <tr class="rc-expandable-row" title="Double-click to show the form response">
                 <td><%= rd.applied_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
                 <td><%= rd.display_req_number %></td>
                 <td><%= rd.name %></td>
@@ -115,6 +115,9 @@
                                 class: 'btn btn-default btn-xs' %>
                   <% end %>
                 </td>
+              </tr>
+              <tr class="rc-detail-row rc-collapsed">
+                <td colspan="5"><%= render 'admin/remote_demobs/detail', rd: rd %></td>
               </tr>
             <% end %>
           </tbody>
@@ -129,7 +132,7 @@
           <thead><tr><th>Submitted</th><th>Req #</th><th>Name</th><th></th></tr></thead>
           <tbody>
             <% @dismissed.each do |rd| %>
-              <tr>
+              <tr class="rc-expandable-row" title="Double-click to show the form response">
                 <td><%= rd.submitted_at&.in_time_zone&.strftime('%-m/%-d %H:%M') %></td>
                 <td><%= rd.display_req_number %></td>
                 <td><%= rd.name %></td>
@@ -140,6 +143,9 @@
                                 class: 'btn btn-danger btn-xs' %>
                 </td>
               </tr>
+              <tr class="rc-detail-row rc-collapsed">
+                <td colspan="4"><%= render 'admin/remote_demobs/detail', rd: rd %></td>
+              </tr>
             <% end %>
           </tbody>
         </table>
@@ -147,3 +153,5 @@
     <% end %>
   </div>
 </div>
+
+<%= render 'admin/remote_checkins/expand_rows_script' %>

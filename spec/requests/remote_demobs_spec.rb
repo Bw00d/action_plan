@@ -135,6 +135,18 @@ RSpec.describe 'Remote demobs', type: :request do
       expect(response.body).to include("https://incident-action-plan.com/remote_checkin/#{token}")
     end
 
+    it 'keeps applied and dismissed answers behind a double-click row' do
+      rd.update!(status: :applied, applied_at: Time.current, demob: resource.demob)
+      incident.remote_demobs.create!(req_number_raw: 'O-77', name: 'Lee Fox', phone: '907-555-0123',
+                                       travel_method: 'POV', ron: true, ron_location: 'Tok, AK',
+                                       submitted_at: Time.current, status: :dismissed)
+      get incident_remote_demobs_path(incident)
+      expect(response.body.scan('class="rc-expandable-row"').size).to eq(2)
+      expect(response.body.scan('rc-detail-row rc-collapsed').size).to eq(2)
+      expect(response.body).to include('Request # entered:', 'Palmer, AK', 'Yes — Tok, AK',
+                                        'POV', '(Privately Owned Vehicle)', 'window.rcExpandBound')
+    end
+
     it 'dismisses a submission' do
       post dismiss_incident_remote_demob_path(incident, rd)
       expect(response).to redirect_to(incident_remote_demobs_path(incident))
