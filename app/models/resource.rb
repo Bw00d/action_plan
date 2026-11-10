@@ -486,6 +486,13 @@ class Resource < ApplicationRecord
    return "#{self.cat}#{self.order_number}"
   end
 
+  # Unit ID for the demob notification and travel forms. IROC's Provider is
+  # "AGENCY / UNIT" (e.g. "USFS / OR-MHF") and the Unit ID is the unit half.
+  # Falls back to agency when the request hasn't been imported.
+  def provider_unit_code
+    incident.requests.find_by(req_number: full_order_number)&.res_prov_unit_code.presence || agency
+  end
+
   def released?
     return true if self.release_date
   end

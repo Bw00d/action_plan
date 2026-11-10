@@ -35,7 +35,7 @@ class DemobNotification < ApplicationRecord
       roster:                roster,
       demob:                 demob,
       request_number:        roster&.full_order_number || resource.full_order_number,
-      unit_id:               roster&.agency            || resource.agency,
+      unit_id:               (roster || resource).provider_unit_code,
       name:                  roster&.name              || resource.name,
       actual_release_date:   demob.actual_release_date,
       actual_release_time:   demob.actual_release_time,

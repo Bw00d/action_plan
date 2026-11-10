@@ -30,7 +30,7 @@ class AirTravelRequest < ApplicationRecord
     req.resource       = resource
     req.request_number = resource.full_order_number
     req.resource_name  = resource.name
-    req.unit_id        = resource.agency
+    req.unit_id        = resource.provider_unit_code
     req.release_city   = resource.return_city
     req.release_state  = resource.return_state
     if (demob = resource.demob)

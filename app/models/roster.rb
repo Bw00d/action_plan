@@ -111,6 +111,13 @@ class Roster < ApplicationRecord
     "#{prefix}#{resource.order_number}.#{order_number}"
   end
 
+  # Unit ID from the IROC Provider ("USFS / OR-MHF" → "OR-MHF"). Uses the
+  # linked request, else looks it up by number, else falls back to agency.
+  def provider_unit_code
+    req = request || resource.incident.requests.find_by(req_number: full_order_number)
+    req&.res_prov_unit_code.presence || agency.presence || resource.provider_unit_code
+  end
+
   # Natural-numeric sort key. order_number is a string, so the DB's
   # lexicographic sort puts "10" before "2". This scan/split preserves
   # insertion-friendly ordering for both "3.1"-style and bare-number
@@ -137,7 +144,7 @@ class Roster < ApplicationRecord
   def demob_prefill
     {
       request_number:       full_order_number,
-      unit_id:              agency.presence || resource.agency,
+      unit_id:              provider_unit_code,
       name:                 name.presence   || position,
       actual_release_date:  Time.zone.today
     }
